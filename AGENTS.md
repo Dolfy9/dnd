@@ -9,8 +9,8 @@ Tento repozitář je **lore wiki a příprava D&D 5e kampaní** ve světě Monte
 
 ## Pravidla hry: D&D 5e – verze 2024
 - Základ: **Player's Handbook 2024, Dungeon Master's Guide 2024, Monster Manual 2025**. Terminologie 2024: *Species* (ne Race), *Background* dává ability score increases + Origin feat, subclass všude od 3. úrovně, Exhaustion −2 za úroveň, Weapon Mastery.
-- Kouzla a schopnosti uváděj pod názvy z 2024 (např. Befuddlement místo Feeblemind, Shining Smite místo Branding Smite, Divine Smite je kouzlo).
-- Subclassy a species ze starších knih (XGtE, TCoE, MotM, SCAG…) jen tehdy, když 2024 nemá ekvivalent. Označ je „legacy, kompatibilní“ a uveď alternativu z 2024.
+- Kouzla a schopnosti uváděj pod názvy z 2024 (např. Befuddlement, Shining Smite, Divine Smite je kouzlo).
+- **Žádný legacy obsah.** Species, subclassy, featy, kouzla a předměty jen z knih pro pravidla 2024+ (PHB 2024, DMG 2024, MM 2025, Heroes of Faerûn, Ravenloft: The Horrors Within…). Starší (2014) obsah se nepoužívá ani jako alternativa.
 - U každé postavy veď řádek **Převod na 2024**, kde je vidět, co se změnilo.
 - Bohové a mýtické bytosti: avatar max. CR 30 (MM 2025).
 - Pravidla ověřuj např. na http://dnd2024.wikidot.com nebo D&D Beyond (Free Rules 2024).

@@ -22,10 +22,10 @@ Seznam věcí k rozhodnutí DM. Po rozhodnutí položku přesuň do sekce *Vyře
 - [Panteon](01_Svet/Panteon.md) je navržený (symboly, domény). Chybí svátky a obřady.
 
 ## Mechanika (D&D 2024)
-- Převod hotový (viz řádek *Převod na 2024* u každé postavy). K rozhodnutí: zda nahradit i legacy subclassy (Transmutation, Bladesinging, Order/Nature/Knowledge Domain, Conquest, Mastermind, Swashbuckler, Scout, Shepherd) jejich 2024 alternativou.
 - Bohové: hratelné avatary CR 30, nebo jen orientační popis?
 
 ## Vyřešeno
+- **Pravidla (DM):** vše jen na systému 2024+, žádný legacy obsah. Všechny postavy převedeny (řádek *Převod na 2024*), species/subclassy/featy/kouzla ověřeny proti pravidlům 2024.
 - **Kop Aram (DM):** město uprostřed jezera Amir se super dlouhým mostem na západ; dnes částečně obnovené v menším měřítku, centrum středozemního obchodu. **Werenor (DM):** leží v Bririi na západním břehu jezera Amir, odkud vede most do Kop Aramu; kletba z Dräaru mu nehrozí. **Svobodné Jižní ostrovy (DM):** jižně od Laertmundu (velký ostrov s loděmi na jihovýchodě je bez jména).
 - **Mapa (DM):** na mapě jsou Laertmund (jihovýchodně od Ordenu), Tali, Zairam (jihovýchod), Ordenská zátoka. **Divoký Sever je severozápadní část Montelienu** (jak uvádí archiv).
 - **Rozsah Kodexu (návrh):** Kniha I. vyšla hned po sněmu jen pro země pod přímou správou; ostatní přidal [Kodex II.](06_Knihy_a_Dokumenty/Kniha_16_Kodex_Radu_a_Poradku_II.md).
