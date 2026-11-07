@@ -23,7 +23,7 @@
 | **MÖNOHEN** (částečně čitelné) | východ, jižně od Khearazu | [Klanové Země Mönohen](../02_Zeme/Klanove_Zeme_Monohen.md) |
 | další popisek na jihu (Z… A… M) | jih mezi Ordenem a Knärghe | pravděpodobně [Zairam](../02_Zeme/Zeme_Zairam.md) – potvrď |
 
-> Pozn.: na mapě je psáno **Khärghe / Knärghe Zhia**, v textech **Khärghae / Knärghae Zia** – viz [otevřené otázky](../Otevrene_otazky.md).
+> Pozn.: na mapě je psáno **Khärghe / Knärghe Zhia**, v textech **Khärghae / Knärghae Zia** – obě podoby jsou správné (kánon). Temné síly ovládají **Knärghe Zhia**.
 
 ## Odhad (nepopsané kresby) – potvrď
 | Kresba | Poloha | Můj výklad |
@@ -36,7 +36,7 @@
 | Husté lesy se stromovými domy | sever středu, u Nöelienu | [Východní hvozd](../01_Svet/Mista/Vychodni_hvozd.md) / [Imonir](../02_Zeme/Kralovstvi_Imonir.md)? |
 | Tmavý šrafovaný prales kolem zátoky s lodí | jih středu, mezi Bririí a Ordenem | [Hinai Mihi](../01_Svet/Mista/Hinai_Mihi.md) |
 | Dlouhý průliv z jezera na východ do moře | střed → východ | hlavní obchodní tepna; hranice Bririe a Zhie |
-| Obří propast (sever–jih) s vysokou věží | Knärghe Zhia | hranice mezi živou a mrtvou půlkou Zhie? |
+| Obří propast (sever–jih) s vysokou věží | Knärghe Zhia | hranice mrtvé Knärghe Zhie (ovládají ji mrtví a démoni – kánon); propast jako jejich zdroj = návrh |
 | Poušť s kaktusy a chrámy | jihovýchod | Irtisina poušť / jižní pole Eligona? |
 | Přístav s domy u ústí průlivu | východní pobřeží | [Miria](../03_Mesta/Mesto_Miria.md)? |
 | Ostrov s pagodou, souostroví s loděmi | jihovýchod | [Svobodné Jižní ostrovy](../02_Zeme/Svobodne_Jizni_Ostrovy.md), [Menkant](../03_Mesta/Mesto_Menkant.md) |

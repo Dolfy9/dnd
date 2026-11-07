@@ -9,7 +9,7 @@ Uzavřené horské pevnostní město v Knärghae Zia.
 
 ## Čtvrti a významná místa
 - **Zavřené brány** – cizincům je vstup přísně zakázán.
-- **Propast** (na mapě) – obří trhlina, za kterou leží ztracená polovina Zhie.
+- **Propast** (na mapě) – obří trhlina na hranici mrtvé Knärghae.
 - **Vysoká věž** (na mapě) – viditelná na desítky kilometrů.
 
 ## Služby
@@ -20,7 +20,7 @@ Uzavřené horské pevnostní město v Knärghae Zia.
 - Ti, kdo se pokusili přelézt hradby, se vrátili o měsíc později, mrtví a chodící.
 
 ## Pro DM (tajné)
-- Viz [Dvě sestry Zhie](../06_Knihy_a_Dokumenty/Kniha_09_Dve_sestry_Zhie.md). Kterou polovinu Zhie ovládají temné síly, je otevřená otázka.
+- Viz [Dvě sestry Zhie](../06_Knihy_a_Dokumenty/Kniha_09_Dve_sestry_Zhie.md). **Kánon:** Knärghae Zia ovládají chodící mrtví a démoni – „neznámí vládci“ za zavřenými branami jsou právě oni. (Návrh: propast je místo, odkud vyšli.)
 
 ## Související
 - Země: [Nezávislá Država Knärghae Zia](../02_Zeme/Drzava_Knarghae_Zia.md)

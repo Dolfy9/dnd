@@ -9,7 +9,7 @@
 Horská pevnost Knärghae Zia ostře odmítá jakoukoliv nadvládu Bririe i Ordenského řádu. Vstup pro cizince je přísně zakázán a její vládci zůstávají zahaleni tajemstvím.
 
 ## Historie
-Khärghae a Knärghae byly původně sesterská města jedné země – **Zia**. Dnes je země rozdělená a jednu její polovinu ovládají temné síly: chodící mrtví a démoni.
+Khärghae a Knärghae byly původně sesterská města jedné země – **Zia** (také **Zhia**, obě podoby jsou správné). Dnes je země rozdělená a polovinu **Knärghae Zia** ovládají temné síly: chodící mrtví a démoni.
 
 ## Související
 - Hlavní město: [Město Dar Kemmar](../03_Mesta/Mesto_Dar_Kemmar.md)
