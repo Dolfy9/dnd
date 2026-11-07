@@ -3,14 +3,14 @@
 Seznam věcí k rozhodnutí DM. Po rozhodnutí položku přesuň do sekce *Vyřešeno* s odpovědí.
 
 ## Rozpory
-1. **Tirent a hvozdy:** Tirent je pánem *Východního* hvozdu (potvrzeno). Otevřené: kde Východní hvozd leží, zda Tirent žije a kde je. Návrh: Východní hvozd = lesy Nöelienu, „východní“ z pohledu Bririe (viz bod 5).
+1. **Tirent a hvozdy:** Východní hvozd leží v Mönohenu a stvořil ho Tirent (kánon). Otevřené: jaký je vztah Východního hvozdu k Nöelienu a jeho lesům, co dalšího Tirent stvořil, zda žije a kde je.
 2. **Zia × Zhia – názvy států:** Proč se dnes jedna polovina jmenuje „Knížectví“ a druhá „Država“?
 3. **Loutkoví vládci:** Kteří vládci jsou Ordenem dosazené loutky? (Forpa VII. ano. Iridin III., Wort XXIV., Breffan, Oltar, Szkunzi? Szkunzi a Oltar jsou popsaní jako vzdorovití.)
 4. **Pravopis Dräar / Draar:** Používají se obě varianty. Kterou sjednotit?
-5. **Poloha Nöelienu:** Na mapě je NÖELIEN ve středu severu, severovýchodně od Bririe a západně od Khearazu, obklopený lesem. Text říká „na západě“ – to sedí z pohledu Khearazu a Zhie, ne z pohledu Bririe. Návrh: „na západě“ = z pohledu východních zemí; tentýž les je z pohledu Bririe „Východní hvozd“. Souhlasíš? Viz [Geografie](11_Mapy/Geografie.md).
+5. **Poloha Nöelienu:** Na mapě je NÖELIEN ve středu severu, severovýchodně od Bririe a západně od Khearazu. Text říká „na západě“ – platí to z pohledu východních zemí (Khearaz, Mönohen, Zhia)? Viz [Geografie](11_Mapy/Geografie.md).
 6. **Provincie Nöet:** Věta „V Mictimě kvituje odboj přítomnost zakázaných svazků“ – myšleno „kvete odboj“ / „odboj vítá“?
 7. **Měřítko mapy:** kontinent má podle měřítka ~3 500 × 2 500 km (velikost Evropy). Je to záměr?
-8. **Východní hvozd:** návrh, že elfové po Temném dni odešli z Východního hvozdu na západ – platí, jen pokud Východní hvozd není přímo Nöelien (bod 5).
+8. **Elfové a Východní hvozd:** Žili elfové původně v mönohenském Východním hvozdu, nebo vždy v Nöelienu?
 
 ## Chybějící / nedopsané
 - Všechna zmíněná místa mají soubor (návrh) v `01_Svet/Mista/`. Chybí ještě poloha Urkalu a jména měst na mapě.
@@ -30,3 +30,4 @@ Seznam věcí k rozhodnutí DM. Po rozhodnutí položku přesuň do sekce *Vyře
 - **Khärghae / Knärghae Zia:** Původně sesterská města jedné země Zia, polovinu dnes ovládají temné síly (chodící mrtví, démoni). Zapsáno do obou zemí.
 - **Která polovina Zhie je temná:** **Knärghae Zia** (chodící mrtví a démoni). Zapsáno do obou zemí, Dar Kemmaru, Geografie a Knihy 09.
 - **Zia / Zhia:** obě podoby jsou správné.
+- **Východní hvozd:** leží v Mönohenu, stvořil ho Tirent (vztah k Nöelienu otevřený – bod 1).

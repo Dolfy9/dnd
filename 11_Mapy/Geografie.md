@@ -20,7 +20,7 @@
 | **KHEARAZ** | severovýchod | [Khaeraz](../02_Zeme/Khaeraz.md) |
 | **KHÄRGHE ZHIA** | jihovýchod středu, jižně od velkého průlivu | [Knížectví Khärghae Zia](../02_Zeme/Kralovstvi_Kharghae_Zia.md) |
 | **KNÄRGHE ZHIA** | východně od Khärghe, podél obří propasti s vysokou věží | [Država Knärghae Zia](../02_Zeme/Drzava_Knarghae_Zia.md) |
-| **MÖNOHEN** (částečně čitelné) | východ, jižně od Khearazu | [Klanové Země Mönohen](../02_Zeme/Klanove_Zeme_Monohen.md) |
+| **MÖNOHEN** (částečně čitelné) | východ, jižně od Khearazu | [Klanové Země Mönohen](../02_Zeme/Klanove_Zeme_Monohen.md), v nich [Východní hvozd](../01_Svet/Mista/Vychodni_hvozd.md) (kánon) |
 | další popisek na jihu (Z… A… M) | jih mezi Ordenem a Knärghe | pravděpodobně [Zairam](../02_Zeme/Zeme_Zairam.md) – potvrď |
 
 > Pozn.: na mapě je psáno **Khärghe / Knärghe Zhia**, v textech **Khärghae / Knärghae Zia** – obě podoby jsou správné (kánon). Temné síly ovládají **Knärghe Zhia**.
@@ -33,7 +33,7 @@
 | Obrovská zřícenina trčící z vnitrozemského jezera | střed, mezi Bririí a Nöelienem | [Jezero Amir a Kop Aram](../01_Svet/Mista/Jezero_Amir_a_Kop_Aram.md) |
 | Rozsáhlé lesy s řekami a jezery | západní část pevniny | [Západní hvozd a Ertinova hora](../01_Svet/Mista/Zapadni_hvozd_a_Ertinova_hora.md) |
 | Hrad na západním pobřeží | západ | [Tel Palentin](../03_Mesta/Mesto_Tel_Palentin.md)? (elfové jsou podle textu „na západě“) |
-| Husté lesy se stromovými domy | sever středu, u Nöelienu | [Východní hvozd](../01_Svet/Mista/Vychodni_hvozd.md) / [Imonir](../02_Zeme/Kralovstvi_Imonir.md)? |
+| Husté lesy se stromovými domy | sever středu, u Nöelienu | lesy [Nöelienu](../02_Zeme/Elfsky_Stat_Noelien.md) (Tirentova magie); [Imonir](../02_Zeme/Kralovstvi_Imonir.md)? |
 | Tmavý šrafovaný prales kolem zátoky s lodí | jih středu, mezi Bririí a Ordenem | [Hinai Mihi](../01_Svet/Mista/Hinai_Mihi.md) |
 | Dlouhý průliv z jezera na východ do moře | střed → východ | hlavní obchodní tepna; hranice Bririe a Zhie |
 | Obří propast (sever–jih) s vysokou věží | Knärghe Zhia | hranice mrtvé Knärghe Zhie (ovládají ji mrtví a démoni – kánon); propast jako jejich zdroj = návrh |

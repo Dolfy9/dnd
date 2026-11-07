@@ -1,3 +1,7 @@
 _import/
 .DS_Store
 .obsidian/workspace*.json
+web/docs/
+web/site/
+web/mkdocs.yml
+11_Mapy/*_debug.jpg

@@ -7,7 +7,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parent.parent
 START, END = "<!-- INDEX -->", "<!-- /INDEX -->"
 LINK = re.compile(r"\[[^\]]*\]\(([^)#\s]+)(?:#[^)]*)?\)")
-SKIP = {"_import", ".git", "tools"}
+SKIP = {"_import", ".git", "tools", "web"}
 
 
 def md_files():

@@ -1,0 +1,32 @@
+{
+  "_popis": "Souřadnice v pixelech podkladu Montelien_mapa_fantasy_podklad.jpg (1536×1024, počátek vlevo nahoře). popisek=true → zapéct jako nápis do mapy. jistota: mapa = popsáno na DM mapě / kanon = potvrzeno DM / odhad = návrh k potvrzení.",
+  "sirka": 1536,
+  "vyska": 1024,
+  "mista": [
+    {"nazev": "Nöelien", "x": 830, "y": 300, "typ": "zeme", "popisek": true, "rot": 22, "jistota": "mapa", "odkaz": "02_Zeme/Elfsky_Stat_Noelien.md", "pozn": "Elfský stát, lesy chráněné Tirentovou magií."},
+    {"nazev": "Briria", "x": 600, "y": 500, "typ": "zeme", "popisek": true, "rot": 28, "jistota": "mapa", "odkaz": "02_Zeme/Kralovstvi_Briria.md", "pozn": "Srdce lidské koruny, dnes pod loutkovým králem Forpou VII."},
+    {"nazev": "Nöet", "x": 385, "y": 600, "typ": "zeme", "popisek": true, "rot": 12, "jistota": "mapa", "odkaz": "02_Zeme/Provincie_Noet.md", "pozn": "Provincie na jihozápadě, Mictima."},
+    {"nazev": "Orden", "x": 845, "y": 690, "typ": "zeme", "popisek": true, "rot": 0, "jistota": "mapa", "odkaz": "02_Zeme/Teokracie_Orden.md", "pozn": "Teokracie Ordenského řádu, Pevnost Orden."},
+    {"nazev": "Khearaz", "x": 1065, "y": 330, "typ": "zeme", "popisek": true, "rot": 0, "jistota": "mapa", "odkaz": "02_Zeme/Khaeraz.md", "pozn": "Severovýchodní země."},
+    {"nazev": "Khärghe Zhia", "x": 955, "y": 545, "typ": "zeme", "popisek": true, "rot": 0, "jistota": "mapa", "odkaz": "02_Zeme/Kralovstvi_Kharghae_Zia.md", "pozn": "Živá polovina Zhie, trpasličí Wortmir."},
+    {"nazev": "Knärghe Zhia", "x": 1112, "y": 600, "typ": "zeme", "popisek": true, "rot": 75, "jistota": "mapa", "odkaz": "02_Zeme/Drzava_Knarghae_Zia.md", "pozn": "Temná polovina Zhie – vládnou jí chodící mrtví a démoni (kánon)."},
+    {"nazev": "Mönohen", "x": 1300, "y": 360, "typ": "zeme", "popisek": true, "rot": 18, "jistota": "mapa", "odkaz": "02_Zeme/Klanove_Zeme_Monohen.md", "pozn": "Klanové země polobrů, Yotter. Leží zde Východní hvozd."},
+    {"nazev": "Dräar", "x": 300, "y": 795, "typ": "misto", "popisek": true, "rot": 0, "jistota": "mapa", "odkaz": "01_Svet/Mista/Trosky_Draaru.md", "pozn": "Trosky Dräaru – pyramidy a ruiny."},
+    {"nazev": "Zairam?", "x": 935, "y": 820, "typ": "zeme", "popisek": false, "jistota": "odhad", "odkaz": "02_Zeme/Zeme_Zairam.md", "pozn": "Popisek na jihu je jen částečně čitelný."},
+    {"nazev": "Východní hvozd", "x": 1345, "y": 285, "typ": "misto", "popisek": false, "jistota": "kanon", "odkaz": "01_Svet/Mista/Vychodni_hvozd.md", "pozn": "Leží v Mönohenu, stvořil ho Tirent (kánon). Přesné hranice = odhad."},
+    {"nazev": "Divoký Sever", "x": 210, "y": 110, "typ": "misto", "popisek": false, "jistota": "odhad", "odkaz": "01_Svet/Mista/Divoky_Sever.md", "pozn": "Hornatý severozápadní poloostrov."},
+    {"nazev": "Fornheim", "x": 1010, "y": 225, "typ": "misto", "popisek": false, "jistota": "odhad", "odkaz": "01_Svet/Mista/Fornheim.md", "pozn": "Ledové věže – tvrz Antemia."},
+    {"nazev": "Jezero Amir a Kop Aram", "x": 825, "y": 465, "typ": "misto", "popisek": false, "jistota": "odhad", "odkaz": "01_Svet/Mista/Jezero_Amir_a_Kop_Aram.md", "pozn": "Obří zřícenina v jezeře."},
+    {"nazev": "Západní hvozd", "x": 400, "y": 400, "typ": "misto", "popisek": false, "jistota": "odhad", "odkaz": "01_Svet/Mista/Zapadni_hvozd_a_Ertinova_hora.md", "pozn": "Rozsáhlé lesy západu."},
+    {"nazev": "Hinai Mihi", "x": 770, "y": 785, "typ": "misto", "popisek": false, "jistota": "odhad", "odkaz": "01_Svet/Mista/Hinai_Mihi.md", "pozn": "Šrafovaný prales u zátoky."},
+    {"nazev": "Propast", "x": 1195, "y": 540, "typ": "misto", "popisek": false, "jistota": "odhad", "odkaz": "03_Mesta/Mesto_Dar_Kemmar.md", "pozn": "Obří trhlina s věží na hranici mrtvé Knärghe Zhie."},
+    {"nazev": "Tel Palentin?", "x": 255, "y": 525, "typ": "mesto", "popisek": false, "jistota": "odhad", "odkaz": "03_Mesta/Mesto_Tel_Palentin.md", "pozn": "Hrad na západním pobřeží."},
+    {"nazev": "Werenor?", "x": 440, "y": 655, "typ": "mesto", "popisek": false, "jistota": "odhad", "odkaz": "03_Mesta/Mesto_Werenor.md", "pozn": "Pobřeží proti Dräaru."},
+    {"nazev": "Miria?", "x": 1245, "y": 470, "typ": "mesto", "popisek": false, "jistota": "odhad", "odkaz": "03_Mesta/Mesto_Miria.md", "pozn": "Přístav u ústí průlivu."},
+    {"nazev": "Svobodné Jižní ostrovy", "x": 1360, "y": 740, "typ": "zeme", "popisek": false, "jistota": "odhad", "odkaz": "02_Zeme/Svobodne_Jizni_Ostrovy.md", "pozn": "Souostroví s loděmi, Menkant."},
+    {"nazev": "Velký vír", "x": 1412, "y": 415, "typ": "misto", "popisek": false, "jistota": "odhad", "odkaz": "01_Svet/Mista/More_a_ostrovy.md", "pozn": "Vír ve východním oceánu."},
+    {"nazev": "Mořský had", "x": 1210, "y": 120, "typ": "misto", "popisek": false, "jistota": "odhad", "odkaz": "01_Svet/Mista/More_a_ostrovy.md", "pozn": "Severovýchodní moře."},
+    {"nazev": "Vrak", "x": 75, "y": 610, "typ": "misto", "popisek": false, "jistota": "odhad", "odkaz": "01_Svet/Mista/More_a_ostrovy.md", "pozn": "Vrak lodi v západním oceánu."},
+    {"nazev": "Neznámá pevnina", "x": 170, "y": 885, "typ": "misto", "popisek": false, "jistota": "odhad", "odkaz": "11_Mapy/Geografie.md", "pozn": "Nepopsaná země na jihozápadním okraji."}
+  ]
+}

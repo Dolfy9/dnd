@@ -29,5 +29,9 @@ Tento repozitář je **lore wiki a příprava D&D 5e kampaní** ve světě Monte
 - **Éra Ordenského řádu věcí** (poslední 2 roky) → začala **Urkalským sněmem**.
 - Rok 0 = začátek kampaně (přítomnost).
 
+## Mapa a web
+- Souřadnice míst: `11_Mapy/mista.json` → popisky `python3 tools/mapa.py` (Pillow). Nové místo s polohou přidej i sem.
+- Web: `web/serve.sh` (MkDocs Material, `web/requirements.txt`), navigace se generuje z nadpisů `# ` souborů. Sekce `## Pro DM` web skryje v režimu hráče.
+
 ## Struktura
 Viz `README.md`. Kontrola odkazů: `python3 tools/kontrola.py` (bez závislostí, Python 3).

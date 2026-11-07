@@ -1,18 +1,17 @@
 # Východní hvozd – Tirentova říše
 
-> **Stav:** návrh – poloha není potvrzena
+> **Stav:** poloha = kánon (Mönohen); ostatní návrh
 
-- **Pán:** [Tirent „Moudrý“](../../04_Postavy/Stavitele_a_Bohove/Postava_Tirent.md)
-- **Na mapě:** odhadem husté lesy se stromovými domy severně od středu (mezi Nöelienem a Khearazem)
+- **Pán a stvořitel:** [Tirent „Moudrý“](../../04_Postavy/Stavitele_a_Bohove/Postava_Tirent.md)
+- **Poloha:** [Klanové Země Mönohen](../../02_Zeme/Klanove_Zeme_Monohen.md) na východě kontinentu (kánon)
+- **Na mapě:** lesy východní části Mönohenu – přesné hranice čekají na potvrzení ([Geografie](../../11_Mapy/Geografie.md))
 
 ## Kánon
-Tirent je stvořitel elfů a koní a pán Východního hvozdu, patron světla v temnotách a vědění. Elfský [Nöelien](../../02_Zeme/Elfsky_Stat_Noelien.md) chrání své hranice prastarou magií z dob Tirenta.
+Tirent je stvořitel elfů a koní a pán Východního hvozdu, patron světla v temnotách a vědění. **Východní hvozd v Mönohenu stvořil Tirent** – a není jediným jeho dílem. Elfský [Nöelien](../../02_Zeme/Elfsky_Stat_Noelien.md) (sever středu kontinentu) chrání své hranice prastarou magií z dob Tirenta. Vztah obou hvozdů „není tak jednoduchý“ (DM) – viz [otevřené otázky](../../Otevrene_otazky.md).
 
-## Návrh vysvětlení rozporu „východ vs. západ“
-Elfové se zrodili ve Východním hvozdu. Po Temném dni, kdy se Tirentova moc vytratila, odešla většina elfů na západ a založila Nöelien; do Východního hvozdu se vrací jen jako poutníci. Hvozd od té doby „spí“ – světlo luceren zde nehasne, ale nikdo tu nežije. Tirentův osud je neznámý.
-
-## Háčky
+## Háčky (návrh)
 - Ve hvozdu se zjevují bílí koně bez jezdců a vedou vybrané poutníky k Tirentově knihovně.
+- Polobří klany Mönohenu se hvozdu vyhýbají – říkají mu „les, který se dívá“.
 
 ## Pro DM (tajné)
 - Návrh: Ordenští mniši jsou potomky Tirentových písařů – proto Kodex Tirenta nezakazuje a proto znají staré vědění.

@@ -1,5 +1,7 @@
 # Montelien – D&D 5e (2024) kampaň a univerzum
 
+![Mapa Montelienu](11_Mapy/Montelien_mapa_fantasy.jpg)
+
 Svět, který stvořil uprchlý Ferienec **Ertus Potřísněný** a jeho děti – **Turandar (Stavitelé)**. Po **Temném dni** leží slavná říše v troskách, lidé vládnou rozdrobeným zemím a poslední dva roky nad nimi tiše vládne **Ordenský řád** Otce Samuela. V podzemí měst se ozývá **Odboj Svobodných**.
 
 - Začni u: [Historie Montelienu](01_Svet/Historie_Montelienu.md)
@@ -7,6 +9,7 @@ Svět, který stvořil uprchlý Ferienec **Ertus Potřísněný** a jeho děti �
 - Pravidla psaní a kánonu: [AGENTS.md](AGENTS.md)
 - Šablony: [_Sablony/](_Sablony/)
 - Mapa: [11_Mapy/](11_Mapy/Geografie.md)
+- Web (wiki s vyhledáváním a interaktivní mapou na localhostu): `pip install -r web/requirements.txt && web/serve.sh` → http://localhost:8000
 - Pravidla: **D&D 5e 2024** (PHB 2024, DMG 2024, MM 2025)
 
 ## Struktura
