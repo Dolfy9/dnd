@@ -26,6 +26,15 @@ Kop Aram býval největším městem světa, dokud ho za Temného dne nesmetl je
 - Za klidných nocí je z hlubin slyšet zvony starého Kop Aramu.
 - Potápěč vylovil desku s písmem Stavitelů a druhý den zmizel.
 
+## Významné NPC (návrh)
+- Správce mostu (neurčeno)
+- Potápěčka Isra – zná potopené čtvrti
+- Ordenský celník Harald
+
+## Setkání a scény (návrh)
+- Kontrola zboží na mostě – zakázané knihy v nákladu.
+- Ponor do potopených čtvrtí (Water Breathing, nebezpečí utonutí).
+
 ## Pro DM (tajné)
 - Návrh: v nejhlubším chrámu starého Kop Aramu je knihovna Stavitelů ve vzduchové bublině – proto Orden jezero hlídá. Viz [Jezero Amir a Kop Aram](../01_Svet/Mista/Jezero_Amir_a_Kop_Aram.md).
 

@@ -18,6 +18,15 @@ Trpasličí podzemní i povrchové město v Khärghae Zia v čele s vévodou Wor
 ## Pověsti a háčky
 - Cechy chystají vzpouru, až „Matka vystoupí z Dräaru“.
 
+## Významné NPC (návrh)
+- Vévoda Wort XXIV.
+- Mistr kovář Brannok – kuje zbraně pro povstání
+- Kněžka Irtis Sola (tajná svatyně)
+
+## Setkání a scény (návrh)
+- Sestup do hlubin k tajné svatyni Irtis.
+- Ordenský inspektor ve slévárně.
+
 ## Pro DM (tajné)
 - Návrh: vévoda kuje zbraně pro nějakou armádu – Orden si myslí, že pro něj.
 

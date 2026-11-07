@@ -18,6 +18,15 @@ Drsné hraniční město v Khaerazu spravované náčelníkem Oltarem.
 ## Pověsti a háčky
 - Kmeny se chystají posádku vyhnat.
 
+## Významné NPC (návrh)
+- Náčelník Oltar
+- Lovkyně Rhonna – zná cestu na sever
+- Ordenský výběrčí (vězněn v jámě)
+
+## Setkání a scény (návrh)
+- Lov s Oltarem – zkouška odvahy.
+- Zpráva o zmizelém kmeni na severu.
+
 ## Pro DM (tajné)
 - Návrh: Oltar jedná s odbojem o zbraních.
 

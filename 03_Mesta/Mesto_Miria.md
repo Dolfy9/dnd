@@ -18,6 +18,15 @@ Svobodná obchodní metropole pod vládou konzula Timopea.
 ## Pověsti a háčky
 - V Mirii se dá koupit cokoliv – i propustka do Dräaru.
 
+## Významné NPC (návrh)
+- Konzul Timopeus
+- Kapitánka Dera – přístavní stráž
+- Zloděj lodí „Mlha“
+
+## Setkání a scény (návrh)
+- Noční vyšetřování v přístavu.
+- Obchodní jednání, kde každý lže.
+
 ## Pro DM (tajné)
 - Návrh: Timopeus hraje na obě strany a vede tajný seznam ordenských agentů.
 

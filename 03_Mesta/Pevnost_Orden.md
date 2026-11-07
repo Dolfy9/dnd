@@ -20,6 +20,15 @@ Nedobytná centrála Ordenského řádu a Otce Samuela.
 - Mniši nikdy nespí.
 - V archivu je kniha o každém občanovi Bririe.
 
+## Významné NPC (návrh)
+- Otec Samuel – Velký inkvizitor
+- Sestra Ilse – správkyně archivu zakázaných knih
+- Aleda – dcera krále Forpy (rukojmí)
+
+## Setkání a scény (návrh)
+- Výslech před Tribunálem (Insight/Deception proti DC 18).
+- Infiltrace do archivu v noci – šedí mniši a magické pasti.
+
 ## Pro DM (tajné)
 - Návrh: v nejhlubším patře archivu jsou ferienské svitky, které Orden studuje – viz [Kosmologie](../01_Svet/Kosmologie_Ferien.md).
 

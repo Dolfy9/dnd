@@ -18,6 +18,15 @@ Bojové město klanů Mönohenu pod vládou Aettara Szkunziho.
 ## Pověsti a háčky
 - Szkunzi prý přijme každého, kdo ho porazí v souboji, za bratra.
 
+## Významné NPC (návrh)
+- Aettar Szkunzi
+- Jeho syn Brakk (tajný konvertita Ordenu)
+- Šamanka Uula
+
+## Setkání a scény (návrh)
+- Turnaj klanů o Szkunziho ochranu.
+- Spiknutí v noci před turnajem.
+
 ## Pro DM (tajné)
 - Návrh: Orden chystá na Szkunziho atentát.
 

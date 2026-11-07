@@ -21,6 +21,17 @@ Královské město Bririe, sídlo krále Forpy VII. a centrum ordenské inkvizic
 - V noci mizí lidé, kteří se ptali na Stavitele.
 - Pod katedrálou je prý zazděná Eligonova socha, která pláče.
 
+## Významné NPC (návrh)
+- Corvin – vůdce odboje (U Slepé lucerny)
+- Inkvizitor Vaelen – katedrála
+- Bratr Osmund – cenzor Písařské ulice, úplatný
+- Mara Rybářka – pašerák v říčním přístavu
+
+## Setkání a scény (návrh)
+- Ordenská hlídka kontroluje knihy u brány (DC 14 Deception/Sleight of Hand).
+- Pálení knih na náměstí – dav, který stačí jiskra.
+- Honička stokami s odbojem v patách.
+
 ## Pro DM (tajné)
 - Návrh: Vaelen má v odboji informátora; Corvin o tom ví a nechává ho žít, aby mu podstrkoval lži.
 

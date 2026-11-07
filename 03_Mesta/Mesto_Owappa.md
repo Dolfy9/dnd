@@ -18,6 +18,15 @@ Zemědělské a obchodní centrum Laertmundu pod dohledem krále Iridina III.
 ## Pověsti a háčky
 - Král prý v noci sám jezdí po vesnicích a varuje lidi před čistkami.
 
+## Významné NPC (návrh)
+- Král Iridin III.
+- Výběrčí Malek (Orden)
+- Stařešina Hedda – mluví za vesnice
+
+## Setkání a scény (návrh)
+- Spor sedláků s výběrčím přerůstá v potyčku.
+- Uprchlíci v lese potřebují doprovod.
+
 ## Pro DM (tajné)
 - Návrh: Iridin III. tajně posílá jídlo odboji.
 

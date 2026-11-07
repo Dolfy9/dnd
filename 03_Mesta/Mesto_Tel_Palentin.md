@@ -18,6 +18,15 @@ Vznešené elfské město v Nöelienu, sídlo krále Veanora I.
 ## Pověsti a háčky
 - Elfové prý pamatují Temný den na vlastní oči.
 
+## Významné NPC (návrh)
+- Král Veanor I.
+- Strážkyně hranic Ithiel
+- Starý písař Tirentovy knihovny
+
+## Setkání a scény (návrh)
+- Elfové nevpustí cizince bez důkazu dobrých úmyslů.
+- Magie hranic na chvíli selže – do lesa vnikne netvor.
+
 ## Pro DM (tajné)
 - Návrh: nejstarší elfové opravdu Temný den zažili a znají pravdu o Tirentově zmizení.
 

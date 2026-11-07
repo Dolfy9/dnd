@@ -18,6 +18,15 @@ Hlavní přístavní město Svobodných jižních ostrovů pod vládou královny
 ## Pověsti a háčky
 - V přístavech působí tajní ordenští agenti.
 
+## Významné NPC (návrh)
+- Královna Yuthika
+- První důstojník Rael (ordenský agent)
+- Pašerák Jo Tři-prsty
+
+## Setkání a scény (návrh)
+- Ordenská loď v přístavu – kdo ji pozval?
+- Souboj na palubě s piráty.
+
 ## Pro DM (tajné)
 - Viz [Lodní deník z Menkantu](../06_Knihy_a_Dokumenty/Kniha_17_Lodni_denik_z_Menkantu.md).
 

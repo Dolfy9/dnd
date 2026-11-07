@@ -18,6 +18,15 @@ Lesní město v království Imonir, sídlo krále Istuviona.
 ## Pověsti a háčky
 - Kdo v Imoniru zabije zvíře bez prosby, zmizí.
 
+## Významné NPC (návrh)
+- Král Istuvion
+- Druidka Neva
+- Otrávený jelen – strážce pramene
+
+## Setkání a scény (návrh)
+- Šílená zvířata na stezkách.
+- Hledání otrávce pramenů.
+
 ## Pro DM (tajné)
 - Návrh: Imonir je jediné místo, kam Orden nemá přístup, protože o něm neví.
 

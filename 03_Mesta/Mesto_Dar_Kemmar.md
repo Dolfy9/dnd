@@ -19,6 +19,14 @@ Uzavřené horské pevnostní město v Knärghae Zia.
 - Za hradbami nikdo nesvítí – a přece se tam pohybují stíny.
 - Ti, kdo se pokusili přelézt hradby, se vrátili o měsíc později, mrtví a chodící.
 
+## Významné NPC (návrh)
+- Neznámí vládci – nemrtví a démoni (kánon)
+- Poslední živý strážce brány (návrh)
+
+## Setkání a scény (návrh)
+- Pokus přelézt hradby – Wights, Shadows, Vrock.
+- Hlas z druhé strany brány prosí o pomoc.
+
 ## Pro DM (tajné)
 - Viz [Dvě sestry Zhie](../06_Knihy_a_Dokumenty/Kniha_09_Dve_sestry_Zhie.md). **Kánon:** Knärghae Zia ovládají chodící mrtví a démoni – „neznámí vládci“ za zavřenými branami jsou právě oni. (Návrh: propast je místo, odkud vyšli.)
 

@@ -18,6 +18,15 @@ Přírodní metropole Zairamu, sídlo kněžky Mi-Komde.
 ## Pověsti a háčky
 - Ordenští výběrčí daní už brousí zuby i na Pertam.
 
+## Významné NPC (návrh)
+- Kněžka Mi-Komde
+- Satyr Tobb – hudebník a zvěd
+- Ordenský „poutník“ Gerd (špeh)
+
+## Setkání a scény (návrh)
+- Slunovratová slavnost – odhal špeha v davu.
+- Zlatá telata v chrámu – kdo je chce ukrást?
+
 ## Pro DM (tajné)
 - Návrh: pod chrámem roste první strom, který Zaira zasadila – zdroj její moci.
 

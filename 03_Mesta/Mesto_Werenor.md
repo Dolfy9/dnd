@@ -19,6 +19,15 @@ Svobodné město ležící u hranic staré zkázy pod správou primase Perthama.
 ## Pověsti a háčky
 - Temný den se dodnes nazývá také „Zkáza Werenoru“.
 
+## Významné NPC (návrh)
+- Primas Pertham
+- Archivář Lenn
+- Šílený námořník z Dräaru
+
+## Setkání a scény (návrh)
+- Krádež v archivu – stopy vedou k Ordenu.
+- Žádost o povolení vstupu do Dräaru.
+
 ## Pro DM (tajné)
 - Kletba z Dräaru Werenoru nehrozí (DM). Návrh: Pertham ví proč – a mlčí o tom.
 

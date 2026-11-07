@@ -20,6 +20,15 @@ Hlavní město Nöetu, sídlo arcimága Breffana plné magických věží a knih
 - V Breffanových sklepích mizí otroci a vracejí se jako zvířata.
 - Odboj tu kvete díky zakázaným knihám.
 
+## Významné NPC (návrh)
+- Arcimág Breffan
+- Lékařka Vesna – vede tajnou buňku odboje
+- Hadí stráž Breffanovy věže
+
+## Setkání a scény (návrh)
+- Noční ulice, kde chodí mrtví (Zombie, Ghoul).
+- Aukce zakázaných svazků v podzemí.
+
 ## Pro DM (tajné)
 - Návrh: Breffan tajně studuje ferienské runy, aby se vymanil z dohody s Ordenem.
 
