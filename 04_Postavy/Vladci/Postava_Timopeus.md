@@ -3,3 +3,7 @@
 - **D&D 5e Staty:** Level 9 Rogue (Mastermind)
 - **Vlastnosti:** AC 15 (Stínové kožené brnění), HP 63, Charisma 18, Intelligence 16
 - **Role v Kampani:** Vládce Svobodného města Miria. Mistr intrik a obchodu, balancující nezávislost města.
+
+## Související
+- Země: [Svobodné Město Miria](../../02_Zeme/Svobodne_Mesto_Miria.md)
+- Sídlo: [Město Miria](../../03_Mesta/Mesto_Miria.md)

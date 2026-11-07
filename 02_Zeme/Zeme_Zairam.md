@@ -7,3 +7,8 @@
 
 ## Příroda a Víra
 Zairam je požehnaný kraj plný bujné vegetace a bohaté úrody. Je považován za dědictví patronky Zairy. Satyrská kněžka Mi-Komde uplatňuje vládu harmonie s přírodou a Ordenský řád se sem zatím neodvažuje plně vstoupit.
+
+## Související
+- Hlavní město: [Město Pertam](../03_Mesta/Mesto_Pertam.md)
+- Hlava státu: [Kněžka Mi-Komde](../04_Postavy/Vladci/Postava_Mi_Komde.md)
+- Frakce: [Ordenský řád](../05_Frakce/Ordensky_Rad.md)

@@ -10,3 +10,8 @@ Nöet je země opředená tajemstvím a arcánními vědami. Spravuje ji chladno
 
 ## Vztah k Ordenu
 Ordenský řád zde udržuje vojenské i duchovní posádky, avšak vůči Breffanovým magickým experimentům zavírá oči, dokud neohrožují doktrínu Pořádku. V Mictimě kvituje odboj přítomnost zakázaných svazků.
+
+## Související
+- Hlavní město: [Město Mictima](../03_Mesta/Mesto_Mictima.md)
+- Hlava státu: [Arcimág Breffan](../04_Postavy/Vladci/Postava_Breffan.md)
+- Frakce: [Ordenský řád](../05_Frakce/Ordensky_Rad.md)

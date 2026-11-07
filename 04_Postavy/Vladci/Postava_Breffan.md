@@ -4,3 +4,7 @@
 - **Vlastnosti:** AC 16 (Mage Armor), HP 112, Intelligence 20, Dexterity 14
 - **Klíčová Kouzla:** Animate Dead, Polymorph, Teleport, Cloudkill
 - **Role v Kampani:** Vládce provincie Nöet v Mictimě. Provádí zakázaný magický výzkum pod stínem dohody s Ordenem.
+
+## Související
+- Země: [Provincie Nöet](../../02_Zeme/Provincie_Noet.md)
+- Sídlo: [Město Mictima](../../03_Mesta/Mesto_Mictima.md)

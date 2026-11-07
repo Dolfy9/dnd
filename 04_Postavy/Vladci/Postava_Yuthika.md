@@ -3,3 +3,7 @@
 - **D&D 5e Staty:** Level 11 Rogue (Swashbuckler) / Level 3 Bard (College of Eloquence)
 - **Vlastnosti:** AC 17 (Studded Leather + Dex), HP 92, Charisma 18, Dexterity 18
 - **Role v Kampani:** Královna Svobodných jižních ostrovů v Menkantu. Čelí skryté infiltraci ordenských špiónů.
+
+## Související
+- Země: [Svobodné Jižní Ostrovy](../../02_Zeme/Svobodne_Jizni_Ostrovy.md)
+- Sídlo: [Město Menkant](../../03_Mesta/Mesto_Menkant.md)

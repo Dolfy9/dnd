@@ -7,3 +7,7 @@
 
 ## Popis
 Město postavené v blízkosti staré zkázy a ruin. Primas Pertham stráží stará tajemství a čelí hrozbě z nedalekého prokletého Dräaru.
+
+## Související
+- Hlavní město: [Město Werenor](../03_Mesta/Mesto_Werenor.md)
+- Hlava státu: [Primas Pertham](../04_Postavy/Vladci/Postava_Pertham.md)

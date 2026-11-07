@@ -7,3 +7,8 @@
 
 ## Popis
 Drsná krajina obývaná kmeny polobrů a urostlých válečníků. Aettar Szkunzi udržuje křehké příměří s Bririí, ale ordenské výběrčí daní vítá s otevřenou sekyrou.
+
+## Související
+- Hlavní město: [Město Yotter](../03_Mesta/Mesto_Yotter.md)
+- Hlava státu: [Aettar Szkunzi](../04_Postavy/Vladci/Postava_Szkunzi.md)
+- Frakce: [Ordenský řád](../05_Frakce/Ordensky_Rad.md)

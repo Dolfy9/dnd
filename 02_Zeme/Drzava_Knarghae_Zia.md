@@ -7,3 +7,7 @@
 
 ## Tajemství a Uzavřenost
 Horská pevnost Knärghae Zia ostře odmítá jakoukoliv nadvládu Bririe i Ordenského řádu. Vstup pro cizince je přísně zakázán a její vládci zůstávají zahaleni tajemstvím.
+
+## Související
+- Hlavní město: [Město Dar Kemmar](../03_Mesta/Mesto_Dar_Kemmar.md)
+- Frakce: [Ordenský řád](../05_Frakce/Ordensky_Rad.md)

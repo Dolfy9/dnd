@@ -4,3 +4,7 @@
 - **Vlastnosti:** AC 14 (Kožená zbroj), HP 58, Charisma 18, Wisdom 16
 - **Zvláštní Schopnost:** Blindsight 30 ft. (oslepen Ordenem)
 - **Role v Kampani:** Hlavní spojec hráčů pro Octowerinský odboj. Předává zakázané spisy a úkoly.
+
+## Související
+- Frakce: [Odboj Svobodných](../../05_Frakce/Odboj_Svobodnych.md)
+- Působiště: [Město Octowerin](../../03_Mesta/Mesto_Octowerin.md)
