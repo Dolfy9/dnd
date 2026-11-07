@@ -71,6 +71,7 @@ Repo je kompatibilní i s [Obsidianem](https://obsidian.md) (stačí otevřít s
 - [Město Dar Kemmar](03_Mesta/Mesto_Dar_Kemmar.md)
 - [Město Imonir](03_Mesta/Mesto_Imonir.md)
 - [Město Kaer](03_Mesta/Mesto_Kaer.md)
+- [Město Kop Aram](03_Mesta/Mesto_Kop_Aram.md)
 - [Město Menkant](03_Mesta/Mesto_Menkant.md)
 - [Město Mictima](03_Mesta/Mesto_Mictima.md)
 - [Město Miria](03_Mesta/Mesto_Miria.md)

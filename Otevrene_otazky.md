@@ -13,7 +13,7 @@ Seznam věcí k rozhodnutí DM. Po rozhodnutí položku přesuň do sekce *Vyře
 8. **Elfové a Východní hvozd:** Žili elfové původně v mönohenském Východním hvozdu, nebo vždy v Nöelienu?
 
 ## Chybějící / nedopsané
-- **Werenor:** kde přesně v Bririi leží?
+- **Kop Aram:** komu patří a kdo ho spravuje (Briria, Werenor, samospráva kupců)?
 - **Tali:** co je to za zemi/kraj, kdo vládne? ([Tali](01_Svet/Mista/Tali.md))
 - **Severovýchodní poloostrov** (ledové věže, tvář ve skále, maják) nemá jméno – co tam je? Fornheim?
 - Všechna zmíněná místa mají soubor (návrh) v `01_Svet/Mista/`. Chybí ještě poloha Urkalu a jména měst na mapě.
@@ -26,7 +26,7 @@ Seznam věcí k rozhodnutí DM. Po rozhodnutí položku přesuň do sekce *Vyře
 - Bohové: hratelné avatary CR 30, nebo jen orientační popis?
 
 ## Vyřešeno
-- **Kop Aram (DM):** město uprostřed jezera Amir se super dlouhým mostem na západ; dnes částečně obnovené v menším měřítku, centrum středozemního obchodu. **Werenor (DM):** leží v Bririi; kletba z Dräaru mu nehrozí. **Svobodné Jižní ostrovy (DM):** jižně od Laertmundu (velký ostrov s loděmi na jihovýchodě je bez jména).
+- **Kop Aram (DM):** město uprostřed jezera Amir se super dlouhým mostem na západ; dnes částečně obnovené v menším měřítku, centrum středozemního obchodu. **Werenor (DM):** leží v Bririi na západním břehu jezera Amir, odkud vede most do Kop Aramu; kletba z Dräaru mu nehrozí. **Svobodné Jižní ostrovy (DM):** jižně od Laertmundu (velký ostrov s loděmi na jihovýchodě je bez jména).
 - **Mapa (DM):** na mapě jsou Laertmund (jihovýchodně od Ordenu), Tali, Zairam (jihovýchod), Ordenská zátoka. **Divoký Sever je severozápadní část Montelienu** (jak uvádí archiv).
 - **Rozsah Kodexu (návrh):** Kniha I. vyšla hned po sněmu jen pro země pod přímou správou; ostatní přidal [Kodex II.](06_Knihy_a_Dokumenty/Kniha_16_Kodex_Radu_a_Poradku_II.md).
 - **Mechanika:** Grand Inquisitor → titul (Fiend Patron), Ice → Cold immunity, Kazi → Halfling (2024).

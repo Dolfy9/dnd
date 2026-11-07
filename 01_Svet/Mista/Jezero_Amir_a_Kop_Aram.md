@@ -3,7 +3,7 @@
 > **Stav:** poloha a most = kánon (DM); ostatní návrh
 
 - **Typ:** velké vnitrozemské jezero ve středu kontinentu; uprostřed částečně obnovené město Kop Aram – centrum středozemního obchodu
-- **Na mapě:** zřícenina na ostrově uprostřed jezera = **Kop Aram**; **super dlouhý most** vede na západní břeh (DM). Jezero sahá od Bririe až k průlivu na východ ([mapa](../../11_Mapy/Geografie.md)).
+- **Na mapě:** zřícenina na ostrově uprostřed jezera = **Kop Aram**; **super dlouhý most** vede na západní břeh do [Werenoru](../../03_Mesta/Mesto_Werenor.md) (DM). Stránka města: [Kop Aram](../../03_Mesta/Mesto_Kop_Aram.md). Jezero sahá od Bririe až k průlivu na východ ([mapa](../../11_Mapy/Geografie.md)).
 - **Nebezpečí:** střední až vysoké (podvodní průzkum)
 
 ## Kánon

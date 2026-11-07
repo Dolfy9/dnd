@@ -248,22 +248,31 @@
    }
   },
   {
+   "nazev": "Werenor",
+   "x": 894,
+   "y": 770,
+   "typ": "mesto",
+   "jistota": "kanon",
+   "odkaz": "03_Mesta/Mesto_Werenor.md",
+   "pozn": "Svobodné město na západním břehu jezera Amir v Bririi, u mostu do Kop Aramu (DM)."
+  },
+  {
    "nazev": "Kop Aram",
    "x": 1060,
    "y": 730,
    "typ": "mesto",
    "jistota": "kanon",
-   "odkaz": "01_Svet/Mista/Jezero_Amir_a_Kop_Aram.md",
+   "odkaz": "03_Mesta/Mesto_Kop_Aram.md",
    "pozn": "Město uprostřed jezera Amir – dnes částečně obnovené v menším měřítku, centrum středozemního obchodu (DM). Most vede na západ."
   },
   {
    "nazev": "Most Kop Aramu",
-   "x": 955,
-   "y": 804,
+   "x": 950,
+   "y": 808,
    "typ": "misto",
    "jistota": "kanon",
    "odkaz": "01_Svet/Mista/Jezero_Amir_a_Kop_Aram.md",
-   "pozn": "Super dlouhý most z Kop Aramu na západní břeh jezera (DM)."
+   "pozn": "Super dlouhý most z Werenoru na západním břehu do Kop Aramu (DM)."
   },
   {
    "nazev": "Jezero Amir",

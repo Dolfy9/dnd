@@ -4,7 +4,7 @@
 - **Hlavní město:** Werenor
 - **Hlava státu:** Primas Pertham
 - **Podřízenost:** Nezávislé
-- **Poloha (DM):** v Bririi, přesné místo neurčeno
+- **Poloha (DM):** v Bririi na západním břehu jezera Amir, u mostu do [Kop Aramu](../03_Mesta/Mesto_Kop_Aram.md)
 
 ## Popis
 Město postavené v blízkosti staré zkázy a ruin. Primas Pertham stráží stará tajemství a dohlíží na zákaz vstupu do prokletého Dräaru. Samotnému Werenoru kletba z Dräaru nehrozí (upřesnění DM).

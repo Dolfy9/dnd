@@ -86,6 +86,8 @@ def water_mask(clean, data):
     isl = np.zeros((H, W), np.uint8)
     for poly in voda.get("ostrovy", []):
         cv2.fillPoly(isl, [np.int32(poly)], 1)
+    for most in voda.get("mosty", []):
+        cv2.polylines(isl, [np.int32(most["body"])], False, 1, most.get("sirka", 5))
     water &= ~isl.astype(bool)
     # ruční písmena v moři nesmí tvořit pevninu
     bm = box_mask(data, 18)
@@ -96,6 +98,7 @@ def water_mask(clean, data):
     water[:40, :] = True
     water[:, -22:] = True
     water = cv2.morphologyEx(water.astype(np.uint8), cv2.MORPH_CLOSE, cv2.getStructuringElement(cv2.MORPH_ELLIPSE, (9, 9)))
+    water[isl.astype(bool)] = 0
     # zaplnit drobné ostrůvky šumu v moři
     n, lab, st, _ = cv2.connectedComponentsWithStats(1 - water, 8)
     for i in range(1, n):

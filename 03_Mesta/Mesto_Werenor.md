@@ -5,7 +5,7 @@
 ## Detailní Popis
 Svobodné město ležící u hranic staré zkázy pod správou primase Perthama.
 
-- **Poloha (DM):** v [Bririi](../02_Zeme/Kralovstvi_Briria.md); přesné místo na mapě zatím neurčeno
+- **Poloha (DM):** v [Bririi](../02_Zeme/Kralovstvi_Briria.md) na západním břehu [jezera Amir](../01_Svet/Mista/Jezero_Amir_a_Kop_Aram.md); odtud vede super dlouhý most do [Kop Aramu](Mesto_Kop_Aram.md)
 - **Velikost:** Svobodné město u hranic staré zkázy, ~18 000 obyvatel
 
 ## Čtvrti a významná místa
