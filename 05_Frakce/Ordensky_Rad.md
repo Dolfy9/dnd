@@ -10,7 +10,7 @@
 
 ## Historie
 - Dlouho jen tiší mniši, akademici a písaři z hory Orden; poslední, kdo zná stará tajemství magie a historii posledních 600 let.
-- **Urkalský sněm** (před ~3 lety): Orden zavraždil vedení lidských států a nastolil tichou absolutní nadvládu.
+- **Urkalský sněm** (před 2 lety): Orden zavraždil všechny hlavy lidských států, nahradil je loutkovými vládci a nastolil tichou absolutní nadvládu.
 - Od té doby: všichni platí Ordenu daně, kriminalita klesla, občanské války ustaly, kněží hlídají veřejný pořádek.
 
 ## Vliv podle zemí

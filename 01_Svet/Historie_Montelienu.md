@@ -23,13 +23,13 @@ Stavitelé se ten den naposledy semkli a porazili nebezpečí pro své dílo, al
 
 ---
 
-## 2.0 Éra Vlády Lidí (-600 let až -3 roky)
+## 2.0 Éra Vlády Lidí (-600 let až -2 roky)
 Za posledních 600 let se vytratila většina vědění o prastaré magii, o tom, jak se vlastně stalo, že lidé ovládli většinu populace známého světa krom elfských zemí na západě a krvavých plání na jihovýchodě a samozřejmě mnoha dalším – dnes už velmi zdivočelým územím. Bylo vedeno mnoho válek a mnoho krve proteklo řekami Montelienu a dnešní země jsou sice spojené pod korunou krále Bririe, vládce lidí a místodržícího císaře Draarského a správce svobodných zemí, ale svobodné země na to mají úplně jiný názor a občanské války jsou na denním pořádku. Mnozí starší obyvatelé Montelienu si ještě pamatují, jak to vypadalo před pádem starých zvyků za vlády Stavitelů, a existuje silná víra, že se jednou vrátí a obnoví prosperitu a původní slávu říše.
 
 ---
 
-## 3.0 Éra Ordenského Řádu Věcí (Poslední 3 roky)
-Poslední, kdo ještě zná stará tajemství magie a znalosti o historii posledních šestiset let, jsou **Ordenští mniši**. Orden existuje nezávisle na okolním dění, na vládách a králích. Jejich neproniknutelné brány se neotevírají, dokud není potřeba zjednat pořádek. Před dvěma lety nikdo vlastně nevěděl, kdo Ordenští jsou, pokud nebydlel poblíž jejich hranic. Byli to tišší mniši, akademici, písaři a podivíni. V den **Urkalského sněmu** však Ordenští zavraždili všechny hlavy států lidí a nastolili tichou absolutní nadvládu nad lidstvem bez toho, aby si většina občanů něčeho všimla. Jen teď všichni poslušně platí daně Ordenu a jsou jim vděční, protože zločinnost významně poklesla a občanské války zmizely úplně. Přirozeně se zvedla vlna odporu k najednou všudypřítomným kněžím hlídajícím veřejný pořádek – rebelové mají svoje hnízda ve všech větších městech říše.
+## 3.0 Éra Ordenského Řádu Věcí (Poslední 2 roky)
+Poslední, kdo ještě zná stará tajemství magie a znalosti o historii posledních šestiset let, jsou **Ordenští mniši**. Orden existuje nezávisle na okolním dění, na vládách a králích. Jejich neproniknutelné brány se neotevírají, dokud není potřeba zjednat pořádek. Ještě před dvěma lety nikdo vlastně nevěděl, kdo Ordenští jsou, pokud nebydlel poblíž jejich hranic. Byli to tišší mniši, akademici, písaři a podivíni. V den **Urkalského sněmu** však Ordenští zavraždili všechny hlavy států lidí, nahradili je loutkovými vládci, kteří vládnou dodnes, a nastolili tichou absolutní nadvládu nad lidstvem bez toho, aby si většina občanů něčeho všimla. Jen teď všichni poslušně platí daně Ordenu a jsou jim vděční, protože zločinnost významně poklesla a občanské války zmizely úplně. Přirozeně se zvedla vlna odporu k najednou všudypřítomným kněžím hlídajícím veřejný pořádek – rebelové mají svoje hnízda ve všech větších městech říše.
 
 ---
 

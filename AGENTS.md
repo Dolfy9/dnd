@@ -17,8 +17,8 @@ Tento repozitář je **lore wiki a příprava D&D 5e kampaní** ve světě Monte
 
 ## Časová osa (zkráceně)
 - **Éra Stavitelů** (-400 000 až -600 let) → končí **Temným dnem** (Ertusův pád / Zkáza Werenoru).
-- **Éra vlády lidí** (-600 až -3 roky) → koruna Bririe, občanské války.
-- **Éra Ordenského řádu věcí** (posledních 3 roky) → začala **Urkalským sněmem**.
+- **Éra vlády lidí** (-600 až -2 roky) → koruna Bririe, občanské války.
+- **Éra Ordenského řádu věcí** (poslední 2 roky) → začala **Urkalským sněmem**.
 - Rok 0 = začátek kampaně (přítomnost).
 
 ## Struktura

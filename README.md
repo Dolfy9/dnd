@@ -1,6 +1,6 @@
 # Montelien – D&D 5e kampaň a univerzum
 
-Svět, který stvořil uprchlý Ferienec **Ertus Potřísněný** a jeho děti – **Turandar (Stavitelé)**. Po **Temném dni** leží slavná říše v troskách, lidé vládnou rozdrobeným zemím a poslední tři roky nad nimi tiše vládne **Ordenský řád** Otce Samuela. V podzemí měst se ozývá **Odboj Svobodných**.
+Svět, který stvořil uprchlý Ferienec **Ertus Potřísněný** a jeho děti – **Turandar (Stavitelé)**. Po **Temném dni** leží slavná říše v troskách, lidé vládnou rozdrobeným zemím a poslední dva roky nad nimi tiše vládne **Ordenský řád** Otce Samuela. V podzemí měst se ozývá **Odboj Svobodných**.
 
 - Začni u: [Historie Montelienu](01_Svet/Historie_Montelienu.md)
 - Rozpory a otázky k rozhodnutí: [Otevrene_otazky.md](Otevrene_otazky.md)
