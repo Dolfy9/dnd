@@ -26,7 +26,7 @@ Seznam věcí k rozhodnutí DM. Po rozhodnutí položku přesuň do sekce *Vyře
 - Bohové: hratelné avatary CR 30, nebo jen orientační popis?
 
 ## Vyřešeno
-- **Kop Aram (DM):** zřícené město uprostřed jezera Amir se super dlouhým mostem. **Werenor (DM):** leží v Bririi; kletba z Dräaru mu nehrozí. **Svobodné Jižní ostrovy (DM):** jižně od Laertmundu (velký ostrov s loděmi na jihovýchodě je bez jména).
+- **Kop Aram (DM):** město uprostřed jezera Amir se super dlouhým mostem na západ; dnes částečně obnovené v menším měřítku, centrum středozemního obchodu. **Werenor (DM):** leží v Bririi; kletba z Dräaru mu nehrozí. **Svobodné Jižní ostrovy (DM):** jižně od Laertmundu (velký ostrov s loděmi na jihovýchodě je bez jména).
 - **Mapa (DM):** na mapě jsou Laertmund (jihovýchodně od Ordenu), Tali, Zairam (jihovýchod), Ordenská zátoka. **Divoký Sever je severozápadní část Montelienu** (jak uvádí archiv).
 - **Rozsah Kodexu (návrh):** Kniha I. vyšla hned po sněmu jen pro země pod přímou správou; ostatní přidal [Kodex II.](06_Knihy_a_Dokumenty/Kniha_16_Kodex_Radu_a_Poradku_II.md).
 - **Mechanika:** Grand Inquisitor → titul (Fiend Patron), Ice → Cold immunity, Kazi → Halfling (2024).

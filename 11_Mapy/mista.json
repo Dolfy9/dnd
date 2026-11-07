@@ -249,21 +249,21 @@
   },
   {
    "nazev": "Kop Aram",
-   "x": 1067,
-   "y": 795,
-   "typ": "misto",
+   "x": 1060,
+   "y": 730,
+   "typ": "mesto",
    "jistota": "kanon",
    "odkaz": "01_Svet/Mista/Jezero_Amir_a_Kop_Aram.md",
-   "pozn": "Zřícené město uprostřed jezera Amir, se super dlouhým mostem (DM)."
+   "pozn": "Město uprostřed jezera Amir – dnes částečně obnovené v menším měřítku, centrum středozemního obchodu (DM). Most vede na západ."
   },
   {
    "nazev": "Most Kop Aramu",
-   "x": 1170,
-   "y": 730,
+   "x": 955,
+   "y": 804,
    "typ": "misto",
    "jistota": "kanon",
    "odkaz": "01_Svet/Mista/Jezero_Amir_a_Kop_Aram.md",
-   "pozn": "Super dlouhý most přes jezero (na mapě řada kamenů východně od zříceniny)."
+   "pozn": "Super dlouhý most z Kop Aramu na západní břeh jezera (DM)."
   },
   {
    "nazev": "Jezero Amir",

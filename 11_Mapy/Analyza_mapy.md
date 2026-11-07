@@ -5,7 +5,7 @@
 ## Shrnutí
 - **Popisky na mapě:** Nöelien, Briria, Nöet, Dräar, Orden, Laertmund (otočený, čitelné hlavně „…MUND“), Tali, Zairam (svisle), Khearaz, Khärghe Zhia, Knärghe Zhia, Mönohen (otočený, písmena M-Ö-N-O-H-E-N), nečitelné „Dö…“ u východního ostrova, měřítko 150–600 km.
 - **Sídla:** asi 50 kroužků bez jmen, 7 kreslených měst/hradů (budovy u Nöelienu s kotvou, hrad na západním pobřeží, opevněné město u polí, Pevnost Orden, přístav u ústí průlivu, vesnice na severu Mönohenu, budovy v Tali).
-- **Vodstvo:** velké jezero Amir (vyznačené DM) se zříceninou Kop Aramu na ostrově a řadou kamenů = dlouhý most, průliv z jezera na východ do moře, severní záliv, Ordenská zátoka, jezero jižně od Knärghe Zhie, řeky na západě a v Laertmundu.
+- **Vodstvo:** velké jezero Amir (vyznačené DM) s Kop Aramem na ostrově a dlouhým mostem na západní břeh (dvojitá čára u jižního okraje), východně od Kop Aramu řada ostrůvků/kamenů, průliv z jezera na východ do moře, severní záliv, Ordenská zátoka, jezero jižně od Knärghe Zhie, řeky na západě a v Laertmundu.
 - **Symboly:** okřídlený démon a mořský had (sever), vír (východ), vrak (západ), lodě (jihovýchod), mořské vlny (jih), pyramidy (Dräar), krystalové věže a tvář ve skále, maják, obelisk, tvor s holí (Khearaz), kopule a krychlová stavba, kolonáda, svatyně torii, kaktusy a chrámy (Tali), šrafovaná pole.
 - **Čárkované čáry:** cesty (Briria → Nöet, přes Khearaz, Laertmund) a hranice Tali / Zairam.
 - Dlouhé rovné čáry přes moře na západě (y ≈ 400 a 815) jsou nejspíš přehyby papíru.
@@ -28,7 +28,7 @@
 - T23 ZAIRAM písmena svisle (1496-1536,1014-1134); svatyně torii na skále (1600-1665,985-1049); SVOBODNÉ JIŽNÍ OSTROVY = velký JV ostrov (1814-1929,1064-1208), sídla (1834,1139),(1914,1109), slabě skicovaná pevnina (1675-1859,1014-1139); lodě (1660-1814,1169-1328); MĚŘÍTKO (1665-2013,1358-1418): 4 dílky po ~86 px = 150 km → 600 km = 343 px, 1 px ≈ 1,75 km
 
 ## Opravy od DM
-- Zřícenina v jezeře = **Kop Aram** s dlouhým mostem (Werenor leží v Bririi); jezero Amir je mnohem větší (šrafované plochy jižně a východně od zříceniny až k průlivu) – maska jezera převzata z DM vyznačení (`11_Mapy/vodstvo.json`).
+- Zřícenina v jezeře = **Kop Aram** s dlouhým mostem na západ, dnes částečně obnovený, centrum obchodu (Werenor leží v Bririi); jezero Amir je mnohem větší (šrafované plochy jižně a východně od zříceniny až k průlivu) – maska jezera převzata z DM vyznačení (`11_Mapy/vodstvo.json`).
 - **Svobodné Jižní ostrovy** jsou ostrovy jižně od Laertmundu; velký ostrov s loděmi na JV je bez jména.
 - **Divoký Sever** = severozápadní poloostrov.
 
