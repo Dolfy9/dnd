@@ -185,6 +185,21 @@ postava:
 ## Role a historie
 Vládce provincie Nöet v Mictimě. Provádí zakázaný magický výzkum pod stínem dohody s Ordenem.
 
+## Vzhled (návrh)
+Vyzáblý mág se šupinatou kůží na krku a zlatýma hadíma očima, v tmavozelené róbě.
+
+## Motivace (návrh)
+Nesmrtelnost a poznání; dohoda s Ordenem je jen štít pro jeho výzkum.
+
+## Vztahy (návrh)
+Otec Samuel (dohoda), Istuvion (nepřítel), Mictimský odboj (nevědomky ho financuje).
+
+## Háčky pro družinu (návrh)
+- V Mictimě mizí žebráci; v noci prý chodí po ulicích mrtví.
+
+## Pro DM (tajné)
+- Návrh: Pracuje na Clone a potřebuje kousek těla Stavitele – hledá ostatky v Trosky Dräaru.
+
 ## Související
 - Země: [Provincie Nöet](../../02_Zeme/Provincie_Noet.md)
 - Sídlo: [Město Mictima](../../03_Mesta/Mesto_Mictima.md)

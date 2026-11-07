@@ -104,6 +104,21 @@ postava:
 ## Role a historie
 Vládce klanových zemí Mönohenu v Yotteru. Nekompromisní válečník držící si Orden od těla.
 
+## Vzhled (návrh)
+Goliáš vysoký přes dva a půl metru, kůže s kamennými kresbami, sekera „Hora“ na zádech.
+
+## Motivace (návrh)
+Síla a čest klanů; Orden smí do Mönohenu vstoupit jen přes jeho mrtvolu.
+
+## Vztahy (návrh)
+Oltar (rival), Veanor (vzájemný respekt), ordenští výběrčí (trofeje).
+
+## Háčky pro družinu (návrh)
+- Szkunzi vyhlásil turnaj – vítěz získá jeho ochranu na cestě Mönohenem k Východnímu hvozdu.
+
+## Pro DM (tajné)
+- Návrh: Jeden z jeho synů tajně přijal ordenskou víru a chystá převrat.
+
 ## Související
 - Země: [Klanové Země Mönohen](../../02_Zeme/Klanove_Zeme_Monohen.md)
 - Sídlo: [Město Yotter](../../03_Mesta/Mesto_Yotter.md)

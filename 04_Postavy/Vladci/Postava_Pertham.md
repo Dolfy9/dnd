@@ -154,6 +154,21 @@ postava:
 ## Role a historie
 Vládce Svobodného města Werenor u ruin staré zkázy. Strážce zákazů vstupu do Dräaru.
 
+## Vzhled (návrh)
+Starý muž s brýlemi z horského křišťálu, inkoustem potřísněné prsty a kutnou plnou kapes na svitky.
+
+## Motivace (návrh)
+Zachránit vědění o Temném dni a udržet Werenor nezávislý.
+
+## Vztahy (návrh)
+Otec Samuel (opatrný respekt), Corvin (tajný odběratel opisů), Veanor (dopisování o Tirentovi).
+
+## Háčky pro družinu (návrh)
+- Z archivu zmizel originál Kroniky Temného dne – a zloděj nechal na stole ordenskou pečeť.
+
+## Pro DM (tajné)
+- Návrh: Pertham ví, kde v archivu leží mapa podzemní cesty do Dräaru. Nikomu ji neukáže – zatím.
+
 ## Související
 - Země: [Svobodné Město Werenor](../../02_Zeme/Svobodne_Mesto_Werenor.md)
 - Sídlo: [Město Werenor](../../03_Mesta/Mesto_Werenor.md)

@@ -92,3 +92,19 @@ postava:
 Mrtvý / Zničen v Temný den
 Uprchlík z Ferienu před svým předurčeným osudem. Vystavěl svět Montelien z prázdnoty oceánu. Padl v bitvě se svým otcem Ertinem.
 
+
+## Vzhled (návrh)
+V ozvěnách vypadá jako muž s rukama potřísněnýma barvou světů.
+
+## Motivace (návrh)
+Svoboda od osudu, který mu Ferien předurčil.
+
+## Vztahy (návrh)
+Ertin (otec), Corthrin (láska), Turandar (děti).
+
+## Háčky pro družinu (návrh)
+- Kodex zakazuje i jeho jméno.
+
+## Pro DM (tajné)
+- Návrh: Jeho poslední dech je uvězněn v Kop Aramu.
+

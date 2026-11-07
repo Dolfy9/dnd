@@ -222,6 +222,21 @@ postava:
 ## Role a historie
 Absolutní vládce teokracie Orden. Strůjce krvavého převratu na Urkalském sněmu.
 
+## Vzhled (návrh)
+Hubený muž v bílé kutně s plátem pod ní, kůže šedavá, oči černé jako inkoust; mluví šeptem.
+
+## Motivace (návrh)
+Absolutní řád – svět bez bohů, bez Stavitelů, bez chaosu. A moc, kterou mu slíbil jeho patron.
+
+## Vztahy (návrh)
+Vaelen (věrný pes), Forpa (loutka), Breffan (užitečný kacíř), Corvin (osobní nepřítel – oslepil ho).
+
+## Háčky pro družinu (návrh)
+- Velký inkvizitor ohlásil „Den očisty“ – veřejné pálení zakázaných knih v Octowerinu.
+
+## Pro DM (tajné)
+- Návrh: Jeho patron je ďábel, kterého Orden oficiálně pálí. Hexbloodí krev ho poutá k čarodějnici z Hinai Mihi, která drží část jeho duše.
+
 ## Související
 - Země: [Teokracie Orden](../../02_Zeme/Teokracie_Orden.md)
 - Sídlo: [Město Orden (Pevnost)](../../03_Mesta/Pevnost_Orden.md)

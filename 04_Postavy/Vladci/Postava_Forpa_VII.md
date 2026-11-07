@@ -113,6 +113,21 @@ postava:
 ## Role a historie
 Vládce Bririe v Octowerinu. Loutka dosazená Ordenem po Urkalském sněmu, pod přímou kontrolou a cenzurou Ordenského řádu.
 
+## Vzhled (návrh)
+Šedivějící muž kolem padesátky v těžkém brokátu, na prstech prsteny, které mu jsou volné – za dva roky zhubl.
+
+## Motivace (návrh)
+Chce přežít a udržet rod na trůnu. Nenávidí Orden, ale bojí se ho víc, než nenávidí.
+
+## Vztahy (návrh)
+Otec Samuel (pán a vězeň), inkvizitor Vaelen (dozorce v paláci), Corvin (tajně mu posílá nepodepsané zprávy).
+
+## Háčky pro družinu (návrh)
+- Král hledá posla, který doručí zapečetěný dopis Veanorovi do Nöelienu – bez vědomí Ordenu.
+
+## Pro DM (tajné)
+- Návrh: Jeho dcera Aleda je „na vzdělání“ v Pevnosti Orden – ve skutečnosti rukojmí. Za její záchranu by obrátil celé království proti Ordenu.
+
 ## Související
 - Země: [Království Briria](../../02_Zeme/Kralovstvi_Briria.md)
 - Sídlo: [Město Octowerin](../../03_Mesta/Mesto_Octowerin.md)

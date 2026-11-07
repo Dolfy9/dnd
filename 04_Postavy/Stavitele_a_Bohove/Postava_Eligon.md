@@ -134,3 +134,19 @@ postava:
 ## Role a historie
 Otec lidí, správce jižních polí a nositel štěstí. Jeho chrámy v současnosti přetvořil Orden.
 
+
+## Vzhled (návrh)
+Zlatovlasý obr v zářící zbroji se srpem u pasu.
+
+## Motivace (návrh)
+Štěstí a ochrana lidí; dnes je jeho jméno zneužito Ordenem.
+
+## Vztahy (návrh)
+Zaira (sestra), Orden (přetvořil jeho chrámy).
+
+## Háčky pro družinu (návrh)
+- Pod katedrálou v Octowerinu pláče jeho socha.
+
+## Pro DM (tajné)
+- Návrh: Orden čerpá moc z jeho přetvořených chrámů – Eligon je spoutaný, ne mrtvý.
+

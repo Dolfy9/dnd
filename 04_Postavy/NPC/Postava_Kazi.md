@@ -122,5 +122,20 @@ postava:
 ## Role a historie
 Jediný známý pašerák a průvodce, který dokáže družinu provést nebezpečným pralesem [Hinai Mihi](../../01_Svet/Mista/Hinai_Mihi.md).
 
+## Vzhled (návrh)
+Drobný hobit s kapsami plnými „nalezených“ věcí, copánky s peříčky a věčným úsměvem.
+
+## Motivace (návrh)
+Dobrodružství, příběhy a cizí kapsy; prales Hinai Mihi je jeho domov.
+
+## Vztahy (návrh)
+Corvin (občasný zaměstnavatel), pralesní duchové (respekt).
+
+## Háčky pro družinu (návrh)
+- Kazi nabízí, že družinu provede Hinai Mihi – za jednu „malou“ laskavost.
+
+## Pro DM (tajné)
+- Návrh: V pralese našel stopu vedoucí k čarodějnici, která drží část duše Otce Samuela.
+
 ## Související
 - Působiště: prales Hinai Mihi (viz [Historie – Divoké regiony](../../01_Svet/Historie_Montelienu.md))

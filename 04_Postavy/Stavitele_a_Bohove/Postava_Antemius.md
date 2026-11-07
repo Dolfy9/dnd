@@ -150,3 +150,19 @@ postava:
 ## Role a historie
 Nejmladší a nejmocnější ze Stavitelů. Otec zvrácených stvůr. Sídlí v zamrzlé tvrzi [Fornheim](../../01_Svet/Mista/Fornheim.md) na severu.
 
+
+## Vzhled (návrh)
+Postava z mlhy a ledu s očima jako dvě studené hvězdy; ve snech mění podobu podle strachů snícího.
+
+## Motivace (návrh)
+Pomsta Ferienu a vláda nad sny všech smrtelníků.
+
+## Vztahy (návrh)
+Ertus (otec), Tirent a Zaira (sourozenci), Oltar (dohoda), Orden (zakazuje jeho kult).
+
+## Háčky pro družinu (návrh)
+- Družině se začnou zdát stejné sny o ledové věži.
+
+## Pro DM (tajné)
+- Návrh: Je nejmocnější ze Stavitelů a jediný, kdo Temný den přečkal celý – ve Fornheimu sbírá sílu.
+

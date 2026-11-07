@@ -159,6 +159,21 @@ postava:
 ## Role a historie
 Hlavní spojka hráčů pro Octowerinský odboj. Předává zakázané spisy a úkoly.
 
+## Vzhled (návrh)
+Muž kolem čtyřicítky s páskou přes oči, jemnými elfími rysy a hlasem, který umí uklidnit dav.
+
+## Motivace (návrh)
+Svrhnout Orden a vrátit lidem pravdu o Stavitelích.
+
+## Vztahy (návrh)
+Otec Samuel (osobní nepřítel), Vaelen (lovec), Forpa (tajný kontakt), Veanor (vzdálená krev).
+
+## Háčky pro družinu (návrh)
+- Corvin potřebuje dostat opisy Kodexu odporu do Mictimy a Wortmiru.
+
+## Pro DM (tajné)
+- Návrh: Ví o Vaelenově informátorovi v odboji a krmí ho lžemi. Jednou ho obětuje.
+
 ## Související
 - Frakce: [Odboj Svobodných](../../05_Frakce/Odboj_Svobodnych.md)
 - Působiště: [Město Octowerin](../../03_Mesta/Mesto_Octowerin.md)

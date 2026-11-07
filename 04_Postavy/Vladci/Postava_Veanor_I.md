@@ -185,6 +185,21 @@ postava:
 ## Role a historie
 Vládce západní elfské říše Nöelien v Tel Palentinu. Odmítá jakoukoliv autoritu Ordenského řádu.
 
+## Vzhled (návrh)
+Vysoký elf s bílými vlasy spletenými do copu, oči barvy mechu, nosí stříbřitou zbroj a rapír s trnovou záštitou.
+
+## Motivace (návrh)
+Uchránit Nöelien a Tirentovu magii hranic; Orden je pro něj jen další lidská bouře, která přejde.
+
+## Vztahy (návrh)
+Tirent (dávný patron), Forpa (pohrdání), Corvin (vzdálená krev – Corvinovi předkové jsou elfové z Nöelienu).
+
+## Háčky pro družinu (návrh)
+- Hranice Nöelienu slábnou; Veanor hledá někoho, kdo dojde do mönohenského Východního hvozdu a zjistí, zda Tirent ještě žije.
+
+## Pro DM (tajné)
+- Návrh: Magie hranic se rozpadá a Veanor to tají i před vlastní radou. Uvažuje o spojenectví s Odbojem.
+
 ## Související
 - Země: [Elfský Stát Nöelien](../../02_Zeme/Elfsky_Stat_Noelien.md)
 - Sídlo: [Město Tel Palentin](../../03_Mesta/Mesto_Tel_Palentin.md)

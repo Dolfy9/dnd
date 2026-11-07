@@ -95,3 +95,19 @@ postava:
 ## Role a historie
 Nejstarší dcera Ertuse a Corthrin. Patronka přírody, úrody a slunce. Spravuje zemi [Zairam](../../02_Zeme/Zeme_Zairam.md).
 
+
+## Vzhled (návrh)
+Žena s pletí barvy pšenice a vlasy z listí, kolem ní kvete tráva.
+
+## Motivace (návrh)
+Život, úroda a slunce pro všechny.
+
+## Vztahy (návrh)
+Mi-Komde (kněžka), Istuvion (ochránce), Eligon (bratr).
+
+## Háčky pro družinu (návrh)
+- V Zairamu se rodí dvojčata telat se zlatou srstí – znamení.
+
+## Pro DM (tajné)
+- Návrh: Umírá, protože ji přestali uctívat – jen Zairam ji drží naživu.
+

@@ -106,3 +106,19 @@ postava:
 ## Role a historie
 Matka trpaslíků, písku a moří. Po Temném dni přísahala pomstu Ferienu a zmizela v podzemí [Dräaru](../../01_Svet/Mista/Trosky_Draaru.md).
 
+
+## Vzhled (návrh)
+Žena z rozžhaveného písku s vlasy z mořské pěny.
+
+## Motivace (návrh)
+Pomsta Ferienu a ochrana trpaslíků.
+
+## Vztahy (návrh)
+Wort XXIV. (tajný ctitel), Orden (zakazuje ji).
+
+## Háčky pro družinu (návrh)
+- V hlubinách Wortmiru znovu hoří posvátný oheň.
+
+## Pro DM (tajné)
+- Návrh: Pod Dräarem čeká se svou armádou – a Dräarská kletba je její dílo.
+

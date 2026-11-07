@@ -136,6 +136,21 @@ postava:
 ## Role a historie
 Hlavní vyšetřovatel Ordenu v Octowerinu. Hlavní nepřítel začínající družiny na úrovních 1–4.
 
+## Vzhled (návrh)
+Vysoký muž v leštěné plátové zbroji s okem Ordenu na štítu, krátce střižené vlasy, vždy upravený.
+
+## Motivace (návrh)
+Najít a zlomit Corvina; věří, že každý kacíř jde zachránit přiznáním.
+
+## Vztahy (návrh)
+Otec Samuel (bezvýhradná loajalita), Corvin (posedlost), Forpa (pohrdání).
+
+## Háčky pro družinu (návrh)
+- Vaelen vyhlásí odměnu za „slepého kazatele“ – a družina dostane nabídku spolupráce.
+
+## Pro DM (tajné)
+- Návrh: Má v odboji informátora. A jeho vlastní sestra je v odboji také – to neví.
+
 ## Související
 - Frakce: [Ordenský řád](../../05_Frakce/Ordensky_Rad.md)
 - Působiště: [Město Octowerin](../../03_Mesta/Mesto_Octowerin.md)

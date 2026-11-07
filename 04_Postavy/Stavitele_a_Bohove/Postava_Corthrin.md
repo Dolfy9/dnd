@@ -124,3 +124,19 @@ postava:
 Neznámé / Vzácná archivní existence
 Ferienská kněžka, která utekla s Ertusem. Matka pěti Turandar (Stavitelů).
 
+
+## Vzhled (návrh)
+Žena ze světla a tkaniny, tvář nikdy není vidět celá.
+
+## Motivace (návrh)
+Ochránit své děti, i když se jí odcizily.
+
+## Vztahy (návrh)
+Ertus (milovaný), Turandar (děti), Ferien (útěk).
+
+## Háčky pro družinu (návrh)
+- Ve starých chrámech se objevují tkané uzly – její znamení.
+
+## Pro DM (tajné)
+- Návrh: Možná stále žije v pavučinách mezi světy a čeká na návrat Ertuse.
+

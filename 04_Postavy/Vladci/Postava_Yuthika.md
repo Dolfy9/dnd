@@ -169,6 +169,21 @@ postava:
 ## Role a historie
 Královna Svobodných jižních ostrovů v Menkantu. Čelí skryté infiltraci ordenských špiónů.
 
+## Vzhled (návrh)
+Tieflinka s rudou kůží, zahnutými rohy ozdobenými zlatem a pirátským kabátcem.
+
+## Motivace (návrh)
+Svoboda moří a Jižních ostrovů; Orden smí do přístavu jen s jejím svolením.
+
+## Vztahy (návrh)
+Timopeus (rival), Wort (obchod), ordenští agenti v Menkantu (lov).
+
+## Háčky pro družinu (návrh)
+- Královna hledá posádku, která odhalí ordenského špeha v její radě.
+
+## Pro DM (tajné)
+- Návrh: Její první důstojník je ordenský agent – a ona ho miluje.
+
 ## Související
 - Země: [Svobodné Jižní Ostrovy](../../02_Zeme/Svobodne_Jizni_Ostrovy.md)
 - Sídlo: [Město Menkant](../../03_Mesta/Mesto_Menkant.md)

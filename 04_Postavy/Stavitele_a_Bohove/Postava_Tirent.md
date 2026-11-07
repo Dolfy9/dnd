@@ -93,3 +93,19 @@ postava:
 ## Role a historie
 Stvořitel elfů a koní, pán [Východního hvozdu](../../01_Svet/Mista/Vychodni_hvozd.md) a strážce poznání v temnotách.
 
+
+## Vzhled (návrh)
+Moudrý elf s lucernou, v níž hoří hvězda; někdy se zjevuje jako bílý kůň.
+
+## Motivace (návrh)
+Uchovat vědění v temnotách.
+
+## Vztahy (návrh)
+Veanor (služebník), Zaira (sestra).
+
+## Háčky pro družinu (návrh)
+- Bílí koně vedou poutníky k jeho knihovně ve Východním hvozdu.
+
+## Pro DM (tajné)
+- Návrh: Žije, ale jeho moc slábne – proto slábnou hranice Nöelienu.
+

@@ -123,6 +123,21 @@ postava:
 ## Role a historie
 Náčelník Khaerazu v Kaeru. Udržuje křehkou autonomii divokých kmenů.
 
+## Vzhled (návrh)
+Rozložitý chlap s medvědí kožešinou přes ramena, jizvou přes nos a hlasitým smíchem.
+
+## Motivace (návrh)
+Svoboda kmenů a právo na lov; daně Ordenu platí v kožích, které schválně nechá shnít.
+
+## Vztahy (návrh)
+Iridin III. (přítel), Szkunzi (rivalita a respekt), ordenští výběrčí (válka).
+
+## Háčky pro družinu (návrh)
+- Kmen na severu zmizel beze stopy; jediná stopa vede k ledovým věžím na severovýchodě.
+
+## Pro DM (tajné)
+- Návrh: Oltar uzavřel s Antemiovým snem dohodu: jeho lid nebude mít noční můry, dokud bude Kaer střežit cestu k Fornheimu.
+
 ## Související
 - Země: [Khaeraz](../../02_Zeme/Khaeraz.md)
 - Sídlo: [Město Kaer](../../03_Mesta/Mesto_Kaer.md)

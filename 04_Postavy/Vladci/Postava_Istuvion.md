@@ -147,6 +147,21 @@ postava:
 ## Role a historie
 Král lesního království Imonir. Ochránce divokých tvorů a přirozeného řádu přírody.
 
+## Vzhled (návrh)
+Obr s mechem ve vousech a parohy ze dřeva vrostlými do koruny; mluví hlubokým, pomalým hlasem.
+
+## Motivace (návrh)
+Rovnováha mezi lidmi a divočinou; žádný oheň, žádná sekera v posvátném lese.
+
+## Vztahy (návrh)
+Mi-Komde (spojenkyně ve víře v Zairu), Breffan (nepřítel – kácí lesy pro výzkum), Oltar (respekt).
+
+## Háčky pro družinu (návrh)
+- Někdo otravuje prameny v Imoniru; zvířata šílí a útočí na poutníky.
+
+## Pro DM (tajné)
+- Návrh: Pod jeho trůnem roste semeno z prvního Zaiřina stromu. Kdo ho zasadí na Kop Aramu, prý obnoví úrodnost středozemí.
+
 ## Související
 - Země: [Království Imonir](../../02_Zeme/Kralovstvi_Imonir.md)
 - Sídlo: [Město Imonir](../../03_Mesta/Mesto_Imonir.md)

@@ -96,3 +96,19 @@ postava:
 Zničen (Nyní Kamenná hora v Západním hvozdu)
 Ertusův otec, který si přišel pro svého syna v Temný den. Zničen vlastními vnoučaty.
 
+
+## Vzhled (návrh)
+Kamenný obr velikosti hory, oči jako dvě slunce.
+
+## Motivace (návrh)
+Vrátit syna Ferienu – za každou cenu.
+
+## Vztahy (návrh)
+Ertus (syn), Turandar (vnoučata, která ho zabila).
+
+## Háčky pro družinu (návrh)
+- Na Ertinově hoře se objevují poutníci, kteří slyší jeho hlas.
+
+## Pro DM (tajné)
+- Návrh: Jeho tělo je hora; srdce v ní stále slabě bije.
+

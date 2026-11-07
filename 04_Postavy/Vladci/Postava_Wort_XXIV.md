@@ -122,6 +122,21 @@ postava:
 ## Role a historie
 Vládce Khärghae Zia ve Wortmiru, dosazený Ordenem. Podzemně podporuje starou víru v Irtis.
 
+## Vzhled (návrh)
+Široký trpaslík s ocelově šedým vousem spleteným do šesti copů a runovou zbrojí.
+
+## Motivace (návrh)
+Ochránit trpasličí cechy a tajnou víru v Irtis, dokud nepřijde čas povstání.
+
+## Vztahy (návrh)
+Irtis (tajná víra), Otec Samuel (nenávist skrytá za poslušností), Yuthika (obchod s kovem).
+
+## Háčky pro družinu (návrh)
+- Zmizel transport ordenských zbraní z Wortmiru – a Orden viní trpaslíky.
+
+## Pro DM (tajné)
+- Návrh: Ve hlubinách Wortmiru kuje zbraně pro povstání. Ví, že Knärghe Zhia je v rukou nemrtvých, a staví proti nim tajnou zeď.
+
 ## Související
 - Země: [Knížectví Khärghae Zia](../../02_Zeme/Kralovstvi_Kharghae_Zia.md)
 - Sídlo: [Město Wortmir](../../03_Mesta/Mesto_Wortmir.md)

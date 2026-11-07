@@ -127,6 +127,21 @@ postava:
 ## Role a historie
 Vládce Svobodného města Miria. Mistr intrik a obchodu, balancující nezávislost města.
 
+## Vzhled (návrh)
+Elegantní muž v tmavém sametu, prsteny s pečetěmi, úsměv, který nikdy nedojde do očí.
+
+## Motivace (návrh)
+Nezávislost Mirie – a zisk. Hraje všechny strany proti sobě.
+
+## Vztahy (návrh)
+Otec Samuel (obchodní partner), Yuthika (spojenkyně i konkurentka), Corvin (pašuje mu knihy).
+
+## Háčky pro družinu (návrh)
+- Konzul nabízí družině práci: najít, kdo krade lodě v přístavu Mirie.
+
+## Pro DM (tajné)
+- Návrh: Vede dvojí účetnictví – jedno pro Orden, druhé pro Odboj. Obě strany si myslí, že je jejich.
+
 ## Související
 - Země: [Svobodné Město Miria](../../02_Zeme/Svobodne_Mesto_Miria.md)
 - Sídlo: [Město Miria](../../03_Mesta/Mesto_Miria.md)

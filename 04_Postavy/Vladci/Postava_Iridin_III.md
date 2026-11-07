@@ -111,6 +111,21 @@ postava:
 ## Role a historie
 Vládce Laertmundu v Owappě. Dosazen Ordenem, ale snaží se chránit svůj venkovský lid před čistkami.
 
+## Vzhled (návrh)
+Šlachovitý muž s ošlehanou tváří, nosí prostý kabátec a luk přes rameno i na trůnu.
+
+## Motivace (návrh)
+Ochránit venkov Laertmundu před čistkami – i za cenu ponížení.
+
+## Vztahy (návrh)
+Forpa VII. (soucit), Oltar (staré přátelství z lovů), ordenský výběrčí Malek (nenávist).
+
+## Háčky pro družinu (návrh)
+- Vesnici u Owappy navštívila inkvizice; král potřebuje svědky, kteří prokážou nevinu obětí.
+
+## Pro DM (tajné)
+- Návrh: Ukrývá v lesích uprchlíky z Bririe a zásobuje je z královských sýpek. Kdyby se to provalilo, Orden vypálí Owappu.
+
 ## Související
 - Země: [Království Laertmund](../../02_Zeme/Kralovstvi_Laertmund.md)
 - Sídlo: [Město Owappa](../../03_Mesta/Mesto_Owappa.md)

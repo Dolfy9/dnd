@@ -152,6 +152,21 @@ postava:
 ## Role a historie
 Duchovní i světská vládkyně Zairamu v Pertamu. Ochránkyně přírodního odkazu Zairy.
 
+## Vzhled (návrh)
+Drobná kněžka s kozíma nohama, zlatými kroužky v uších a věncem z obilí; voní medem a kouřem.
+
+## Motivace (návrh)
+Uchovat Zairam jako poslední svobodné Zaiřino území a jednou vrátit víru celé zemi.
+
+## Vztahy (návrh)
+Zaira (bohyně), Istuvion (spojenec), Otec Samuel (ví, že Orden přijde).
+
+## Háčky pro družinu (návrh)
+- Ordenští zvědové se vydávají za poutníky na Slunovratovou slavnost v Pertamu.
+
+## Pro DM (tajné)
+- Návrh: Mi-Komde slyší Zaiřin hlas jen v posledních letech slaběji – bojí se, že bohyně umírá.
+
 ## Související
 - Země: [Země Zairam](../../02_Zeme/Zeme_Zairam.md)
 - Sídlo: [Město Pertam](../../03_Mesta/Mesto_Pertam.md)
