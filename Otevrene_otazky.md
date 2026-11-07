@@ -14,7 +14,7 @@ Seznam věcí k rozhodnutí DM. Po rozhodnutí položku přesuň do sekce *Vyře
 
 ## Chybějící / nedopsané
 - **Tali:** co je to za zemi/kraj, kdo vládne? ([Tali](01_Svet/Mista/Tali.md))
-- **Severozápadní poloostrov** (hory a smrky) nemá jméno – co tam je?
+- **Severovýchodní poloostrov** (ledové věže, tvář ve skále, maják) nemá jméno – co tam je? Fornheim?
 - Všechna zmíněná místa mají soubor (návrh) v `01_Svet/Mista/`. Chybí ještě poloha Urkalu a jména měst na mapě.
 - Mapa je v `11_Mapy/`. Chybí potvrzení odhadů v [Geografii](11_Mapy/Geografie.md) a sousedství zemí.
 - Frakce: hodnosti Ordenu jsou navržené (Kniha 18). Chybí buňky Odboje ve městech a kult Irtis ve Wortmiru.
@@ -25,7 +25,7 @@ Seznam věcí k rozhodnutí DM. Po rozhodnutí položku přesuň do sekce *Vyře
 - Bohové: hratelné avatary CR 30, nebo jen orientační popis?
 
 ## Vyřešeno
-- **Mapa (DM):** na mapě jsou Laertmund (jihovýchodně od Ordenu), Tali, Zairam (jihovýchod), Svobodné Jižní ostrovy (jih), Ordenská zátoka. **Divoký Sever je na severovýchodě** – opraveno v historii (dříve „severozápad“), Knize 11 a Divokém Severu.
+- **Mapa (DM):** na mapě jsou Laertmund (jihovýchodně od Ordenu), Tali, Zairam (jihovýchod), Ordenská zátoka. **Svobodné Jižní ostrovy** = velký ostrov s loděmi na jihovýchodě. **Divoký Sever je severozápadní část Montelienu** (jak uvádí archiv).
 - **Rozsah Kodexu (návrh):** Kniha I. vyšla hned po sněmu jen pro země pod přímou správou; ostatní přidal [Kodex II.](06_Knihy_a_Dokumenty/Kniha_16_Kodex_Radu_a_Poradku_II.md).
 - **Mechanika:** Grand Inquisitor → titul (Fiend Patron), Ice → Cold immunity, Kazi → Halfling (2024).
 - **Délka vlády Ordenu:** 2 roky. Upravena historie, pamflet *Odpárané oči Urkalu*, README a AGENTS.

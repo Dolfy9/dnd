@@ -75,10 +75,11 @@ hide:
   <span><i class="tecka jistota-mapa"></i> popsáno na mapě DM</span>
   <span><i class="tecka jistota-kanon"></i> potvrzeno DM</span>
   <span><i class="tecka jistota-odhad"></i> odhad (návrh)</span>
-  <label><input type="checkbox" id="mapa-body" checked> body</label>
+  <label><input type="checkbox" id="mapa-body" checked> místa</label>
+  <label><input type="checkbox" id="mapa-sidla"> sídla bez jména</label>
 </div>
 <div id="mapa"></div>
-<p class="mapa-pozn">Kolečkem přibližuj, klikni na bod pro detail. Vrstvy vpravo nahoře: fantasy mapa / původní kresba.
+<p class="mapa-pozn">Kolečkem přibližuj, klikni na bod pro detail. Vrstvy vpravo nahoře: barevná mapa / původní kresba.
 Polohy „odhad“ čekají na potvrzení – viz <a href="../11_Mapy/Geografie/">Geografie</a>.</p>
 <script src="../assets/leaflet/leaflet.js"></script>
 <script>window.MONTELIEN_MISTA = {json.dumps(data, ensure_ascii=False)};</script>

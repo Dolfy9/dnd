@@ -1,13 +1,13 @@
 # Divoký Sever
 
-> **Stav:** poloha = kánon (severovýchod, upřesněno DM); ostatní návrh
+> **Stav:** poloha = kánon (severozápad, potvrzeno DM); ostatní návrh
 
-- **Typ:** divoký region – zamrzlý a temný severovýchod – na mapě poloostrov severně od Khearazu s ledovými věžemi a tváří vytesanou ve skále
+- **Typ:** divoký region – zamrzlý a temný severozápad – na mapě hornatý zalesněný poloostrov na severozápadě
 - **Obyvatelé:** kočovné kmeny, zdivočelé stvůry Antemia, obři
 - **Nebezpečí:** vysoké
 
 ## Kánon
-Divoký, zamrzlý a temný severovýchod Montelienu, o kterém koluje mnoho legend a odváží se tam jen ti nejstatečnější.
+Divoký, zamrzlý a temný severozápad Montelienu, o kterém koluje mnoho legend a odváží se tam jen ti nejstatečnější.
 
 ## Popis (návrh)
 Jehličnaté hvozdy, ledové fjordy a pohoří, kde slunce v zimě vůbec nevychází. Na pobřeží stojí opuštěné strážní věže z doby císařství. Mezi kmeny se vypráví, že „sever patří snům“ – noc je tu delší a Antemiovi tvorové jsou drzejší.

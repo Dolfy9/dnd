@@ -37,5 +37,5 @@ Poslední, kdo ještě zná stará tajemství magie a znalosti o historii posled
 > Podrobněji: [Trosky Dräaru](Mista/Trosky_Draaru.md), [Divoký Sever](Mista/Divoky_Sever.md), [Hinai Mihi](Mista/Hinai_Mihi.md), [Fornheim](Mista/Fornheim.md), [Jezero Amir a Kop Aram](Mista/Jezero_Amir_a_Kop_Aram.md), [Západní hvozd](Mista/Zapadni_hvozd_a_Ertinova_hora.md), [Východní hvozd](Mista/Vychodni_hvozd.md), [Urkal](Mista/Urkal.md), [Moře a ostrovy](Mista/More_a_ostrovy.md). Viz též [Kosmologie](Kosmologie_Ferien.md), [Panteon](Panteon.md) a [mapa](../11_Mapy/Geografie.md).
 
 - **Dräar (Trosky Dräaru):** Kdo se tam vydá, nejspíš už se nikdy nevrátí zpět, nebo se vrátí šílený. Démoni si rádi hrají s myslí každého, kdo se jen přiblíží k Draarským břehům.
-- **Divoký Sever:** Divoký, zamrzlý a temný severovýchod Montelienu, o kterém koluje mnoho legend a odváží se tam jen ti nejstatečnější.
+- **Divoký Sever:** Divoký, zamrzlý a temný severozápad Montelienu, o kterém koluje mnoho legend a odváží se tam jen ti nejstatečnější.
 - **Hinai Mihi:** Malý prales přímo uprostřed všech civilizovaných zemí, který však obývají po staletí nevidění kanibalové – nevidění stejně jako kdokoliv, kdo se do pralesa odváží.

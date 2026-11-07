@@ -2,7 +2,7 @@
 
 *Vyprávění lovců z Khaerazu a Mönohenu, sepsané potulným učencem.*
 
-Na severovýchodě končí svět, který známe. Tam je **Divoký Sever**: led, tma a hory, kde slunce v zimě nevychází. Odvážní tam chodí pro kožešiny; vrací se jich málo.
+Na severozápadě končí svět, který známe. Tam je **Divoký Sever**: led, tma a hory, kde slunce v zimě nevychází. Odvážní tam chodí pro kožešiny; vrací se jich málo.
 
 Ještě dál, v ledovcích, stojí **Fornheim**. Tvrz zamrzlá v ledu. Prý v ní sedí **Antemius**, nejmladší ze Stavitelů, a nevychází. Kdo spí blízko, sní jeho sny.
 

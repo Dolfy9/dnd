@@ -1,18 +1,18 @@
 # Mapy
 
-![Fantasy mapa Montelienu](Montelien_mapa_fantasy.jpg)
+![Mapa Montelienu](Montelien_mapa.jpg)
 
-> **Stav:** fantasy mapa = návrh. Je překreslená podle DM kresby (generováno AI a popsáno skriptem). Pobřeží, ostrovy, jezera, průliv a propast odpovídají kresbě; drobné detaily (tvary hor, lesů) jsou umělecká licence. Rozhoduje původní kresba.
+Barevná mapa je **přímo tvoje kresba**: fotka je vyrovnaná, bez stínů, moře a pevnina jsou obarvené a ruční nápisy zemí nahrazené sázeným písmem. Žádné tvary se nepřekreslují. Podrobný rozbor všeho, co na kresbě je: [Analýza mapy](Analyza_mapy.md).
 
 | Soubor | Popis |
 |---|---|
-| [Montelien_mapa_fantasy.jpg](Montelien_mapa_fantasy.jpg) | Fantasy mapa s popisky, měřítkem a názvem (3072×2048). |
-| [Montelien_mapa_fantasy_podklad.jpg](Montelien_mapa_fantasy_podklad.jpg) | Stejná mapa bez popisků – podklad pro úpravy. |
-| [Montelien_mapa_foto.jpg](Montelien_mapa_foto.jpg) | Původní fotka ručně kreslené mapy (DM). |
-| [Montelien_mapa_vycistena.jpg](Montelien_mapa_vycistena.jpg) | Digitálně vyčištěná verze kresby (bez stínů, vyšší kontrast). |
-| [mista.json](mista.json) | Souřadnice míst na mapě (pro popisky i interaktivní mapu na webu). |
-| [Geografie.md](Geografie.md) | Popis mapy: co je jisté, co je odhad, měřítko a cestování. |
+| [Montelien_mapa.jpg](Montelien_mapa.jpg) | Barevná mapa s popisky (3072×2160). |
+| [Montelien_mapa_vyrovnana.jpg](Montelien_mapa_vyrovnana.jpg) | Vyrovnaná černobílá kresba (2048×1440) – souřadnice v `mista.json` odpovídají tomuto obrázku. |
+| [Montelien_mapa_foto.jpg](Montelien_mapa_foto.jpg) | Původní fotka mapy (DM). |
+| [mista.json](mista.json) | Místa na mapě (souřadnice, popisky, odkazy) – pro barevnou i interaktivní mapu. |
+| [Analyza_mapy.md](Analyza_mapy.md) | Rozbor kresby po dílech: popisky, sídla, symboly. |
+| [Geografie.md](Geografie.md) | Měřítko, cestování, jisté vs. odhad. |
 
 ## Úpravy
-- Přidat/posunout místo: uprav `mista.json` (souřadnice v px podkladu 1536×1024), pak `python3 tools/mapa.py` (popisky) – web převezme body automaticky. `python3 tools/mapa.py --debug` vykreslí kontrolní body.
-- Jména měst zatím na mapě nejsou (na DM kresbě jsou jen kroužky). Až určíš, který kroužek je které město, doplním je.
+- Místo / popisek: uprav `mista.json` a spusť `python3 tools/mapa.py` (`--debug` vykreslí body a rámečky nápisů).
+- Na mapě DM jsou sídla jen jako kroužky bez jmen; v `mista.json` jsou jako „Sídlo (bez jména)“. Až určíš, který kroužek je které město, přejmenuju je.
