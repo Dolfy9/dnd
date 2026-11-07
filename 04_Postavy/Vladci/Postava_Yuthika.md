@@ -143,6 +143,24 @@ postava:
     vady: Věří lidem rychleji, než by měla – Orden toho využívá.
   prevod_2024: 'Swashbuckler (XGtE) není v pravidlech 2024 → Thief (PHB 2024). College of Eloquence → College of Lore. Tiefling
     s Fiendish Legacy: Infernal.'
+  boj:
+    dpr: 37
+    akce:
+    - nazev: Útok
+      text: Rapier + Sneak Attack 6d6, Scimitar (Nick) útok navíc.
+    - nazev: Hold Person
+      text: Kontrola.
+    bonusove_akce:
+    - nazev: Cunning Action
+      text: Dash, Disengage, Hide.
+    - nazev: Bardic Inspiration
+      text: d6 spojenci.
+    reakce:
+    - nazev: Uncanny Dodge
+      text: Polovina zranění.
+    - nazev: Hellish Rebuke
+      text: 2d10 Fire odveta.
+    taktika: Bojuje na palubách a lanoví, s posádkou. Darkness + útěk přes palubu, když je zle.
 ---
 # Postava: Královna Yuthika
 

@@ -102,6 +102,18 @@ postava:
     pouta: Prales Hinai Mihi a jeho tajemství.
     vady: Nedokáže odolat zamčené truhle.
   prevod_2024: Kender → Halfling (PHB 2024). Scout (XGtE) není v pravidlech 2024 → Thief (PHB 2024).
+  boj:
+    dpr: 18
+    akce:
+    - nazev: Útok
+      text: Shortbow + Sneak Attack 3d6.
+    bonusove_akce:
+    - nazev: Cunning Action
+      text: Dash, Disengage, Hide; Fast Hands (Use an Object).
+    reakce:
+    - nazev: Uncanny Dodge
+      text: Polovina zranění.
+    taktika: Nebojuje – schová se, ostřeluje ze stínů a vede družinu pryč nejkratší stezkou.
 ---
 # Postava: Kazi Nocostřel (Průvodce)
 

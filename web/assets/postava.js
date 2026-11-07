@@ -13,6 +13,17 @@
     [4, 3, 3, 3, 2, 1, 1, 1, 1], [4, 3, 3, 3, 3, 1, 1, 1, 1], [4, 3, 3, 3, 3, 2, 1, 1, 1], [4, 3, 3, 3, 3, 2, 2, 1, 1]];
   var SKIP_COLS = ["Proficiency Bonus", "Features", "Class Features", "Cantrips", "Prepared Spells", "1st", "2nd", "3rd", "4th", "5th", "6th", "7th", "8th", "9th", "Spell Slots", "Slot Level"];
   var R = null;
+  // CR: [cr, AC, HPmax, útok, DPRmax, DC] – metoda „Monster Statistics by Challenge Rating“
+  var CRT = [["0",13,6,3,1,13],["1/8",13,35,3,3,13],["1/4",13,49,3,5,13],["1/2",13,70,3,8,13],["1",13,85,3,14,13],["2",13,100,3,20,13],["3",13,115,4,26,13],["4",14,130,5,32,14],["5",15,145,6,38,15],["6",15,160,6,44,15],["7",15,175,6,50,15],["8",16,190,7,56,16],["9",16,205,7,62,16],["10",17,220,7,68,16],["11",17,235,8,74,17],["12",17,250,8,80,17],["13",18,265,8,86,18],["14",18,280,8,92,18],["15",18,295,8,98,18],["16",18,310,9,104,18],["17",19,325,10,110,19],["18",19,340,10,116,19],["19",19,355,10,122,19],["20",19,400,10,140,19],["21",19,445,11,158,20],["22",19,490,11,176,20],["23",19,535,11,194,20],["24",19,580,12,212,21],["25",19,625,12,230,21],["26",19,670,12,248,21],["27",19,715,13,266,22],["28",19,760,13,284,22],["29",19,805,13,302,22],["30",19,850,14,320,23]];
+  var XP = {"0":10,"1/8":25,"1/4":50,"1/2":100,"1":200,"2":450,"3":700,"4":1100,"5":1800,"6":2300,"7":2900,"8":3900,"9":5000,"10":5900,"11":7200,"12":8400,"13":10000,"14":11500,"15":13000,"16":15000,"17":18000,"18":20000,"19":22000,"20":25000,"21":33000,"22":41000,"23":50000,"24":62000,"25":75000,"26":90000,"27":105000,"28":120000,"29":135000,"30":155000};
+  function crIdx(v, col) { for (var i = 0; i < CRT.length; i++) if (v <= CRT[i][col]) return i; return CRT.length - 1; }
+  function computeCR(hp, ac, dpr, atk, dc) {
+    var di = crIdx(hp, 2); di = Math.max(0, Math.min(CRT.length - 1, di + Math.trunc((ac - CRT[di][1]) / 2)));
+    var oi = crIdx(dpr, 4), useDc = dc && (!atk || dc - 8 > atk), dif = useDc ? dc - CRT[oi][5] : atk - CRT[oi][3];
+    oi = Math.max(0, Math.min(CRT.length - 1, oi + Math.trunc(dif / 2)));
+    var fi = Math.round((di + oi) / 2);
+    return { cr: CRT[fi][0], def: CRT[di][0], off: CRT[oi][0], xp: XP[CRT[fi][0]] };
+  }
 
   function base() { var s = document.querySelector('script[src*="assets/postava.js"]'); return s ? s.src.replace(/assets\/postava\.js.*$/, "") : "/"; }
   function rules() {
@@ -93,6 +104,10 @@
     if (n === 1) { var lv = Number(single[0].uroven); cl = single[1] === 1 ? lv : single[1] === 2 ? Math.ceil(lv / 2) : Math.ceil(lv / 3); }
     d.slots = MULTI[Math.min(cl, 20)] || [];
     d.casting.forEach(function (x) { x.dc = 8 + d.pb + d.mods[x.ab]; x.atk = d.pb + d.mods[x.ab]; });
+    var b = c.boj || {}, bestAtk = 0;
+    (c.utoky || []).forEach(function (u) { var a = u.atribut === "FIN" ? Math.max(d.mods.STR, d.mods.DEX) : u.atribut === "SPELL" ? (d.casting[0] ? d.mods[d.casting[0].ab] : 0) : d.mods[u.atribut || "STR"] || 0; bestAtk = Math.max(bestAtk, a + d.pb + (Number(u.bonus) || 0)); });
+    var bestDc = d.casting.reduce(function (m, x) { return Math.max(m, x.dc); }, 0);
+    d.cr = computeCR(d.hp, d.ac, Number(b.dpr) || 0, bestAtk, bestDc);
     return d;
   }
   function lvlOf(c, t) { return (c.tridy || []).filter(function (x) { return x.trida === t; }).reduce(function (a, x) { return a + Number(x.uroven); }, 0); }
@@ -127,14 +142,20 @@
       + box("Úroveň", d.lvl) + box("Druh (Species)", esc(c.druh) + (c.druh_volby ? " <small>– " + esc(c.druh_volby) + "</small>" : ""))
       + box("Pozadí (Background)", esc(c.pozadi || "—")) + box("Přesvědčení", esc(c.zarovnani || "—")) + box("Velikost", esc(c.velikost || "Medium")) + '</div></div>';
     if (cesta && document.body.classList.contains("ed-on")) h += '<div class="ps-edit"><button class="ed-btn ed-primary" data-ps-edit>✎ Upravit postavu</button></div>';
+    var bj = c.boj || {}, key = "ps-hp:" + (cesta || c.jmeno);
+    h += '<div class="ps-fight"><div class="ps-fight-h">Připravenost na boj</div>'
+      + '<div class="ps-fight-row">' + box("CR (odhad)", '<span title="obrana CR ' + d.cr.def + ' · útok CR ' + d.cr.off + '">' + d.cr.cr + '</span>' + (bj.cr_rucne ? ' <small>/ ' + esc(bj.cr_rucne) + '</small>' : ''))
+      + box("XP", d.cr.xp) + box("DPR", esc(bj.dpr || "?")) + box("Iniciativa", '<a class="ps-roll" data-roll="1d20' + sg(d.init) + '" data-label="Iniciativa">' + sg(d.init) + ' 🎲</a>')
+      + '<div class="ps-box ps-hptrack" data-key="' + esc(key) + '" data-max="' + d.hp + '"><div class="ps-lbl">Aktuální HP / dočasné</div><div class="ps-val"><button data-hp="-5">−5</button><button data-hp="-1">−1</button><input class="ps-hpcur" type="number"><button data-hp="1">+1</button><button data-hp="5">+5</button> <input class="ps-hptmp" type="number" placeholder="tmp"> <button data-hp="reset" title="Plné HP">↺</button></div></div>'
+      + '</div>' + fightList("Akce", bj.akce) + fightList("Bonusové akce", bj.bonusove_akce) + fightList("Reakce", bj.reakce) + fightList("Legendární akce", bj.legendarni) + (bj.taktika ? '<p class="ps-tactic"><b>Taktika:</b> ' + para(bj.taktika) + '</p>' : '') + '</div>';
     h += '<div class="ps-grid">';
     // atributy + dovednosti
     h += '<div class="ps-col ps-abil">';
     AB.forEach(function (a) {
       h += '<div class="ps-ab"><div class="ps-ab-top"><span class="ps-ab-n">' + AB_CZ[a] + ' <small>' + a + '</small></span><span class="ps-ab-mod">' + sg(d.mods[a]) + '</span><span class="ps-ab-s">' + esc((c.atributy || {})[a]) + '</span></div><ul>';
-      h += '<li class="' + (d.saveProf.indexOf(a) >= 0 ? "p" : "") + '"><i></i>' + sg(d.saves[a]) + ' <b>Záchranný hod</b></li>';
+      h += '<li class="' + (d.saveProf.indexOf(a) >= 0 ? "p" : "") + '"><i></i><a class="ps-roll" data-roll="1d20' + sg(d.saves[a]) + '" data-label="Záchrana ' + a + '">' + sg(d.saves[a]) + '</a> <b>Záchranný hod</b></li>';
       Object.keys(SKILLS).filter(function (s) { return SKILLS[s] === a; }).forEach(function (s) {
-        var k = d.skills[s]; h += '<li class="' + (k.exp ? "e" : k.prof ? "p" : "") + '"><i></i>' + sg(k.val) + " " + s + '</li>';
+        var k = d.skills[s]; h += '<li class="' + (k.exp ? "e" : k.prof ? "p" : "") + '"><i></i><a class="ps-roll" data-roll="1d20' + sg(k.val) + '" data-label="' + s + '">' + sg(k.val) + "</a> " + s + '</li>';
       });
       h += '</ul></div>';
     });
@@ -149,7 +170,7 @@
       var a = u.atribut === "FIN" ? Math.max(d.mods.STR, d.mods.DEX) : u.atribut === "SPELL" ? (d.casting[0] ? d.mods[d.casting[0].ab] : 0) : d.mods[u.atribut || "STR"] || 0;
       var bon = a + d.pb + (Number(u.bonus) || 0), dm = (u.bez_modu ? 0 : a) + (Number(u.bonus) || 0) + (Number(u.bonus_zraneni) || 0);
       var dmg = u.kostka ? esc(u.kostka) + (dm ? " " + sg(dm) : "") : "";
-      return '<tr><td>' + esc(u.nazev) + (u.dosah ? ' <small>' + esc(u.dosah) + '</small>' : '') + '</td><td>' + (u.bez_hodu ? "—" : sg(bon)) + '</td><td>' + dmg + ' ' + esc(u.typ || "") + '</td><td>' + esc([u.mastery, u.poznamka].filter(Boolean).join(" · ")) + '</td></tr>';
+      return '<tr><td>' + esc(u.nazev) + (u.dosah ? ' <small>' + esc(u.dosah) + '</small>' : '') + '</td><td>' + (u.bez_hodu ? "—" : '<a class="ps-roll" data-roll="1d20' + sg(bon) + '" data-label="' + esc(u.nazev) + ' – útok">' + sg(bon) + '</a>') + '</td><td>' + (u.kostka ? '<a class="ps-roll" data-roll="' + esc(u.kostka) + (dm ? sg(dm) : "") + '" data-label="' + esc(u.nazev) + ' – zásah">' + dmg + '</a>' : '') + ' ' + esc(u.typ || "") + '</td><td>' + esc([u.mastery, u.poznamka].filter(Boolean).join(" · ")) + '</td></tr>';
     }).join("") + '</table>');
     var res = [];
     (c.tridy || []).forEach(function (t) { var r = row(t.trida, t.uroven); Object.keys(r).forEach(function (k) { if (SKIP_COLS.indexOf(k) < 0 && r[k] && r[k] !== "-") res.push([t.trida + ": " + k, r[k]]); }); });
@@ -185,6 +206,35 @@
       + sect("Pozadí: " + esc(c.pozadi || "—"), bg.feat ? '<p><b>Atributy:</b> ' + esc(bg.atributy) + '<br><b>Origin feat:</b> ' + esc(bg.feat) + '<br><b>Dovednosti:</b> ' + esc(bg.dovednosti) + '<br><b>Nástroj:</b> ' + esc(bg.nastroj) + '</p>' : '<p>—</p>') + '</div>';
     if (c.vzhled || c.poznamky || c.puvod_atributu || c.prevod_2024) h += sect("Poznámky", (c.vzhled ? '<p><b>Vzhled:</b> ' + para(c.vzhled) + '</p>' : '') + (c.puvod_atributu ? '<p><b>Atributy:</b> ' + para(c.puvod_atributu) + '</p>' : '') + (c.prevod_2024 ? '<p><b>Převod na 2024:</b> ' + para(c.prevod_2024) + '</p>' : '') + (c.poznamky ? '<p>' + para(c.poznamky) + '</p>' : ''));
     return h + '</div>';
+  }
+  function fightList(t, arr) { if (!arr || !arr.length) return ""; return '<div class="ps-fl"><b>' + t + ':</b><ul>' + arr.map(function (a) { return "<li>" + (typeof a === "string" ? esc(a) : "<b>" + esc(a.nazev) + ".</b> " + esc(a.text || "")) + "</li>"; }).join("") + '</ul></div>'; }
+  function roll(expr) {
+    var m = String(expr).replace(/\s/g, "").match(/^(\d*)d(\d+)([+-]\d+)?$/); if (!m) return null;
+    var n = Number(m[1] || 1), s = Number(m[2]), rolls = [], sum = 0;
+    for (var i = 0; i < n; i++) { var r = 1 + Math.floor(Math.random() * s); rolls.push(r); sum += r; }
+    return { total: sum + Number(m[3] || 0), rolls: rolls, mod: Number(m[3] || 0) };
+  }
+  function toast(html) { var e = document.createElement("div"); e.className = "ps-toast"; e.innerHTML = html; document.body.appendChild(e); setTimeout(function () { e.remove(); }, 4000); }
+  document.addEventListener("click", function (e) {
+    var a = e.target.closest && e.target.closest(".ps-roll"); if (!a) return; e.preventDefault();
+    var r = roll(a.dataset.roll); if (!r) return;
+    var crit = /^1d20/.test(a.dataset.roll) && r.rolls[0] === 20 ? " <b>KRITICKÝ!</b>" : /^1d20/.test(a.dataset.roll) && r.rolls[0] === 1 ? " <b>fail</b>" : "";
+    toast((a.dataset.label || a.dataset.roll) + ": <b>" + r.total + "</b> <small>[" + r.rolls.join(", ") + "]" + (r.mod ? sg(r.mod) : "") + "</small>" + crit);
+  });
+  function hpTracker(root) {
+    var w = root.querySelector(".ps-hptrack"); if (!w) return;
+    var key = w.dataset.key, max = Number(w.dataset.max), cur = w.querySelector(".ps-hpcur"), tmp = w.querySelector(".ps-hptmp");
+    var st = JSON.parse(localStorage.getItem(key) || "null") || { hp: max, tmp: "" };
+    function save() { localStorage.setItem(key, JSON.stringify(st)); cur.value = st.hp; tmp.value = st.tmp; w.classList.toggle("ps-bloodied", st.hp <= max / 2); w.classList.toggle("ps-down", st.hp <= 0); }
+    w.addEventListener("click", function (e) {
+      var b = e.target.dataset.hp; if (!b) return;
+      if (b === "reset") { st.hp = max; st.tmp = ""; }
+      else { var v = Number(b); if (v < 0 && Number(st.tmp) > 0) { var left = Number(st.tmp) + v; st.tmp = left > 0 ? left : ""; v = Math.min(0, left); } st.hp = Math.max(0, Math.min(max, st.hp + v)); }
+      save();
+    });
+    cur.addEventListener("change", function () { st.hp = Number(cur.value); save(); });
+    tmp.addEventListener("change", function () { st.tmp = tmp.value; save(); });
+    save();
   }
   function box(l, v, cls) { return '<div class="ps-box ' + (cls || "") + '"><div class="ps-lbl">' + l + '</div><div class="ps-val">' + v + '</div></div>'; }
   function sect(t, body) { return '<section class="ps-sect"><h4>' + t + '</h4>' + body + '</section>'; }
@@ -278,6 +328,12 @@
       list(p, data, "utoky", "Útoky", [["nazev", "Název"], ["atribut", "Atribut", ["STR", "DEX", "FIN", "SPELL", "CON", "INT", "WIS", "CHA"]], ["kostka", "Kostka"], ["typ", "Typ zranění"], ["mastery", "Mastery"], ["dosah", "Dosah"], ["bonus", "Bonus (útok i zásah)", "number"], ["bonus_zraneni", "Bonus jen k zásahu", "number"], ["poznamka", "Pozn."]]);
       list(p, data, "zdroje", "Další zdroje", [["nazev", "Název"], ["pocet", "Počet"], ["obnova", "Obnova"]]);
     });
+    tab("Připravenost na boj", function (p) {
+      data.boj = data.boj || {};
+      field(p, data.boj, "dpr", "Průměrné zranění za kolo (DPR) – pro výpočet CR", "number"); field(p, data.boj, "cr_rucne", "CR ručně / avatar (volitelné)");
+      [["akce", "Akce"], ["bonusove_akce", "Bonusové akce"], ["reakce", "Reakce"], ["legendarni", "Legendární akce"]].forEach(function (x) { list(p, data.boj, x[0], x[1], [["nazev", "Název"], ["text", "Popis"]]); });
+      field(p, data.boj, "taktika", "Taktika", "area");
+    });
     tab("Kouzla", function (p) {
       p.appendChild(el("p", { class: "ed-pozn" }, "Úroveň se doplní ze seznamu kouzel 2024, když ji necháš prázdnou."));
       list(p, data, "kouzla", "Kouzla", [["nazev", "Kouzlo"], ["uroven", "Úroveň"], ["trida", "Třída"], ["poznamka", "Pozn."]]);
@@ -312,7 +368,7 @@
     var c = JSON.parse(dataEl.textContent), src = document.getElementById("zdroj-stranky"), cesta = src && src.dataset.cesta;
     rules().then(function () {
       var draw = function () {
-        holder.innerHTML = render(c, compute(c), cesta);
+        holder.innerHTML = render(c, compute(c), cesta); hpTracker(holder);
         var b = holder.querySelector("[data-ps-edit]"); if (b) b.addEventListener("click", function () { editor(c, cesta); });
       };
       draw();

@@ -69,6 +69,24 @@ postava:
   prevod_2024: Arch-Druid (Land / Life Domain) → jen Circle of the Land; Aura of Abundance = vlastní schopnost.
   poznamky: 'Božstvo: atributy nad 20 jsou božská výjimka (Epic Boon +1 až do 30, zbytek určuje DM). Pro střet použij avatar
     do CR 30 (MM 2025).'
+  boj:
+    dpr: 60
+    cr_rucne: avatar CR 28–30
+    akce:
+    - nazev: Sunburst
+      text: Sluneční výbuch 12d6 Radiant.
+    - nazev: Shapechange
+      text: Podoba libovolné bytosti.
+    bonusove_akce:
+    - nazev: Healing Word
+      text: Léčení.
+    reakce: []
+    legendarni:
+    - nazev: Kořeny (1)
+      text: Cíl je Restrained (STR save).
+    - nazev: Úroda (2)
+      text: Spojenci v 30 ft léčí 2d10.
+    taktika: Chrání Zairam; Orden se do jejího kraje bojí vstoupit.
 ---
 # Postava: Zaira – Patronka Života
 

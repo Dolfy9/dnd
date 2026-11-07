@@ -105,6 +105,20 @@ postava:
     pouta: Přístav a obchodní cechy Mirie.
     vady: Každého považuje za figurku na šachovnici.
   prevod_2024: Mastermind (XGtE) není v pravidlech 2024 → Arcane Trickster (PHB 2024; intriky přes kouzla Enchantment/Illusion).
+  boj:
+    dpr: 24
+    akce:
+    - nazev: Útok
+      text: Rapier + Sneak Attack 5d6; Cunning Strike (Poison, Trip, Withdraw).
+    - nazev: Suggestion / Charm Person
+      text: Raději přesvědčí než bojuje.
+    bonusove_akce:
+    - nazev: Cunning Action
+      text: Dash, Disengage, Hide.
+    reakce:
+    - nazev: Uncanny Dodge
+      text: Polovina zranění z útoku.
+    taktika: Nikdy nebojuje otevřeně – nájemní stráže, jed, Invisibility a útěk tajnou chodbou.
 ---
 # Postava: Konzul Timopeus
 

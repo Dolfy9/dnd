@@ -91,6 +91,20 @@ postava:
     vady: Zbabělost tváří v tvář Otci Samuelovi.
   prevod_2024: Purple Dragon Knight / Banneret (SCAG) → Banneret (Heroes of Faerûn, pravidla 2024). AC a HP dopočítány dle
     2024.
+  boj:
+    dpr: 15
+    akce:
+    - nazev: Útok (Extra Attack)
+      text: 2× Longsword nebo Lance.
+    - nazev: Action Surge
+      text: '1× za Short Rest: akce navíc.'
+    bonusove_akce:
+    - nazev: Second Wind
+      text: 1d10 + 5 HP.
+    reakce:
+    - nazev: Banneret – ochrana
+      text: 'Rysy Banneret: podpora spojenců (viz rysy).'
+    taktika: Bojuje jen když musí; drží se za gardou, velí a pokřikuje rozkazy. Při 1/2 HP se vzdá nebo uteče.
 ---
 # Postava: Král Forpa VII.
 

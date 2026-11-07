@@ -159,6 +159,24 @@ postava:
     vady: Pohrdá lidmi, kteří se sklonili před Ordenem.
   prevod_2024: Bladesinging (TCoE) → Bladesinger (Heroes of Faerûn, pravidla 2024). Vznešený elf → Elf s High Elf lineage.
     Bladesong přidává INT k AC (při aktivaci 17 + 3 = 20).
+  boj:
+    dpr: 33
+    akce:
+    - nazev: Útok (Extra Attack)
+      text: 2× Rapier, jeden útok lze nahradit cantripem (Bladesinger).
+    bonusove_akce:
+    - nazev: Bladesong
+      text: 'Aktivace: +INT k AC (20), výhoda na Acrobatics, +10 ft rychlost.'
+    - nazev: Misty Step
+      text: Teleport 30 ft.
+    - nazev: Hunter's Mark
+      text: +1d6 Force.
+    reakce:
+    - nazev: Shield
+      text: +5 AC do začátku dalšího tahu.
+    - nazev: Beguiling Twist
+      text: Když spojenec uspěje v záchraně proti Charmed/Frightened, přesměruje kouzlo.
+    taktika: Nejdřív Bladesong, pak boj zblízka s Misty Step. Proti přesile Summon Fey nebo Mislead a ústup do lesa.
 ---
 # Postava: Král Veanor I.
 

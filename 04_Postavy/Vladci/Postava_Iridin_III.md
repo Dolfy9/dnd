@@ -91,6 +91,18 @@ postava:
     vady: Podřizuje se Ordenu víc, než by měl – ze strachu o lid.
   prevod_2024: 'Beze změny podtřídy (Hunter je v PHB 2024). Archery u útoku lukem: +2 k hodu na útok (zadej do pole Bonus,
     pokud chceš vidět v tabulce).'
+  boj:
+    dpr: 22
+    akce:
+    - nazev: Útok (Extra Attack)
+      text: 2× Longbow (+2 Archery), Colossus Slayer +1d8 1× za kolo.
+    bonusove_akce:
+    - nazev: Hunter's Mark
+      text: Označí cíl (+1d6 Force).
+    reakce:
+    - nazev: Opportunity Attack
+      text: Shortsword.
+    taktika: Drží odstup, Spike Growth na úzká místa, zraněné spojence léčí Cure Wounds.
 ---
 # Postava: Král Iridin III.
 

@@ -133,6 +133,24 @@ postava:
     pouta: Octowerinský odboj a jeho spisy.
     vady: Ze msty riskuje životy svých lidí.
   prevod_2024: Half-Elf není v PHB 2024 → Human (elfí předci vyprávěcí). Blindsight 30 ft = zvláštní schopnost (DM).
+  boj:
+    dpr: 12
+    akce:
+    - nazev: Hypnotic Pattern / Silence
+      text: Kontrola davu.
+    - nazev: Vicious Mockery
+      text: 2d6 Psychic + nevýhoda.
+    bonusove_akce:
+    - nazev: Bardic Inspiration
+      text: d8 spojenci.
+    - nazev: Healing Word
+      text: Léčení.
+    reakce:
+    - nazev: Cutting Words
+      text: Odečte Bardic die od hodu nepřítele.
+    - nazev: Counterspell
+      text: Zruší kouzlo.
+    taktika: Vždy má únikovou cestu; Greater Invisibility a Dimension Door. Chrání spisy víc než sebe.
 ---
 # Postava: "Slepý" Corvin (Vůdce Odboje)
 

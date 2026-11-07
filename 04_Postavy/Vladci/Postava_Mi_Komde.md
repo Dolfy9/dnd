@@ -130,6 +130,20 @@ postava:
     vady: Podceňuje Orden, protože se sem zatím neodvážil.
   prevod_2024: 'Satyr (MotM) → Elf (Wood Elf, PHB 2024; satyrský původ vyprávěcí). Nature Domain → Life Domain. Wrath of Nature
     (XGtE) není v 2024 – nahrazeno Insect Plague / Commune. Divine Order: Thaumaturge.'
+  boj:
+    dpr: 25
+    akce:
+    - nazev: Spirit Guardians
+      text: 3d8 Radiant v okruhu 15 ft.
+    - nazev: Heal / Mass Cure Wounds
+      text: Záchrana spojenců.
+    bonusove_akce:
+    - nazev: Spiritual Weapon
+      text: 1d8 + 4 Force.
+    - nazev: Healing Word
+      text: Léčení na dálku.
+    reakce: []
+    taktika: Drží spojence naživu, Spirit Guardians a Insect Plague proti nepřátelům v lese. Bojuje jen na své půdě.
 ---
 # Postava: Kněžka Mi-Komde
 

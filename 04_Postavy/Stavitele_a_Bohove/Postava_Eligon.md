@@ -108,6 +108,24 @@ postava:
   prevod_2024: Odstraněna Protection Domain (klerická doména); Divine Smite je v 2024 kouzlo.
   poznamky: 'Božstvo: atributy nad 20 jsou božská výjimka (Epic Boon +1 až do 30, zbytek určuje DM). Pro střet použij avatar
     do CR 30 (MM 2025).'
+  boj:
+    dpr: 70
+    cr_rucne: avatar CR 28–30
+    akce:
+    - nazev: Útok
+      text: 2× Svatý meč + Radiant Strikes, Divine Smite.
+    bonusove_akce:
+    - nazev: Sacred Weapon
+      text: +CHA k útoku.
+    reakce:
+    - nazev: Smite of Protection
+      text: Krytí spojenců.
+    legendarni:
+    - nazev: Zlatý úder (1)
+      text: Útok mečem.
+    - nazev: Štěstí (2)
+      text: Proměnit neúspěch spojence v úspěch.
+    taktika: Vede z první linie, Aura of Devotion chrání spojence před ovládnutím.
 ---
 # Postava: Eligon
 

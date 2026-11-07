@@ -99,6 +99,22 @@ postava:
   prevod_2024: Arcana/Life → jen Life Domain (PHB 2024).
   poznamky: 'Božstvo: atributy nad 20 jsou božská výjimka (Epic Boon +1 až do 30, zbytek určuje DM). Pro střet použij avatar
     do CR 30 (MM 2025).'
+  boj:
+    dpr: 60
+    cr_rucne: avatar CR 25–30
+    akce:
+    - nazev: Mass Heal / Holy Aura
+      text: Božské léčení a ochrana.
+    bonusove_akce:
+    - nazev: Spiritual Weapon
+      text: Duchovní zbraň.
+    reakce:
+    - nazev: Boon of Fate
+      text: Ovlivní hod v dohledu.
+    legendarni:
+    - nazev: Požehnání (1)
+      text: Spojenec získá 2d10 dočasných HP.
+    taktika: Nebojuje – chrání a vyjednává.
 ---
 # Postava: Corthrin
 

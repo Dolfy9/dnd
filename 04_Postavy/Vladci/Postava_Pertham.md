@@ -134,6 +134,18 @@ postava:
     pouta: Archivy Werenoru a zákaz vstupu do Dräaru.
     vady: Mlčí o věcech, které by měl říct.
   prevod_2024: 'Knowledge Domain (PHB 2014) → Knowledge Domain (Heroes of Faerûn, pravidla 2024). Divine Order: Thaumaturge.'
+  boj:
+    dpr: 18
+    akce:
+    - nazev: Toll the Dead / Sacred Flame
+      text: Cantripy na dálku.
+    - nazev: Banishment
+      text: Vyřadí nejnebezpečnějšího nepřítele.
+    bonusove_akce:
+    - nazev: Healing Word
+      text: Léčení na dálku.
+    reakce: []
+    taktika: Vyjednává; bojuje jen v obraně archivů. Zone of Truth při výsleších, Divination před výpravou.
 ---
 # Postava: Primas Pertham
 

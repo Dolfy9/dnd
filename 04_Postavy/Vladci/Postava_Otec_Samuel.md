@@ -195,6 +195,25 @@ postava:
     vady: Nesnese, když se mu někdo vysměje.
   prevod_2024: 'Feeblemind → Befuddlement; Grand Inquisitor = titul; The Fiend → Fiend Patron; Order Domain (TCoE) → War Domain
     (PHB 2024). Hexblood je species z Ravenloft: The Horrors Within (pravidla 2024).'
+  boj:
+    dpr: 56
+    akce:
+    - nazev: Eldritch Blast
+      text: 4 paprsky po 1d10 + 5 Force, Repelling Blast odhodí o 10 ft.
+    - nazev: Befuddlement / Dominate Person
+      text: Kontrola klíčového nepřítele.
+    bonusove_akce:
+    - nazev: Hex
+      text: +1d6 Necrotic k zásahům.
+    - nazev: Spiritual Weapon
+      text: 1d8 + 4 Force.
+    reakce:
+    - nazev: Counterspell
+      text: Zruší kouzlo nepřítele.
+    - nazev: Hellish Rebuke (Fiend)
+      text: Odveta ohněm.
+    taktika: Nikdy nebojuje sám – před ním je stráž a inkvizitoři. Ruší kouzla, ovládá hrdiny proti sobě; při ohrožení Dimension
+      Door. Dark One's Own Luck na kritickou záchranu.
 ---
 # Postava: Otec Samuel (Hlava Ordenu)
 

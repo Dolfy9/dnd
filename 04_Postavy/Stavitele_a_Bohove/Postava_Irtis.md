@@ -78,6 +78,26 @@ postava:
     Water (božská moc).
   poznamky: 'Božstvo: atributy nad 20 jsou božská výjimka (Epic Boon +1 až do 30, zbytek určuje DM). Pro střet použij avatar
     do CR 30 (MM 2025).'
+  boj:
+    dpr: 90
+    cr_rucne: avatar CR 28–30
+    akce:
+    - nazev: Incendiary Cloud / Earthquake
+      text: Oheň a zemětřesení.
+    - nazev: Vládkyně moří
+      text: Tsunami nebo Control Water bez slotu.
+    bonusove_akce:
+    - nazev: Quickened Spell
+      text: Metamagic.
+    reakce:
+    - nazev: Plamenná odveta
+      text: Kdo ji zasáhne zblízka, utrpí 4d6 Fire.
+    legendarni:
+    - nazev: Plamen (1)
+      text: Fire Bolt.
+    - nazev: Vlna (2)
+      text: Linie 60 ft, 6d6 Bludgeoning, STR save.
+    taktika: Bojuje jen pod zemí Dräaru nebo na moři; nenávidí služebníky Ferienu.
 ---
 # Postava: Irtis "Ohnivá"
 

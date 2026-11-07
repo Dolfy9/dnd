@@ -112,6 +112,22 @@ postava:
     vady: Nedokáže nechat odejít podezřelého – ani když je nevinný.
   prevod_2024: Branding Smite → Shining Smite. Oath of Conquest (XGtE) není v PHB 2024 → Oath of Vengeance. Divine Smite je
     v 2024 kouzlo.
+  boj:
+    dpr: 30
+    akce:
+    - nazev: Útok (Extra Attack)
+      text: 2× Longsword (+2 Dueling), Divine Smite po zásahu.
+    - nazev: Hold Person
+      text: Zajme kacíře.
+    bonusove_akce:
+    - nazev: Vow of Enmity
+      text: Výhoda na útoky proti cíli (Channel Divinity).
+    - nazev: Shining Smite / Hunter's Mark
+      text: Smite kouzla.
+    reakce:
+    - nazev: Relentless Avenger
+      text: Po Opportunity Attack se pohne za cílem.
+    taktika: Útočí s oddílem stráží, nejdřív Vow of Enmity na vůdce družiny, pak Hold Person a zatčení. Chce zajatce, ne mrtvoly.
 ---
 # Postava: Inkvizitor Vaelen (NPC Antagonista)
 

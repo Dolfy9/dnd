@@ -158,6 +158,25 @@ postava:
     vady: Pýcha – věří, že ho nikdo nepřechytračí.
   prevod_2024: Yuan-ti (MotM) → Tiefling s Chthonic legacy (PHB 2024; hadí krev vyprávěcí). School of Transmutation není v
     PHB 2024 → Diviner. „Anathema Caster“ odstraněno.
+  boj:
+    dpr: 40
+    akce:
+    - nazev: Fireball / Cloudkill / Finger of Death
+      text: Plošné a smrtící kouzlo.
+    - nazev: Polymorph
+      text: Promění hrozbu v neškodné zvíře.
+    bonusove_akce:
+    - nazev: Misty Step
+      text: Teleport 30 ft.
+    reakce:
+    - nazev: Shield
+      text: +5 AC.
+    - nazev: Counterspell
+      text: Zruší kouzlo.
+    - nazev: Portent
+      text: Nahradí hod tvora předpověděným číslem (2×/den).
+    taktika: Contingency (Teleport při pádu pod polovinu HP), Globe of Invulnerability, nemrtví sluhové. V Mictimě má připravené
+      pasti.
 ---
 # Postava: Arcimág Breffan
 

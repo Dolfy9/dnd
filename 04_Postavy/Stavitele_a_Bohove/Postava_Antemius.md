@@ -120,6 +120,28 @@ postava:
   prevod_2024: Shadow Magic odstraněna; Ice Immunity → Cold Immunity; Maddening Darkness (XGtE) není v 2024 → Hunger of Hadar.
   poznamky: 'Božstvo: atributy nad 20 jsou božská výjimka (Epic Boon +1 až do 30, zbytek určuje DM). Pro střet použij avatar
     do CR 30 (MM 2025).'
+  boj:
+    dpr: 90
+    cr_rucne: avatar CR 30
+    akce:
+    - nazev: Eldritch Blast
+      text: 4 paprsky 1d10 + 10.
+    - nazev: Weird / Phantasmal Killer
+      text: Strach, který zabíjí.
+    bonusove_akce:
+    - nazev: Hex
+      text: Prokletí.
+    reakce:
+    - nazev: Hellish strach
+      text: 'Vlastní: kdo ho zraní, hází WIS save nebo Frightened.'
+    legendarni:
+    - nazev: Noční můra (1)
+      text: Cíl v dohledu hází WIS save, jinak 4d10 Psychic.
+    - nazev: Krok stínem (1)
+      text: Teleport 60 ft do tmy.
+    - nazev: Sen (2)
+      text: Seslání Phantasmal Killer bez slotu.
+    taktika: Bojuje přes sny a přízraky; fyzicky se zjevuje jen ve Fornheimu.
 ---
 # Postava: Antemius – Pán Snů a Strachu
 

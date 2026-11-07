@@ -125,6 +125,20 @@ postava:
     vady: Nevěří ničemu, co je postaveno z kamene.
   prevod_2024: 'Firbolg (MotM) → Goliath (PHB 2024; firbolží původ vyprávěcí). Circle of the Shepherd → Circle of the Land
     (Temperate). Primal Order: Warden (Medium armor + Martial weapons).'
+  boj:
+    dpr: 25
+    akce:
+    - nazev: Call Lightning / Moonbeam
+      text: Plošné zranění, opakuje se dalšími akcemi.
+    - nazev: Wild Shape
+      text: Bestie do CR dle tabulky.
+    bonusove_akce:
+    - nazev: Shillelagh
+      text: Greatclub d12 Force, útok WIS.
+    - nazev: Healing Word
+      text: Léčení na dálku.
+    reakce: []
+    taktika: Konjuruje zvířata a kontroluje terén (Wall of Thorns, Plant Growth). Do boje zblízka jde jen v podobě medvěda.
 ---
 # Postava: Král Istuvion
 

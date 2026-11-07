@@ -65,6 +65,28 @@ postava:
   prevod_2024: Avatar of Destruction / CR 30+ → Fighter 20 (Champion) jako orientační sheet; avatar CR 30.
   poznamky: 'Božstvo: atributy nad 20 jsou božská výjimka (Epic Boon +1 až do 30, zbytek určuje DM). Pro střet použij avatar
     do CR 30 (MM 2025).'
+  boj:
+    dpr: 100
+    cr_rucne: avatar CR 30
+    akce:
+    - nazev: Útok
+      text: 4× Greatsword hvězd.
+    - nazev: Ertinův pohled
+      text: Zničí stavbu nebo armádu (vyprávěcí, 1× za den).
+    bonusove_akce:
+    - nazev: Second Wind
+      text: 1d10 + 20 HP.
+    reakce:
+    - nazev: Indomitable
+      text: Přehodí záchranu.
+    legendarni:
+    - nazev: Krok (1)
+      text: Pohyb bez Opportunity Attack.
+    - nazev: Úder (2)
+      text: Útok mečem.
+    - nazev: Pohled (3)
+      text: 'Ertinův pohled na jednu bytost: CON save, jinak 10d10 Force.'
+    taktika: Zničen – objevuje se jen ve vizích Temného dne.
 ---
 # Postava: Ertin
 

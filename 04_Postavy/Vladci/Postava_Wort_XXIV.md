@@ -98,6 +98,22 @@ postava:
     pouta: Podzemní cechy a tajná víra v Irtis.
     vady: Hraje roli loutky tak dobře, že tomu sám začíná věřit.
   prevod_2024: Horský trpaslík → Dwarf (2024 bez poddruhů). Battle Master z PHB 2024.
+  boj:
+    dpr: 23
+    akce:
+    - nazev: Útok (Extra Attack)
+      text: 2× Warhammer, manévry (Trip, Precision, Menacing).
+    - nazev: Action Surge
+      text: Akce navíc.
+    bonusove_akce:
+    - nazev: Second Wind
+      text: 1d10 + 10 HP.
+    reakce:
+    - nazev: Riposte
+      text: Útok po minutí nepřítele (manévr).
+    - nazev: Sentinel
+      text: Zastaví pohyb nepřítele.
+    taktika: Stěna štítů s trpasličí gardou, Commander's Strike pro spojence. Chrání tajné svatyně Irtis za každou cenu.
 ---
 # Postava: Vévoda Wort XXIV.
 

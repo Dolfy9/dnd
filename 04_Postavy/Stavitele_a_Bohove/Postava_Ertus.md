@@ -69,6 +69,20 @@ postava:
     2024).
   poznamky: 'Božstvo: atributy nad 20 jsou božská výjimka (Epic Boon +1 až do 30, zbytek určuje DM). Pro střet použij avatar
     do CR 30 (MM 2025).'
+  boj:
+    dpr: 100
+    cr_rucne: avatar CR 30
+    akce:
+    - nazev: Meteor Swarm / Wish
+      text: Stvořitelská magie.
+    bonusove_akce: []
+    reakce:
+    - nazev: Counterspell
+      text: Zruší kouzlo.
+    legendarni:
+    - nazev: Stvoření (2)
+      text: Vytvoří stěnu nebo most z kamene (Wall of Stone).
+    taktika: Mrtvý – jen ve snech a ozvěnách.
 ---
 # Postava: Ertus Potřísněný
 

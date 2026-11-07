@@ -80,6 +80,22 @@ postava:
     pouta: Klany Mönohenu.
     vady: Neodpouští – ani když by měl.
   prevod_2024: Half-Giant → Goliath (PHB 2024) s Giant Ancestry (Stone). AC z Unarmored Defense (10 + DEX + CON) = 14.
+  boj:
+    dpr: 49
+    akce:
+    - nazev: Útok (Extra Attack)
+      text: 2× Greataxe, Brutal Strike místo výhody z Reckless Attack.
+    bonusove_akce:
+    - nazev: Rage
+      text: +3 zranění, odolnost vůči Bludgeoning/Piercing/Slashing.
+    - nazev: Frenzy
+      text: Útok navíc během zuřivosti.
+    reakce:
+    - nazev: Retaliation
+      text: Útok na toho, kdo ho zranil v dosahu 5 ft.
+    - nazev: Stone's Endurance
+      text: Sníží zranění o 1d12 + 3.
+    taktika: Large Form, Rage a rovnou do středu. Relentless Rage ho drží na nohou. Respektuje jen sílu.
 ---
 # Postava: Aettar Szkunzi
 

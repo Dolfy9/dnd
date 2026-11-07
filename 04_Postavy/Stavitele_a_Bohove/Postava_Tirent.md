@@ -69,6 +69,22 @@ postava:
   prevod_2024: Divination / Abjuration → jen Diviner (PHB 2024).
   poznamky: 'Božstvo: atributy nad 20 jsou božská výjimka (Epic Boon +1 až do 30, zbytek určuje DM). Pro střet použij avatar
     do CR 30 (MM 2025).'
+  boj:
+    dpr: 60
+    cr_rucne: avatar CR 28–30
+    akce:
+    - nazev: Time Stop / Foresight
+      text: Ovládá čas a předvídá.
+    bonusove_akce: []
+    reakce:
+    - nazev: Portent
+      text: Předpověděný hod.
+    legendarni:
+    - nazev: Lucerna (1)
+      text: Světlo 60 ft ruší neviditelnost a iluze.
+    - nazev: Vědění (2)
+      text: 'Zjistí slabinu cíle: další útok má výhodu.'
+    taktika: Vyhýbá se boji; zjevuje se jako bílý kůň nebo světlo v lese.
 ---
 # Postava: Tirent "Moudrý"
 

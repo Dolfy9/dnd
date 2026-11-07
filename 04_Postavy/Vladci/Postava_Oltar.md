@@ -101,6 +101,20 @@ postava:
     vady: Nesnáší úředníky a papír – Orden ho za to jednou dostane.
   prevod_2024: Totem Warrior → Path of the Wild Heart (PHB 2024), zvíře Bear zachováno. AC z Unarmored Defense (10 + DEX +
     CON).
+  boj:
+    dpr: 31
+    akce:
+    - nazev: Útok (Extra Attack)
+      text: 2× Greataxe (Reckless Attack pro výhodu).
+    bonusove_akce:
+    - nazev: Rage
+      text: '+2 zranění, odolnost (Bear: vůči všemu kromě Force/Necrotic/Psychic/Radiant).'
+    - nazev: Great Weapon Master
+      text: Útok navíc po kritickém zásahu nebo zabití.
+    reakce:
+    - nazev: Opportunity Attack
+      text: Greataxe.
+    taktika: Vrhá se na nejsilnějšího, Reckless Attack od prvního kola. Nikdy neustupuje před svými lidmi.
 ---
 # Postava: Náčelník Oltar
 
