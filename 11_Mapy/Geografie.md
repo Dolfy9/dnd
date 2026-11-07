@@ -25,7 +25,7 @@
 | **KHÄRGHE ZHIA** | jižně od jezera a průlivu | [Knížectví Khärghae Zia](../02_Zeme/Kralovstvi_Kharghae_Zia.md) |
 | **KNÄRGHE ZHIA** | východně od Khärghe, u kaňonu s vysokou věží (temná polovina – kánon) | [Država Knärghae Zia](../02_Zeme/Drzava_Knarghae_Zia.md) |
 | **MÖNOHEN** | východ, otočený nápis severně od ústí průlivu | [Klanové Země Mönohen](../02_Zeme/Klanove_Zeme_Monohen.md), v nich [Východní hvozd](../01_Svet/Mista/Vychodni_hvozd.md) (kánon) |
-| **Werenor** (DM) | ostrov se zříceninou uprostřed velkého vnitrozemského jezera | [Město Werenor](../03_Mesta/Mesto_Werenor.md) |
+| **Jezero Amir a Kop Aram** (DM) | velké jezero ve středu; zřícené město na ostrově uprostřed, dlouhý most | [Jezero Amir a Kop Aram](../01_Svet/Mista/Jezero_Amir_a_Kop_Aram.md) |
 | **Divoký Sever** (DM) | severozápadní hornatý poloostrov se smrky | [Divoký Sever](../01_Svet/Mista/Divoky_Sever.md) |
 | **Svobodné Jižní ostrovy** (DM) | ostrovy jižně od Laertmundu | [Svobodné Jižní ostrovy](../02_Zeme/Svobodne_Jizni_Ostrovy.md) |
 

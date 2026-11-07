@@ -1,13 +1,16 @@
 # Jezero Amir a Kop Aram
 
-> **Stav:** návrh
+> **Stav:** poloha a most = kánon (DM); ostatní návrh
 
-- **Typ:** vnitrozemské jezero ve středu kontinentu; na jeho dně leží největší město starého světa
-- **Na mapě:** poloha neznámá – zřícenina ve velkém vnitrozemském jezeře je podle DM [Werenor](../../03_Mesta/Mesto_Werenor.md). Je to jezero Amir? (otevřená otázka)
+- **Typ:** velké vnitrozemské jezero ve středu kontinentu; uprostřed zřícené město Kop Aram
+- **Na mapě:** zřícenina na ostrově uprostřed jezera = **Kop Aram**, k městu vede **super dlouhý most** (DM). Jezero sahá od Bririe až k průlivu na východ ([mapa](../../11_Mapy/Geografie.md)).
 - **Nebezpečí:** střední až vysoké (podvodní průzkum)
 
 ## Kánon
 Povídá se, že největší město světa **Kop Aram** bylo smeteno jediným Ertinovým pohledem a dnes leží na dně jezera Amir.
+
+## Most Kop Aramu (kánon)
+Kop Aram je město uprostřed jezera, spojené s břehem super dlouhým mostem, o kterém se zmiňují spisy.
 
 ## Popis (návrh)
 Z hladiny čnějí vrcholky nejvyšších věží Kop Aramu jako zlámané prsty. Rybáři z okolí věří, že za klidných nocí je slyšet zvony z hlubin. Kodex zakazuje potápění k ruinám bez povolení – Orden tvrdí, že „vody jsou prokleté“.

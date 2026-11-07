@@ -4,7 +4,7 @@
 
 - **Typ:** divoký region – ostrov písku a rozvalin u jihozápadního pobřeží
 - **Dříve:** **Draar**, hlavní město říše a sídlo císaře, v zeleném Draarském údolí
-- **Přístup:** zakázán Kodexem bez písemného povolení ordenského inkvizitora; hlídá ho [Werenor](../../03_Mesta/Mesto_Werenor.md)
+- **Přístup:** zakázán Kodexem bez písemného povolení ordenského inkvizitora; zákaz vstupu hlídá primas [Werenoru](../../03_Mesta/Mesto_Werenor.md)
 - **Nebezpečí:** extrémní (doporučeno úrovně 11+)
 
 ## Kánon

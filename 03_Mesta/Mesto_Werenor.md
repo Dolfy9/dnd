@@ -5,11 +5,11 @@
 ## Detailní Popis
 Svobodné město ležící u hranic staré zkázy pod správou primase Perthama.
 
-- **Poloha (DM):** na ostrově uprostřed velkého vnitrozemského jezera ve středu kontinentu (na mapě zřícenina v jezeře)
+- **Poloha (DM):** v [Bririi](../02_Zeme/Kralovstvi_Briria.md); přesné místo na mapě zatím neurčeno
 - **Velikost:** Svobodné město u hranic staré zkázy, ~18 000 obyvatel
 
 ## Čtvrti a významná místa
-- **Jezerní přístav** – jediná cesta na ostrov vede po vodě.
+- **Brána k Dräaru** – úřad primase vydává (a hlavně odmítá) povolení ke vstupu do Dräaru.
 - **Primasovy archivy** – sbírka svědectví o Temném dni, viz [Kronika Temného dne](../06_Knihy_a_Dokumenty/Kniha_06_Kronika_Temneho_dne.md).
 - **Staré ruiny** – zbytky předpádového Werenoru.
 
@@ -20,7 +20,7 @@ Svobodné město ležící u hranic staré zkázy pod správou primase Perthama.
 - Temný den se dodnes nazývá také „Zkáza Werenoru“.
 
 ## Pro DM (tajné)
-- Návrh: Pertham ví o cestě do Draarského podzemí, která nevede přes moře.
+- Kletba z Dräaru Werenoru nehrozí (DM). Návrh: Pertham ví proč – a mlčí o tom.
 
 ## Související
 - Země: [Svobodné Město Werenor](../02_Zeme/Svobodne_Mesto_Werenor.md)

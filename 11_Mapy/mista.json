@@ -248,13 +248,36 @@
    }
   },
   {
-   "nazev": "Werenor",
+   "nazev": "Kop Aram",
    "x": 1067,
    "y": 795,
-   "typ": "mesto",
+   "typ": "misto",
    "jistota": "kanon",
-   "odkaz": "03_Mesta/Mesto_Werenor.md",
-   "pozn": "Svobodné město na ostrově uprostřed velkého jezera (DM). Zkáza Werenoru = Temný den."
+   "odkaz": "01_Svet/Mista/Jezero_Amir_a_Kop_Aram.md",
+   "pozn": "Zřícené město uprostřed jezera Amir, se super dlouhým mostem (DM)."
+  },
+  {
+   "nazev": "Most Kop Aramu",
+   "x": 1170,
+   "y": 730,
+   "typ": "misto",
+   "jistota": "kanon",
+   "odkaz": "01_Svet/Mista/Jezero_Amir_a_Kop_Aram.md",
+   "pozn": "Super dlouhý most přes jezero (na mapě řada kamenů východně od zříceniny)."
+  },
+  {
+   "nazev": "Jezero Amir",
+   "x": 990,
+   "y": 865,
+   "typ": "more",
+   "jistota": "kanon",
+   "odkaz": "01_Svet/Mista/Jezero_Amir_a_Kop_Aram.md",
+   "pozn": "Velké vnitrozemské jezero, uprostřed Kop Aram.",
+   "popisek": {
+    "rot": 0,
+    "styl": "more",
+    "velikost": 17
+   }
   },
   {
    "nazev": "Východní hvozd",
