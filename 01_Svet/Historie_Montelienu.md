@@ -24,7 +24,7 @@ Stavitelé se ten den naposledy semkli a porazili nebezpečí pro své dílo, al
 ---
 
 ## 2.0 Éra Vlády Lidí (-600 let až -3 roky)
-Za posledních 600 let se vytratila většina vědění o prastaré magii, o tom, jak se vlastně stalo, že lidé ovládli většinu populace známého světa krom elfských zemí na západě a krvavých plání na jihovýchodě a samozřejmě mnoha dalším – dnes už velmi zdivočelým územím. Bylo vedeno mnoho válek a mnoho krve proteklo řekami Montelienu a dnešní země jsou sice spojené pod korunou krále Bririe, vládce lidí a místodržícího císaře Draarského a správce svobodných zemí, ale svobodné země na to mají úplně jiný názor a občanské války jsou na denním pořádku. Mnohé starší obyvatelé Montelienu si ještě pamatují, jak to vypadalo před pádem starých zvyků za vlády Stavitelů, a existuje silná víra, že se jednou vrátí a obnoví prosperitu a původní slávu říše.
+Za posledních 600 let se vytratila většina vědění o prastaré magii, o tom, jak se vlastně stalo, že lidé ovládli většinu populace známého světa krom elfských zemí na západě a krvavých plání na jihovýchodě a samozřejmě mnoha dalším – dnes už velmi zdivočelým územím. Bylo vedeno mnoho válek a mnoho krve proteklo řekami Montelienu a dnešní země jsou sice spojené pod korunou krále Bririe, vládce lidí a místodržícího císaře Draarského a správce svobodných zemí, ale svobodné země na to mají úplně jiný názor a občanské války jsou na denním pořádku. Mnozí starší obyvatelé Montelienu si ještě pamatují, jak to vypadalo před pádem starých zvyků za vlády Stavitelů, a existuje silná víra, že se jednou vrátí a obnoví prosperitu a původní slávu říše.
 
 ---
 
