@@ -69,3 +69,9 @@ body.ed-busy::after { content: "Ukládám a přestavuji web…"; position: fixed
 .EasyMDEContainer .CodeMirror, .EasyMDEContainer .CodeMirror * { font-family: ui-monospace, Consolas, monospace !important; font-size: 13px !important; line-height: 1.5 !important; }
 .EasyMDEContainer .cm-header-1, .EasyMDEContainer .cm-header-2 { font-weight: 700; color: #6b3a10; }
 .EasyMDEContainer .editor-preview { background: #fffaf0; color: #222; }
+.kz-modal { max-width: 720px; } .kz-meta { margin: 0 0 .4rem; } .kz-tab th { text-align: left; padding-right: .8rem; font-family: "Cinzel", serif; font-size: .65rem; } .kz-tab td, .kz-tab th { padding: 2px 4px; font-size: .75rem; }
+.kz-text { font-size: .78rem; line-height: 1.55; margin-top: .6rem; max-height: 50vh; overflow: auto; }
+.kz-filtr { display: flex; gap: .4rem; flex-wrap: wrap; align-items: center; margin-bottom: .6rem; }
+.kz-filtr input, .kz-filtr select { font: .75rem Georgia, serif; padding: .3rem .4rem; border: 1px solid #8a6a3f; border-radius: 3px; background: rgba(255,255,255,.06); color: inherit; }
+.kz-filtr #kz-q { flex: 1; min-width: 200px; }
+.md-typeset table.kz-list { font-size: .72rem; display: table; width: 100%; }

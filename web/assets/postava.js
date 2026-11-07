@@ -145,7 +145,7 @@
     var bj = c.boj || {}, key = "ps-hp:" + (cesta || c.jmeno);
     h += '<div class="ps-fight"><div class="ps-fight-h">Připravenost na boj</div>'
       + '<div class="ps-fight-row">' + box("CR (odhad)", '<span title="obrana CR ' + d.cr.def + ' · útok CR ' + d.cr.off + '">' + d.cr.cr + '</span>' + (bj.cr_rucne ? ' <small>/ ' + esc(bj.cr_rucne) + '</small>' : ''))
-      + box("XP", d.cr.xp) + box("DPR", esc(bj.dpr || "?")) + box("Iniciativa", '<a class="ps-roll" data-roll="1d20' + sg(d.init) + '" data-label="Iniciativa">' + sg(d.init) + ' 🎲</a>')
+      + box("XP", d.cr.xp) + box("DPR", esc(bj.dpr || "?")) + box("Iniciativa", '<a class="ps-roll" data-roll="1d20' + sg(d.init) + '" data-label="Iniciativa">' + sg(d.init) + '</a>')
       + '<div class="ps-box ps-hptrack" data-key="' + esc(key) + '" data-max="' + d.hp + '"><div class="ps-lbl">Aktuální HP / dočasné</div><div class="ps-val"><button data-hp="-5">−5</button><button data-hp="-1">−1</button><input class="ps-hpcur" type="number"><button data-hp="1">+1</button><button data-hp="5">+5</button> <input class="ps-hptmp" type="number" placeholder="tmp"> <button data-hp="reset" title="Plné HP">↺</button></div></div>'
       + '</div>' + fightList("Akce", bj.akce) + fightList("Bonusové akce", bj.bonusove_akce) + fightList("Reakce", bj.reakce) + fightList("Legendární akce", bj.legendarni) + (bj.taktika ? '<p class="ps-tactic"><b>Taktika:</b> ' + para(bj.taktika) + '</p>' : '') + '</div>';
     h += '<div class="ps-grid">';
@@ -194,7 +194,7 @@
       for (var l = 0; l <= 9; l++) {
         var slots = l ? (d.slots[l - 1] || 0) : 0, pact = d.pact && Number(d.pact.uroven) === l ? Number(d.pact.pocet) : 0;
         if (!byLvl[l] && !slots && !pact) continue;
-        s += '<div class="ps-sl"><div class="ps-sl-h">' + (l ? l + ". úroveň" : "Cantripy") + '<span>' + pips(slots) + (pact ? ' <em title="Pact Magic">pakt ' + pips(pact) + '</em>' : '') + '</span></div><ul>' + (byLvl[l] || []).map(function (k) { var r = R.spell(k.nazev); return '<li>' + esc(k.nazev) + (r ? ' <small>' + esc(r.skola) + '</small>' : ' <small class="ps-warn">mimo seznam 2024?</small>') + (k.poznamka ? ' <small>– ' + esc(k.poznamka) + '</small>' : '') + '</li>'; }).join("") + '</ul></div>';
+        s += '<div class="ps-sl"><div class="ps-sl-h">' + (l ? l + ". úroveň" : "Cantripy") + '<span>' + pips(slots) + (pact ? ' <em title="Pact Magic">pakt ' + pips(pact) + '</em>' : '') + '</span></div><ul>' + (byLvl[l] || []).map(function (k) { var r = R.spell(k.nazev); return '<li><a href="#" class="kz-link" data-kouzlo="' + esc(k.nazev) + '">' + esc(k.nazev) + '</a>' + (r ? ' <small>' + esc(r.skola) + '</small>' : ' <small class="ps-warn">mimo seznam 2024?</small>') + (k.poznamka ? ' <small>– ' + esc(k.poznamka) + '</small>' : '') + '</li>'; }).join("") + '</ul></div>';
       }
       if (byLvl["?"]) s += '<div class="ps-sl"><div class="ps-sl-h">Neznámá úroveň</div><ul>' + byLvl["?"].map(function (k) { return "<li>" + esc(k.nazev) + "</li>"; }).join("") + '</ul></div>';
       h += sect("Kouzla", s + '</div>');

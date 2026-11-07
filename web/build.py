@@ -101,8 +101,9 @@ def main():
         os.symlink(os.path.relpath(ROOT / f, DOCS), DOCS / f)
     os.symlink(os.path.relpath(WEB / "assets", DOCS), DOCS / "assets")
     (DOCS / "mapa.md").write_text(map_page(), encoding="utf-8")
+    (DOCS / "kouzla.md").write_text("---\nhide:\n  - toc\n---\n# Katalog kouzel (D&D 2024)\n\nVšechna kouzla z pravidel 2024+. Klikni na název pro celý popis.\n\n<div id=\"katalog-kouzel\"></div>\n", encoding="utf-8")
 
-    nav = ["README.md", {"Interaktivní mapa": "mapa.md"}] + sections + [
+    nav = ["README.md", {"Interaktivní mapa": "mapa.md"}, {"Katalog kouzel": "kouzla.md"}] + sections + [
         {"Otevřené otázky": "Otevrene_otazky.md"}, {"Pravidla projektu": "AGENTS.md"}]
     watch = "\n".join(f"  - ../{d}" for d in [s for s in os.listdir(ROOT)
                       if (ROOT / s).is_dir() and s not in SKIP and not s.startswith(".")])
@@ -157,8 +158,10 @@ extra_javascript:
   - assets/extra.js
   - assets/editor.js
   - assets/postava.js
+  - assets/kouzla.js
 not_in_nav: |
   /mapa.md
+  /kouzla.md
 validation:
   omitted_files: ignore
   absolute_links: ignore
