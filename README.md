@@ -1,4 +1,4 @@
-# Montelien – D&D 5e kampaň a univerzum
+# Montelien – D&D 5e (2024) kampaň a univerzum
 
 Svět, který stvořil uprchlý Ferienec **Ertus Potřísněný** a jeho děti – **Turandar (Stavitelé)**. Po **Temném dni** leží slavná říše v troskách, lidé vládnou rozdrobeným zemím a poslední dva roky nad nimi tiše vládne **Ordenský řád** Otce Samuela. V podzemí měst se ozývá **Odboj Svobodných**.
 
@@ -6,12 +6,14 @@ Svět, který stvořil uprchlý Ferienec **Ertus Potřísněný** a jeho děti �
 - Rozpory a otázky k rozhodnutí: [Otevrene_otazky.md](Otevrene_otazky.md)
 - Pravidla psaní a kánonu: [AGENTS.md](AGENTS.md)
 - Šablony: [_Sablony/](_Sablony/)
+- Mapa: [11_Mapy/](11_Mapy/Geografie.md)
+- Pravidla: **D&D 5e 2024** (PHB 2024, DMG 2024, MM 2025)
 
 ## Struktura
 
 | Složka | Obsah |
 |---|---|
-| `01_Svet/` | Historie, kosmologie, panteon, divoké regiony |
+| `01_Svet/` | Historie, kosmologie, panteon; `Mista/` = divoké regiony a mýtická místa |
 | `02_Zeme/` | Státy a regiony |
 | `03_Mesta/` | Města a pevnosti |
 | `04_Postavy/` | Stavitelé a bohové, vládci, NPC kampaně |
@@ -31,7 +33,19 @@ Repo je kompatibilní i s [Obsidianem](https://obsidian.md) (stačí otevřít s
 <!-- INDEX -->
 
 ### [01_Svet](01_Svet/)
+- **Mista**
+  - [Divoký Sever](01_Svet/Mista/Divoky_Sever.md)
+  - [Fornheim – Zamrzlá tvrz](01_Svet/Mista/Fornheim.md)
+  - [Hinai Mihi – Prales neviditelných](01_Svet/Mista/Hinai_Mihi.md)
+  - [Jezero Amir a Kop Aram](01_Svet/Mista/Jezero_Amir_a_Kop_Aram.md)
+  - [Moře a ostrovy Montelienu](01_Svet/Mista/More_a_ostrovy.md)
+  - [Trosky Dräaru](01_Svet/Mista/Trosky_Draaru.md)
+  - [Urkal a Urkalský palác](01_Svet/Mista/Urkal.md)
+  - [Východní hvozd – Tirentova říše](01_Svet/Mista/Vychodni_hvozd.md)
+  - [Západní hvozd a Ertinova hora](01_Svet/Mista/Zapadni_hvozd_a_Ertinova_hora.md)
 - [Kompletní Historie a Základ Světa Montelienu](01_Svet/Historie_Montelienu.md)
+- [Kosmologie – Ferien a svět Montelien](01_Svet/Kosmologie_Ferien.md)
+- [Panteon – Turandar (Stavitelé)](01_Svet/Panteon.md)
 
 ### [02_Zeme](02_Zeme/)
 - [Nezávislá Država Knärghae Zia](02_Zeme/Drzava_Knarghae_Zia.md)
@@ -102,6 +116,22 @@ Repo je kompatibilní i s [Obsidianem](https://obsidian.md) (stačí otevřít s
 - [Odpárané oči Urkalu](06_Knihy_a_Dokumenty/Kniha_01_Odparane_Oci_Urkalu.md)
 - [Kodex Řádu a Pořádku (Kniha I.)](06_Knihy_a_Dokumenty/Kniha_02_Kodex_Radu_a_Poradku.md)
 - [Průvodce Divokými Kraji](06_Knihy_a_Dokumenty/Kniha_03_Zapisnik_Stareho_Cestovatele.md)
+- [Píseň o Prvním ostrově](06_Knihy_a_Dokumenty/Kniha_04_Pisen_o_Prvnim_ostrove.md)
+- [O pěti dětech Ertusových](06_Knihy_a_Dokumenty/Kniha_05_O_peti_detech.md)
+- [Kronika Temného dne (Zkáza Werenoru)](06_Knihy_a_Dokumenty/Kniha_06_Kronika_Temneho_dne.md)
+- [Šest set let koruny](06_Knihy_a_Dokumenty/Kniha_07_Sest_set_let_koruny.md)
+- [Rejstřík správy Ordenu (Tajné)](06_Knihy_a_Dokumenty/Kniha_08_Rejstrik_spravy_Ordenu.md)
+- [Dvě sestry Zhie](06_Knihy_a_Dokumenty/Kniha_09_Dve_sestry_Zhie.md)
+- [Deník z Dräaru](06_Knihy_a_Dokumenty/Kniha_10_Denik_z_Draaru.md)
+- [Sny ze severu](06_Knihy_a_Dokumenty/Kniha_11_Sny_ze_severu.md)
+- [Poslední listy z Hinai Mihi](06_Knihy_a_Dokumenty/Kniha_12_Posledni_listy_z_Hinai_Mihi.md)
+- [O Ferienu a jeho knězích](06_Knihy_a_Dokumenty/Kniha_13_O_Ferienu_a_jeho_knezich.md)
+- [Elfské letopisy Nöelienu](06_Knihy_a_Dokumenty/Kniha_14_Elfske_letopisy.md)
+- [Zaiřin herbář](06_Knihy_a_Dokumenty/Kniha_15_Zairin_herbar.md)
+- [Kodex Řádu a Pořádku (Kniha II.) – Dodatek o správě zemí](06_Knihy_a_Dokumenty/Kniha_16_Kodex_Radu_a_Poradku_II.md)
+- [Lodní deník z Menkantu](06_Knihy_a_Dokumenty/Kniha_17_Lodni_denik_z_Menkantu.md)
+- [Regule šedých kutn](06_Knihy_a_Dokumenty/Kniha_18_Regule_sedych_kuten.md)
+- [Zeměpis známých zemí](06_Knihy_a_Dokumenty/Kniha_19_Zemepis_znamych_zemi.md)
 
 ### [07_Kampane](07_Kampane/)
 _(zatím prázdné)_
@@ -116,5 +146,5 @@ _(zatím prázdné)_
 _(zatím prázdné)_
 
 ### [11_Mapy](11_Mapy/)
-_(zatím prázdné)_
+- [Geografie Montelienu (podle mapy DM)](11_Mapy/Geografie.md)
 <!-- /INDEX -->

@@ -1,7 +1,25 @@
 # Město Menkant
 
+> **Stav:** původní věta = kánon, ostatní návrh
+
 ## Detailní Popis
 Hlavní přístavní město Svobodných jižních ostrovů pod vládou královny Yuthiky.
+
+- **Velikost:** Hlavní přístav Svobodných jižních ostrovů, ~25 000 obyvatel
+
+## Čtvrti a významná místa
+- **Královský přístav** – sídlo královny Yuthiky.
+- **Pagodový ostrov** (na mapě) – chrám a pevnost.
+- **Pašerácké zátoky**.
+
+## Služby
+- Krčma *Zlatá kotva*.
+
+## Pověsti a háčky
+- V přístavech působí tajní ordenští agenti.
+
+## Pro DM (tajné)
+- Viz [Lodní deník z Menkantu](../06_Knihy_a_Dokumenty/Kniha_17_Lodni_denik_z_Menkantu.md).
 
 ## Související
 - Země: [Svobodné Jižní Ostrovy](../02_Zeme/Svobodne_Jizni_Ostrovy.md)

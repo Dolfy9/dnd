@@ -1,7 +1,25 @@
 # Město Owappa
 
+> **Stav:** původní věta = kánon, ostatní návrh
+
 ## Detailní Popis
 Zemědělské a obchodní centrum Laertmundu pod dohledem krále Iridina III.
+
+- **Velikost:** Zemědělské a obchodní centrum Laertmundu, ~20 000 obyvatel
+
+## Čtvrti a významná místa
+- **Trh obilí** – největší v zemi.
+- **Hraničářská síň** – sídlo stoických hraničářů krále Iridina III.
+- **Dvůr krále Iridina** – skromný, bez pompy.
+
+## Služby
+- Hostinec *Zlatý snop*.
+
+## Pověsti a háčky
+- Král prý v noci sám jezdí po vesnicích a varuje lidi před čistkami.
+
+## Pro DM (tajné)
+- Návrh: Iridin III. tajně posílá jídlo odboji.
 
 ## Související
 - Země: [Království Laertmund](../02_Zeme/Kralovstvi_Laertmund.md)

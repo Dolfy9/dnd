@@ -1,7 +1,25 @@
 # Město Tel Palentin
 
+> **Stav:** původní věta = kánon, ostatní návrh
+
 ## Detailní Popis
 Vznešené elfské město v Nöelienu, sídlo krále Veanora I.
+
+- **Velikost:** Vznešené elfské město v Nöelienu, ~30 000 obyvatel
+
+## Čtvrti a významná místa
+- **Královský háj** – palác krále Veanora I. ve stromech.
+- **Hranice hvozdu** – chráněné prastarou magií z doby Tirenta.
+- **Knihovna listů** – elfské letopisy, viz [Elfské letopisy](../06_Knihy_a_Dokumenty/Kniha_14_Elfske_letopisy.md).
+
+## Služby
+- Ordenští vyslanci jsou vráceni na hranici.
+
+## Pověsti a háčky
+- Elfové prý pamatují Temný den na vlastní oči.
+
+## Pro DM (tajné)
+- Návrh: nejstarší elfové opravdu Temný den zažili a znají pravdu o Tirentově zmizení.
 
 ## Související
 - Země: [Elfský Stát Nöelien](../02_Zeme/Elfsky_Stat_Noelien.md)

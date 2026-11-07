@@ -11,3 +11,11 @@ Ano – protože každý, kdo položí nesprávnou otázku o Stavitelích nebo o
 
 Hledejte symbol přeškrtnutého oka v Octowerinském podzemí. Ještě jsme neskončili.
 — *Odboj Svobodných*
+
+---
+## Pro DM
+- **Autor:** Odboj Svobodných (pamflet).
+- **Datace:** krátce po Urkalském sněmu (cca před 2 lety), stále se tiskne.
+- **Kde najít:** [Octowerinské podzemí](../03_Mesta/Mesto_Octowerin.md), u [Corvina](../04_Postavy/NPC/Postava_Corvin.md); držení = zatčení.
+- **Spolehlivost:** pravdivá, ale emotivní propaganda (neví, kdo přesně ve sněmu zemřel).
+- **Odhaluje:** Urkalský sněm, nový král Forpa VII., symbol přeškrtnutého oka, mizení tazatelů.

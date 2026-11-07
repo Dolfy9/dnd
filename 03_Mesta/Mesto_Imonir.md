@@ -1,7 +1,25 @@
 # Město Imonir
 
+> **Stav:** původní věta = kánon, ostatní návrh
+
 ## Detailní Popis
 Lesní město v království Imonir, sídlo krále Istuviona.
+
+- **Velikost:** Lesní město firbolgů a přírodních bytostí, ~6 000 obyvatel
+
+## Čtvrti a významná místa
+- **Královský strom** – sídlo krále Istuviona.
+- **Kruhy druidů**.
+- **Pastviny divokých tvorů**.
+
+## Služby
+- Výměnný obchod, žádné peníze.
+
+## Pověsti a háčky
+- Kdo v Imoniru zabije zvíře bez prosby, zmizí.
+
+## Pro DM (tajné)
+- Návrh: Imonir je jediné místo, kam Orden nemá přístup, protože o něm neví.
 
 ## Související
 - Země: [Království Imonir](../02_Zeme/Kralovstvi_Imonir.md)

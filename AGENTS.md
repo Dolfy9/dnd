@@ -7,6 +7,14 @@ Tento repozitář je **lore wiki a příprava D&D 5e kampaní** ve světě Monte
 - Názvy souborů: bez diakritiky, slova oddělená `_`, prefix podle typu (`Postava_`, `Mesto_`, `Quest_`, `Hadanka_`, `Sezeni_` ...).
 - Tón: temné fantasy, politické intriky, ztracené vědění, náboženský útlak (Orden) vs. stará víra ve Stavitele.
 
+## Pravidla hry: D&D 5e – verze 2024
+- Základ: **Player's Handbook 2024, Dungeon Master's Guide 2024, Monster Manual 2025**. Terminologie 2024: *Species* (ne Race), *Background* dává ability score increases + Origin feat, subclass všude od 3. úrovně, Exhaustion −2 za úroveň, Weapon Mastery.
+- Kouzla a schopnosti uváděj pod názvy z 2024 (např. Befuddlement místo Feeblemind, Shining Smite místo Branding Smite, Divine Smite je kouzlo).
+- Subclassy a species ze starších knih (XGtE, TCoE, MotM, SCAG…) jen tehdy, když 2024 nemá ekvivalent. Označ je „legacy, kompatibilní“ a uveď alternativu z 2024.
+- U každé postavy veď řádek **Převod na 2024**, kde je vidět, co se změnilo.
+- Bohové a mýtické bytosti: avatar max. CR 30 (MM 2025).
+- Pravidla ověřuj např. na http://dnd2024.wikidot.com nebo D&D Beyond (Free Rules 2024).
+
 ## Kánon – pravidla
 1. **Kánon určuje uživatel (DM).** Nic, co je napsané, nepřepisuj ani "neopravuj" bez souhlasu – kromě zjevných překlepů.
 2. Rozpory a nejasnosti nezapisuj potichu – přidej je do `Otevrene_otazky.md` a zeptej se.
