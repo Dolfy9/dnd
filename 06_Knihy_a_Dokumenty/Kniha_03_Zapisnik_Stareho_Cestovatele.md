@@ -1,0 +1,10 @@
+# Průvodce Divokými Kraji
+
+*Zápisník starého cestovatele:*
+
+Pokud toto čteš, pravděpodobně jsi dost hloupý na to, abys opustil dlážděné cesty Bririe. Zapomeň na to, co ti vyprávěli v Octowerinu. Svět tam venku se řídí úplně jinými pravidly.
+
+- **Nöet a Arcimág Breffan:** V Mictimě vládne Yuan-ti. Orden tam sice má svoje mnichy, ale všichni vědí, že Breffan si ve svých věžích dělá, co chce. Pakt s hadím lidem drží pochybný mír, ale magické experimenty tam smrdí na míle daleko.
+- **Hinai Mihi (Prales uprostřed říše):** Vidíš ten zelený flek na mapě přímo mezi Bririí a Zairamem? Vyhni se mu obloukem. Ti kanibalové tam nejsou jen divoši. Jsou neviditelní. Vstoupíš mezi stromy, neslyšíš žádné ptáky, a než stihneš tasit meč, tvůj společník vedle tebe už nemá hlavu.
+- **Zairam:** Jediné místo, kde se ještě dýchá volně. Satyrka Mi-Komde drží tradice matky Zairy. Rostou tam věci, které jinde zahynuly před staletími. Ale pozor – brirští výběrčí daní z Ordenu už brousí zuby i na Pertam.
+- **Dräar:** Zátoka šílenství. Pokud uvidíš na obzoru černé útesy Dräaru, otoč loď. Démoni tam nekřičí – šeptají ti přímo do hlavy tónem tvé vlastní matky.

@@ -1,0 +1,9 @@
+# Klanové Země Mönohen
+
+## Základní Přehled
+- **Hlavní město:** Yotter
+- **Hlava státu:** Aettar Szkunzi (Polobr)
+- **Podřízenost:** Briria (pod dohledem Ordenu)
+
+## Popis
+Drsná krajina obývaná kmeny polobrů a urostlých válečníků. Aettar Szkunzi udržuje křehké příměří s Bririí, ale ordenské výběrčí daní vítá s otevřenou sekyrou.
