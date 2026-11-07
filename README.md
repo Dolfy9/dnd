@@ -42,6 +42,7 @@ Repo je kompatibilní i s [Obsidianem](https://obsidian.md) (stačí otevřít s
   - [Hinai Mihi – Prales neviditelných](01_Svet/Mista/Hinai_Mihi.md)
   - [Jezero Amir a Kop Aram](01_Svet/Mista/Jezero_Amir_a_Kop_Aram.md)
   - [Moře a ostrovy Montelienu](01_Svet/Mista/More_a_ostrovy.md)
+  - [Tali](01_Svet/Mista/Tali.md)
   - [Trosky Dräaru](01_Svet/Mista/Trosky_Draaru.md)
   - [Urkal a Urkalský palác](01_Svet/Mista/Urkal.md)
   - [Východní hvozd – Tirentova říše](01_Svet/Mista/Vychodni_hvozd.md)

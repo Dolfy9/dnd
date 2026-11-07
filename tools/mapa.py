@@ -52,7 +52,13 @@ def main(debug=False):
         if m.get("popisek"):
             parts = m["nazev"].split(" ")
             fnt = region if m["typ"] == "zeme" else place
-            if len(parts) == 2 and m.get("rot", 0) == 0:
+            if m["typ"] == "more":
+                sea = font("IMFePIit28P.ttf", 19)
+                half = (len(parts) + 1) // 2
+                lines = [" ".join(parts[:half]), " ".join(parts[half:])]
+                for i, ln in enumerate(lines):
+                    paste_center(img, text_layer(ln, sea, 0.25), x, y + (i - 0.5) * sea.size * 1.15, m.get("rot", 0))
+            elif len(parts) == 2 and m.get("rot", 0) == 0 and m["typ"] == "zeme":
                 paste_center(img, text_layer(parts[0], fnt), x, y - fnt.size * 0.55, 0)
                 paste_center(img, text_layer(parts[1], font("Cinzel.ttf", 18), 0.3), x, y + fnt.size * 0.6, 0)
             else:

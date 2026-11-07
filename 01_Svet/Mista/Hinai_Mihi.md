@@ -2,7 +2,7 @@
 
 > **Stav:** návrh
 
-- **Typ:** malý prales uprostřed civilizovaných zemí, mezi Bririí a Zairamem (na mapě pravděpodobně tmavý prales kolem zátoky na jihu středu)
+- **Typ:** malý prales uprostřed civilizovaných zemí, mezi Bririí a Zairamem (na mapě pravděpodobně temný prales na západním břehu Ordenské zátoky)
 - **Obyvatelé:** po staletí neviditelní kanibalové
 - **Průvodce:** [Kazi Nocostřel](../../04_Postavy/NPC/Postava_Kazi.md)
 - **Nebezpečí:** vysoké (úrovně 5+)

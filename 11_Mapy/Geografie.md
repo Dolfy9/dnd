@@ -21,25 +21,29 @@
 | **KHÄRGHE ZHIA** | jihovýchod středu, jižně od velkého průlivu | [Knížectví Khärghae Zia](../02_Zeme/Kralovstvi_Kharghae_Zia.md) |
 | **KNÄRGHE ZHIA** | východně od Khärghe, podél obří propasti s vysokou věží | [Država Knärghae Zia](../02_Zeme/Drzava_Knarghae_Zia.md) |
 | **MÖNOHEN** (částečně čitelné) | východ, jižně od Khearazu | [Klanové Země Mönohen](../02_Zeme/Klanove_Zeme_Monohen.md), v nich [Východní hvozd](../01_Svet/Mista/Vychodni_hvozd.md) (kánon) |
-| další popisek na jihu (Z… A… M) | jih mezi Ordenem a Knärghe | pravděpodobně [Zairam](../02_Zeme/Zeme_Zairam.md) – potvrď |
+| **LAERTMUND** | jih, jihovýchodně od Ordenu | [Království Laertmund](../02_Zeme/Kralovstvi_Laertmund.md) |
+| **TALI** | jihovýchod, poušť mezi Laertmundem a roklí | [Tali](../01_Svet/Mista/Tali.md) |
+| **ZAIRAM** | jihovýchod, úzký pobřežní pás za roklí | [Země Zairam](../02_Zeme/Zeme_Zairam.md) |
 
 > Pozn.: na mapě je psáno **Khärghe / Knärghe Zhia**, v textech **Khärghae / Knärghae Zia** – obě podoby jsou správné (kánon). Temné síly ovládají **Knärghe Zhia**.
 
 ## Odhad (nepopsané kresby) – potvrď
 | Kresba | Poloha | Můj výklad |
 |---|---|---|
-| Hornatý poloostrov se smrky | daleký severozápad | [Divoký Sever](../01_Svet/Mista/Divoky_Sever.md) |
-| Ledové krystalické věže | sever (nad Nöelienem/Khearazem) | [Fornheim](../01_Svet/Mista/Fornheim.md) – tvrz Antemia |
+| Hornatý poloostrov se smrky | daleký severozápad | bez jména (Divoký Sever je podle DM na **severovýchodě**) |
+| Ledové krystalické věže a tvář ve skále | severovýchodní poloostrov nad Khearazem | [Divoký Sever](../01_Svet/Mista/Divoky_Sever.md) (kánon), v něm [Fornheim](../01_Svet/Mista/Fornheim.md)? |
 | Obrovská zřícenina trčící z vnitrozemského jezera | střed, mezi Bririí a Nöelienem | [Jezero Amir a Kop Aram](../01_Svet/Mista/Jezero_Amir_a_Kop_Aram.md) |
 | Rozsáhlé lesy s řekami a jezery | západní část pevniny | [Západní hvozd a Ertinova hora](../01_Svet/Mista/Zapadni_hvozd_a_Ertinova_hora.md) |
 | Hrad na západním pobřeží | západ | [Tel Palentin](../03_Mesta/Mesto_Tel_Palentin.md)? (elfové jsou podle textu „na západě“) |
 | Husté lesy se stromovými domy | sever středu, u Nöelienu | lesy [Nöelienu](../02_Zeme/Elfsky_Stat_Noelien.md) (Tirentova magie); [Imonir](../02_Zeme/Kralovstvi_Imonir.md)? |
-| Tmavý šrafovaný prales kolem zátoky s lodí | jih středu, mezi Bririí a Ordenem | [Hinai Mihi](../01_Svet/Mista/Hinai_Mihi.md) |
+| Velká zátoka s lodí (kánon: **Ordenská zátoka**) | jih středu, mezi pralesem a Ordenem | na západním břehu temný prales – [Hinai Mihi](../01_Svet/Mista/Hinai_Mihi.md)? |
 | Dlouhý průliv z jezera na východ do moře | střed → východ | hlavní obchodní tepna; hranice Bririe a Zhie |
 | Obří propast (sever–jih) s vysokou věží | Knärghe Zhia | hranice mrtvé Knärghe Zhie (ovládají ji mrtví a démoni – kánon); propast jako jejich zdroj = návrh |
 | Poušť s kaktusy a chrámy | jihovýchod | Irtisina poušť / jižní pole Eligona? |
 | Přístav s domy u ústí průlivu | východní pobřeží | [Miria](../03_Mesta/Mesto_Miria.md)? |
-| Ostrov s pagodou, souostroví s loděmi | jihovýchod | [Svobodné Jižní ostrovy](../02_Zeme/Svobodne_Jizni_Ostrovy.md), [Menkant](../03_Mesta/Mesto_Menkant.md) |
+| Ostrovy u jižního pobřeží | jih | [Svobodné Jižní ostrovy](../02_Zeme/Svobodne_Jizni_Ostrovy.md) (kánon: jih, ne východ), [Menkant](../03_Mesta/Mesto_Menkant.md)? |
+| Torii / svatyně na skále u pobřeží Zairamu | jihovýchod | svatyně Zairy? |
+| Velký ostrov s loděmi | jihovýchodní roh | bez jména |
 | Pobřeží proti Dräaru | jihozápad u Nöetu | [Werenor](../03_Mesta/Mesto_Werenor.md) („strážce Dräaru“) |
 | Velká nepopsaná pevnina | daleký jihozápad (okraj mapy) | neprozkoumaná země? |
 | Vír v moři | východní oceán | [Moře a ostrovy](../01_Svet/Mista/More_a_ostrovy.md) – Velký vír |
