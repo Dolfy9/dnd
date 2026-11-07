@@ -3,7 +3,7 @@
 > **Stav:** návrh
 
 - **Typ:** vnitrozemské jezero ve středu kontinentu; na jeho dně leží největší město starého světa
-- **Na mapě:** pravděpodobně obrovská zřícenina trčící z jezera mezi Bririí a Nöelienem
+- **Na mapě:** poloha neznámá – zřícenina ve velkém vnitrozemském jezeře je podle DM [Werenor](../../03_Mesta/Mesto_Werenor.md). Je to jezero Amir? (otevřená otázka)
 - **Nebezpečí:** střední až vysoké (podvodní průzkum)
 
 ## Kánon

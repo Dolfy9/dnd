@@ -25,8 +25,9 @@
 | **KHÄRGHE ZHIA** | jižně od jezera a průlivu | [Knížectví Khärghae Zia](../02_Zeme/Kralovstvi_Kharghae_Zia.md) |
 | **KNÄRGHE ZHIA** | východně od Khärghe, u kaňonu s vysokou věží (temná polovina – kánon) | [Država Knärghae Zia](../02_Zeme/Drzava_Knarghae_Zia.md) |
 | **MÖNOHEN** | východ, otočený nápis severně od ústí průlivu | [Klanové Země Mönohen](../02_Zeme/Klanove_Zeme_Monohen.md), v nich [Východní hvozd](../01_Svet/Mista/Vychodni_hvozd.md) (kánon) |
+| **Werenor** (DM) | ostrov se zříceninou uprostřed velkého vnitrozemského jezera | [Město Werenor](../03_Mesta/Mesto_Werenor.md) |
 | **Divoký Sever** (DM) | severozápadní hornatý poloostrov se smrky | [Divoký Sever](../01_Svet/Mista/Divoky_Sever.md) |
-| **Svobodné Jižní ostrovy** (DM) | velký ostrov s loděmi na jihovýchodě | [Svobodné Jižní ostrovy](../02_Zeme/Svobodne_Jizni_Ostrovy.md) |
+| **Svobodné Jižní ostrovy** (DM) | ostrovy jižně od Laertmundu | [Svobodné Jižní ostrovy](../02_Zeme/Svobodne_Jizni_Ostrovy.md) |
 
 > Pozn.: na mapě je psáno **Khärghe / Knärghe Zhia**, v textech **Khärghae / Knärghae Zia** – obě podoby jsou správné (kánon).
 
@@ -34,19 +35,18 @@
 | Kresba | Poloha | Můj výklad |
 |---|---|---|
 | Město s budovami a kotvou | sever, u Nöelienu | [Tel Palentin](../03_Mesta/Mesto_Tel_Palentin.md)? |
-| Hrad na západním pobřeží | západ, severně od Dräaru | [Werenor](../03_Mesta/Mesto_Werenor.md)? („strážce Dräaru“) |
+| Hrad na západním pobřeží | západ, severně od Dräaru | bez jména |
 | Velké sídlo v severním Nöetu | jihozápad | [Mictima](../03_Mesta/Mesto_Mictima.md)? |
 | Přístav s domy u ústí průlivu | východní pobřeží | [Miria](../03_Mesta/Mesto_Miria.md)? |
 | Velké sídlo s domy | severní pobřeží Mönohenu | [Yotter](../03_Mesta/Mesto_Yotter.md)? |
 | Hlavní sídlo Zairamu | jihovýchod | [Pertam](../03_Mesta/Mesto_Pertam.md)? |
-| Sídlo na Jižních ostrovech | jihovýchod | [Menkant](../03_Mesta/Mesto_Menkant.md)? |
-| Zřícenina na ostrově v jezeře | střed | [Jezero Amir a Kop Aram](../01_Svet/Mista/Jezero_Amir_a_Kop_Aram.md) |
+| Sídlo na největším z Jižních ostrovů | jih, pod Laertmundem | [Menkant](../03_Mesta/Mesto_Menkant.md)? |
 | Poloostrov s ledovými věžemi a tváří ve skále, maják | severovýchod nad Khearazem | [Fornheim](../01_Svet/Mista/Fornheim.md)? |
 | Temný prales na západním břehu Ordenské zátoky | jih středu | [Hinai Mihi](../01_Svet/Mista/Hinai_Mihi.md)? |
 | Rozsáhlé lesy a řeky západu | západ | [Západní hvozd a Ertinova hora](../01_Svet/Mista/Zapadni_hvozd_a_Ertinova_hora.md) |
 | Kaňon s vysokou věží | východ, Knärghe Zhia | hranice mrtvé Zhie; [Dar Kemmar](../03_Mesta/Mesto_Dar_Kemmar.md)? |
 | Vír, mořský had, okřídlený démon, vrak | moře | [Moře a ostrovy](../01_Svet/Mista/More_a_ostrovy.md) |
-| Velký ostrov jižně od Dräaru, ostrov u západního pobřeží, ostrov s útesy u víru („Dö…“) | moře | bez jména |
+| Velký ostrov s loděmi na jihovýchodě, velký ostrov jižně od Dräaru, ostrov u západního pobřeží, ostrov s útesy u víru („Dö…“) | moře | bez jména |
 
 ## Použitelnost mapy
 - Barevná [mapa](Montelien_mapa.jpg) je postavená přímo z fotky (vyrovnání, odstranění stínů, obarvení) – tvary jsou 1:1 podle kresby. Ruční nápisy zemí jsou nahrazené sázeným písmem.

@@ -5,10 +5,11 @@
 ## Detailní Popis
 Svobodné město ležící u hranic staré zkázy pod správou primase Perthama.
 
+- **Poloha (DM):** na ostrově uprostřed velkého vnitrozemského jezera ve středu kontinentu (na mapě zřícenina v jezeře)
 - **Velikost:** Svobodné město u hranic staré zkázy, ~18 000 obyvatel
 
 ## Čtvrti a významná místa
-- **Strážní mys** – maják a pevnost s výhledem na černé útesy Dräaru.
+- **Jezerní přístav** – jediná cesta na ostrov vede po vodě.
 - **Primasovy archivy** – sbírka svědectví o Temném dni, viz [Kronika Temného dne](../06_Knihy_a_Dokumenty/Kniha_06_Kronika_Temneho_dne.md).
 - **Staré ruiny** – zbytky předpádového Werenoru.
 

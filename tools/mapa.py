@@ -76,6 +76,17 @@ def water_mask(clean, data):
                 cv2.floodFill(ff, m, (px, py), 128)
         inside = ff != 128
         water[y0:y1, x0:x1] &= ~inside
+    voda = json.loads((MAPY / "vodstvo.json").read_text(encoding="utf-8"))
+    extra = np.zeros((H, W), np.uint8)
+    for poly in voda.get("jezera", []):
+        cv2.fillPoly(extra, [np.int32(poly)], 1)
+    for poly in voda.get("ostrovy", []):
+        cv2.fillPoly(extra, [np.int32(poly)], 0)
+    water |= extra.astype(bool)
+    isl = np.zeros((H, W), np.uint8)
+    for poly in voda.get("ostrovy", []):
+        cv2.fillPoly(isl, [np.int32(poly)], 1)
+    water &= ~isl.astype(bool)
     # ruční písmena v moři nesmí tvořit pevninu
     bm = box_mask(data, 18)
     land = (~water & bm).astype(np.uint8)

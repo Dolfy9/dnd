@@ -4,6 +4,7 @@
 - **Hlavní město:** Werenor
 - **Hlava státu:** Primas Pertham
 - **Podřízenost:** Nezávislé
+- **Poloha (DM):** ostrov ve velkém vnitrozemském jezeře ve středu kontinentu ([mapa](../11_Mapy/Geografie.md))
 
 ## Popis
 Město postavené v blízkosti staré zkázy a ruin. Primas Pertham stráží stará tajemství a čelí hrozbě z nedalekého prokletého Dräaru.

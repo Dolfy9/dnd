@@ -236,16 +236,25 @@
   },
   {
    "nazev": "Svobodné Jižní ostrovy",
-   "x": 1870,
-   "y": 1035,
+   "x": 1300,
+   "y": 1300,
    "typ": "zeme",
    "jistota": "kanon",
    "odkaz": "02_Zeme/Svobodne_Jizni_Ostrovy.md",
-   "pozn": "Velký ostrov s loďmi na jihovýchodě, Menkant.",
+   "pozn": "Ostrovy jižně od Laertmundu (DM), Menkant.",
    "popisek": {
     "rot": 0,
     "styl": "more"
    }
+  },
+  {
+   "nazev": "Werenor",
+   "x": 1067,
+   "y": 795,
+   "typ": "mesto",
+   "jistota": "kanon",
+   "odkaz": "03_Mesta/Mesto_Werenor.md",
+   "pozn": "Svobodné město na ostrově uprostřed velkého jezera (DM). Zkáza Werenoru = Temný den."
   },
   {
    "nazev": "Východní hvozd",
@@ -255,15 +264,6 @@
    "jistota": "kanon",
    "odkaz": "01_Svet/Mista/Vychodni_hvozd.md",
    "pozn": "Leží v Mönohenu, stvořil ho Tirent (kánon). Poloha bodu = odhad."
-  },
-  {
-   "nazev": "Kop Aram (zřícenina v jezeře)",
-   "x": 1070,
-   "y": 720,
-   "typ": "misto",
-   "jistota": "odhad",
-   "odkaz": "01_Svet/Mista/Jezero_Amir_a_Kop_Aram.md",
-   "pozn": "Obří zřícenina na ostrově ve vnitrozemském jezeře."
   },
   {
    "nazev": "Kaňon a vysoká věž",
@@ -284,13 +284,13 @@
    "pozn": "Město s budovami a přístavem (kotva) na severu – hlavní město Nöelienu?"
   },
   {
-   "nazev": "Werenor?",
+   "nazev": "Hrad na západním pobřeží",
    "x": 340,
    "y": 848,
    "typ": "mesto",
    "jistota": "odhad",
-   "odkaz": "03_Mesta/Mesto_Werenor.md",
-   "pozn": "Hrad na západním pobřeží severně od Dräaru."
+   "odkaz": "11_Mapy/Analyza_mapy.md",
+   "pozn": "Hrad na západním pobřeží severně od Dräaru – bez jména."
   },
   {
    "nazev": "Opevněné město u polí",
@@ -330,12 +330,12 @@
   },
   {
    "nazev": "Menkant?",
-   "x": 1834,
-   "y": 1139,
+   "x": 1060,
+   "y": 1327,
    "typ": "mesto",
    "jistota": "odhad",
    "odkaz": "03_Mesta/Mesto_Menkant.md",
-   "pozn": "Sídlo na Jižních ostrovech."
+   "pozn": "Sídlo na největším z Jižních ostrovů."
   },
   {
    "nazev": "Mictima?",
@@ -460,8 +460,8 @@
    "y": 1250,
    "typ": "misto",
    "jistota": "mapa",
-   "odkaz": "02_Zeme/Svobodne_Jizni_Ostrovy.md",
-   "pozn": "Tři plachetnice u Jižních ostrovů."
+   "odkaz": "11_Mapy/Analyza_mapy.md",
+   "pozn": "Tři plachetnice u velkého jihovýchodního ostrova."
   },
   {
    "nazev": "Velký ostrov na jihozápadě",
@@ -966,6 +966,15 @@
    "jistota": "mapa",
    "odkaz": "11_Mapy/Analyza_mapy.md",
    "pozn": "Kroužek na mapě DM – jméno zatím nepřiřazeno."
+  },
+  {
+   "nazev": "Velký ostrov s loděmi",
+   "x": 1870,
+   "y": 1135,
+   "typ": "misto",
+   "jistota": "mapa",
+   "odkaz": "11_Mapy/Analyza_mapy.md",
+   "pozn": "Velký ostrov na jihovýchodě – bez jména."
   }
  ]
 }

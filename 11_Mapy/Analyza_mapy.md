@@ -5,7 +5,7 @@
 ## Shrnutí
 - **Popisky na mapě:** Nöelien, Briria, Nöet, Dräar, Orden, Laertmund (otočený, čitelné hlavně „…MUND“), Tali, Zairam (svisle), Khearaz, Khärghe Zhia, Knärghe Zhia, Mönohen (otočený, písmena M-Ö-N-O-H-E-N), nečitelné „Dö…“ u východního ostrova, měřítko 150–600 km.
 - **Sídla:** asi 50 kroužků bez jmen, 7 kreslených měst/hradů (budovy u Nöelienu s kotvou, hrad na západním pobřeží, opevněné město u polí, Pevnost Orden, přístav u ústí průlivu, vesnice na severu Mönohenu, budovy v Tali).
-- **Vodstvo:** vnitrozemské jezero se zříceninou na ostrově, průliv z jezera na východ do moře, severní záliv, Ordenská zátoka, jezero jižně od Knärghe Zhie, řeky na západě a v Laertmundu.
+- **Vodstvo:** velké vnitrozemské jezero (vyznačené DM) se zříceninou Werenoru na ostrově, průliv z jezera na východ do moře, severní záliv, Ordenská zátoka, jezero jižně od Knärghe Zhie, řeky na západě a v Laertmundu.
 - **Symboly:** okřídlený démon a mořský had (sever), vír (východ), vrak (západ), lodě (jihovýchod), mořské vlny (jih), pyramidy (Dräar), krystalové věže a tvář ve skále, maják, obelisk, tvor s holí (Khearaz), kopule a krychlová stavba, kolonáda, svatyně torii, kaktusy a chrámy (Tali), šrafovaná pole.
 - **Čárkované čáry:** cesty (Briria → Nöet, přes Khearaz, Laertmund) a hranice Tali / Zairam.
 - Dlouhé rovné čáry přes moře na západě (y ≈ 400 a 815) jsou nejspíš přehyby papíru.
@@ -26,6 +26,11 @@
 - T21 NÖET písmena (468,975)->(584,906); prales s palmami (507-617,955-1076) se zříceným chrámem (562,993); řeka (644-760,900-1142); šrafovaná pole/mokřad (556-705,1180-1312); opevněné město (694-771,1169-1208); sídla (716,1213),(738,1112),(817,1243),(861,1224),(705,977); ORDENSKÁ ZÁTOKA šrafovaná voda (831-1045,977-1208) s LODÍ (930-979,1037-1158), západní břeh temný prales (793-870,922-1164), otevřená k JZ do jižního moře (jižní moře celé diagonálně šrafované); ostrůvek (826-864,1372-1400); vlny (617-787,1356-1427)
 - T22 ORDEN nápis (1074-1140,1015-1059), hradba (1057-1156,1076-1092), budovy (1019-1129,944-1010); LAERTMUND (otočené písmeno, čitelné M U N D) z ~(1035,1208) do (1250,1054); dřevěný most/plot (1145-1206,1186-1208); hory s řekami mezi Ordenem a Tali (1173-1349,955-1208); TALI nápis (1283,1142)->(1382,1106); Tali poušť s kaktusy, chrám (1343,977), kopule (1436,1010), oáza se stromy, šrafovaná pole (1349-1459,971-1175), sídla (1412,1059),(1412,1186),(1250,1054); čárkovaná hranice Tali/Zairam x≈1480-1513; ZAIRAM pás (1486-1568,1010-1240), hlavní sídlo (1535,1103), sídla (1568,1048),(1494,1153); kolonáda (1475-1563,933-955); jižní pobřeží (1129-1486,1208-1285); jižní poloostrov (986-1184,1219-1384) se sídlem (1060,1326); ostrovy (1244-1294,1364-1394),(1310,1383); úzký ostrov (1541-1585,1224-1329) se sídlem (1574,1265); černá skvrna v moři (1357,1326)
 - T23 ZAIRAM písmena svisle (1496-1536,1014-1134); svatyně torii na skále (1600-1665,985-1049); SVOBODNÉ JIŽNÍ OSTROVY = velký JV ostrov (1814-1929,1064-1208), sídla (1834,1139),(1914,1109), slabě skicovaná pevnina (1675-1859,1014-1139); lodě (1660-1814,1169-1328); MĚŘÍTKO (1665-2013,1358-1418): 4 dílky po ~86 px = 150 km → 600 km = 343 px, 1 px ≈ 1,75 km
+
+## Opravy od DM
+- Zřícenina v jezeře = **Werenor**; jezero je mnohem větší (šrafované plochy jižně a východně od zříceniny až k průlivu) – maska jezera převzata z DM vyznačení (`11_Mapy/vodstvo.json`).
+- **Svobodné Jižní ostrovy** jsou ostrovy jižně od Laertmundu; velký ostrov s loděmi na JV je bez jména.
+- **Divoký Sever** = severozápadní poloostrov.
 
 ## K potvrzení (DM)
 - Které kroužky jsou která města (Octowerin, Owappa, Wortmir, Kaer, Imonir, Dar Kemmar…)?

@@ -1,6 +1,7 @@
 # Svobodné Jižní Ostrovy
 
 ## Základní Přehled
+- **Poloha (DM):** ostrovy jižně od Laertmundu ([mapa](../11_Mapy/Geografie.md))
 - **Hlavní město:** Menkant
 - **Hlava státu:** Královna Yuthika (Tiefling)
 - **Podřízenost:** Pod skrytým vlivem Ordenu
