@@ -9,6 +9,8 @@
   L.control.layers({ "Barevná mapa": barevna, "Původní kresba (DM)": kresba }).addTo(map);
   var sidla = L.layerGroup();
   map.fitBounds(bounds);
+  var coord = document.createElement("div"); coord.className = "mapa-souradnice"; el.appendChild(coord);
+  map.on("click", function (e) { coord.textContent = "x " + Math.round(e.latlng.lng) + ", y " + Math.round(H - e.latlng.lat); });
   map.setMaxBounds([[-200, -200], [H + 200, W + 200]]);
   var barvy = { mapa: "#c0392b", kanon: "#2e8b57", odhad: "#f0b429" };
   var jistotaText = { mapa: "popsáno na mapě DM", kanon: "potvrzeno DM", odhad: "odhad – čeká na potvrzení" };

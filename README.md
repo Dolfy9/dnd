@@ -9,7 +9,7 @@ Svět, který stvořil uprchlý Ferienec **Ertus Potřísněný** a jeho děti �
 - Pravidla psaní a kánonu: [AGENTS.md](AGENTS.md)
 - Šablony: [_Sablony/](_Sablony/)
 - Mapa: [11_Mapy/](11_Mapy/Geografie.md)
-- Web (wiki s vyhledáváním a interaktivní mapou na localhostu): `pip install -r web/requirements.txt && web/serve.sh` → http://localhost:8000
+- Web (wiki s vyhledáváním, interaktivní mapou, character sheety a úpravami všeho přímo v prohlížeči): `pip install -r web/requirements.txt && web/serve.sh` → http://localhost:8000
 - Pravidla: **D&D 5e 2024** (PHB 2024, DMG 2024, MM 2025)
 
 ## Struktura

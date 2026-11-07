@@ -1,0 +1,75 @@
+.ps { --ink: #3a2412; --line: #8a6a3f; --paper: #f6ecd2; --paper2: #efe1bf; color: var(--ink); background: var(--paper);
+  border: 2px solid var(--line); border-radius: 8px; padding: 14px; margin: 0 0 1.5rem; font-family: Georgia, serif; font-size: .74rem;
+  box-shadow: 0 4px 18px rgba(0,0,0,.35); }
+.md-typeset .ps h4 { font-family: "Cinzel", serif; font-size: .72rem; letter-spacing: .08em; text-transform: uppercase; margin: 0 0 .4rem;
+  border-bottom: 1px solid var(--line); padding-bottom: 2px; color: var(--ink); }
+.ps small { opacity: .75; }
+.ps-head { display: grid; grid-template-columns: minmax(200px, 1fr) 2.2fr; gap: 10px; margin-bottom: 10px; }
+.ps-name { border: 2px solid var(--ink); border-radius: 6px; padding: 8px 12px; background: var(--paper2); }
+.ps-big { font-family: "Cinzel", serif; font-size: 1.6rem; font-weight: 700; line-height: 1.1; }
+.ps-sub { font-style: italic; }
+.ps-meta { display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px; }
+.ps-box { border: 1px solid var(--line); border-radius: 5px; padding: 4px 8px; background: #fffaf0; text-align: center; }
+.ps-meta .ps-box { text-align: left; }
+.ps-lbl { font-family: "Cinzel", serif; font-size: .55rem; letter-spacing: .06em; text-transform: uppercase; opacity: .8; }
+.ps-val { font-size: .95rem; font-weight: 700; }
+.ps-meta .ps-val { font-size: .78rem; }
+.ps-edit { text-align: right; margin: -4px 0 8px; }
+.ps-grid { display: grid; grid-template-columns: 1.05fr 1.25fr 1.4fr; gap: 12px; align-items: start; }
+.ps-grid3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-top: 12px; }
+@media (max-width: 1100px) { .ps-grid, .ps-grid3, .ps-head { grid-template-columns: 1fr; } .ps-meta { grid-template-columns: repeat(2, 1fr); } }
+.ps-ab { border: 2px solid var(--ink); border-radius: 8px; margin-bottom: 7px; background: #fffaf0; overflow: hidden; }
+.ps-ab-top { display: flex; align-items: center; gap: 8px; background: var(--paper2); padding: 3px 8px; border-bottom: 1px solid var(--line); }
+.ps-ab-n { flex: 1; font-family: "Cinzel", serif; font-weight: 700; font-size: .72rem; }
+.ps-ab-mod { font-size: 1.15rem; font-weight: 700; border: 2px solid var(--ink); border-radius: 50%; width: 2.1rem; height: 2.1rem; display: flex; align-items: center; justify-content: center; background: #fff; }
+.ps-ab-s { border: 1px solid var(--line); border-radius: 10px; padding: 0 6px; font-size: .7rem; }
+.ps-ab ul { list-style: none; margin: 0 !important; padding: 3px 8px !important; }
+.md-typeset .ps-ab li { margin: 0; line-height: 1.5; }
+.ps-ab li i { display: inline-block; width: .6rem; height: .6rem; border: 1px solid var(--ink); border-radius: 50%; margin-right: 5px; vertical-align: -1px; }
+.ps-ab li.p i { background: var(--ink); }
+.ps-ab li.e i { background: var(--ink); box-shadow: 0 0 0 2px #fffaf0, 0 0 0 3px var(--ink); }
+.ps-small { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; }
+.ps-combat { display: grid; grid-template-columns: repeat(4, 1fr); gap: 6px; }
+.ps-combat .ps-val { font-size: 1.2rem; }
+.ps-ac { border: 2px solid var(--ink); border-radius: 6px 6px 50% 50% / 6px 6px 30% 30%; background: #fff; }
+.ps-hp { border: 2px solid var(--ink); border-radius: 8px; text-align: center; padding: 6px; margin: 8px 0; background: #fffaf0; }
+.ps-hp .ps-big { font-size: 1.9rem; }
+.ps-note { font-size: .68rem; font-style: italic; margin: 2px 0 6px; }
+.ps-sect { border: 1px solid var(--line); border-radius: 6px; padding: 6px 9px; margin-bottom: 9px; background: #fffaf0; }
+.ps-tab { width: 100%; border-collapse: collapse; font-size: .68rem; }
+.md-typeset .ps-tab th, .md-typeset .ps-tab td { padding: 2px 4px; border-bottom: 1px dotted var(--line); background: none; color: var(--ink); }
+.md-typeset .ps-tab th { font-family: "Cinzel", serif; font-size: .55rem; }
+.ps-res { list-style: none; margin: 0 !important; padding: 0 !important; columns: 2; }
+.md-typeset .ps-res li { display: flex; justify-content: space-between; gap: 6px; margin: 0; border-bottom: 1px dotted var(--line); break-inside: avoid; }
+.ps details { border-bottom: 1px dotted var(--line); }
+.ps summary { cursor: pointer; font-weight: 700; padding: 2px 0; }
+.ps details > div { padding: 2px 0 6px 10px; font-size: .68rem; }
+.ps-cast { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 6px; }
+.ps-spells { display: grid; grid-template-columns: repeat(auto-fill, minmax(190px, 1fr)); gap: 8px; }
+.ps-sl { border: 1px solid var(--line); border-radius: 5px; padding: 3px 7px; }
+.ps-sl-h { font-family: "Cinzel", serif; font-weight: 700; display: flex; justify-content: space-between; border-bottom: 1px solid var(--line); }
+.ps-sl-h span { letter-spacing: 2px; font-family: Georgia, serif; }
+.ps-sl ul { margin: 2px 0 !important; padding-left: 1rem !important; }
+.md-typeset .ps-sl li { margin: 0; }
+.ps-warn { color: #a3342b; }
+.ps p { margin: .25rem 0; }
+.ps ul { margin: .2rem 0; }
+.pf-tabs { display: flex; gap: 4px; flex-wrap: wrap; margin-bottom: 8px; }
+.pf-abil { display: grid; grid-template-columns: repeat(6, 1fr); gap: 6px; }
+.pf-checks label { display: inline-block; width: 32%; }
+.pf-skills label { width: 32%; }
+.pf-list { margin: 8px 0; }
+.pf-list h5, .pf-checks h5 { font-family: "Cinzel", serif; margin: 6px 0 2px; }
+.pf-raw { font-family: monospace !important; font-size: .7rem !important; }
+.pf-pane { max-height: 62vh; overflow: auto; padding-right: 6px; }
+/* stránka s postavou: celá šířka, bez pravého obsahu */
+.md-main__inner:has(.ps) .md-sidebar--secondary { display: none; }
+.md-content__inner:has(.ps) { max-width: none; margin-right: 1.2rem; }
+.md-grid:has(.ps) { max-width: 100rem; }
+/* vlastní vzhled rozbalovacích rysů (místo admonition stylu Material) */
+.md-typeset .ps details { background: none; border: 0; border-bottom: 1px dotted var(--line); border-radius: 0; box-shadow: none; margin: 0; padding: 0; font-size: .7rem; }
+.md-typeset .ps details > summary { background: none; padding: 3px 0 3px 14px; color: var(--ink); font-weight: 700; min-height: 0; }
+.md-typeset .ps details > summary::before { content: "▸"; -webkit-mask: none; mask: none; background: none; color: var(--ink); width: auto; height: auto; left: 0; top: 3px; transform: none; }
+.md-typeset .ps details[open] > summary::before { content: "▾"; }
+.md-typeset .ps details > summary::after { display: none; }
+.md-typeset .ps details > div { padding: 2px 0 6px 14px; margin: 0; }

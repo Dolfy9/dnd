@@ -1,6 +1,125 @@
+---
+postava:
+  typ: božstvo
+  velikost: Medium
+  zarovnani: Lawful Good
+  jmeno: Eligon
+  titul: Otec lidí, nositel štěstí
+  druh: Turandar (Stavitel)
+  tridy:
+  - trida: Paladin
+    uroven: 20
+    podtrida: Oath of Devotion
+  atributy:
+    STR: 26
+    DEX: 14
+    CON: 22
+    INT: 16
+    WIS: 18
+    CHA: 24
+  dovednosti:
+  - Athletics
+  - Insight
+  - Persuasion
+  - Religion
+  - History
+  featy:
+  - nazev: Ability Score Improvement
+    zdroj: Paladin 4
+  - nazev: Ability Score Improvement
+    zdroj: Paladin 8
+  - nazev: Sentinel
+    zdroj: Paladin 12
+  - nazev: Great Weapon Master
+    zdroj: Paladin 16
+  - nazev: Boon of Combat Prowess
+    zdroj: Epic Boon (Paladin 19)
+  - nazev: Defense
+    zdroj: Fighting Style (Paladin 2)
+  zbroj:
+    nazev: Zlatá plátová zbroj
+    typ: heavy
+    zakladni_ac: 18
+    stit: true
+    bonus: 3
+  utoky:
+  - nazev: Svatý meč (Holy Avenger +3)
+    atribut: STR
+    kostka: 1d8
+    typ: Slashing
+    mastery: Sap
+    bonus: 3
+    poznamka: +2d10 Radiant proti Fiend/Undead; Radiant Strikes +1d8
+  mastery:
+  - Longsword (Sap)
+  - Lance (Topple)
+  kouzla:
+  - nazev: Protection from Evil and Good
+    trida: Paladin
+    poznamka: Oath of Devotion
+  - nazev: Shield of Faith
+    trida: Paladin
+    poznamka: Oath of Devotion
+  - nazev: Aura of Vitality
+    trida: Paladin
+    poznamka: Oath of Devotion
+  - nazev: Zone of Truth
+    trida: Paladin
+    poznamka: Oath of Devotion
+  - nazev: Beacon of Hope
+    trida: Paladin
+    poznamka: Oath of Devotion
+  - nazev: Dispel Magic
+    trida: Paladin
+    poznamka: Oath of Devotion
+  - nazev: Freedom of Movement
+    trida: Paladin
+    poznamka: Oath of Devotion
+  - nazev: Guardian of Faith
+    trida: Paladin
+    poznamka: Oath of Devotion
+  - nazev: Commune
+    trida: Paladin
+    poznamka: Oath of Devotion
+  - nazev: Flame Strike
+    trida: Paladin
+    poznamka: Oath of Devotion
+  - nazev: Divine Smite
+    trida: Paladin
+  - nazev: Find Steed
+    trida: Paladin
+  - nazev: Banishing Smite
+    trida: Paladin
+  - nazev: Circle of Power
+    trida: Paladin
+  - nazev: Destructive Wave
+    trida: Paladin
+  - nazev: Bless
+    trida: Paladin
+  - nazev: Aid
+    trida: Paladin
+  vlastni_rysy:
+  - nazev: Nositel štěstí
+    text: Jednou za den může přeměnit neúspěch tvora v dohledu na úspěch (vyprávěcí, avatar).
+  vybava:
+  - Svatý meč
+  - Zlatá plátová zbroj
+  - Štít jižních polí
+  prevod_2024: Odstraněna Protection Domain (klerická doména); Divine Smite je v 2024 kouzlo.
+  poznamky: 'Božstvo: atributy nad 20 jsou božská výjimka (Epic Boon +1 až do 30, zbytek určuje DM). Pro střet použij avatar
+    do CR 30 (MM 2025).'
+---
 # Postava: Eligon
+
+> **Stav:** character sheet = převod na D&D 2024 (návrh); role a historie z archivu = kánon
+
+## Role a historie
+Otec lidí, správce jižních polí a nositel štěstí. Jeho chrámy v současnosti přetvořil Orden.
+
+## Předchozí zápis (před úplným převodem)
 - **Typ / Bytost:** Turandar (Stavitel) / Bůh
 - **Herní pojetí (2024):** Orientačně **Paladin 20 (Oath of Devotion)**; jako avatar CR 28–30.
 - **Schopnosti & Magie:** Sacred Weapon (Channel Divinity), Aura of Protection + Aura of Courage, Divine Smite (v 2024 kouzlo, u avatara maximalizované), Beacon of Hope
 - **Historie & Popis:** Otec lidí, správce jižních polí a nositel štěstí. Jeho chrámy v současnosti přetvořil Orden.
 - **Převod na 2024:** odstraněna „Protection Domain“ (doména klerika, ne paladina); Divine Smite je v 2024 kouzlo 1. úrovně (bonus action po zásahu).
+

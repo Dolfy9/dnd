@@ -136,6 +136,8 @@ theme:
     - toc.follow
   icon:
     logo: material/castle
+hooks:
+  - hooks.py
 plugins:
   - search:
       separator: '[\\s\\-_,:!=\\[\\]()"/]+'
@@ -145,10 +147,16 @@ markdown_extensions:
   - admonition
   - attr_list
   - md_in_html
+  - meta
 extra_css:
+  - assets/easymde/easymde.min.css
   - assets/extra.css
+  - assets/postava.css
 extra_javascript:
+  - assets/easymde/easymde.min.js
   - assets/extra.js
+  - assets/editor.js
+  - assets/postava.js
 not_in_nav: |
   /mapa.md
 validation:

@@ -1,7 +1,88 @@
+---
+postava:
+  typ: božstvo
+  velikost: Medium
+  zarovnani: Chaotic Good
+  jmeno: Ertus Potřísněný
+  titul: Stvořitel Montelienu (mrtvý)
+  druh: Ferienský bůh
+  tridy:
+  - trida: Wizard
+    uroven: 20
+    podtrida: Evoker
+  atributy:
+    STR: 20
+    DEX: 18
+    CON: 26
+    INT: 30
+    WIS: 24
+    CHA: 24
+  dovednosti:
+  - Arcana
+  - History
+  - Nature
+  - Religion
+  - Investigation
+  featy:
+  - nazev: Ability Score Improvement
+    zdroj: Wizard 4
+  - nazev: Ability Score Improvement
+    zdroj: Wizard 8
+  - nazev: War Caster
+    zdroj: Wizard 12
+  - nazev: Elemental Adept
+    zdroj: Wizard 16
+  - nazev: Boon of Spell Recall
+    zdroj: Epic Boon (Wizard 19)
+  zbroj:
+    nazev: Bez zbroje
+    typ: none
+  utoky:
+  - nazev: Fire Bolt
+    atribut: SPELL
+    kostka: 4d10
+    typ: Fire
+    dosah: 120 ft
+  kouzla:
+  - nazev: Fire Bolt
+    uroven: 0
+  - nazev: Mage Hand
+    uroven: 0
+  - nazev: Prestidigitation
+    uroven: 0
+  - nazev: Elementalism
+    uroven: 0
+  - nazev: Wish
+  - nazev: Meteor Swarm
+  - nazev: True Polymorph
+  - nazev: Gate
+  - nazev: Earthquake
+  - nazev: Control Weather
+  - nazev: Move Earth
+  - nazev: Wall of Force
+  - nazev: Fabricate
+  - nazev: Creation
+  vlastni_rysy:
+  - nazev: Creation Magic / Cosmic Weaver / Primordial Essence
+    text: 'Vyprávěcí schopnosti: vyzvedl pevninu z oceánu, utkal Montelien z prázdnoty.'
+  prevod_2024: Arch-Deity → orientačně Wizard 20 (Evoker); avatar CR 30. Mold Earth / Shape Water (XGtE) → Elementalism (PHB
+    2024).
+  poznamky: 'Božstvo: atributy nad 20 jsou božská výjimka (Epic Boon +1 až do 30, zbytek určuje DM). Pro střet použij avatar
+    do CR 30 (MM 2025).'
+---
 # Postava: Ertus Potřísněný
+
+> **Stav:** character sheet = převod na D&D 2024 (návrh); role a historie z archivu = kánon
+
+## Role a historie
+Mrtvý / Zničen v Temný den
+Uprchlík z Ferienu před svým předurčeným osudem. Vystavěl svět Montelien z prázdnoty oceánu. Padl v bitvě se svým otcem Ertinem.
+
+## Předchozí zápis (před úplným převodem)
 - **Typ / Bytost:** Prastará božská entita z Ferienu (Stvořitel Montelienu)
 - **Status:** Mrtvý / Zničen v Temný den
 - **Herní pojetí (2024):** Mýtická bytost mimo pravidla – žádný statblok; pokud je třeba (vize, sen, ozvěna), použij avatar **CR 30** dle DMG 2024 (Creating a Creature).
 - **Domény / Magie:** Creation Magic, Cosmic Weaver, Primordial Essence (vyprávěcí schopnosti, ne kouzla)
 - **Historie & Popis:** Uprchlík z Ferienu před svým předurčeným osudem. Vystavěl svět Montelien z prázdnoty oceánu. Padl v bitvě se svým otcem Ertinem.
 - **Převod na 2024:** „Arch-Deity / CR 30+“ → avatar CR 30 (maximum MM 2025).
+

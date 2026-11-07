@@ -41,3 +41,31 @@ body.rezim-hrac .dm-sekce, body.rezim-hrac h2.dm-nadpis { display: none !importa
   color: #3a2412; border: 1px solid #8a6a3f; }
 .leaflet-popup-content { font-family: Georgia, serif; }
 .leaflet-popup-content h4 { font-family: "Cinzel", serif; margin: 0 0 .3rem; }
+
+/* Editor */
+#ed-toolbar { display: flex; gap: .4rem; justify-content: flex-end; margin-bottom: .4rem; flex-wrap: wrap; }
+.ed-btn { font: 600 .65rem/1 "Cinzel", serif; padding: .45rem .8rem; border-radius: 3px; cursor: pointer;
+  border: 1px solid var(--md-accent-fg-color); background: transparent; color: var(--md-default-fg-color); }
+.ed-btn:hover { background: var(--md-accent-fg-color); color: #1d1814; }
+.ed-primary { background: var(--md-accent-fg-color); color: #1d1814; }
+.ed-danger { border-color: #c0392b; color: #e06b5f; }
+.ed-modal-bg { position: fixed; inset: 0; background: rgba(0,0,0,.6); z-index: 1000; display: flex; align-items: flex-start; justify-content: center; overflow: auto; padding: 3vh 1rem; }
+.ed-modal { background: var(--md-default-bg-color); color: var(--md-default-fg-color); border: 1px solid #8a6a3f; border-radius: 6px; padding: 1rem 1.2rem; width: min(640px, 100%); box-shadow: 0 10px 40px rgba(0,0,0,.6); }
+.ed-modal.ed-wide { width: min(1200px, 100%); }
+.ed-modal h2 { font-family: "Cinzel", serif; margin: 0 0 .6rem; font-size: 1.1rem; }
+.ed-bar { display: flex; gap: .5rem; justify-content: flex-end; margin-top: .8rem; }
+.ed-form label, .ed-modal label { display: block; font-size: .72rem; margin: .4rem 0; }
+.ed-modal input, .ed-modal select, .ed-modal textarea { width: 100%; font: .75rem Georgia, serif; padding: .3rem .4rem; border: 1px solid #8a6a3f; border-radius: 3px; background: rgba(255,255,255,.06); color: inherit; }
+.ed-modal input[type=checkbox] { width: auto; }
+.ed-pozn { font-size: .7rem; opacity: .8; }
+.ed-scroll { max-height: 60vh; overflow: auto; }
+.ed-table { width: 100%; border-collapse: collapse; font-size: .7rem; }
+.ed-table td, .ed-table th { padding: 2px; }
+.EasyMDEContainer .CodeMirror { min-height: 55vh; background: #fff; color: #222; }
+.editor-toolbar { background: #f4ecd8; }
+body.ed-busy { cursor: progress; }
+body.ed-busy::after { content: "Ukládám a přestavuji web…"; position: fixed; top: 1rem; left: 50%; transform: translateX(-50%); z-index: 2000; background: #f0b429; color: #1d1814; padding: .5rem 1rem; border-radius: 4px; font-family: "Cinzel", serif; }
+.mapa-souradnice { position: absolute; right: 8px; bottom: 8px; z-index: 500; background: rgba(246,233,200,.9); color: #3a2412; padding: 2px 6px; border-radius: 3px; font: 12px monospace; }
+.EasyMDEContainer .CodeMirror, .EasyMDEContainer .CodeMirror * { font-family: ui-monospace, Consolas, monospace !important; font-size: 13px !important; line-height: 1.5 !important; }
+.EasyMDEContainer .cm-header-1, .EasyMDEContainer .cm-header-2 { font-weight: 700; color: #6b3a10; }
+.EasyMDEContainer .editor-preview { background: #fffaf0; color: #222; }

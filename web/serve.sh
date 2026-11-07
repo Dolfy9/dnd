@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
-# Spustí wiki Montelienu na http://localhost:8000 (potřeba: pip install -r requirements.txt)
+# Spustí wiki Montelienu s editací na http://localhost:8000 (potřeba: pip install -r requirements.txt)
 set -e
 cd "$(dirname "$0")"
-python3 build.py
-exec mkdocs serve -f mkdocs.yml -a "${HOST:-127.0.0.1}:${PORT:-8000}"
+PY=python3; [ -x /usr/bin/python3 ] && PY=/usr/bin/python3
+exec "$PY" server.py

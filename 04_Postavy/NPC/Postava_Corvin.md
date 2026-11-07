@@ -1,4 +1,147 @@
+---
+postava:
+  jmeno: „Slepý“ Corvin
+  titul: Vůdce octowerinského odboje
+  druh: Human
+  druh_volby: 'Skillful: Persuasion; Versatile: Alert; vyprávěcí: elfí předci'
+  pozadi: Scribe
+  zarovnani: Chaotic Good
+  tridy:
+  - trida: Bard
+    uroven: 9
+    podtrida: College of Lore
+  atributy:
+    STR: 8
+    DEX: 14
+    CON: 13
+    INT: 10
+    WIS: 16
+    CHA: 18
+  puvod_atributu: Standard Array (CHA 15, WIS 14, DEX 13, CON 12, INT 10, STR 8); Scribe +2 WIS, +1 DEX; ASI (4) +2 CHA; ASI
+    (8) +1 CHA +1 CON.
+  dovednosti:
+  - Deception
+  - Insight
+  - Stealth
+  - Investigation
+  - Perception
+  - Persuasion
+  - History
+  - Arcana
+  - Religion
+  - Medicine
+  - Performance
+  - Sleight of Hand
+  expertiza:
+  - Insight
+  - Persuasion
+  - Investigation
+  - Deception
+  featy:
+  - nazev: Skilled
+    zdroj: Pozadí (Scribe)
+    poznamka: History, Arcana, Religion
+  - nazev: Alert
+    zdroj: Human – Versatile
+  - nazev: Ability Score Improvement
+    zdroj: Bard 4
+    poznamka: +2 CHA
+  - nazev: Ability Score Improvement
+    zdroj: Bard 8
+    poznamka: +1 CHA, +1 CON
+  zbroj:
+    nazev: Studded Leather Armor
+    typ: light
+    zakladni_ac: 12
+  utoky:
+  - nazev: Vicious Mockery
+    atribut: SPELL
+    kostka: 2d6
+    typ: Psychic
+    dosah: 60 ft
+    poznamka: cantrip, WIS save
+  - nazev: Dagger
+    atribut: FIN
+    kostka: 1d4
+    typ: Piercing
+    dosah: 20/60 ft
+  kouzla:
+  - nazev: Vicious Mockery
+    uroven: 0
+  - nazev: Minor Illusion
+    uroven: 0
+  - nazev: Message
+    uroven: 0
+  - nazev: Dissonant Whispers
+    trida: Bard
+  - nazev: Healing Word
+    trida: Bard
+  - nazev: Faerie Fire
+    trida: Bard
+  - nazev: Comprehend Languages
+    trida: Bard
+  - nazev: Silence
+    trida: Bard
+  - nazev: Detect Thoughts
+    trida: Bard
+  - nazev: Invisibility
+    trida: Bard
+  - nazev: Hypnotic Pattern
+    trida: Bard
+  - nazev: Sending
+    trida: Bard
+  - nazev: Nondetection
+    trida: Bard
+  - nazev: Dimension Door
+    trida: Bard
+  - nazev: Greater Invisibility
+    trida: Bard
+  - nazev: Modify Memory
+    trida: Bard
+  - nazev: Mislead
+    trida: Bard
+  - nazev: Counterspell
+    trida: Bard
+    poznamka: Magical Discoveries
+  - nazev: Revivify
+    trida: Bard
+    poznamka: Magical Discoveries
+  vlastni_rysy:
+  - nazev: Oslepen Ordenem (DM)
+    text: Trvale oslepen (Blinded), ale má Blindsight 30 ft – v tomto dosahu vnímá okolí bez zraku.
+  vybava:
+  - Studded Leather Armor
+  - Dagger
+  - Lute
+  - Calligrapher's Supplies
+  - Zakázané spisy odboje
+  - Slepecká hůl
+  penize:
+    GP: 75
+  jazyky:
+  - Common
+  - Elvish
+  - Halfling
+  nastroje:
+  - Calligrapher's Supplies
+  - Lute
+  - Flute
+  - Viol
+  osobnost:
+    rysy: Klidný hlas, který umí uklidnit i roztančit dav.
+    idealy: Pravda patří všem.
+    pouta: Octowerinský odboj a jeho spisy.
+    vady: Ze msty riskuje životy svých lidí.
+  prevod_2024: Half-Elf není v PHB 2024 → Human (elfí předci vyprávěcí). Blindsight 30 ft = zvláštní schopnost (DM).
+---
 # Postava: "Slepý" Corvin (Vůdce Odboje)
+
+> **Stav:** character sheet = převod na D&D 2024 (návrh); role a historie z archivu = kánon
+
+## Role a historie
+Hlavní spojka hráčů pro Octowerinský odboj. Předává zakázané spisy a úkoly.
+
+## Předchozí zápis (před úplným převodem)
 - **Druh (Species):** Human s elfími předky (půlelf – v 2024 se volí rysy jednoho z rodičů)
 - **Třída (2024):** Bard 9 (College of Lore)
 - **Pozadí (návrh):** Scribe

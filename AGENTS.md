@@ -3,7 +3,7 @@
 Tento repozitář je **lore wiki a příprava D&D 5e kampaní** ve světě Montelien. Nejde o software.
 
 ## Jazyk a styl
-- Veškerý obsah piš **česky** (s diakritikou). D&D mechaniky (kouzla, subclassy, schopnosti) nech v **angličtině** dle 5e (SRD / PHB 2014 názvy), jak je zvykem v existujících souborech.
+- Veškerý obsah piš **česky** (s diakritikou). D&D mechaniky (kouzla, subclassy, schopnosti) nech v **angličtině** pod názvy z pravidel 2024.
 - Názvy souborů: bez diakritiky, slova oddělená `_`, prefix podle typu (`Postava_`, `Mesto_`, `Quest_`, `Hadanka_`, `Sezeni_` ...).
 - Tón: temné fantasy, politické intriky, ztracené vědění, náboženský útlak (Orden) vs. stará víra ve Stavitele.
 
@@ -31,7 +31,8 @@ Tento repozitář je **lore wiki a příprava D&D 5e kampaní** ve světě Monte
 
 ## Mapa a web
 - Souřadnice míst: `11_Mapy/mista.json` → popisky `python3 tools/mapa.py` (Pillow). Nové místo s polohou přidej i sem.
-- Web: `web/serve.sh` (MkDocs Material, `web/requirements.txt`), navigace se generuje z nadpisů `# ` souborů. Sekce `## Pro DM` web skryje v režimu hráče.
+- Web: `web/serve.sh` spustí `web/server.py` (MkDocs Material + API pro úpravy). Na webu jde upravit, přidat a smazat každou stránku, postavy (formulář) i místa na mapě – zapisuje se přímo do souborů repa. Navigace se generuje z nadpisů `# `. Sekce `## Pro DM` web skryje v režimu hráče.
+- Postavy: data jsou v YAML hlavičce `postava:` (viz `_Sablony/Sablona_Postava.md`); AC, HP, záchrany, dovednosti, PB, spell DC a sloty dopočítává `web/assets/postava.js` podle pravidel 2024 (`web/assets/pravidla2024.json`). Používej jen species, subclassy, featy a kouzla z pravidel 2024 (PHB 2024, Heroes of Faerûn, Ravenloft: The Horrors Within).
 
 ## Struktura
 Viz `README.md`. Kontrola odkazů: `python3 tools/kontrola.py` (bez závislostí, Python 3).
