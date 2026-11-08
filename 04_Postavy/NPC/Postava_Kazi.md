@@ -9,13 +9,13 @@ postava:
   velikost: Small
   tridy:
   - trida: Rogue
-    uroven: 6
+    uroven: 9
     podtrida: Thief
   atributy:
-    STR: 8
+    STR: 9
     DEX: 18
     CON: 14
-    INT: 12
+    INT: 13
     WIS: 15
     CHA: 10
   puvod_atributu: Standard Array (DEX 15, WIS 14, CON 13, INT 12, CHA 10, STR 8); Guide +2 DEX, +1 WIS; ASI (4) +1 DEX +1
@@ -39,6 +39,9 @@ postava:
   - nazev: Ability Score Improvement
     zdroj: Rogue 4
     poznamka: +1 DEX, +1 CON
+  - nazev: Ability Score Improvement
+    zdroj: Rogue 8
+    poznamka: +1 STR, +1 INT
   zbroj:
     nazev: Studded Leather Armor
     typ: light
