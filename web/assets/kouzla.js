@@ -5,7 +5,7 @@
   var CS = null;
   function lang() { return localStorage.getItem("mont-lang") || "cs"; }
   function loadCs() { return CS ? Promise.resolve(CS) : fetch(base() + "assets/preklad/kouzla_cs.json").then(function (r) { return r.ok ? r.json() : {}; }).catch(function () { return {}; }).then(function (j) { CS = j; return j; }); }
-  function load() { return K ? loadCs().then(function () { return K; }) : fetch(base() + "assets/kouzla2024.json").then(function (r) { return r.json(); }).then(function (j) { K = j; K._low = {}; Object.keys(j).forEach(function (k) { K._low[k.toLowerCase()] = k; }); return K; }); }
+  function load() { return loadCs().then(function () { return K ? K : fetch(base() + "assets/kouzla2024.json").then(function (r) { return r.json(); }).then(function (j) { K = j; K._low = {}; Object.keys(j).forEach(function (k) { K._low[k.toLowerCase()] = k; }); return K; }); }); }
   function esc(s) { return String(s == null ? "" : s).replace(/[&<>"]/g, function (c) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]; }); }
   function find(n) { var k = K[n] ? n : K._low[String(n).toLowerCase()]; return k ? [k, K[k]] : null; }
   function show(name) {
