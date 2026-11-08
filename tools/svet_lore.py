@@ -212,6 +212,11 @@ def lore(svet):
                         for d in np.arange(10, g.length - 5, 34):
                             p = g.interpolate(d); q = nearest_points(mz.buffer(-6), p)[0] if mz.buffer(-6).area > 0 else p
                             svet["symboly"].append({"typ": "kul", "x": int(q.x), "y": int(q.y), "m": round(float(rng.uniform(.85, 1.15)), 2), "pozn": "kůly s lebkami na hranici Knärghe Zhie (DM)"})
+    hranice_kresba = K.get("hranice", [])
+    if hranice_kresba:
+        pozns = {h["pozn"] for h in hranice_kresba}
+        svet["hranice"] = [g for g in svet["hranice"] if g.get("pozn") not in pozns]
+        svet["hranice"].extend(hranice_kresba)
     for o in ob:
         if o["typ"] in ("les", "haj", "louky") and len(o["body"]) > 2 and mz.contains(Polygon(o["body"]).buffer(0).representative_point()):
             o["typ"] = "mrtvy"
@@ -266,7 +271,15 @@ def lore(svet):
     hor = unary_union([Polygon(o["body"]).buffer(0) for o in ob if o["typ"] in ("hory", "velehory") and len(o["body"]) > 2])
     jine = unary_union([Polygon(o["body"]).buffer(0) for o in ob if o["typ"] in ("les", "haj", "dzungle", "poust", "ledovec", "mrtvy", "bazina") and len(o["body"]) > 2])
     lae = next((Point(x["x"], x["y"]).buffer(110) for x in mista if x["nazev"] == "Laertmund"), Polygon())
-    kop = hor.buffer(34).difference(hor.buffer(3)).union(lae.difference(hor)).difference(jine).difference(mz).intersection(land.buffer(-8))
+    kop = hor.buffer(34).difference(hor.buffer(3)).union(lae.difference(hor)).difference(jine).difference(mz)
+    for v in K.get("vyrezat", []):
+        if "kopce" in v["typy"]:
+            kop = kop.difference(Polygon(v["body"]).buffer(0))
+    podhuri = unary_union([
+        Polygon(o["body"]).buffer(o["podhuri"]).difference(Polygon(o["body"]).buffer(3))
+        for o in ob if o["typ"] in ("hory", "velehory") and o.get("podhuri")
+    ])
+    kop = kop.union(podhuri).difference(jine).difference(mz).intersection(land.buffer(-8))
     for b in kousky(kop, 400):
         ob.append({"typ": "kopce", "pozn": "podhůří / pahorkatina (lore: hornatý Laertmund; podhůří pohoří)", "body": b})
     # řeky: obkreslené úseky z kresby + ruční, prodloužené k prameni a ústí (hydrologicky)
