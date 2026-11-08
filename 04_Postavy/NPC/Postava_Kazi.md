@@ -1,6 +1,6 @@
 ---
 postava:
-  jmeno: Kazi Nocostřel
+  jmeno: Kazim
   titul: Pašerák a průvodce pralesem Hinai Mihi
   druh: Halfling
   druh_volby: 'vyprávěcí: kenderská kultura'
@@ -122,6 +122,8 @@ postava:
     - nazev: Uncanny Dodge
       text: Polovina zranění.
     taktika: Nebojuje – schová se, ostřeluje ze stínů a vede družinu pryč nejkratší stezkou.
+    legendarni: []
+  zdroje: []
 ---
 # Postava: Kazi Nocostřel (Průvodce)
 
