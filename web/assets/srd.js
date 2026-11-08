@@ -7,7 +7,7 @@
   function load(t) { return loadCs(t).then(function () { return C[t] ? C[t] : fetch(base() + "assets/srd/" + F[t]).then(function (r) { return r.json(); }).then(function (j) { C[t] = j; return j; }); }); }
   function esc(s) { return String(s == null ? "" : s).replace(/[&<>"]/g, function (c) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]; }); }
   function md(n) { return Math.floor((n - 10) / 2); } function sg(n) { return (n >= 0 ? "+" : "") + n; }
-  function lt(en) { var cs = (CS.bestiar || {})[en], L = window.MontelienLang ? window.MontelienLang.lang() : "cs"; return '<span class="lt" data-cs="' + esc(cs || en) + '" data-en="' + esc(en) + '">' + esc(cs && L === "cs" ? cs : en).replace(/\n/g, "<br>") + '</span>'; }
+  function lt(en) { var cs = (CS.bestiar || {})[en], L = window.MontelienLang ? window.MontelienLang.lang() : "cs"; return '<span class="lt" data-cs="' + esc(cs || en) + '" data-en="' + esc(en) + '">' + esc(cs && L === "cs" ? cs : en).replace(/\n/g, "<br>").replace(/\*\*(.+?)\*\*/g, "<b>$1</b>") + '</span>'; }
   function list(t, a) { return a && a.length ? '<h4>' + t + '</h4>' + a.map(function (x) { return '<p><b><i>' + esc(x.nazev) + '.</i></b> ' + lt(x.text) + '</p>'; }).join("") : ""; }
   function statblock(m) {
     var sp = Object.keys(m.rychlost || {}).map(function (k) { return (k === "walk" ? "" : k + " ") + m.rychlost[k] + " ft"; }).join(", ");

@@ -27,7 +27,7 @@
   function langBar(cs) { return '<div class="lang-bar">' + (cs ? '<button class="lang-btn' + (lang() === "cs" ? ' on' : '') + '" data-lang="cs">CZ</button><button class="lang-btn' + (lang() === "en" ? ' on' : '') + '" data-lang="en">EN</button>' : '<small>Překlad zatím není – zobrazen originál.</small>') + '</div>'; }
   function txt(cs, en) { var s = cs && lang() === "cs" ? cs : en; return s ? '<div class="lt" data-cs="' + esc(cs || "") + '" data-en="' + esc(en || "") + '">' + esc(s).replace(/\n/g, "<br>") + '</div>' : "<i>Popis zatím nestažen.</i>"; }
   document.addEventListener("click", function (e) { var b = e.target.closest && e.target.closest(".lang-btn"); if (!b) return; e.preventDefault(); e.stopPropagation(); localStorage.setItem("mont-lang", b.dataset.lang);
-    var m = b.closest(".ed-modal"); m.querySelectorAll(".lang-btn").forEach(function (x) { x.classList.toggle("on", x === b); }); m.querySelectorAll(".lt").forEach(function (d) { d.innerHTML = esc(d.dataset[b.dataset.lang] || d.dataset.en).replace(/\n/g, "<br>"); }); }, true);
+    var m = b.closest(".ed-modal"); m.querySelectorAll(".lang-btn").forEach(function (x) { x.classList.toggle("on", x === b); }); m.querySelectorAll(".lt").forEach(function (d) { d.innerHTML = esc(d.dataset[b.dataset.lang] || d.dataset.en).replace(/\n/g, "<br>").replace(/\*\*(.+?)\*\*/g, "<b>$1</b>"); }); }, true);
   window.MontelienLang = { bar: langBar, txt: txt, lang: lang };
   window.MontelienKouzla = { show: show, load: load };
   document.addEventListener("click", function (e) { var a = e.target.closest && e.target.closest(".kz-link"); if (a) { e.preventDefault(); show(a.dataset.kouzlo); } });
