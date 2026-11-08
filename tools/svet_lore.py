@@ -378,4 +378,5 @@ def lore(svet):
         hl = uzly[a][2] and uzly[b][2]
         svet["cesty"].append({"typ": "cesta" if hl else "stezka", "pozn": "obchodní cesta (lore: Briria protkaná obchodními cestami; trasa vypočtená, návrh)",
                               "body": [[round(x), round(y)] for x, y in chaikin([tuple(p) for p in c])]})
+    svet["cesty"] += K.get("cesty", [])
     return svet
