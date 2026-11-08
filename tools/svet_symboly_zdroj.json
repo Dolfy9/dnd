@@ -99,11 +99,11 @@
   "pozn": "obelisk s postavami"
  },
  {
-  "typ": "vesnice",
-  "x": 1715,
-  "y": 370,
+  "typ": "mesto",
+  "x": 1690,
+  "y": 380,
   "m": 1,
-  "pozn": "vesnice s domy"
+  "pozn": "Yotter? – město s domy a kruhovou stavbou (kresba DM)"
  },
  {
   "typ": "kolo",

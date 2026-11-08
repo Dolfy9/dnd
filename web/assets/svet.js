@@ -72,8 +72,8 @@
     (D.cesty || []).forEach(function (r) {
       var d = pathD(r.body, false);
       if (r.typ === "most") o.push('<path d="' + d + '" fill="none" stroke="#4a2e16" stroke-width="5" stroke-linecap="round"/><path d="' + d + '" fill="none" stroke="#c9a676" stroke-width="2.6" stroke-linecap="round"/><path d="' + d + '" fill="none" stroke="#4a2e16" stroke-width="2.6" stroke-dasharray="1 4"/>');
-      else if (r.typ === "stezka") o.push('<path d="' + d + '" fill="none" stroke="#7a5a3a" stroke-width="1.1" stroke-dasharray="2.5 3.5" stroke-linecap="round" opacity=".85"/>');
-      else o.push('<path d="' + d + '" fill="none" stroke="#f4e6c0" stroke-width="3.6" stroke-linecap="round" opacity=".55"/><path d="' + d + '" fill="none" stroke="#6b4423" stroke-width="1.7" stroke-dasharray="7 4" stroke-linecap="round"/>');
+      else if (r.typ === "stezka") o.push('<path d="' + d + '" fill="none" stroke="#6b4a2a" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" opacity=".55"/><path d="' + d + '" fill="none" stroke="#e3cfa0" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/>');
+      else o.push('<path d="' + d + '" fill="none" stroke="#5a3f24" stroke-width="4.4" stroke-linecap="round" stroke-linejoin="round" opacity=".75"/><path d="' + d + '" fill="none" stroke="#d8bf8a" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"/><path d="' + d + '" fill="none" stroke="#a88a5a" stroke-width=".6" stroke-dasharray="3 2" stroke-linecap="round" stroke-linejoin="round" opacity=".6"/>');
     });
     (D.hradby || []).forEach(function (r) { o.push('<path d="' + pathD(r.body, false) + '" fill="none" stroke="#2e241a" stroke-width="2.2" opacity=".5"/>'); });
     (D.utesy || []).forEach(function (r) { o.push('<path d="' + pathD(r.body, false) + '" fill="none" stroke="#3a2e22" stroke-width="3" opacity=".3"/>'); });
