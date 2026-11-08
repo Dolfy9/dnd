@@ -152,6 +152,7 @@ def hydro(svet, land, ob, seeds, rng, k=2):
 
 
 def lore(svet):
+    K = json.loads((Path(__file__).with_name("svet_kresba.json")).read_text(encoding="utf-8"))
     Z = json.loads((T / "svet_lore.json").read_text(encoding="utf-8"))
     mista = json.loads((R / "11_Mapy/mista.json").read_text(encoding="utf-8"))["mista"]
     vod = json.loads((R / "11_Mapy/vodstvo.json").read_text(encoding="utf-8"))
@@ -166,9 +167,25 @@ def lore(svet):
         for b in kousky(Polygon(o["body"]).buffer(0).intersection(land)):
             ob.append({"typ": o["typ"], "pozn": o["pozn"] + " (lore, návrh)", "zdroj": o["zdroj"], "body": b})
 
+    for v in K.get("vyrezat", []):
+        vyrez = Polygon(v["body"]).buffer(0)
+        typy = set(v["typy"])
+        ob2 = []
+        for o in ob:
+            if o["typ"] not in typy:
+                ob2.append(o)
+                continue
+            for b in kousky(Polygon(o["body"]).buffer(0).difference(vyrez), 150):
+                ob2.append(o | {"body": b})
+        ob[:] = ob2
+
+    for o in K.get("oblasti", []):
+        for b in kousky(Polygon(o["body"]).buffer(0).intersection(land)):
+            ob.append(o | {"body": b})
+
     for o in ob:
         if o["typ"] == "hory" and len(o["body"]) > 2 and Polygon(o["body"]).buffer(0).centroid.y < 480:
-            o["typ"] = "velehory"; o["pozn"] = "zasněžené hory zamrzlého severu (lore)"
+            o["typ"] = "velehory"
     st = staty(svet, land, ob, mista)
     kn = next((z for z in st if z["nazev"].startswith("Knärghe")), None)
     mz = unary_union(kn["polys"]) if kn else Polygon(Z["mrtva_zeme"]["body"])
@@ -253,7 +270,6 @@ def lore(svet):
     for b in kousky(kop, 400):
         ob.append({"typ": "kopce", "pozn": "podhůří / pahorkatina (lore: hornatý Laertmund; podhůří pohoří)", "body": b})
     # řeky: obkreslené úseky z kresby + ruční, prodloužené k prameni a ústí (hydrologicky)
-    K = json.loads((Path(__file__).with_name("svet_kresba.json")).read_text(encoding="utf-8"))
     seeds = [{"typ": "reka", "pozn": r["nazev"], "body": r["body"]} for r in K["reky"]] + [r for r in svet["reky"] if "DM" in r.get("pozn", "") and not r.get("pozn", "").startswith("řeka u Nöetu")]
     svet["reky"] = hydro(svet, land, ob, seeds, rng)
     for hb in K.get("hradby", []):
@@ -278,7 +294,6 @@ def lore(svet):
                 angle += -180 if angle > 0 else 180
             angle = max(-50, min(50, angle))
             svet["symboly"].append({"typ": "utes_velky", "x": int(p.x), "y": int(p.y), "m": float(rng.uniform(.9, 1.1)), "rot": angle})
-    ob.extend(K.get("oblasti", []))
     svet["symboly"] += K.get("pevnosti", [])
     # nic nepřetéká do moře: oblasti oříznout podle souše
     le = land.buffer(-7)

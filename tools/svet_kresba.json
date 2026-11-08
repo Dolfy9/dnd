@@ -230,6 +230,54 @@
       "typ": "pole",
       "pozn": "kostkovaná pole Ordenu (kresba DM)",
       "body": [[1035, 945], [1110, 940], [1112, 995], [1040, 1000]]
+    },
+    {
+      "typ": "hory",
+      "pozn": "horské značky Divokého Severu (kresba DM)",
+      "body": [[220, 95], [300, 85], [400, 130], [460, 170], [470, 240], [430, 290], [320, 295], [250, 260], [215, 180]]
+    },
+    {
+      "typ": "kopce",
+      "pozn": "šikmé tahy v kresbě – pahorkatina západní Bririe (výklad)",
+      "body": [[535, 555], [660, 550], [700, 620], [690, 705], [600, 710], [540, 680]]
+    },
+    {
+      "typ": "kopce",
+      "hustota": 1.6,
+      "pozn": "oválný hřbet v Bririi (kresba DM)",
+      "body": [[823, 640], [828, 659], [826, 678], [815, 696], [799, 710], [779, 717], [758, 717], [740, 709], [727, 696], [722, 677], [724, 658], [735, 640], [751, 626], [771, 619], [792, 619], [810, 627]]
+    },
+    {
+      "typ": "hory",
+      "pozn": "hřbety s řekami mezi Ordenem a Tali (kresba DM)",
+      "body": [[1185, 995], [1230, 985], [1290, 1040], [1300, 1110], [1265, 1120], [1225, 1060]]
+    },
+    {
+      "typ": "pole",
+      "pozn": "šrafovaná pole jižního Tali (kresba DM)",
+      "body": [[1300, 1180], [1470, 1150], [1475, 1245], [1320, 1252]]
+    }
+  ],
+  "vyrezat": [
+    {
+      "typy": ["hory", "velehory"],
+      "body": [[90, 10], [340, 10], [340, 140], [300, 160], [90, 160]],
+      "pozn": "severní cíp Divokého Severu – v kresbě bez hor"
+    },
+    {
+      "typy": ["les"],
+      "body": [[535, 550], [700, 550], [700, 710], [535, 710]],
+      "pozn": "západní Briria – v kresbě není les, ale pahorkatina"
+    },
+    {
+      "typy": ["hory", "velehory"],
+      "body": [[740, 570], [850, 570], [850, 710], [740, 710]],
+      "pozn": "oválný hřbet Bririe místo hor"
+    },
+    {
+      "typy": ["poust"],
+      "body": [[1300, 1060], [1470, 1060], [1470, 1255], [1300, 1255]],
+      "pozn": "jih Tali – oáza a pole místo dun"
     }
   ],
   "pevnosti": [
@@ -295,6 +343,104 @@
       "y": 1388,
       "m": 0.9,
       "pozn": "mořské vlny jižně od Nöetu (kresba DM; dřív chybně ostrůvky)"
+    },
+    {
+      "typ": "oaza",
+      "x": 1395,
+      "y": 1130,
+      "m": 1.2,
+      "pozn": "oáza Tali (kresba DM)"
+    },
+    {
+      "typ": "palmy",
+      "x": 1360,
+      "y": 1095,
+      "m": 1.0,
+      "pozn": "palmy oázy Tali (kresba DM)"
+    },
+    {
+      "typ": "palmy",
+      "x": 1385,
+      "y": 1160,
+      "m": 1.0,
+      "pozn": "palmy oázy Tali (kresba DM)"
+    },
+    {
+      "typ": "palmy",
+      "x": 1420,
+      "y": 1100,
+      "m": 1.0,
+      "pozn": "palmy oázy Tali (kresba DM)"
+    },
+    {
+      "typ": "palmy",
+      "x": 1430,
+      "y": 1170,
+      "m": 1.0,
+      "pozn": "palmy oázy Tali (kresba DM)"
+    },
+    {
+      "typ": "palmy",
+      "x": 1345,
+      "y": 1150,
+      "m": 1.0,
+      "pozn": "palmy oázy Tali (kresba DM)"
+    },
+    {
+      "typ": "palmy",
+      "x": 1405,
+      "y": 1190,
+      "m": 1.0,
+      "pozn": "palmy oázy Tali (kresba DM)"
+    },
+    {
+      "typ": "kaktus",
+      "x": 1320,
+      "y": 1020,
+      "m": 1.0,
+      "pozn": "kaktusy Tali (kresba DM)"
+    },
+    {
+      "typ": "kaktus",
+      "x": 1345,
+      "y": 1045,
+      "m": 1.0,
+      "pozn": "kaktusy Tali (kresba DM)"
+    },
+    {
+      "typ": "kaktus",
+      "x": 1300,
+      "y": 1060,
+      "m": 1.0,
+      "pozn": "kaktusy Tali (kresba DM)"
+    },
+    {
+      "typ": "kaktus",
+      "x": 1330,
+      "y": 1080,
+      "m": 1.0,
+      "pozn": "kaktusy Tali (kresba DM)"
+    },
+    {
+      "typ": "palisada",
+      "x": 1190,
+      "y": 1194,
+      "m": 1.0,
+      "pozn": "dřevěný plot v Laertmundu (kresba DM)"
+    },
+    {
+      "typ": "palisada",
+      "x": 1212,
+      "y": 1193,
+      "m": 1.0,
+      "pozn": "dřevěný plot v Laertmundu (kresba DM)"
+    },
+    {
+      "typ": "palisada",
+      "x": 1234,
+      "y": 1192,
+      "m": 1.0,
+      "pozn": "dřevěný plot v Laertmundu (kresba DM)"
     }
   ]
 }

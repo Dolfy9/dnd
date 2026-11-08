@@ -86,12 +86,17 @@
     }
     (D.oblasti || []).forEach(function (a, ai) {
       var t = OBL[a.typ]; if (!t || !t.spr || !t.spr.length) return;
-      var bb = bbox(a.body), R = rng(ai * 7919 + 13 + Math.round(bb[0] + bb[1])), st = t.rozestup / (a.hustota || 1), row = 0;
+      var bb = bbox(a.body), R = rng(ai * 7919 + 13 + Math.round(bb[0] + bb[1])), st = t.rozestup / (a.hustota || 1), row = 0, sh = t.shluky === true,
+        f1 = sh ? R() * Math.PI * 2 : 0, f2 = sh ? R() * Math.PI * 2 : 0, f3 = sh ? R() * Math.PI * 2 : 0;
       for (var y = bb[1] + st * .5; y < bb[3] + st * .3; y += st * .62, row++) for (var x = bb[0] + (row % 2 ? st / 2 : 0); x < bb[2]; x += st) {
-        var px = x + (R() - .5) * st * .8, py = y + (R() - .5) * st * .5;
+        var px = x + (R() - .5) * st * (sh ? 1.1 : .8), py = y + (R() - .5) * st * (sh ? .9 : .5);
         if (!inPoly(px, py, a.body) || lakes.some(function (l) { return inPoly(px, py, l.body); })) continue;
+        if (sh) {
+          var n = .5 + .5 * Math.sin(px * .031 + f1) * Math.sin(py * .027 + f2) + .25 * Math.sin((px + py) * .07 + f3);
+          if (R() > .2 + .9 * n) continue;
+        }
         var nm = t.spr[Math.floor(R() * t.spr.length)];
-        items.push([py, spr(nm, px, py, t.w * (REL[nm.split("_")[0]] || 1) * (.8 + R() * .4), R() < .5)]);
+        items.push([py, spr(nm, px, py, t.w * (REL[nm.split("_")[0]] || 1) * (sh ? .65 + R() * .7 : .8 + R() * .4), R() < .5)]);
       }
     });
     // řídká drobná vegetace na volné pevnině (mimo oblasti a jezera)
