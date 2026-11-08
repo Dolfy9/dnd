@@ -35,6 +35,17 @@ postava:
   zbroj:
     typ: none
   prevod_2024: Vytvořeno průvodcem podle pravidel 2024.
+  kouzla:
+  - nazev: Circle Of Death
+    uroven: 6
+    trida: PJ
+    vzdy: true
+    poznamka: dle PJ
+  - nazev: Clairvoyance
+    uroven: 3
+    trida: PJ
+    vzdy: true
+    poznamka: dle PJ
 ---
 
 # Dluben
