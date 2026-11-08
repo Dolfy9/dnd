@@ -179,3 +179,20 @@
 .p2-card { padding: 6px 10px 8px; margin-bottom: 8px; } .p2-2col, .p2-spells { gap: 8px; }
 @media (max-width: 1100px) { .p2-vitals { grid-template-columns: 62px 1fr 1fr 1fr; } .p2-abil { grid-template-columns: repeat(3, 1fr); } }
 .ps.ps2 { --ink: inherit; --line: inherit; --paper: inherit; --paper2: inherit; }
+/* navigace sekcí sheetu */
+.p2-tabs { flex-wrap: nowrap; overflow-x: auto; scrollbar-width: thin; gap: 6px; padding: 6px 4px; border-bottom: 2px solid var(--red); background: color-mix(in srgb, var(--paper) 92%, transparent); backdrop-filter: blur(4px); border-radius: 10px 10px 0 0; box-shadow: 0 4px 10px -8px rgba(0,0,0,.45); }
+.p2-tabbtn { display: inline-flex; align-items: center; gap: 6px; flex: 0 0 auto; border: 1px solid var(--line); border-radius: 999px; padding: 5px 12px; background: var(--paper2); transition: background .15s, color .15s, transform .1s; white-space: nowrap; }
+.p2-tabbtn:hover { border-color: var(--red); transform: translateY(-1px); }
+.p2-tabbtn.on { background: var(--red); color: var(--hi); border-color: var(--red); box-shadow: 0 2px 6px -2px var(--red); }
+.p2-ti { font-size: .9rem; line-height: 1; }
+.p2-tc { font: 700 .6rem system-ui, sans-serif; background: var(--paper); color: var(--red); border-radius: 999px; padding: 1px 6px; border: 1px solid var(--line); }
+.p2-tabbtn.on .p2-tc { background: var(--hi); color: var(--red); border-color: transparent; }
+.p2-taball { margin-left: auto; }
+@media (max-width: 700px) { .p2-tl { display: none; } .p2-tabbtn.on .p2-tl { display: inline; } .p2-tabbtn { padding: 5px 9px; } }
+/* tabulky v rysech */
+.p2-rt-t { font: 700 .66rem "Cinzel", serif; color: var(--red); margin: 6px 0 2px; text-transform: uppercase; }
+.md-typeset table.p2-rt { display: table; width: 100%; font-size: .7rem; border-collapse: collapse; margin: 2px 0 8px; }
+.md-typeset table.p2-rt th { background: var(--red); color: var(--hi); padding: 3px 6px; text-align: left; font-weight: 700; }
+.md-typeset table.p2-rt td { padding: 3px 6px; border-top: 1px solid var(--line2); }
+.md-typeset table.p2-rt tr:nth-child(odd) td { background: color-mix(in srgb, var(--paper2) 70%, transparent); }
+.ps2 details > div p { margin: .3em 0; }
