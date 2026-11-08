@@ -107,6 +107,27 @@ def water_mask(clean, data):
     return water.astype(bool)
 
 
+def upravy_kresby(clean):
+    """Ruční úpravy kresby DM z vodstvo.json: vymazané plochy a zmenšené symboly (Kop Aram)."""
+    voda = json.loads((MAPY / "vodstvo.json").read_text(encoding="utf-8"))
+    out = clean.copy()
+    zm = []
+    for z in voda.get("zmenseni", []):
+        x0, y0, x1, y1 = z["zdroj"]
+        zm.append((z, cv2.resize(clean[y0:y1, x0:x1], None, fx=z["meritko"], fy=z["meritko"], interpolation=cv2.INTER_AREA)))
+    for poly in voda.get("bez_kresby", []):
+        m = np.zeros(clean.shape[:2], np.uint8)
+        cv2.fillPoly(m, [np.int32(poly)], 1)
+        m = cv2.GaussianBlur(m.astype(np.float32), (0, 0), 2)
+        out = (out * (1 - m) + 255 * m).astype(np.uint8)
+    for z, sm in zm:
+        h, w = sm.shape[:2]
+        cx, cy = z["stred"]
+        x, y = int(cx - w / 2), int(cy - h / 2)
+        out[y:y + h, x:x + w] = np.minimum(out[y:y + h, x:x + w], sm)
+    return out
+
+
 def rbox(cx, cy, length, height, rot):
     return cv2.boxPoints(((cx, cy), (length, height), -rot)).astype(np.int32)
 
@@ -209,7 +230,7 @@ def main(debug=False):
     clean = rectify()
     cv2.imwrite(str(MAPY / "Montelien_mapa_vyrovnana.jpg"), clean, [cv2.IMWRITE_JPEG_QUALITY, 90])
     water = water_mask(clean, data)
-    img = render(clean, water, data, debug)
+    img = render(upravy_kresby(clean), water, data, debug)
     out = MAPY / ("Montelien_mapa_debug.jpg" if debug else "Montelien_mapa.jpg")
     img.convert("RGB").save(out, quality=88)
     print("Uloženo:", out.relative_to(ROOT))
