@@ -251,12 +251,20 @@ def lore(svet):
             o["typ"] = "velehory"
     st = staty(svet, land, ob, mista)
     uzemi = {}
+    vychodni_uzemi = {}
+    neprirazene = []
     for u in K.get("uzemi", []):
+        if u.get("stat", "stat") is None:
+            g = Polygon(u["body"]).buffer(0)
+            if g.area > 0:
+                neprirazene.append(g)
+            continue
         if not any(z["nazev"] == u["nazev"] for z in st):
             continue
         g = Polygon(u["body"]).buffer(0).intersection(land)
         if g.area > 0:
-            uzemi[u["nazev"]] = unary_union([uzemi[u["nazev"]], g]) if u["nazev"] in uzemi else g
+            target = vychodni_uzemi if u.get("pozn", "").startswith("východní hranice DM:") else uzemi
+            target[u["nazev"]] = unary_union([target[u["nazev"]], g]) if u["nazev"] in target else g
     if uzemi:
         vyhra = unary_union(list(uzemi.values()))
         for z in st:
@@ -264,9 +272,15 @@ def lore(svet):
             if z["nazev"] in uzemi:
                 g = unary_union([g, uzemi[z["nazev"]]])
             z["polys"] = [p for p in geoms(g) if p.geom_type == "Polygon" and p.area > 1]
+    for z in st:
+        if z["nazev"] in vychodni_uzemi:
+            g = unary_union([unary_union(z["polys"]), vychodni_uzemi[z["nazev"]]])
+            z["polys"] = [p for p in geoms(g) if p.geom_type == "Polygon" and p.area > 1]
     kn = next((z for z in st if z["nazev"].startswith("Knärghe")), None)
-    mz = unary_union(kn["polys"]) if kn else Polygon(Z["mrtva_zeme"]["body"])
-    mz = irregular(mz, 6421, 14, spacing=5).intersection(land)
+    kn_region = unary_union([
+        Polygon(body(p.simplify(1.5))).buffer(0) for p in kn["polys"] if p.area > 3000
+    ]) if kn else Polygon(Z["mrtva_zeme"]["body"])
+    mz = irregular(kn_region, 6421, 14, spacing=5).intersection(kn_region.buffer(-2)).intersection(land)
     ob[:] = [o for o in ob if not (
         o["typ"] == "mrtva_zeme" and len(o["body"]) > 2
         and Polygon(o["body"]).buffer(0).intersection(mz).area > 1
@@ -281,6 +295,12 @@ def lore(svet):
     ob[:] = ob2
     ob3 = []
     for i, o in enumerate(ob):
+        if o["typ"] in ("ledovec", "velehory") and len(o["body"]) >= 3:
+            amp = 7 if o["typ"] == "ledovec" else 3
+            shaped = irregular(Polygon(o["body"]).buffer(0), 42001 + i * 271, amp, spacing=6).intersection(land)
+            for b in kousky(shaped, 45 if o["typ"] == "ledovec" else 100):
+                ob3.append(o | {"body": b})
+            continue
         if o["typ"] not in ("les", "haj", "dzungle", "mrtvy") or len(o["body"]) < 3:
             ob3.append(o)
             continue
@@ -291,6 +311,14 @@ def lore(svet):
     ob[:] = ob3
     svet["zeme"] = [{"nazev": z["nazev"], "body": [body(p.simplify(1.5)) for p in z["polys"] if p.area > 3000], "pozn": "území státu vypočtené z popisků a terénu (návrh)"}
                     | ({"barva": "#1e1614"} if z is kn else {"barva": "#6b6b6b"} if z["divoke"] else {}) for z in st]
+    for geom in neprirazene:
+        for p in geoms(geom):
+            if p.geom_type == "Polygon" and p.area > 1000:
+                svet["zeme"].append({
+                    "nazev": "Nepřiřazené území", "stat": None,
+                    "barva": "#838b8f", "pozn": "nepřiřazeno – čeká na DM",
+                    "body": [body(p.simplify(1.5))],
+                })
     cb = land.boundary.buffer(7)
     for z, zz in zip(st, svet["zeme"]):
         U = unary_union(z["polys"])
@@ -312,10 +340,8 @@ def lore(svet):
                         for d in np.arange(10, g.length - 5, 34):
                             p = g.interpolate(d); q = nearest_points(mz.buffer(-6), p)[0] if mz.buffer(-6).area > 0 else p
                             svet["symboly"].append({"typ": "kul", "x": int(q.x), "y": int(q.y), "m": round(float(rng.uniform(.85, 1.15)), 2), "pozn": "kůly s lebkami na hranici Knärghe Zhie (DM)"})
-    hranice_kresba = K.get("hranice", []) if not K.get("uzemi") else []
+    hranice_kresba = [h for h in K.get("hranice", []) if h.get("carkovana")]
     if hranice_kresba:
-        pozns = {h["pozn"] for h in hranice_kresba}
-        svet["hranice"] = [g for g in svet["hranice"] if g.get("pozn") not in pozns]
         svet["hranice"].extend(hranice_kresba)
     for o in ob:
         if o["typ"] in ("les", "haj", "louky") and len(o["body"]) > 2 and mz.contains(Polygon(o["body"]).buffer(0).representative_point()):

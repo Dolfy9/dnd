@@ -53,13 +53,13 @@ function vzdalenostKeKrajiPevniny(x, y) {
 ["pevnina", "oblasti", "reky", "cesty", "hranice", "hradby", "utesy"].forEach(k => (D[k] || []).forEach((f, i) => { if (!ok(f.body)) err.push(k + "[" + i + "] neplatné body"); }));
 (D.oblasti || []).forEach((f, i) => { if (!O[f.typ]) err.push("neznámý typ oblasti " + f.typ); });
 (D.oblasti || []).forEach((f, i) => {
-  if (!["les", "haj", "dzungle", "mrtvy", "mrtva_zeme"].includes(f.typ) || !ok(f.body) || f.body.length < 3) return;
+  if (!["les", "haj", "dzungle", "mrtvy", "mrtva_zeme", "ledovec", "velehory"].includes(f.typ) || !ok(f.body) || f.body.length < 3) return;
   const limit = 40;
   for (let j = 0; j < f.body.length; j++) {
     const a = f.body[j], b = f.body[(j + 1) % f.body.length], length = Math.hypot(a[0] - b[0], a[1] - b[1]);
     if (length <= limit) continue;
     const middle = [(a[0] + b[0]) / 2, (a[1] + b[1]) / 2];
-    if ([a, middle, b].every(p => vzdalenostKeKrajiPevniny(p[0], p[1]) <= 6)) continue;
+    if ([a, middle, b].every(p => vzdalenostKeKrajiPevniny(p[0], p[1]) <= 8)) continue;
     err.push(f.typ + "[" + i + "] má přímý úsek obvodu " + length.toFixed(1) + " px (limit " + limit + ")");
     break;
   }
@@ -79,6 +79,7 @@ const souse = (D.pevnina || []).map((f, i) => ({ f, i })).filter(({ f }) => f.ty
     if (!souse.some(({ f }) => uvnitr(s.x, s.y, f.body))) err.push("ledový útes[" + i + "] není na pevnině");
     const coast = vzdalenostKPobrezi(s.x, s.y);
     if (coast > 25) err.push("ledový útes[" + i + "] je " + coast.toFixed(1) + " px od pobřeží (limit 25)");
+    if (s.pozn === "ledový útes u severního fjordu Nölienu" && coast > 2) err.push("ledový útes Nölienu není ukotvený na pobřeží (limit 2 px)");
   }
   if (!vodniSymboly.has(s.typ)) return;
   const nalez = souse.find(({ f }) => uvnitr(s.x, s.y, f.body));

@@ -97,7 +97,11 @@
     o.push('<path d="' + landD + '" fill="none" stroke="#7a5a37" stroke-opacity=".18" stroke-width="2" stroke-linejoin="round"/>');
     (D.oblasti || []).forEach(function (a) { if (!a.tmavy) return; o.push('<path d="' + pathD(a.body, true) + '" fill="' + AP.tmavy + '" opacity="' + PAL.area_opacity.tmavy + '" filter="url(#sv-mekce)"/>'); });
     var ZPAL = PAL.state_tints || [];
-    (D.zeme || []).forEach(function (z, i) { var c = ZPAL[i % ZPAL.length] || "#777"; (z.pas || []).forEach(function (b) { o.push('<path d="' + (typeof b[0][0] === "number" ? pathD(b, true) : b.map(function (r) { return pathD(r, true); }).join(" ")) + '" fill="' + c + '" fill-rule="evenodd" opacity="' + (PAL.state_tint_opacity == null ? .12 : PAL.state_tint_opacity) + '"/>'); }); });
+    (D.zeme || []).forEach(function (z, i) {
+      var c = z.stat === null ? (z.barva || "#838b8f") : (ZPAL[i % ZPAL.length] || "#777");
+      (z.pas || []).forEach(function (b) { o.push('<path d="' + (typeof b[0][0] === "number" ? pathD(b, true) : b.map(function (r) { return pathD(r, true); }).join(" ")) + '" fill="' + c + '" fill-rule="evenodd" opacity="' + (PAL.state_tint_opacity == null ? .12 : PAL.state_tint_opacity) + '"/>'); });
+      if (z.stat === null) (z.body || []).forEach(function (ring) { o.push('<path d="' + pathD(ring, true) + '" fill="' + c + '" fill-opacity=".12"/>'); });
+    });
     (D.oblasti || []).forEach(function (a, i) {
       if (a.typ !== "pole") return;
       var Rf = rng(977 + i * 31), xs = a.body.map(function (p) { return p[0]; }), ys = a.body.map(function (p) { return p[1]; }),
@@ -124,7 +128,7 @@
     });
     (D.hradby || []).forEach(function (r) { o.push('<path d="' + pathD(r.body, false) + '" fill="none" stroke="#2e241a" stroke-width="2.2" opacity=".5"/>'); });
     (D.utesy || []).forEach(function (r) { o.push('<path d="' + pathD(r.body, false) + '" fill="none" stroke="#3a2e22" stroke-width="3" opacity=".3"/>'); });
-    (D.hranice || []).forEach(function (r) { var d = pathD(r.body, false); o.push('<path d="' + d + '" fill="none" stroke="#f3e6c4" stroke-width="4" opacity=".5"/><path d="' + d + '" fill="none" stroke="#7a2416" stroke-width="1.6" stroke-dasharray="9 3 2 3" opacity=".85"/>'); });
+    (D.hranice || []).forEach(function (r) { var d = pathD(r.body, false), dash = r.carkovana ? "7 6" : "9 3 2 3"; o.push('<path d="' + d + '" fill="none" stroke="#f3e6c4" stroke-width="4" opacity=".5"/><path d="' + d + '" fill="none" stroke="#7a2416" stroke-width="1.6" stroke-dasharray="' + dash + '" opacity=".85"/>'); });
     // symboly v oblastech (seřazené podle y, aby se překrývaly správně)
     var items = [], landPolys = (D.pevnina || []).filter(function (p) { return p.typ === "pevnina" || p.typ === "ostrov"; }),
       ridgeAreas = (D.oblasti || []).filter(function (a) { return a.typ === "hory" || a.typ === "velehory"; });
@@ -326,8 +330,8 @@
       ctx.save(); ctx.beginPath(); ctx.moveTo(pts[0][0], pts[0][1]);
       pts.slice(1).forEach(function (p) { ctx.lineTo(p[0], p[1]); }); ctx.closePath();
       if (area.typ === "ledovec") {
-        ctx.lineWidth = 2 / scaleNow; ctx.strokeStyle = vectors.glacier_outline_shadow || "rgba(54,81,94,.55)"; ctx.stroke();
-        ctx.lineWidth = .75 / scaleNow; ctx.strokeStyle = vectors.glacier_outline || "rgba(135,164,178,.9)"; ctx.stroke();
+        ctx.lineWidth = 1.35 / scaleNow; ctx.strokeStyle = vectors.glacier_outline_shadow || "rgba(54,81,94,.42)"; ctx.stroke();
+        ctx.lineWidth = .65 / scaleNow; ctx.strokeStyle = vectors.glacier_outline || "rgba(135,164,178,.72)"; ctx.stroke();
       }
       ctx.clip();
       ctx.lineWidth = line;
@@ -336,8 +340,8 @@
         var coastward = nearestShore(centerX, centerY, state.shore), vx = coastward.x - centerX, vy = coastward.y - centerY;
         var directionLength = Math.hypot(vx, vy) || 1; vx /= directionLength; vy /= directionLength;
         var clusterCount = Math.max(1, Math.min(3, Math.ceil((maxX - minX) / 60)));
-        var bandCount = Math.max(2, Math.min(5, vectors.glacier_flow_count || 3));
-        var spread = Math.min(32, Math.max(12, (maxX - minX) * .18));
+        var bandCount = Math.max(2, Math.min(4, vectors.glacier_flow_count || 2));
+        var spread = Math.min(26, Math.max(10, (maxX - minX) * .14));
         var flowRng = rng(617 + index * 9973), crackRng = rng(7919 + index * 104729);
         var hollow = vectors.glacier_hollow || "rgba(57,90,106,.1)";
         var crackLength = (vectors.glacier_crevasse_length || 13) / scaleNow;
@@ -349,7 +353,7 @@
           var shore = nearestShore(anchorX, anchorY, state.shore), fx = shore.x - anchorX, fy = shore.y - anchorY;
           var flowNorm = Math.hypot(fx, fy) || 1; fx /= flowNorm; fy /= flowNorm;
           var fpx = -fy, fpy = fx;
-          var flowLength = Math.min(vectors.glacier_flow_length || 48, Math.max(22, shore.d * scaleNow * .42)) / scaleNow;
+          var flowLength = Math.min(vectors.glacier_flow_length || 34, Math.max(18, shore.d * scaleNow * .34)) / scaleNow;
           var phase = flowRng() * Math.PI * 2;
           for (var band = 0; band < bandCount; band++) {
             var offset = (band - (bandCount - 1) / 2) * 14 / scaleNow, points = [];
@@ -378,6 +382,23 @@
             if (!inPoly(cx, cy, pts) || !inPoly(ex, ey, pts)) continue;
             ctx.beginPath(); ctx.moveTo(cx, cy); ctx.lineTo(cx + dx * .55 + fpx * crackLength * .12, cy + dy * .55 + fpy * crackLength * .12); ctx.lineTo(ex, ey); ctx.stroke();
           }
+        }
+        var edgeCrackCount = Math.max(10, Math.min(22, Math.round((maxX - minX + maxY - minY) / 38)));
+        ctx.globalAlpha = .72;
+        ctx.strokeStyle = vectors.glacier_crevasse || "rgba(57,90,106,.42)";
+        ctx.lineWidth = .9 / scaleNow; ctx.lineCap = "round";
+        for (var ec = 0; ec < edgeCrackCount; ec++) {
+          var edgeIndex = Math.floor((ec + crackRng()) * pts.length / edgeCrackCount) % pts.length;
+          var edgeA = pts[edgeIndex], edgeB = pts[(edgeIndex + 1) % pts.length];
+          var etx = edgeB[0] - edgeA[0], ety = edgeB[1] - edgeA[1], etn = Math.hypot(etx, ety) || 1;
+          var enx = -ety / etn, eny = etx / etn, emx = (edgeA[0] + edgeB[0]) / 2, emy = (edgeA[1] + edgeB[1]) / 2;
+          if ((centerX - emx) * enx + (centerY - emy) * eny < 0) { enx = -enx; eny = -eny; }
+          var offset = 2 + crackRng() * 5, ex0 = emx + enx * offset, ey0 = emy + eny * offset;
+          var crackLen = (6 + crackRng() * 7) / scaleNow, etx2 = etx / etn, ety2 = ety / etn;
+          var ex1 = ex0 + enx * crackLen + etx2 * crackLen * .18, ey1 = ey0 + eny * crackLen + ety2 * crackLen * .18;
+          var exm = ex0 + enx * crackLen * .55 - etx2 * crackLen * .08, eym = ey0 + eny * crackLen * .55 - ety2 * crackLen * .08;
+          if (!inPoly(ex0, ey0, pts) || !inPoly(exm, eym, pts) || !inPoly(ex1, ey1, pts)) continue;
+          ctx.beginPath(); ctx.moveTo(ex0, ey0); ctx.lineTo(exm, eym); ctx.lineTo(ex1, ey1); ctx.stroke();
         }
         ctx.globalAlpha = 1;
       } else {

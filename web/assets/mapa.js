@@ -39,19 +39,21 @@
     stateTip = null;
   }
   function showState(z, ll) {
-    if (activeState === z.nazev) return;
-    activeState = z.nazev;
+    if (activeState === z) return;
+    activeState = z;
     stateHighlight.clearLayers();
+    var unassigned = z.stat === null;
     (z.body || []).forEach(function (ring) {
       if (ring.length < 3) return;
       stateHighlight.addLayer(L.polygon(ring.map(function (p) { return [H - p[1], p[0]]; }), {
-        interactive: false, color: "#fff1a0", weight: 5, opacity: .96, fillColor: "#fff3b0", fillOpacity: .19,
+        interactive: false, color: unassigned ? "#5c666b" : "#fff1a0", weight: 5, opacity: .96,
+        fillColor: unassigned ? "#9aa4a8" : "#fff3b0", fillOpacity: unassigned ? .24 : .19,
         lineCap: "round", lineJoin: "round"
       }));
     });
     if (stateTip) map.removeLayer(stateTip);
     stateTip = L.tooltip({ permanent: true, direction: "top", className: "mapa-stav-stitek" })
-      .setLatLng(ll).setContent(esc(z.nazev)).addTo(map);
+      .setLatLng(ll).setContent(esc(unassigned ? "Nepřiřazené území" : z.nazev)).addTo(map);
   }
   map.on("mousemove", function (e) {
     if (crop || SV.open || !stateData.length) return;
@@ -64,7 +66,13 @@
   });
   el.addEventListener("mouseleave", clearState);
   fetch("../11_Mapy/svet.json?t=" + Date.now()).then(function (r) { return r.json(); }).then(function (j) {
-    SV.D = j; stateData = j.zeme || [];
+    SV.D = j;
+    var hoverPriority = ["Nölien", "Khearaz", "Mönohen", "Khärghe Zhia", "Knärghe Zhia"];
+    stateData = (j.zeme || []).slice().sort(function (a, b) {
+      var ra = a.stat === null ? 0 : (hoverPriority.indexOf(a.nazev) >= 0 ? 1 : 2);
+      var rb = b.stat === null ? 0 : (hoverPriority.indexOf(b.nazev) >= 0 ? 1 : 2);
+      return ra - rb;
+    });
     if (window.MontelienSvet) window.MontelienSvet.render(svgEl, j, D, "../");
     refreshLabels();
   }).catch(function () { });

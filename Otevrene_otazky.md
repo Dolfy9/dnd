@@ -44,7 +44,8 @@ Seznam věcí k rozhodnutí DM. Po rozhodnutí položku přesuň do sekce *Vyře
 - **Hinai Mihi (≈1210,645):** temný prales na severním břehu východní části jezera Amir. *(vyřešeno – potvrdil DM)*
 - Obchodní cesty mezi sídly jsou vypočtené (terén, mosty, uzavřená Knärghe Zhia), ne z kresby. Které z nich platí?
 - Hranice států mimo pokrytí mapou DM jsou vypočtené (od popisku země po terénu, hory jako přirozená hranice); v pokrytém území jsou převzaté z mapy hranic DM. Kůly s lebkami stojí na hranici Knärghe Zhie. Sedí průběh hranic mimo mapu DM?
-- **Čárkovaná svislá čára v horní části mapy hranic (≈x 550):** význam nejasný, do hranic území nebyla zahrnuta. *(návrh – čeká na DM)*
+- **Východní hranice států (DM):** Pohoří s chrámy severně od Nölienu patří podle DM k Nölienu. Nepřiřazené zůstávají tři oblasti: velká smyčka severně od Khearazu s ostrůvky, domy a majákem; malá smyčka u démona s čárkovanými úseky; východní pobřežní smyčka pod Mönohenem u nápisu „D:“. Jak se tyto tři oblasti jmenují a ke komu patří?
+- **Čárkované úseky v horní části mapy hranic:** význam nejasný; zachovány jako čárkovaná hranice, nepoužity k uzavírání území. *(čeká na DM)*
 - **Mönohen – řeka a pobřeží:** Dvojité čáry jsou nyní obkreslené jako jedna řeka ústící do východního moře; pobřeží Mönohenu je ručně obkreslené jako návrh. Odpovídá to kresbě?
 - **Černá skvrna v moři jižně od Tali (≈1357,1326):** chyba kresby, potvrdil DM; do atlasu se nic nepřidává.
 - **Sever Nölienu (≈1040–1400, 110–430):** pohoří s malými chrámy. *(vyřešeno – potvrdil DM)*
