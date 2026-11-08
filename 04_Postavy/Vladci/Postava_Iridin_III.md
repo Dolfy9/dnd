@@ -62,12 +62,28 @@ postava:
   - Shortsword (Vex)
   kouzla:
   - nazev: Hunter's Mark
+    vzdy: true
+    poznamka: vždy připravené (subclass Hunter)
+    uroven: 1
+    trida: Ranger
   - nazev: Cure Wounds
+    uroven: 1
+    trida: Ranger
   - nazev: Goodberry
+    uroven: 1
+    trida: Ranger
   - nazev: Ensnaring Strike
+    uroven: 1
+    trida: Ranger
   - nazev: Pass without Trace
+    uroven: 2
+    trida: Ranger
   - nazev: Lesser Restoration
+    uroven: 2
+    trida: Ranger
   - nazev: Spike Growth
+    uroven: 2
+    trida: Ranger
   vybava:
   - Breastplate
   - Longbow + 20 Arrows

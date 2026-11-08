@@ -52,42 +52,63 @@ postava:
   kouzla:
   - nazev: Eldritch Blast
     uroven: 0
+    trida: Warlock
   - nazev: Chill Touch
     uroven: 0
+    trida: Warlock
   - nazev: Minor Illusion
     uroven: 0
+    trida: Warlock
   - nazev: Mind Sliver
     uroven: 0
+    trida: Warlock
   - nazev: Dissonant Whispers
     trida: Warlock
-    poznamka: Great Old One Patron
+    poznamka: Great Old One Patron; vždy připravené (subclass Great Old One Patron)
+    vzdy: true
+    uroven: 1
   - nazev: Tasha's Hideous Laughter
     trida: Warlock
     poznamka: Great Old One Patron
+    uroven: 1
   - nazev: Detect Thoughts
     trida: Warlock
-    poznamka: Great Old One Patron
+    poznamka: Great Old One Patron; vždy připravené (subclass Great Old One Patron)
+    vzdy: true
+    uroven: 2
   - nazev: Phantasmal Force
     trida: Warlock
-    poznamka: Great Old One Patron
+    poznamka: Great Old One Patron; vždy připravené (subclass Great Old One Patron)
+    vzdy: true
+    uroven: 2
   - nazev: Clairvoyance
     trida: Warlock
-    poznamka: Great Old One Patron
+    poznamka: Great Old One Patron; vždy připravené (subclass Great Old One Patron)
+    vzdy: true
+    uroven: 3
   - nazev: Hunger of Hadar
     trida: Warlock
     poznamka: Great Old One Patron
+    uroven: 3
   - nazev: Confusion
     trida: Warlock
-    poznamka: Great Old One Patron
+    poznamka: Great Old One Patron; vždy připravené (subclass Great Old One Patron)
+    vzdy: true
+    uroven: 4
   - nazev: Summon Aberration
     trida: Warlock
     poznamka: Great Old One Patron
+    uroven: 4
   - nazev: Modify Memory
     trida: Warlock
-    poznamka: Great Old One Patron
+    poznamka: Great Old One Patron; vždy připravené (subclass Great Old One Patron)
+    vzdy: true
+    uroven: 5
   - nazev: Telekinesis
     trida: Warlock
-    poznamka: Great Old One Patron
+    poznamka: Great Old One Patron; vždy připravené (subclass Great Old One Patron)
+    vzdy: true
+    uroven: 5
   - nazev: Phantasmal Killer
     uroven: 4
     trida: Warlock
@@ -95,19 +116,23 @@ postava:
   - nazev: Eyebite
     uroven: 6
     trida: Warlock
-    poznamka: Mystic Arcanum
+    poznamka: Mystic Arcanum; Mystic Arcanum
+    vzdy: true
   - nazev: Forcecage
     uroven: 7
     trida: Warlock
-    poznamka: Mystic Arcanum
+    poznamka: Mystic Arcanum; Mystic Arcanum
+    vzdy: true
   - nazev: Befuddlement
     uroven: 8
     trida: Warlock
-    poznamka: Mystic Arcanum
+    poznamka: Mystic Arcanum; Mystic Arcanum
+    vzdy: true
   - nazev: Weird
     uroven: 9
     trida: Warlock
-    poznamka: Mystic Arcanum
+    poznamka: Mystic Arcanum; Mystic Arcanum
+    vzdy: true
   vlastni_rysy:
   - nazev: 'Immunity: Cold'
     text: Božská imunita vůči chladu.

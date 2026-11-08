@@ -46,22 +46,46 @@ postava:
   kouzla:
   - nazev: Fire Bolt
     uroven: 0
+    trida: Wizard
   - nazev: Mage Hand
     uroven: 0
+    trida: Wizard
   - nazev: Prestidigitation
     uroven: 0
+    trida: Wizard
   - nazev: Elementalism
     uroven: 0
+    trida: Wizard
   - nazev: Wish
+    uroven: 9
+    trida: Wizard
   - nazev: Meteor Swarm
+    uroven: 9
+    trida: Wizard
   - nazev: True Polymorph
+    uroven: 9
+    trida: Wizard
   - nazev: Gate
+    uroven: 9
+    trida: Wizard
   - nazev: Earthquake
+    uroven: 8
+    trida: Wizard
   - nazev: Control Weather
+    uroven: 8
+    trida: Wizard
   - nazev: Move Earth
+    uroven: 6
+    trida: Wizard
   - nazev: Wall of Force
+    uroven: 5
+    trida: Wizard
   - nazev: Fabricate
+    uroven: 4
+    trida: Wizard
   - nazev: Creation
+    uroven: 5
+    trida: Wizard
   vlastni_rysy:
   - nazev: Creation Magic / Cosmic Weaver / Primordial Essence
     text: 'Vyprávěcí schopnosti: vyzvedl pevninu z oceánu, utkal Montelien z prázdnoty.'

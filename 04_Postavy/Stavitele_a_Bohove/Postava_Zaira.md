@@ -47,22 +47,45 @@ postava:
   kouzla:
   - nazev: Produce Flame
     uroven: 0
+    trida: Druid
   - nazev: Guidance
     uroven: 0
+    trida: Druid
   - nazev: Druidcraft
     uroven: 0
+    trida: Druid
   - nazev: Shillelagh
     uroven: 0
+    trida: Druid
   - nazev: Sunburst
+    uroven: 8
+    trida: Druid
   - nazev: Plant Growth
+    uroven: 3
+    trida: Druid
   - nazev: Goodberry
+    uroven: 1
+    trida: Druid
   - nazev: Heal
+    uroven: 6
+    trida: Druid
   - nazev: Mass Cure Wounds
+    uroven: 5
+    trida: Druid
   - nazev: Regenerate
+    uroven: 7
+    trida: Druid
   - nazev: Commune with Nature
+    trida: Druid
   - nazev: Control Weather
+    uroven: 8
+    trida: Druid
   - nazev: Shapechange
+    uroven: 9
+    trida: Druid
   - nazev: True Resurrection
+    uroven: 9
+    trida: Druid
   vlastni_rysy:
   - nazev: Aura hojnosti
     text: 'Vlastní schopnost: úroda a zvířata v jejím okolí prosperují (vyprávěcí).'

@@ -82,91 +82,135 @@ postava:
   - nazev: Toll the Dead
     uroven: 0
     trida: Magic Initiate
+    vzdy: true
+    poznamka: vždy připravené (feat Magic Initiate)
   - nazev: Sacred Flame
     uroven: 0
     trida: Magic Initiate
+    vzdy: true
+    poznamka: vždy připravené (feat Magic Initiate)
   - nazev: Burning Hands
     trida: Warlock
-    poznamka: Fiend Patron
+    poznamka: Fiend Patron; vždy připravené (subclass Fiend Patron)
+    vzdy: true
+    uroven: 1
   - nazev: Command
     trida: Warlock
-    poznamka: Fiend Patron
+    poznamka: Fiend Patron; vždy připravené (subclass Fiend Patron)
+    vzdy: true
+    uroven: 1
   - nazev: Scorching Ray
     trida: Warlock
-    poznamka: Fiend Patron
+    poznamka: Fiend Patron; vždy připravené (subclass Fiend Patron)
+    vzdy: true
+    uroven: 2
   - nazev: Suggestion
     trida: Warlock
     poznamka: Fiend Patron
+    uroven: 2
   - nazev: Fireball
     trida: Warlock
-    poznamka: Fiend Patron
+    poznamka: Fiend Patron; vždy připravené (subclass Fiend Patron)
+    vzdy: true
+    uroven: 3
   - nazev: Stinking Cloud
     trida: Warlock
-    poznamka: Fiend Patron
+    poznamka: Fiend Patron; vždy připravené (subclass Fiend Patron)
+    vzdy: true
+    uroven: 3
   - nazev: Fire Shield
     trida: Warlock
-    poznamka: Fiend Patron
+    poznamka: Fiend Patron; vždy připravené (subclass Fiend Patron)
+    vzdy: true
+    uroven: 4
   - nazev: Wall of Fire
     trida: Warlock
-    poznamka: Fiend Patron
+    poznamka: Fiend Patron; vždy připravené (subclass Fiend Patron)
+    vzdy: true
+    uroven: 4
   - nazev: Geas
     trida: Warlock
-    poznamka: Fiend Patron
+    poznamka: Fiend Patron; vždy připravené (subclass Fiend Patron)
+    vzdy: true
+    uroven: 5
   - nazev: Insect Plague
     trida: Warlock
-    poznamka: Fiend Patron
+    poznamka: Fiend Patron; vždy připravené (subclass Fiend Patron)
+    vzdy: true
+    uroven: 5
   - nazev: Hex
     trida: Warlock
+    uroven: 1
   - nazev: Counterspell
     trida: Warlock
+    uroven: 3
   - nazev: Dominate Person
     trida: Warlock
+    uroven: 5
   - nazev: Hold Monster
     trida: Warlock
+    uroven: 5
   - nazev: Dimension Door
     trida: Warlock
+    uroven: 4
   - nazev: Banishment
     trida: Warlock
+    uroven: 4
   - nazev: Scrying
     trida: Warlock
+    uroven: 5
   - nazev: Fear
     trida: Warlock
+    uroven: 3
   - nazev: Hunger of Hadar
     trida: Warlock
+    uroven: 3
   - nazev: Misty Step
     trida: Warlock
+    uroven: 2
   - nazev: Mass Suggestion
     uroven: 6
     trida: Warlock
-    poznamka: Mystic Arcanum
+    poznamka: Mystic Arcanum; Mystic Arcanum
+    vzdy: true
   - nazev: Finger of Death
     uroven: 7
     trida: Warlock
-    poznamka: Mystic Arcanum
+    poznamka: Mystic Arcanum; Mystic Arcanum
+    vzdy: true
   - nazev: Befuddlement
     uroven: 8
     trida: Warlock
-    poznamka: Mystic Arcanum
+    poznamka: Mystic Arcanum; Mystic Arcanum
+    vzdy: true
   - nazev: Imprisonment
     uroven: 9
     trida: Warlock
-    poznamka: Mystic Arcanum
+    poznamka: Mystic Arcanum; Mystic Arcanum
+    vzdy: true
   - nazev: Guiding Bolt
     trida: Cleric
     poznamka: War Domain
+    uroven: 1
   - nazev: Magic Weapon
     trida: Cleric
-    poznamka: War Domain
+    poznamka: War Domain; vždy připravené (subclass War Domain)
+    vzdy: true
+    uroven: 2
   - nazev: Shield of Faith
     trida: Cleric
     poznamka: War Domain
+    uroven: 1
   - nazev: Spiritual Weapon
     trida: Cleric
     poznamka: War Domain
+    uroven: 2
   - nazev: Bless
     trida: Cleric
+    uroven: 1
   - nazev: Zone of Truth
     trida: Cleric
+    uroven: 2
   vlastni_rysy:
   - nazev: Eldritch Invocations
     text: Agonizing Blast, Repelling Blast, Pact of the Tome, Devil's Sight, Eldritch Mind, Mask of Many Faces, Witch Sight,

@@ -71,16 +71,39 @@ postava:
   kouzla:
   - nazev: Mage Hand
     uroven: 0
+    vzdy: true
+    poznamka: vždy připravené (subclass Arcane Trickster)
+    trida: Rogue
   - nazev: Minor Illusion
     uroven: 0
+    vzdy: true
+    poznamka: vždy připravené (subclass Arcane Trickster)
+    trida: Rogue
   - nazev: Friends
     uroven: 0
+    trida: Rogue
   - nazev: Charm Person
+    vzdy: true
+    poznamka: vždy připravené (subclass Arcane Trickster)
+    uroven: 1
+    trida: Rogue
   - nazev: Disguise Self
+    vzdy: true
+    poznamka: vždy připravené (subclass Arcane Trickster)
+    uroven: 1
+    trida: Rogue
   - nazev: Silent Image
+    uroven: 1
+    trida: Rogue
   - nazev: Detect Thoughts
+    uroven: 2
+    trida: Rogue
   - nazev: Suggestion
+    uroven: 2
+    trida: Rogue
   - nazev: Invisibility
+    uroven: 2
+    trida: Rogue
   vybava:
   - Studded Leather Armor +1
   - Rapier

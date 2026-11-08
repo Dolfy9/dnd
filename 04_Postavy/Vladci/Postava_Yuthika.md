@@ -95,25 +95,38 @@ postava:
   - nazev: Fire Bolt
     uroven: 0
     trida: Tiefling
+    vzdy: true
+    poznamka: vždy připravené (druh Tiefling)
   - nazev: Thaumaturgy
     uroven: 0
     trida: Tiefling
+    vzdy: true
+    poznamka: vždy připravené (druh Tiefling)
   - nazev: Hellish Rebuke
     uroven: 1
     trida: Tiefling
+    vzdy: true
+    poznamka: vždy připravené (druh Tiefling)
   - nazev: Darkness
     uroven: 2
     trida: Tiefling
+    vzdy: true
+    poznamka: vždy připravené (druh Tiefling)
   - nazev: Charm Person
     trida: Bard
+    uroven: 1
   - nazev: Dissonant Whispers
     trida: Bard
+    uroven: 1
   - nazev: Healing Word
     trida: Bard
+    uroven: 1
   - nazev: Suggestion
     trida: Bard
+    uroven: 2
   - nazev: Hold Person
     trida: Bard
+    uroven: 2
   vybava:
   - Studded Leather Armor
   - Cloak of Protection

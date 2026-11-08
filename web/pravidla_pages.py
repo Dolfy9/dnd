@@ -112,4 +112,5 @@ def build(docs: Path):
     mm += [{t.capitalize(): kat(f"mm/{t}.md", f"Bestiář – {t.capitalize()}", f"Netvoři typu {t.capitalize()} (SRD 5.2.1).", "bestiar", "typ", t)} for t in typy]
     for lo, hi, n in [(0, 4, "CR 0–4"), (5, 10, "CR 5–10"), (11, 16, "CR 11–16"), (17, 30, "CR 17–30")]:
         mm.append({n: w(f"mm/cr_{lo}_{hi}.md", page(f"Bestiář – {n}", f"Netvoři s CR {lo}–{hi}.\n\n" + f'<div class="srd-katalog" data-typ="bestiar" data-crmin="{lo}" data-crmax="{hi}"></div>\n', True))})
-    return [{"Příručka hráče (PHB)": phb}, {"Příručka Pána jeskyně (DMG)": dmg}, {"Bestiář (Monster Manual)": mm}]
+    dmg.append({"Předměty a výbava (vše)": "predmety.md"})
+    return [{"Příručka hráče": phb}, {"Příručka PJ": dmg}, {"Bestiář": mm}]

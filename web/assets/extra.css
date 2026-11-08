@@ -105,3 +105,7 @@ html[data-mont-theme] .md-typeset h1, html[data-mont-theme] .md-typeset h2 { col
 .lu-feat { display: inline-block; font-weight: 400; } .lu-ab select { margin-left: 4px; } .lu-txt { font-size: .66rem; opacity: .8; white-space: pre-line; max-width: 70ch; }
 .lu-err { color: #c0392b; font-size: .75rem; margin: 6px 0; } .pv-list { font-size: .74rem; } .pv-chyba { color: var(--red3); } .pv-varovani { opacity: .85; } .pv-ok { color: #2e7d32; }
 .lu-step h5 { font-size: .85rem; letter-spacing: .02em; } .lu-choice { display: flex; flex-direction: column; gap: 3px; } .lu-choice select { margin-left: 0; } .lu-feat { display: block; } .lu-ab { display: flex; gap: 6px; align-items: center; margin-top: 3px; } .lu-ab select { margin-left: 0; max-width: 12rem; }
+.p2-rest { display: flex; gap: 6px; justify-content: flex-end; margin: -2px 0 6px; } .p2-rest .ed-btn { padding: 2px 10px; font-size: .62rem; }
+.ps-spell-bar { margin-bottom: 6px; } .sp-head { display: flex; flex-wrap: wrap; gap: 14px; font-size: .74rem; margin: 6px 0; } .sp-over { color: #c0392b; } .sp-full { color: #2e7d32; }
+.sp-rules { font-size: .68rem; opacity: .85; margin: 2px 0 6px; } .sp-mode { font-size: .74rem; font-style: italic; } .sp-vzdy { font-size: .7rem; }
+.sp-tab td, .sp-tab th { padding: 2px 6px; font-size: .72rem; } .sp-tab tr.sp-on td { background: rgba(184,137,43,.15); }

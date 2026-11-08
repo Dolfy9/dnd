@@ -57,47 +57,68 @@ postava:
   - nazev: Protection from Evil and Good
     trida: Paladin
     poznamka: Oath of Devotion
+    uroven: 1
   - nazev: Shield of Faith
     trida: Paladin
     poznamka: Oath of Devotion
+    uroven: 1
   - nazev: Aura of Vitality
     trida: Paladin
     poznamka: Oath of Devotion
+    uroven: 3
   - nazev: Zone of Truth
     trida: Paladin
     poznamka: Oath of Devotion
+    uroven: 2
   - nazev: Beacon of Hope
     trida: Paladin
-    poznamka: Oath of Devotion
+    poznamka: Oath of Devotion; vždy připravené (subclass Oath of Devotion)
+    vzdy: true
+    uroven: 3
   - nazev: Dispel Magic
     trida: Paladin
     poznamka: Oath of Devotion
+    uroven: 3
   - nazev: Freedom of Movement
     trida: Paladin
-    poznamka: Oath of Devotion
+    poznamka: Oath of Devotion; vždy připravené (subclass Oath of Devotion)
+    vzdy: true
+    uroven: 4
   - nazev: Guardian of Faith
     trida: Paladin
-    poznamka: Oath of Devotion
+    poznamka: Oath of Devotion; vždy připravené (subclass Oath of Devotion)
+    vzdy: true
+    uroven: 4
   - nazev: Commune
     trida: Paladin
-    poznamka: Oath of Devotion
+    poznamka: Oath of Devotion; vždy připravené (subclass Oath of Devotion)
+    vzdy: true
+    uroven: 5
   - nazev: Flame Strike
     trida: Paladin
-    poznamka: Oath of Devotion
+    poznamka: Oath of Devotion; vždy připravené (subclass Oath of Devotion)
+    vzdy: true
+    uroven: 5
   - nazev: Divine Smite
     trida: Paladin
+    uroven: 1
   - nazev: Find Steed
     trida: Paladin
+    uroven: 2
   - nazev: Banishing Smite
     trida: Paladin
+    uroven: 5
   - nazev: Circle of Power
     trida: Paladin
   - nazev: Destructive Wave
     trida: Paladin
+    uroven: 5
   - nazev: Bless
     trida: Paladin
+    uroven: 1
   - nazev: Aid
     trida: Paladin
+    uroven: 2
   vlastni_rysy:
   - nazev: Nositel štěstí
     text: Jednou za den může přeměnit neúspěch tvora v dohledu na úspěch (vyprávěcí, avatar).

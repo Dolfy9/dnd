@@ -107,7 +107,8 @@ def main():
     (DOCS / "kouzla.md").write_text("---\nhide:\n  - toc\n---\n# Katalog kouzel (D&D 2024)\n\nVšechna kouzla z pravidel 2024+. Klikni na název pro celý popis.\n\n<div id=\"katalog-kouzel\"></div>\n", encoding="utf-8")
 
     import pravidla_pages
-    nav = ["README.md", {"Interaktivní mapa": "mapa.md"}, {"Pravidla 2024": pravidla_pages.build(DOCS) + [{"Předměty a výbava (vše)": "predmety.md"}]}] + sections + [
+    P = pravidla_pages.build(DOCS)
+    nav = [{"Úvod": "README.md"}, {"Interaktivní mapa": "mapa.md"}] + P + sections + [
         {"Otevřené otázky": "Otevrene_otazky.md"}, {"Pravidla projektu": "AGENTS.md"}]
     watch = "\n".join(f"  - ../{d}" for d in [s for s in os.listdir(ROOT)
                       if (ROOT / s).is_dir() and s not in SKIP and not s.startswith(".")])

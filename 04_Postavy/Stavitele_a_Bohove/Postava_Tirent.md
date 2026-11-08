@@ -41,26 +41,55 @@ postava:
   kouzla:
   - nazev: Light
     uroven: 0
+    trida: Wizard
   - nazev: Message
     uroven: 0
+    trida: Wizard
   - nazev: Mage Hand
     uroven: 0
+    trida: Wizard
   - nazev: Prestidigitation
     uroven: 0
+    trida: Wizard
   - nazev: Guidance
     uroven: 0
+    trida: Wizard
   - nazev: Foresight
+    uroven: 9
+    trida: Wizard
   - nazev: Time Stop
+    uroven: 9
+    trida: Wizard
   - nazev: Wish
+    uroven: 9
+    trida: Wizard
   - nazev: Mind Blank
+    uroven: 8
+    trida: Wizard
   - nazev: True Seeing
+    uroven: 6
+    trida: Wizard
   - nazev: Scrying
+    uroven: 5
+    trida: Wizard
   - nazev: Legend Lore
+    uroven: 5
+    trida: Wizard
   - nazev: Arcane Eye
+    uroven: 4
+    trida: Wizard
   - nazev: Clairvoyance
+    uroven: 3
+    trida: Wizard
   - nazev: Mordenkainen's Sword
+    uroven: 7
+    trida: Wizard
   - nazev: Antimagic Field
+    uroven: 8
+    trida: Wizard
   - nazev: Globe of Invulnerability
+    uroven: 6
+    trida: Wizard
   vlastni_rysy:
   - nazev: Legendary Resistance (3/Day)
     text: Rys netvora dle MM 2025 pro avatar.

@@ -69,13 +69,18 @@ postava:
   - nazev: Druidcraft
     uroven: 0
     trida: Magic Initiate
+    vzdy: true
+    poznamka: vždy připravené (feat Magic Initiate)
   - nazev: Guidance
     uroven: 0
     trida: Magic Initiate
+    vzdy: true
+    poznamka: vždy připravené (feat Magic Initiate)
   - nazev: Speak with Animals
     uroven: 1
     trida: Magic Initiate
-    poznamka: 1× za Long Rest bez slotu
+    poznamka: 1× za Long Rest bez slotu; vždy připravené (feat Magic Initiate)
+    vzdy: true
   vlastni_rysy:
   - nazev: Znalec Hinai Mihi (DM)
     text: Advantage na Wisdom (Survival) v pralese Hinai Mihi. Bystrý sluch a zrak.

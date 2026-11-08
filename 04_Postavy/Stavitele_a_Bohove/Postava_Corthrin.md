@@ -47,52 +47,83 @@ postava:
   kouzla:
   - nazev: Sacred Flame
     uroven: 0
+    trida: Cleric
   - nazev: Guidance
     uroven: 0
+    trida: Cleric
   - nazev: Light
     uroven: 0
+    trida: Cleric
   - nazev: Spare the Dying
     uroven: 0
+    trida: Cleric
   - nazev: Thaumaturgy
     uroven: 0
+    trida: Cleric
   - nazev: Aid
     trida: Cleric
     poznamka: Life Domain
+    uroven: 2
   - nazev: Bless
     trida: Cleric
     poznamka: Life Domain
+    uroven: 1
   - nazev: Cure Wounds
     trida: Cleric
     poznamka: Life Domain
+    uroven: 1
   - nazev: Lesser Restoration
     trida: Cleric
     poznamka: Life Domain
+    uroven: 2
   - nazev: Mass Healing Word
     trida: Cleric
     poznamka: Life Domain
+    uroven: 3
   - nazev: Revivify
     trida: Cleric
     poznamka: Life Domain
+    uroven: 3
   - nazev: Aura of Life
     trida: Cleric
     poznamka: Life Domain
+    uroven: 4
   - nazev: Death Ward
     trida: Cleric
     poznamka: Life Domain
+    uroven: 4
   - nazev: Greater Restoration
     trida: Cleric
     poznamka: Life Domain
+    uroven: 5
   - nazev: Mass Cure Wounds
     trida: Cleric
     poznamka: Life Domain
+    uroven: 5
   - nazev: Heal
+    uroven: 6
+    trida: Cleric
   - nazev: Regenerate
+    uroven: 7
+    trida: Cleric
   - nazev: Holy Aura
+    uroven: 8
+    trida: Cleric
   - nazev: Mass Heal
+    uroven: 9
+    trida: Cleric
   - nazev: True Resurrection
+    uroven: 9
+    trida: Cleric
   - nazev: Gate
+    uroven: 9
+    trida: Cleric
   - nazev: Resurrection
+    uroven: 7
+    trida: Cleric
   - nazev: Sunburst
+    uroven: 8
+    trida: Cleric
   vlastni_rysy:
   - nazev: Matka Stavitelů
     text: Její slovo dokáže probudit spící božskou jiskru v Turandar (vyprávěcí).

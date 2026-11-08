@@ -63,31 +63,46 @@ postava:
   kouzla:
   - nazev: Bane
     trida: Paladin
-    poznamka: Oath of Vengeance
+    poznamka: Oath of Vengeance; vždy připravené (subclass Oath of Vengeance)
+    vzdy: true
+    uroven: 1
   - nazev: Hunter's Mark
     trida: Paladin
-    poznamka: Oath of Vengeance
+    poznamka: Oath of Vengeance; vždy připravené (subclass Oath of Vengeance)
+    vzdy: true
+    uroven: 1
   - nazev: Hold Person
     trida: Paladin
-    poznamka: Oath of Vengeance
+    poznamka: Oath of Vengeance; vždy připravené (subclass Oath of Vengeance)
+    vzdy: true
+    uroven: 2
   - nazev: Misty Step
     trida: Paladin
-    poznamka: Oath of Vengeance
+    poznamka: Oath of Vengeance; vždy připravené (subclass Oath of Vengeance)
+    vzdy: true
+    uroven: 2
   - nazev: Find Steed
     trida: Paladin
     poznamka: Faithful Steed
+    uroven: 2
   - nazev: Divine Smite
     trida: Paladin
+    uroven: 1
   - nazev: Shining Smite
     trida: Paladin
+    uroven: 2
   - nazev: Command
     trida: Paladin
+    uroven: 1
   - nazev: Wrathful Smite
     trida: Paladin
+    uroven: 1
   - nazev: Zone of Truth
     trida: Paladin
+    uroven: 2
   - nazev: Aid
     trida: Paladin
+    uroven: 2
   vybava:
   - Plate Armor
   - Shield s okem Ordenu

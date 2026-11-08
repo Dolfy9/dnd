@@ -1,5 +1,5 @@
 // Testy pravidel 2024: node tools/test_pravidla.js [postavy.json]
-const R = require("../web/assets/pravidla2024.json"), E = require("../web/assets/pravidla_engine.js").init(R);
+const R = require("../web/assets/pravidla2024.json"), E = require("../web/assets/pravidla_engine.js").init(R).setSpells(R.kouzla);
 let fails = 0, ok = 0;
 function eq(a, b, msg) { if (JSON.stringify(a) === JSON.stringify(b)) ok++; else { fails++; console.log("FAIL", msg, "\n  čekáno", JSON.stringify(b), "\n  dostal ", JSON.stringify(a)); } }
 function t(cond, msg) { eq(!!cond, true, msg); }
@@ -93,6 +93,30 @@ t(E.createCharacter({ druh: "Elf", pozadi: "Sage", trida: "Wizard", metoda: "poi
 const okc = E.createCharacter({ druh: "Elf", pozadi: "Sage", trida: "Wizard", metoda: "standard", zaklad: { STR: 8, DEX: 14, CON: 13, INT: 15, WIS: 12, CHA: 10 }, bonus: { INT: 2, CON: 1 }, dovednosti: ["Investigation", "Medicine"], keen: "Perception" });
 eq(okc.chyby, [], "platný Elf Sage Wizard"); eq(okc.postava.featy[0].nazev, "Magic Initiate", "Sage dává Magic Initiate");
 eq(E.validate(okc.postava).filter(x => x.typ === "chyba"), [], "validace nové postavy");
+
+
+// 7) kouzla
+const wz = E.spellRules({ tridy: [{ trida: "Wizard", uroven: 5 }] })[0];
+eq([wz.cantrips, wz.pripravena, wz.maxUroven, wz.kniha], [4, 9, 3, 14], "Wizard 5: cantripy, připravená, max úroveň, spellbook");
+t(wz.moznosti.indexOf("Fireball") >= 0 && wz.moznosti.indexOf("Cone of Cold") < 0, "Wizard 5 nabídka do 3. úrovně");
+const pl = E.spellRules({ tridy: [{ trida: "Paladin", uroven: 5 }] })[0]; eq([pl.cantrips, pl.maxUroven], [0, 2], "Paladin 5: bez cantripů, max 2. úroveň");
+const wl5 = E.spellRules({ tridy: [{ trida: "Warlock", uroven: 5 }] })[0]; eq(wl5.maxUroven, 3, "Warlock 5: Pact sloty 3. úrovně");
+const ek = E.spellRules({ tridy: [{ trida: "Fighter", uroven: 7, podtrida: "Eldritch Knight" }] })[0]; eq([ek.seznam, ek.cantrips, ek.pripravena, ek.maxUroven], ["Wizard", 2, 5, 2], "EK 7");
+const mk = (cls, lv, sp) => ({ tridy: [{ trida: cls, uroven: lv }], kouzla: sp.map(([n, u, k]) => ({ nazev: n, uroven: u, trida: cls, kniha: k })) });
+const cl0 = mk("Cleric", 3, [["Bless", 1], ["Cure Wounds", 1], ["Guiding Bolt", 1], ["Shield of Faith", 1], ["Aid", 2], ["Prayer of Healing", 2]]);
+const cl1 = mk("Cleric", 3, [["Bless", 1], ["Cure Wounds", 1], ["Command", 1], ["Sanctuary", 1], ["Aid", 2], ["Spiritual Weapon", 2]]);
+eq(E.checkSpellChange(cl0, cl1, "Cleric", "lr"), [], "Cleric po Long Rest smí vyměnit cokoli");
+const pa0 = mk("Paladin", 5, [["Bless", 1], ["Command", 1], ["Heroism", 1], ["Aid", 2], ["Find Steed", 2], ["Divine Favor", 1]]);
+const pa1 = JSON.parse(JSON.stringify(pa0)); pa1.kouzla[0].nazev = "Shield of Faith"; const pa2 = JSON.parse(JSON.stringify(pa1)); pa2.kouzla[1].nazev = "Searing Smite";
+eq(E.checkSpellChange(pa0, pa1, "Paladin", "lr"), [], "Paladin po Long Rest vymění 1 kouzlo");
+t(E.checkSpellChange(pa0, pa2, "Paladin", "lr").length, "Paladin po Long Rest nevymění 2 kouzla");
+const so0 = mk("Sorcerer", 3, [["Burning Hands", 1], ["Detect Magic", 1], ["Shield", 1], ["Scorching Ray", 2]]); const so1 = JSON.parse(JSON.stringify(so0)); so1.kouzla[0].nazev = "Sleep";
+t(E.checkSpellChange(so0, so1, "Sorcerer", "lr").length, "Sorcerer po Long Rest neměnní");
+eq(E.checkSpellChange(so0, so1, "Sorcerer", "lvl"), [], "Sorcerer při level upu vymění 1");
+const wi0 = mk("Wizard", 5, [["Shield", 1], ["Sleep", 1, true]]); const wi1 = mk("Wizard", 5, [["Shield", 1, true], ["Sleep", 1]]); const wi2 = mk("Wizard", 5, [["Shield", 1], ["Fireball", 3]]);
+eq(E.checkSpellChange(wi0, wi1, "Wizard", "lr"), [], "Wizard připraví jiné kouzlo ze spellbooku po Long Rest");
+t(E.checkSpellChange(wi0, wi2, "Wizard", "lr").length, "Wizard nepřipraví kouzlo, které nemá ve spellbooku");
+eq(E.checkSpellChange(wi0, wi1, "Wizard", "sr"), [], "Wizard 5 Memorize Spell po Short Rest");
 
 // 6) existující postavy
 if (process.argv[2]) {

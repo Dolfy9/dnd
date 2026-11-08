@@ -62,45 +62,92 @@ postava:
   kouzla:
   - nazev: Shillelagh
     uroven: 0
+    trida: Druid
   - nazev: Produce Flame
     uroven: 0
+    trida: Druid
   - nazev: Guidance
     uroven: 0
+    trida: Druid
   - nazev: Thorn Whip
     uroven: 0
+    trida: Druid
   - nazev: Misty Step
     trida: Druid
-    poznamka: Circle of the Land (Temperate)
+    poznamka: Circle of the Land (Temperate); vždy připravené (subclass Circle of the Land)
+    vzdy: true
+    uroven: 2
   - nazev: Sleep
     trida: Druid
-    poznamka: Circle of the Land (Temperate)
+    poznamka: Circle of the Land (Temperate); vždy připravené (subclass Circle of the Land)
+    vzdy: true
+    uroven: 1
   - nazev: Lightning Bolt
     trida: Druid
-    poznamka: Circle of the Land (Temperate)
+    poznamka: Circle of the Land (Temperate); vždy připravené (subclass Circle of the Land)
+    vzdy: true
+    uroven: 3
   - nazev: Freedom of Movement
     trida: Druid
     poznamka: Circle of the Land (Temperate)
+    uroven: 4
   - nazev: Tree Stride
     trida: Druid
     poznamka: Circle of the Land (Temperate)
+    uroven: 5
   - nazev: Speak with Animals
+    uroven: 1
+    trida: Druid
   - nazev: Cure Wounds
+    uroven: 1
+    trida: Druid
   - nazev: Goodberry
+    uroven: 1
+    trida: Druid
   - nazev: Healing Word
+    uroven: 1
+    trida: Druid
   - nazev: Barkskin
+    uroven: 2
+    trida: Druid
   - nazev: Moonbeam
+    uroven: 2
+    trida: Druid
   - nazev: Pass without Trace
+    uroven: 2
+    trida: Druid
   - nazev: Conjure Animals
+    uroven: 3
+    trida: Druid
   - nazev: Plant Growth
+    uroven: 3
+    trida: Druid
   - nazev: Call Lightning
+    uroven: 3
+    trida: Druid
   - nazev: Dominate Beast
+    uroven: 4
+    trida: Druid
   - nazev: Giant Insect
+    uroven: 4
+    trida: Druid
   - nazev: Commune with Nature
+    trida: Druid
   - nazev: Awaken
+    uroven: 5
+    trida: Druid
   - nazev: Mass Cure Wounds
+    uroven: 5
+    trida: Druid
   - nazev: Wall of Thorns
+    uroven: 6
+    trida: Druid
   - nazev: Transport via Plants
+    uroven: 6
+    trida: Druid
   - nazev: Regenerate
+    uroven: 7
+    trida: Druid
   vybava:
   - Hide Armor
   - Shield (dřevěný)

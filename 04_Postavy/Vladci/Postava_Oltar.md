@@ -68,13 +68,18 @@ postava:
   - nazev: Guidance
     uroven: 0
     trida: Magic Initiate
+    vzdy: true
+    poznamka: vždy připravené (feat Magic Initiate)
   - nazev: Druidcraft
     uroven: 0
     trida: Magic Initiate
+    vzdy: true
+    poznamka: vždy připravené (feat Magic Initiate)
   - nazev: Speak with Animals
     uroven: 1
     trida: Magic Initiate
-    poznamka: 1× za Long Rest bez slotu
+    poznamka: 1× za Long Rest bez slotu; vždy připravené (subclass Path of the Wild Heart)
+    vzdy: true
   vlastni_rysy:
   - nazev: Volby Wild Heart
     text: 'Rage of the Wilds: Bear (odolnost vůči všemu kromě Force, Necrotic, Psychic, Radiant během zuřivosti). Aspect of

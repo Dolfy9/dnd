@@ -61,57 +61,107 @@ postava:
   kouzla:
   - nazev: Guidance
     uroven: 0
+    trida: Cleric
   - nazev: Sacred Flame
     uroven: 0
+    trida: Cleric
   - nazev: Light
     uroven: 0
+    trida: Cleric
   - nazev: Thaumaturgy
     uroven: 0
+    trida: Cleric
   - nazev: Spare the Dying
     uroven: 0
+    trida: Cleric
   - nazev: Toll the Dead
     uroven: 0
+    trida: Cleric
   - nazev: Command
     trida: Cleric
     poznamka: Knowledge Domain
+    uroven: 1
   - nazev: Identify
     trida: Cleric
-    poznamka: Knowledge Domain
+    poznamka: Knowledge Domain; vždy připravené (subclass Knowledge Domain)
+    vzdy: true
+    uroven: 1
   - nazev: Augury
     trida: Cleric
     poznamka: Knowledge Domain
+    uroven: 2
   - nazev: Suggestion
     trida: Cleric
     poznamka: Knowledge Domain
+    uroven: 2
   - nazev: Nondetection
     trida: Cleric
-    poznamka: Knowledge Domain
+    poznamka: Knowledge Domain; vždy připravené (subclass Knowledge Domain)
+    vzdy: true
+    uroven: 3
   - nazev: Speak with Dead
     trida: Cleric
     poznamka: Knowledge Domain
+    uroven: 3
   - nazev: Arcane Eye
     trida: Cleric
-    poznamka: Knowledge Domain
+    poznamka: Knowledge Domain; vždy připravené (subclass Knowledge Domain)
+    vzdy: true
+    uroven: 4
   - nazev: Confusion
     trida: Cleric
-    poznamka: Knowledge Domain
+    poznamka: Knowledge Domain; vždy připravené (subclass Knowledge Domain)
+    vzdy: true
+    uroven: 4
   - nazev: Legend Lore
     trida: Cleric
     poznamka: Knowledge Domain
+    uroven: 5
   - nazev: Scrying
     trida: Cleric
     poznamka: Knowledge Domain
+    uroven: 5
   - nazev: Detect Magic
+    vzdy: true
+    poznamka: vždy připravené (subclass Knowledge Domain)
+    uroven: 1
+    trida: Cleric
   - nazev: Guiding Bolt
+    uroven: 1
+    trida: Cleric
   - nazev: Healing Word
+    uroven: 1
+    trida: Cleric
   - nazev: Zone of Truth
+    uroven: 2
+    trida: Cleric
   - nazev: Lesser Restoration
+    uroven: 2
+    trida: Cleric
   - nazev: Dispel Magic
+    vzdy: true
+    poznamka: vždy připravené (subclass Knowledge Domain)
+    uroven: 3
+    trida: Cleric
   - nazev: Remove Curse
+    uroven: 3
+    trida: Cleric
   - nazev: Banishment
+    vzdy: true
+    poznamka: vždy připravené (subclass Knowledge Domain)
+    uroven: 4
+    trida: Cleric
   - nazev: Divination
+    vzdy: true
+    poznamka: vždy připravené (subclass Knowledge Domain)
+    uroven: 4
+    trida: Cleric
   - nazev: Commune
+    uroven: 5
+    trida: Cleric
   - nazev: Dispel Evil and Good
+    uroven: 5
+    trida: Cleric
   vybava:
   - Half Plate Armor
   - Mace

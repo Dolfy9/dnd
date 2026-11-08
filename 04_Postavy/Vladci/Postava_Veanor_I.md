@@ -97,42 +97,71 @@ postava:
     trida: Wizard
   - nazev: Hunter's Mark
     trida: Ranger
+    uroven: 1
   - nazev: Charm Person
     trida: Ranger
+    vzdy: true
+    poznamka: vždy připravené (subclass Fey Wanderer)
+    uroven: 1
   - nazev: Misty Step
     trida: Ranger
+    vzdy: true
+    poznamka: vždy připravené (subclass Fey Wanderer)
+    uroven: 2
   - nazev: Summon Fey
     trida: Ranger
+    uroven: 3
   - nazev: Dimension Door
     trida: Ranger
+    vzdy: true
+    poznamka: vždy připravené (subclass Fey Wanderer)
+    uroven: 4
   - nazev: Goodberry
     trida: Ranger
+    uroven: 1
   - nazev: Pass without Trace
     trida: Ranger
+    uroven: 2
   - nazev: Conjure Barrage
     trida: Ranger
+    uroven: 3
   - nazev: Lightning Arrow
     trida: Ranger
+    uroven: 3
   - nazev: Freedom of Movement
     trida: Ranger
+    uroven: 4
   - nazev: Locate Creature
     trida: Ranger
+    uroven: 4
   - nazev: Mislead
     trida: Ranger
+    vzdy: true
+    poznamka: vždy připravené (subclass Fey Wanderer)
+    uroven: 5
   - nazev: Shield
     trida: Wizard
+    uroven: 1
   - nazev: Magic Missile
     trida: Wizard
+    uroven: 1
   - nazev: Find Familiar
     trida: Wizard
+    uroven: 1
   - nazev: Detect Magic
     trida: Wizard
+    uroven: 1
   - nazev: Mirror Image
     trida: Wizard
+    uroven: 2
   - nazev: Blur
     trida: Wizard
+    uroven: 2
   - nazev: Command
     trida: Fey Touched
+    vzdy: true
+    poznamka: vždy připravené (feat Fey Touched)
+    uroven: 1
   vybava:
   - Studded Leather Armor (elfí)
   - Rapier „Tirentův trn“

@@ -82,60 +82,91 @@ postava:
   - nazev: Toll the Dead
     uroven: 0
     trida: Magic Initiate
+    vzdy: true
+    poznamka: vždy připravené (feat Magic Initiate)
   - nazev: Message
     uroven: 0
     trida: Magic Initiate
+    vzdy: true
+    poznamka: vždy připravené (feat Magic Initiate)
   - nazev: Chill Touch
     uroven: 0
     trida: Tiefling
+    vzdy: true
+    poznamka: vždy připravené (druh Tiefling)
   - nazev: False Life
     uroven: 1
     trida: Tiefling
+    vzdy: true
+    poznamka: vždy připravené (druh Tiefling)
   - nazev: Ray of Enfeeblement
     uroven: 2
     trida: Tiefling
+    vzdy: true
+    poznamka: vždy připravené (druh Tiefling)
   - nazev: Shield
     trida: Wizard
+    uroven: 1
   - nazev: Detect Magic
     trida: Wizard
+    uroven: 1
   - nazev: Find Familiar
     trida: Wizard
+    uroven: 1
   - nazev: Misty Step
     trida: Wizard
+    uroven: 2
   - nazev: Mirror Image
     trida: Wizard
+    uroven: 2
   - nazev: Counterspell
     trida: Wizard
+    uroven: 3
   - nazev: Fireball
     trida: Wizard
+    uroven: 3
   - nazev: Animate Dead
     trida: Wizard
+    uroven: 3
   - nazev: Dispel Magic
     trida: Wizard
+    uroven: 3
   - nazev: Polymorph
     trida: Wizard
+    uroven: 4
   - nazev: Arcane Eye
     trida: Wizard
+    uroven: 4
   - nazev: Banishment
     trida: Wizard
+    uroven: 4
   - nazev: Cloudkill
     trida: Wizard
+    uroven: 5
   - nazev: Teleportation Circle
     trida: Wizard
+    uroven: 5
   - nazev: Scrying
     trida: Wizard
+    uroven: 5
   - nazev: Contingency
     trida: Wizard
+    uroven: 6
   - nazev: Globe of Invulnerability
     trida: Wizard
+    uroven: 6
   - nazev: Create Undead
     trida: Wizard
+    uroven: 6
   - nazev: Teleport
     trida: Wizard
+    uroven: 7
   - nazev: Finger of Death
     trida: Wizard
+    uroven: 7
   - nazev: Clone
     trida: Wizard
+    uroven: 8
   vybava:
   - Hadí róba (+1 AC)
   - Quarterstaff

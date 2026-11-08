@@ -68,44 +68,63 @@ postava:
   kouzla:
   - nazev: Vicious Mockery
     uroven: 0
+    trida: Bard
   - nazev: Minor Illusion
     uroven: 0
+    trida: Bard
   - nazev: Message
     uroven: 0
+    trida: Bard
   - nazev: Dissonant Whispers
     trida: Bard
+    uroven: 1
   - nazev: Healing Word
     trida: Bard
+    uroven: 1
   - nazev: Faerie Fire
     trida: Bard
+    uroven: 1
   - nazev: Comprehend Languages
     trida: Bard
+    uroven: 1
   - nazev: Silence
     trida: Bard
+    uroven: 2
   - nazev: Detect Thoughts
     trida: Bard
+    uroven: 2
   - nazev: Invisibility
     trida: Bard
+    uroven: 2
   - nazev: Hypnotic Pattern
     trida: Bard
+    uroven: 3
   - nazev: Sending
     trida: Bard
+    uroven: 3
   - nazev: Nondetection
     trida: Bard
+    uroven: 3
   - nazev: Dimension Door
     trida: Bard
+    uroven: 4
   - nazev: Greater Invisibility
     trida: Bard
+    uroven: 4
   - nazev: Modify Memory
     trida: Bard
+    uroven: 5
   - nazev: Mislead
     trida: Bard
+    uroven: 5
   - nazev: Counterspell
     trida: Bard
     poznamka: Magical Discoveries
+    uroven: 3
   - nazev: Revivify
     trida: Bard
     poznamka: Magical Discoveries
+    uroven: 3
   vlastni_rysy:
   - nazev: Oslepen Ordenem (DM)
     text: Trvale oslepen (Blinded), ale má Blindsight 30 ft – v tomto dosahu vnímá okolí bez zraku.

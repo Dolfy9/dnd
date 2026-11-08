@@ -211,6 +211,7 @@
       if (have < exp.pocet) warn("Dovedností je " + have + ", podle pravidel by mělo být aspoň " + exp.pocet + " (" + exp.rozpis.join(", ") + ").");
       exp.povinne.forEach(function (s) { if ((c.dovednosti || []).indexOf(s) < 0) warn("Chybí dovednost z pozadí: " + s + "."); });
     }
+    if (!god) validateSpells(c).forEach(function (t) { warn(t); });
     return out;
   }
   function lvlAtSlot(c, s) {
@@ -357,9 +358,101 @@
     return { postava: c, chyby: errs };
   }
 
+
+  // ---------- kouzla ----------
+  var THIRD_PREP = { 3: 3, 4: 4, 7: 5, 8: 6, 10: 7, 11: 8, 13: 9, 14: 10, 16: 11, 19: 12, 20: 13 };
+  var CHANGE = { Cleric: { lr: "all", lvl: 0, cLvl: 1 }, Druid: { lr: "all", lvl: 0, cLvl: 1 }, Wizard: { lr: "all", lvl: 0, cLr: 1, sr: 1, kniha: 1 },
+    Paladin: { lr: 1, lvl: 0, cLvl: 0 }, Ranger: { lr: 1, lvl: 0, cLvl: 0 }, Bard: { lr: 0, lvl: 1, cLvl: 1 }, Sorcerer: { lr: 0, lvl: 1, cLvl: 1 },
+    Warlock: { lr: 0, lvl: 1, cLvl: 1 }, THIRD: { lr: 0, lvl: 1, cLvl: 1 } };
+  var SPELLS = null;
+  function setSpells(k) { SPELLS = k; return api; }
+  function spellList(listCls, maxLvl) {
+    return Object.keys(SPELLS || {}).filter(function (n) { var v = SPELLS[n]; return v && (v.tridy || "").split(/,\s*/).indexOf(listCls) >= 0 && Number(v.uroven) <= maxLvl; }).sort();
+  }
+  function spellRules(c) {
+    var out = [];
+    (c.tridy || []).forEach(function (t) {
+      var lv = Number(t.uroven) || 0, r = row(t.trida, lv), o = null;
+      if (FULL[t.trida] || HALF[t.trida]) {
+        var mx = 0; SLOT_COLS.forEach(function (k, i) { if (num(r[k]) > 0) mx = i + 1; });
+        o = { trida: t.trida, seznam: t.trida, ab: CAST_AB[t.trida], cantrips: num(r.Cantrips), pripravena: num(r["Prepared Spells"]), maxUroven: mx, zmena: CHANGE[t.trida] };
+        if (t.trida === "Wizard") o.kniha = 6 + 2 * (lv - 1);
+      } else if (t.trida === "Warlock") {
+        o = { trida: "Warlock", seznam: "Warlock", ab: "CHA", cantrips: num(r.Cantrips), pripravena: num(r["Prepared Spells"]), maxUroven: num(r["Slot Level"]), zmena: CHANGE.Warlock };
+      } else if (THIRD[t.podtrida] && lv >= 3) {
+        var p = 0; Object.keys(THIRD_PREP).forEach(function (k) { if (lv >= Number(k)) p = THIRD_PREP[k]; });
+        o = { trida: t.trida, seznam: "Wizard", ab: "INT", cantrips: t.podtrida === "Arcane Trickster" ? (lv >= 10 ? 4 : 3) : (lv >= 10 ? 3 : 2), pripravena: p, maxUroven: MULTI[Math.ceil(lv / 3)].length, zmena: CHANGE.THIRD, podtrida: t.podtrida };
+      }
+      if (o) { o.uroven = lv; o.moznosti = SPELLS ? spellList(o.seznam, o.maxUroven) : []; out.push(o); }
+    });
+    return out;
+  }
+  function spellCounts(c, trida) {
+    var k = (c.kouzla || []).filter(function (x) { return x.trida === trida; });
+    return { cantrips: k.filter(function (x) { return Number(x.uroven) === 0; }).length,
+      pripravena: k.filter(function (x) { return Number(x.uroven) > 0 && !x.kniha && !x.vzdy; }).length,
+      kniha: k.filter(function (x) { return Number(x.uroven) > 0 && !x.vzdy; }).length };
+  }
+  function validateSpells(c) {
+    var out = [];
+    spellRules(c).forEach(function (r) {
+      var n = spellCounts(c, r.trida);
+      if (n.cantrips > r.cantrips) out.push(r.trida + ": cantripů " + n.cantrips + ", povoleno " + r.cantrips + ".");
+      if (n.pripravena > r.pripravena) out.push(r.trida + ": připravených kouzel " + n.pripravena + ", povoleno " + r.pripravena + " (kouzla od subclassy označ jako „vždy připravené“).");
+      if (r.kniha && n.kniha > r.kniha) out.push("Wizard: kouzel ve spellbooku " + n.kniha + ", základ je " + r.kniha + " (další jde přepsat ze svitků a knih).");
+      if (SPELLS) (c.kouzla || []).filter(function (x) { return x.trida === r.trida && !x.vzdy; }).forEach(function (x) {
+        var v = SPELLS[x.nazev];
+        if (!v) out.push(x.nazev + ": není v seznamu kouzel 2024.");
+        else if ((v.tridy || "").split(/,\s*/).indexOf(r.seznam) < 0) out.push(x.nazev + ": není na seznamu kouzel " + r.seznam + ".");
+        else if (Number(v.uroven) > r.maxUroven) out.push(x.nazev + ": úroveň " + v.uroven + " je nad maximem " + r.maxUroven + " pro " + r.trida + " " + r.uroven + ".");
+      });
+    });
+    return out;
+  }
+  // režim: free | lvl (level up) | lr (Long Rest) | sr (Short Rest) – kontrola, kolik změn pravidla dovolí
+  function checkSpellChange(oldC, newC, trida, rezim, nLvl) {
+    nLvl = nLvl || 1;
+    var r = spellRules(newC).filter(function (x) { return x.trida === trida; })[0]; if (!r) return [];
+    var errs = [], z = r.zmena || {}, n = spellCounts(newC, trida);
+    if (n.cantrips > r.cantrips) errs.push("Cantripů je víc než " + r.cantrips + ".");
+    if (n.pripravena > r.pripravena) errs.push("Připravených kouzel je víc než " + r.pripravena + ".");
+    if (r.kniha && n.kniha > r.kniha && rezim !== "free") errs.push("Spellbook má víc než " + r.kniha + " kouzel – další přidej v režimu úprav (opsaná ze svitků).");
+    if (rezim === "free") return errs;
+    function set(c, f) { var o = {}; (c.kouzla || []).filter(function (x) { return x.trida === trida && !x.vzdy && f(x); }).forEach(function (x) { o[x.nazev] = 1; }); return o; }
+    function added(f) { var a = set(oldC, f), b = set(newC, f); return Object.keys(b).filter(function (k) { return !a[k]; }).length; }
+    var oldN = spellCounts(oldC, trida), oldR = spellRules(oldC).filter(function (x) { return x.trida === trida; })[0] || { cantrips: 0, pripravena: 0, kniha: 0 };
+    var addC = added(function (x) { return Number(x.uroven) === 0; }), addP = added(function (x) { return Number(x.uroven) > 0 && !x.kniha; }), addB = added(function (x) { return Number(x.uroven) > 0; });
+    var growC = Math.max(0, r.cantrips - oldN.cantrips), growP = Math.max(0, r.pripravena - oldN.pripravena);
+    var replP = rezim === "lr" ? (z.lr === "all" ? 1e9 : z.lr || 0) : rezim === "lvl" ? (z.lr === "all" ? 1e9 : (z.lvl || 0) * nLvl + (z.lr || 0)) : rezim === "sr" ? (z.sr && r.uroven >= 5 ? 1 : 0) : 0;
+    var replC = rezim === "lr" ? (z.cLr || 0) : rezim === "lvl" ? (z.cLvl || 0) * nLvl + (z.cLr || 0) : 0;
+    if (rezim !== "lvl") { growC = 0; growP = 0; }
+    if (addC > growC + replC) errs.push("Cantripy: nových " + addC + ", pravidla teď dovolují " + (growC + replC) + ".");
+    if (addP > growP + replP) errs.push("Připravená kouzla: nových " + addP + ", pravidla teď dovolují " + (growP + replP) + ".");
+    if (r.kniha) {
+      var growB = rezim === "lvl" ? Math.max(0, r.kniha - oldN.kniha) : 0;
+      if (addB - 0 > growB + (rezim === "lr" || rezim === "sr" ? 0 : 0) && (rezim === "lr" || rezim === "sr")) errs.push("Při odpočinku nejde přidat kouzla do spellbooku – připravuj jen z knihy.");
+      if (rezim === "lvl" && addB > growB) errs.push("Spellbook: nových " + addB + ", za tyto úrovně získáš " + growB + ".");
+      if (rezim !== "free") (newC.kouzla || []).filter(function (x) { return x.trida === trida && Number(x.uroven) > 0 && !x.kniha && !x.vzdy; }).forEach(function (x) {
+        var inOld = (oldC.kouzla || []).some(function (y) { return y.trida === trida && y.nazev === x.nazev; }), inNewBook = true; if (!inOld && rezim !== "lvl") errs.push(x.nazev + " není ve spellbooku.");
+      });
+    }
+    return errs;
+  }
+  function changeRulesText(r) {
+    var z = r.zmena || {}, t = [];
+    if (z.lr === "all") t.push("Po Long Rest můžeš vyměnit celý seznam připravených kouzel" + (z.kniha ? " (jen z kouzel ve spellbooku)" : "") + ".");
+    else if (z.lr) t.push("Po Long Rest můžeš vyměnit jedno připravené kouzlo.");
+    if (z.lvl) t.push("Při zisku úrovně můžeš vyměnit jedno připravené kouzlo.");
+    if (z.cLr) t.push("Po Long Rest můžeš vyměnit jeden cantrip.");
+    if (z.cLvl) t.push("Při zisku úrovně můžeš vyměnit jeden cantrip.");
+    if (z.sr && r.uroven >= 5) t.push("Memorize Spell: po Short Rest můžeš vyměnit jedno připravené kouzlo za jiné ze spellbooku.");
+    if (z.kniha) t.push("Spellbook: 6 kouzel na 1. úrovni + 2 za každou další úroveň Wizarda (další lze opsat).");
+    return t;
+  }
+
   var api = { init: init, AB: AB, SKILLS: SKILLS, PRIMARY: PRIMARY, MULTI_PROF: MULTI_PROF, STANDARD: STANDARD, COST: COST, totalLevel: totalLevel, pb: pb,
     classMilestones: classMilestones, featSlots: featSlots, featOptions: featOptions, checkPrereq: checkPrereq, multiclassCheck: multiclassCheck,
     derive: derive, validate: validate, planLevelUp: planLevelUp, applyLevelUp: applyLevelUp, featAbilityChoices: featAbilityChoices,
-    classSkillRule: classSkillRule, expectedSkills: expectedSkills, createCharacter: createCharacter, armorTraining: armorTraining };
+    classSkillRule: classSkillRule, setSpells: setSpells, spellRules: spellRules, spellCounts: spellCounts, validateSpells: validateSpells, checkSpellChange: checkSpellChange, changeRulesText: changeRulesText, expectedSkills: expectedSkills, createCharacter: createCharacter, armorTraining: armorTraining };
   return api;
 });

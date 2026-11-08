@@ -48,27 +48,48 @@ postava:
   kouzla:
   - nazev: Fire Bolt
     uroven: 0
+    trida: Sorcerer
   - nazev: Elementalism
     uroven: 0
+    trida: Sorcerer
   - nazev: Mage Hand
     uroven: 0
+    trida: Sorcerer
   - nazev: Prestidigitation
     uroven: 0
+    trida: Sorcerer
   - nazev: Light
     uroven: 0
+    trida: Sorcerer
   - nazev: Incendiary Cloud
+    uroven: 8
+    trida: Sorcerer
   - nazev: Earthquake
+    uroven: 8
+    trida: Sorcerer
   - nazev: Fire Storm
+    uroven: 7
+    trida: Sorcerer
   - nazev: Stone Shape
+    uroven: 4
+    trida: Sorcerer
   - nazev: Wall of Fire
+    uroven: 4
+    trida: Sorcerer
   - nazev: Fireball
+    uroven: 3
+    trida: Sorcerer
   - nazev: Meteor Swarm
+    uroven: 9
+    trida: Sorcerer
   - nazev: Tsunami
     uroven: 8
     poznamka: božská moc (Vládkyně moří)
+    trida: Sorcerer
   - nazev: Control Water
     uroven: 4
     poznamka: božská moc (Vládkyně moří)
+    trida: Sorcerer
   vlastni_rysy:
   - nazev: Vládkyně moří
     text: 'Vlastní božská schopnost: ovládá moře a písek (Tsunami, Control Water bez slotu).'

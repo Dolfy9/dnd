@@ -57,56 +57,100 @@ postava:
   kouzla:
   - nazev: Guidance
     uroven: 0
+    vzdy: true
+    poznamka: vždy připravené (feat Magic Initiate)
+    trida: Cleric
   - nazev: Sacred Flame
     uroven: 0
+    trida: Cleric
   - nazev: Toll the Dead
     uroven: 0
+    vzdy: true
+    poznamka: vždy připravené (feat Magic Initiate)
+    trida: Cleric
   - nazev: Thaumaturgy
     uroven: 0
+    trida: Cleric
   - nazev: Light
     uroven: 0
+    trida: Cleric
   - nazev: Spare the Dying
     uroven: 0
+    trida: Cleric
   - nazev: Aid
     trida: Cleric
     poznamka: Life Domain
+    uroven: 2
   - nazev: Bless
     trida: Cleric
     poznamka: Life Domain
+    uroven: 1
   - nazev: Cure Wounds
     trida: Cleric
     poznamka: Life Domain
+    uroven: 1
   - nazev: Lesser Restoration
     trida: Cleric
     poznamka: Life Domain
+    uroven: 2
   - nazev: Mass Healing Word
     trida: Cleric
     poznamka: Life Domain
+    uroven: 3
   - nazev: Revivify
     trida: Cleric
     poznamka: Life Domain
+    uroven: 3
   - nazev: Aura of Life
     trida: Cleric
     poznamka: Life Domain
+    uroven: 4
   - nazev: Death Ward
     trida: Cleric
     poznamka: Life Domain
+    uroven: 4
   - nazev: Greater Restoration
     trida: Cleric
     poznamka: Life Domain
+    uroven: 5
   - nazev: Mass Cure Wounds
     trida: Cleric
     poznamka: Life Domain
+    uroven: 5
   - nazev: Healing Word
+    vzdy: true
+    poznamka: vždy připravené (subclass Life Domain)
+    uroven: 1
+    trida: Cleric
   - nazev: Command
+    vzdy: true
+    poznamka: vždy připravené (druh Elf)
+    uroven: 1
+    trida: Cleric
   - nazev: Spiritual Weapon
+    uroven: 2
+    trida: Cleric
   - nazev: Spirit Guardians
+    uroven: 3
+    trida: Cleric
   - nazev: Dispel Magic
+    uroven: 3
+    trida: Cleric
   - nazev: Banishment
+    uroven: 4
+    trida: Cleric
   - nazev: Guardian of Faith
+    uroven: 4
+    trida: Cleric
   - nazev: Commune
+    uroven: 5
+    trida: Cleric
   - nazev: Insect Plague
+    uroven: 5
+    trida: Cleric
   - nazev: Heal
+    uroven: 6
+    trida: Cleric
   vybava:
   - Studded Leather Armor
   - Shield
