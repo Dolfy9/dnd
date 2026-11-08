@@ -29,12 +29,13 @@
     Object.keys(SYM).forEach(function (k) { o.push('<g id="sv-' + k + '">' + SYM[k].svg + "</g>"); });
     o.push('<pattern id="sv-pp" patternUnits="userSpaceOnUse" width="512" height="512"><rect width="512" height="512" fill="#efdfb4"/><image href="' + A + 'papir.jpg" width="512" height="512" opacity=".75"/></pattern>');
     o.push('<pattern id="sv-mp" patternUnits="userSpaceOnUse" width="420" height="420"><rect width="420" height="420" fill="#9cc2bc"/><image href="' + A + 'more.jpg" width="420" height="420" opacity=".42"/></pattern>');
+    [["#e3cf86", "#cdb862", 25], ["#bccb7c", "#a2b664", -35], ["#e2c48e", "#c8a160", 70]].forEach(function (f, i) { o.push('<pattern id="sv-f' + i + '" patternUnits="userSpaceOnUse" width="9" height="9" patternTransform="rotate(' + f[2] + ')"><rect width="9" height="9" fill="' + f[0] + '"/><rect width="9" height="4" fill="' + f[1] + '"/><path d="M0,4.5 h9" stroke="#7a5a2a" stroke-width=".45" opacity=".55"/></pattern>'); });
     var lakes = (D.pevnina || []).filter(function (s) { return s.typ === "jezero"; });
     var landD = (D.pevnina || []).filter(function (s) { return s.typ === "pevnina"; }).map(function (s) { return pathD(s.body, true); }).join(" ");
     o.push('<clipPath id="sv-souse"><path d="' + landD + '"/></clipPath></defs>');
     o.push('<rect width="' + W + '" height="' + H + '" fill="url(#sv-mp)"/>');
     o.push('<path d="' + landD + '" fill="none" stroke="#5f9294" stroke-opacity=".35" stroke-width="56" stroke-linejoin="round" filter="url(#sv-mekce)"/>');
-    [22, 14, 7].forEach(function (d) { o.push('<path d="' + landD + '" fill="none" stroke="#2f6670" stroke-opacity=".45" stroke-width="' + (2 * d + 1.4) + '" stroke-linejoin="round"/><path d="' + landD + '" fill="none" stroke="url(#sv-mp)" stroke-width="' + 2 * d + '" stroke-linejoin="round"/>'); });
+    [16, 7].forEach(function (d) { o.push('<path d="' + landD + '" fill="none" stroke="#2f6670" stroke-opacity=".28" stroke-width="' + (2 * d + 1.1) + '" stroke-linejoin="round"/><path d="' + landD + '" fill="none" stroke="url(#sv-mp)" stroke-width="' + 2 * d + '" stroke-linejoin="round"/>'); });
     o.push('<rect width="' + W + '" height="' + H + '" fill="#fff" filter="url(#sv-papir)" opacity=".6"/>');
     var lid = 0;
     (D.pevnina || []).forEach(function (s) {
@@ -47,6 +48,16 @@
     o.push('<path d="' + landD + '" fill="none" stroke="#f6e7bb" stroke-opacity=".75" stroke-width="12" filter="url(#sv-mekce)"/>');
     o.push('<path d="' + landD + '" fill="none" stroke="#7a5a2a" stroke-opacity=".3" stroke-width="5" filter="url(#sv-mekce)"/>');
     (D.oblasti || []).forEach(function (a) { var c = (OBL[a.typ] || {}).barva || "#b8c47a"; o.push('<path d="' + pathD(a.body, true) + '" fill="' + c + '" opacity=".22" filter="url(#sv-mekce)"/>'); });
+    (D.oblasti || []).forEach(function (a, i) {
+      if (a.typ !== "pole") return;
+      var Rf = rng(977 + i * 31), xs = a.body.map(function (p) { return p[0]; }), ys = a.body.map(function (p) { return p[1]; }),
+        x0 = Math.min.apply(null, xs), x1 = Math.max.apply(null, xs), y0 = Math.min.apply(null, ys), y1 = Math.max.apply(null, ys), ang = (Rf() - .5) * 50;
+      for (var fy = y0 + 4; fy < y1; fy += 10) for (var fx = x0 + 4; fx < x1; fx += 13) {
+        var qx = fx + (Rf() - .5) * 4, qy = fy + (Rf() - .5) * 3;
+        if (Rf() < .18 || !inPoly(qx, qy, a.body)) continue;
+        o.push('<rect x="' + (qx - 5.5).toFixed(1) + '" y="' + (qy - 4).toFixed(1) + '" width="' + (9 + Rf() * 3).toFixed(1) + '" height="' + (6.5 + Rf() * 2).toFixed(1) + '" transform="rotate(' + (ang + (Rf() - .5) * 12).toFixed(1) + " " + qx.toFixed(1) + " " + qy.toFixed(1) + ')" fill="url(#sv-f' + Math.floor(Rf() * 3) + ')" stroke="#7a5a2a" stroke-width=".4" stroke-opacity=".6" opacity=".85"/>');
+      }
+    });
     lakes.forEach(function (s) { o.push('<path d="' + pathD(s.body, true) + '" fill="url(#sv-mp)"/>'); });
     o.push("</g>");
     o.push('<g clip-path="url(#sv-souse)">');
@@ -111,6 +122,18 @@
       else if (styl === "zeme" && w.length === 2) o.push('<g transform="translate(' + x + "," + y + ") rotate(" + rot + ')"><text class="sv-l" text-anchor="middle" font-size="24" letter-spacing="3.6" y="-2">' + esc(w[0]) + '</text><text class="sv-l" text-anchor="middle" font-size="17" letter-spacing="5" y="17">' + esc(w[1]) + "</text></g>");
       else o.push('<text class="' + (styl === "zeme" ? "sv-l" : "sv-c") + '" text-anchor="middle" dominant-baseline="middle" font-size="' + (p.velikost || (styl === "zeme" ? 27 : 24)) + '" letter-spacing="' + (styl === "zeme" ? 4.8 : 2) + '" transform="translate(' + x + "," + y + ") rotate(" + rot + ')">' + esc(styl === "zeme" ? m.nazev : m.nazev) + "</text>");
     });
+    (M.mista || []).forEach(function (m) {
+      if (m.typ !== "mesto" || m.popisek || !m.nazev || /^(Hrad na|Opevněné|Sídlo|Nové místo)/.test(m.nazev)) return;
+      o.push('<text class="sv-c" text-anchor="middle" font-size="15" letter-spacing="1" x="' + m.x + '" y="' + (m.y + 20) + '">' + esc(m.nazev) + "</text>");
+    });
+    var KM = D.km_px || 1.75, sx = 1560, sy = 1405, dil = 150 / KM;
+    o.push('<g font-family="MFell,serif" font-size="13" fill="#3a2412">');
+    for (var di = 0; di < 4; di++) o.push('<rect x="' + (sx + di * dil).toFixed(1) + '" y="' + sy + '" width="' + dil.toFixed(1) + '" height="6" fill="' + (di % 2 ? "#f3e6c4" : "#3a2412") + '" stroke="#3a2412" stroke-width=".8"/><text x="' + (sx + (di + 1) * dil).toFixed(1) + '" y="' + (sy - 5) + '" text-anchor="middle">' + (150 * (di + 1)) + '</text>');
+    o.push('<text x="' + sx + '" y="' + (sy - 5) + '" text-anchor="middle">0</text><text x="' + (sx + 2 * dil) + '" y="' + (sy + 22) + '" text-anchor="middle" font-style="italic">km</text></g>');
+    var cx = 1935, cy = 1300, rr = 58, rose = "";
+    for (var ri = 0; ri < 8; ri++) { var ang = ri * Math.PI / 4, L2 = ri % 2 ? rr * .55 : rr, w2 = ri % 2 ? 6 : 10, ax = Math.sin(ang), ay = -Math.cos(ang), px = Math.cos(ang), py = Math.sin(ang);
+      rose += '<path d="M' + cx + "," + cy + " L" + (cx + px * w2).toFixed(1) + "," + (cy + py * w2).toFixed(1) + " L" + (cx + ax * L2).toFixed(1) + "," + (cy + ay * L2).toFixed(1) + 'Z" fill="#3a2412"/><path d="M' + cx + "," + cy + " L" + (cx - px * w2).toFixed(1) + "," + (cy - py * w2).toFixed(1) + " L" + (cx + ax * L2).toFixed(1) + "," + (cy + ay * L2).toFixed(1) + 'Z" fill="#f3e6c4" stroke="#3a2412" stroke-width=".8"/>'; }
+    o.push('<g opacity=".9"><circle cx="' + cx + '" cy="' + cy + '" r="' + (rr * .72) + '" fill="none" stroke="#3a2412" stroke-width="1"/><circle cx="' + cx + '" cy="' + cy + '" r="' + (rr * .78) + '" fill="none" stroke="#3a2412" stroke-width=".6"/>' + rose + '<text class="sv-l" x="' + cx + '" y="' + (cy - rr - 6) + '" text-anchor="middle" font-size="18">S</text></g>');
     o.push('<text class="sv-l" text-anchor="middle" font-size="48" letter-spacing="6" x="1810" y="130">Montelien</text>');
     o.push('<rect width="' + W + '" height="' + H + '" fill="url(#sv-vin)" pointer-events="none"/>');
     svg.innerHTML = o.join("");
@@ -131,7 +154,7 @@
       sprites.forEach(function (s) {
         var img = im[s.n], m = META[s.n]; if (!img) return;
         var k = s.w / m.w;
-        g.save(); g.translate(s.x, s.y); if (s.r) g.rotate(s.r * Math.PI / 180); g.scale(s.f ? -k : k, k);
+        g.save(); g.filter = /^(duna|kaktus)/.test(s.n) ? "saturate(.72) brightness(1.04)" : "none"; g.translate(s.x, s.y); if (s.r) g.rotate(s.r * Math.PI / 180); g.scale(s.f ? -k : k, k);
         g.drawImage(img, -m.w / 2, -m.h + 2, m.w, m.h); g.restore();
       });
       c.toBlob(function (b) {

@@ -61,7 +61,7 @@
     kopce: { nazev: "Kopce", barva: "#c9c07a", spr: ["kopec_1", "kopec_2", "kopec_3", "kopec_4", "kopec_5"], rozestup: 24, w: 30 },
     poust: { nazev: "Poušť", barva: "#e6c886", spr: ["duna_1", "duna_2", "duna_3", "duna_4", "duna_5", "duna_2", "duna_3", "duna_1", "duna_4", "kaktus_1", "duna_5", "balvan_2"], rozestup: 28, w: 38 },
     bazina: { nazev: "Bažina", barva: "#8fa68a", spr: ["bazina_1", "bazina_2", "rakos_1", "rakos_2", "ker_2", "suchy_2"], rozestup: 18, w: 22 },
-    pole: { nazev: "Pole a vinice", barva: "#dcc57a", spr: ["pole_1", "pole_2", "vinice", "pole_1"], rozestup: 24, w: 24 },
+    pole: { nazev: "Pole a vinice", barva: "#dcc57a", spr: ["vinice", "ker_1"], rozestup: 40, w: 14 },
     mrtvy: { nazev: "Mrtvý les", barva: "#a59a7a", spr: ["suchy_1", "suchy_2", "ker_2"], rozestup: 10, w: 14 },
     ledovec: { nazev: "Ledovec", barva: "#e4ecef", spr: ["snih", "kamen_3", "snih", "utes_1"], rozestup: 30, w: 30 },
     mrtva_zeme: { nazev: "Mrtvá země", barva: "#a39a86", spr: ["suchy_1", "kamen_1", "suchy_2", "utes_2", "sucha_6"], rozestup: 34, w: 12 },
