@@ -15,6 +15,15 @@
   }
   function inPoly(x, y, b) { var c = false; for (var i = 0, j = b.length - 1; i < b.length; j = i++) { if (((b[i][1] > y) !== (b[j][1] > y)) && (x < (b[j][0] - b[i][0]) * (y - b[i][1]) / (b[j][1] - b[i][1]) + b[i][0])) c = !c; } return c; }
   function bbox(b) { var x0 = 1e9, y0 = 1e9, x1 = -1e9, y1 = -1e9; b.forEach(function (p) { x0 = Math.min(x0, p[0]); y0 = Math.min(y0, p[1]); x1 = Math.max(x1, p[0]); y1 = Math.max(y1, p[1]); }); return [x0, y0, x1, y1]; }
+  function boundaryDistance(x, y, b) {
+    var d = Infinity;
+    for (var i = 0, j = b.length - 1; i < b.length; j = i++) {
+      var ax = b[j][0], ay = b[j][1], dx = b[i][0] - ax, dy = b[i][1] - ay;
+      var t = Math.max(0, Math.min(1, ((x - ax) * dx + (y - ay) * dy) / (dx * dx + dy * dy || 1)));
+      d = Math.min(d, Math.hypot(x - ax - t * dx, y - ay - t * dy));
+    }
+    return d;
+  }
 
   function render(svg, D, M, base) {
     var SYM = window.SVET_SYMBOLY || {}, OBL = window.SVET_OBLASTI || {}, SPR = window.SVET_SPRITY || {}, META = window.SVET_SPRITY_META || {},
@@ -81,25 +90,39 @@
     (D.utesy || []).forEach(function (r) { o.push('<path d="' + pathD(r.body, false) + '" fill="none" stroke="#3a2e22" stroke-width="3" opacity=".3"/>'); });
     (D.hranice || []).forEach(function (r) { var d = pathD(r.body, false); o.push('<path d="' + d + '" fill="none" stroke="#f3e6c4" stroke-width="4" opacity=".5"/><path d="' + d + '" fill="none" stroke="#7a2416" stroke-width="1.6" stroke-dasharray="9 3 2 3" opacity=".85"/>'); });
     // symboly v oblastech (seřazené podle y, aby se překrývaly správně)
-    var items = [];
-    var REL = { kaktus: .3, balvan: .45, rakos: .55, ker: .5, suchy: .8 };
+    var items = [], landPolys = (D.pevnina || []).filter(function (p) { return p.typ === "pevnina"; });
+    var REL = { kaktus: .3, balvan: .45, rakos: .55, ker: .5, suchy: .8, kopec: .65, utes: .55 };
     function spr(name, x, y, w, flip, rot, tmavy) {
-      return META[name] ? { n: name, x: x, y: y, w: w, f: flip, r: rot || 0, tmavy: !!tmavy } : "";
+      if (!META[name]) return "";
+      var res = PAL.viewport_sprites || {}, maxScale = Math.pow(2, res.max_zoom || 2.5);
+      w = Math.min(w, META[name].w / (maxScale * (res.min_resolution_ratio || 2)));
+      return { n: name, x: x, y: y, w: w, f: flip, r: rot || 0, tmavy: !!tmavy };
     }
     (D.oblasti || []).forEach(function (a, ai) {
       var t = OBL[a.typ]; if (!t || !t.spr || !t.spr.length) return;
-      var bb = bbox(a.body), R = rng(ai * 7919 + 13 + Math.round(bb[0] + bb[1])), st = t.rozestup / (a.hustota || 1), row = 0, sh = t.shluky === true || a.shluky === true,
+      var bb = bbox(a.body), R = rng(ai * 7919 + 13 + Math.round(bb[0] + bb[1])), forest = a.typ === "les" || a.typ === "haj" || a.typ === "dzungle",
+        forestStyle = LAND.forest || {}, density = forest ? Math.max(1, a.hustota || 1) * (forestStyle.density || 1) : (a.hustota || 1),
+        st = t.rozestup / density, row = 0, sh = t.shluky === true || a.shluky === true,
         f1 = sh ? R() * Math.PI * 2 : 0, f2 = sh ? R() * Math.PI * 2 : 0, f3 = sh ? R() * Math.PI * 2 : 0;
       for (var y = bb[1] + st * .5; y < bb[3] + st * .3; y += st * .62, row++) for (var x = bb[0] + (row % 2 ? st / 2 : 0); x < bb[2]; x += st) {
         var px = x + (R() - .5) * st * (sh ? 1.1 : .8), py = y + (R() - .5) * st * (sh ? .9 : .5);
         if (!inPoly(px, py, a.body) || lakes.some(function (l) { return inPoly(px, py, l.body); })) continue;
+        if ((a.typ === "poust" || a.typ === "ledovec") && !landPolys.some(function (p) { return inPoly(px, py, p.body); })) continue;
+        var edge = 1;
+        if (forest) {
+          edge = Math.max(0, Math.min(1, boundaryDistance(px, py, a.body) / (forestStyle.edge_depth || 15)));
+          if (R() > (forestStyle.edge_density || .42) + (1 - (forestStyle.edge_density || .42)) * edge) continue;
+        }
         if (sh) {
           var n = .5 + .5 * Math.sin(px * .031 + f1) * Math.sin(py * .027 + f2) + .25 * Math.sin((px + py) * .07 + f3);
           if (R() > .2 + .9 * n) continue;
         }
         var pool = a.tmavy && a.typ === "dzungle" ? ["dzung_1", "dzung_2"] : t.spr;
         var nm = pool[Math.floor(R() * pool.length)];
-        items.push([py, spr(nm, px, py, t.w * (REL[nm.split("_")[0]] || 1) * (sh ? .65 + R() * .7 : .8 + R() * .4), R() < .5, 0, a.tmavy)]);
+        var size = t.w * (REL[nm.split("_")[0]] || 1) * (sh ? .65 + R() * .7 : .8 + R() * .4);
+        if (forest) size *= (forestStyle.edge_scale || .58) + (1 - (forestStyle.edge_scale || .58)) * edge;
+        var rotation = a.typ === "poust" ? Math.sin((px + py * .62) * .012) * ((LAND.variation || {}).sand_row_rotation || 8) + (R() - .5) * 3 : 0;
+        items.push([py, spr(nm, px, py, size, R() < .5, rotation, a.tmavy)]);
       }
     });
     // řídká drobná vegetace na volné pevnině (mimo oblasti a jezera)
@@ -137,7 +160,7 @@
     });
     (M.mista || []).forEach(function (m) { if ((m.typ === "sidlo" || m.typ === "mesto") && !(D.symboly || []).some(function (q) { return SPR[q.typ] && Math.abs(q.x - m.x) < 45 && Math.abs(q.y - m.y) < 90; })) items.push([m.y + 6, spr(m.typ === "mesto" ? "mesto" : (Math.round(m.x + m.y) % 2 ? "vesnice" : "vesnice2"), m.x, m.y + 6, m.typ === "mesto" ? 28 : 16, Math.round(m.x) % 2 === 0)]); });
     var sprites = [];
-    o.push('<image id="sv-spr" x="0" y="0" width="' + W + '" height="' + H + '" preserveAspectRatio="none"/>');
+    o.push('<foreignObject id="sv-spr" x="0" y="0" width="1" height="1"><canvas xmlns="http://www.w3.org/1999/xhtml" style="display:block;width:100%;height:100%"></canvas></foreignObject>');
     items.sort(function (a, b) { return a[0] - b[0]; }).forEach(function (i) { if (typeof i[1] === "string") o.push(i[1]); else sprites.push(i[1]); });
     // popisky z mista.json
     (M.mista || []).forEach(function (m) {
@@ -166,7 +189,7 @@
     kresliSprity(svg, sprites, A, W, H, META);
   }
 
-  var IMG = {}, K = Math.max(1, Math.min(2, window.devicePixelRatio || 1));
+  var IMG = {}, GRADED = {};
   function nacti(src) { if (!IMG[src]) IMG[src] = new Promise(function (ok) { var i = new Image(); i.onload = function () { ok(i); }; i.onerror = function () { ok(null); }; i.src = src; }); return IMG[src]; }
   function upravObraz(img, saturation, brightness, grade) {
     saturation = saturation == null ? 1 : saturation; brightness = brightness == null ? 1 : brightness;
@@ -186,43 +209,97 @@
     }
     g.putImageData(px, 0, 0); return c;
   }
+  function pripravenySprite(name, A, tmavy) {
+    var key = A + name;
+    if (!GRADED[key]) GRADED[key] = nacti(key + ".webp").then(function (img) {
+      if (!img) return null;
+      var filters = (window.SVET_PALETA || {}).sprite_filters || {}, f = null, grade = null;
+      if (/^(hora|masiv|skala|hreben|utes)/.test(name)) { f = [filters.mountain_saturation, filters.mountain_brightness]; grade = { tint: filters.mountain_tint, tint_opacity: filters.mountain_tint_opacity, preserve_highlights: true, highlight_luminance: filters.snow_highlight_luminance }; }
+      else if (/^kopec/.test(name)) { f = [filters.hill_saturation, filters.hill_brightness]; grade = { tint: filters.hill_tint, tint_opacity: filters.hill_tint_opacity }; }
+      else if (/^duna/.test(name)) { f = [filters.dune_saturation, filters.dune_brightness]; grade = { tint: filters.dune_tint, tint_opacity: filters.dune_tint_opacity }; }
+      else if (/^kaktus/.test(name)) f = [filters.cactus_saturation, filters.cactus_brightness];
+      else if (/^sucha/.test(name)) f = [filters.dry_grass_saturation, filters.dry_grass_brightness];
+      else if (/^podzim/.test(name)) f = [filters.autumn_saturation, filters.autumn_brightness];
+      else if (/^(kvety|maky)/.test(name)) f = [filters.flower_saturation, filters.flower_brightness];
+      else if (name === "kostka") { f = [filters.artifact_saturation, filters.artifact_brightness]; grade = { tint: filters.artifact_tint, tint_opacity: filters.artifact_tint_opacity }; }
+      if (f) img = upravObraz(img, f[0], f[1], grade);
+      return upravObraz(img, ((window.SVET_PALETA || {}).grade || {}).sprite_saturation, 1);
+    });
+    if (!tmavy) return GRADED[key];
+    if (!GRADED[key + "#tmavy"]) GRADED[key + "#tmavy"] = GRADED[key].then(function (img) { return img && upravObraz(img, .65, .58); });
+    return GRADED[key + "#tmavy"];
+  }
+  function indexSprity(state) {
+    var cell = state.gridSize, grid = Object.create(null);
+    state.sprites.forEach(function (s, i) {
+      var m = state.meta[s.n]; if (!m) return;
+      var k = s.w / m.w, rw = Math.abs(s.w), rh = m.h * k, r = Math.hypot(rw, rh) / 2 + 3;
+      var x0 = Math.floor((s.x - r) / cell), x1 = Math.floor((s.x + r) / cell);
+      var y0 = Math.floor((s.y - rh / 2 - r) / cell), y1 = Math.floor((s.y - rh / 2 + r) / cell);
+      for (var y = y0; y <= y1; y++) for (var x = x0; x <= x1; x++) {
+        var key = x + "," + y; (grid[key] || (grid[key] = [])).push(i);
+      }
+    });
+    state.grid = grid;
+  }
+  function prekresli(state) {
+    var map = state.map, bounds = map && map.getBounds ? map.getBounds() : null;
+    var left = bounds ? bounds.getWest() : 0, right = bounds ? bounds.getEast() : state.W;
+    var top = bounds ? state.H - bounds.getNorth() : 0, bottom = bounds ? state.H - bounds.getSouth() : state.H;
+    var margin = (window.SVET_PALETA.viewport_sprites || {}).margin_ratio || .22;
+    var mx = (right - left) * margin, my = (bottom - top) * margin;
+    left = Math.max(0, left - mx); right = Math.min(state.W, right + mx);
+    top = Math.max(0, top - my); bottom = Math.min(state.H, bottom + my);
+    var fo = state.svg.querySelector("#sv-spr"), canvas = fo && fo.querySelector("canvas");
+    if (!canvas || right <= left || bottom <= top) return;
+    fo.setAttribute("x", left); fo.setAttribute("y", top);
+    fo.setAttribute("width", right - left); fo.setAttribute("height", bottom - top);
+    var scale = map && map.getZoomScale ? map.getZoomScale(map.getZoom(), 0) : 1, dpr = Math.max(1, window.devicePixelRatio || 1);
+    canvas.width = Math.max(1, Math.ceil((right - left) * scale * dpr));
+    canvas.height = Math.max(1, Math.ceil((bottom - top) * scale * dpr));
+    var ctx = canvas.getContext("2d"), pixelScale = scale * dpr;
+    ctx.setTransform(1, 0, 0, 1, 0, 0); ctx.clearRect(0, 0, canvas.width, canvas.height);
+    ctx.setTransform(pixelScale, 0, 0, pixelScale, -left * pixelScale, -top * pixelScale);
+    ctx.imageSmoothingQuality = "high";
+    var cell = state.gridSize, seen = Object.create(null), visible = [];
+    for (var cy = Math.floor(top / cell); cy <= Math.floor(bottom / cell); cy++) for (var cx = Math.floor(left / cell); cx <= Math.floor(right / cell); cx++) {
+      (state.grid[cx + "," + cy] || []).forEach(function (i) { if (!seen[i]) { seen[i] = true; visible.push(i); } });
+    }
+    visible.sort(function (a, b) { return a - b; });
+    visible.forEach(function (i) {
+      var s = state.sprites[i], img = state.images[s.n + (s.tmavy ? "#tmavy" : "")], m = state.meta[s.n];
+      if (!img || !m || s.x < left - s.w || s.x > right + s.w || s.y < top - m.h * s.w / m.w || s.y > bottom + m.h * s.w / m.w) return;
+      var k = s.w / m.w;
+      ctx.save(); ctx.translate(s.x, s.y); if (s.r) ctx.rotate(s.r * Math.PI / 180); ctx.scale(s.f ? -k : k, k);
+      ctx.drawImage(img, -m.w / 2, -m.h + 2, m.w, m.h); ctx.restore();
+    });
+  }
   function kresliSprity(svg, sprites, A, W, H, META) {
-    var tok = svg._tok = (svg._tok || 0) + 1, names = {}, tmave = {};
-    sprites.forEach(function (s) { names[s.n] = 1; if (s.tmavy) tmave[s.n] = 1; });
-    var keys = Object.keys(names);
-    Promise.all(keys.map(function (n) { return nacti(A + n + ".webp"); })).then(function (imgs) {
-      if (tok !== svg._tok) return;
-      var im = {}; keys.forEach(function (n, i) {
-        var img = imgs[i], filters = window.SVET_PALETA.sprite_filters || {}, f = null, grade = null;
-        if (/^(hora|masiv|skala|hreben|utes)/.test(n)) { f = [filters.mountain_saturation, filters.mountain_brightness]; grade = { tint: filters.mountain_tint, tint_opacity: filters.mountain_tint_opacity, preserve_highlights: true, highlight_luminance: filters.snow_highlight_luminance }; }
-        else if (/^kopec/.test(n)) { f = [filters.hill_saturation, filters.hill_brightness]; grade = { tint: filters.hill_tint, tint_opacity: filters.hill_tint_opacity }; }
-        else if (/^duna/.test(n)) f = [filters.dune_saturation, filters.dune_brightness];
-        else if (/^kaktus/.test(n)) f = [filters.cactus_saturation, filters.cactus_brightness];
-        else if (/^sucha/.test(n)) f = [filters.dry_grass_saturation, filters.dry_grass_brightness];
-        else if (/^podzim/.test(n)) f = [filters.autumn_saturation, filters.autumn_brightness];
-        else if (/^(kvety|maky)/.test(n)) f = [filters.flower_saturation, filters.flower_brightness];
-        if (img) {
-          if (f) img = upravObraz(img, f[0], f[1], grade);
-          im[n] = upravObraz(img, window.SVET_PALETA.grade.sprite_saturation, 1);
-          if (tmave[n]) im[n + "#tmavy"] = upravObraz(img, .65, .58);
-        } else {
-          im[n] = null;
-        }
-      });
-      var c = document.createElement("canvas"); c.width = W * K; c.height = H * K;
-      var g = c.getContext("2d"); g.scale(K, K); g.imageSmoothingQuality = "high";
-      sprites.forEach(function (s) {
-        var img = im[s.n + (s.tmavy ? "#tmavy" : "")], m = META[s.n]; if (!img) return;
-        var k = s.w / m.w;
-        g.save(); g.translate(s.x, s.y); if (s.r) g.rotate(s.r * Math.PI / 180); g.scale(s.f ? -k : k, k);
-        g.drawImage(img, -m.w / 2, -m.h + 2, m.w, m.h); g.restore();
-      });
-      c.toBlob(function (b) {
-        if (tok !== svg._tok) return;
-        var el = svg.querySelector("#sv-spr"); if (!el) return;
-        if (svg._sprUrl) URL.revokeObjectURL(svg._sprUrl);
-        svg._sprUrl = URL.createObjectURL(b); el.setAttribute("href", svg._sprUrl);
-      }, "image/png");
+    var state = svg._svSpriteState;
+    if (!state) {
+      state = svg._svSpriteState = { svg: svg, map: window.MontelienMapa, gridSize: 128, images: {}, grid: {} };
+      state.schedule = function () {
+        if (state.frame) return;
+        state.frame = requestAnimationFrame(function () { state.frame = 0; prekresli(state); });
+      };
+      if (state.map && state.map.on) state.map.on("moveend zoomend resize", state.schedule);
+    }
+    state.token = (state.token || 0) + 1;
+    var token = state.token, config = (window.SVET_PALETA || {}).viewport_sprites || {};
+    state.sprites = sprites; state.meta = META; state.W = W; state.H = H;
+    state.gridSize = config.grid_px || 128; state.map = window.MontelienMapa || state.map;
+    state.svg = svg; indexSprity(state);
+    var needed = Object.create(null);
+    sprites.forEach(function (s) { needed[s.n] = 1; if (s.tmavy) needed[s.n + "#tmavy"] = 1; });
+    var keys = Object.keys(needed);
+    Promise.all(keys.map(function (key) {
+      var dark = key.slice(-6) === "#tmavy", name = dark ? key.slice(0, -6) : key;
+      return pripravenySprite(name, A, dark).then(function (img) { return [key, img]; });
+    })).then(function (images) {
+      if (state.token !== token) return;
+      state.images = {};
+      images.forEach(function (entry) { state.images[entry[0]] = entry[1]; });
+      state.schedule();
     });
   }
 

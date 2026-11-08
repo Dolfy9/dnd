@@ -54,17 +54,17 @@
   // Výplň oblastí: které symboly a jak hustě (rozestup v px).
   var BARVY_OBLASTI = (window.SVET_PALETA || {}).areas || {};
   var OBLASTI = {
-    les: { nazev: "Jehličnatý les", barva: "#567b45", spr: ["jehl_1", "jehl_2", "jehl_3", "jehl_4", "jehl_5", "jehl_6", "jehl_2", "list_6"], rozestup: 6, w: 12 },
-    haj: { nazev: "Listnatý les", barva: "#789958", spr: ["list_1", "list_2", "list_3", "list_4", "list_5", "list_6", "jehl_3"], rozestup: 7, w: 13 },
-    dzungle: { nazev: "Prales", barva: "#355d37", spr: ["palma_1", "palma_2", "palmy", "dzung_1", "dzung_2", "palma_3", "dzung_1"], rozestup: 9, w: 15 },
-    hory: { nazev: "Hory", barva: "#a09e8d", spr: ["hora_a", "hora_b", "hora_c", "hora_d", "hora_e", "hora_f", "masiv_a", "skala", "masiv_c"], rozestup: 14, w: 34, shluky: true },
-    velehory: { nazev: "Velehory (sníh)", barva: "#c2b8a6", spr: ["snih", "snih", "snih", "hora_e", "snih"], rozestup: 16, w: 40 },
+    les: { nazev: "Jehličnatý les", barva: "#567b45", spr: ["jehl_1", "jehl_2", "jehl_3", "jehl_4", "jehl_5", "jehl_6", "jehl_2", "list_6"], rozestup: 5, w: 14 },
+    haj: { nazev: "Listnatý les", barva: "#789958", spr: ["list_1", "list_2", "list_3", "list_4", "list_5", "list_6", "jehl_3"], rozestup: 5.8, w: 15 },
+    dzungle: { nazev: "Prales", barva: "#355d37", spr: ["palma_1", "palma_2", "palmy", "dzung_1", "dzung_2", "palma_3", "dzung_1"], rozestup: 7, w: 18 },
+    hory: { nazev: "Hory", barva: "#a09e8d", spr: ["hora_a", "hora_b", "hora_c", "hora_d", "hora_e", "hora_f", "masiv_a", "skala", "masiv_c"], rozestup: 14, w: 28, shluky: true },
+    velehory: { nazev: "Velehory (sníh)", barva: "#c2b8a6", spr: ["snih", "snih", "snih", "hora_e", "snih"], rozestup: 16, w: 31 },
     kopce: { nazev: "Kopce", barva: "#8ea86a", spr: ["kopec_1", "kopec_2", "kopec_3", "kopec_4", "kopec_5"], rozestup: 24, w: 30, shluky: true },
-    poust: { nazev: "Poušť", barva: "#e6c886", spr: ["duna_1", "duna_2", "duna_3", "duna_4", "duna_5", "duna_2", "duna_3", "duna_1", "duna_4", "kaktus_1", "duna_5", "balvan_2"], rozestup: 28, w: 38 },
+    poust: { nazev: "Poušť", barva: "#d8c08a", spr: ["duna_1", "duna_2", "duna_3", "duna_4", "duna_5", "duna_2", "duna_3", "duna_1", "duna_4", "kaktus_1", "duna_5", "balvan_2", "kaktus_2", "balvan_1", "kopec_4", "utes_2"], rozestup: 18, w: 30 },
     bazina: { nazev: "Bažina", barva: "#8fa68a", spr: ["bazina_1", "bazina_2", "rakos_1", "rakos_2", "ker_2", "suchy_2"], rozestup: 18, w: 22 },
     pole: { nazev: "Pole a vinice", barva: "#b2ae70", spr: ["vinice", "ker_1"], rozestup: 40, w: 14 },
     mrtvy: { nazev: "Mrtvý les", barva: "#4a4238", spr: ["suchy_1", "suchy_2", "ker_2"], rozestup: 10, w: 14 },
-    ledovec: { nazev: "Ledovec", barva: "#e4ecef", spr: ["snih", "kamen_3", "snih", "utes_1"], rozestup: 30, w: 30 },
+    ledovec: { nazev: "Ledovec", barva: "#e5eef0", spr: ["ledova_pole", "ledova_pole", "seraky"], rozestup: 52, w: 40 },
     mrtva_zeme: { nazev: "Mrtvá země", barva: "#3d3633", spr: ["suchy_1", "suchy_2", "sibenice", "kamen_1", "suchy_1", "utes_2", "palisada", "suchy_2"], rozestup: 22, w: 14 },
     louky: { nazev: "Louky", barva: "#97b477", spr: ["ker_1", "list_2", "ker_2", "list_5", "kopec_3", "ker_1"], rozestup: 16, w: 10 }
   };
@@ -74,12 +74,12 @@
     hora: { nazev: "Hora", spr: ["hora_a", "hora_d", "hora_e"], w: 46 }, hora2: { nazev: "Dvojhora", spr: ["hora_b"], w: 50 },
     hora_snih: { nazev: "Zasněžená hora", spr: ["snih"], w: 52 }, hreben: { nazev: "Horský hřeben", spr: ["hreben"], w: 80 },
     masiv: { nazev: "Masiv", spr: ["masiv_a", "masiv_b", "masiv_c"], w: 52 }, skala: { nazev: "Skalisko", spr: ["skala"], w: 40 },
-    kopec: { nazev: "Kopec", spr: ["kopec_1", "kopec_2", "kopec_4"], w: 30 }, jehlican: { nazev: "Jehličnan", spr: ["jehl_1", "jehl_5"], w: 14 },
+    kopec: { nazev: "Kopec", spr: ["kopec_1", "kopec_2", "kopec_4"], w: 26 }, jehlican: { nazev: "Jehličnan", spr: ["jehl_1", "jehl_5"], w: 14 },
     strom: { nazev: "Listnatý strom", spr: ["list_1", "list_4"], w: 16 }, palma: { nazev: "Palma", spr: ["palma_1", "palma_2"], w: 15 },
     palmy: { nazev: "Palmy", spr: ["palma_1", "palma_2", "palmy", "palma_3"], w: 16 },
     dzungle: { nazev: "Pralesní strom", spr: ["dzung_1", "dzung_2"], w: 17 }, rakos: { nazev: "Rákos", spr: ["rakos_1", "rakos_2"], w: 11 },
     ker: { nazev: "Keř", spr: ["ker_1", "ker_2"], w: 11 }, suchy: { nazev: "Suchý strom", spr: ["suchy_1", "suchy_2"], w: 14 },
-    duna: { nazev: "Duna", spr: ["duna_1", "duna_3"], w: 34 }, kaktus: { nazev: "Kaktus", spr: ["kaktus_1", "kaktus_2"], w: 9 },
+    duna: { nazev: "Duna", spr: ["duna_1", "duna_3"], w: 26 }, kaktus: { nazev: "Kaktus", spr: ["kaktus_1", "kaktus_2"], w: 9 },
     balvan: { nazev: "Balvany", spr: ["balvan_1", "balvan_2"], w: 15 }, oaza: { nazev: "Oáza", spr: ["oaza"], w: 26 },
     pole: { nazev: "Pole", spr: ["pole_1", "pole_2"], w: 26 }, kul: { nazev: "Kůl s lebkou", spr: ["kul_1", "kul_2", "kul_3", "palisada"], w: 13 },
     hranik: { nazev: "Hraniční kámen", spr: ["hranik"], w: 11 }, sibenice: { nazev: "Mrtvý strom s lebkou", spr: ["sibenice"], w: 18 }, vinice: { nazev: "Vinice", spr: ["vinice"], w: 24 },
@@ -99,7 +99,10 @@
     kolo: { nazev: "Kamenné kolo", spr: ["kolo"], w: 30 }, lod: { nazev: "Loď", spr: ["lod"], w: 38 },
     vrak: { nazev: "Vrak", spr: ["vrak"], w: 38 }, vir: { nazev: "Vír", spr: ["vir"], w: 50 }, had: { nazev: "Mořský had", spr: ["had"], w: 42 },
     demon: { nazev: "Démon", spr: ["demon"], w: 50 }, vlny: { nazev: "Vlny", spr: ["vlny"], w: 34 }, clun: { nazev: "Člun", spr: ["clun"], w: 22 },
-    utes_velky: { nazev: "Útes", spr: ["utes_a", "utes_b", "utes_c"], w: 30 },
+    utes_velky: { nazev: "Útes", spr: ["utes_a", "utes_b", "utes_c"], w: 26 },
+    ledovcovy_jazyk: { nazev: "Ledovcový jazyk", spr: ["ledovcovy_jazyk"], w: 76 },
+    ledovy_utes: { nazev: "Ledovcový útes", spr: ["ledovy_utes"], w: 44 },
+    ledova_kra: { nazev: "Ledová kra", spr: ["ledova_kra", "ledova_kra2"], w: 22 },
     hradba: { nazev: "Hradba", spr: ["hradba_a", "hradba_a", "hradba_b"], w: 24 },
     vytah: { nazev: "Pevnost na útesu s výtahem", spr: ["vytah"], w: 46 }
   };

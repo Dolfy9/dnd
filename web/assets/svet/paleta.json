@@ -36,7 +36,29 @@
       "foothill_distance_px": 120,
       "foothill_strength": 0.22,
       "snow_edge_noise_px": 60,
-      "snow_edge_noise_scale_px": 110
+      "snow_edge_noise_scale_px": 110,
+      "coastal_sand_width_px": 8,
+      "coastal_sand_strength": 0.18,
+      "sand_color": "#d8c08a",
+      "sand_shadow": "#b89f6e",
+      "sand_noise": 0.12,
+      "sand_ripple_scale": 0.075,
+      "sand_ripple_strength": 0.055,
+      "sand_row_rotation": 8,
+      "ice_color": "#e5eef0",
+      "ice_shadow": "#b6cbd1",
+      "ice_crevasse": "#7899a4",
+      "ice_outline": "#625e57",
+      "ice_highlight": "#f2f1e7",
+      "ice_noise": 0.08,
+      "ice_crevasse_scale": 0.045,
+      "ice_crevasse_strength": 0.2
+    },
+    "forest": {
+      "density": 1.55,
+      "edge_depth": 15,
+      "edge_density": 0.42,
+      "edge_scale": 0.58
     }
   },
   "areas": {
@@ -95,8 +117,14 @@
     "sprite_saturation": 0.92
   },
   "sprite_filters": {
-    "dune_saturation": 0.5,
-    "dune_brightness": 0.97,
+    "dune_saturation": 0.4,
+    "dune_brightness": 0.93,
+    "dune_tint": "#bfae83",
+    "dune_tint_opacity": 0.18,
+    "artifact_saturation": 0.54,
+    "artifact_brightness": 0.92,
+    "artifact_tint": "#928c7d",
+    "artifact_tint_opacity": 0.2,
     "cactus_saturation": 0.66,
     "cactus_brightness": 0.98,
     "hill_saturation": 0.62,
@@ -125,6 +153,12 @@
     "autumn_chance": 0.018,
     "autumn_share": 0.5,
     "autumn_scale": 0.65
+  },
+  "viewport_sprites": {
+    "grid_px": 128,
+    "margin_ratio": 0.22,
+    "max_zoom": 2.5,
+    "min_resolution_ratio": 2.05
   },
   "markers": {
     "mapa": "#8a7465",

@@ -133,7 +133,7 @@ def trace(sk, min_len):
 
 def barvy(data, out):
     """Barevný podklad terénu s plynulým klimatem a barevnými oblastmi."""
-    w, h, k = 1024, 720, .5
+    w, h, k = W, H, 1
     rng = np.random.default_rng(7)
     def sum_(s):
         n = cv2.GaussianBlur(rng.random((h, w)).astype(np.float32), (0, 0), s)
@@ -144,6 +144,7 @@ def barvy(data, out):
         x = np.clip(x, 0, 1)
         return x * x * (3 - 2 * x)
     yy = np.linspace(0, 1, h, dtype=np.float32)[:, None].repeat(w, 1)
+    xx = np.arange(w, dtype=np.float32)[None, :]
     variation = PALETA["land"]["variation"]
     scales = [v * k for v in variation["noise_scales_px"]]
     noise = .5 * sum_(scales[0]) + .3 * sum_(scales[1]) + .2 * sum_(scales[2])
@@ -180,8 +181,50 @@ def barvy(data, out):
     dry *= snow_t
     dry[hills > 0] = 0
     img = img * (1 - dry[..., None]) + rgb(PALETA["land"]["dry"]) * dry[..., None]
+    land_mask = np.zeros((h, w), np.uint8)
+    for shape in sorted(data.get("pevnina", []), key=lambda p: p.get("uroven", 0)):
+        cv2.fillPoly(land_mask, [np.int32(shape["body"])], 255 if shape["typ"] == "pevnina" else 0)
+    coastal_land = land_mask.copy()
+    for shape in data.get("pevnina", []):
+        if shape["typ"] == "jezero":
+            cv2.fillPoly(coastal_land, [np.int32(shape["body"])], 255)
+    coast_distance = cv2.distanceTransform(coastal_land, cv2.DIST_L2, 3) / k
+    beach = (1 - smooth(coast_distance / variation["coastal_sand_width_px"])) * variation["coastal_sand_strength"]
+    beach *= (land_mask > 0)
+    img = img * (1 - beach[..., None]) + rgb(PALETA["sea"]["beach"])[None, None, :] * beach[..., None]
+    for typ, base_key, shadow_key, noise_key, pattern_key, strength_key in (
+        ("poust", "sand_color", "sand_shadow", "sand_noise", "sand_ripple_scale", "sand_ripple_strength"),
+        ("ledovec", "ice_color", "ice_shadow", "ice_noise", "ice_crevasse_scale", "ice_crevasse_strength"),
+    ):
+        terrain = PALETA["land"]["variation"]
+        mask = np.zeros((h, w), np.uint8)
+        for area in data.get("oblasti", []):
+            if area["typ"] == typ:
+                cv2.fillPoly(mask, [np.int32(area["body"])], 255)
+        mask = cv2.bitwise_and(mask, land_mask)
+        alpha = cv2.GaussianBlur(mask.astype(np.float32) / 255, (0, 0), 3)
+        if not np.any(alpha):
+            continue
+        phase = xx * terrain[pattern_key]
+        if typ == "poust":
+            phase = phase + yy * h * terrain[pattern_key] * .34 + np.sin(yy * h * .012) * 1.4
+            ripple = np.sin(phase + noise * .55)
+            variation = np.tanh(noise) * terrain[noise_key] + ripple * terrain[strength_key]
+            color = rgb(terrain[base_key])[None, None, :] * (1 + variation[..., None])
+            shade = np.maximum(0, -ripple) * .22
+            color = color * (1 - shade[..., None]) + rgb(terrain[shadow_key])[None, None, :] * shade[..., None]
+        else:
+            phase2 = (xx * .31 - yy * h) * terrain[pattern_key] * .74 + np.sin(yy * h * .018) * 1.8
+            fissures = np.maximum(
+                np.clip((.16 - np.abs(np.sin(phase + noise * .25))) / .16, 0, 1),
+                np.clip((.12 - np.abs(np.sin(phase2 + noise * .35))) / .12, 0, 1) * .7,
+            )
+            color = rgb(terrain[base_key])[None, None, :] * (1 + np.tanh(noise)[..., None] * terrain[noise_key])
+            color = color * (1 - fissures[..., None] * terrain[strength_key]) + rgb(terrain["ice_crevasse"])[None, None, :] * (fissures[..., None] * terrain[strength_key])
+            color = color * (1 - .18 * np.maximum(0, -np.sin(phase2))[..., None]) + rgb(terrain[shadow_key])[None, None, :] * (.18 * np.maximum(0, -np.sin(phase2))[..., None])
+        img = img * (1 - alpha[..., None]) + color * alpha[..., None]
     for typ, color in PALETA["areas"].items():
-        if typ == "tmavy":
+        if typ in ("tmavy", "poust", "ledovec"):
             continue
         m = np.zeros((h, w), np.uint8)
         for o in data["oblasti"]:

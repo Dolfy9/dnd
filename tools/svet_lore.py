@@ -162,6 +162,14 @@ def lore(svet):
     land = unary_union(pev).difference(unary_union(jez)) if jez else unary_union(pev)
     rng = np.random.default_rng(11)
     ob = svet["oblasti"]
+    clipped = []
+    for o in ob:
+        if o["typ"] not in ("poust", "ledovec"):
+            clipped.append(o)
+            continue
+        for b in kousky(Polygon(o["body"]).buffer(0).intersection(land)):
+            clipped.append(o | {"body": b})
+    ob[:] = clipped
 
     for o in Z["oblasti"]:
         for b in kousky(Polygon(o["body"]).buffer(0).intersection(land)):
@@ -203,6 +211,14 @@ def lore(svet):
             z["polys"] = [p for p in geoms(g) if p.geom_type == "Polygon" and p.area > 1]
     kn = next((z for z in st if z["nazev"].startswith("Knärghe")), None)
     mz = unary_union(kn["polys"]) if kn else Polygon(Z["mrtva_zeme"]["body"])
+    ob2 = []
+    for o in ob:
+        if o["typ"] != "poust":
+            ob2.append(o)
+            continue
+        for b in kousky(Polygon(o["body"]).buffer(0).difference(mz.buffer(2)), 60):
+            ob2.append(o | {"body": b})
+    ob[:] = ob2
     svet["zeme"] = [{"nazev": z["nazev"], "body": [body(p.simplify(1.5)) for p in z["polys"] if p.area > 3000], "pozn": "území státu vypočtené z popisků a terénu (návrh)"}
                     | ({"barva": "#1e1614"} if z is kn else {"barva": "#6b6b6b"} if z["divoke"] else {}) for z in st]
     cb = land.boundary.buffer(7)

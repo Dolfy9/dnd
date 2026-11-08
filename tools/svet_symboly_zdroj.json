@@ -252,5 +252,100 @@
   "y": 557,
   "m": 1,
   "pozn": "kopule v Khearazu (kresba DM)"
+ },
+ {
+  "typ": "ledova_kra",
+  "x": 651,
+  "y": 80,
+  "m": 0.8,
+  "pozn": "plovoucí kra v severním moři"
+ },
+ {
+  "typ": "ledova_kra",
+  "x": 850,
+  "y": 110,
+  "m": 0.72,
+  "pozn": "plovoucí kra v severním moři"
+ },
+ {
+  "typ": "ledova_kra",
+  "x": 1041,
+  "y": 70,
+  "m": 0.9,
+  "pozn": "plovoucí kra v severním moři"
+ },
+ {
+  "typ": "ledova_kra",
+  "x": 1200,
+  "y": 90,
+  "m": 0.7,
+  "pozn": "plovoucí kra v severním moři"
+ },
+ {
+  "typ": "ledova_kra",
+  "x": 1700,
+  "y": 120,
+  "m": 0.8,
+  "pozn": "plovoucí kra v severním moři"
+ },
+ {
+  "typ": "ledovcovy_jazyk",
+  "x": 220,
+  "y": 106,
+  "m": 0.72,
+  "rot": 172,
+  "pozn": "ledovcový jazyk na severním cípu Divokého Severu"
+ },
+ {
+  "typ": "ledovy_utes",
+  "x": 165,
+  "y": 60,
+  "m": 0.8,
+  "pozn": "ledový útes na fjordu Divokého Severu"
+ },
+ {
+  "typ": "ledovcovy_jazyk",
+  "x": 1074,
+  "y": 356,
+  "m": 0.9,
+  "rot": -130,
+  "pozn": "ledovcový jazyk k severnímu fjordu Nölienu"
+ },
+ {
+  "typ": "ledovy_utes",
+  "x": 1068,
+  "y": 286,
+  "m": 0.9,
+  "pozn": "ledový útes u severního fjordu Nölienu"
+ },
+ {
+  "typ": "ledovcovy_jazyk",
+  "x": 1224,
+  "y": 330,
+  "m": 0.9,
+  "rot": 50,
+  "pozn": "ledovcový jazyk k východním fjordům Nölienu"
+ },
+ {
+  "typ": "ledovy_utes",
+  "x": 1223,
+  "y": 395,
+  "m": 0.85,
+  "pozn": "ledový útes u východních fjordů Nölienu"
+ },
+ {
+  "typ": "ledovcovy_jazyk",
+  "x": 1350,
+  "y": 250,
+  "m": 0.85,
+  "rot": -90,
+  "pozn": "ledovcový jazyk k pobřeží Fornheimu"
+ },
+ {
+  "typ": "ledovy_utes",
+  "x": 1390,
+  "y": 201,
+  "m": 0.85,
+  "pozn": "ledový útes na pobřeží Fornheimu"
  }
 ]
