@@ -91,6 +91,7 @@ hide:
 # Interaktivní mapa
 
 <link rel="stylesheet" href="../assets/leaflet/leaflet.css">
+<link rel="stylesheet" href="../assets/leaflet/leaflet-geoman.css">
 <div class="mapa-legenda">
   <input type="search" id="mapa-hledat" placeholder="Hledat místo…" list="mapa-seznam"><datalist id="mapa-seznam"></datalist>
   <span><i class="tecka jistota-mapa"></i> popsáno na mapě DM</span>
@@ -100,14 +101,18 @@ hide:
   <label><input type="checkbox" id="mapa-sidla"> sídla bez jména</label>
   <label><input type="checkbox" id="mapa-stitky"> jména měst</label>
   <label><input type="checkbox" id="mapa-boj" checked> ⚔ bojové mapy</label>
+  <button type="button" id="mapa-editor" class="ed-only" title="Upravit pobřeží, oblasti, řeky, symboly a popisky">✎ Editor mapy</button>
   <button type="button" id="mapa-meric" title="Klikáním do mapy změříš trasu">⟷ Měřit trasu</button>
 </div>
 <div id="mapa"></div>
-<p class="mapa-pozn">Kolečkem přibližuj, klikni na bod pro detail. Vrstvy vpravo nahoře: ilustrovaná mapa / věrná barevná mapa / původní kresba DM.
+<p class="mapa-pozn">Kolečkem přibližuj, klikni na bod pro detail. Vrstvy vpravo nahoře: atlas z dat (upravitelný v režimu úprav tlačítkem Editor mapy) / ilustrovaná mapa / věrná barevná mapa / původní kresba DM.
 Měření trasy počítá s měřítkem z kresby DM (150 km dílek) a cestovním tempem PHB 2024 (Slow 18, Normal 24, Fast 30 mil za den).
 Polohy „odhad“ čekají na potvrzení – viz <a href="../11_Mapy/Geografie/">Geografie</a>.</p>
 <script src="../assets/leaflet/leaflet.js"></script>
 <script>window.MONTELIEN_MISTA = {json.dumps(data, ensure_ascii=False)};</script>
+<script src="../assets/leaflet/leaflet-geoman.min.js"></script>
+<script src="../assets/svet_symboly.js"></script>
+<script src="../assets/svet.js"></script>
 <script src="../assets/mapa.js"></script>
 """
 

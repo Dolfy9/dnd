@@ -138,3 +138,16 @@ html[data-mont-theme] .md-typeset h1, html[data-mont-theme] .md-typeset h2 { col
 #mapa-hledat { padding: 2px 6px; border: 1px solid #b59a6a; border-radius: 4px; min-width: 12rem; }
 #mapa-meric { border: 1px solid #b59a6a; border-radius: 4px; padding: 1px 8px; cursor: pointer; background: transparent; }
 #mapa-meric.on { background: #7a1f12; color: #fff; }
+.ed-only { display: none; }
+body.ed-on .ed-only { display: inline-block; }
+#mapa-editor { border: 1px solid #b59a6a; border-radius: 4px; padding: 1px 8px; cursor: pointer; background: #8b2c1c; color: #fff; }
+.sv-ed { position: sticky; top: 3.2rem; z-index: 1001; background: var(--md-default-bg-color, #fff); border: 1px solid #b59a6a; border-radius: 6px; padding: 6px 8px; margin: 6px 0; font-size: .72rem; display: flex; flex-wrap: wrap; gap: 6px; align-items: center; }
+.sv-ed select, .sv-ed input { font-size: .72rem; padding: 1px 4px; border: 1px solid #b59a6a; border-radius: 4px; background: transparent; color: inherit; }
+.sv-ed input[type=number] { width: 4.5em; }
+.sv-ed button { font-size: .72rem; border: 1px solid #b59a6a; border-radius: 4px; padding: 1px 8px; cursor: pointer; background: transparent; color: inherit; }
+.sv-ed .sv-save.on { background: #2e8b57; color: #fff; }
+.sv-props { flex-basis: 100%; display: flex; flex-wrap: wrap; gap: 6px; align-items: center; min-height: 1.6em; }
+.sv-tip { opacity: .75; }
+.sv-h { background: #fff8; border: 1px solid #c0392b; border-radius: 50%; color: #c0392b; text-align: center; font-size: 12px; line-height: 16px; }
+.sv-hm { border-color: #1f6fb2; color: #1f6fb2; font-size: 8px; line-height: 10px; }
+.sv-hp { border-radius: 3px; font-weight: bold; }

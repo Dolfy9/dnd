@@ -4,11 +4,15 @@
   el.dataset.ready = "1";
   var W = D.sirka, H = D.vyska, bounds = [[0, 0], [H, W]], KM_PX = 1.7;
   var map = L.map(el, { crs: L.CRS.Simple, minZoom: -1.5, maxZoom: 2.5, zoomSnap: 0.25, attributionControl: false });
+  var svgEl = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+  var atlas = L.svgOverlay(svgEl, bounds, { interactive: false });
+  var SV = { map: map, el: el, svg: svgEl, base: "../", D: null, M: D };
+  fetch("../11_Mapy/svet.json?t=" + Date.now()).then(function (r) { return r.json(); }).then(function (j) { SV.D = j; if (window.MontelienSvet) window.MontelienSvet.render(svgEl, j, D, "../"); }).catch(function () { });
   var ilu = L.imageOverlay("../11_Mapy/Montelien_mapa_ilustrovana.jpg", bounds);
   var barevna = L.imageOverlay("../11_Mapy/Montelien_mapa.jpg", bounds);
   var kresba = L.imageOverlay("../11_Mapy/Montelien_mapa_vyrovnana.jpg", bounds);
-  var vrstvy = { "Ilustrovaná mapa": ilu, "Věrná barevná mapa": barevna, "Původní kresba (DM)": kresba };
-  var pam = localStorage.getItem("mapa-vrstva"); (vrstvy[pam] || ilu).addTo(map);
+  var vrstvy = { "Atlas (z dat)": atlas, "Ilustrovaná mapa": ilu, "Věrná barevná mapa": barevna, "Původní kresba (DM)": kresba };
+  var pam = localStorage.getItem("mapa-vrstva"); (vrstvy[pam] || atlas).addTo(map);
   L.control.layers(vrstvy).addTo(map);
   map.on("baselayerchange", function (e) { localStorage.setItem("mapa-vrstva", e.name); });
   map.fitBounds(bounds);
@@ -61,6 +65,13 @@
   var st = document.getElementById("mapa-stitky");
   if (st) st.addEventListener("change", function (e) {
     D.mista.forEach(function (m) { if (m.typ !== "mesto" && m.typ !== "misto") return; var c = byName[m.nazev.toLowerCase()].c; c.unbindTooltip(); c.bindTooltip(m.nazev, { className: "mapa-stitek", direction: "top", offset: [0, -6], permanent: e.target.checked }); if (e.target.checked) c.openTooltip(); });
+  });
+  var eb = document.getElementById("mapa-editor");
+  if (eb) eb.addEventListener("click", function () {
+    if (!SV.D || !window.MontelienSvet || SV.open) return;
+    if (!map.pm) { alert("Knihovna editoru se nenačetla."); return; }
+    Object.keys(vrstvy).forEach(function (k) { map.removeLayer(vrstvy[k]); }); atlas.addTo(map); map.removeLayer(body); map.removeLayer(sidla);
+    SV.open = true; window.MontelienSvet.editor(SV);
   });
   // měření trasy
   var mer = null, mb = document.getElementById("mapa-meric");
