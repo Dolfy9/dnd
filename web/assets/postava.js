@@ -263,20 +263,20 @@
     if (c.xp != null && c.xp !== "" && Number.isFinite(Number(c.xp))) xpHtml = '<div class="p2-xp">XP ' + Number(c.xp).toLocaleString("cs-CZ") + (d.lvl < 20 ? ' / ' + XP_LEVELS[d.lvl].toLocaleString("cs-CZ") + ' · další úroveň ' + (d.lvl + 1) : ' · Level 20') + '</div>';
     var senses = sensesFor(c, sp), languages = listValues(c.jazyky);
     var defenses = [["Resistance", listValues(c.odolnosti)], ["Immunity", listValues(c.imunity)], ["Vulnerability", listValues(c.zranitelnosti)]].filter(function (x) { return x[1].length; });
-    var castingSummary = d.casting.map(function (x) { return '<li><b>' + esc(x.trida) + '</b> ' + x.ab + ' · DC ' + x.dc + ' · <a class="ps-roll" data-roll="1d20' + sg(x.atk) + '" data-label="Spell attack">' + sg(x.atk) + '</a></li>'; }).join("");
-    var overview = '<aside class="p2-overview"><h3>Přehled</h3>'
-      + (senses.length ? '<div><b>Senses</b><span>' + esc(senses.join(", ")) + '</span></div>' : '')
-      + (languages.length ? '<div><b>Languages</b><span>' + esc(languages.join(", ")) + '</span></div>' : '')
-      + (defenses.length ? '<div><b>Defenses</b><span>' + defenses.map(function (x) { return esc(x[0]) + ': ' + esc(x[1].join(", ")); }).join(" · ") + '</span></div>' : '')
-      + (castingSummary ? '<div class="p2-overview-spellcasting"><b>Spellcasting</b><ul>' + castingSummary + '</ul></div>' : '')
-      + '<div><b>Weapon Mastery</b><span>' + ((c.mastery || []).length) + ' proficiencies</span></div></aside>';
+    var castingSummary = d.casting.map(function (x) { return '<span><b>' + esc(x.trida) + '</b> ' + x.ab + ' DC ' + x.dc + ' <a class="ps-roll" data-roll="1d20' + sg(x.atk) + '" data-label="Spell attack">' + sg(x.atk) + '</a></span>'; }).join(' <span class="p2-overview-slash">/</span> ');
+    var overview = '<aside class="p2-overview" aria-label="Přehled"><b class="p2-overview-title">Přehled</b>'
+      + (senses.length ? '<span class="p2-overview-group"><b>Senses</b> ' + esc(senses.join(", ")) + '</span>' : '')
+      + (languages.length ? '<span class="p2-overview-group"><b>Languages</b> ' + esc(languages.join(", ")) + '</span>' : '')
+      + (defenses.length ? '<span class="p2-overview-group"><b>Defenses</b> ' + defenses.map(function (x) { return esc(x[0]) + ': ' + esc(x[1].join(", ")); }).join(" · ") + '</span>' : '')
+      + (castingSummary ? '<span class="p2-overview-group p2-overview-spellcasting"><b>Spellcasting</b> ' + castingSummary + '</span>' : '')
+      + '<span class="p2-overview-group"><b>Weapon Mastery</b> ' + ((c.mastery || []).length) + '</span></aside>';
     var toolbar = cesta && document.body.classList.contains("ed-on") ? '<div class="p2-toolbar"><button class="ed-btn" data-ps-lvl title="Level up">⬆</button><button class="ed-btn ed-primary" data-ps-edit title="Upravit postavu">✎</button></div>' : '';
     var badgeXp = c.xp != null && c.xp !== "" && Number.isFinite(Number(c.xp)) ? xpHtml : "";
     var diceCompact = String(d.dice).split(" + ").map(function (die) { var m = die.match(/(\d+)d(\d+)/); return m ? "d" + m[2] + "×" + m[1] : die; }).join(" · ");
     var h = '<div class="ps ps2"><div class="p2-top">';
     h += '<aside class="p2-portrait"><div class="p2-crest' + (portraitUrl ? ' p2-crest-portret' : ' p2-crest-initial') + '">'
       + (portraitUrl ? '<a class="p2-portret" href="' + esc(portraitUrl) + '" target="_blank" rel="noopener"><img src="' + esc(portraitUrl) + '" alt="' + esc(c.jmeno) + '"></a>' : '<span>' + esc(initials) + '</span>')
-      + '<div class="p2-lvl" title="Celková úroveň">' + d.lvl + '</div></div></aside>' + overview;
+      + '<div class="p2-lvl" title="Celková úroveň">' + d.lvl + '</div></div></aside>';
     h += '<div class="p2-top-main"><header class="p2-hero"><div class="p2-id"><div class="p2-identity-head"><div><h2 class="p2-name">' + esc(c.jmeno) + '</h2><div class="p2-title">' + esc(c.titul || "") + '</div></div>' + toolbar + '</div><div class="p2-chips">'
       + (c.tridy || []).map(function (t) { return '<span class="p2-chip p2-class">' + esc(t.trida) + ' ' + t.uroven + (t.podtrida ? ' · ' + esc(t.podtrida) : '') + '</span>'; }).join("")
       + '<span class="p2-chip">' + esc(c.druh || "—") + '</span><span class="p2-chip">' + esc(c.pozadi || "—") + '</span><span class="p2-chip">' + esc(c.zarovnani || "—") + '</span><span class="p2-chip">' + esc(c.velikost || "Medium") + '</span></div>'
@@ -290,7 +290,7 @@
       + stat("Hit Dice", '<span class="p2-hd-left ps-hdleft" data-key="' + esc(key) + '" data-total="' + d.lvl + '"></span>/' + d.lvl + '<small class="p2-hd-dice">' + esc(diceCompact) + '</small>', "p2-hd-stat")
       + stat("DPR", bj.dpr ? esc(bj.dpr) : '<span title="Automatický odhad: ' + esc(d.dprPopis || "") + ' (ručně: Upravit postavu → Připravenost na boj)">~' + d.dprAuto + '</span>') + '</div>'
       + '<div class="p2-abil">' + AB.map(function (a) { return '<div class="p2-ab"><div class="p2-ab-n"><span class="p2-ab-name-wide">' + AB_CZ[a] + '</span><span class="p2-ab-name-short">' + a + '</span></div><a class="p2-ab-mod ps-roll" data-roll="1d20' + sg(d.checkMods[a]) + '" data-label="' + AB_CZ[a] + '">' + sg(d.checkMods[a]) + '</a><div class="p2-ab-s">' + esc((c.atributy || {})[a]) + '</div><a class="p2-ab-save ps-roll' + (d.saveProf.indexOf(a) >= 0 ? ' p' : '') + '" data-roll="1d20' + sg(d.saves[a]) + '" data-label="Záchrana ' + a + '">save ' + sg(d.saves[a]) + '</a></div>'; }).join("") + '</div>';
-    h += trackerHtml(c, key) + '</div></div>';
+    h += trackerHtml(c, key) + overview + '</div></div>';
     // ---- záložky ----
     var tabs = [];
     // Boj

@@ -31,8 +31,9 @@ body.rezim-hrac .dm-sekce, body.rezim-hrac h2.dm-nadpis { display: none !importa
 }
 
 /* Mapa */
-#mapa { height: 75vh; min-height: 480px; border-radius: 6px; background: #8fb3b8;
-        box-shadow: 0 2px 12px rgba(0,0,0,.4); }
+#mapa { width: min(100%, 113.78vh); height: auto; max-height: 80vh; min-height: 0;
+        aspect-ratio: 2048 / 1440; margin-inline: auto; border-radius: 6px;
+        background: #8fb3b8; box-shadow: 0 2px 12px rgba(0,0,0,.4); }
 .md-content__inner:has(#mapa) { max-width: none; }
 .mapa-legenda { display: flex; gap: 1.2rem; flex-wrap: wrap; font-size: .75rem; margin-bottom: .5rem; }
 .mapa-pozn { font-size: .7rem; opacity: .8; }
@@ -83,7 +84,7 @@ body.ed-busy::after { content: "Ukládám a přestavuji web…"; position: fixed
 .md-typeset table.kz-list { font-size: .72rem; display: table; width: 100%; }
 .sb h2 { margin: 0; color: #7a1f17; } .sb-sub { font-style: italic; margin: 0 0 .3rem; } .sb hr { border: 0; border-top: 2px solid #7a1f17; margin: .4rem 0; }
 .sb p { font-size: .76rem; margin: .25rem 0; } .sb h4 { font-family: "Cinzel", serif; color: #7a1f17; border-bottom: 1px solid #7a1f17; margin: .6rem 0 .2rem; }
-.sb-ab { width: 100%; text-align: center; font-size: .72rem; } .sb-ab th { font-family: "Cinzel", serif; } .sb-src { font-size: .62rem; opacity: .6; }
+.sb-ab { width: 100%; text-align: center; font-size: .72rem; } .sb-ab th { font-family: "Cinzel", serif; } .sb-src { font-size: .62rem; opacity: 1; }
 .kz-modal { max-height: 90vh; overflow: auto; }
 .EasyMDEContainer .editor-toolbar button { color: #3a2412 !important; font: 700 13px Georgia, serif !important; min-width: 30px; opacity: 1; }
 .EasyMDEContainer .editor-toolbar button:hover, .EasyMDEContainer .editor-toolbar button.active { background: #e3cfa2; border-color: #8a6a3f; }
@@ -132,7 +133,7 @@ html[data-mont-theme] .md-typeset h1, html[data-mont-theme] .md-typeset h2 { col
 .sb2 .sb-h { font: 700 1rem "Cinzel", serif; color: var(--sbr); border-bottom: 1.5px solid var(--sbr); margin: 12px 0 5px; padding-bottom: 1px; letter-spacing: .03em; }
 .sb2 .sb-e { font-size: .78rem; line-height: 1.5; margin: 0 0 6px; } .sb2 .sb-e > b i { color: var(--sbink); }
 .sb2 .sb-e em { font-style: italic; font-weight: 600; color: var(--sbr); } .sb2 .sb-intro { font-size: .74rem; margin: 0 0 6px; opacity: .9; }
-.sb2 .sb-src { font-size: .6rem; opacity: .55; margin: 8px 0 0; text-align: right; }
+.sb2 .sb-src { font-size: .6rem; opacity: 1; margin: 8px 0 0; text-align: right; }
 @media (min-width: 900px) { .sb2 .sb-body { column-count: 1; } }
 .kz-modal:has(.sb2) .ed-bar { background: var(--md-default-bg-color); padding: 8px; border-radius: 0 0 6px 6px; }
 .sb2 .sb-li { display: block; margin: 3px 0 0 10px; padding-left: 10px; border-left: 2px solid var(--sbr); }
@@ -184,7 +185,8 @@ body.mapa-vyrez .md-typeset > p:has(> link[rel="stylesheet"]) { display: none !i
 body.mapa-vyrez { margin: 0 !important; padding: 0 !important; overflow: hidden !important; }
 body.mapa-vyrez .md-main, body.mapa-vyrez .md-main__inner, body.mapa-vyrez .md-content,
 body.mapa-vyrez .md-content__inner, body.mapa-vyrez .md-typeset { margin: 0 !important; padding: 0 !important; max-width: none !important; }
-body.mapa-vyrez #mapa { height: 360px; min-height: 360px; margin: 0; border-radius: 0; box-shadow: none; }
+body.mapa-vyrez #mapa { width: 100%; max-width: none; height: 360px; max-height: none; min-height: 360px;
+                        aspect-ratio: auto; margin: 0; border-radius: 0; box-shadow: none; }
 .ed-only { display: none; }
 body.ed-on .ed-only { display: inline-block; }
 #mapa-editor { border: 1px solid #b59a6a; border-radius: 4px; padding: 1px 8px; cursor: pointer; background: #8b2c1c; color: #fff; }
