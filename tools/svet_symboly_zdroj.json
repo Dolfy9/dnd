@@ -47,12 +47,6 @@
  },
  {
   "typ": "vlny",
-  "x": 540,
-  "y": 1380,
-  "m": 1
- },
- {
-  "typ": "vlny",
   "x": 610,
   "y": 1390,
   "m": 1
@@ -202,5 +196,12 @@
   "y": 540,
   "m": 1,
   "pozn": "budovy u Nöelienu"
+ },
+ {
+  "typ": "majak",
+  "x": 1418,
+  "y": 348,
+  "m": 1,
+  "pozn": "maják s paprsky na ostrůvku (kresba DM)"
  }
 ]

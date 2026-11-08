@@ -43,3 +43,4 @@ Seznam věcí k rozhodnutí DM. Po rozhodnutí položku přesuň do sekce *Vyře
 - Hranice států jsou vypočtené (od popisku země po terénu, hory jako přirozená hranice), ne z kresby ani textu. Kůly s lebkami stojí na hranici Knärghe Zhie. Sedí průběh hranic?
 - **Mönohen – řeka a pobřeží:** Dvojité čáry jsou nyní obkreslené jako jedna řeka ústící do východního moře; pobřeží Mönohenu je ručně obkreslené jako návrh. Odpovídá to kresbě?
 - **Černá skvrna v moři jižně od Tali (≈1357,1326):** v kresbě je plně začerněná skvrna. Co to je (útes, vrak, hlubina, ostrov, kraken)? Zatím v atlasu není. *(návrh – čeká na DM)*
+- **Sever Nöelienu (≈1050–1400, 150–430):** v kresbě jsou dlouhé tahy (≈1050–1260) a vysoký tvar s tváří nahoře (≈1250–1400). Atlas z toho dělá moře s tenkými ostrůvky a poloostrov s horami a tváří ve skále. Co tam je (pohoří, kořeny, obří socha)? *(návrh – čeká na DM)*
