@@ -1,4 +1,4 @@
-.ps { --ink: #3a2412; --line: #8a6a3f; --paper: #f6ecd2; --paper2: #efe1bf; color: var(--ink); background: var(--paper);
+.ps { --ink: #3a2412; --line: #8a6a3f; --paper: #f6ecd2; --paper2: #efe1bf; --muted: #75614a; --red: #8f362b; --card: #fffaf0; --gold: #b79143; --dark: #2d2418; --hi: #fff6df; --green: #52764b; color: var(--ink); background: var(--paper);
   border: 2px solid var(--line); border-radius: 8px; padding: 14px; margin: 0 0 1.5rem; font-family: Georgia, serif; font-size: .74rem;
   box-shadow: 0 4px 18px rgba(0,0,0,.35); }
 .md-typeset .ps h4 { font-family: "Cinzel", serif; font-size: .72rem; letter-spacing: .08em; text-transform: uppercase; margin: 0 0 .4rem;
@@ -213,3 +213,65 @@
 .md-typeset table.p2-rt td { padding: 3px 6px; border-top: 1px solid var(--line2); }
 .md-typeset table.p2-rt tr:nth-child(odd) td { background: color-mix(in srgb, var(--paper2) 70%, transparent); }
 .ps2 details > div p { margin: .3em 0; }
+.p2-top-portret { display: grid; grid-template-columns: minmax(220px, 280px) minmax(0, 1fr); gap: 16px; align-items: start; }
+.p2-top-main { min-width: 0; }
+.p2-portrait { min-width: 0; }
+.p2-crest-portret { position: relative; width: 100%; height: auto; aspect-ratio: 2 / 3; border: 1px solid var(--gold); border-radius: 10px; background: var(--card); box-shadow: 0 6px 18px rgba(0,0,0,.3); }
+.p2-crest-portret .p2-portret { position: absolute; inset: 0; display: block; overflow: hidden; border-radius: inherit; }
+.p2-crest-portret img { display: block; width: 100%; height: 100%; object-fit: cover; }
+.p2-crest-portret .p2-lvl { right: 8px; bottom: 8px; }
+.p2-top-portret .p2-hero { grid-template-columns: minmax(0, 1fr) 82px; align-items: start; gap: 10px; }
+.p2-top-portret .p2-cr { grid-column: auto; grid-row: auto; width: auto; }
+@media (max-width: 900px) {
+  .p2-top-portret { grid-template-columns: 110px minmax(0, 1fr); gap: 12px; }
+  .p2-top-portret .p2-top-main { display: contents; }
+  .p2-top-portret .p2-hero { grid-column: 2; grid-row: 1; grid-template-columns: minmax(0, 1fr) 68px; min-height: 165px; padding: 0; border: 0; }
+  .p2-top-portret .p2-id { grid-column: 1; grid-row: 1; }
+  .p2-top-portret .p2-cr { grid-column: 2; grid-row: 1; }
+  .p2-top-portret .ps-edit, .p2-top-portret .p2-vitals, .p2-top-portret .p2-rest, .p2-top-portret .p2-abil, .p2-top-portret .p2-trackers { grid-column: 1 / -1; }
+  .p2-top-portret .p2-name { font-size: 1.2rem; }
+  .p2-top-portret .p2-chip { padding: 1px 5px; font-size: .56rem; }
+  .p2-vitals { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+  .p2-vitals .p2-hp { grid-column: 1 / -1; min-width: 0; }
+  .p2-vitals .p2-stat { min-width: 0; overflow-wrap: anywhere; }
+  .p2-vitals .p2-stat .p2-v { font-size: .9rem; }
+  .p2-vitals .p2-l { font-size: .44rem; }
+}
+@media print {
+  .p2-top-portret { grid-template-columns: 170px minmax(0, 1fr); gap: 10px; }
+}
+.p2-xp { margin-top: 3px; color: var(--muted); font-size: .62rem; font-weight: 700; }
+.p2-exhaust-warning { display: inline-block; margin-top: 3px; padding: 1px 6px; border-radius: 999px; background: color-mix(in srgb, var(--red) 14%, var(--paper)); color: var(--red); font-size: .58rem; font-weight: 700; }
+.p2-trackers { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 5px; margin: 5px 0 8px; }
+.p2-tr-card { min-width: 0; padding: 4px 6px; border: 1px solid var(--line); border-radius: 7px; background: var(--card); font-size: .58rem; }
+.p2-tr-card > b { display: block; margin-bottom: 2px; color: var(--red); font: 700 .55rem "Cinzel", serif; text-transform: uppercase; letter-spacing: .04em; }
+.p2-inspiration { width: 100%; height: 100%; border: 1px solid var(--line); border-radius: 5px; background: var(--paper2); color: var(--ink); font-size: .62rem; font-weight: 700; cursor: pointer; }
+.p2-inspiration.on { background: var(--gold); color: var(--dark); }
+.p2-death { display: flex; align-items: center; gap: 3px; }
+.p2-death > span { margin-right: 1px; color: var(--muted); font-size: .5rem; }
+.p2-death-pip { width: 10px; height: 10px; padding: 0; border: 1px solid var(--red); border-radius: 50%; background: var(--paper); cursor: pointer; }
+.p2-death-pip.on { background: var(--green, #52764b); border-color: var(--green, #52764b); }
+.p2-death-pip.fail { border-color: var(--red); }
+.p2-death-pip.fail.on { background: var(--red); }
+.p2-exhaustion { display: flex; align-items: center; gap: 5px; }
+.p2-exhaustion button { width: 19px; height: 19px; border: 1px solid var(--line); border-radius: 50%; background: var(--paper2); color: var(--ink); line-height: 1; cursor: pointer; }
+.p2-exhaustion strong { min-width: 1em; text-align: center; font-size: .8rem; }
+.p2-exhaustion small, .p2-exhaustion em { color: var(--red); font-size: .5rem; font-style: normal; }
+.p2-concentration label { display: flex; align-items: center; gap: 3px; font-weight: 700; }
+.p2-concentration input[type="text"], .p2-concentration select { width: 100%; margin-top: 3px; padding: 2px 4px; border: 1px solid var(--line); border-radius: 4px; background: var(--paper); color: var(--ink); font-size: .56rem; }
+.p2-condition-list { grid-column: 1 / -1; padding: 4px 6px; border: 1px solid var(--line); border-radius: 7px; background: var(--card); }
+.p2-condition-list > b { margin-right: 5px; color: var(--red); font: 700 .55rem "Cinzel", serif; text-transform: uppercase; }
+.p2-condition-list > div { display: inline-flex; flex-wrap: wrap; gap: 2px; }
+.p2-condition { display: inline-flex; overflow: hidden; border: 1px solid var(--line); border-radius: 999px; background: var(--paper2); }
+.p2-condition.on { border-color: var(--red); background: var(--red); }
+.p2-condition button, .p2-condition a { display: inline-block; border: 0; padding: 1px 3px; background: transparent; color: var(--ink); font: inherit; font-size: .46rem; line-height: 1.25; text-decoration: none; cursor: pointer; }
+.p2-condition.on button, .p2-condition.on a { color: var(--hi); }
+.p2-condition a { padding-left: 2px; padding-right: 3px; border-left: 1px solid var(--line); opacity: .75; }
+.p2-attunement { display: grid; gap: 4px; margin: 0; padding-left: 1.3rem; font-size: .72rem; }
+.p2-attunement li { min-height: 1.5em; padding: 2px 6px; border-bottom: 1px dashed var(--line); color: var(--muted); }
+.p2-attunement li.filled { color: var(--ink); font-weight: 700; }
+.p2-spell-meta { color: var(--muted); }
+@media (max-width: 700px) {
+  .p2-trackers { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .p2-condition-list { grid-column: 1 / -1; }
+}
