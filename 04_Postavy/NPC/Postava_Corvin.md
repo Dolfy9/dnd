@@ -8,7 +8,7 @@ postava:
   zarovnani: Chaotic Good
   tridy:
   - trida: Bard
-    uroven: 9
+    uroven: 10
     podtrida: College of Lore
   atributy:
     STR: 8
@@ -76,55 +76,55 @@ postava:
     uroven: 0
     trida: Bard
   - nazev: Dissonant Whispers
-    trida: Bard
     uroven: 1
+    trida: Bard
   - nazev: Healing Word
-    trida: Bard
     uroven: 1
+    trida: Bard
   - nazev: Faerie Fire
-    trida: Bard
     uroven: 1
+    trida: Bard
   - nazev: Comprehend Languages
-    trida: Bard
     uroven: 1
+    trida: Bard
   - nazev: Silence
-    trida: Bard
     uroven: 2
+    trida: Bard
   - nazev: Detect Thoughts
-    trida: Bard
     uroven: 2
+    trida: Bard
   - nazev: Invisibility
-    trida: Bard
     uroven: 2
+    trida: Bard
   - nazev: Hypnotic Pattern
-    trida: Bard
     uroven: 3
+    trida: Bard
   - nazev: Sending
-    trida: Bard
     uroven: 3
+    trida: Bard
   - nazev: Nondetection
-    trida: Bard
     uroven: 3
+    trida: Bard
   - nazev: Dimension Door
-    trida: Bard
     uroven: 4
+    trida: Bard
   - nazev: Greater Invisibility
-    trida: Bard
     uroven: 4
+    trida: Bard
   - nazev: Modify Memory
-    trida: Bard
     uroven: 5
-  - nazev: Mislead
     trida: Bard
-    uroven: 5
   - nazev: Counterspell
+    uroven: 3
     trida: Bard
     poznamka: Magical Discoveries
-    uroven: 3
   - nazev: Revivify
+    uroven: 3
     trida: Bard
     poznamka: Magical Discoveries
-    uroven: 3
+  - nazev: Dancing Lights
+    uroven: 0
+    trida: Bard
   vlastni_rysy:
   - nazev: Oslepen Ordenem (DM)
     text: Trvale oslepen (Blinded), ale má Blindsight 30 ft – v tomto dosahu vnímá okolí bez zraku.
