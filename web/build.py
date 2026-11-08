@@ -101,7 +101,7 @@ hide:
   <label><input type="checkbox" id="mapa-body" checked> místa</label>
   <label><input type="checkbox" id="mapa-sidla"> sídla bez jména</label>
   <label><input type="checkbox" id="mapa-stitky"> jména měst</label>
-  <label><input type="checkbox" id="mapa-boj" checked> ⚔ bojové mapy</label>
+  <label><input type="checkbox" id="mapa-boj"> ⚔ bojové mapy</label>
   <button type="button" id="mapa-editor" class="ed-only" title="Upravit pobřeží, oblasti, řeky, symboly a popisky">✎ Editor mapy</button>
   <button type="button" id="mapa-meric" title="Klikáním do mapy změříš trasu">⟷ Měřit trasu</button>
 </div>

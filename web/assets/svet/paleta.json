@@ -127,13 +127,14 @@
     "autumn_scale": 0.65
   },
   "markers": {
-    "mapa": "#8e4f45",
-    "kanon": "#4f7657",
-    "odhad": "#9a8050",
-    "stroke": "#4a3f31",
-    "radius": 4,
-    "state_radius": 5,
-    "stroke_width": 1.25,
-    "fill_opacity": 0.9
+    "mapa": "#8a7465",
+    "kanon": "#697b63",
+    "odhad": "#9c875e",
+    "stroke": "#4e493f",
+    "radius": 2.5,
+    "state_radius": 3,
+    "stroke_width": 0.9,
+    "stroke_opacity": 0.65,
+    "fill_opacity": 0.58
   }
 }

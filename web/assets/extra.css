@@ -39,8 +39,8 @@ body.rezim-hrac .dm-sekce, body.rezim-hrac h2.dm-nadpis { display: none !importa
 .mapa-vlozena { margin: 1rem 0 1.5rem; }
 .mapa-vlozena iframe { display: block; width: 100%; height: 360px; border: 1px solid #b59a6a; border-radius: 6px; }
 .mapa-zobrazit { margin-bottom: .5rem; }
-.tecka { display: inline-block; width: .7rem; height: .7rem; border-radius: 50%; border: 2px solid #3a2412; vertical-align: middle; }
-.jistota-mapa { background: #c0392b; } .jistota-kanon { background: #2e8b57; } .jistota-odhad { background: #f0b429; }
+.tecka { display: inline-block; width: .7rem; height: .7rem; border-radius: 50%; border: 1px solid #4e493f; vertical-align: middle; }
+.jistota-mapa { background: #8a7465; } .jistota-kanon { background: #697b63; } .jistota-odhad { background: #9c875e; }
 .leaflet-tooltip.mapa-stitek { font-family: "IM Fell", serif; font-size: 13px; background: rgba(246,233,200,.92);
   color: #3a2412; border: 1px solid #8a6a3f; }
 .leaflet-tooltip.mapa-stav-stitek { font-family: "IM Fell", serif; font-size: 16px; font-weight: 700;

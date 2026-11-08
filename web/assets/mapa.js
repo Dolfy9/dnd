@@ -74,10 +74,10 @@
       return "<a href='../boj/?mapa=" + encodeURIComponent(b.id) + "'>" + esc(b.nazev) + "</a>" + (n ? " <small>(" + n + " ulož. bojů)</small>" : "");
     }).join("<br>") + "</p>";
   }
-  var body = L.layerGroup().addTo(map), sidla = L.layerGroup(), bojL = L.layerGroup().addTo(map), byName = {}, cropHighlight = null;
+  var body = L.layerGroup(), sidla = L.layerGroup(), bojL = L.layerGroup(), byName = {}, cropHighlight = null;
   D.mista.forEach(function (m) {
     var c = L.circleMarker([H - m.y, m.x], {
-      radius: m.typ === "zeme" ? (MP.state_radius || 5) : (MP.radius || 4), color: MP.stroke || "#4a3f31", weight: MP.stroke_width || 1.25,
+      radius: m.typ === "zeme" ? (MP.state_radius || 3) : (MP.radius || 2.5), color: MP.stroke || "#4e493f", weight: MP.stroke_width || .9, opacity: MP.stroke_opacity || .65,
       fillColor: barvy[m.jistota] || "#777", fillOpacity: MP.fill_opacity || .9
     });
     c.bindTooltip(m.nazev, { className: "mapa-stitek", direction: "top", offset: [0, -6] });
@@ -109,7 +109,11 @@
   var hl = document.getElementById("mapa-hledat");
   if (hl) hl.addEventListener("change", function () { najdi(this.value); });
   if (qs.get("misto")) setTimeout(function () { najdi(qs.get("misto")); }, 300);
-  function tog(id, layer) { var e = document.getElementById(id); if (e) e.addEventListener("change", function (ev) { if (ev.target.checked) map.addLayer(layer); else map.removeLayer(layer); }); }
+  function tog(id, layer) {
+    var e = document.getElementById(id); if (!e) return;
+    if (e.checked) map.addLayer(layer); else map.removeLayer(layer);
+    e.addEventListener("change", function (ev) { if (ev.target.checked) map.addLayer(layer); else map.removeLayer(layer); });
+  }
   tog("mapa-sidla", sidla); tog("mapa-body", body); tog("mapa-boj", bojL);
   var st = document.getElementById("mapa-stitky");
   if (st) st.addEventListener("change", function (e) {

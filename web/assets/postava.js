@@ -78,7 +78,7 @@
   }
   function trackerHtml(c, key) {
     var s = sessionState(key), known = concentrationSpells(c), spellOptions = known.map(function (n) { return '<option value="' + esc(n) + '"' + (s.concentrationSpell === n ? " selected" : "") + '>' + esc(n) + '</option>'; }).join(""),
-      concentrationInput = known.length ? '<select data-concentration-spell><option value="">Vyber spell</option>' + spellOptions + '</select>' : '<input data-concentration-spell type="text" value="' + esc(s.concentrationSpell) + '" placeholder="Spell name">';
+      concentrationInput = known.length ? '<select data-concentration-spell><option value="">Vyber kouzlo</option>' + spellOptions + '</select>' : '<input data-concentration-spell type="text" value="' + esc(s.concentrationSpell) + '" placeholder="Spell name">';
     return '<div class="p2-trackers"><div class="p2-tr-card"><button type="button" class="p2-inspiration' + (s.inspiration ? " on" : "") + '" data-inspiration aria-pressed="' + s.inspiration + '">Heroic Inspiration</button></div>'
       + '<div class="p2-tr-card"><b>Death Saves</b><div class="p2-death"><span>Success</span>' + [1, 2, 3].map(function (i) { return '<button type="button" class="p2-death-pip' + (i <= s.successes ? " on" : "") + '" data-death="success" data-step="' + i + '" aria-label="Success ' + i + '"></button>'; }).join("") + '<span>Failure</span>' + [1, 2, 3].map(function (i) { return '<button type="button" class="p2-death-pip fail' + (i <= s.failures ? " on" : "") + '" data-death="failure" data-step="' + i + '" aria-label="Failure ' + i + '"></button>'; }).join("") + '</div></div>'
       + '<div class="p2-tr-card"><b>Exhaustion</b><div class="p2-exhaustion"><button type="button" data-exhaustion="-1" aria-label="Snížit Exhaustion">−</button><strong>' + s.exhaustion + '</strong><button type="button" data-exhaustion="1" aria-label="Zvýšit Exhaustion">+</button>' + (s.exhaustion ? '<small>−' + (s.exhaustion * 2) + ' D20 · −' + (s.exhaustion * 5) + ' ft</small>' : '') + (s.exhaustion === 6 ? '<em>Death</em>' : '') + '</div></div>'
@@ -138,7 +138,7 @@
       var prof = (c.dovednosti || []).indexOf(s) >= 0, exp = (c.expertiza || []).indexOf(s) >= 0;
       d.skills[s] = { val: d.mods[SKILLS[s]] + (prof ? d.pb : 0) + (exp ? d.pb : 0) + (!prof && jack ? Math.floor(d.pb / 2) : 0) - d.exhaustPenalty, prof: prof, exp: exp };
     });
-    d.passive = 10 + d.skills.Perception.val;
+    d.passive = 10 + d.skills.Perception.val + d.exhaustPenalty;
     d.init = d.mods.DEX + (has(c.featy, "Alert") ? d.pb : 0) - d.exhaustPenalty;
     // AC
     var z = c.zbroj || { typ: "none" }, ac;
@@ -259,15 +259,15 @@
     h += '<div class="p2-id"><h2 class="p2-name">' + esc(c.jmeno) + '</h2><div class="p2-title">' + esc(c.titul || "") + '</div><div class="p2-chips">'
       + (c.tridy || []).map(function (t) { return '<span class="p2-chip p2-class">' + esc(t.trida) + ' ' + t.uroven + (t.podtrida ? ' · ' + esc(t.podtrida) : '') + '</span>'; }).join("")
       + '<span class="p2-chip">' + esc(c.druh || "—") + '</span><span class="p2-chip">' + esc(c.pozadi || "—") + '</span><span class="p2-chip">' + esc(c.zarovnani || "—") + '</span><span class="p2-chip">' + esc(c.velikost || "Medium") + '</span></div>' + xpHtml + (d.exhaustion ? '<span class="p2-exhaust-warning">Exhaustion ' + d.exhaustion + ' · −' + d.exhaustPenalty + ' D20 · −' + (d.exhaustion * 5) + ' ft Speed' + (d.exhaustion === 6 ? ' · Death' : '') + '</span>' : '') + '</div>'
-      + '<div class="p2-cr"><div class="p2-cr-v" title="obrana CR ' + d.cr.def + ' · útok CR ' + d.cr.off + '">' + d.cr.cr + '</div><div class="p2-cr-l">CR (odhad)</div><div class="p2-cr-x">' + d.cr.xp + ' XP' + (bj.cr_rucne ? '<br>' + esc(bj.cr_rucne) : '') + '</div></div></header>';
+      + '<div class="p2-cr"><div class="p2-cr-v" title="obrana CR ' + d.cr.def + ' · útok CR ' + d.cr.off + '">' + d.cr.cr + '</div><div class="p2-cr-l">CR <span class="p2-cr-kind">(odhad)</span></div><div class="p2-cr-x">' + d.cr.xp + ' XP' + (bj.cr_rucne ? '<br>' + esc(bj.cr_rucne) : '') + '</div></div></header>';
     if (cesta && document.body.classList.contains("ed-on")) h += '<div class="ps-edit"><button class="ed-btn" data-ps-lvl>⬆ Level up</button> <button class="ed-btn ed-primary" data-ps-edit>✎ Upravit postavu</button></div>';
     // ---- životní hodnoty ----
     h += '<div class="p2-vitals"><div class="p2-shield"><div class="p2-v">' + d.ac + '</div><div class="p2-l">Armor Class</div></div>'
       + '<div class="p2-hp ps-hptrack" data-key="' + esc(key) + '" data-max="' + d.hp + '"><div class="p2-l">Hit Points</div><div class="p2-hp-row"><button data-hp="-5">−5</button><button data-hp="-1">−1</button><input class="ps-hpcur" type="number"><span class="p2-hp-max">/ ' + d.hp + '</span><button data-hp="1">+1</button><button data-hp="5">+5</button></div><div class="p2-hpbar"><i></i></div><div class="p2-hp-row p2-small"><label>dočasné <input class="ps-hptmp" type="number"></label><button data-hp="reset" title="Plné HP">↺ plné</button></div></div>'
-      + stat("Iniciativa", '<a class="ps-roll" data-roll="1d20' + sg(d.init) + '" data-label="Iniciativa">' + sg(d.init) + '</a>') + stat("Rychlost", d.speed + ' ft') + stat("Proficiency", sg(d.pb)) + stat("Pasivní Perception", d.passive) + stat("Hit Dice", d.dice + ' <small class="ps-hdleft" data-key="' + esc(key) + '" data-total="' + d.lvl + '"></small>') + stat("DPR", bj.dpr ? esc(bj.dpr) : '<span title="Automatický odhad: ' + esc(d.dprPopis || "") + ' (ručně: Upravit postavu → Připravenost na boj)">~' + d.dprAuto + '</span>') + '</div>'
+      + stat("Iniciativa", '<a class="ps-roll" data-roll="1d20' + sg(d.init) + '" data-label="Iniciativa">' + sg(d.init) + '</a>') + stat("Rychlost", d.speed + ' ft') + stat("Proficiency", sg(d.pb)) + stat("Pasivní Perception", d.passive) + stat('<span class="p2-hd-label-long">Hit Dice</span><span class="p2-hd-label-short">HD</span>', d.dice + ' <small class="ps-hdleft" data-key="' + esc(key) + '" data-total="' + d.lvl + '" title="Zbývající Hit Dice"></small>', "p2-hd-stat") + stat("DPR", bj.dpr ? esc(bj.dpr) : '<span title="Automatický odhad: ' + esc(d.dprPopis || "") + ' (ručně: Upravit postavu → Připravenost na boj)">~' + d.dprAuto + '</span>') + '</div>'
       + '<div class="p2-rest"><button class="ed-btn" data-rest="short" title="Short Rest: utratit Hit Dice, obnovit Pact Magic a zdroje na krátký odpočinek">☀ Short Rest</button><button class="ed-btn" data-rest="long" title="Long Rest: plné HP, všechny sloty, zdroje a Hit Dice">☾ Long Rest</button></div>';
     // ---- atributy ----
-    h += '<div class="p2-abil">' + AB.map(function (a) { return '<div class="p2-ab"><div class="p2-ab-n">' + AB_CZ[a] + '</div><a class="p2-ab-mod ps-roll" data-roll="1d20' + sg(d.checkMods[a]) + '" data-label="' + AB_CZ[a] + '">' + sg(d.checkMods[a]) + '</a><div class="p2-ab-s">' + esc((c.atributy || {})[a]) + '</div><a class="p2-ab-save ps-roll' + (d.saveProf.indexOf(a) >= 0 ? ' p' : '') + '" data-roll="1d20' + sg(d.saves[a]) + '" data-label="Záchrana ' + a + '">záchrana ' + sg(d.saves[a]) + '</a></div>'; }).join("") + '</div>';
+    h += '<div class="p2-abil">' + AB.map(function (a) { return '<div class="p2-ab"><div class="p2-ab-n"><span class="p2-ab-name-wide">' + AB_CZ[a] + '</span><span class="p2-ab-name-short">' + a + '</span></div><a class="p2-ab-mod ps-roll" data-roll="1d20' + sg(d.checkMods[a]) + '" data-label="' + AB_CZ[a] + '">' + sg(d.checkMods[a]) + '</a><div class="p2-ab-s">' + esc((c.atributy || {})[a]) + '</div><a class="p2-ab-save ps-roll' + (d.saveProf.indexOf(a) >= 0 ? ' p' : '') + '" data-roll="1d20' + sg(d.saves[a]) + '" data-label="Záchrana ' + a + '">záchrana ' + sg(d.saves[a]) + '</a></div>'; }).join("") + '</div>';
     h += trackerHtml(c, key) + '</div></div>';
     // ---- záložky ----
     var tabs = [];
@@ -323,7 +323,7 @@
     h += tabs.map(function (x, i) { return '<section class="p2-pane' + (i ? '' : ' on') + '" data-pane="' + i + '"><h3 class="p2-pane-h">' + x[0] + '</h3>' + x[1] + '</section>'; }).join("");
     return h + '</div>';
   }
-  function stat(l, v) { return '<div class="p2-stat"><div class="p2-v">' + v + '</div><div class="p2-l">' + l + '</div></div>'; }
+  function stat(l, v, cls) { return '<div class="p2-stat' + (cls ? ' ' + cls : '') + '"><div class="p2-v">' + v + '</div><div class="p2-l">' + l + '</div></div>'; }
   function card(t, body) { return '<section class="p2-card"><h4>' + t + '</h4>' + body + '</section>'; }
   function actList(t, arr) { if (!arr || !arr.length) return ""; return '<div class="p2-act"><div class="p2-act-h">' + t + '</div>' + arr.map(function (a) { return '<p>' + (typeof a === "string" ? esc(a) : '<b>' + esc(a.nazev) + '.</b> ' + esc(a.text || "")) + '</p>'; }).join("") + '</div>'; }
   function sheetUi(root) {
@@ -758,10 +758,10 @@
     m.box.classList.add("ed-wide");
   }
   // ---------- odpočinek ----------
-  function hdLeft(root) { root.querySelectorAll(".ps-hdleft").forEach(function (x) { var used = Number(localStorage.getItem(x.dataset.key + ":hd") || 0); x.textContent = "(zbývá " + Math.max(0, Number(x.dataset.total) - used) + ")"; }); }
+  function hdLeft(root) { root.querySelectorAll(".ps-hdleft").forEach(function (x) { var used = Number(localStorage.getItem(x.dataset.key + ":hd") || 0), left = Math.max(0, Number(x.dataset.total) - used); x.innerHTML = '<span class="p2-hdleft-long">(zbývá ' + left + ')</span><span class="p2-hdleft-short">(' + left + ')</span>'; }); }
   function rest(kind, c, d, cesta, key) {
     var st = JSON.parse(localStorage.getItem(key) || "null") || { hp: d.hp, tmp: "" }, used = Number(localStorage.getItem(key + ":hd") || 0), msg = [];
-    function clear(prefix) { Object.keys(localStorage).forEach(function (k) { if (k.indexOf(prefix) === 0) localStorage.removeItem(k); }); }
+    function clear(prefix) { Object.keys(localStorage).forEach(function (k) { if (k.indexOf(prefix) === 0 && k !== key + ":session") localStorage.removeItem(k); }); }
     if (kind === "long") {
       if (!confirm("Long Rest (8 hodin): plné HP, všechny spell sloty, zdroje a Hit Dice. Pokračovat?")) return;
       st = { hp: d.hp, tmp: "" }; used = 0; clear(key + ":s"); clear(key + ":p"); clear(key + ":z:");
