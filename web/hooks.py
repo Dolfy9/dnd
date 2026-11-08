@@ -9,8 +9,25 @@ from urllib.parse import quote
 
 def on_page_markdown(markdown, page, config, files):
     src = page.file.src_path
+    root = Path(__file__).resolve().parent.parent
+    data = page.meta.get("postava")
+    override = data.get("portret") if isinstance(data, dict) else None
+    portrait_path = None
+    if override:
+        candidate = (root / str(override)).resolve()
+        try:
+            rel = candidate.relative_to(root).as_posix()
+        except ValueError:
+            rel = None
+        if rel and candidate.is_file():
+            portrait_path = rel
+    if not portrait_path and src.startswith("04_Postavy/"):
+        candidate = root / "04_Postavy" / "obrazky" / (Path(src).stem + ".webp")
+        if candidate.is_file():
+            portrait_path = candidate.relative_to(root).as_posix()
+    portrait_url = posixpath.relpath(portrait_path, posixpath.dirname(page.url) or ".") if portrait_path else None
     if not src.startswith("11_Mapy/"):
-        data_path = Path(__file__).resolve().parent.parent / "11_Mapy" / "mista.json"
+        data_path = root / "11_Mapy" / "mista.json"
         places = json.loads(data_path.read_text(encoding="utf-8"))["mista"]
         matches = [m for m in places if m.get("odkaz") == src]
         if matches:
@@ -32,11 +49,20 @@ def on_page_markdown(markdown, page, config, files):
                 markdown = markdown[:end] + block + markdown[end:]
             else:
                 markdown = block + markdown
-    data = page.meta.get("postava")
     if data:
-        payload = json.dumps(data, ensure_ascii=False).replace("</", "<\\/")
+        sheet_data = dict(data)
+        if portrait_url:
+            sheet_data["portret"] = portrait_url
+        else:
+            sheet_data.pop("portret", None)
+        payload = json.dumps(sheet_data, ensure_ascii=False).replace("</", "<\\/")
         markdown = ('<div class="postava-sheet"></div>\n'
                     f'<script type="application/json" class="postava-data">{payload}</script>\n\n' + markdown)
+    elif portrait_url:
+        title = page.meta.get("title") or Path(src).stem.replace("_", " ")
+        figure = (f'\n<figure class="postava-portret"><a href="{html.escape(portrait_url, quote=True)}" target="_blank" rel="noopener">'
+                  f'<img src="{html.escape(portrait_url, quote=True)}" alt="{html.escape(title, quote=True)}" loading="lazy"></a></figure>\n\n')
+        markdown = figure + markdown
     return markdown
 
 

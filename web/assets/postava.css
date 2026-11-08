@@ -170,6 +170,23 @@
 .p2-stat { padding: 3px 2px; border-radius: 6px; } .p2-stat .p2-v { font-size: .98rem; }
 .p2-hp { padding: 3px 6px; border-radius: 8px; } .p2-hp-row { margin: 0; gap: 3px; }
 .p2-hp input.ps-hpcur { font-size: 1.15rem; width: 3rem; } .p2-hp-max { font-size: .8rem; }
+.postava-portret { float: right; width: min(260px, 38vw); max-width: 260px; margin: 0 0 1.2rem 1.5rem; padding: 4px; border: 1px solid var(--line); border-radius: 12px; background: var(--card); box-shadow: 0 6px 18px rgba(0,0,0,.24); }
+.postava-portret a, .postava-portret img { display: block; width: 100%; }
+.postava-portret img { height: auto; border-radius: 8px; }
+.p2-hero.p2-hero-portret { grid-template-columns: minmax(0, 1fr) 260px; align-items: start; }
+.p2-hero.p2-hero-portret .p2-id { grid-column: 1; grid-row: 1; }
+.p2-hero.p2-hero-portret .p2-cr { grid-column: 1; grid-row: 2; width: 120px; }
+.p2-hero.p2-hero-portret .p2-crest-portret { grid-column: 2; grid-row: 1 / span 2; width: 260px; height: auto; aspect-ratio: 2 / 3; border: 1px solid var(--gold); border-radius: 10px; background: var(--card); box-shadow: 0 6px 18px rgba(0,0,0,.3); overflow: hidden; }
+.p2-crest-portret .p2-portret { display: block; width: 100%; height: 100%; }
+.p2-crest-portret img { display: block; width: 100%; height: 100%; object-fit: cover; border-radius: 8px; }
+.p2-crest-portret .p2-lvl { right: 8px; bottom: 8px; }
+@media (max-width: 700px) {
+  .postava-portret { float: none; width: min(100%, 360px); max-width: 100%; margin: 1rem auto; }
+  .p2-hero.p2-hero-portret { grid-template-columns: minmax(0, 1fr); }
+  .p2-hero.p2-hero-portret .p2-id { grid-column: 1; grid-row: 1; }
+  .p2-hero.p2-hero-portret .p2-cr { grid-column: 1; grid-row: 2; width: 120px; }
+  .p2-hero.p2-hero-portret .p2-crest-portret { grid-column: 1; grid-row: 3; width: min(100%, 360px); margin: 0 auto; }
+}
 .p2-hp button { padding: 0 5px; font-size: .62rem; } .p2-hpbar { height: 5px; margin: 2px 0; } .p2-small { font-size: .58rem; } .p2-small input { width: 2.4rem; font-size: .6rem; }
 .p2-abil { gap: 5px; margin-bottom: 8px; }
 .p2-ab { display: grid; grid-template-columns: 1fr auto; grid-template-areas: "n n" "m s" "v v"; align-items: center; column-gap: 4px; padding: 3px 8px 4px; border-width: 1.5px; border-radius: 8px 8px 18px 18px; box-shadow: inset 0 0 0 2px var(--paper2); }

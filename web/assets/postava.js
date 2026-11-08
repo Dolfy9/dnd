@@ -167,7 +167,7 @@
     var initials = String(c.jmeno || "?").split(/\s+/).map(function (w) { return w[0]; }).join("").slice(0, 2);
     var h = '<div class="ps ps2">';
     // ---- hlavička ----
-    h += '<header class="p2-hero"><div class="p2-crest">' + (c.portret ? '<img src="' + esc(c.portret) + '" alt="">' : '<span>' + esc(initials) + '</span>') + '<div class="p2-lvl" title="Celková úroveň">' + d.lvl + '</div></div>'
+    h += '<header class="p2-hero' + (c.portret ? ' p2-hero-portret' : '') + '"><div class="p2-crest' + (c.portret ? ' p2-crest-portret' : '') + '">' + (c.portret ? '<a class="p2-portret" href="' + esc(c.portret) + '" target="_blank" rel="noopener"><img src="' + esc(c.portret) + '" alt="' + esc(c.jmeno) + '"></a>' : '<span>' + esc(initials) + '</span>') + '<div class="p2-lvl" title="Celková úroveň">' + d.lvl + '</div></div>'
       + '<div class="p2-id"><h2 class="p2-name">' + esc(c.jmeno) + '</h2><div class="p2-title">' + esc(c.titul || "") + '</div><div class="p2-chips">'
       + (c.tridy || []).map(function (t) { return '<span class="p2-chip p2-class">' + esc(t.trida) + ' ' + t.uroven + (t.podtrida ? ' · ' + esc(t.podtrida) : '') + '</span>'; }).join("")
       + '<span class="p2-chip">' + esc(c.druh || "—") + '</span><span class="p2-chip">' + esc(c.pozadi || "—") + '</span><span class="p2-chip">' + esc(c.zarovnani || "—") + '</span><span class="p2-chip">' + esc(c.velikost || "Medium") + '</span></div></div>'
