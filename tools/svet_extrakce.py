@@ -112,6 +112,9 @@ def main():
     reky = [{"typ": "reka", "body": l} for l in trace(skeletonize(keep > 0), 45)]
 
     rucne = json.loads((Path(__file__).parent / "svet_oblasti_zdroj.json").read_text(encoding="utf-8")) if (Path(__file__).parent / "svet_oblasti_zdroj.json").exists() else []
+    for a in oblasti:
+        if a["typ"] == "les" and sum(q[1] for q in a["body"]) / len(a["body"]) > 700:
+            a["typ"] = "haj"
     oblasti = rucne + oblasti
     sym = json.loads((Path(__file__).parent / "svet_symboly_zdroj.json").read_text(encoding="utf-8"))
     svet = {

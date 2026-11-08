@@ -112,6 +112,7 @@ Polohy „odhad“ čekají na potvrzení – viz <a href="../11_Mapy/Geografie/
 <script>window.MONTELIEN_MISTA = {json.dumps(data, ensure_ascii=False)};</script>
 <script src="../assets/leaflet/leaflet-geoman.min.js"></script>
 <script src="../assets/svet_symboly.js"></script>
+<script src="../assets/svet/sprity.js"></script>
 <script src="../assets/svet.js"></script>
 <script src="../assets/mapa.js"></script>
 """

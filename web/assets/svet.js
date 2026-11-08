@@ -17,47 +17,77 @@
   function bbox(b) { var x0 = 1e9, y0 = 1e9, x1 = -1e9, y1 = -1e9; b.forEach(function (p) { x0 = Math.min(x0, p[0]); y0 = Math.min(y0, p[1]); x1 = Math.max(x1, p[0]); y1 = Math.max(y1, p[1]); }); return [x0, y0, x1, y1]; }
 
   function render(svg, D, M, base) {
-    var SYM = window.SVET_SYMBOLY || {}, OBL = window.SVET_OBLASTI || {}, W = D.sirka, H = D.vyska, o = [];
+    var SYM = window.SVET_SYMBOLY || {}, OBL = window.SVET_OBLASTI || {}, SPR = window.SVET_SPRITY || {}, META = window.SVET_SPRITY_META || {}, W = D.sirka, H = D.vyska, o = [];
+    var A = base + "assets/svet/";
     svg.setAttribute("viewBox", "0 0 " + W + " " + H);
     svg.setAttribute("preserveAspectRatio", "none");
     o.push('<defs><style>@font-face{font-family:MCinzel;src:url(' + base + 'assets/fonts/Cinzel.ttf)}@font-face{font-family:MFell;src:url(' + base + 'assets/fonts/IMFePIit28P.ttf)}'
       + '.sv-l{font-family:MCinzel,serif;fill:#3a2412;paint-order:stroke;stroke:#f3e6c4;stroke-width:3px;stroke-linejoin:round;text-transform:uppercase}.sv-m{font-family:MFell,serif;font-style:italic;fill:#1f4a52;paint-order:stroke;stroke:#cfe3df;stroke-width:3px}.sv-c{font-family:MFell,serif;fill:#3a2412;paint-order:stroke;stroke:#f3e6c4;stroke-width:2.5px}</style>'
       + '<filter id="sv-papir" x="0" y="0" width="100%" height="100%"><feTurbulence type="fractalNoise" baseFrequency=".012 .016" numOctaves="4" seed="3"/><feColorMatrix values="0 0 0 0 .45  0 0 0 0 .32  0 0 0 0 .18  0 0 0 .16 0"/><feComposite in2="SourceGraphic" operator="in"/></filter>'
-      + '<filter id="sv-mekce" x="-5%" y="-5%" width="110%" height="110%"><feGaussianBlur stdDeviation="5"/></filter>'
+      + '<filter id="sv-mekce" x="-30%" y="-30%" width="160%" height="160%"><feGaussianBlur stdDeviation="5"/></filter>'
       + '<radialGradient id="sv-vin" cx=".5" cy=".5" r=".75"><stop offset=".55" stop-color="#000" stop-opacity="0"/><stop offset="1" stop-color="#3a2412" stop-opacity=".45"/></radialGradient>');
     Object.keys(SYM).forEach(function (k) { o.push('<g id="sv-' + k + '">' + SYM[k].svg + "</g>"); });
+    Object.keys(META).forEach(function (k) { var m = META[k]; o.push('<image id="sp-' + k + '" href="' + A + k + '.webp" width="' + m.w + '" height="' + m.h + '" x="' + (-m.w / 2) + '" y="' + (-m.h + 2) + '"/>'); });
+    o.push('<pattern id="sv-pp" patternUnits="userSpaceOnUse" width="512" height="512"><rect width="512" height="512" fill="#efdfb4"/><image href="' + A + 'papir.jpg" width="512" height="512" opacity=".75"/></pattern>');
+    o.push('<pattern id="sv-mp" patternUnits="userSpaceOnUse" width="420" height="420"><rect width="420" height="420" fill="#9cc2bc"/><image href="' + A + 'more.jpg" width="420" height="420" opacity=".42"/></pattern>');
     var lakes = (D.pevnina || []).filter(function (s) { return s.typ === "jezero"; });
     var landD = (D.pevnina || []).filter(function (s) { return s.typ === "pevnina"; }).map(function (s) { return pathD(s.body, true); }).join(" ");
     o.push('<clipPath id="sv-souse"><path d="' + landD + '"/></clipPath></defs>');
-    o.push('<rect width="' + W + '" height="' + H + '" fill="#a9cbc4"/>');
+    o.push('<rect width="' + W + '" height="' + H + '" fill="url(#sv-mp)"/>');
     o.push('<path d="' + landD + '" fill="none" stroke="#5f9294" stroke-opacity=".35" stroke-width="56" stroke-linejoin="round" filter="url(#sv-mekce)"/>');
-    [22, 14, 7].forEach(function (d) { o.push('<path d="' + landD + '" fill="none" stroke="#2f6670" stroke-opacity=".45" stroke-width="' + (2 * d + 1.4) + '" stroke-linejoin="round"/><path d="' + landD + '" fill="none" stroke="#a9cbc4" stroke-width="' + 2 * d + '" stroke-linejoin="round"/>'); });
-    o.push('<rect width="' + W + '" height="' + H + '" fill="#fff" filter="url(#sv-papir)"/>');
+    [22, 14, 7].forEach(function (d) { o.push('<path d="' + landD + '" fill="none" stroke="#2f6670" stroke-opacity=".45" stroke-width="' + (2 * d + 1.4) + '" stroke-linejoin="round"/><path d="' + landD + '" fill="none" stroke="url(#sv-mp)" stroke-width="' + 2 * d + '" stroke-linejoin="round"/>'); });
+    o.push('<rect width="' + W + '" height="' + H + '" fill="#fff" filter="url(#sv-papir)" opacity=".6"/>');
+    var lid = 0;
     (D.pevnina || []).forEach(function (s) {
       var d = pathD(s.body, true);
-      if (s.typ === "jezero") o.push('<path d="' + d + '" fill="#a9cbc4" stroke="#3a2412" stroke-width="1.3"/><path d="' + d + '" fill="none" stroke="#2f6670" stroke-opacity=".22" stroke-width="10" clip-path="url(#sv-souse)"/>');
-      else o.push('<path d="' + d + '" fill="#efdfb4" stroke="#3a2412" stroke-width="1.3" stroke-linejoin="round"/>');
+      if (s.typ === "jezero") { lid++; o.push('<clipPath id="sv-j' + lid + '"><path d="' + d + '"/></clipPath><path d="' + d + '" fill="url(#sv-mp)"/><g clip-path="url(#sv-j' + lid + ')" fill="none" stroke-linejoin="round"><path d="' + d + '" stroke="#2f6670" stroke-opacity=".35" stroke-width="13"/><path d="' + d + '" stroke="url(#sv-mp)" stroke-width="11.6"/><path d="' + d + '" stroke="#2f6670" stroke-opacity=".3" stroke-width="5"/></g><path d="' + d + '" fill="none" stroke="#3a2412" stroke-width="1.2"/>'); }
+      else o.push('<path d="' + d + '" fill="url(#sv-pp)" stroke="#3a2412" stroke-width="1.3" stroke-linejoin="round"/>');
     });
-    o.push('<g clip-path="url(#sv-souse)"><rect width="' + W + '" height="' + H + '" fill="#fff" filter="url(#sv-papir)" opacity=".9"/>');
+    o.push('<g clip-path="url(#sv-souse)"><rect width="' + W + '" height="' + H + '" fill="#fff" filter="url(#sv-papir)" opacity=".45"/>');
+    o.push('<path d="' + landD + '" fill="none" stroke="#7a5a2a" stroke-opacity=".28" stroke-width="22" filter="url(#sv-mekce)"/>');
     (D.oblasti || []).forEach(function (a) { var c = (OBL[a.typ] || {}).barva || "#b8c47a"; o.push('<path d="' + pathD(a.body, true) + '" fill="' + c + '" opacity=".42" filter="url(#sv-mekce)"/>'); });
-    lakes.forEach(function (s) { o.push('<path d="' + pathD(s.body, true) + '" fill="#a9cbc4"/>'); });
+    lakes.forEach(function (s) { o.push('<path d="' + pathD(s.body, true) + '" fill="url(#sv-mp)"/>'); });
     o.push("</g>");
+    o.push('<g clip-path="url(#sv-souse)">');
     (D.reky || []).forEach(function (r) { var d = pathD(r.body, false); o.push('<path d="' + d + '" fill="none" stroke="#3a2412" stroke-width="3.2" stroke-linecap="round" opacity=".55"/><path d="' + d + '" fill="none" stroke="#7fb3b8" stroke-width="2" stroke-linecap="round"/>'); });
+    o.push("</g>");
     (D.cesty || []).forEach(function (r) { o.push('<path d="' + pathD(r.body, false) + '" fill="none" stroke="#6b4423" stroke-width="1.6" stroke-dasharray="6 5" stroke-linecap="round"/>'); });
     (D.hranice || []).forEach(function (r) { o.push('<path d="' + pathD(r.body, false) + '" fill="none" stroke="#8b2c1c" stroke-width="1.8" stroke-dasharray="10 4 2 4" opacity=".8"/>'); });
     // symboly v oblastech (seřazené podle y, aby se překrývaly správně)
     var items = [];
+    var REL = { kaktus: .3, balvan: .45, rakos: .55, ker: .5, suchy: .8 };
+    function spr(name, x, y, w, flip, rot) {
+      var m = META[name]; if (!m) return "";
+      var k = w / m.w;
+      return '<use href="#sp-' + name + '" transform="translate(' + x.toFixed(1) + "," + y.toFixed(1) + ")" + (rot ? " rotate(" + rot + ")" : "") + " scale(" + (flip ? -k : k).toFixed(3) + "," + k.toFixed(3) + ')"/>';
+    }
     (D.oblasti || []).forEach(function (a, ai) {
-      var t = OBL[a.typ]; if (!t || !t.sym.length) return;
-      var bb = bbox(a.body), R = rng(ai * 7919 + 13 + Math.round(bb[0] + bb[1])), st = (a.hustota || 1) * t.rozestup, row = 0;
-      for (var y = bb[1] + st * .6; y < bb[3]; y += st * .8, row++) for (var x = bb[0] + (row % 2 ? st / 2 : 0); x < bb[2]; x += st) {
-        var px = x + (R() - .5) * st * .7, py = y + (R() - .5) * st * .5;
+      var t = OBL[a.typ]; if (!t || !t.spr || !t.spr.length) return;
+      var bb = bbox(a.body), R = rng(ai * 7919 + 13 + Math.round(bb[0] + bb[1])), st = t.rozestup / (a.hustota || 1), row = 0;
+      for (var y = bb[1] + st * .5; y < bb[3] + st * .3; y += st * .62, row++) for (var x = bb[0] + (row % 2 ? st / 2 : 0); x < bb[2]; x += st) {
+        var px = x + (R() - .5) * st * .8, py = y + (R() - .5) * st * .5;
         if (!inPoly(px, py, a.body) || lakes.some(function (l) { return inPoly(px, py, l.body); })) continue;
-        items.push([py, '<use href="#sv-' + t.sym[Math.floor(R() * t.sym.length)] + '" transform="translate(' + px.toFixed(1) + "," + py.toFixed(1) + ") scale(" + (t.m[0] + R() * (t.m[1] - t.m[0])).toFixed(2) + (R() < .5 ? "" : ",") + (R() < .5 ? "" : "") + ')"/>']);
+        var nm = t.spr[Math.floor(R() * t.spr.length)];
+        items.push([py, spr(nm, px, py, t.w * (REL[nm.split("_")[0]] || 1) * (.8 + R() * .4), R() < .5)]);
       }
     });
-    (D.symboly || []).forEach(function (s) { if (SYM[s.typ]) items.push([s.y, '<use href="#sv-' + s.typ + '" transform="translate(' + s.x + "," + s.y + ") rotate(" + (s.rot || 0) + ") scale(" + (s.m || 1) + ')"/>']); });
-    (M.mista || []).forEach(function (m) { if (m.typ === "sidlo" || m.typ === "mesto") items.push([m.y + 4, '<use href="#sv-sidlo" transform="translate(' + m.x + "," + (m.y + 4) + ") scale(" + (m.typ === "mesto" ? 1.25 : .9) + ')"/>']); });
+    // řídká drobná vegetace na volné pevnině (mimo oblasti a jezera)
+    if (D.rozptyl !== false) {
+      var R2 = rng(4242), land = (D.pevnina || []).filter(function (p) { return p.typ === "pevnina"; }), DROB = ["ker_1", "ker_2", "list_2", "list_5", "jehl_4", "kopec_3", "kopec_5", "balvan_2"];
+      for (var gy = 30; gy < H; gy += 46) for (var gx = 20; gx < W; gx += 52) {
+        if (R2() > .3) continue;
+        var qx = gx + (R2() - .5) * 40, qy = gy + (R2() - .5) * 36, nm2 = DROB[Math.floor(R2() * DROB.length)];
+        if (!land.some(function (p) { return inPoly(qx, qy, p.body); }) || lakes.some(function (l) { return inPoly(qx, qy, l.body); }) || (D.oblasti || []).some(function (o) { return inPoly(qx, qy, o.body); })) continue;
+        var base2 = nm2.indexOf("kopec") === 0 ? 22 : nm2.indexOf("balvan") === 0 ? 9 : nm2.indexOf("ker") === 0 ? 8 : 11;
+        items.push([qy, spr(nm2, qx, qy, base2 * (.8 + R2() * .4), R2() < .5)]);
+      }
+    }
+    (D.symboly || []).forEach(function (s, si) {
+      var sp = SPR[s.typ];
+      if (sp) items.push([s.y, spr(sp.spr[(Math.abs(s.x * 7 + s.y * 13)) % sp.spr.length], s.x, s.y, sp.w * (s.m || 1), !!s.zrcadlo, s.rot || 0)]);
+      else if (SYM[s.typ]) items.push([s.y, '<use href="#sv-' + s.typ + '" transform="translate(' + s.x + "," + s.y + ") rotate(" + (s.rot || 0) + ") scale(" + (s.m || 1) + ')"/>']);
+    });
+    (M.mista || []).forEach(function (m) { if ((m.typ === "sidlo" || m.typ === "mesto") && !(D.symboly || []).some(function (q) { return SPR[q.typ] && Math.abs(q.x - m.x) < 45 && Math.abs(q.y - m.y) < 90; })) items.push([m.y + 4, '<use href="#sv-sidlo" transform="translate(' + m.x + "," + (m.y + 4) + ") scale(" + (m.typ === "mesto" ? 1.1 : .8) + ')"/>']); });
     items.sort(function (a, b) { return a[0] - b[0]; }).forEach(function (i) { o.push(i[1]); });
     // popisky z mista.json
     (M.mista || []).forEach(function (m) {
@@ -77,7 +107,9 @@
   function editor(ctx) {
     var map = ctx.map, H = ctx.D.vyska, D = JSON.parse(JSON.stringify(ctx.D)), M = JSON.parse(JSON.stringify(ctx.M)), grp = L.featureGroup().addTo(map), vr = "oblasti", dirty = false, typ = "les", sym = "hora";
     var ll = function (p) { return [H - p[1], p[0]]; }, pt = function (l) { return [Math.round(l.lng), Math.round(H - l.lat)]; };
-    var SYM = window.SVET_SYMBOLY, OBL = window.SVET_OBLASTI;
+    var OBL = window.SVET_OBLASTI, SYM = {};
+    Object.keys(window.SVET_SPRITY || {}).forEach(function (k) { SYM[k] = window.SVET_SPRITY[k]; });
+    Object.keys(window.SVET_SYMBOLY || {}).forEach(function (k) { if (!SYM[k]) SYM[k] = { nazev: window.SVET_SYMBOLY[k].nazev + " (kresba)" }; });
     var panel = document.createElement("div"); panel.className = "sv-ed";
     ctx.el.parentNode.insertBefore(panel, ctx.el);
     function rerender() { render(ctx.svg, D, M, ctx.base); }

@@ -20,6 +20,7 @@ for m in d['mapy']:
     if len(w) != 1: err.append(m['id'] + ': řádky mřížky mají různou délku')
     if m.get('obrazek') and not (pathlib.Path('11_Mapy') / m['obrazek']).exists(): err.append(m['id'] + ': chybí obrázek ' + m['obrazek'])
 print('\n'.join(err)); sys.exit(1 if err else 0)"
+krok "atlas mapy (svet.json, sprity)" node tools/kontrola_svet.js
 for f in web/assets/*.js; do krok "syntaxe $f" node -e "new Function(require('fs').readFileSync('$f','utf8'))"; done
 if [ -f /tmp/postavy.json ]; then krok "testy pravidel" node tools/test_pravidla.js /tmp/postavy.json; else krok "testy pravidel" node tools/test_pravidla.js; fi
 krok "generování webu (web/build.py)" python3 web/build.py
