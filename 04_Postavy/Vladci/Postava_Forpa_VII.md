@@ -123,7 +123,7 @@ Chce přežít a udržet rod na trůnu. Nenávidí Orden, ale bojí se ho víc, 
 Otec Samuel (pán a vězeň), inkvizitor Vaelen (dozorce v paláci), Corvin (tajně mu posílá nepodepsané zprávy).
 
 ## Háčky pro družinu (návrh)
-- Král hledá posla, který doručí zapečetěný dopis Veanorovi do Nöelienu – bez vědomí Ordenu.
+- Král hledá posla, který doručí zapečetěný dopis Veanorovi do Nölienu – bez vědomí Ordenu.
 
 ## Pro DM (tajné)
 - Návrh: Jeho dcera Aleda je „na vzdělání“ v Pevnosti Orden – ve skutečnosti rukojmí. Za její záchranu by obrátil celé království proti Ordenu.

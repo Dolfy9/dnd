@@ -2,7 +2,7 @@
 
 > **Stav:** návrh
 
-- **Typ:** pevnost v ledovcích dalekého severu (na mapě pravděpodobně krystalické věže nad Nöelienem/Khearazem)
+- **Typ:** pevnost v ledovcích dalekého severu (na mapě pravděpodobně krystalické věže nad Nölienem/Khearazem)
 - **Pán:** [Antemius](../../04_Postavy/Stavitele_a_Bohove/Postava_Antemius.md)
 - **Nebezpečí:** smrtelné (úrovně 15+)
 

@@ -3,9 +3,9 @@
 > **Stav:** původní věta = kánon, ostatní návrh
 
 ## Detailní Popis
-Vznešené elfské město v Nöelienu, sídlo krále Veanora I.
+Vznešené elfské město v Nölienu, sídlo krále Veanora I.
 
-- **Velikost:** Vznešené elfské město v Nöelienu, ~30 000 obyvatel
+- **Velikost:** Vznešené elfské město v Nölienu, ~30 000 obyvatel
 
 ## Čtvrti a významná místa
 - **Královský háj** – palác krále Veanora I. ve stromech.
@@ -31,5 +31,5 @@ Vznešené elfské město v Nöelienu, sídlo krále Veanora I.
 - Návrh: nejstarší elfové opravdu Temný den zažili a znají pravdu o Tirentově zmizení.
 
 ## Související
-- Země: [Elfský Stát Nöelien](../02_Zeme/Elfsky_Stat_Noelien.md)
+- Země: [Elfský Stát Nölien](../02_Zeme/Elfsky_Stat_Nolien.md)
 - Vládce: [Král Veanor I.](../04_Postavy/Vladci/Postava_Veanor_I.md)

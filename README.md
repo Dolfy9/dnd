@@ -53,7 +53,7 @@ Repo je kompatibilní i s [Obsidianem](https://obsidian.md) (stačí otevřít s
 
 ### [02_Zeme](02_Zeme/)
 - [Nezávislá Država Knärghae Zia](02_Zeme/Drzava_Knarghae_Zia.md)
-- [Elfský Stát Nöelien](02_Zeme/Elfsky_Stat_Noelien.md)
+- [Elfský Stát Nölien](02_Zeme/Elfsky_Stat_Nolien.md)
 - [Khaeraz](02_Zeme/Khaeraz.md)
 - [Klanové Země Mönohen](02_Zeme/Klanove_Zeme_Monohen.md)
 - [Království Briria](02_Zeme/Kralovstvi_Briria.md)
@@ -132,7 +132,7 @@ Repo je kompatibilní i s [Obsidianem](https://obsidian.md) (stačí otevřít s
 - [Sny ze severu](06_Knihy_a_Dokumenty/Kniha_11_Sny_ze_severu.md)
 - [Poslední listy z Hinai Mihi](06_Knihy_a_Dokumenty/Kniha_12_Posledni_listy_z_Hinai_Mihi.md)
 - [O Ferienu a jeho knězích](06_Knihy_a_Dokumenty/Kniha_13_O_Ferienu_a_jeho_knezich.md)
-- [Elfské letopisy Nöelienu](06_Knihy_a_Dokumenty/Kniha_14_Elfske_letopisy.md)
+- [Elfské letopisy Nölienu](06_Knihy_a_Dokumenty/Kniha_14_Elfske_letopisy.md)
 - [Zaiřin herbář](06_Knihy_a_Dokumenty/Kniha_15_Zairin_herbar.md)
 - [Kodex Řádu a Pořádku (Kniha II.) – Dodatek o správě zemí](06_Knihy_a_Dokumenty/Kniha_16_Kodex_Radu_a_Poradku_II.md)
 - [Lodní deník z Menkantu](06_Knihy_a_Dokumenty/Kniha_17_Lodni_denik_z_Menkantu.md)

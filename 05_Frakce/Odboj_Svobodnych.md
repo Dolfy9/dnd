@@ -19,4 +19,4 @@
 - [Ordenský řád](Ordensky_Rad.md), zejména [Inkvizitor Vaelen](../04_Postavy/NPC/Postava_Vaelen.md)
 
 ## Pro DM (tajné)
-_(doplnit: buňky, zrádci, financování, spojení s Nöelienem / Knärghae Zia…)_
+_(doplnit: buňky, zrádci, financování, spojení s Nölienem / Knärghae Zia…)_

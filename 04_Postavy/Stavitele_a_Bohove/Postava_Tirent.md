@@ -94,7 +94,7 @@ postava:
   - nazev: Legendary Resistance (3/Day)
     text: Rys netvora dle MM 2025 pro avatar.
   - nazev: Mistr elfské magie
-    text: 'Vlastní schopnost: elfská magie v jeho přítomnosti nemůže selhat; z jeho doby pochází ochranná magie Nöelienu.'
+    text: 'Vlastní schopnost: elfská magie v jeho přítomnosti nemůže selhat; z jeho doby pochází ochranná magie Nölienu.'
   prevod_2024: Divination / Abjuration → jen Diviner (PHB 2024).
   poznamky: 'Božstvo: atributy nad 20 jsou božská výjimka (Epic Boon +1 až do 30, zbytek určuje DM). Pro střet použij avatar
     do CR 30 (MM 2025).'
@@ -136,5 +136,5 @@ Veanor (služebník), Zaira (sestra).
 - Bílí koně vedou poutníky k jeho knihovně ve Východním hvozdu.
 
 ## Pro DM (tajné)
-- Návrh: Žije, ale jeho moc slábne – proto slábnou hranice Nöelienu.
+- Návrh: Žije, ale jeho moc slábne – proto slábnou hranice Nölienu.
 

@@ -1,7 +1,7 @@
 ---
 postava:
   jmeno: Veanor I.
-  titul: Král Nöelienu
+  titul: Král Nölienu
   druh: Elf
   druh_volby: 'High Elf lineage; Keen Senses: Insight'
   pozadi: Noble
@@ -167,7 +167,7 @@ postava:
   - Rapier „Tirentův trn“
   - Longbow + 20 Arrows
   - Spellbook
-  - Koruna Nöelienu
+  - Koruna Nölienu
   - Gaming Set (Dragonchess)
   penize:
     GP: 1000
@@ -181,7 +181,7 @@ postava:
   osobnost:
     rysy: Klidný, zdvořilý a nekompromisní.
     idealy: Svoboda lesa a starých zákonů.
-    pouta: Hranice Nöelienu a Tirentova magie, která je chrání.
+    pouta: Hranice Nölienu a Tirentova magie, která je chrání.
     vady: Pohrdá lidmi, kteří se sklonili před Ordenem.
   prevod_2024: 'Bladesinging (TCoE) → Bladesinger (Heroes of Faerûn, pravidla 2024). Vznešený elf → Elf s High Elf lineage.
     Bladesong přidává INT k AC (při aktivaci 17 + 3 = 20). Oprava: odebrán War Caster („Ranger 16“) – Ranger 14 má ASI jen
@@ -210,23 +210,23 @@ postava:
 > **Stav:** character sheet = převod na D&D 2024 (návrh); role a historie z archivu = kánon
 
 ## Role a historie
-Vládce západní elfské říše Nöelien v Tel Palentinu. Odmítá jakoukoliv autoritu Ordenského řádu.
+Vládce západní elfské říše Nölien v Tel Palentinu. Odmítá jakoukoliv autoritu Ordenského řádu.
 
 ## Vzhled (návrh)
 Vysoký elf s bílými vlasy spletenými do copu, oči barvy mechu, nosí stříbřitou zbroj a rapír s trnovou záštitou.
 
 ## Motivace (návrh)
-Uchránit Nöelien a Tirentovu magii hranic; Orden je pro něj jen další lidská bouře, která přejde.
+Uchránit Nölien a Tirentovu magii hranic; Orden je pro něj jen další lidská bouře, která přejde.
 
 ## Vztahy (návrh)
-Tirent (dávný patron), Forpa (pohrdání), Corvin (vzdálená krev – Corvinovi předkové jsou elfové z Nöelienu).
+Tirent (dávný patron), Forpa (pohrdání), Corvin (vzdálená krev – Corvinovi předkové jsou elfové z Nölienu).
 
 ## Háčky pro družinu (návrh)
-- Hranice Nöelienu slábnou; Veanor hledá někoho, kdo dojde do mönohenského Východního hvozdu a zjistí, zda Tirent ještě žije.
+- Hranice Nölienu slábnou; Veanor hledá někoho, kdo dojde do mönohenského Východního hvozdu a zjistí, zda Tirent ještě žije.
 
 ## Pro DM (tajné)
 - Návrh: Magie hranic se rozpadá a Veanor to tají i před vlastní radou. Uvažuje o spojenectví s Odbojem.
 
 ## Související
-- Země: [Elfský Stát Nöelien](../../02_Zeme/Elfsky_Stat_Noelien.md)
+- Země: [Elfský Stát Nölien](../../02_Zeme/Elfsky_Stat_Nolien.md)
 - Sídlo: [Město Tel Palentin](../../03_Mesta/Mesto_Tel_Palentin.md)

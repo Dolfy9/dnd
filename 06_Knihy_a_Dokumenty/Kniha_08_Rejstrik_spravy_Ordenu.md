@@ -14,7 +14,7 @@
 | Svobodné jižní ostrovy | královna Yuthika | infiltrace probíhá |
 | Miria | konzul Timopeus | placený |
 | Werenor | primas Pertham | užitečný (hlídá zákaz vstupu do Dräaru) |
-| Nöelien, Knärghae Zia, Imonir | — | mimo dosah |
+| Nölien, Knärghae Zia, Imonir | — | mimo dosah |
 
 *Pořádek je mír. Mír je poslušnost.*
 

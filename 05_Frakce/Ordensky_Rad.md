@@ -25,7 +25,7 @@
 | [Zairam](../02_Zeme/Zeme_Zairam.md) | Formálně pod Bririí, Orden se zatím neodvažuje vstoupit |
 | [Svobodné Jižní ostrovy](../02_Zeme/Svobodne_Jizni_Ostrovy.md) | Skrytý vliv, tajní agenti v přístavech |
 | [Miria](../02_Zeme/Svobodne_Mesto_Miria.md) | Nezávislá, konzul uplácí vyslance |
-| [Nöelien](../02_Zeme/Elfsky_Stat_Noelien.md), [Knärghae Zia](../02_Zeme/Drzava_Knarghae_Zia.md) | Ostře odmítají |
+| [Nölien](../02_Zeme/Elfsky_Stat_Nolien.md), [Knärghae Zia](../02_Zeme/Drzava_Knarghae_Zia.md) | Ostře odmítají |
 | [Werenor](../02_Zeme/Svobodne_Mesto_Werenor.md), [Imonir](../02_Zeme/Kralovstvi_Imonir.md) | Nezávislé |
 
 ## Zakázané skutky (dle Kodexu)

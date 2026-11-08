@@ -4,7 +4,7 @@
 
 - **Typ:** prastarý les na západě kontinentu
 - **Dominanta:** **Ertinova hora** – ostatky Ertina, otce Ertusova
-- **Sousedí:** elfský [Nöelien](../../02_Zeme/Elfsky_Stat_Noelien.md) (podle textu „na západě“)
+- **Sousedí:** elfský [Nölien](../../02_Zeme/Elfsky_Stat_Nolien.md) (podle textu „na západě“)
 
 ## Kánon
 Ertus i Ertin při boji zemřeli. Z Ertina se stala jen hora kamení prorostlá kořeny stromů a pokrytá mechem kdesi v Západním hvozdu.

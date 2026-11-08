@@ -18,7 +18,7 @@ Herní texty, které mohou hráči najít. Každá kniha má na konci sekci **Pr
 | 11 | [Sny ze severu](Kniha_11_Sny_ze_severu.md) | potulný učenec | Kaer, Yotter | střední | ano |
 | 12 | [Poslední listy z Hinai Mihi](Kniha_12_Posledni_listy_z_Hinai_Mihi.md) | kartograf koruny | Kazi, Octowerin | vysoká | ne |
 | 13 | [O Ferienu a jeho knězích](Kniha_13_O_Ferienu_a_jeho_knezich.md) | neznámý (Corthrin?) | archiv Ordenu, Mictima | vysoká | ano – nejvyšší |
-| 14 | [Elfské letopisy Nöelienu](Kniha_14_Elfske_letopisy.md) | elfští letopisci | Tel Palentin | vysoká, neúplná | — (mimo Orden) |
+| 14 | [Elfské letopisy Nölienu](Kniha_14_Elfske_letopisy.md) | elfští letopisci | Tel Palentin | vysoká, neúplná | — (mimo Orden) |
 | 15 | [Zaiřin herbář](Kniha_15_Zairin_herbar.md) | kněžky z Pertamu | Pertam | vysoká | ne |
 | 16 | [Kodex Řádu a Pořádku II.](Kniha_16_Kodex_Radu_a_Poradku_II.md) | Orden | náměstí | propaganda | ne |
 | 17 | [Lodní deník z Menkantu](Kniha_17_Lodni_denik_z_Menkantu.md) | kapitánka | Menkant, Miria | vysoká | ne |
@@ -43,7 +43,7 @@ Herní texty, které mohou hráči najít. Každá kniha má na konci sekci **Pr
 | Hinai Mihi | 03, 12 |
 | Zairam | 03, 04, 15 |
 | Nöet, Breffan | 03 |
-| Nöelien, Tirent, Východní hvozd | 05, 14 |
+| Nölien, Tirent, Východní hvozd | 05, 14 |
 | Moře, Jižní ostrovy, Miria | 17 |
 
 Každé informaci z [historie](../01_Svet/Historie_Montelienu.md) odpovídá aspoň jedna kniha. Knihy 01–03 jsou z původního archivu, knihy 04–19 jsou **návrh**.
@@ -62,7 +62,7 @@ Každé informaci z [historie](../01_Svet/Historie_Montelienu.md) odpovídá asp
 - [Sny ze severu](Kniha_11_Sny_ze_severu.md)
 - [Poslední listy z Hinai Mihi](Kniha_12_Posledni_listy_z_Hinai_Mihi.md)
 - [O Ferienu a jeho knězích](Kniha_13_O_Ferienu_a_jeho_knezich.md)
-- [Elfské letopisy Nöelienu](Kniha_14_Elfske_letopisy.md)
+- [Elfské letopisy Nölienu](Kniha_14_Elfske_letopisy.md)
 - [Zaiřin herbář](Kniha_15_Zairin_herbar.md)
 - [Kodex Řádu a Pořádku (Kniha II.) – Dodatek o správě zemí](Kniha_16_Kodex_Radu_a_Poradku_II.md)
 - [Lodní deník z Menkantu](Kniha_17_Lodni_denik_z_Menkantu.md)

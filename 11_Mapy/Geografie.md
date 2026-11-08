@@ -12,7 +12,7 @@
 ## Jisté (popsáno na mapě nebo potvrzeno DM)
 | Popisek / místo | Poloha na mapě | Soubor |
 |---|---|---|
-| **NÖELIEN** | sever středu, šikmý nápis nad Bririí a západně od Khearazu | [Elfský Stát Nöelien](../02_Zeme/Elfsky_Stat_Noelien.md) |
+| **NÖLIEN** | sever středu, šikmý nápis nad Bririí a západně od Khearazu | [Elfský Stát Nölien](../02_Zeme/Elfsky_Stat_Nolien.md) |
 | **BRIRIA** | střed, šikmo od Nöetu k vnitrozemskému jezeru | [Království Briria](../02_Zeme/Kralovstvi_Briria.md) |
 | **NÖET** | jihozápad, pobřeží s palmovým pralesem a zříceným chrámem | [Provincie Nöet](../02_Zeme/Provincie_Noet.md) |
 | **DRÄAR** | jihozápadní poloostrov s pyramidami a sloupy, ostrůvky s pyramidami | [Trosky Dräaru](../01_Svet/Mista/Trosky_Draaru.md) |
@@ -34,7 +34,7 @@
 ## Odhad (nepopsané kresby) – potvrď
 | Kresba | Poloha | Můj výklad |
 |---|---|---|
-| Město s budovami a kotvou | sever, u Nöelienu | [Tel Palentin](../03_Mesta/Mesto_Tel_Palentin.md)? |
+| Město s budovami a kotvou | sever, u Nölienu | [Tel Palentin](../03_Mesta/Mesto_Tel_Palentin.md)? |
 | Hrad na západním pobřeží | západ, severně od Dräaru | bez jména |
 | Velké sídlo v severním Nöetu | jihozápad | [Mictima](../03_Mesta/Mesto_Mictima.md)? |
 | Přístav s domy u ústí průlivu | východní pobřeží | [Miria](../03_Mesta/Mesto_Miria.md)? |

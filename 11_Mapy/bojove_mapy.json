@@ -1468,9 +1468,9 @@
    "obrazek": "bojove/ostrovy-pobrezi.jpg"
   },
   {
-   "id": "noelien-posvatny-haj",
-   "nazev": "Nöelien – Posvátný háj u tůně",
-   "misto": "02_Zeme/Elfsky_Stat_Noelien.md",
+   "id": "nolien-posvatny-haj",
+   "nazev": "Nölien – Posvátný háj u tůně",
+   "misto": "02_Zeme/Elfsky_Stat_Nolien.md",
    "podklad": "les",
    "osvetleni": "Dim Light (soumrak, světlušky)",
    "popis": "Prastaré stromy kolem průzračné tůně a kruh devíti mechových menhirů s runami (three-quarters cover). Tůň je ve středu hluboká, kořeny a kapradí jsou difficult terrain. Kdo v kruhu sešle kouzlo školy Enchantment, hází záchranu s advantage. Potok odtéká na východ.",
@@ -1565,7 +1565,7 @@
     "gggggggggggggggg^^gggggggggggg",
     "gggggTgggggggggg^TTggggg^^^^gg"
    ],
-   "obrazek": "bojove/noelien-posvatny-haj.jpg"
+   "obrazek": "bojove/nolien-posvatny-haj.jpg"
   },
   {
    "id": "amir-rakosovy-ostrov",

@@ -11,7 +11,7 @@
 - **Zairam** – úrodný kraj, Pertam.
 - **Svobodné jižní ostrovy** – námořníci, Menkant.
 - **Svobodná města** Miria a Werenor.
-- *Nepřátelské a divoké:* elfský Nöelien (Tel Palentin), uzavřená Knärghae Zia (Dar Kemmar), lesní Imonir, Trosky Dräaru, Divoký Sever, Hinai Mihi.
+- *Nepřátelské a divoké:* elfský Nölien (Tel Palentin), uzavřená Knärghae Zia (Dar Kemmar), lesní Imonir, Trosky Dräaru, Divoký Sever, Hinai Mihi.
 
 ---
 ## Pro DM

@@ -4,12 +4,12 @@
  "vyska": 1440,
  "mista": [
   {
-   "nazev": "Nöelien",
+   "nazev": "Nölien",
    "x": 1071,
    "y": 535,
    "typ": "zeme",
    "jistota": "mapa",
-   "odkaz": "02_Zeme/Elfsky_Stat_Noelien.md",
+   "odkaz": "02_Zeme/Elfsky_Stat_Nolien.md",
    "pozn": "Elfský stát, lesy chráněné Tirentovou magií.",
    "popisek": {
     "rot": 38,
@@ -313,7 +313,7 @@
    "typ": "mesto",
    "jistota": "odhad",
    "odkaz": "03_Mesta/Mesto_Tel_Palentin.md",
-   "pozn": "Město s budovami a přístavem (kotva) na severu – hlavní město Nöelienu?"
+   "pozn": "Město s budovami a přístavem (kotva) na severu – hlavní město Nölienu?"
   },
   {
    "nazev": "Hrad na západním pobřeží",

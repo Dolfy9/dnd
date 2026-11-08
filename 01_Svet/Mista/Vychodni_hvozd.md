@@ -7,7 +7,7 @@
 - **Na mapě:** lesy východní části Mönohenu – přesné hranice čekají na potvrzení ([Geografie](../../11_Mapy/Geografie.md))
 
 ## Kánon
-Tirent je stvořitel elfů a koní a pán Východního hvozdu, patron světla v temnotách a vědění. **Východní hvozd v Mönohenu stvořil Tirent** – a není jediným jeho dílem. Elfský [Nöelien](../../02_Zeme/Elfsky_Stat_Noelien.md) (sever středu kontinentu) chrání své hranice prastarou magií z dob Tirenta. Vztah obou hvozdů „není tak jednoduchý“ (DM) – viz [otevřené otázky](../../Otevrene_otazky.md).
+Tirent je stvořitel elfů a koní a pán Východního hvozdu, patron světla v temnotách a vědění. **Východní hvozd v Mönohenu stvořil Tirent** – a není jediným jeho dílem. Elfský [Nölien](../../02_Zeme/Elfsky_Stat_Nolien.md) (sever středu kontinentu) chrání své hranice prastarou magií z dob Tirenta. Vztah obou hvozdů „není tak jednoduchý“ (DM) – viz [otevřené otázky](../../Otevrene_otazky.md).
 
 ## Háčky (návrh)
 - Ve hvozdu se zjevují bílí koně bez jezdců a vedou vybrané poutníky k Tirentově knihovně.

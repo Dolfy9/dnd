@@ -244,7 +244,7 @@ def mlyn():
 
 
 NOVE = [
- ("noelien-posvatny-haj", haj, dict(nazev="Nöelien – Posvátný háj u tůně", misto="02_Zeme/Elfsky_Stat_Noelien.md", podklad="les", osvetleni="Dim Light (soumrak, světlušky)",
+ ("nolien-posvatny-haj", haj, dict(nazev="Nölien – Posvátný háj u tůně", misto="02_Zeme/Elfsky_Stat_Nolien.md", podklad="les", osvetleni="Dim Light (soumrak, světlušky)",
    popis="Prastaré stromy kolem průzračné tůně a kruh devíti mechových menhirů s runami (three-quarters cover). Tůň je ve středu hluboká, kořeny a kapradí jsou difficult terrain. Kdo v kruhu sešle kouzlo školy Enchantment, hází záchranu s advantage. Potok odtéká na východ.",
    stretnuti=[{"nazev": "Dryad", "pocet": 1}, {"nazev": "Awakened Tree", "pocet": 2}, {"nazev": "Sprite", "pocet": 3}])),
  ("amir-rakosovy-ostrov", amir, dict(nazev="Jezero Amir – Rákosový ostrov a potopená věž", misto="01_Svet/Mista/Jezero_Amir_a_Kop_Aram.md", podklad="more", osvetleni="Bright Light (ráno), mlha: Lightly Obscured nad vodou",
