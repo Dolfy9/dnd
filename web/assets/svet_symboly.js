@@ -57,14 +57,14 @@
     haj: { nazev: "Listnatý les", barva: "#8fb35a", spr: ["list_1", "list_2", "list_3", "list_4", "list_5", "list_6", "jehl_3"], rozestup: 7, w: 13 },
     dzungle: { nazev: "Prales", barva: "#5e8f45", spr: ["palma_1", "palma_2", "palmy", "dzung_1", "dzung_2", "palma_3", "dzung_1"], rozestup: 9, w: 15 },
     hory: { nazev: "Hory", barva: "#b8a88a", spr: ["hora_a", "hora_b", "hora_c", "hora_d", "hora_e", "hora_f", "masiv_a", "skala", "masiv_c"], rozestup: 14, w: 34 },
-    velehory: { nazev: "Velehory (sníh)", barva: "#c2b8a6", spr: ["snih", "snih", "hora_e", "hora_a", "hora_f"], rozestup: 16, w: 40 },
+    velehory: { nazev: "Velehory (sníh)", barva: "#c2b8a6", spr: ["snih", "snih", "snih", "hora_e", "snih"], rozestup: 16, w: 40 },
     kopce: { nazev: "Kopce", barva: "#c9c07a", spr: ["kopec_1", "kopec_2", "kopec_3", "kopec_4", "kopec_5"], rozestup: 24, w: 30 },
     poust: { nazev: "Poušť", barva: "#e6c886", spr: ["duna_1", "duna_2", "duna_3", "duna_4", "duna_5", "duna_2", "duna_3", "duna_1", "duna_4", "kaktus_1", "duna_5", "balvan_2"], rozestup: 28, w: 38 },
     bazina: { nazev: "Bažina", barva: "#8fa68a", spr: ["bazina_1", "bazina_2", "rakos_1", "rakos_2", "ker_2", "suchy_2"], rozestup: 18, w: 22 },
     pole: { nazev: "Pole a vinice", barva: "#dcc57a", spr: ["vinice", "ker_1"], rozestup: 40, w: 14 },
-    mrtvy: { nazev: "Mrtvý les", barva: "#a59a7a", spr: ["suchy_1", "suchy_2", "ker_2"], rozestup: 10, w: 14 },
+    mrtvy: { nazev: "Mrtvý les", barva: "#4a4238", spr: ["suchy_1", "suchy_2", "ker_2"], rozestup: 10, w: 14 },
     ledovec: { nazev: "Ledovec", barva: "#e4ecef", spr: ["snih", "kamen_3", "snih", "utes_1"], rozestup: 30, w: 30 },
-    mrtva_zeme: { nazev: "Mrtvá země", barva: "#a39a86", spr: ["suchy_1", "kamen_1", "suchy_2", "utes_2", "sucha_6"], rozestup: 34, w: 12 },
+    mrtva_zeme: { nazev: "Mrtvá země", barva: "#3d3633", spr: ["suchy_1", "suchy_2", "sibenice", "kamen_1", "suchy_1", "utes_2", "palisada", "suchy_2"], rozestup: 22, w: 14 },
     louky: { nazev: "Louky", barva: "#b8c47a", spr: ["ker_1", "list_2", "ker_2", "list_5", "kopec_3", "ker_1"], rozestup: 16, w: 10 }
   };
   // jednotlivé symboly: typ -> sprity (malované, web/assets/svet/*.webp) a šířka v px mapy
@@ -78,7 +78,8 @@
     ker: { nazev: "Keř", spr: ["ker_1", "ker_2"], w: 11 }, suchy: { nazev: "Suchý strom", spr: ["suchy_1", "suchy_2"], w: 14 },
     duna: { nazev: "Duna", spr: ["duna_1", "duna_3"], w: 34 }, kaktus: { nazev: "Kaktus", spr: ["kaktus_1", "kaktus_2"], w: 9 },
     balvan: { nazev: "Balvany", spr: ["balvan_1", "balvan_2"], w: 15 }, oaza: { nazev: "Oáza", spr: ["oaza"], w: 26 },
-    pole: { nazev: "Pole", spr: ["pole_1", "pole_2"], w: 26 }, vinice: { nazev: "Vinice", spr: ["vinice"], w: 24 },
+    pole: { nazev: "Pole", spr: ["pole_1", "pole_2"], w: 26 }, kul: { nazev: "Kůl s lebkou", spr: ["kul_1", "kul_2", "kul_3", "palisada"], w: 13 },
+    hranik: { nazev: "Hraniční kámen", spr: ["hranik"], w: 11 }, sibenice: { nazev: "Mrtvý strom s lebkou", spr: ["sibenice"], w: 18 }, vinice: { nazev: "Vinice", spr: ["vinice"], w: 24 },
     bazina: { nazev: "Bažina", spr: ["bazina_1", "bazina_2"], w: 26 },
     vesnice: { nazev: "Vesnice", spr: ["vesnice"], w: 26 }, vesnice2: { nazev: "Městečko", spr: ["vesnice2"], w: 30 },
     mesto: { nazev: "Opevněné město", spr: ["mesto"], w: 36 }, velkomesto: { nazev: "Velkoměsto", spr: ["velkomesto"], w: 46 },

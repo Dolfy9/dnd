@@ -7,8 +7,8 @@ import numpy as np
 from scipy.sparse import csr_matrix
 from scipy.sparse.csgraph import minimum_spanning_tree
 from scipy.spatial import Delaunay
-from shapely.geometry import Point, Polygon
-from shapely.ops import unary_union
+from shapely.geometry import LineString, Point, Polygon
+from shapely.ops import linemerge, nearest_points, unary_union
 from skimage.graph import MCP_Geometric
 
 T = Path(__file__).resolve().parent
@@ -34,6 +34,56 @@ def chaikin(pts, n=2):
     return pts
 
 
+def geoms(g):
+    return list(g.geoms) if hasattr(g, "geoms") else [g]
+
+
+def staty(svet, land, ob, mista, k=4):
+    """Území států: cenová vzdálenost od popisku země (hory a moře jsou přirozené hranice)."""
+    W, H = svet["sirka"], svet["vyska"]
+    w, h = W // k, H // k
+    m = np.zeros((h, w), np.uint8)
+    for p in svet["pevnina"]:
+        cv2.fillPoly(m, [np.int32(np.array(p["body"]) / k)], 1 if p["typ"] == "pevnina" else 0)
+    cost = np.where(m > 0, 1.0, 25.0)
+    for typ, c in {"hory": 6, "velehory": 12}.items():
+        mm = np.zeros((h, w), np.uint8)
+        for o in ob:
+            if o["typ"] == typ:
+                cv2.fillPoly(mm, [np.int32(np.array(o["body"]) / k)], 1)
+        cost = np.where((mm > 0) & (m > 0), c, cost)
+    nz = cv2.GaussianBlur(np.random.default_rng(3).random((h, w)).astype(np.float32), (0, 0), 5)
+    nz = (nz - nz.min()) / (nz.max() - nz.min() + 1e-9)
+    cost = cost * (1 + 1.6 * nz)
+    seeds = [x for x in mista if x["typ"] == "zeme"] + [x for x in mista if x["nazev"] in ("Divoký Sever", "Dräar")]
+    ys, xs = np.nonzero(m)
+    C = []
+    for sd in seeds:
+        r, c = min(int(sd["y"] // k), h - 1), min(int(sd["x"] // k), w - 1)
+        if m[r, c] == 0:
+            i = np.argmin((ys - r) ** 2 + (xs - c) ** 2); r, c = ys[i], xs[i]
+        cc, _ = MCP_Geometric(cost).find_costs([(r, c)])
+        C.append(cc)
+    lab = np.argmin(np.stack(C), 0)
+    lab = np.argmax(np.stack([cv2.GaussianBlur((lab == i).astype(np.float32), (0, 0), 2.5) for i in range(len(seeds))]), 0)
+    out = []
+    for i, sd in enumerate(seeds):
+        mm = ((lab == i) & (m > 0)).astype(np.uint8)
+        cs, _ = cv2.findContours(mm, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_NONE)
+        polys = []
+        for c in cs:
+            if cv2.contourArea(c) < 20:
+                continue
+            c = cv2.approxPolyDP(c, 1.0, True).reshape(-1, 2) * k + k / 2
+            if len(c) < 3:
+                continue
+            p = Polygon(chaikin([tuple(q) for q in c] + [tuple(c[0])], 2)).buffer(0).intersection(land)
+            polys += [g for g in geoms(p) if g.geom_type == "Polygon" and g.area > 300]
+        if polys:
+            out.append({"nazev": sd["nazev"], "polys": polys, "divoke": sd["typ"] != "zeme"})
+    return out
+
+
 def lore(svet):
     Z = json.loads((T / "svet_lore.json").read_text(encoding="utf-8"))
     mista = json.loads((R / "11_Mapy/mista.json").read_text(encoding="utf-8"))["mista"]
@@ -49,11 +99,35 @@ def lore(svet):
         for b in kousky(Polygon(o["body"]).buffer(0).intersection(land)):
             ob.append({"typ": o["typ"], "pozn": o["pozn"] + " (lore, návrh)", "zdroj": o["zdroj"], "body": b})
 
-    mz = Polygon(Z["mrtva_zeme"]["body"]).segmentize(12)
-    ex = np.array(mz.exterior.coords)[:-1]
-    nz = np.convolve(np.r_[rng.normal(0, 1, len(ex)), rng.normal(0, 1, 6)], np.ones(5) / 5, "same")[:len(ex)] * 26
-    c0 = ex.mean(0); dv = ex - c0; dv /= np.linalg.norm(dv, axis=1)[:, None]
-    mz = Polygon(ex + dv * nz[:, None]).buffer(0)
+    for o in ob:
+        if o["typ"] == "hory" and len(o["body"]) > 2 and Polygon(o["body"]).buffer(0).centroid.y < 480:
+            o["typ"] = "velehory"; o["pozn"] = "zasněžené hory zamrzlého severu (lore)"
+    st = staty(svet, land, ob, mista)
+    kn = next((z for z in st if z["nazev"].startswith("Knärghe")), None)
+    mz = unary_union(kn["polys"]) if kn else Polygon(Z["mrtva_zeme"]["body"])
+    svet["zeme"] = [{"nazev": z["nazev"], "body": [body(p.simplify(1.5)) for p in z["polys"] if p.area > 3000], "pozn": "území státu vypočtené z popisků a terénu (návrh)"}
+                    | ({"barva": "#1e1614"} if z is kn else {"barva": "#6b6b6b"} if z["divoke"] else {}) for z in st]
+    cb = land.boundary.buffer(7)
+    for z, zz in zip(st, svet["zeme"]):
+        U = unary_union(z["polys"])
+        zz["pas"] = [[body(p.simplify(1.2))] + [[[round(x), round(y)] for x, y in r.coords[:-1]] for r in p.interiors]
+                     for p in geoms(U.difference(U.buffer(-7)).difference(land.boundary.buffer(3))) if p.geom_type == "Polygon" and p.area >= 40]
+    for i in range(len(st)):
+        A = unary_union(st[i]["polys"])
+        for j in range(i + 1, len(st)):
+            B = unary_union(st[j]["polys"])
+            if not A.buffer(6).intersects(B):
+                continue
+            seg = A.boundary.intersection(B.buffer(6)).difference(cb)
+            seg = linemerge([g for g in geoms(seg) if g.geom_type == "LineString"]) if seg.geom_type != "LineString" else seg
+            for g in geoms(seg):
+                if g.geom_type == "LineString" and g.length > 25:
+                    g = g.simplify(1.5)
+                    svet["hranice"].append({"typ": "hranice", "pozn": f"hranice {st[i]['nazev']} / {st[j]['nazev']} (vypočtená, návrh)", "body": [[round(x), round(y)] for x, y in g.coords]})
+                    if st[i] is kn or st[j] is kn:
+                        for d in np.arange(10, g.length - 5, 34):
+                            p = g.interpolate(d); q = nearest_points(mz.buffer(-6), p)[0] if mz.buffer(-6).area > 0 else p
+                            svet["symboly"].append({"typ": "kul", "x": int(q.x), "y": int(q.y), "m": round(float(rng.uniform(.85, 1.15)), 2), "pozn": "kůly s lebkami na hranici Knärghe Zhie (DM)"})
     for o in ob:
         if o["typ"] in ("les", "haj", "louky") and len(o["body"]) > 2 and mz.contains(Polygon(o["body"]).buffer(0).representative_point()):
             o["typ"] = "mrtvy"
@@ -104,6 +178,44 @@ def lore(svet):
             vybrane.append((q.x, q.y))
             sym.append({"typ": "strazni_vez", "x": int(q.x), "y": int(q.y), "m": .8, "pozn": "opuštěná císařská strážní věž na pobřeží Divokého Severu (lore)"})
 
+    # kopce: podhůří kolem pohoří a hornatý Laertmund
+    hor = unary_union([Polygon(o["body"]).buffer(0) for o in ob if o["typ"] in ("hory", "velehory") and len(o["body"]) > 2])
+    jine = unary_union([Polygon(o["body"]).buffer(0) for o in ob if o["typ"] in ("les", "haj", "dzungle", "poust", "ledovec", "mrtvy", "bazina") and len(o["body"]) > 2])
+    lae = next((Point(x["x"], x["y"]).buffer(110) for x in mista if x["nazev"] == "Laertmund"), Polygon())
+    kop = hor.buffer(34).difference(hor.buffer(3)).union(lae.difference(hor)).difference(jine).difference(mz).intersection(land.buffer(-8))
+    for b in kousky(kop, 400):
+        ob.append({"typ": "kopce", "pozn": "podhůří / pahorkatina (lore: hornatý Laertmund; podhůří pohoří)", "body": b})
+    # řeky: jen souvislé, vyhlazené, napojené na moře či jezero
+    nove, vzaté = [], []
+    for r in svet["reky"]:
+        L = LineString(r["body"])
+        if L.length < 60:
+            continue
+        p0, p1 = Point(r["body"][0]), Point(r["body"][-1])
+        d0, d1 = land.boundary.distance(p0), land.boundary.distance(p1)
+        pts = [tuple(p) for p in r["body"]]
+        if d0 < d1:
+            pts, d0, d1 = pts[::-1], d1, d0
+        if d1 > 40 and L.length < 170:
+            continue
+        if d1 <= 40:
+            q = nearest_points(land.boundary, Point(pts[-1]))[0]; pts.append((q.x, q.y))
+        L2 = LineString(pts)
+        if any(L2.buffer(7).intersection(v).length > .6 * v.length for v in vzaté):
+            continue
+        vzaté.append(L2)
+        nove.append(r | {"body": [[round(x), round(y)] for x, y in LineString(chaikin(pts, 3)).simplify(.8).coords]})
+    svet["reky"] = nove
+    # nic nepřetéká do moře: oblasti oříznout podle souše
+    le = land.buffer(-7)
+    ob2 = []
+    for o in ob:
+        if len(o["body"]) < 3:
+            continue
+        for b in kousky(Polygon(o["body"]).buffer(0).intersection(le if o["typ"] != "pole" else land), 60):
+            ob2.append(o | {"body": b})
+    ob[:] = ob2
+    svet["oblasti"] = ob
     # obchodní cesty
     k = 4
     w, h = W // k, H // k
@@ -117,7 +229,9 @@ def lore(svet):
             if o["typ"] == typ:
                 cv2.fillPoly(mm, [np.int32(np.array(o["body"]) / k)], 1)
         cost = np.where((mm > 0) & np.isfinite(cost), c, cost)
-    mm = np.zeros((h, w), np.uint8); cv2.fillPoly(mm, [np.int32(np.array(Z["mrtva_zeme"]["body"]) / k)], 1)
+    mm = np.zeros((h, w), np.uint8)
+    for g in geoms(mz):
+        cv2.fillPoly(mm, [np.int32(np.array(g.exterior.coords) / k)], 1)
     cost = np.where((mm > 0) & np.isfinite(cost), cost * Z["uzavrena_zeme_cena"], cost)
     for b in vod.get("mosty", []):
         mm = np.zeros((h, w), np.uint8); cv2.polylines(mm, [np.int32(np.array(b["body"]) / k)], False, 1, 2)

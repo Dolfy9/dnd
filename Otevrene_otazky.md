@@ -40,3 +40,4 @@ Seznam věcí k rozhodnutí DM. Po rozhodnutí položku přesuň do sekce *Vyře
 ## Atlas mapy – prvky z loru (návrh, potvrď polohy)
 - Polohy odvozené z textů, ne z kresby: Východní hvozd (východ Mönohenu), Hinai Mihi (západní břeh Ordenské zátoky), ledovce Fornheimu (SV poloostrov), písek Dräaru, hranice mrtvé Knärghe Zhie, opuštěné císařské věže na pobřeží Divokého Severu, věže starého Kop Aramu čnějící z jezera. Zdroj: `tools/svet_lore.json`.
 - Obchodní cesty mezi sídly jsou vypočtené (terén, mosty, uzavřená Knärghe Zhia), ne z kresby. Které z nich platí?
+- Hranice států jsou vypočtené (od popisku země po terénu, hory jako přirozená hranice), ne z kresby ani textu. Kůly s lebkami stojí na hranici Knärghe Zhie. Sedí průběh hranic?

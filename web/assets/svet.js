@@ -47,7 +47,9 @@
     o.push('<image href="' + A + 'barvy.jpg" width="' + W + '" height="' + H + '" preserveAspectRatio="none" opacity="' + (D.barvy_sila == null ? .8 : D.barvy_sila) + '"/>');
     o.push('<path d="' + landD + '" fill="none" stroke="#f6e7bb" stroke-opacity=".75" stroke-width="12" filter="url(#sv-mekce)"/>');
     o.push('<path d="' + landD + '" fill="none" stroke="#7a5a2a" stroke-opacity=".3" stroke-width="5" filter="url(#sv-mekce)"/>');
-    (D.oblasti || []).forEach(function (a) { var c = (OBL[a.typ] || {}).barva || "#b8c47a"; o.push('<path d="' + pathD(a.body, true) + '" fill="' + c + '" opacity=".22" filter="url(#sv-mekce)"/>'); });
+    (D.oblasti || []).forEach(function (a) { var c = (OBL[a.typ] || {}).barva || "#b8c47a"; o.push('<path d="' + pathD(a.body, true) + '" fill="' + c + '" opacity="' + (a.typ === "mrtva_zeme" ? .55 : a.typ === "mrtvy" ? .4 : .22) + '" filter="url(#sv-mekce)"/>'); });
+    var ZPAL = ["#b0413e", "#3f6fa0", "#6a8f3a", "#a0702a", "#7a4f9a", "#2f8f86", "#b05a8a", "#8a8a2a", "#4a5aa8", "#a84a2a", "#3a7a4a", "#9a6a4a", "#5a8aa8", "#aa8a3a", "#6a4a3a"];
+    (D.zeme || []).forEach(function (z, i) { var c = z.barva || ZPAL[i % ZPAL.length]; (z.pas || []).forEach(function (b) { o.push('<path d="' + (typeof b[0][0] === "number" ? pathD(b, true) : b.map(function (r) { return pathD(r, true); }).join(" ")) + '" fill="' + c + '" fill-rule="evenodd" opacity=".3"/>'); }); });
     (D.oblasti || []).forEach(function (a, i) {
       if (a.typ !== "pole") return;
       var Rf = rng(977 + i * 31), xs = a.body.map(function (p) { return p[0]; }), ys = a.body.map(function (p) { return p[1]; }),
@@ -58,6 +60,7 @@
         o.push('<rect x="' + (qx - 5.5).toFixed(1) + '" y="' + (qy - 4).toFixed(1) + '" width="' + (9 + Rf() * 3).toFixed(1) + '" height="' + (6.5 + Rf() * 2).toFixed(1) + '" transform="rotate(' + (ang + (Rf() - .5) * 12).toFixed(1) + " " + qx.toFixed(1) + " " + qy.toFixed(1) + ')" fill="url(#sv-f' + Math.floor(Rf() * 3) + ')" stroke="#7a5a2a" stroke-width=".4" stroke-opacity=".6" opacity=".85"/>');
       }
     });
+    o.push('<linearGradient id="sv-snih" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fbfaf7" stop-opacity=".62"/><stop offset=".22" stop-color="#f4f2ee" stop-opacity=".38"/><stop offset=".36" stop-color="#f4f2ee" stop-opacity="0"/></linearGradient><rect width="' + W + '" height="' + H + '" fill="url(#sv-snih)"/>');
     lakes.forEach(function (s) { o.push('<path d="' + pathD(s.body, true) + '" fill="url(#sv-mp)"/>'); });
     o.push("</g>");
     o.push('<g clip-path="url(#sv-souse)">');
@@ -69,7 +72,7 @@
       else if (r.typ === "stezka") o.push('<path d="' + d + '" fill="none" stroke="#7a5a3a" stroke-width="1.1" stroke-dasharray="2.5 3.5" stroke-linecap="round" opacity=".85"/>');
       else o.push('<path d="' + d + '" fill="none" stroke="#f4e6c0" stroke-width="3.6" stroke-linecap="round" opacity=".55"/><path d="' + d + '" fill="none" stroke="#6b4423" stroke-width="1.7" stroke-dasharray="7 4" stroke-linecap="round"/>');
     });
-    (D.hranice || []).forEach(function (r) { o.push('<path d="' + pathD(r.body, false) + '" fill="none" stroke="#8b2c1c" stroke-width="1.8" stroke-dasharray="10 4 2 4" opacity=".8"/>'); });
+    (D.hranice || []).forEach(function (r) { var d = pathD(r.body, false); o.push('<path d="' + d + '" fill="none" stroke="#f3e6c4" stroke-width="4" opacity=".5"/><path d="' + d + '" fill="none" stroke="#7a2416" stroke-width="1.6" stroke-dasharray="9 3 2 3" opacity=".85"/>'); });
     // symboly v oblastech (seřazené podle y, aby se překrývaly správně)
     var items = [];
     var REL = { kaktus: .3, balvan: .45, rakos: .55, ker: .5, suchy: .8 };
@@ -98,8 +101,9 @@
         if (R2() > .62) continue;
         var qx = gx + (R2() - .5) * 20, qy = gy + (R2() - .5) * 16;
         if (!land.some(function (p) { return inPoly(qx, qy, p.body); }) || lakes.some(function (l) { return inPoly(qx, qy, l.body); })) continue;
-        var vO = null; (D.oblasti || []).some(function (o2) { if (inPoly(qx, qy, o2.body)) { vO = o2.typ; return true; } return false; });
+        var vO = null; (D.oblasti || []).some(function (o2) { if (o2.typ !== "pole" && inPoly(qx, qy, o2.body)) { vO = o2.typ; return true; } return false; });
         if (vO && vO !== "louky" && vO !== "poust") continue;
+        if (qy < 400 && R2() < .6) { items.push([qy, spr(["kamen_3", "zel_4", "utes_1", "kamen_1", "zel_6"][Math.floor(R2() * 5)], qx, qy, 8 * (.8 + R2() * .4), R2() < .5)]); continue; }
         var pool = vO === "poust" ? PSK : vO === "louky" ? ZEL : qy < 520 ? (R2() < .6 ? SEV : ZEL) : qy > 950 ? (R2() < .65 ? JIH : ZEL) : (R2() < .5 ? ZEL : JIH);
         var nm2 = pool[Math.floor(R2() * pool.length)];
         items.push([qy, spr(nm2, qx, qy, (VEL[nm2.split("_")[0]] || 8) * (.8 + R2() * .45), R2() < .5)]);
@@ -148,13 +152,23 @@
     var keys = Object.keys(names);
     Promise.all(keys.map(function (n) { return nacti(A + n + ".webp"); })).then(function (imgs) {
       if (tok !== svg._tok) return;
-      var im = {}; keys.forEach(function (n, i) { im[n] = imgs[i]; });
+      var im = {}; keys.forEach(function (n, i) {
+        var img = imgs[i], f = /^(duna|kaktus)/.test(n) ? [.72, 1.04] : /^kopec/.test(n) ? [.42, 1.03] : null;
+        if (img && f) {
+          var oc = document.createElement("canvas"); oc.width = img.naturalWidth; oc.height = img.naturalHeight;
+          var og = oc.getContext("2d"); og.drawImage(img, 0, 0);
+          var px = og.getImageData(0, 0, oc.width, oc.height), d = px.data;
+          for (var j = 0; j < d.length; j += 4) { var l = .3 * d[j] + .59 * d[j + 1] + .11 * d[j + 2]; d[j] = (l + (d[j] - l) * f[0]) * f[1]; d[j + 1] = (l + (d[j + 1] - l) * f[0]) * f[1]; d[j + 2] = (l + (d[j + 2] - l) * f[0]) * f[1]; }
+          og.putImageData(px, 0, 0); img = oc;
+        }
+        im[n] = img;
+      });
       var c = document.createElement("canvas"); c.width = W * K; c.height = H * K;
       var g = c.getContext("2d"); g.scale(K, K); g.imageSmoothingQuality = "high";
       sprites.forEach(function (s) {
         var img = im[s.n], m = META[s.n]; if (!img) return;
         var k = s.w / m.w;
-        g.save(); g.filter = /^(duna|kaktus)/.test(s.n) ? "saturate(.72) brightness(1.04)" : "none"; g.translate(s.x, s.y); if (s.r) g.rotate(s.r * Math.PI / 180); g.scale(s.f ? -k : k, k);
+        g.save(); g.translate(s.x, s.y); if (s.r) g.rotate(s.r * Math.PI / 180); g.scale(s.f ? -k : k, k);
         g.drawImage(img, -m.w / 2, -m.h + 2, m.w, m.h); g.restore();
       });
       c.toBlob(function (b) {
