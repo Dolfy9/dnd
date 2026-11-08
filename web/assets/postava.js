@@ -162,12 +162,12 @@
     return out;
   }
 
-  function render(c, d, cesta) {
+  function render(c, d, cesta, portraitUrl) {
     var bg = R.pozadi[c.pozadi] || {}, sp = R.druhy[c.druh] || {}, bj = c.boj || {}, o = c.osobnost || {}, key = "ps-hp:" + (cesta || c.jmeno);
     var initials = String(c.jmeno || "?").split(/\s+/).map(function (w) { return w[0]; }).join("").slice(0, 2);
     var h = '<div class="ps ps2">';
     // ---- hlavička ----
-    h += '<header class="p2-hero' + (c.portret ? ' p2-hero-portret' : '') + '"><div class="p2-crest' + (c.portret ? ' p2-crest-portret' : '') + '">' + (c.portret ? '<a class="p2-portret" href="' + esc(c.portret) + '" target="_blank" rel="noopener"><img src="' + esc(c.portret) + '" alt="' + esc(c.jmeno) + '"></a>' : '<span>' + esc(initials) + '</span>') + '<div class="p2-lvl" title="Celková úroveň">' + d.lvl + '</div></div>'
+    h += '<header class="p2-hero' + (portraitUrl ? ' p2-hero-portret' : '') + '"><div class="p2-crest' + (portraitUrl ? ' p2-crest-portret' : '') + '">' + (portraitUrl ? '<a class="p2-portret" href="' + esc(portraitUrl) + '" target="_blank" rel="noopener"><img src="' + esc(portraitUrl) + '" alt="' + esc(c.jmeno) + '"></a>' : '<span>' + esc(initials) + '</span>') + '<div class="p2-lvl" title="Celková úroveň">' + d.lvl + '</div></div>'
       + '<div class="p2-id"><h2 class="p2-name">' + esc(c.jmeno) + '</h2><div class="p2-title">' + esc(c.titul || "") + '</div><div class="p2-chips">'
       + (c.tridy || []).map(function (t) { return '<span class="p2-chip p2-class">' + esc(t.trida) + ' ' + t.uroven + (t.podtrida ? ' · ' + esc(t.podtrida) : '') + '</span>'; }).join("")
       + '<span class="p2-chip">' + esc(c.druh || "—") + '</span><span class="p2-chip">' + esc(c.pozadi || "—") + '</span><span class="p2-chip">' + esc(c.zarovnani || "—") + '</span><span class="p2-chip">' + esc(c.velikost || "Medium") + '</span></div></div>'
@@ -691,10 +691,10 @@
     var holder = document.querySelector(".postava-sheet"), dataEl = document.querySelector(".postava-data");
     if (!holder || !dataEl || holder.dataset.done) return;
     holder.dataset.done = "1";
-    var c = JSON.parse(dataEl.textContent), src = document.getElementById("zdroj-stranky"), cesta = src && src.dataset.cesta;
+    var c = JSON.parse(dataEl.textContent), portraitUrl = holder.dataset.portretUrl || "", src = document.getElementById("zdroj-stranky"), cesta = src && src.dataset.cesta;
     rules().then(function () {
       var draw = function () {
-        holder.innerHTML = render(c, compute(c), cesta); hpTracker(holder); sheetUi(holder);
+        holder.innerHTML = render(c, compute(c), cesta, portraitUrl); hpTracker(holder); sheetUi(holder);
         var b = holder.querySelector("[data-ps-edit]"); if (b) b.addEventListener("click", function () { editor(c, cesta); });
         var lb = holder.querySelector("[data-ps-lvl]"); if (lb) lb.addEventListener("click", function () { levelUpUi(c, cesta); });
         var sb = holder.querySelector("[data-ps-spells]"); if (sb) sb.addEventListener("click", function () { spellUi(c, cesta, "free"); });

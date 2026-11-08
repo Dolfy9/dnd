@@ -12,15 +12,17 @@ def on_page_markdown(markdown, page, config, files):
     root = Path(__file__).resolve().parent.parent
     data = page.meta.get("postava")
     override = data.get("portret") if isinstance(data, dict) else None
-    portrait_path = None
+    portrait_path = override_path = None
     if override:
-        candidate = (root / str(override)).resolve()
-        try:
-            rel = candidate.relative_to(root).as_posix()
-        except ValueError:
-            rel = None
-        if rel and candidate.is_file():
-            portrait_path = rel
+        for source in (root / str(override), root / Path(src).parent / str(override)):
+            candidate = source.resolve()
+            try:
+                rel = candidate.relative_to(root).as_posix()
+            except ValueError:
+                continue
+            if candidate.is_file():
+                portrait_path = override_path = rel
+                break
     if not portrait_path and src.startswith("04_Postavy/"):
         candidate = root / "04_Postavy" / "obrazky" / (Path(src).stem + ".webp")
         if candidate.is_file():
@@ -51,12 +53,13 @@ def on_page_markdown(markdown, page, config, files):
                 markdown = block + markdown
     if data:
         sheet_data = dict(data)
-        if portrait_url:
-            sheet_data["portret"] = portrait_url
+        if override_path:
+            sheet_data["portret"] = override_path
         else:
             sheet_data.pop("portret", None)
         payload = json.dumps(sheet_data, ensure_ascii=False).replace("</", "<\\/")
-        markdown = ('<div class="postava-sheet"></div>\n'
+        portret_attr = f' data-portret-url="{html.escape(portrait_url, quote=True)}"' if portrait_url else ""
+        markdown = (f'<div class="postava-sheet"{portret_attr}></div>\n'
                     f'<script type="application/json" class="postava-data">{payload}</script>\n\n' + markdown)
     elif portrait_url:
         title = page.meta.get("title") or Path(src).stem.replace("_", " ")

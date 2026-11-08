@@ -18,7 +18,7 @@
 
   function render(svg, D, M, base) {
     var SYM = window.SVET_SYMBOLY || {}, OBL = window.SVET_OBLASTI || {}, SPR = window.SVET_SPRITY || {}, META = window.SVET_SPRITY_META || {},
-      PAL = window.SVET_PALETA || {}, SEA = PAL.sea || {}, AP = PAL.areas || {}, FIELD = PAL.fields || {}, W = D.sirka, H = D.vyska, o = [];
+      PAL = window.SVET_PALETA || {}, SEA = PAL.sea || {}, LAND = PAL.land || {}, AP = PAL.areas || {}, FIELD = PAL.fields || {}, W = D.sirka, H = D.vyska, o = [];
     var A = base + "assets/svet/";
     svg.setAttribute("viewBox", "0 0 " + W + " " + H);
     svg.setAttribute("preserveAspectRatio", "none");
@@ -47,12 +47,12 @@
       else o.push('<path d="' + d + '" fill="url(#sv-pp)" stroke="#3a2412" stroke-width="1.3" stroke-linejoin="round"/>');
     });
     o.push('<g clip-path="url(#sv-souse)"><rect width="' + W + '" height="' + H + '" fill="#fff" filter="url(#sv-papir)" opacity=".45"/>');
-    o.push('<image href="' + A + 'barvy.jpg" width="' + W + '" height="' + H + '" preserveAspectRatio="none" opacity="' + (D.barvy_sila == null ? .8 : D.barvy_sila) + '"/>');
+    o.push('<image href="' + A + 'barvy.jpg" width="' + W + '" height="' + H + '" preserveAspectRatio="none" opacity="' + (LAND.base_opacity == null ? 1 : LAND.base_opacity) + '"/>');
     o.push('<path d="' + landD + '" fill="none" stroke="' + SEA.beach + '" stroke-opacity="' + SEA.beach_opacity + '" stroke-width="4" stroke-linejoin="round"/>');
     o.push('<path d="' + landD + '" fill="none" stroke="#7a5a37" stroke-opacity=".18" stroke-width="2" stroke-linejoin="round"/>');
-    (D.oblasti || []).forEach(function (a) { var c = a.tmavy ? AP.tmavy : AP[a.typ] || (OBL[a.typ] || {}).barva || "#b8c47a", alpha = a.tmavy ? PAL.area_opacity.tmavy : PAL.area_opacity[a.typ] || .22; o.push('<path d="' + pathD(a.body, true) + '" fill="' + c + '" opacity="' + alpha + '" filter="url(#sv-mekce)"/>'); });
+    (D.oblasti || []).forEach(function (a) { if (!a.tmavy) return; o.push('<path d="' + pathD(a.body, true) + '" fill="' + AP.tmavy + '" opacity="' + PAL.area_opacity.tmavy + '" filter="url(#sv-mekce)"/>'); });
     var ZPAL = PAL.state_tints || [];
-    (D.zeme || []).forEach(function (z, i) { var c = ZPAL[i % ZPAL.length] || "#777"; (z.pas || []).forEach(function (b) { o.push('<path d="' + (typeof b[0][0] === "number" ? pathD(b, true) : b.map(function (r) { return pathD(r, true); }).join(" ")) + '" fill="' + c + '" fill-rule="evenodd" opacity=".12"/>'); }); });
+    (D.zeme || []).forEach(function (z, i) { var c = ZPAL[i % ZPAL.length] || "#777"; (z.pas || []).forEach(function (b) { o.push('<path d="' + (typeof b[0][0] === "number" ? pathD(b, true) : b.map(function (r) { return pathD(r, true); }).join(" ")) + '" fill="' + c + '" fill-rule="evenodd" opacity="' + (PAL.state_tint_opacity == null ? .12 : PAL.state_tint_opacity) + '"/>'); }); });
     (D.oblasti || []).forEach(function (a, i) {
       if (a.typ !== "pole") return;
       var Rf = rng(977 + i * 31), xs = a.body.map(function (p) { return p[0]; }), ys = a.body.map(function (p) { return p[1]; }),
