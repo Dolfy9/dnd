@@ -17,9 +17,10 @@ JMENA = {
     "hranice": "kul_1 kul_2 kul_3 hranik palisada sibenice",
     "detaily": "zel_1 zel_2 zel_3 zel_4 zel_5 zel_6 sucha_1 sucha_2 sucha_3 sucha_4 sucha_5 sucha_6 kamen_1 kamen_2 kamen_3 vres maky kvety krik_1 krik_2 podzim_1 podzim_2 utes_1 utes_2",
     "teren": "kopec_1 kopec_2 kopec_3 kopec_4 kopec_5 duna_1 duna_2 duna_3 duna_4 duna_5 kaktus_1 kaktus_2 balvan_1 balvan_2 oaza pole_1 pole_2 bazina_1 bazina_2 vinice",
+    "opevneni": "utes_a utes_b utes_c hradba_a hradba_b vytah",
 }
 MAXH = 300
-MRIZKA = {"hory": (3, 4), "stromy": (4, 6), "sidla": (3, 5), "landmarky": (3, 5), "teren": (4, 5), "detaily": (4, 6), "hranice": (2, 3)}
+MRIZKA = {"hory": (3, 4), "stromy": (4, 6), "sidla": (3, 5), "landmarky": (3, 5), "teren": (4, 5), "detaily": (4, 6), "hranice": (2, 3), "opevneni": (2, 3)}
 
 
 def km1(v, k):

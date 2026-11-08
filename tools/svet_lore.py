@@ -1,5 +1,6 @@
 """Doplnění atlasu (svet.json) o prvky z loru: oblasti, mrtvá země, pole u sídel, strážní věže, potopené věže Kop Aramu a obchodní cesty."""
 import json
+import math
 from pathlib import Path
 
 import cv2
@@ -257,10 +258,27 @@ def lore(svet):
     svet["reky"] = hydro(svet, land, ob, seeds, rng)
     for hb in K.get("hradby", []):
         svet.setdefault("hradby", []).append({"typ": "hradba", "pozn": hb["nazev"], "body": hb["body"]})
-        L = LineString(hb["body"])
-        for d in np.arange(16, L.length - 8, 24):
-            p = L.interpolate(d)
-            svet["symboly"].append({"typ": "strazni_vez", "x": int(p.x), "y": int(p.y), "m": .55, "pozn": "věž na hradbě (" + hb["nazev"] + ")"})
+        line = LineString(hb["body"])
+        for d in np.arange(0, line.length, 18):
+            p = line.interpolate(d)
+            a, b = line.interpolate(max(0, d - 1)), line.interpolate(min(line.length, d + 1))
+            angle = math.degrees(math.atan2(b.y - a.y, b.x - a.x))
+            if abs(angle) > 90:
+                angle += -180 if angle > 0 else 180
+            angle = max(-45, min(45, angle))
+            svet["symboly"].append({"typ": "hradba", "x": int(p.x), "y": int(p.y), "m": 1.0, "rot": angle})
+    for ut in K.get("utesy", []):
+        svet.setdefault("utesy", []).append({"typ": "utes", "pozn": ut["nazev"], "body": ut["body"]})
+        line = LineString(ut["body"])
+        for d in np.arange(0, line.length, 15):
+            p = line.interpolate(d)
+            a, b = line.interpolate(max(0, d - 1)), line.interpolate(min(line.length, d + 1))
+            angle = math.degrees(math.atan2(b.y - a.y, b.x - a.x))
+            if abs(angle) > 90:
+                angle += -180 if angle > 0 else 180
+            angle = max(-50, min(50, angle))
+            svet["symboly"].append({"typ": "utes_velky", "x": int(p.x), "y": int(p.y), "m": float(rng.uniform(.9, 1.1)), "rot": angle})
+    ob.extend(K.get("oblasti", []))
     svet["symboly"] += K.get("pevnosti", [])
     # nic nepřetéká do moře: oblasti oříznout podle souše
     le = land.buffer(-7)

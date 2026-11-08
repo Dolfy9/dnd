@@ -94,7 +94,10 @@
     kostka: { nazev: "Kostka", spr: ["kostka"], w: 26 }, kupole: { nazev: "Kupole / observatoř", spr: ["kupole"], w: 30 },
     kolo: { nazev: "Kamenné kolo", spr: ["kolo"], w: 30 }, lod: { nazev: "Loď", spr: ["lod"], w: 38 },
     vrak: { nazev: "Vrak", spr: ["vrak"], w: 38 }, vir: { nazev: "Vír", spr: ["vir"], w: 50 }, had: { nazev: "Mořský had", spr: ["had"], w: 42 },
-    demon: { nazev: "Démon", spr: ["demon"], w: 50 }, vlny: { nazev: "Vlny", spr: ["vlny"], w: 34 }, clun: { nazev: "Člun", spr: ["clun"], w: 22 }
+    demon: { nazev: "Démon", spr: ["demon"], w: 50 }, vlny: { nazev: "Vlny", spr: ["vlny"], w: 34 }, clun: { nazev: "Člun", spr: ["clun"], w: 22 },
+    utes_velky: { nazev: "Útes", spr: ["utes_a", "utes_b", "utes_c"], w: 30 },
+    hradba: { nazev: "Hradba", spr: ["hradba_a", "hradba_a", "hradba_b"], w: 24 },
+    vytah: { nazev: "Pevnost na útesu s výtahem", spr: ["vytah"], w: 46 }
   };
   window.SVET_SYMBOLY = S;
   window.SVET_OBLASTI = OBLASTI;

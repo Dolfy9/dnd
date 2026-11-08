@@ -155,114 +155,48 @@
     {
       "nazev": "jižní hradba Ordenu (kresba DM)",
       "body": [
-        [
-          1048,
-          1078
-        ],
-        [
-          1075,
-          1083
-        ],
-        [
-          1100,
-          1084
-        ],
-        [
-          1125,
-          1081
-        ],
-        [
-          1148,
-          1074
-        ],
-        [
-          1165,
-          1062
-        ],
-        [
-          1180,
-          1045
-        ]
+        [1055, 1078],
+        [1080, 1082],
+        [1105, 1085],
+        [1130, 1086],
+        [1152, 1082],
+        [1168, 1072],
+        [1185, 1052],
+        [1200, 1030],
+        [1215, 1005]
       ]
-    },
+    }
+  ],
+  "utesy": [
     {
-      "nazev": "západní hradba Ordenu (kresba DM)",
+      "nazev": "útes Ordenu nad Ordenskou zátokou (kresba DM)",
       "body": [
-        [
-          1046,
-          935
-        ],
-        [
-          1042,
-          965
-        ],
-        [
-          1044,
-          1000
-        ],
-        [
-          1040,
-          1035
-        ],
-        [
-          1048,
-          1078
-        ]
+        [985, 905],
+        [995, 935],
+        [1003, 965],
+        [1010, 995],
+        [1022, 1025],
+        [1040, 1055],
+        [1048, 1085],
+        [1047, 1120],
+        [1046, 1160],
+        [1050, 1200]
       ]
-    },
+    }
+  ],
+  "oblasti": [
     {
-      "nazev": "severozápadní hradba Ordenu (kresba DM)",
-      "body": [
-        [
-          952,
-          930
-        ],
-        [
-          968,
-          922
-        ],
-        [
-          990,
-          918
-        ],
-        [
-          1015,
-          925
-        ],
-        [
-          1046,
-          935
-        ]
-      ]
-    },
-    {
-      "nazev": "severovýchodní hradba Ordenu (kresba DM)",
-      "body": [
-        [
-          1118,
-          935
-        ],
-        [
-          1132,
-          928
-        ],
-        [
-          1146,
-          930
-        ],
-        [
-          1162,
-          945
-        ]
-      ]
+      "typ": "pole",
+      "pozn": "kostkovaná pole Ordenu (kresba DM)",
+      "body": [[1035, 945], [1110, 940], [1112, 995], [1040, 1000]]
     }
   ],
   "pevnosti": [
     {
       "typ": "pevnost",
-      "x": 968,
-      "y": 925,
-      "m": 0.75,
+      "x": 976,
+      "y": 912,
+      "m": 0.7,
       "pozn": "pevnost na severozápadě Ordenu (kresba DM)"
     },
     {
@@ -273,30 +207,9 @@
       "pozn": "hrad s branou, východ Ordenu (kresba DM)"
     },
     {
-      "typ": "strazni_vez",
-      "x": 1045,
-      "y": 958,
-      "m": 1.0,
-      "pozn": "věže na západní hradbě Ordenu (kresba DM)"
-    },
-    {
-      "typ": "strazni_vez",
-      "x": 1060,
-      "y": 988,
-      "m": 0.9,
-      "pozn": "věže na západní hradbě Ordenu (kresba DM)"
-    },
-    {
       "typ": "pevnost",
       "x": 1050,
       "y": 1080,
-      "m": 0.6,
-      "pozn": "nárožní pevnost jižní hradby (kresba DM)"
-    },
-    {
-      "typ": "pevnost",
-      "x": 1180,
-      "y": 1046,
       "m": 0.6,
       "pozn": "nárožní pevnost jižní hradby (kresba DM)"
     },
@@ -306,6 +219,20 @@
       "y": 1200,
       "m": 0.6,
       "pozn": "opevnění v Laertmundu (kresba DM)"
+    },
+    {
+      "typ": "vytah",
+      "x": 1018,
+      "y": 1040,
+      "m": 1.0,
+      "pozn": "pevnost na útesu s výtahem do Ordenské zátoky (kresba DM)"
+    },
+    {
+      "typ": "lod",
+      "x": 950,
+      "y": 1110,
+      "m": 1.5,
+      "pozn": "loď v Ordenské zátoce (kresba DM; dřív chybně jako ostrov)"
     }
   ]
 }
