@@ -17,11 +17,11 @@ postava:
     STR: 8
     DEX: 20
     CON: 12
-    INT: 17
+    INT: 16
     WIS: 15
     CHA: 11
   puvod_atributu: Standard Array (DEX 15, INT 14, WIS 13, CON 12, CHA 10, STR 8); Noble +2 INT, +1 CHA; ASI R4 +2 DEX, R8
-    +2 DEX, R12 +1 DEX +1 WIS; War Caster (R16) +1 INT; Fey Touched (W4) +1 WIS.
+    +2 DEX, R12 +1 DEX +1 WIS; Fey Touched (W4) +1 WIS.
   dovednosti:
   - Perception
   - Stealth
@@ -52,9 +52,6 @@ postava:
   - nazev: Ability Score Improvement
     zdroj: Ranger 12
     poznamka: +1 DEX, +1 WIS
-  - nazev: War Caster
-    zdroj: Ranger 16
-    poznamka: +1 INT
   - nazev: Fey Touched
     zdroj: Wizard 4
     poznamka: +1 WIS; Misty Step, Command
@@ -157,8 +154,9 @@ postava:
     idealy: Svoboda lesa a starých zákonů.
     pouta: Hranice Nöelienu a Tirentova magie, která je chrání.
     vady: Pohrdá lidmi, kteří se sklonili před Ordenem.
-  prevod_2024: Bladesinging (TCoE) → Bladesinger (Heroes of Faerûn, pravidla 2024). Vznešený elf → Elf s High Elf lineage.
-    Bladesong přidává INT k AC (při aktivaci 17 + 3 = 20).
+  prevod_2024: 'Bladesinging (TCoE) → Bladesinger (Heroes of Faerûn, pravidla 2024). Vznešený elf → Elf s High Elf lineage.
+    Bladesong přidává INT k AC (při aktivaci 17 + 3 = 20). Oprava: odebrán War Caster („Ranger 16“) – Ranger 14 má ASI jen
+    na 4, 8, 12; INT 17 → 16.'
   boj:
     dpr: 33
     akce:

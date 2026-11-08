@@ -97,3 +97,11 @@ html[data-mont-theme] .md-typeset h1, html[data-mont-theme] .md-typeset h2 { col
 #tema-prepinac { margin: 0 .6rem; font: 700 .6rem "Cinzel", serif; } body > #tema-prepinac { position: fixed; right: 1rem; bottom: 3.6rem; z-index: 1000; }
 #tema-prepinac select { background: var(--card); color: var(--ink); border: 1px solid var(--gold); border-radius: 999px; padding: 4px 10px; cursor: pointer; font: inherit; box-shadow: 0 3px 10px rgba(0,0,0,.35); }
 @media print { #tema-prepinac { display: none; } }
+/* level up / nová postava */
+.lu-top { display: flex; flex-wrap: wrap; gap: 10px; align-items: flex-end; margin-bottom: 8px; } .lu-top label { display: flex; flex-direction: column; font-size: .7rem; }
+.lu-step { border: 1px solid var(--line); border-radius: 8px; padding: 6px 10px; margin: 6px 0; background: var(--card); color: var(--ink); }
+.lu-step h5 { margin: 0 0 4px; color: var(--red); } .lu-meta { font-size: .68rem; opacity: .85; margin: 0 0 4px; }
+.lu-choice { display: block; font-weight: 700; font-size: .72rem; margin: 6px 0; } .lu-choice select { max-width: 100%; margin-left: 6px; }
+.lu-feat { display: inline-block; font-weight: 400; } .lu-ab select { margin-left: 4px; } .lu-txt { font-size: .66rem; opacity: .8; white-space: pre-line; max-width: 70ch; }
+.lu-err { color: #c0392b; font-size: .75rem; margin: 6px 0; } .pv-list { font-size: .74rem; } .pv-chyba { color: var(--red3); } .pv-varovani { opacity: .85; } .pv-ok { color: #2e7d32; }
+.lu-step h5 { font-size: .85rem; letter-spacing: .02em; } .lu-choice { display: flex; flex-direction: column; gap: 3px; } .lu-choice select { margin-left: 0; } .lu-feat { display: block; } .lu-ab { display: flex; gap: 6px; align-items: center; margin-top: 3px; } .lu-ab select { margin-left: 0; max-width: 12rem; }

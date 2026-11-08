@@ -99,6 +99,16 @@ class Handler(SimpleHTTPRequestHandler):
                 p.unlink()
                 rebuild(index=True)
                 return self.send_json({"ok": True})
+            if u.path == "/api/postava" and method == "POST":
+                d = self.body()
+                p = safe_path(d["cesta"])
+                if p.exists():
+                    return self.send_json({"error": "Soubor už existuje"}, 409)
+                p.parent.mkdir(parents=True, exist_ok=True)
+                body = d.get("telo") or ("\n# " + d["postava"].get("jmeno", "Postava") + "\n\n> **Stav:** návrh\n\n## Příběh\n\n## Pro DM (tajné)\n")
+                p.write_text(join_front({"postava": d["postava"]}, body), encoding="utf-8")
+                rebuild(index=True)
+                return self.send_json({"ok": True})
             if u.path == "/api/postava" and method == "PUT":
                 d = self.body()
                 p = safe_path(d["cesta"])

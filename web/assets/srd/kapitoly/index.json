@@ -1,0 +1,57 @@
+[
+ {
+  "slug": "pravidla_hry",
+  "nazev": "Pravidla hry (Playing the Game)",
+  "skupina": null
+ },
+ {
+  "slug": "tvorba_postavy",
+  "nazev": "Tvorba postavy a postup na úrovních (Character Creation)",
+  "skupina": null
+ },
+ {
+  "slug": "nastroje_pj_travel_pace",
+  "nazev": "Travel Pace",
+  "skupina": "Nástroje PJ (Gameplay Toolbox)"
+ },
+ {
+  "slug": "nastroje_pj_creating_a_background",
+  "nazev": "Creating a Background",
+  "skupina": "Nástroje PJ (Gameplay Toolbox)"
+ },
+ {
+  "slug": "nastroje_pj_curses_and_magical_contagions",
+  "nazev": "Curses and Magical Contagions",
+  "skupina": "Nástroje PJ (Gameplay Toolbox)"
+ },
+ {
+  "slug": "nastroje_pj_environmental_effects",
+  "nazev": "Environmental Effects",
+  "skupina": "Nástroje PJ (Gameplay Toolbox)"
+ },
+ {
+  "slug": "nastroje_pj_fear_and_mental_stress",
+  "nazev": "Fear and Mental Stress",
+  "skupina": "Nástroje PJ (Gameplay Toolbox)"
+ },
+ {
+  "slug": "nastroje_pj_poison",
+  "nazev": "Poison",
+  "skupina": "Nástroje PJ (Gameplay Toolbox)"
+ },
+ {
+  "slug": "nastroje_pj_traps",
+  "nazev": "Traps",
+  "skupina": "Nástroje PJ (Gameplay Toolbox)"
+ },
+ {
+  "slug": "nastroje_pj_combat_encounters",
+  "nazev": "Combat Encounters",
+  "skupina": "Nástroje PJ (Gameplay Toolbox)"
+ },
+ {
+  "slug": "kouzelne_predmety_pravidla",
+  "nazev": "Pravidla kouzelných předmětů (Magic Items)",
+  "skupina": null
+ }
+]

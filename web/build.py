@@ -161,6 +161,7 @@ extra_javascript:
   - assets/easymde/easymde.min.js
   - assets/extra.js
   - assets/editor.js
+  - assets/pravidla_engine.js
   - assets/postava.js
   - assets/kouzla.js
   - assets/srd.js

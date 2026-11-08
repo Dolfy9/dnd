@@ -85,7 +85,14 @@ def build(docs: Path):
     def kat(rel, title, intro, typ, pole="", hod=""):
         return w(rel, page(title, intro + "\n\n" + katalog(typ, pole, hod), True))
 
-    phb = [{"Povolání": cls_nav}, {"Druhy (Species)": druhy}, {"Pozadí (Backgrounds)": pozadi}, {"Featy": featy},
+    K = json.load(open(A / "srd/kapitoly/index.json", encoding="utf-8"))
+    def kap(slug):
+        t = (A / "srd/kapitoly" / (slug + ".md")).read_text(encoding="utf-8")
+        t = t.replace("\n# ", "\n## ", 0)
+        return w(f"kap/{slug}.md", t + LIC)
+    toolbox = [{x["nazev"]: kap(x["slug"])} for x in K if x["skupina"]]
+    phb_kap = [{"Pravidla hry": kap("pravidla_hry")}, {"Tvorba postavy a level up": kap("tvorba_postavy")}]
+    phb = phb_kap + [{"Povolání": cls_nav}, {"Druhy (Species)": druhy}, {"Pozadí (Backgrounds)": pozadi}, {"Featy": featy},
            {"Výbava": [
                {"Zbraně": kat("phb/zbrane.md", "Zbraně", "Zbraně a střelivo (SRD 5.2.1).", "predmety", "kategorie|druh", "Weapon,Ammunition|běžný")},
                {"Zbroje a štíty": kat("phb/zbroje.md", "Zbroje a štíty", "Zbroje a štíty (SRD 5.2.1).", "predmety", "kategorie|druh", "Armor|běžný")},
@@ -94,7 +101,7 @@ def build(docs: Path):
                {"Zvířata a dopravní prostředky": kat("phb/doprava.md", "Zvířata a dopravní prostředky", "Jízdní zvířata a vozidla (SRD 5.2.1).", "predmety", "kategorie", "Mount,Land Vehicle,Waterborne Vehicle")}]},
            {"Kouzla": "kouzla.md"}, {"Glosář pravidel": "glosar.md"}]
     rar = ["Common", "Uncommon", "Rare", "Very Rare", "Legendary", "Artifact"]
-    dmg = [{"Kouzelné předměty (vše)": kat("dmg/kouzelne_predmety.md", "Kouzelné předměty", "Všechny kouzelné předměty ze SRD 5.2.1.", "predmety", "druh", "kouzelný")}]
+    dmg = [{"Nástroje PJ": toolbox}, {"Pravidla kouzelných předmětů": kap("kouzelne_predmety_pravidla")}, {"Kouzelné předměty (vše)": kat("dmg/kouzelne_predmety.md", "Kouzelné předměty", "Všechny kouzelné předměty ze SRD 5.2.1.", "predmety", "druh", "kouzelný")}]
     dmg += [{f"Vzácnost: {r}": kat(f"dmg/predmety_{slug(r).lower()}.md", f"Kouzelné předměty – {r}", f"Kouzelné předměty vzácnosti {r}.", "predmety", "vzacnost", r)} for r in rar]
     for title, cats in [("Lektvary a svitky", "Potion,Scroll"), ("Prsteny", "Ring"), ("Hůlky, hole a žezla", "Wand,Staff,Rod"), ("Divotvorné předměty", "Wondrous Item")]:
         dmg.append({title: kat(f"dmg/{slug(title).lower()}.md", title, f"{title} (SRD 5.2.1).", "predmety", "kategorie", cats)})

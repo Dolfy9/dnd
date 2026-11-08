@@ -103,6 +103,7 @@
     });
     if (n === 1) { var lv = Number(single[0].uroven); cl = single[1] === 1 ? lv : single[1] === 2 ? Math.ceil(lv / 2) : Math.ceil(lv / 3); }
     d.slots = MULTI[Math.min(cl, 20)] || [];
+    if (window.MontelienPravidla) { var ed = window.MontelienPravidla.init(R).derive(c); d.slots = ed.slots; if (ed.pact) d.pact = { pocet: ed.pact.pocet, uroven: ed.pact.uroven }; }
     d.casting.forEach(function (x) { x.dc = 8 + d.pb + d.mods[x.ab]; x.atk = d.pb + d.mods[x.ab]; });
     var b = c.boj || {}, bestAtk = 0;
     (c.utoky || []).forEach(function (u) { var a = u.atribut === "FIN" ? Math.max(d.mods.STR, d.mods.DEX) : u.atribut === "SPELL" ? (d.casting[0] ? d.mods[d.casting[0].ab] : 0) : d.mods[u.atribut || "STR"] || 0; bestAtk = Math.max(bestAtk, a + d.pb + (Number(u.bonus) || 0)); });
@@ -144,7 +145,7 @@
       + (c.tridy || []).map(function (t) { return '<span class="p2-chip p2-class">' + esc(t.trida) + ' ' + t.uroven + (t.podtrida ? ' · ' + esc(t.podtrida) : '') + '</span>'; }).join("")
       + '<span class="p2-chip">' + esc(c.druh || "—") + '</span><span class="p2-chip">' + esc(c.pozadi || "—") + '</span><span class="p2-chip">' + esc(c.zarovnani || "—") + '</span><span class="p2-chip">' + esc(c.velikost || "Medium") + '</span></div></div>'
       + '<div class="p2-cr"><div class="p2-cr-v" title="obrana CR ' + d.cr.def + ' · útok CR ' + d.cr.off + '">' + d.cr.cr + '</div><div class="p2-cr-l">CR (odhad)</div><div class="p2-cr-x">' + d.cr.xp + ' XP' + (bj.cr_rucne ? '<br>' + esc(bj.cr_rucne) : '') + '</div></div></header>';
-    if (cesta && document.body.classList.contains("ed-on")) h += '<div class="ps-edit"><button class="ed-btn ed-primary" data-ps-edit>✎ Upravit postavu</button></div>';
+    if (cesta && document.body.classList.contains("ed-on")) h += '<div class="ps-edit"><button class="ed-btn" data-ps-lvl>⬆ Level up</button> <button class="ed-btn ed-primary" data-ps-edit>✎ Upravit postavu</button></div>';
     // ---- životní hodnoty ----
     h += '<div class="p2-vitals"><div class="p2-shield"><div class="p2-v">' + d.ac + '</div><div class="p2-l">Armor Class</div></div>'
       + '<div class="p2-hp ps-hptrack" data-key="' + esc(key) + '" data-max="' + d.hp + '"><div class="p2-l">Hit Points</div><div class="p2-hp-row"><button data-hp="-5">−5</button><button data-hp="-1">−1</button><input class="ps-hpcur" type="number"><span class="p2-hp-max">/ ' + d.hp + '</span><button data-hp="1">+1</button><button data-hp="5">+5</button></div><div class="p2-hpbar"><i></i></div><div class="p2-hp-row p2-small"><label>dočasné <input class="ps-hptmp" type="number"></label><button data-hp="reset" title="Plné HP">↺ plné</button></div></div>'
@@ -192,6 +193,9 @@
     tabs.push(["Příběh", '<div class="p2-2col"><div>' + card("Osobnost", '<dl class="p2-dl"><dt>Rysy</dt><dd>' + esc(o.rysy || "—") + '</dd><dt>Ideály</dt><dd>' + esc(o.idealy || "—") + '</dd><dt>Pouta</dt><dd>' + esc(o.pouta || "—") + '</dd><dt>Vady</dt><dd>' + esc(o.vady || "—") + '</dd></dl>') + (c.vzhled ? card("Vzhled", '<p>' + para(c.vzhled) + '</p>') : '') + '</div><div>'
       + card("Pozadí: " + esc(c.pozadi || "—"), bg.feat ? '<dl class="p2-dl"><dt>Atributy</dt><dd>' + esc(bg.atributy) + '</dd><dt>Origin feat</dt><dd>' + esc(bg.feat) + '</dd><dt>Dovednosti</dt><dd>' + esc(bg.dovednosti) + '</dd><dt>Nástroj</dt><dd>' + esc(bg.nastroj) + '</dd></dl>' : '<p>—</p>')
       + (c.puvod_atributu || c.prevod_2024 || c.poznamky ? card("Poznámky", (c.puvod_atributu ? '<p><b>Atributy:</b> ' + para(c.puvod_atributu) + '</p>' : '') + (c.prevod_2024 ? '<p><b>Převod na 2024:</b> ' + para(c.prevod_2024) + '</p>' : '') + (c.poznamky ? '<p>' + para(c.poznamky) + '</p>' : '')) : '') + '</div></div>']);
+    var PV = window.MontelienPravidla ? window.MontelienPravidla.init(R).validate(c) : [];
+    tabs.push(["Kontrola" + (PV.some(function (x) { return x.typ === "chyba"; }) ? " ⚠" : PV.length ? " ·" : " ✓"), card("Kontrola pravidel 2024", PV.length ? '<ul class="pv-list">' + PV.map(function (x) { return '<li class="pv-' + x.typ + '">' + (x.typ === "chyba" ? "Chyba: " : "Upozornění: ") + esc(x.text) + '</li>'; }).join("") + '</ul>' : '<p class="pv-ok">Vše odpovídá pravidlům 2024: povolání, subclass, featy a jejich předpoklady, sloty ASI / Fighting Style / Epic Boon, atributy, dovednosti.</p>')
+      + card("Featy podle úrovní", window.MontelienPravidla ? '<ul>' + window.MontelienPravidla.featSlots(c).map(function (sl) { var f = (c.featy || []).filter(function (x) { return x.zdroj === sl.zdroj; })[0]; return '<li><b>' + esc(sl.zdroj) + ':</b> ' + (f ? esc(f.nazev) + (f.poznamka ? ' <small>(' + esc(f.poznamka) + ')</small>' : '') : '<i>nevybráno</i>') + '</li>'; }).join("") + '</ul>' : '')]);
     h += '<nav class="p2-tabs">' + tabs.map(function (x, i) { return '<button class="p2-tabbtn' + (i ? '' : ' on') + '" data-tab="' + i + '">' + x[0] + '</button>'; }).join("") + '<button class="p2-tabbtn" data-tab="all" title="Zobrazit vše (i pro tisk)">Vše (tisk)</button></nav>';
     h += tabs.map(function (x, i) { return '<section class="p2-pane' + (i ? '' : ' on') + '" data-pane="' + i + '"><h3 class="p2-pane-h">' + x[0] + '</h3>' + x[1] + '</section>'; }).join("");
     return h + '</div>';
@@ -366,6 +370,146 @@
     m.box.classList.add("ed-wide");
   }
 
+  // ---------- level up a nová postava ----------
+  function featPicker(E, v, store) {
+    var el = E.el, w = el("div", { class: "lu-feat" }), sel = el("select"), ab = el("span", { class: "lu-ab" });
+    sel.appendChild(el("option", { value: "" }, "— vyber feat —"));
+    ["Origin", "General", "Fighting Style", "Epic Boon"].forEach(function (kat) {
+      var g = v.moznosti.filter(function (o) { return o.kategorie === kat; }); if (!g.length) return;
+      var og = document.createElement("optgroup"); og.label = kat;
+      g.forEach(function (o) { var op = el("option", { value: o.nazev }, o.nazev + (o.ok ? "" : " – " + o.duvod)); if (!o.ok) op.disabled = true; og.appendChild(op); });
+      sel.appendChild(og);
+    });
+    var P = window.MontelienPravidla;
+    function drawAb() {
+      ab.innerHTML = ""; store[v.klic] = sel.value ? { nazev: sel.value, atributy: {} } : null; if (!sel.value) return;
+      var ch = P.featAbilityChoices(sel.value);
+      if (ch.typ === "zadne") return;
+      var n = ch.typ === "asi" ? 2 : 1, sels = [];
+      for (var i = 0; i < n; i++) { var s2 = el("select"); ch.atributy.forEach(function (a) { s2.appendChild(el("option", { value: a }, "+1 " + a)); }); sels.push(s2); ab.appendChild(s2); }
+      function upd() { var a = {}; sels.forEach(function (x) { a[x.value] = (a[x.value] || 0) + 1; }); store[v.klic].atributy = a; }
+      sels.forEach(function (x) { x.addEventListener("change", upd); }); upd();
+      if (ch.typ === "asi") ab.appendChild(el("small", {}, " (stejný atribut dvakrát = +2)"));
+    }
+    sel.addEventListener("change", drawAb);
+    var t = el("div", { class: "lu-txt" });
+    sel.addEventListener("change", function () { var f = R.featy[sel.value]; t.textContent = f ? f.text.slice(0, 400) + (f.text.length > 400 ? "…" : "") : ""; });
+    w.appendChild(sel); w.appendChild(ab); w.appendChild(t); return w;
+  }
+  function renderPlan(E, plan, store, holder) {
+    var el = E.el; holder.innerHTML = "";
+    if (plan.chyby.length) { holder.appendChild(el("div", { class: "lu-err" }, plan.chyby.map(esc).join("<br>"))); return; }
+    plan.kroky.forEach(function (st) {
+      var box = el("div", { class: "lu-step" });
+      var inf = st.info, sl = (inf.sloty || []).map(function (n, i) { return (i + 1) + ".: " + n; }).join(", ");
+      box.appendChild(el("h5", {}, "Úroveň " + st.celkova + " – " + st.trida + " " + st.uroven));
+      box.appendChild(el("p", { class: "lu-meta" }, "HP +" + st.hp + " + CON · PB +" + inf.pb + (sl ? " · sloty " + sl : "") + (inf.pakt ? " · Pact " + inf.pakt.pocet + "× " + inf.pakt.uroven + ". úr." : "") +
+        (inf.kouzla && (inf.kouzla.cantrips || inf.kouzla.pripravena) ? " · cantripy " + inf.kouzla.cantrips + ", připravená kouzla " + inf.kouzla.pripravena : "")));
+      if (st.rysy.length) box.appendChild(el("p", {}, "<b>Rysy:</b> " + st.rysy.map(esc).join(", ")));
+      if (inf.multiclass) box.appendChild(el("p", {}, "<b>Multiclass:</b> " + esc(inf.multiclass)));
+      st.volby.forEach(function (v) {
+        var row = el("label", { class: "lu-choice" }, v.typ === "podtrida" ? "Subclass" : v.typ === "dovednost" ? "Dovednost (multiclass)" : "Feat – " + esc(v.klic));
+        if (v.typ === "feat") row.appendChild(featPicker(E, v, store));
+        else { var s = el("select"); s.appendChild(el("option", { value: "" }, "— vyber —")); v.moznosti.forEach(function (o) { s.appendChild(el("option", { value: o }, o)); }); s.addEventListener("change", function () { store[v.klic] = s.value; }); row.appendChild(s); }
+        box.appendChild(row);
+      });
+      holder.appendChild(box);
+    });
+  }
+  function levelUpUi(c, cesta, nova) {
+    var E = window.MontelienEditor, P = window.MontelienPravidla; if (!E || !P) return; P.init(R);
+    var el = E.el, body = el("div", { class: "lu" }), store = {};
+    var total = P.totalLevel(c), top = el("div", { class: "lu-top" }), sc = el("select"), n = el("input", { type: "number", min: 1, max: 20 - total, value: nova ? nova.n : 1 });
+    Object.keys(R.tridy).forEach(function (k) {
+      var why = P.multiclassCheck(c, k), cur = (c.tridy || []).filter(function (t) { return t.trida === k; })[0];
+      var op = el("option", { value: k }, k + (cur ? " (teď " + cur.uroven + ")" : (c.tridy || []).length ? " – multiclass" + (why.length ? ": nesplňuje " + why.join("; ") : "") : ""));
+      if (why.length) op.disabled = true; sc.appendChild(op);
+    });
+    sc.value = nova ? nova.trida : (c.tridy && c.tridy[0] ? c.tridy[0].trida : "Fighter");
+    var lt = el("label", {}, "Povolání"); lt.appendChild(sc); top.appendChild(lt);
+    var ln = el("label", {}, "Počet úrovní (teď " + total + ", max " + (20 - total) + ")"); ln.appendChild(n); top.appendChild(ln);
+    var planEl = el("div", { class: "lu-plan" });
+    function replan() { store = {}; var k = Number(n.value) || 1; renderPlan(E, P.planLevelUp(c, sc.value, k), store, planEl); }
+    sc.addEventListener("change", replan); n.addEventListener("change", replan);
+    body.appendChild(top); body.appendChild(planEl); replan();
+    var m = E.modal((nova ? "Nová postava – úrovně 2+ – " : "Level up – ") + (c.jmeno || ""), body, [{ text: nova ? "Vytvořit postavu" : "Použít a uložit", primary: true, click: function () {
+      var r = P.applyLevelUp(c, sc.value, Number(n.value) || 1, store);
+      if (r.chyby.length) return alert("Nejde použít:\n" + r.chyby.join("\n"));
+      save(r.postava);
+    } }]);
+    m.box.classList.add("ed-wide");
+    function save(out) {
+      document.body.classList.add("ed-busy");
+      E.api(nova ? "POST" : "PUT", "postava", { cesta: cesta, postava: out }).then(function () { location.href = nova ? base() + cesta.replace(/\.md$/, "/") : location.href; if (!nova) location.reload(); })
+        .catch(function (e) { document.body.classList.remove("ed-busy"); alert("Chyba: " + e.message); });
+    }
+  }
+  function newCharUi() {
+    var E = window.MontelienEditor, P = window.MontelienPravidla; if (!E || !P) return; rules().then(function () {
+      P.init(R); var el = E.el, b = el("div", { class: "lu nc" }), s = { metoda: "standard", zaklad: {}, bonus: {}, dovednosti: [] };
+      function sel(label, opts, key, obj, onch) { var l = el("label", {}, label), x = el("select"); x.appendChild(el("option", { value: "" }, "—")); opts.forEach(function (o) { x.appendChild(el("option", { value: o }, o)); }); x.addEventListener("change", function () { (obj || s)[key] = x.value; if (onch) onch(); }); l.appendChild(x); return l; }
+      var g1 = el("div", { class: "lu-top" });
+      var jm = el("label", {}, "Jméno"), ji = el("input", { type: "text" }); ji.addEventListener("change", function () { s.jmeno = ji.value; }); jm.appendChild(ji); g1.appendChild(jm);
+      g1.appendChild(sel("Složka", ["04_Postavy/NPC", "04_Postavy/Vladci", "04_Postavy/Stavitele_a_Bohove"], "slozka"));
+      var lvl = el("label", {}, "Cílová úroveň"), li = el("input", { type: "number", min: 1, max: 20, value: 1 }); lvl.appendChild(li); g1.appendChild(lvl);
+      b.appendChild(g1);
+      var origin = Object.keys(R.featy).filter(function (k) { return R.featy[k].kategorie === "Origin"; }).sort();
+      var fs = Object.keys(R.featy).filter(function (k) { return R.featy[k].kategorie === "Fighting Style"; }).sort();
+      var g2 = el("div", { class: "lu-top" }), dyn = el("div", { class: "lu-dyn" });
+      g2.appendChild(sel("Druh (Species)", Object.keys(R.druhy).sort(), "druh", null, draw));
+      g2.appendChild(sel("Pozadí (Background)", Object.keys(R.pozadi).sort(), "pozadi", null, draw));
+      g2.appendChild(sel("Povolání", Object.keys(R.tridy), "trida", null, draw));
+      g2.appendChild(sel("Atributy", ["standard", "pointbuy", "rucne"], "metoda", null, draw));
+      b.appendChild(g2); b.appendChild(dyn);
+      var errEl = el("div", { class: "lu-err" }); b.appendChild(errEl);
+      function draw() {
+        dyn.innerHTML = ""; s.dovednosti = []; s.bonus = {};
+        var bg = R.pozadi[s.pozadi];
+        var ab = el("div", { class: "pf-abil" });
+        P.AB.forEach(function (a) { var l = el("label", {}, a + (s.metoda === "standard" ? " (15/14/13/12/10/8)" : s.metoda === "pointbuy" ? " (8–15, 27 bodů)" : "")), i = el("input", { type: "number", min: 3, max: 20, value: s.zaklad[a] || "" }); i.addEventListener("change", function () { s.zaklad[a] = Number(i.value); cost(); }); l.appendChild(i); ab.appendChild(l); });
+        var cw = el("small", { class: "lu-cost" }); function cost() { if (s.metoda !== "pointbuy") return cw.textContent = ""; var t = P.AB.reduce(function (x, a) { return x + (P.COST[s.zaklad[a]] == null ? 0 : P.COST[s.zaklad[a]]); }, 0); cw.textContent = "Point Buy: " + t + " / 27"; }
+        dyn.appendChild(el("h5", {}, "Atributy (před bonusem z pozadí)")); dyn.appendChild(ab); dyn.appendChild(cw); cost();
+        if (bg) {
+          var al = []; ["Strength", "Dexterity", "Constitution", "Intelligence", "Wisdom", "Charisma"].forEach(function (x, i) { if (bg.atributy.indexOf(x) >= 0) al.push(P.AB[i]); });
+          dyn.appendChild(el("p", {}, "<b>" + esc(s.pozadi) + ":</b> atributy " + al.join(", ") + " · feat " + esc(bg.feat) + " · dovednosti " + esc(bg.dovednosti) + " · nástroj " + esc(bg.nastroj)));
+          var bm = el("div", { class: "lu-top" }), mode = el("select"); ["+2 / +1", "+1 / +1 / +1"].forEach(function (o) { mode.appendChild(el("option", { value: o }, o)); });
+          var a1 = el("select"), a2 = el("select"); al.forEach(function (a) { a1.appendChild(el("option", { value: a }, "+2 " + a)); a2.appendChild(el("option", { value: a }, "+1 " + a)); }); a2.value = al[1];
+          function ub() { s.bonus = {}; if (mode.value === "+2 / +1") { s.bonus[a1.value] = 2; s.bonus[a2.value] = (s.bonus[a2.value] || 0) + 1; a1.style.display = a2.style.display = ""; } else { al.forEach(function (a) { s.bonus[a] = 1; }); a1.style.display = a2.style.display = "none"; } }
+          [mode, a1, a2].forEach(function (x) { x.addEventListener("change", ub); }); ub();
+          var lb = el("label", {}, "Bonus z pozadí"); lb.appendChild(mode); bm.appendChild(lb); bm.appendChild(a1); bm.appendChild(a2); dyn.appendChild(bm);
+        }
+        if (s.druh === "Human") { var hr = el("div", { class: "lu-top" }); hr.appendChild(sel("Versatile – Origin feat", origin, "origin_feat")); hr.appendChild(sel("Skillful – dovednost", P.SKILLS, "skillful")); dyn.appendChild(hr); }
+        if (s.druh === "Elf") dyn.appendChild(sel("Keen Senses", ["Insight", "Perception", "Survival"], "keen"));
+        if (s.druh) dyn.appendChild(el("label", {}, "Volby druhu (lineage, ancestry…)")).appendChild((function () { var i = el("input", { type: "text" }); i.addEventListener("change", function () { s.druh_volby = i.value; }); return i; })());
+        if (s.trida) {
+          var r = P.classSkillRule(s.trida), sk = el("div", { class: "pf-checks pf-skills" }); sk.appendChild(el("h5", {}, s.trida + ": vyber " + r.pocet + " dovednosti"));
+          r.z.forEach(function (x) { var l = el("label", {}), i = el("input", { type: "checkbox" }); i.addEventListener("change", function () { if (i.checked) s.dovednosti.push(x); else s.dovednosti = s.dovednosti.filter(function (y) { return y !== x; }); if (s.dovednosti.length > r.pocet) { i.checked = false; s.dovednosti.pop(); } }); l.appendChild(i); l.appendChild(document.createTextNode(" " + x)); sk.appendChild(l); });
+          dyn.appendChild(sk);
+          if (P.classMilestones(s.trida).fs === 1) dyn.appendChild(sel("Fighting Style (feat)", fs, "fighting_style"));
+        }
+      }
+      draw();
+      E.modal("Nová postava (pravidla 2024)", b, [{ text: "Pokračovat", primary: true, click: function () {
+        var r = P.createCharacter(s);
+        if (!s.slozka) r.chyby.push("Vyber složku.");
+        if (!s.jmeno) r.chyby.push("Zadej jméno.");
+        if (r.chyby.length) { errEl.innerHTML = r.chyby.map(esc).join("<br>"); return false; }
+        var slug = s.jmeno.normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/[^A-Za-z0-9]+/g, "_").replace(/^_|_$/g, "");
+        var cesta = s.slozka + "/Postava_" + slug + ".md", target = Math.max(1, Math.min(20, Number(li.value) || 1));
+        r.postava.prevod_2024 = "Vytvořeno průvodcem podle pravidel 2024.";
+        document.querySelectorAll(".ed-modal-bg").forEach(function (x) { x.remove(); });
+        if (target > 1) levelUpUi(r.postava, cesta, { trida: s.trida, n: target - 1 });
+        else E.api("POST", "postava", { cesta: cesta, postava: r.postava }).then(function () { location.href = base() + cesta.replace(/\.md$/, "/"); }).catch(function (e) { alert("Chyba: " + e.message); });
+      } }]).box.classList.add("ed-wide");
+    });
+  }
+  window.MontelienPostava = { novaPostava: newCharUi };
+  function toolbarBtn() {
+    var bar = document.getElementById("ed-toolbar"); if (!bar || bar.querySelector("[data-nova-postava]")) return;
+    var b = document.createElement("button"); b.className = "ed-btn"; b.dataset.novaPostava = "1"; b.textContent = "+ Nová postava"; b.addEventListener("click", newCharUi); bar.appendChild(b);
+  }
+  setInterval(toolbarBtn, 700);
+
   function init() {
     var holder = document.querySelector(".postava-sheet"), dataEl = document.querySelector(".postava-data");
     if (!holder || !dataEl || holder.dataset.done) return;
@@ -375,6 +519,7 @@
       var draw = function () {
         holder.innerHTML = render(c, compute(c), cesta); hpTracker(holder); sheetUi(holder);
         var b = holder.querySelector("[data-ps-edit]"); if (b) b.addEventListener("click", function () { editor(c, cesta); });
+        var lb = holder.querySelector("[data-ps-lvl]"); if (lb) lb.addEventListener("click", function () { levelUpUi(c, cesta); });
       };
       draw();
       var tries = 0, t = setInterval(function () { if (document.body.classList.contains("ed-on") || ++tries > 20) { clearInterval(t); if (document.body.classList.contains("ed-on")) draw(); } }, 150);
