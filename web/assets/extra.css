@@ -81,3 +81,4 @@ body.ed-busy::after { content: "Ukládám a přestavuji web…"; position: fixed
 .kz-modal { max-height: 90vh; overflow: auto; }
 .EasyMDEContainer .editor-toolbar button { color: #3a2412 !important; font: 700 13px Georgia, serif !important; min-width: 30px; opacity: 1; }
 .EasyMDEContainer .editor-toolbar button:hover, .EasyMDEContainer .editor-toolbar button.active { background: #e3cfa2; border-color: #8a6a3f; }
+.lang-bar { margin: .5rem 0 .2rem; display: flex; gap: 4px; } .lang-btn { border: 1px solid #b8892b; background: transparent; color: inherit; border-radius: 4px; padding: 1px 10px; cursor: pointer; font: 700 .65rem "Cinzel", serif; } .lang-btn.on { background: #8b1e14; color: #fbe7b5; border-color: #8b1e14; }

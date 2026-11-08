@@ -2,7 +2,9 @@
 (function () {
   var C = {}, F = { bestiar: "bestiar.json", predmety: "predmety.json", glosar: "glosar.json", featy: "puvod_a_featy.json" };
   function base() { var s = document.querySelector('script[src*="assets/srd.js"]'); return s ? s.src.replace(/assets\/srd\.js.*$/, "") : "/"; }
-  function load(t) { return C[t] ? Promise.resolve(C[t]) : fetch(base() + "assets/srd/" + F[t]).then(function (r) { return r.json(); }).then(function (j) { C[t] = j; return j; }); }
+  var CS = {};
+  function loadCs(t) { return CS[t] ? Promise.resolve(CS[t]) : fetch(base() + "assets/preklad/" + t + "_cs.json").then(function (r) { return r.ok ? r.json() : {}; }).catch(function () { return {}; }).then(function (j) { CS[t] = j; return j; }); }
+  function load(t) { return loadCs(t).then(function () { return C[t] ? C[t] : fetch(base() + "assets/srd/" + F[t]).then(function (r) { return r.json(); }).then(function (j) { C[t] = j; return j; }); }); }
   function esc(s) { return String(s == null ? "" : s).replace(/[&<>"]/g, function (c) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]; }); }
   function md(n) { return Math.floor((n - 10) / 2); } function sg(n) { return (n >= 0 ? "+" : "") + n; }
   function list(t, a) { return a && a.length ? '<h4>' + t + '</h4>' + a.map(function (x) { return '<p><b><i>' + esc(x.nazev) + '.</i></b> ' + esc(x.text).replace(/\n/g, "<br>") + '</p>'; }).join("") : ""; }
@@ -17,7 +19,7 @@
   }
   function detail(t, x) {
     if (t === "bestiar") return statblock(x);
-    return '<h2>' + esc(x.nazev) + '</h2>' + (x.stitek ? '<p><i>' + esc(x.stitek) + '</i></p>' : '') + (x.kategorie ? '<p><i>' + esc(x.kategorie + (x.vzacnost ? " · " + x.vzacnost : "") + (x.attunement ? " · attunement" : "")) + '</i></p>' : '') + '<div class="kz-text">' + esc(x.text).replace(/\n/g, "<br>") + '</div><p class="sb-src">SRD 5.2.1 (CC-BY 4.0)</p>';
+    return '<h2>' + esc(x.nazev) + '</h2>' + (x.stitek ? '<p><i>' + esc(x.stitek) + '</i></p>' : '') + (x.kategorie ? '<p><i>' + esc(x.kategorie + (x.vzacnost ? " · " + x.vzacnost : "") + (x.attunement ? " · attunement" : "")) + '</i></p>' : '') + (window.MontelienLang ? window.MontelienLang.bar((CS[t] || {})[x.nazev]) + '<div class="kz-text">' + window.MontelienLang.txt((CS[t] || {})[x.nazev], x.text) : '<div class="kz-text">' + esc(x.text).replace(/\n/g, "<br>")) + '</div><p class="sb-src">SRD 5.2.1 (CC-BY 4.0)</p>';
   }
   function toMd(m) {
     var L = function (ttl, a) { return a && a.length ? "\n### " + ttl + "\n" + a.map(function (x) { return "- **" + x.nazev + ".** " + x.text.replace(/\n/g, " "); }).join("\n") + "\n" : ""; };

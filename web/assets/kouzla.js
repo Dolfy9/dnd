@@ -2,7 +2,10 @@
 (function () {
   var K = null;
   function base() { var s = document.querySelector('script[src*="assets/kouzla.js"]'); return s ? s.src.replace(/assets\/kouzla\.js.*$/, "") : "/"; }
-  function load() { return K ? Promise.resolve(K) : fetch(base() + "assets/kouzla2024.json").then(function (r) { return r.json(); }).then(function (j) { K = j; K._low = {}; Object.keys(j).forEach(function (k) { K._low[k.toLowerCase()] = k; }); return K; }); }
+  var CS = null;
+  function lang() { return localStorage.getItem("mont-lang") || "cs"; }
+  function loadCs() { return CS ? Promise.resolve(CS) : fetch(base() + "assets/preklad/kouzla_cs.json").then(function (r) { return r.ok ? r.json() : {}; }).catch(function () { return {}; }).then(function (j) { CS = j; return j; }); }
+  function load() { return K ? loadCs().then(function () { return K; }) : fetch(base() + "assets/kouzla2024.json").then(function (r) { return r.json(); }).then(function (j) { K = j; K._low = {}; Object.keys(j).forEach(function (k) { K._low[k.toLowerCase()] = k; }); return K; }); }
   function esc(s) { return String(s == null ? "" : s).replace(/[&<>"]/g, function (c) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]; }); }
   function find(n) { var k = K[n] ? n : K._low[String(n).toLowerCase()]; return k ? [k, K[k]] : null; }
   function show(name) {
@@ -14,13 +17,18 @@
         var s = f[1];
         h += '<p class="kz-meta"><i>' + esc(s.typ || ((s.uroven ? s.uroven + ". úroveň " : "Cantrip ") + (s.skola || ""))) + '</i></p><table class="kz-tab">'
           + [["Čas sesílání", s.cas], ["Dosah", s.dosah], ["Složky", s.slozky], ["Trvání", s.trvani], ["Povolání", s.tridy], ["Zdroj", s.zdroj]].filter(function (r) { return r[1]; }).map(function (r) { return "<tr><th>" + r[0] + "</th><td>" + esc(r[1]) + "</td></tr>"; }).join("")
-          + '</table><div class="kz-text">' + (s.text ? esc(s.text).replace(/\n/g, "<br>") : "<i>Popis zatím nestažen.</i>") + '</div>';
+          + '</table>' + langBar(CS[f[0]]) + '<div class="kz-text">' + txt(CS[f[0]], s.text) + '</div>';
       }
       h += '<div class="ed-bar"><button class="ed-btn">Zavřít</button></div></div>';
       bg.innerHTML = h; document.body.appendChild(bg);
       bg.addEventListener("click", function (e) { if (e.target === bg || e.target.tagName === "BUTTON") bg.remove(); });
     });
   }
+  function langBar(cs) { return '<div class="lang-bar">' + (cs ? '<button class="lang-btn' + (lang() === "cs" ? ' on' : '') + '" data-lang="cs">CZ</button><button class="lang-btn' + (lang() === "en" ? ' on' : '') + '" data-lang="en">EN</button>' : '<small>Překlad zatím není – zobrazen originál.</small>') + '</div>'; }
+  function txt(cs, en) { var s = cs && lang() === "cs" ? cs : en; return s ? '<div class="lt" data-cs="' + esc(cs || "") + '" data-en="' + esc(en || "") + '">' + esc(s).replace(/\n/g, "<br>") + '</div>' : "<i>Popis zatím nestažen.</i>"; }
+  document.addEventListener("click", function (e) { var b = e.target.closest && e.target.closest(".lang-btn"); if (!b) return; e.preventDefault(); e.stopPropagation(); localStorage.setItem("mont-lang", b.dataset.lang);
+    var m = b.closest(".ed-modal"); m.querySelectorAll(".lang-btn").forEach(function (x) { x.classList.toggle("on", x === b); }); m.querySelectorAll(".lt").forEach(function (d) { d.innerHTML = esc(d.dataset[b.dataset.lang] || d.dataset.en).replace(/\n/g, "<br>"); }); }, true);
+  window.MontelienLang = { bar: langBar, txt: txt, lang: lang };
   window.MontelienKouzla = { show: show, load: load };
   document.addEventListener("click", function (e) { var a = e.target.closest && e.target.closest(".kz-link"); if (a) { e.preventDefault(); show(a.dataset.kouzlo); } });
   function catalog() {
