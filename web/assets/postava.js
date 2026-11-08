@@ -135,78 +135,83 @@
   }
 
   function render(c, d, cesta) {
-    var bg = R.pozadi[c.pozadi] || {}, sp = R.druhy[c.druh] || {};
-    var h = '<div class="ps">';
-    h += '<div class="ps-head"><div class="ps-name"><div class="ps-big">' + esc(c.jmeno) + '</div><div class="ps-sub">' + esc(c.titul || "") + '</div></div>';
-    h += '<div class="ps-meta">' + box("Povolání", (c.tridy || []).map(function (t) { return esc(t.trida + " " + t.uroven) + (t.podtrida ? " <small>(" + esc(t.podtrida) + ")</small>" : ""); }).join(" / "))
-      + box("Úroveň", d.lvl) + box("Druh (Species)", esc(c.druh) + (c.druh_volby ? " <small>– " + esc(c.druh_volby) + "</small>" : ""))
-      + box("Pozadí (Background)", esc(c.pozadi || "—")) + box("Přesvědčení", esc(c.zarovnani || "—")) + box("Velikost", esc(c.velikost || "Medium")) + '</div></div>';
+    var bg = R.pozadi[c.pozadi] || {}, sp = R.druhy[c.druh] || {}, bj = c.boj || {}, o = c.osobnost || {}, key = "ps-hp:" + (cesta || c.jmeno);
+    var initials = String(c.jmeno || "?").split(/\s+/).map(function (w) { return w[0]; }).join("").slice(0, 2);
+    var h = '<div class="ps ps2">';
+    // ---- hlavička ----
+    h += '<header class="p2-hero"><div class="p2-crest">' + (c.portret ? '<img src="' + esc(c.portret) + '" alt="">' : '<span>' + esc(initials) + '</span>') + '<div class="p2-lvl" title="Celková úroveň">' + d.lvl + '</div></div>'
+      + '<div class="p2-id"><h2 class="p2-name">' + esc(c.jmeno) + '</h2><div class="p2-title">' + esc(c.titul || "") + '</div><div class="p2-chips">'
+      + (c.tridy || []).map(function (t) { return '<span class="p2-chip p2-class">' + esc(t.trida) + ' ' + t.uroven + (t.podtrida ? ' · ' + esc(t.podtrida) : '') + '</span>'; }).join("")
+      + '<span class="p2-chip">' + esc(c.druh || "—") + '</span><span class="p2-chip">' + esc(c.pozadi || "—") + '</span><span class="p2-chip">' + esc(c.zarovnani || "—") + '</span><span class="p2-chip">' + esc(c.velikost || "Medium") + '</span></div></div>'
+      + '<div class="p2-cr"><div class="p2-cr-v" title="obrana CR ' + d.cr.def + ' · útok CR ' + d.cr.off + '">' + d.cr.cr + '</div><div class="p2-cr-l">CR (odhad)</div><div class="p2-cr-x">' + d.cr.xp + ' XP' + (bj.cr_rucne ? '<br>' + esc(bj.cr_rucne) : '') + '</div></div></header>';
     if (cesta && document.body.classList.contains("ed-on")) h += '<div class="ps-edit"><button class="ed-btn ed-primary" data-ps-edit>✎ Upravit postavu</button></div>';
-    var bj = c.boj || {}, key = "ps-hp:" + (cesta || c.jmeno);
-    h += '<div class="ps-fight"><div class="ps-fight-h">Připravenost na boj</div>'
-      + '<div class="ps-fight-row">' + box("CR (odhad)", '<span title="obrana CR ' + d.cr.def + ' · útok CR ' + d.cr.off + '">' + d.cr.cr + '</span>' + (bj.cr_rucne ? ' <small>/ ' + esc(bj.cr_rucne) + '</small>' : ''))
-      + box("XP", d.cr.xp) + box("DPR", esc(bj.dpr || "?")) + box("Iniciativa", '<a class="ps-roll" data-roll="1d20' + sg(d.init) + '" data-label="Iniciativa">' + sg(d.init) + '</a>')
-      + '<div class="ps-box ps-hptrack" data-key="' + esc(key) + '" data-max="' + d.hp + '"><div class="ps-lbl">Aktuální HP / dočasné</div><div class="ps-val"><button data-hp="-5">−5</button><button data-hp="-1">−1</button><input class="ps-hpcur" type="number"><button data-hp="1">+1</button><button data-hp="5">+5</button> <input class="ps-hptmp" type="number" placeholder="tmp"> <button data-hp="reset" title="Plné HP">↺</button></div></div>'
-      + '</div>' + fightList("Akce", bj.akce) + fightList("Bonusové akce", bj.bonusove_akce) + fightList("Reakce", bj.reakce) + fightList("Legendární akce", bj.legendarni) + (bj.taktika ? '<p class="ps-tactic"><b>Taktika:</b> ' + para(bj.taktika) + '</p>' : '') + '</div>';
-    h += '<div class="ps-grid">';
-    // atributy + dovednosti
-    h += '<div class="ps-col ps-abil">';
-    AB.forEach(function (a) {
-      h += '<div class="ps-ab"><div class="ps-ab-top"><span class="ps-ab-n">' + AB_CZ[a] + ' <small>' + a + '</small></span><span class="ps-ab-mod">' + sg(d.mods[a]) + '</span><span class="ps-ab-s">' + esc((c.atributy || {})[a]) + '</span></div><ul>';
-      h += '<li class="' + (d.saveProf.indexOf(a) >= 0 ? "p" : "") + '"><i></i><a class="ps-roll" data-roll="1d20' + sg(d.saves[a]) + '" data-label="Záchrana ' + a + '">' + sg(d.saves[a]) + '</a> <b>Záchranný hod</b></li>';
-      Object.keys(SKILLS).filter(function (s) { return SKILLS[s] === a; }).forEach(function (s) {
-        var k = d.skills[s]; h += '<li class="' + (k.exp ? "e" : k.prof ? "p" : "") + '"><i></i><a class="ps-roll" data-roll="1d20' + sg(k.val) + '" data-label="' + s + '">' + sg(k.val) + "</a> " + s + '</li>';
-      });
-      h += '</ul></div>';
-    });
-    h += '<div class="ps-small">' + box("Proficiency Bonus", sg(d.pb)) + box("Pasivní Perception", d.passive) + '</div>';
-    h += '</div>';
-    // boj
-    h += '<div class="ps-col">';
-    h += '<div class="ps-combat">' + box("Armor Class", d.ac, "ps-ac") + box("Iniciativa", sg(d.init)) + box("Rychlost", d.speed + " ft") + box("Hit Dice", d.dice) + '</div>';
-    h += '<div class="ps-hp"><div class="ps-lbl">Hit Points</div><div class="ps-big">' + d.hp + '</div>' + (c.hp_rucne ? '<small>ručně (výpočet ' + d.hpCalc + ')</small>' : '<small>průměr na úroveň</small>') + '</div>';
-    if (c.zbroj && c.zbroj.nazev) h += '<div class="ps-note">Zbroj: ' + esc(c.zbroj.nazev) + (c.zbroj.stit ? " + Shield" : "") + '</div>';
-    h += sect("Útoky a cantripy", '<table class="ps-tab"><tr><th>Zbraň / útok</th><th>Bonus</th><th>Zásah</th><th>Mastery / pozn.</th></tr>' + (c.utoky || []).map(function (u) {
+    // ---- životní hodnoty ----
+    h += '<div class="p2-vitals"><div class="p2-shield"><div class="p2-v">' + d.ac + '</div><div class="p2-l">Armor Class</div></div>'
+      + '<div class="p2-hp ps-hptrack" data-key="' + esc(key) + '" data-max="' + d.hp + '"><div class="p2-l">Hit Points</div><div class="p2-hp-row"><button data-hp="-5">−5</button><button data-hp="-1">−1</button><input class="ps-hpcur" type="number"><span class="p2-hp-max">/ ' + d.hp + '</span><button data-hp="1">+1</button><button data-hp="5">+5</button></div><div class="p2-hpbar"><i></i></div><div class="p2-hp-row p2-small"><label>dočasné <input class="ps-hptmp" type="number"></label><button data-hp="reset" title="Plné HP">↺ plné</button></div></div>'
+      + stat("Iniciativa", '<a class="ps-roll" data-roll="1d20' + sg(d.init) + '" data-label="Iniciativa">' + sg(d.init) + '</a>') + stat("Rychlost", d.speed + ' ft') + stat("Proficiency", sg(d.pb)) + stat("Pasivní Perception", d.passive) + stat("Hit Dice", d.dice) + stat("DPR", esc(bj.dpr || "?")) + '</div>';
+    // ---- atributy ----
+    h += '<div class="p2-abil">' + AB.map(function (a) { return '<div class="p2-ab"><div class="p2-ab-n">' + AB_CZ[a] + '</div><a class="p2-ab-mod ps-roll" data-roll="1d20' + sg(d.mods[a]) + '" data-label="' + AB_CZ[a] + '">' + sg(d.mods[a]) + '</a><div class="p2-ab-s">' + esc((c.atributy || {})[a]) + '</div><a class="p2-ab-save ps-roll' + (d.saveProf.indexOf(a) >= 0 ? ' p' : '') + '" data-roll="1d20' + sg(d.saves[a]) + '" data-label="Záchrana ' + a + '">záchrana ' + sg(d.saves[a]) + '</a></div>'; }).join("") + '</div>';
+    // ---- záložky ----
+    var tabs = [];
+    // Boj
+    var atk = '<table class="p2-tab"><tr><th>Útok</th><th>Zásah</th><th>Zranění</th><th>Mastery / pozn.</th></tr>' + (c.utoky || []).map(function (u) {
       var a = u.atribut === "FIN" ? Math.max(d.mods.STR, d.mods.DEX) : u.atribut === "SPELL" ? (d.casting[0] ? d.mods[d.casting[0].ab] : 0) : d.mods[u.atribut || "STR"] || 0;
       var bon = a + d.pb + (Number(u.bonus) || 0), dm = (u.bez_modu ? 0 : a) + (Number(u.bonus) || 0) + (Number(u.bonus_zraneni) || 0);
-      var dmg = u.kostka ? esc(u.kostka) + (dm ? " " + sg(dm) : "") : "";
-      return '<tr><td>' + esc(u.nazev) + (u.dosah ? ' <small>' + esc(u.dosah) + '</small>' : '') + '</td><td>' + (u.bez_hodu ? "—" : '<a class="ps-roll" data-roll="1d20' + sg(bon) + '" data-label="' + esc(u.nazev) + ' – útok">' + sg(bon) + '</a>') + '</td><td>' + (u.kostka ? '<a class="ps-roll" data-roll="' + esc(u.kostka) + (dm ? sg(dm) : "") + '" data-label="' + esc(u.nazev) + ' – zásah">' + dmg + '</a>' : '') + ' ' + esc(u.typ || "") + '</td><td>' + esc([u.mastery, u.poznamka].filter(Boolean).join(" · ")) + '</td></tr>';
-    }).join("") + '</table>');
+      return '<tr><td><b>' + esc(u.nazev) + '</b>' + (u.dosah ? '<br><small>' + esc(u.dosah) + '</small>' : '') + '</td><td>' + (u.bez_hodu ? "—" : '<a class="p2-pill ps-roll" data-roll="1d20' + sg(bon) + '" data-label="' + esc(u.nazev) + ' – útok">' + sg(bon) + '</a>') + '</td><td>' + (u.kostka ? '<a class="p2-pill p2-dmg ps-roll" data-roll="' + esc(u.kostka) + (dm ? sg(dm) : "") + '" data-label="' + esc(u.nazev) + ' – zásah">' + esc(u.kostka) + (dm ? " " + sg(dm) : "") + '</a> ' : '') + '<small>' + esc(u.typ || "") + '</small></td><td><small>' + esc([u.mastery, u.poznamka].filter(Boolean).join(" · ")) + '</small></td></tr>';
+    }).join("") + '</table>';
     var res = [];
     (c.tridy || []).forEach(function (t) { var r = row(t.trida, t.uroven); Object.keys(r).forEach(function (k) { if (SKIP_COLS.indexOf(k) < 0 && r[k] && r[k] !== "-") res.push([t.trida + ": " + k, r[k]]); }); });
     (c.zdroje || []).forEach(function (z) { res.push([z.nazev, z.pocet + (z.obnova ? " / " + z.obnova : "")]); });
-    if (res.length) h += sect("Zdroje povolání", '<ul class="ps-res">' + res.map(function (r) { return "<li><span>" + esc(r[0]) + "</span><b>" + esc(r[1]) + "</b></li>"; }).join("") + '</ul>');
-    h += sect("Výcvik a zdatnosti", '<p><b>Zbroj:</b> ' + esc(train(c, "Armor Training")) + '<br><b>Zbraně:</b> ' + esc(train(c, "Weapon Proficiencies")) + (c.mastery && c.mastery.length ? '<br><b>Weapon Mastery:</b> ' + esc(c.mastery.join(", ")) : '') + '<br><b>Nástroje:</b> ' + esc((c.nastroje || []).join(", ") || "—") + '<br><b>Jazyky:</b> ' + esc((c.jazyky || []).join(", ") || "—") + '</p>');
-    h += '</div>';
-    // rysy
-    h += '<div class="ps-col">';
-    var feats = features(c);
-    h += sect("Rysy povolání", feats.map(function (f) { return det(f.nazev + ' <small>' + esc(f.zdroj) + ' ' + (f.urovne ? f.urovne.join(", ") : f.uroven) + '</small>', f.text); }).join(""));
-    h += sect("Rysy druhu – " + esc(c.druh), Object.keys(sp.rysy || {}).map(function (k) { return det(k, sp.rysy[k]); }).join("") + (c.druh_volby ? '<p class="ps-note">Volba: ' + esc(c.druh_volby) + '</p>' : ''));
-    h += sect("Featy", (c.featy || []).map(function (f) { var r = R.featy[f.nazev] || {}; return det(esc(f.nazev) + ' <small>' + esc(f.zdroj || "") + '</small>', (f.poznamka ? "Volba: " + f.poznamka + "\n\n" : "") + (r.text || "")); }).join(""));
-    if (c.vlastni_rysy && c.vlastni_rysy.length) h += sect("Zvláštní a božské rysy", c.vlastni_rysy.map(function (f) { return det(esc(f.nazev), f.text); }).join(""));
-    h += '</div></div>';
-    // kouzla
+    tabs.push(["Boj", '<div class="p2-2col"><div>' + card("Útoky", atk) + (res.length ? card("Zdroje povolání", '<ul class="p2-res">' + res.map(function (r) { return "<li><span>" + esc(r[0]) + "</span><b>" + esc(r[1]) + "</b></li>"; }).join("") + '</ul>') : '') + '</div><div>'
+      + card("V tahu", actList("Akce", bj.akce) + actList("Bonusové akce", bj.bonusove_akce) + actList("Reakce", bj.reakce) + actList("Legendární akce", bj.legendarni) + (bj.taktika ? '<p class="p2-tactic">' + para(bj.taktika) + '</p>' : '')) + '</div></div>']);
+    // Dovednosti
+    tabs.push(["Dovednosti", '<div class="p2-2col"><div>' + card("Dovednosti", '<ul class="p2-skills">' + Object.keys(SKILLS).sort().map(function (s) { var k = d.skills[s]; return '<li class="' + (k.exp ? "e" : k.prof ? "p" : "") + '"><i></i><span>' + s + ' <small>' + SKILLS[s] + '</small></span><a class="ps-roll" data-roll="1d20' + sg(k.val) + '" data-label="' + s + '">' + sg(k.val) + '</a></li>'; }).join("") + '</ul>') + '</div><div>'
+      + card("Výcvik a zdatnosti", '<dl class="p2-dl"><dt>Zbroj</dt><dd>' + esc(train(c, "Armor Training")) + '</dd><dt>Zbraně</dt><dd>' + esc(train(c, "Weapon Proficiencies")) + '</dd>' + (c.mastery && c.mastery.length ? '<dt>Weapon Mastery</dt><dd>' + esc(c.mastery.join(", ")) + '</dd>' : '') + '<dt>Nástroje</dt><dd>' + esc((c.nastroje || []).join(", ") || "—") + '</dd><dt>Jazyky</dt><dd>' + esc((c.jazyky || []).join(", ") || "—") + '</dd>' + (c.zbroj && c.zbroj.nazev ? '<dt>Zbroj na sobě</dt><dd>' + esc(c.zbroj.nazev) + (c.zbroj.stit ? " + Shield" : "") + '</dd>' : '') + '</dl>') + '</div></div>']);
+    // Kouzla
     if (d.casting.length || (c.kouzla || []).length) {
-      var s = '<div class="ps-cast">' + d.casting.map(function (x) { var r = row(x.trida.split(" ")[0], lvlOf(c, x.trida.split(" ")[0])); return box(x.trida + " (" + x.ab + ")", "DC " + x.dc + " · útok " + sg(x.atk) + (r["Prepared Spells"] ? " · připravených " + r["Prepared Spells"] : "") + (r.Cantrips ? " · cantripů " + r.Cantrips : "")); }).join("") + '</div>';
+      var s = '<div class="p2-cast">' + d.casting.map(function (x) { var r = row(x.trida.split(" ")[0], lvlOf(c, x.trida.split(" ")[0])); return '<div class="p2-castbox"><div class="p2-l">' + esc(x.trida) + ' · ' + x.ab + '</div><div><b>DC ' + x.dc + '</b> · útok <a class="ps-roll" data-roll="1d20' + sg(x.atk) + '" data-label="Spell attack">' + sg(x.atk) + '</a></div><small>' + (r["Prepared Spells"] ? "připravených " + r["Prepared Spells"] : "") + (r.Cantrips ? " · cantripů " + r.Cantrips : "") + '</small></div>'; }).join("") + '</div>';
       var byLvl = {}; (c.kouzla || []).forEach(function (k) { var l = k.uroven != null ? Number(k.uroven) : ((R.spell(k.nazev) || {}).uroven); if (l == null) l = "?"; (byLvl[l] = byLvl[l] || []).push(k); });
-      s += '<div class="ps-spells">';
+      s += '<div class="p2-spells">';
       for (var l = 0; l <= 9; l++) {
         var slots = l ? (d.slots[l - 1] || 0) : 0, pact = d.pact && Number(d.pact.uroven) === l ? Number(d.pact.pocet) : 0;
         if (!byLvl[l] && !slots && !pact) continue;
-        s += '<div class="ps-sl"><div class="ps-sl-h">' + (l ? l + ". úroveň" : "Cantripy") + '<span>' + pips(slots) + (pact ? ' <em title="Pact Magic">pakt ' + pips(pact) + '</em>' : '') + '</span></div><ul>' + (byLvl[l] || []).map(function (k) { var r = R.spell(k.nazev); return '<li><a href="#" class="kz-link" data-kouzlo="' + esc(k.nazev) + '">' + esc(k.nazev) + '</a>' + (r ? ' <small>' + esc(r.skola) + '</small>' : ' <small class="ps-warn">mimo seznam 2024?</small>') + (k.poznamka ? ' <small>– ' + esc(k.poznamka) + '</small>' : '') + '</li>'; }).join("") + '</ul></div>';
+        s += '<div class="p2-sl"><div class="p2-sl-h"><span>' + (l ? l + '. úroveň' : 'Cantripy') + '</span><span class="p2-pips" data-k="' + esc(key + ':s' + l) + '">' + pips(slots) + (pact ? ' <em title="Pact Magic">pakt ' + pips(pact) + '</em>' : '') + '</span></div><ul>' + (byLvl[l] || []).map(function (k) { var r = R.spell(k.nazev); return '<li><a href="#" class="kz-link" data-kouzlo="' + esc(k.nazev) + '">' + esc(k.nazev) + '</a>' + (r ? ' <small>' + esc(r.skola) + '</small>' : ' <small class="ps-warn">mimo seznam 2024?</small>') + (k.poznamka ? ' <small>– ' + esc(k.poznamka) + '</small>' : '') + '</li>'; }).join("") + '</ul></div>';
       }
-      if (byLvl["?"]) s += '<div class="ps-sl"><div class="ps-sl-h">Neznámá úroveň</div><ul>' + byLvl["?"].map(function (k) { return "<li>" + esc(k.nazev) + "</li>"; }).join("") + '</ul></div>';
-      h += sect("Kouzla", s + '</div>');
+      if (byLvl["?"]) s += '<div class="p2-sl"><div class="p2-sl-h">Neznámá úroveň</div><ul>' + byLvl["?"].map(function (k) { return "<li>" + esc(k.nazev) + "</li>"; }).join("") + '</ul></div>';
+      tabs.push(["Kouzla", s + '</div>']);
     }
-    // výbava, osobnost
-    var o = c.osobnost || {};
-    h += '<div class="ps-grid3">' + sect("Výbava", '<ul>' + (c.vybava || []).map(function (v) { return "<li>" + esc(v) + "</li>"; }).join("") + '</ul>' + (c.penize ? '<p><b>Peníze:</b> ' + esc(Object.keys(c.penize).map(function (k) { return c.penize[k] + " " + k; }).join(", ")) + '</p>' : ''))
-      + sect("Osobnost", '<p><b>Rysy:</b> ' + esc(o.rysy || "") + '</p><p><b>Ideály:</b> ' + esc(o.idealy || "") + '</p><p><b>Pouta:</b> ' + esc(o.pouta || "") + '</p><p><b>Vady:</b> ' + esc(o.vady || "") + '</p>')
-      + sect("Pozadí: " + esc(c.pozadi || "—"), bg.feat ? '<p><b>Atributy:</b> ' + esc(bg.atributy) + '<br><b>Origin feat:</b> ' + esc(bg.feat) + '<br><b>Dovednosti:</b> ' + esc(bg.dovednosti) + '<br><b>Nástroj:</b> ' + esc(bg.nastroj) + '</p>' : '<p>—</p>') + '</div>';
-    if (c.vzhled || c.poznamky || c.puvod_atributu || c.prevod_2024) h += sect("Poznámky", (c.vzhled ? '<p><b>Vzhled:</b> ' + para(c.vzhled) + '</p>' : '') + (c.puvod_atributu ? '<p><b>Atributy:</b> ' + para(c.puvod_atributu) + '</p>' : '') + (c.prevod_2024 ? '<p><b>Převod na 2024:</b> ' + para(c.prevod_2024) + '</p>' : '') + (c.poznamky ? '<p>' + para(c.poznamky) + '</p>' : ''));
+    // Rysy
+    var feats = features(c);
+    tabs.push(["Rysy", '<div class="p2-2col"><div>' + card("Rysy povolání", feats.map(function (f) { return det(f.nazev + ' <small>' + esc(f.zdroj) + ' ' + (f.urovne ? f.urovne.join(", ") : f.uroven) + '</small>', f.text); }).join("")) + '</div><div>'
+      + card("Rysy druhu – " + esc(c.druh), Object.keys(sp.rysy || {}).map(function (k) { return det(k, sp.rysy[k]); }).join("") + (c.druh_volby ? '<p class="ps-note">Volba: ' + esc(c.druh_volby) + '</p>' : ''))
+      + card("Featy", (c.featy || []).map(function (f) { var r = R.featy[f.nazev] || {}; return det(esc(f.nazev) + ' <small>' + esc(f.zdroj || "") + '</small>', (f.poznamka ? "Volba: " + f.poznamka + "\n\n" : "") + (r.text || "")); }).join(""))
+      + (c.vlastni_rysy && c.vlastni_rysy.length ? card("Zvláštní a božské rysy", c.vlastni_rysy.map(function (f) { return det(esc(f.nazev), f.text); }).join("")) : '') + '</div></div>']);
+    // Výbava
+    tabs.push(["Výbava", '<div class="p2-2col"><div>' + card("Výbava", '<ul class="p2-gear">' + (c.vybava || []).map(function (v) { return "<li>" + esc(v) + "</li>"; }).join("") + '</ul>') + '</div><div>' + (c.penize ? card("Peníze", '<div class="p2-coins">' + Object.keys(c.penize).map(function (k) { return '<span><b>' + esc(c.penize[k]) + '</b> ' + esc(k) + '</span>'; }).join("") + '</div>') : '') + '</div></div>']);
+    // Příběh
+    tabs.push(["Příběh", '<div class="p2-2col"><div>' + card("Osobnost", '<dl class="p2-dl"><dt>Rysy</dt><dd>' + esc(o.rysy || "—") + '</dd><dt>Ideály</dt><dd>' + esc(o.idealy || "—") + '</dd><dt>Pouta</dt><dd>' + esc(o.pouta || "—") + '</dd><dt>Vady</dt><dd>' + esc(o.vady || "—") + '</dd></dl>') + (c.vzhled ? card("Vzhled", '<p>' + para(c.vzhled) + '</p>') : '') + '</div><div>'
+      + card("Pozadí: " + esc(c.pozadi || "—"), bg.feat ? '<dl class="p2-dl"><dt>Atributy</dt><dd>' + esc(bg.atributy) + '</dd><dt>Origin feat</dt><dd>' + esc(bg.feat) + '</dd><dt>Dovednosti</dt><dd>' + esc(bg.dovednosti) + '</dd><dt>Nástroj</dt><dd>' + esc(bg.nastroj) + '</dd></dl>' : '<p>—</p>')
+      + (c.puvod_atributu || c.prevod_2024 || c.poznamky ? card("Poznámky", (c.puvod_atributu ? '<p><b>Atributy:</b> ' + para(c.puvod_atributu) + '</p>' : '') + (c.prevod_2024 ? '<p><b>Převod na 2024:</b> ' + para(c.prevod_2024) + '</p>' : '') + (c.poznamky ? '<p>' + para(c.poznamky) + '</p>' : '')) : '') + '</div></div>']);
+    h += '<nav class="p2-tabs">' + tabs.map(function (x, i) { return '<button class="p2-tabbtn' + (i ? '' : ' on') + '" data-tab="' + i + '">' + x[0] + '</button>'; }).join("") + '<button class="p2-tabbtn" data-tab="all" title="Zobrazit vše (i pro tisk)">Vše (tisk)</button></nav>';
+    h += tabs.map(function (x, i) { return '<section class="p2-pane' + (i ? '' : ' on') + '" data-pane="' + i + '"><h3 class="p2-pane-h">' + x[0] + '</h3>' + x[1] + '</section>'; }).join("");
     return h + '</div>';
   }
+  function stat(l, v) { return '<div class="p2-stat"><div class="p2-v">' + v + '</div><div class="p2-l">' + l + '</div></div>'; }
+  function card(t, body) { return '<section class="p2-card"><h4>' + t + '</h4>' + body + '</section>'; }
+  function actList(t, arr) { if (!arr || !arr.length) return ""; return '<div class="p2-act"><div class="p2-act-h">' + t + '</div>' + arr.map(function (a) { return '<p>' + (typeof a === "string" ? esc(a) : '<b>' + esc(a.nazev) + '.</b> ' + esc(a.text || "")) + '</p>'; }).join("") + '</div>'; }
+  function sheetUi(root) {
+    if (root.dataset.ui) { restorePips(root); return; } root.dataset.ui = "1";
+    root.addEventListener("click", function (e) {
+      var b = e.target.closest(".p2-tabbtn"); if (b) {
+        root.querySelectorAll(".p2-tabbtn").forEach(function (x) { x.classList.toggle("on", x === b); });
+        root.querySelectorAll(".p2-pane").forEach(function (p) { p.classList.toggle("on", b.dataset.tab === "all" || p.dataset.pane === b.dataset.tab); });
+        root.querySelector(".ps2").classList.toggle("p2-all", b.dataset.tab === "all");
+      }
+      var pip = e.target.closest(".p2-pip"); if (pip) { pip.classList.toggle("used"); var w = pip.closest(".p2-pips"); localStorage.setItem(w.dataset.k, w.querySelectorAll(".used").length); }
+    });
+    restorePips(root);
+  }
+  function restorePips(root) { root.querySelectorAll(".p2-pips").forEach(function (w) { var n = Number(localStorage.getItem(w.dataset.k) || 0); w.querySelectorAll(".p2-pip").forEach(function (p, i) { if (i < n) p.classList.add("used"); }); }); }
   function fightList(t, arr) { if (!arr || !arr.length) return ""; return '<div class="ps-fl"><b>' + t + ':</b><ul>' + arr.map(function (a) { return "<li>" + (typeof a === "string" ? esc(a) : "<b>" + esc(a.nazev) + ".</b> " + esc(a.text || "")) + "</li>"; }).join("") + '</ul></div>'; }
   function roll(expr) {
     var m = String(expr).replace(/\s/g, "").match(/^(\d*)d(\d+)([+-]\d+)?$/); if (!m) return null;
@@ -225,7 +230,7 @@
     var w = root.querySelector(".ps-hptrack"); if (!w) return;
     var key = w.dataset.key, max = Number(w.dataset.max), cur = w.querySelector(".ps-hpcur"), tmp = w.querySelector(".ps-hptmp");
     var st = JSON.parse(localStorage.getItem(key) || "null") || { hp: max, tmp: "" };
-    function save() { localStorage.setItem(key, JSON.stringify(st)); cur.value = st.hp; tmp.value = st.tmp; w.classList.toggle("ps-bloodied", st.hp <= max / 2); w.classList.toggle("ps-down", st.hp <= 0); }
+    function save() { localStorage.setItem(key, JSON.stringify(st)); cur.value = st.hp; tmp.value = st.tmp; w.classList.toggle("ps-bloodied", st.hp <= max / 2); w.classList.toggle("ps-down", st.hp <= 0); var bar = w.querySelector(".p2-hpbar i"); if (bar) bar.style.width = Math.max(0, Math.min(100, 100 * st.hp / max)) + "%"; }
     w.addEventListener("click", function (e) {
       var b = e.target.dataset.hp; if (!b) return;
       if (b === "reset") { st.hp = max; st.tmp = ""; }
@@ -239,7 +244,7 @@
   function box(l, v, cls) { return '<div class="ps-box ' + (cls || "") + '"><div class="ps-lbl">' + l + '</div><div class="ps-val">' + v + '</div></div>'; }
   function sect(t, body) { return '<section class="ps-sect"><h4>' + t + '</h4>' + body + '</section>'; }
   function det(t, body) { return '<details><summary>' + t + '</summary><div>' + para(body || "") + '</div></details>'; }
-  function pips(n) { var s = ""; for (var i = 0; i < n; i++) s += "◯"; return s; }
+  function pips(n) { var s = ""; for (var i = 0; i < n; i++) s += '<i class="p2-pip" title="Klikni = slot použit"></i>'; return s; }
   function train(c, key) { var t = c.tridy && c.tridy[0] && R.tridy[c.tridy[0].trida]; return t ? t.core[key] || "—" : "—"; }
 
   // ---------- formulář ----------
@@ -368,7 +373,7 @@
     var c = JSON.parse(dataEl.textContent), src = document.getElementById("zdroj-stranky"), cesta = src && src.dataset.cesta;
     rules().then(function () {
       var draw = function () {
-        holder.innerHTML = render(c, compute(c), cesta); hpTracker(holder);
+        holder.innerHTML = render(c, compute(c), cesta); hpTracker(holder); sheetUi(holder);
         var b = holder.querySelector("[data-ps-edit]"); if (b) b.addEventListener("click", function () { editor(c, cesta); });
       };
       draw();
