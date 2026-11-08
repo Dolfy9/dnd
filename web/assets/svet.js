@@ -158,33 +158,39 @@
     kresliSprity(svg, sprites, A, W, H, META);
   }
 
-  var IMG = {}, K = 2;
+  var IMG = {}, K = Math.max(1, Math.min(2, window.devicePixelRatio || 1));
   function nacti(src) { if (!IMG[src]) IMG[src] = new Promise(function (ok) { var i = new Image(); i.onload = function () { ok(i); }; i.onerror = function () { ok(null); }; i.src = src; }); return IMG[src]; }
+  function upravObraz(img, saturation, brightness) {
+    saturation = saturation == null ? 1 : saturation; brightness = brightness == null ? 1 : brightness;
+    if (saturation === 1 && brightness === 1) return img;
+    var c = document.createElement("canvas"); c.width = img.naturalWidth || img.width; c.height = img.naturalHeight || img.height;
+    var g = c.getContext("2d"); g.drawImage(img, 0, 0);
+    var px = g.getImageData(0, 0, c.width, c.height), d = px.data;
+    for (var j = 0; j < d.length; j += 4) { var l = .3 * d[j] + .59 * d[j + 1] + .11 * d[j + 2]; d[j] = (l + (d[j] - l) * saturation) * brightness; d[j + 1] = (l + (d[j + 1] - l) * saturation) * brightness; d[j + 2] = (l + (d[j + 2] - l) * saturation) * brightness; }
+    g.putImageData(px, 0, 0); return c;
+  }
   function kresliSprity(svg, sprites, A, W, H, META) {
-    var tok = svg._tok = (svg._tok || 0) + 1, names = {};
-    sprites.forEach(function (s) { names[s.n] = 1; });
+    var tok = svg._tok = (svg._tok || 0) + 1, names = {}, tmave = {};
+    sprites.forEach(function (s) { names[s.n] = 1; if (s.tmavy) tmave[s.n] = 1; });
     var keys = Object.keys(names);
     Promise.all(keys.map(function (n) { return nacti(A + n + ".webp"); })).then(function (imgs) {
       if (tok !== svg._tok) return;
       var im = {}; keys.forEach(function (n, i) {
         var img = imgs[i], filters = window.SVET_PALETA.sprite_filters || {}, f = /^duna/.test(n) ? [filters.dune_saturation, filters.dune_brightness] : /^kaktus/.test(n) ? [filters.cactus_saturation, filters.cactus_brightness] : /^kopec/.test(n) ? [filters.hill_saturation, filters.hill_brightness] : null;
-        if (img && f) {
-          var oc = document.createElement("canvas"); oc.width = img.naturalWidth; oc.height = img.naturalHeight;
-          var og = oc.getContext("2d"); og.drawImage(img, 0, 0);
-          var px = og.getImageData(0, 0, oc.width, oc.height), d = px.data;
-          for (var j = 0; j < d.length; j += 4) { var l = .3 * d[j] + .59 * d[j + 1] + .11 * d[j + 2]; d[j] = (l + (d[j] - l) * f[0]) * f[1]; d[j + 1] = (l + (d[j + 1] - l) * f[0]) * f[1]; d[j + 2] = (l + (d[j + 2] - l) * f[0]) * f[1]; }
-          og.putImageData(px, 0, 0); img = oc;
+        if (img) {
+          if (f) img = upravObraz(img, f[0], f[1]);
+          im[n] = upravObraz(img, window.SVET_PALETA.grade.sprite_saturation, 1);
+          if (tmave[n]) im[n + "#tmavy"] = upravObraz(img, .65, .58);
+        } else {
+          im[n] = null;
         }
-        im[n] = img;
       });
       var c = document.createElement("canvas"); c.width = W * K; c.height = H * K;
       var g = c.getContext("2d"); g.scale(K, K); g.imageSmoothingQuality = "high";
       sprites.forEach(function (s) {
-        var img = im[s.n], m = META[s.n]; if (!img) return;
+        var img = im[s.n + (s.tmavy ? "#tmavy" : "")], m = META[s.n]; if (!img) return;
         var k = s.w / m.w;
         g.save(); g.translate(s.x, s.y); if (s.r) g.rotate(s.r * Math.PI / 180); g.scale(s.f ? -k : k, k);
-        g.filter = "saturate(" + window.SVET_PALETA.grade.sprite_saturation + ")";
-        if (s.tmavy) g.filter = "brightness(.58) saturate(.65)";
         g.drawImage(img, -m.w / 2, -m.h + 2, m.w, m.h); g.restore();
       });
       c.toBlob(function (b) {
