@@ -101,9 +101,12 @@ def main():
         os.symlink(os.path.relpath(ROOT / f, DOCS), DOCS / f)
     os.symlink(os.path.relpath(WEB / "assets", DOCS), DOCS / "assets")
     (DOCS / "mapa.md").write_text(map_page(), encoding="utf-8")
+    (DOCS / "bestiar.md").write_text("---\nhide:\n  - toc\n---\n# Bestiář (SRD 5.2.1)\n\nNetvoři ze SRD 5.2.1 se statbloky. Filtruj podle typu a CR, klikni pro statblok. Obsah SRD 5.2.1 je pod licencí CC-BY 4.0.\n\n<div class=\"srd-katalog\" data-typ=\"bestiar\"></div>\n", encoding="utf-8")
+    (DOCS / "predmety.md").write_text("---\nhide:\n  - toc\n---\n# Předměty a výbava (SRD 5.2.1)\n\nZbraně, zbroje, výbava a kouzelné předměty. Obsah SRD 5.2.1 je pod licencí CC-BY 4.0.\n\n<div class=\"srd-katalog\" data-typ=\"predmety\"></div>\n", encoding="utf-8")
+    (DOCS / "glosar.md").write_text("---\nhide:\n  - toc\n---\n# Glosář pravidel (SRD 5.2.1)\n\nDefinice pravidel 2024 (stavy, akce, pojmy). Obsah SRD 5.2.1 je pod licencí CC-BY 4.0.\n\n<div class=\"srd-katalog\" data-typ=\"glosar\"></div>\n", encoding="utf-8")
     (DOCS / "kouzla.md").write_text("---\nhide:\n  - toc\n---\n# Katalog kouzel (D&D 2024)\n\nVšechna kouzla z pravidel 2024+. Klikni na název pro celý popis.\n\n<div id=\"katalog-kouzel\"></div>\n", encoding="utf-8")
 
-    nav = ["README.md", {"Interaktivní mapa": "mapa.md"}, {"Katalog kouzel": "kouzla.md"}] + sections + [
+    nav = ["README.md", {"Interaktivní mapa": "mapa.md"}, {"Pravidla 2024": [{"Katalog kouzel": "kouzla.md"}, {"Bestiář": "bestiar.md"}, {"Předměty a výbava": "predmety.md"}, {"Glosář pravidel": "glosar.md"}]}] + sections + [
         {"Otevřené otázky": "Otevrene_otazky.md"}, {"Pravidla projektu": "AGENTS.md"}]
     watch = "\n".join(f"  - ../{d}" for d in [s for s in os.listdir(ROOT)
                       if (ROOT / s).is_dir() and s not in SKIP and not s.startswith(".")])
@@ -159,9 +162,13 @@ extra_javascript:
   - assets/editor.js
   - assets/postava.js
   - assets/kouzla.js
+  - assets/srd.js
 not_in_nav: |
   /mapa.md
   /kouzla.md
+  /bestiar.md
+  /predmety.md
+  /glosar.md
 validation:
   omitted_files: ignore
   absolute_links: ignore
