@@ -39,6 +39,32 @@ def geoms(g):
     return list(g.geoms) if hasattr(g, "geoms") else [g]
 
 
+def irregular(g, seed, amplitude, spacing=7):
+    out = []
+    for p in geoms(g):
+        if p.geom_type != "Polygon" or p.area < 20:
+            continue
+        line = LineString(p.exterior.coords)
+        length = line.length
+        points = []
+        for d in np.arange(0, length, spacing):
+            q = line.interpolate(d)
+            a = line.interpolate((d - 2) % length)
+            b = line.interpolate((d + 2) % length)
+            tangent = np.array([b.x - a.x, b.y - a.y], dtype=float)
+            tangent /= np.linalg.norm(tangent) + 1e-9
+            normal = np.array([-tangent[1], tangent[0]])
+            offset = amplitude * (
+                .48 * math.sin(d * .16 + seed * .01)
+                + .30 * math.sin(d * .31 + seed * .023)
+                + .22 * math.sin(d * .062 + seed * .04)
+            )
+            points.append((q.x + normal[0] * offset, q.y + normal[1] * offset))
+        shaped = Polygon(points).buffer(0)
+        out.extend(x for x in geoms(shaped) if x.geom_type == "Polygon" and x.area > 20)
+    return unary_union(out) if out else g
+
+
 def staty(svet, land, ob, mista, k=4):
     """Území států: cenová vzdálenost od popisku země (hory a moře jsou přirozené hranice)."""
     W, H = svet["sirka"], svet["vyska"]
@@ -191,6 +217,35 @@ def lore(svet):
         for b in kousky(Polygon(o["body"]).buffer(0).intersection(land)):
             ob.append(o | {"body": b})
 
+    ridges = unary_union([Polygon(o["body"]).buffer(0) for o in ob if o["typ"] in ("hory", "velehory") and len(o["body"]) > 2])
+    reshaped = []
+    hinai_main = None
+    for i, o in enumerate(ob):
+        if o["typ"] not in ("les", "haj", "dzungle", "mrtvy", "mrtva_zeme") or len(o["body"]) < 3:
+            reshaped.append(o)
+            continue
+        poly = Polygon(o["body"]).buffer(0)
+        note = o.get("pozn", "")
+        named_jungle = "Hinai Mihi" in note or ("Mönohen" in note and o["typ"] in ("haj", "dzungle"))
+        amp = 12 if named_jungle else 3.5
+        center = poly.centroid
+        seed = round(center.x * 13 + center.y * 17 + i * 7919)
+        shaped = irregular(poly, seed, amp).intersection(land)
+        if named_jungle:
+            shaped = shaped.difference(ridges.buffer(4))
+            if "Hinai Mihi" in note:
+                hinai_main = shaped
+        for b in kousky(shaped, 45):
+            reshaped.append(o | {"body": b})
+    ob[:] = reshaped
+    if hinai_main and not hinai_main.is_empty:
+        center = hinai_main.centroid
+        for i, (dx, dy, radius) in enumerate(((-78, 12, 10), (72, -38, 9), (58, 61, 8), (-44, 75, 8))):
+            grove = irregular(Point(center.x + dx, center.y + dy).buffer(radius, resolution=8), 1301 + i * 271, 3)
+            grove = grove.difference(hinai_main.buffer(6)).intersection(land).difference(ridges.buffer(4))
+            for b in kousky(grove, 45):
+                ob.append({"typ": "dzungle", "tmavy": True, "hustota": 1.2, "pozn": "Hinai Mihi – odlehlý háj (návrh)", "body": b})
+
     for o in ob:
         if o["typ"] == "hory" and len(o["body"]) > 2 and Polygon(o["body"]).buffer(0).centroid.y < 480:
             o["typ"] = "velehory"
@@ -211,6 +266,11 @@ def lore(svet):
             z["polys"] = [p for p in geoms(g) if p.geom_type == "Polygon" and p.area > 1]
     kn = next((z for z in st if z["nazev"].startswith("Knärghe")), None)
     mz = unary_union(kn["polys"]) if kn else Polygon(Z["mrtva_zeme"]["body"])
+    mz = irregular(mz, 6421, 14, spacing=5).intersection(land)
+    ob[:] = [o for o in ob if not (
+        o["typ"] == "mrtva_zeme" and len(o["body"]) > 2
+        and Polygon(o["body"]).buffer(0).intersection(mz).area > 1
+    )]
     ob2 = []
     for o in ob:
         if o["typ"] != "poust":
@@ -219,6 +279,16 @@ def lore(svet):
         for b in kousky(Polygon(o["body"]).buffer(0).difference(mz.buffer(2)), 60):
             ob2.append(o | {"body": b})
     ob[:] = ob2
+    ob3 = []
+    for i, o in enumerate(ob):
+        if o["typ"] not in ("les", "haj", "dzungle", "mrtvy") or len(o["body"]) < 3:
+            ob3.append(o)
+            continue
+        amp = 12 if "Hinai Mihi" in o.get("pozn", "") or "Mönohen" in o.get("pozn", "") else 8
+        p = irregular(Polygon(o["body"]).buffer(0), 31001 + i * 271, amp)
+        for b in kousky(p, 45):
+            ob3.append(o | {"body": b})
+    ob[:] = ob3
     svet["zeme"] = [{"nazev": z["nazev"], "body": [body(p.simplify(1.5)) for p in z["polys"] if p.area > 3000], "pozn": "území státu vypočtené z popisků a terénu (návrh)"}
                     | ({"barva": "#1e1614"} if z is kn else {"barva": "#6b6b6b"} if z["divoke"] else {}) for z in st]
     cb = land.boundary.buffer(7)
@@ -425,4 +495,29 @@ def lore(svet):
         svet["cesty"].append({"typ": "cesta" if hl else "stezka", "pozn": "obchodní cesta (lore: Briria protkaná obchodními cestami; trasa vypočtená, návrh)",
                               "body": [[round(x), round(y)] for x, y in chaikin([tuple(p) for p in c])]})
     svet["cesty"] += K.get("cesty", [])
+    for area in svet.get("oblasti", []):
+        coordinates = area.get("body", [])
+        if len(coordinates) < 4:
+            continue
+        poly = Polygon(coordinates)
+        if not poly.is_valid:
+            poly = poly.buffer(0)
+        if poly.area <= 3000 or poly.length <= 0 or 4 * math.pi * poly.area / poly.length ** 2 <= .8:
+            continue
+        ring = poly.exterior
+        n = max(72, int(ring.length / 8))
+        phase = sum(ord(c) for c in area.get("pozn", "")) * .017
+        amplitude = 5
+        points = []
+        for i in range(n):
+            d = ring.length * i / n
+            p0, p1, p2 = (ring.interpolate((d + off) % ring.length) for off in (-2, 2, 0))
+            tx, ty = p1.x - p0.x, p1.y - p0.y
+            length = max(1e-6, math.hypot(tx, ty))
+            t = i / n
+            wave = math.sin(t * math.tau * 11 + phase) + .35 * math.sin(t * math.tau * 17 + phase * 1.7)
+            points.append((p2.x - ty / length * wave * amplitude, p2.y + tx / length * wave * amplitude))
+        candidate = Polygon(points)
+        if candidate.is_valid and candidate.area > poly.area * .72 and candidate.area < poly.area * 1.3:
+            area["body"] = [[round(x, 1), round(y, 1)] for x, y in candidate.exterior.coords[:-1]]
     return svet

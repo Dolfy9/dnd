@@ -45,8 +45,25 @@ function vzdalenostKPobrezi(x, y) {
   souse.forEach(({ f }) => f.body.forEach((p, i) => { min = Math.min(min, vzdalenostKUseku(x, y, f.body[(i + f.body.length - 1) % f.body.length], p)); }));
   return min;
 }
+function vzdalenostKeKrajiPevniny(x, y) {
+  let min = Infinity;
+  (D.pevnina || []).forEach(f => f.body.forEach((p, i) => { min = Math.min(min, vzdalenostKUseku(x, y, f.body[(i + f.body.length - 1) % f.body.length], p)); }));
+  return min;
+}
 ["pevnina", "oblasti", "reky", "cesty", "hranice", "hradby", "utesy"].forEach(k => (D[k] || []).forEach((f, i) => { if (!ok(f.body)) err.push(k + "[" + i + "] neplatné body"); }));
 (D.oblasti || []).forEach((f, i) => { if (!O[f.typ]) err.push("neznámý typ oblasti " + f.typ); });
+(D.oblasti || []).forEach((f, i) => {
+  if (!["les", "haj", "dzungle", "mrtvy", "mrtva_zeme"].includes(f.typ) || !ok(f.body) || f.body.length < 3) return;
+  const limit = 40;
+  for (let j = 0; j < f.body.length; j++) {
+    const a = f.body[j], b = f.body[(j + 1) % f.body.length], length = Math.hypot(a[0] - b[0], a[1] - b[1]);
+    if (length <= limit) continue;
+    const middle = [(a[0] + b[0]) / 2, (a[1] + b[1]) / 2];
+    if ([a, middle, b].every(p => vzdalenostKeKrajiPevniny(p[0], p[1]) <= 6)) continue;
+    err.push(f.typ + "[" + i + "] má přímý úsek obvodu " + length.toFixed(1) + " px (limit " + limit + ")");
+    break;
+  }
+});
 (D.oblasti || []).forEach((f, i) => {
   if (f.typ !== "pole") return;
   (D.oblasti || []).forEach((s, j) => {

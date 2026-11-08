@@ -53,8 +53,14 @@
       "ice_noise": 0.08,
       "ice_crevasse_scale": 0.045,
       "ice_crevasse_strength": 0.2,
-      "ice_edge_feather_px": 18,
-      "ice_edge_noise_strength": 0.62
+    "ice_edge_feather_px": 18,
+    "ice_edge_noise_strength": 0.62,
+    "blight_edge": "#4b493d",
+    "blight_center": "#292b27",
+    "blight_center_distance_px": 110,
+    "blight_strength": 0.82,
+    "blight_edge_noise_px": 18,
+    "blight_edge_feather_px": 12
     },
     "forest": {
       "density": 1.55,
@@ -106,6 +112,16 @@
     "stroke_opacity": 0.3
   },
   "state_tint_opacity": 0.12,
+  "labels": {
+    "state_ink": "#332418",
+    "state_halo": "#f1e3c4",
+    "state_halo_width": 4,
+    "state_size_fit": 13,
+    "state_size_max": 18,
+    "state_zoom_gain": 1.5,
+    "state_tracking": 1.1,
+    "city_min_zoom": 0.25
+  },
   "state_tints": [
     "#87945f", "#7f9468", "#929b68", "#82966d", "#9ba473",
     "#7c926b", "#929663", "#849a72", "#99a16b", "#819468",
@@ -133,11 +149,15 @@
     "hill_brightness": 1,
     "hill_tint": "#90906e",
     "hill_tint_opacity": 0.1,
-    "mountain_saturation": 0.42,
-    "mountain_brightness": 0.98,
-    "mountain_tint": "#8f8d7d",
-    "mountain_tint_opacity": 0.38,
+    "mountain_saturation": 0.2,
+    "mountain_brightness": 0.94,
+    "mountain_tint": "#77786f",
+    "mountain_tint_opacity": 0.7,
     "snow_highlight_luminance": 205,
+    "dead_tree_saturation": 0.3,
+    "dead_tree_brightness": 0.62,
+    "dead_tree_tint": "#34352f",
+    "dead_tree_tint_opacity": 0.52,
     "autumn_saturation": 0.28,
     "autumn_brightness": 0.86,
     "flower_saturation": 0.32,
@@ -161,6 +181,19 @@
     "margin_ratio": 0.22,
     "max_zoom": 2.5,
     "min_resolution_ratio": 2.05
+  },
+  "terrain_vectors": {
+    "glacier_outline_shadow": "rgba(54,81,94,.55)",
+    "glacier_outline": "rgba(135,164,178,.9)",
+    "glacier_flow": "rgba(84,117,133,.25)",
+    "glacier_hollow": "rgba(57,90,106,.12)",
+    "glacier_crevasse": "rgba(57,90,106,.48)",
+    "glacier_flow_length": 48,
+    "glacier_flow_count": 3,
+    "glacier_crevasse_length": 13,
+    "sand_ripple": "rgba(126,96,52,.5)",
+    "sand_highlight": "rgba(244,224,182,.4)",
+    "sand_band_spacing": 34
   },
   "markers": {
     "mapa": "#8a7465",

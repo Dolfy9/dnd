@@ -24,15 +24,50 @@
     }
     return d;
   }
+  function nearestShore(x, y, rings) {
+    var best = { x: x, y: y, d: Infinity };
+    (rings || []).forEach(function (ring) {
+      for (var i = 0, j = ring.length - 1; i < ring.length; j = i++) {
+        var ax = ring[j][0], ay = ring[j][1], dx = ring[i][0] - ax, dy = ring[i][1] - ay;
+        var t = Math.max(0, Math.min(1, ((x - ax) * dx + (y - ay) * dy) / (dx * dx + dy * dy || 1)));
+        var px = ax + t * dx, py = ay + t * dy, d = Math.hypot(x - px, y - py);
+        if (d < best.d) best = { x: px, y: py, d: d };
+      }
+    });
+    return best;
+  }
+  function polygonCenter(body) {
+    var crossSum = 0, xSum = 0, ySum = 0;
+    for (var i = 0, j = body.length - 1; i < body.length; j = i++) {
+      var cross = body[j][0] * body[i][1] - body[i][0] * body[j][1];
+      crossSum += cross;
+      xSum += (body[j][0] + body[i][0]) * cross;
+      ySum += (body[j][1] + body[i][1]) * cross;
+    }
+    if (Math.abs(crossSum) > 1e-6) {
+      var x = xSum / (3 * crossSum), y = ySum / (3 * crossSum);
+      if (inPoly(x, y, body)) return { x: x, y: y };
+    }
+    var box = bbox(body), step = Math.max(1, Math.min(box[2] - box[0], box[3] - box[1]) / 16);
+    var best = { x: (box[0] + box[2]) / 2, y: (box[1] + box[3]) / 2, d: -1 };
+    for (var py = box[1]; py <= box[3]; py += step) for (var px = box[0]; px <= box[2]; px += step) {
+      if (!inPoly(px, py, body)) continue;
+      var distance = boundaryDistance(px, py, body);
+      if (distance > best.d) best = { x: px, y: py, d: distance };
+    }
+    return best;
+  }
 
   function render(svg, D, M, base) {
+    svg._svAreas = D.oblasti || [];
     var SYM = window.SVET_SYMBOLY || {}, OBL = window.SVET_OBLASTI || {}, SPR = window.SVET_SPRITY || {}, META = window.SVET_SPRITY_META || {},
       PAL = window.SVET_PALETA || {}, SEA = PAL.sea || {}, LAND = PAL.land || {}, AP = PAL.areas || {}, FIELD = PAL.fields || {}, W = D.sirka, H = D.vyska, o = [];
     var A = base + "assets/svet/";
     svg.setAttribute("viewBox", "0 0 " + W + " " + H);
     svg.setAttribute("preserveAspectRatio", "none");
+    var LABEL = PAL.labels || {};
     o.push('<defs><style>@font-face{font-family:MCinzel;src:url(' + base + 'assets/fonts/Cinzel.ttf)}@font-face{font-family:MFell;src:url(' + base + 'assets/fonts/IMFePIit28P.ttf)}'
-      + '.sv-l{font-family:MCinzel,serif;fill:#3a2412;paint-order:stroke;stroke:#f3e6c4;stroke-width:3px;stroke-linejoin:round;text-transform:uppercase}.sv-m{font-family:MFell,serif;font-style:italic;fill:#1f4a52;paint-order:stroke;stroke:#cfe3df;stroke-width:3px}.sv-c{font-family:MFell,serif;fill:#3a2412;paint-order:stroke;stroke:#f3e6c4;stroke-width:2.5px}</style>'
+      + '.sv-l{font-family:MCinzel,serif;fill:' + (LABEL.state_ink || "#332418") + ';paint-order:stroke;stroke:' + (LABEL.state_halo || "#f1e3c4") + ';stroke-width:' + (LABEL.state_halo_width || 4) + 'px;stroke-linejoin:round;text-transform:uppercase}.sv-m{font-family:MFell,serif;font-style:italic;fill:#1f4a52;paint-order:stroke;stroke:#cfe3df;stroke-width:3px}.sv-c{font-family:MFell,serif;fill:#332418;paint-order:stroke;stroke:#f1e3c4;stroke-width:2.5px}</style>'
       + '<filter id="sv-papir" x="0" y="0" width="100%" height="100%"><feTurbulence type="fractalNoise" baseFrequency=".012 .016" numOctaves="4" seed="3"/><feColorMatrix values="0 0 0 0 .45  0 0 0 0 .32  0 0 0 0 .18  0 0 0 .16 0"/><feComposite in2="SourceGraphic" operator="in"/></filter>'
       + '<filter id="sv-mekce" x="-30%" y="-30%" width="160%" height="160%"><feGaussianBlur stdDeviation="5"/></filter>'
       + '<radialGradient id="sv-vin" cx=".5" cy=".5" r=".75"><stop offset=".55" stop-color="#000" stop-opacity="0"/><stop offset="1" stop-color="' + PAL.grade.vignette + '" stop-opacity="' + PAL.grade.vignette_opacity + '"/></radialGradient>');
@@ -43,6 +78,7 @@
     (FIELD.patterns || []).forEach(function (f, i) { o.push('<pattern id="sv-f' + i + '" patternUnits="userSpaceOnUse" width="9" height="9" patternTransform="rotate(' + [25, -35, 70][i] + ')"><rect width="9" height="9" fill="' + f[0] + '"/><rect width="9" height="4" fill="' + f[1] + '"/><path d="M0,4.5 h9" stroke="' + FIELD.line + '" stroke-width=".45" opacity="' + FIELD.stroke_opacity + '"/></pattern>'); });
     var lakes = (D.pevnina || []).filter(function (s) { return s.typ === "jezero"; });
     var landD = (D.pevnina || []).filter(function (s) { return s.typ === "pevnina" || s.typ === "ostrov"; }).map(function (s) { return pathD(s.body, true); }).join(" ");
+    svg._svShore = (D.pevnina || []).filter(function (s) { return s.typ === "pevnina" || s.typ === "ostrov"; }).map(function (s) { return s.body; });
     o.push('<clipPath id="sv-souse"><path d="' + landD + '"/></clipPath></defs>');
     o.push('<image href="' + A + 'hloubka.jpg" width="' + W + '" height="' + H + '" preserveAspectRatio="none"/>');
     o.push('<rect width="' + W + '" height="' + H + '" fill="url(#sv-mp)" opacity="' + SEA.wave_opacity + '" style="mix-blend-mode:multiply"/>');
@@ -102,6 +138,7 @@
     (D.oblasti || []).forEach(function (a, ai) {
       var t = OBL[a.typ]; if (!t || !t.spr || !t.spr.length) return;
       var bb = bbox(a.body), R = rng(ai * 7919 + 13 + Math.round(bb[0] + bb[1])), forest = a.typ === "les" || a.typ === "haj" || a.typ === "dzungle",
+        deadArea = a.typ === "mrtva_zeme" || a.typ === "mrtvy",
         forestStyle = LAND.forest || {}, density = forest ? Math.max(1, a.hustota || 1) * (forestStyle.density || 1) : (a.hustota || 1),
         st = t.rozestup / density, row = 0, sh = t.shluky === true || a.shluky === true,
         f1 = sh ? R() * Math.PI * 2 : 0, f2 = sh ? R() * Math.PI * 2 : 0, f3 = sh ? R() * Math.PI * 2 : 0;
@@ -120,10 +157,11 @@
         }
         var pool = a.tmavy && a.typ === "dzungle" ? ["dzung_1", "dzung_2"] : t.spr;
         var nm = pool[Math.floor(R() * pool.length)];
+        if (a.typ === "ledovec" && nm === "ledova_pole") continue;
         var size = t.w * (REL[nm.split("_")[0]] || 1) * (sh ? .65 + R() * .7 : .8 + R() * .4);
         if (forest) size *= (forestStyle.edge_scale || .58) + (1 - (forestStyle.edge_scale || .58)) * edge;
         var rotation = a.typ === "poust" ? Math.sin((px + py * .62) * .012) * ((LAND.variation || {}).sand_row_rotation || 8) + (R() - .5) * 3 : 0;
-        items.push([py, spr(nm, px, py, size, R() < .5, rotation, a.tmavy)]);
+        items.push([py, spr(nm, px, py, size, R() < .5, rotation, a.tmavy || (deadArea && /^such/.test(nm)))]);
       }
       if (a.typ === "ledovec") {
         var seracRng = rng(619 + ai * 997), step = 58;
@@ -176,12 +214,12 @@
       var p = m.popisek; if (!p) return;
       var x = m.x + (p.dx || 0), y = m.y + (p.dy || 0), rot = -(p.rot || 0), styl = p.styl || "zeme", w = m.nazev.split(" ");
       if (styl === "more") { var sz = p.velikost || 22, half = Math.ceil(w.length / 2); [w.slice(0, half).join(" "), w.slice(half).join(" ")].forEach(function (ln, i) { if (ln) o.push('<text class="sv-m" text-anchor="middle" dominant-baseline="middle" font-size="' + sz + '" letter-spacing="' + sz * .2 + '" transform="translate(' + x + "," + y + ") rotate(" + rot + ') translate(0,' + ((i - .5) * sz * 1.1).toFixed(1) + ')">' + esc(ln.toUpperCase()) + "</text>"); }); }
-      else if (styl === "zeme" && w.length === 2) o.push('<g transform="translate(' + x + "," + y + ") rotate(" + rot + ')"><text class="sv-l" text-anchor="middle" font-size="24" letter-spacing="3.6" y="-2">' + esc(w[0]) + '</text><text class="sv-l" text-anchor="middle" font-size="17" letter-spacing="5" y="17">' + esc(w[1]) + "</text></g>");
-      else o.push('<text class="' + (styl === "zeme" ? "sv-l" : "sv-c") + '" text-anchor="middle" dominant-baseline="middle" font-size="' + (p.velikost || (styl === "zeme" ? 27 : 24)) + '" letter-spacing="' + (styl === "zeme" ? 4.8 : 2) + '" transform="translate(' + x + "," + y + ") rotate(" + rot + ')">' + esc(styl === "zeme" ? m.nazev : m.nazev) + "</text>");
+      else if (styl === "zeme" && w.length === 2) o.push('<g transform="translate(' + x + "," + y + ") rotate(" + rot + ')"><text class="sv-l" data-map-label="state" text-anchor="middle" font-size="24" letter-spacing="1" y="-2">' + esc(w[0]) + '</text><text class="sv-l" data-map-label="state" text-anchor="middle" font-size="17" letter-spacing="1" y="17">' + esc(w[1]) + "</text></g>");
+      else o.push('<text class="' + (styl === "zeme" ? "sv-l" : "sv-c") + '"' + (styl === "zeme" ? ' data-map-label="state"' : "") + ' text-anchor="middle" dominant-baseline="middle" font-size="' + (p.velikost || (styl === "zeme" ? 27 : 24)) + '" letter-spacing="1" transform="translate(' + x + "," + y + ") rotate(" + rot + ')">' + esc(styl === "zeme" ? m.nazev : m.nazev) + "</text>");
     });
     (M.mista || []).forEach(function (m) {
       if (m.typ !== "mesto" || m.popisek || !m.nazev || /^(Hrad na|Opevněné|Sídlo|Nové místo)/.test(m.nazev)) return;
-      o.push('<text class="sv-c" text-anchor="middle" font-size="15" letter-spacing="1" x="' + m.x + '" y="' + (m.y + 20) + '">' + esc(m.nazev) + "</text>");
+      o.push('<text class="sv-c" data-city-label="1" text-anchor="middle" font-size="15" letter-spacing="1" x="' + m.x + '" y="' + (m.y + 20) + '">' + esc(m.nazev) + "</text>");
     });
     var KM = D.km_px || 1.75, sx = 1560, sy = 1405, dil = 150 / KM;
     o.push('<g font-family="MFell,serif" font-size="13" fill="#3a2412">');
@@ -274,6 +312,92 @@
     for (var cy = Math.floor(top / cell); cy <= Math.floor(bottom / cell); cy++) for (var cx = Math.floor(left / cell); cx <= Math.floor(right / cell); cx++) {
       (state.grid[cx + "," + cy] || []).forEach(function (i) { if (!seen[i]) { seen[i] = true; visible.push(i); } });
     }
+    var scaleNow = Math.max(.25, scale), line = 1 / scaleNow;
+    var vectors = (window.SVET_PALETA || {}).terrain_vectors || {};
+    (state.areas || []).forEach(function (area, index) {
+      if (area.typ !== "ledovec" && area.typ !== "poust") return;
+      var pts = area.body || [];
+      if (pts.length < 3) return;
+      var minX = Math.min.apply(null, pts.map(function (p) { return p[0]; })), maxX = Math.max.apply(null, pts.map(function (p) { return p[0]; }));
+      var minY = Math.min.apply(null, pts.map(function (p) { return p[1]; })), maxY = Math.max.apply(null, pts.map(function (p) { return p[1]; }));
+      if (maxX < left || minX > right || maxY < top || minY > bottom) return;
+      var drawMinX = Math.max(minX, left), drawMaxX = Math.min(maxX, right);
+      var drawMinY = Math.max(minY, top), drawMaxY = Math.min(maxY, bottom);
+      ctx.save(); ctx.beginPath(); ctx.moveTo(pts[0][0], pts[0][1]);
+      pts.slice(1).forEach(function (p) { ctx.lineTo(p[0], p[1]); }); ctx.closePath();
+      if (area.typ === "ledovec") {
+        ctx.lineWidth = 2 / scaleNow; ctx.strokeStyle = vectors.glacier_outline_shadow || "rgba(54,81,94,.55)"; ctx.stroke();
+        ctx.lineWidth = .75 / scaleNow; ctx.strokeStyle = vectors.glacier_outline || "rgba(135,164,178,.9)"; ctx.stroke();
+      }
+      ctx.clip();
+      ctx.lineWidth = line;
+      if (area.typ === "ledovec") {
+        var flowCenter = polygonCenter(pts), centerX = flowCenter.x, centerY = flowCenter.y;
+        var coastward = nearestShore(centerX, centerY, state.shore), vx = coastward.x - centerX, vy = coastward.y - centerY;
+        var directionLength = Math.hypot(vx, vy) || 1; vx /= directionLength; vy /= directionLength;
+        var clusterCount = Math.max(1, Math.min(3, Math.ceil((maxX - minX) / 60)));
+        var bandCount = Math.max(2, Math.min(5, vectors.glacier_flow_count || 3));
+        var spread = Math.min(32, Math.max(12, (maxX - minX) * .18));
+        var flowRng = rng(617 + index * 9973), crackRng = rng(7919 + index * 104729);
+        var hollow = vectors.glacier_hollow || "rgba(57,90,106,.1)";
+        var crackLength = (vectors.glacier_crevasse_length || 13) / scaleNow;
+        ctx.lineCap = "round"; ctx.lineJoin = "round";
+        for (var cluster = 0; cluster < clusterCount; cluster++) {
+          var position = clusterCount === 1 ? 0 : cluster / (clusterCount - 1) * 2 - 1;
+          var anchorX = centerX - vx * spread * position, anchorY = centerY - vy * spread * position;
+          if (!inPoly(anchorX, anchorY, pts)) continue;
+          var shore = nearestShore(anchorX, anchorY, state.shore), fx = shore.x - anchorX, fy = shore.y - anchorY;
+          var flowNorm = Math.hypot(fx, fy) || 1; fx /= flowNorm; fy /= flowNorm;
+          var fpx = -fy, fpy = fx;
+          var flowLength = Math.min(vectors.glacier_flow_length || 48, Math.max(22, shore.d * scaleNow * .42)) / scaleNow;
+          var phase = flowRng() * Math.PI * 2;
+          for (var band = 0; band < bandCount; band++) {
+            var offset = (band - (bandCount - 1) / 2) * 14 / scaleNow, points = [];
+            for (var step = 0; step <= 8; step++) {
+              var t = step / 8, wave = Math.sin(t * Math.PI * 2 + band * 1.31 + cluster * .73 + phase) * 3.5 / scaleNow * (1 - t);
+              points.push([
+                anchorX - fx * flowLength * .38 + fx * flowLength * t + fpx * (offset * (1 - .84 * t) + wave),
+                anchorY - fy * flowLength * .38 + fy * flowLength * t + fpy * (offset * (1 - .84 * t) + wave)
+              ]);
+            }
+            for (var seg = 0; seg < points.length - 1; seg++) {
+              ctx.globalAlpha = Math.sin(Math.PI * (seg + .5) / (points.length - 1)) * .95;
+              ctx.beginPath(); ctx.moveTo(points[seg][0], points[seg][1]); ctx.lineTo(points[seg + 1][0], points[seg + 1][1]);
+              ctx.strokeStyle = hollow; ctx.lineWidth = 6 / scaleNow; ctx.stroke();
+              ctx.strokeStyle = vectors.glacier_flow || "rgba(84,117,133,.25)"; ctx.lineWidth = 2 / scaleNow; ctx.stroke();
+            }
+          }
+          ctx.globalAlpha = .85;
+          ctx.strokeStyle = vectors.glacier_crevasse || "rgba(57,90,106,.48)"; ctx.lineWidth = 1.2 / scaleNow;
+          var crackX = anchorX + fx * flowLength * .76, crackY = anchorY + fy * flowLength * .76;
+          for (var ci = 0; ci < 3; ci++) {
+            var cx = crackX + fpx * (crackRng() - .5) * 14 / scaleNow, cy = crackY + fpy * (crackRng() - .5) * 14 / scaleNow;
+            var angle = Math.atan2(fy, fx) + Math.PI / 2 + (crackRng() - .5) * .55;
+            var dx = Math.cos(angle) * crackLength, dy = Math.sin(angle) * crackLength;
+            var ex = cx + dx, ey = cy + dy;
+            if (!inPoly(cx, cy, pts) || !inPoly(ex, ey, pts)) continue;
+            ctx.beginPath(); ctx.moveTo(cx, cy); ctx.lineTo(cx + dx * .55 + fpx * crackLength * .12, cy + dy * .55 + fpy * crackLength * .12); ctx.lineTo(ex, ey); ctx.stroke();
+          }
+        }
+        ctx.globalAlpha = 1;
+      } else {
+        ctx.strokeStyle = vectors.sand_ripple || "rgba(126,96,52,.5)";
+        ctx.beginPath();
+        for (var sy = drawMinY; sy <= drawMaxY; sy += Math.max(8, (vectors.sand_band_spacing || 34) / scaleNow)) {
+          ctx.moveTo(drawMinX, sy + Math.sin(sy * .035 + index) * 4);
+          for (var sx = drawMinX + 8; sx <= drawMaxX; sx += 8) ctx.lineTo(sx, sy + Math.sin(sx * .025 + sy * .04 + index) * 4);
+        }
+        ctx.stroke();
+        ctx.strokeStyle = vectors.sand_highlight || "rgba(244,224,182,.4)";
+        ctx.lineWidth = .6 / scaleNow; ctx.beginPath();
+        for (var hy = drawMinY + 12 / scaleNow; hy <= drawMaxY; hy += Math.max(8, (vectors.sand_band_spacing || 34) / scaleNow) * 2) {
+          ctx.moveTo(drawMinX, hy + Math.sin(hy * .035 + index + .8) * 3);
+          for (var hx = drawMinX + 10; hx <= drawMaxX; hx += 10) ctx.lineTo(hx, hy + Math.sin(hx * .023 + hy * .032 + index + .8) * 3);
+        }
+        ctx.stroke();
+      }
+      ctx.restore();
+    });
     visible.sort(function (a, b) { return a - b; });
     visible.forEach(function (i) {
       var s = state.sprites[i], img = state.images[s.n + (s.tmavy ? "#tmavy" : "")], m = state.meta[s.n];
@@ -296,6 +420,7 @@
     state.token = (state.token || 0) + 1;
     var token = state.token, config = (window.SVET_PALETA || {}).viewport_sprites || {};
     state.sprites = sprites; state.meta = META; state.W = W; state.H = H;
+    state.areas = svg._svAreas || []; state.shore = svg._svShore || [];
     state.gridSize = config.grid_px || 128; state.map = window.MontelienMapa || state.map;
     state.svg = svg; indexSprity(state);
     var needed = Object.create(null);

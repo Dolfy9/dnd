@@ -5,12 +5,26 @@
   var qs = new URLSearchParams(location.search), crop = qs.get("vyrez") === "1";
   if (crop) document.body.classList.add("mapa-vyrez");
   var W = D.sirka, H = D.vyska, bounds = [[0, 0], [H, W]], KM_PX = 1.7;
-  var map = L.map(el, { crs: L.CRS.Simple, minZoom: -1.5, maxZoom: 2.5, zoomSnap: 0.25, attributionControl: false });
+  var map = L.map(el, { crs: L.CRS.Simple, minZoom: -3, maxZoom: 2.5, zoomSnap: 0.05, attributionControl: false });
   window.MontelienMapa = map;
   var svgEl = document.createElementNS("http://www.w3.org/2000/svg", "svg");
   var atlas = L.svgOverlay(svgEl, bounds, { interactive: false });
   var SV = { map: map, el: el, svg: svgEl, base: "../", D: null, M: D };
   var stateData = [], stateHighlight = L.layerGroup().addTo(map), stateTip = null, activeState = null;
+  var LABELS = (window.SVET_PALETA || {}).labels || {};
+  function refreshLabels() {
+    var scale = map.getZoomScale(map.getZoom(), 0), fitZoom = map.getBoundsZoom(bounds, false),
+      statePx = Math.min(LABELS.state_size_max || 18, (LABELS.state_size_fit || 13) + Math.max(0, map.getZoom() - fitZoom) * (LABELS.state_zoom_gain || 1.5)),
+      tracking = (LABELS.state_tracking || 1) / scale;
+    svgEl.querySelectorAll('[data-map-label="state"]').forEach(function (label) {
+      label.setAttribute("font-size", statePx / scale);
+      label.setAttribute("letter-spacing", tracking);
+    });
+    var showCities = map.getZoom() >= (LABELS.city_min_zoom == null ? .25 : LABELS.city_min_zoom);
+    svgEl.querySelectorAll("[data-city-label]").forEach(function (label) {
+      label.style.display = showCities ? "" : "none";
+    });
+  }
   function inRing(x, y, ring) {
     var inside = false;
     for (var i = 0, j = ring.length - 1; i < ring.length; j = i++) {
@@ -49,15 +63,32 @@
     if (found) showState(found, e.latlng);
   });
   el.addEventListener("mouseleave", clearState);
-  fetch("../11_Mapy/svet.json?t=" + Date.now()).then(function (r) { return r.json(); }).then(function (j) { SV.D = j; stateData = j.zeme || []; if (window.MontelienSvet) window.MontelienSvet.render(svgEl, j, D, "../"); }).catch(function () { });
+  fetch("../11_Mapy/svet.json?t=" + Date.now()).then(function (r) { return r.json(); }).then(function (j) {
+    SV.D = j; stateData = j.zeme || [];
+    if (window.MontelienSvet) window.MontelienSvet.render(svgEl, j, D, "../");
+    refreshLabels();
+  }).catch(function () { });
   var ilu = L.imageOverlay("../11_Mapy/Montelien_mapa_ilustrovana.jpg", bounds);
   var barevna = L.imageOverlay("../11_Mapy/Montelien_mapa.jpg", bounds);
   var kresba = L.imageOverlay("../11_Mapy/Montelien_mapa_vyrovnana.jpg", bounds);
   var vrstvy = { "Atlas (z dat)": atlas, "Ilustrovaná mapa": ilu, "Věrná barevná mapa": barevna, "Původní kresba (DM)": kresba };
   var pam = localStorage.getItem("mapa-vrstva"); (crop ? atlas : (vrstvy[pam] || atlas)).addTo(map);
-  L.control.layers(vrstvy).addTo(map);
+  L.control.layers(vrstvy, null, { position: "bottomleft" }).addTo(map);
   map.on("baselayerchange", function (e) { localStorage.setItem("mapa-vrstva", e.name); });
-  map.fitBounds(bounds);
+  function fitAtlas() {
+    map.invalidateSize({ pan: false });
+    var fitZoom = Math.log2(Math.min(el.clientWidth / W, el.clientHeight / H));
+    map.setMinZoom(Math.min(-1.5, fitZoom - .1));
+    map.fitBounds(bounds, { padding: [0, 0], animate: false });
+    refreshLabels();
+  }
+  map.on("zoomend", refreshLabels);
+  var fitTimer;
+  window.addEventListener("resize", function () {
+    clearTimeout(fitTimer);
+    fitTimer = setTimeout(fitAtlas, 120);
+  });
+  requestAnimationFrame(fitAtlas);
   map.setMaxBounds([[-200, -200], [H + 200, W + 200]]);
   var coord = document.createElement("div"); coord.className = "mapa-souradnice"; el.appendChild(coord);
   var MP = (window.SVET_PALETA || {}).markers || {};

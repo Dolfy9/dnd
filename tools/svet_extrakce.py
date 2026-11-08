@@ -239,6 +239,23 @@ def barvy(data, out):
                 cv2.fillPoly(m, [np.int32(np.array(o["body"]) * k)], 255)
         m = cv2.GaussianBlur(m.astype(np.float32) / 255, (0, 0), 7)[..., None] * PALETA["area_opacity"].get(typ, .3)
         img = img * (1 - m) + rgb(color) * m
+    dead = np.zeros((h, w), np.uint8)
+    for area in data["oblasti"]:
+        if area["typ"] == "mrtva_zeme":
+            cv2.fillPoly(dead, [np.int32(np.array(area["body"]) * k)], 255)
+    if np.any(dead):
+        terrain = PALETA["land"]["variation"]
+        distance = cv2.distanceTransform(dead, cv2.DIST_L2, 5)
+        core = smooth(distance / terrain.get("blight_center_distance_px", 110))[..., None]
+        edge, center = rgb(terrain.get("blight_edge", "#4b493d")), rgb(terrain.get("blight_center", "#292b27"))
+        target = edge[None, None, :] * (1 - core) + center[None, None, :] * core
+        outside = cv2.distanceTransform(cv2.bitwise_not(dead), cv2.DIST_L2, 5)
+        edge_noise = (sum_(18) * .7 + sum_(7) * .3) * terrain.get("blight_edge_noise_px", 7)
+        feather = terrain.get("blight_edge_feather_px", 9)
+        coverage = smooth((distance - outside + edge_noise + feather) / (2 * feather))
+        coverage = (coverage * (land_mask > 0))[..., None]
+        strength = terrain.get("blight_strength", .82)
+        img = img * (1 - coverage * strength) + target * (coverage * strength)
     img = cv2.GaussianBlur(img, (0, 0), 1.5)
     cv2.imwrite(str(out), cv2.cvtColor(np.clip(img, 0, 255).astype(np.uint8), cv2.COLOR_RGB2BGR), [cv2.IMWRITE_JPEG_QUALITY, 90])
 
