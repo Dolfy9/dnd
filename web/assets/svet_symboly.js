@@ -64,7 +64,7 @@
     bazina: { nazev: "Bažina", barva: "#8fa68a", spr: ["bazina_1", "bazina_2", "rakos_1", "rakos_2", "ker_2", "suchy_2"], rozestup: 18, w: 22 },
     pole: { nazev: "Pole a vinice", barva: "#b2ae70", spr: ["vinice", "ker_1"], rozestup: 40, w: 14 },
     mrtvy: { nazev: "Mrtvý les", barva: "#4a4238", spr: ["suchy_1", "suchy_2", "ker_2"], rozestup: 10, w: 14 },
-    ledovec: { nazev: "Ledovec", barva: "#e5eef0", spr: ["ledova_pole", "ledova_pole", "seraky"], rozestup: 52, w: 40 },
+    ledovec: { nazev: "Ledovec", barva: "#e5eef0", spr: ["ledova_pole"], rozestup: 52, w: 38, shluky: true },
     mrtva_zeme: { nazev: "Mrtvá země", barva: "#3d3633", spr: ["suchy_1", "suchy_2", "sibenice", "kamen_1", "suchy_1", "utes_2", "palisada", "suchy_2"], rozestup: 22, w: 14 },
     louky: { nazev: "Louky", barva: "#97b477", spr: ["ker_1", "list_2", "ker_2", "list_5", "kopec_3", "ker_1"], rozestup: 16, w: 10 }
   };

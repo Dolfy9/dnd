@@ -258,6 +258,7 @@ def lore(svet):
         p = Point(x, y)
         return any(o["typ"] in typy and len(o["body"]) > 2 and Polygon(o["body"]).buffer(0).contains(p) for o in ob)
 
+    snih = unary_union([Polygon(o["body"]).buffer(0) for o in ob if o["typ"] in ("ledovec", "velehory") and len(o["body"]) > 2]).buffer(24)
     zeme = [m for m in mista if m["typ"] == "zeme"]
     sidla = [m for m in mista if m["typ"] in ("sidlo", "mesto") and m.get("nazev") != "Nové místo"]
     for s in sidla:
@@ -271,6 +272,8 @@ def lore(svet):
                 continue
             r = rng.uniform(11, 19)
             poly = Polygon([(cx + np.cos(t) * r * rng.uniform(.75, 1.2), cy + np.sin(t) * r * .75 * rng.uniform(.75, 1.2)) for t in np.linspace(0, 2 * np.pi, 9)[:-1]])
+            if poly.intersects(snih):
+                continue
             for b in kousky(poly.buffer(0).intersection(land), 120):
                 ob.append({"typ": "pole", "pozn": f"pole u sídla ({z}) – lore: úrodné kraje (návrh)", "body": b})
 

@@ -42,7 +42,7 @@
     o.push('<pattern id="sv-jp" patternUnits="userSpaceOnUse" width="420" height="420"><rect width="420" height="420" fill="' + SEA.lake + '"/><image href="' + A + 'more.jpg" width="420" height="420" opacity="' + SEA.lake_wave_opacity + '"/></pattern>');
     (FIELD.patterns || []).forEach(function (f, i) { o.push('<pattern id="sv-f' + i + '" patternUnits="userSpaceOnUse" width="9" height="9" patternTransform="rotate(' + [25, -35, 70][i] + ')"><rect width="9" height="9" fill="' + f[0] + '"/><rect width="9" height="4" fill="' + f[1] + '"/><path d="M0,4.5 h9" stroke="' + FIELD.line + '" stroke-width=".45" opacity="' + FIELD.stroke_opacity + '"/></pattern>'); });
     var lakes = (D.pevnina || []).filter(function (s) { return s.typ === "jezero"; });
-    var landD = (D.pevnina || []).filter(function (s) { return s.typ === "pevnina"; }).map(function (s) { return pathD(s.body, true); }).join(" ");
+    var landD = (D.pevnina || []).filter(function (s) { return s.typ === "pevnina" || s.typ === "ostrov"; }).map(function (s) { return pathD(s.body, true); }).join(" ");
     o.push('<clipPath id="sv-souse"><path d="' + landD + '"/></clipPath></defs>');
     o.push('<image href="' + A + 'hloubka.jpg" width="' + W + '" height="' + H + '" preserveAspectRatio="none"/>');
     o.push('<rect width="' + W + '" height="' + H + '" fill="url(#sv-mp)" opacity="' + SEA.wave_opacity + '" style="mix-blend-mode:multiply"/>');
@@ -90,7 +90,8 @@
     (D.utesy || []).forEach(function (r) { o.push('<path d="' + pathD(r.body, false) + '" fill="none" stroke="#3a2e22" stroke-width="3" opacity=".3"/>'); });
     (D.hranice || []).forEach(function (r) { var d = pathD(r.body, false); o.push('<path d="' + d + '" fill="none" stroke="#f3e6c4" stroke-width="4" opacity=".5"/><path d="' + d + '" fill="none" stroke="#7a2416" stroke-width="1.6" stroke-dasharray="9 3 2 3" opacity=".85"/>'); });
     // symboly v oblastech (seřazené podle y, aby se překrývaly správně)
-    var items = [], landPolys = (D.pevnina || []).filter(function (p) { return p.typ === "pevnina"; });
+    var items = [], landPolys = (D.pevnina || []).filter(function (p) { return p.typ === "pevnina" || p.typ === "ostrov"; }),
+      ridgeAreas = (D.oblasti || []).filter(function (a) { return a.typ === "hory" || a.typ === "velehory"; });
     var REL = { kaktus: .3, balvan: .45, rakos: .55, ker: .5, suchy: .8, kopec: .65, utes: .55 };
     function spr(name, x, y, w, flip, rot, tmavy) {
       if (!META[name]) return "";
@@ -123,6 +124,14 @@
         if (forest) size *= (forestStyle.edge_scale || .58) + (1 - (forestStyle.edge_scale || .58)) * edge;
         var rotation = a.typ === "poust" ? Math.sin((px + py * .62) * .012) * ((LAND.variation || {}).sand_row_rotation || 8) + (R() - .5) * 3 : 0;
         items.push([py, spr(nm, px, py, size, R() < .5, rotation, a.tmavy)]);
+      }
+      if (a.typ === "ledovec") {
+        var seracRng = rng(619 + ai * 997), step = 58;
+        for (var sy = bb[1] + step * .5; sy < bb[3]; sy += step) for (var sx = bb[0] + step * .5; sx < bb[2]; sx += step) {
+          var rx = sx + (seracRng() - .5) * step * .65, ry = sy + (seracRng() - .5) * step * .55;
+          if (!inPoly(rx, ry, a.body) || !ridgeAreas.some(function (ridge) { return inPoly(rx, ry, ridge.body); }) || seracRng() > .32) continue;
+          items.push([ry, spr("seraky", rx, ry, 18 + seracRng() * 7, seracRng() < .5, (seracRng() - .5) * 8)]);
+        }
       }
     });
     // řídká drobná vegetace na volné pevnině (mimo oblasti a jezera)

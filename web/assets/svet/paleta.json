@@ -52,7 +52,9 @@
       "ice_highlight": "#f2f1e7",
       "ice_noise": 0.08,
       "ice_crevasse_scale": 0.045,
-      "ice_crevasse_strength": 0.2
+      "ice_crevasse_strength": 0.2,
+      "ice_edge_feather_px": 18,
+      "ice_edge_noise_strength": 0.62
     },
     "forest": {
       "density": 1.55,

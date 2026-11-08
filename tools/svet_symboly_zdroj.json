@@ -264,14 +264,14 @@
   "typ": "ledova_kra",
   "x": 850,
   "y": 110,
-  "m": 0.72,
+  "m": 0.57,
   "pozn": "plovoucí kra v severním moři"
  },
  {
   "typ": "ledova_kra",
   "x": 1041,
   "y": 70,
-  "m": 0.9,
+  "m": 0.6,
   "pozn": "plovoucí kra v severním moři"
  },
  {
@@ -307,7 +307,7 @@
   "typ": "ledovcovy_jazyk",
   "x": 1074,
   "y": 356,
-  "m": 0.9,
+  "m": 0.56,
   "rot": -130,
   "pozn": "ledovcový jazyk k severnímu fjordu Nölienu"
  },
@@ -328,9 +328,9 @@
  },
  {
   "typ": "ledovy_utes",
-  "x": 1223,
-  "y": 395,
-  "m": 0.85,
+  "x": 1381,
+  "y": 369,
+  "m": 0.58,
   "pozn": "ledový útes u východních fjordů Nölienu"
  },
  {

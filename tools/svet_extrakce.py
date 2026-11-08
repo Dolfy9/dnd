@@ -183,7 +183,7 @@ def barvy(data, out):
     img = img * (1 - dry[..., None]) + rgb(PALETA["land"]["dry"]) * dry[..., None]
     land_mask = np.zeros((h, w), np.uint8)
     for shape in sorted(data.get("pevnina", []), key=lambda p: p.get("uroven", 0)):
-        cv2.fillPoly(land_mask, [np.int32(shape["body"])], 255 if shape["typ"] == "pevnina" else 0)
+        cv2.fillPoly(land_mask, [np.int32(shape["body"])], 255 if shape["typ"] in ("pevnina", "ostrov") else 0)
     coastal_land = land_mask.copy()
     for shape in data.get("pevnina", []):
         if shape["typ"] == "jezero":
@@ -202,7 +202,14 @@ def barvy(data, out):
             if area["typ"] == typ:
                 cv2.fillPoly(mask, [np.int32(area["body"])], 255)
         mask = cv2.bitwise_and(mask, land_mask)
-        alpha = cv2.GaussianBlur(mask.astype(np.float32) / 255, (0, 0), 3)
+        if typ == "ledovec":
+            inside = cv2.distanceTransform(mask, cv2.DIST_L2, 3)
+            outside = cv2.distanceTransform(cv2.bitwise_not(mask), cv2.DIST_L2, 3)
+            feather = terrain["ice_edge_feather_px"]
+            edge = inside - outside + snow_jitter * H * terrain["ice_edge_noise_strength"]
+            alpha = smooth((edge + feather) / (2 * feather)) * (land_mask > 0)
+        else:
+            alpha = cv2.GaussianBlur(mask.astype(np.float32) / 255, (0, 0), 3)
         if not np.any(alpha):
             continue
         phase = xx * terrain[pattern_key]
