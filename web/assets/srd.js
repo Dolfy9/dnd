@@ -7,10 +7,12 @@
   function load(t) { return loadCs(t).then(function () { return C[t] ? C[t] : fetch(base() + "assets/srd/" + F[t]).then(function (r) { return r.json(); }).then(function (j) { C[t] = j; return j; }); }); }
   function esc(s) { return String(s == null ? "" : s).replace(/[&<>"]/g, function (c) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]; }); }
   function md(n) { return Math.floor((n - 10) / 2); } function sg(n) { return (n >= 0 ? "+" : "") + n; }
-  function list(t, a) { return a && a.length ? '<h4>' + t + '</h4>' + a.map(function (x) { return '<p><b><i>' + esc(x.nazev) + '.</i></b> ' + esc(x.text).replace(/\n/g, "<br>") + '</p>'; }).join("") : ""; }
+  function lt(en) { var cs = (CS.bestiar || {})[en], L = window.MontelienLang ? window.MontelienLang.lang() : "cs"; return '<span class="lt" data-cs="' + esc(cs || en) + '" data-en="' + esc(en) + '">' + esc(cs && L === "cs" ? cs : en).replace(/\n/g, "<br>") + '</span>'; }
+  function list(t, a) { return a && a.length ? '<h4>' + t + '</h4>' + a.map(function (x) { return '<p><b><i>' + esc(x.nazev) + '.</i></b> ' + lt(x.text) + '</p>'; }).join("") : ""; }
   function statblock(m) {
     var sp = Object.keys(m.rychlost || {}).map(function (k) { return (k === "walk" ? "" : k + " ") + m.rychlost[k] + " ft"; }).join(", ");
-    return '<div class="sb"><h2>' + esc(m.nazev) + '</h2><p class="sb-sub">' + esc(m.velikost + " " + m.typ + ", " + m.zarovnani) + '</p><hr>'
+    var all = [].concat(m.rysy || [], m.akce || [], m.bonusove_akce || [], m.reakce || [], m.legendarni || []), hasCs = all.some(function (x) { return (CS.bestiar || {})[x.text]; });
+    return '<div class="sb"><h2>' + esc(m.nazev) + '</h2><p class="sb-sub">' + esc(m.velikost + " " + m.typ + ", " + m.zarovnani) + '</p>' + (window.MontelienLang && all.length ? window.MontelienLang.bar(hasCs) : '') + '<hr>'
       + '<p><b>AC</b> ' + m.ac + ' &nbsp; <b>HP</b> ' + m.hp + ' (' + esc(m.hp_vzorec || "") + ') &nbsp; <b>Rychlost</b> ' + esc(sp || "30 ft") + '</p>'
       + '<table class="sb-ab"><tr>' + Object.keys(m.atributy).map(function (k) { return '<th>' + k + '</th>'; }).join("") + '</tr><tr>' + Object.keys(m.atributy).map(function (k) { var v = m.atributy[k]; return '<td>' + v + ' (' + sg(md(v)) + ')' + '' + '</td>'; }).join("") + '</tr></table>'
       + (m.zachrany.length ? '<p><b>Záchrany</b> ' + esc(m.zachrany.join(", ")) + '</p>' : '') + (m.dovednosti.length ? '<p><b>Dovednosti</b> ' + esc(m.dovednosti.join(", ")) + '</p>' : '') + (m.imunity ? '<p><b>Imunity</b> ' + esc(m.imunity) + '</p>' : '') + (m.odolnosti ? '<p><b>Odolnosti</b> ' + esc(m.odolnosti) + '</p>' : '')
