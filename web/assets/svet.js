@@ -27,7 +27,6 @@
       + '<filter id="sv-mekce" x="-30%" y="-30%" width="160%" height="160%"><feGaussianBlur stdDeviation="5"/></filter>'
       + '<radialGradient id="sv-vin" cx=".5" cy=".5" r=".75"><stop offset=".55" stop-color="#000" stop-opacity="0"/><stop offset="1" stop-color="#3a2412" stop-opacity=".45"/></radialGradient>');
     Object.keys(SYM).forEach(function (k) { o.push('<g id="sv-' + k + '">' + SYM[k].svg + "</g>"); });
-    Object.keys(META).forEach(function (k) { var m = META[k]; o.push('<image id="sp-' + k + '" href="' + A + k + '.webp" width="' + m.w + '" height="' + m.h + '" x="' + (-m.w / 2) + '" y="' + (-m.h + 2) + '"/>'); });
     o.push('<pattern id="sv-pp" patternUnits="userSpaceOnUse" width="512" height="512"><rect width="512" height="512" fill="#efdfb4"/><image href="' + A + 'papir.jpg" width="512" height="512" opacity=".75"/></pattern>');
     o.push('<pattern id="sv-mp" patternUnits="userSpaceOnUse" width="420" height="420"><rect width="420" height="420" fill="#9cc2bc"/><image href="' + A + 'more.jpg" width="420" height="420" opacity=".42"/></pattern>');
     var lakes = (D.pevnina || []).filter(function (s) { return s.typ === "jezero"; });
@@ -57,9 +56,7 @@
     var items = [];
     var REL = { kaktus: .3, balvan: .45, rakos: .55, ker: .5, suchy: .8 };
     function spr(name, x, y, w, flip, rot) {
-      var m = META[name]; if (!m) return "";
-      var k = w / m.w;
-      return '<use href="#sp-' + name + '" transform="translate(' + x.toFixed(1) + "," + y.toFixed(1) + ")" + (rot ? " rotate(" + rot + ")" : "") + " scale(" + (flip ? -k : k).toFixed(3) + "," + k.toFixed(3) + ')"/>';
+      return META[name] ? { n: name, x: x, y: y, w: w, f: flip, r: rot || 0 } : "";
     }
     (D.oblasti || []).forEach(function (a, ai) {
       var t = OBL[a.typ]; if (!t || !t.spr || !t.spr.length) return;
@@ -74,9 +71,9 @@
     // řídká drobná vegetace na volné pevnině (mimo oblasti a jezera)
     if (D.rozptyl !== false) {
       var R2 = rng(4242), land = (D.pevnina || []).filter(function (p) { return p.typ === "pevnina"; }), DROB = ["ker_1", "ker_2", "list_2", "list_5", "jehl_4", "kopec_3", "kopec_5", "balvan_2"];
-      for (var gy = 30; gy < H; gy += 46) for (var gx = 20; gx < W; gx += 52) {
-        if (R2() > .3) continue;
-        var qx = gx + (R2() - .5) * 40, qy = gy + (R2() - .5) * 36, nm2 = DROB[Math.floor(R2() * DROB.length)];
+      for (var gy = 20; gy < H; gy += 30) for (var gx = 15; gx < W; gx += 34) {
+        if (R2() > .5) continue;
+        var qx = gx + (R2() - .5) * 28, qy = gy + (R2() - .5) * 24, nm2 = DROB[Math.floor(R2() * DROB.length)];
         if (!land.some(function (p) { return inPoly(qx, qy, p.body); }) || lakes.some(function (l) { return inPoly(qx, qy, l.body); }) || (D.oblasti || []).some(function (o) { return inPoly(qx, qy, o.body); })) continue;
         var base2 = nm2.indexOf("kopec") === 0 ? 22 : nm2.indexOf("balvan") === 0 ? 9 : nm2.indexOf("ker") === 0 ? 8 : 11;
         items.push([qy, spr(nm2, qx, qy, base2 * (.8 + R2() * .4), R2() < .5)]);
@@ -88,7 +85,9 @@
       else if (SYM[s.typ]) items.push([s.y, '<use href="#sv-' + s.typ + '" transform="translate(' + s.x + "," + s.y + ") rotate(" + (s.rot || 0) + ") scale(" + (s.m || 1) + ')"/>']);
     });
     (M.mista || []).forEach(function (m) { if ((m.typ === "sidlo" || m.typ === "mesto") && !(D.symboly || []).some(function (q) { return SPR[q.typ] && Math.abs(q.x - m.x) < 45 && Math.abs(q.y - m.y) < 90; })) items.push([m.y + 4, '<use href="#sv-sidlo" transform="translate(' + m.x + "," + (m.y + 4) + ") scale(" + (m.typ === "mesto" ? 1.1 : .8) + ')"/>']); });
-    items.sort(function (a, b) { return a[0] - b[0]; }).forEach(function (i) { o.push(i[1]); });
+    var sprites = [];
+    o.push('<image id="sv-spr" x="0" y="0" width="' + W + '" height="' + H + '" preserveAspectRatio="none"/>');
+    items.sort(function (a, b) { return a[0] - b[0]; }).forEach(function (i) { if (typeof i[1] === "string") o.push(i[1]); else sprites.push(i[1]); });
     // popisky z mista.json
     (M.mista || []).forEach(function (m) {
       var p = m.popisek; if (!p) return;
@@ -100,6 +99,33 @@
     o.push('<text class="sv-l" text-anchor="middle" font-size="48" letter-spacing="6" x="1810" y="130">Montelien</text>');
     o.push('<rect width="' + W + '" height="' + H + '" fill="url(#sv-vin)" pointer-events="none"/>');
     svg.innerHTML = o.join("");
+    kresliSprity(svg, sprites, A, W, H, META);
+  }
+
+  var IMG = {}, K = 2;
+  function nacti(src) { if (!IMG[src]) IMG[src] = new Promise(function (ok) { var i = new Image(); i.onload = function () { ok(i); }; i.onerror = function () { ok(null); }; i.src = src; }); return IMG[src]; }
+  function kresliSprity(svg, sprites, A, W, H, META) {
+    var tok = svg._tok = (svg._tok || 0) + 1, names = {};
+    sprites.forEach(function (s) { names[s.n] = 1; });
+    var keys = Object.keys(names);
+    Promise.all(keys.map(function (n) { return nacti(A + n + ".webp"); })).then(function (imgs) {
+      if (tok !== svg._tok) return;
+      var im = {}; keys.forEach(function (n, i) { im[n] = imgs[i]; });
+      var c = document.createElement("canvas"); c.width = W * K; c.height = H * K;
+      var g = c.getContext("2d"); g.scale(K, K); g.imageSmoothingQuality = "high";
+      sprites.forEach(function (s) {
+        var img = im[s.n], m = META[s.n]; if (!img) return;
+        var k = s.w / m.w;
+        g.save(); g.translate(s.x, s.y); if (s.r) g.rotate(s.r * Math.PI / 180); g.scale(s.f ? -k : k, k);
+        g.drawImage(img, -m.w / 2, -m.h + 2, m.w, m.h); g.restore();
+      });
+      c.toBlob(function (b) {
+        if (tok !== svg._tok) return;
+        var el = svg.querySelector("#sv-spr"); if (!el) return;
+        if (svg._sprUrl) URL.revokeObjectURL(svg._sprUrl);
+        svg._sprUrl = URL.createObjectURL(b); el.setAttribute("href", svg._sprUrl);
+      }, "image/png");
+    });
   }
 
   // ---------------- editor ----------------
@@ -112,7 +138,7 @@
     Object.keys(window.SVET_SYMBOLY || {}).forEach(function (k) { if (!SYM[k]) SYM[k] = { nazev: window.SVET_SYMBOLY[k].nazev + " (kresba)" }; });
     var panel = document.createElement("div"); panel.className = "sv-ed";
     ctx.el.parentNode.insertBefore(panel, ctx.el);
-    function rerender() { render(ctx.svg, D, M, ctx.base); }
+    var rt; function rerender() { clearTimeout(rt); rt = setTimeout(function () { render(ctx.svg, D, M, ctx.base); }, 250); }
     function mark() { dirty = true; panel.querySelector(".sv-save").classList.add("on"); rerender(); }
     function syncLayer(lay) {
       var f = lay._sv; if (!f) return;

@@ -53,17 +53,17 @@
   };
   // Výplň oblastí: které symboly a jak hustě (rozestup v px).
   var OBLASTI = {
-    les: { nazev: "Jehličnatý les", barva: "#6f9a52", spr: ["jehl_1", "jehl_2", "jehl_3", "jehl_4", "jehl_5", "jehl_6", "jehl_2", "list_6"], rozestup: 8, w: 13 },
-    haj: { nazev: "Listnatý les", barva: "#8fb35a", spr: ["list_1", "list_2", "list_3", "list_4", "list_5", "list_6", "jehl_3"], rozestup: 9, w: 15 },
+    les: { nazev: "Jehličnatý les", barva: "#6f9a52", spr: ["jehl_1", "jehl_2", "jehl_3", "jehl_4", "jehl_5", "jehl_6", "jehl_2", "list_6"], rozestup: 6, w: 12 },
+    haj: { nazev: "Listnatý les", barva: "#8fb35a", spr: ["list_1", "list_2", "list_3", "list_4", "list_5", "list_6", "jehl_3"], rozestup: 7, w: 13 },
     dzungle: { nazev: "Prales", barva: "#5e8f45", spr: ["palma_1", "palma_2", "palmy", "dzung_1", "dzung_2", "palma_3", "dzung_1"], rozestup: 9, w: 15 },
-    hory: { nazev: "Hory", barva: "#b8a88a", spr: ["hora_a", "hora_b", "hora_c", "hora_d", "hora_e", "hora_f", "masiv_a", "skala", "masiv_c"], rozestup: 24, w: 44 },
-    velehory: { nazev: "Velehory (sníh)", barva: "#c2b8a6", spr: ["snih", "snih", "hora_e", "hora_a", "hora_f"], rozestup: 26, w: 50 },
+    hory: { nazev: "Hory", barva: "#b8a88a", spr: ["hora_a", "hora_b", "hora_c", "hora_d", "hora_e", "hora_f", "masiv_a", "skala", "masiv_c"], rozestup: 14, w: 34 },
+    velehory: { nazev: "Velehory (sníh)", barva: "#c2b8a6", spr: ["snih", "snih", "hora_e", "hora_a", "hora_f"], rozestup: 16, w: 40 },
     kopce: { nazev: "Kopce", barva: "#c9c07a", spr: ["kopec_1", "kopec_2", "kopec_3", "kopec_4", "kopec_5"], rozestup: 24, w: 30 },
     poust: { nazev: "Poušť", barva: "#e6c886", spr: ["duna_1", "duna_2", "duna_3", "duna_4", "duna_5", "duna_2", "duna_3", "duna_1", "duna_4", "kaktus_1", "duna_5", "balvan_2"], rozestup: 28, w: 38 },
     bazina: { nazev: "Bažina", barva: "#8fa68a", spr: ["bazina_1", "bazina_2", "rakos_1", "rakos_2", "ker_2", "suchy_2"], rozestup: 18, w: 22 },
     pole: { nazev: "Pole a vinice", barva: "#dcc57a", spr: ["pole_1", "pole_2", "vinice", "pole_1"], rozestup: 24, w: 24 },
     mrtvy: { nazev: "Mrtvý les", barva: "#a59a7a", spr: ["suchy_1", "suchy_2", "ker_2"], rozestup: 10, w: 14 },
-    louky: { nazev: "Louky (jen barva)", barva: "#b8c47a", spr: [], rozestup: 0, w: 0 }
+    louky: { nazev: "Louky", barva: "#b8c47a", spr: ["ker_1", "list_2", "ker_2", "list_5", "kopec_3", "ker_1"], rozestup: 16, w: 10 }
   };
   // jednotlivé symboly: typ -> sprity (malované, web/assets/svet/*.webp) a šířka v px mapy
   var SPRITY = {

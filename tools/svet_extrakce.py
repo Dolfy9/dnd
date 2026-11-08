@@ -87,21 +87,25 @@ def main():
     hsv = cv2.cvtColor(pod, cv2.COLOR_BGR2HSV).astype(np.float32)
     h, s, v = hsv[..., 0], hsv[..., 1], hsv[..., 2]
     inland = cv2.erode(land, cv2.getStructuringElement(cv2.MORPH_ELLIPSE, (9, 9))) > 0
-    cls = {
-        "les": (h > 33) & (h < 80) & (s > 70) & (v < 125),
-    }
+    wat = (h >= 70) & (h <= 105)
+    les = (h >= 27) & (h <= 55) & (v < 125) & (s > 100)
+    louky = (h >= 27) & (h <= 60) & (v >= 125)
+    cls = {"hory": ~wat & ~les & ~louky & (s < 118) & (v > 60) & (v < 215), "les": les, "louky": louky}
+    rucne = json.loads((Path(__file__).parent / "svet_oblasti_zdroj.json").read_text(encoding="utf-8"))
+    rmask = np.zeros((H, W), np.uint8)
+    for a in rucne:
+        cv2.fillPoly(rmask, [np.int32(a["body"])], 1)
     oblasti = []
     for typ, m in cls.items():
-        f = cv2.GaussianBlur((m & inland).astype(np.float32), (0, 0), 7)
-        thr = .38
-        mm = ((f > thr) & inland).astype(np.uint8)
-        mm = cv2.morphologyEx(mm, cv2.MORPH_OPEN, cv2.getStructuringElement(cv2.MORPH_ELLIPSE, (9, 9)))
-        for sh in shapes(mm, 3.0, 450, typ):
+        f = cv2.GaussianBlur((m & inland & (rmask == 0)).astype(np.float32), (0, 0), 5)
+        mm = ((f > .42) & inland & (rmask == 0)).astype(np.uint8)
+        mm = cv2.morphologyEx(mm, cv2.MORPH_OPEN, cv2.getStructuringElement(cv2.MORPH_ELLIPSE, (7, 7)))
+        for sh in shapes(mm, 2.0, {"hory": 260, "les": 120, "louky": 500}[typ], typ):
             sh["typ"] = typ
             oblasti.append(sh)
 
-    nearw = cv2.dilate(water.astype(np.uint8), cv2.getStructuringElement(cv2.MORPH_ELLIPSE, (35, 35))) > 0
-    riv = (h > 82) & (h < 108) & (s > 60) & (v > 70) & ~nearw & (land > 0)
+    nearw = cv2.dilate(water.astype(np.uint8), cv2.getStructuringElement(cv2.MORPH_ELLIPSE, (15, 15))) > 0
+    riv = (h >= 72) & (h <= 108) & (s > 50) & ~nearw & (land > 0)
     riv = cv2.morphologyEx(riv.astype(np.uint8), cv2.MORPH_CLOSE, cv2.getStructuringElement(cv2.MORPH_ELLIPSE, (5, 5)))
     n, lab, st, _ = cv2.connectedComponentsWithStats(riv, 8)
     keep = np.zeros_like(riv)
@@ -111,7 +115,6 @@ def main():
             keep[lab == i] = 1
     reky = [{"typ": "reka", "body": l} for l in trace(skeletonize(keep > 0), 45)]
 
-    rucne = json.loads((Path(__file__).parent / "svet_oblasti_zdroj.json").read_text(encoding="utf-8")) if (Path(__file__).parent / "svet_oblasti_zdroj.json").exists() else []
     for a in oblasti:
         if a["typ"] == "les" and sum(q[1] for q in a["body"]) / len(a["body"]) > 700:
             a["typ"] = "haj"
@@ -126,8 +129,7 @@ def main():
         "sirka": W, "vyska": H,
         "pevnina": pevnina, "oblasti": oblasti, "reky": reky + [
             {"typ": "reka", "pozn": "řeka u Nöetu (kresba DM)", "body": [[700, 820], [690, 900], [660, 980], [650, 1060], [680, 1140]]},
-            {"typ": "reka", "pozn": "odhad z ilustrace", "body": [[390, 240], [375, 300], [350, 360], [335, 420]]},
-            {"typ": "reka", "pozn": "odhad z ilustrace", "body": [[350, 480], [400, 540], [430, 600], [440, 660], [500, 700], [600, 725]]}],
+            ],
         "cesty": [],
         "hranice": [{"typ": "hranice", "pozn": "hranice Tali / Zairam (čárkovaně v kresbě DM)", "body": [[1480, 960], [1530, 1000], [1545, 1100], [1525, 1230]]}], "symboly": sym,
     }
@@ -137,7 +139,7 @@ def main():
     col = {"les": (40, 120, 30), "hory": (130, 110, 140), "velehory": (200, 200, 220), "poust": (60, 170, 230), "dzungle": (20, 90, 20), "bazina": (120, 140, 90), "pole": (60, 200, 220), "kopce": (90, 150, 190)}
     ov = dbg.copy()
     for o in oblasti:
-        cv2.fillPoly(ov, [np.int32(o["body"])], col[o["typ"]])
+        cv2.fillPoly(ov, [np.int32(o["body"])], col.get(o["typ"], (90, 200, 140)))
     dbg = cv2.addWeighted(dbg, .5, ov, .5, 0)
     for p in pevnina:
         cv2.polylines(dbg, [np.int32(p["body"])], True, (200, 60, 0) if p["typ"] == "pevnina" else (0, 0, 220), 2)
