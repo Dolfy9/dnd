@@ -57,7 +57,7 @@
     });
     if (stateTip) map.removeLayer(stateTip);
     stateTip = L.tooltip({ permanent: true, direction: "top", className: "mapa-stav-stitek" })
-      .setLatLng(ll).setContent(esc(unassigned ? "Nepřiřazené území" : z.nazev)).addTo(map);
+      .setLatLng(ll).setContent(esc(unassigned ? "Samostatné území (bez jména)" : z.nazev)).addTo(map);
   }
   map.on("mousemove", function (e) {
     if (crop || SV.open || !stateData.length) return;

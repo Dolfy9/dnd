@@ -13,14 +13,23 @@ T = Path(__file__).resolve().parent
 R = T.parent
 K_PATH = T / "svet_kresba.json"
 IMG_PATH = T / "svet_archy/hranice_vychod_dm.png"
+SOUTH_IMG_PATH = T / "svet_archy/hranice_jih_dm.png"
 H = np.array([
     [1.0622541476744136, -5.94189574928109e-7, 616.4252429366333],
     [1.367542630317689e-5, 1.0619243666697018, -5.240186280624511],
     [1.8809856605495925e-8, -6.989608003086606e-9, 1.0],
 ], dtype=np.float64)
+H_SOUTH = np.array([
+    [1.1789986344678178, -0.00016248895505274524, 52.137001017849215],
+    [-1.894482472645219e-5, 1.1781780940862343, 687.7360914591272],
+    [-1.3859678518250163e-8, -1.2857555929462806e-7, 1.0],
+], dtype=np.float64)
 TAG = "východní hranice DM:"
+SOUTH_TAG = "jižní hranice DM:"
 NEIGHBORS = [(-1, -1), (0, -1), (1, -1), (-1, 0), (1, 0), (-1, 1), (0, 1), (1, 1)]
 STATES = ("Nölien", "Khearaz", "Mönohen", "Khärghe Zhia", "Knärghe Zhia")
+SOUTH_STATES = ("Briria", "Nöet", "Dräar", "Orden", "Laertmund", "Tali", "Zairam",
+                "Khärghe Zhia", "Knärghe Zhia", "Svobodné Jižní ostrovy")
 
 
 def neighbors(p, pixels):
@@ -266,6 +275,142 @@ def extract_dashed(mask, labels, matrix):
     return result
 
 
+def southern_sheet(image, data, source, land):
+    hsv = cv2.cvtColor(image, cv2.COLOR_BGR2HSV)
+    raw = cv2.inRange(hsv, np.array([125, 80, 70], dtype=np.uint8), np.array([179, 255, 255], dtype=np.uint8))
+    raw[:25] = 0
+    count, components, stats, centroids = cv2.connectedComponentsWithStats(raw, 8)
+    dashed = []
+    for i in range(1, count):
+        x, y, w, h, area = map(int, stats[i])
+        if not (8 <= area < 1000 and (y >= 380 or x >= 1250)):
+            continue
+        center = centroids[i].astype(np.float64).reshape(1, 1, 2)
+        atlas_center = cv2.perspectiveTransform(center, H_SOUTH).reshape(2)
+        if land.distance(Point(*atlas_center)) < 8:
+            continue
+        ys, xs = np.nonzero(components == i)
+        points = np.column_stack((xs, ys)).astype(np.float64)
+        if len(points) < 2:
+            continue
+        center = points.mean(axis=0)
+        _, vectors = np.linalg.eigh(np.cov(points.T))
+        direction = vectors[:, -1]
+        projection = (points - center) @ direction
+        endpoints = np.array([
+            center + direction * projection.min(),
+            center + direction * projection.max(),
+        ], dtype=np.float64).reshape(-1, 1, 2)
+        atlas = cv2.perspectiveTransform(endpoints, H_SOUTH).reshape(-1, 2)
+        body = [[int(round(x)), int(round(y))] for x, y in atlas]
+        if body[0] != body[1]:
+            dashed.append({"typ": "hranice", "pozn": SOUTH_TAG + " čárkovaný úsek v moři",
+                           "carkovana": True, "body": body})
+
+    closed = cv2.morphologyEx(raw, cv2.MORPH_CLOSE, np.ones((7, 7), dtype=np.uint8))
+    count, labels, stats, _ = cv2.connectedComponentsWithStats(closed, 8)
+    solid = np.zeros_like(closed)
+    for i in range(1, count):
+        if int(stats[i, cv2.CC_STAT_AREA]) >= 1000:
+            solid[labels == i] = 255
+    warped = cv2.warpPerspective(solid, H_SOUTH, (data["sirka"], data["vyska"]), flags=cv2.INTER_NEAREST)
+    traced, dangling = trace_lines(warped)
+    kept = [(line, ends) for line, ends in zip(traced, dangling) if line.length >= 18]
+    lines = [line for line, _ in kept]
+    dangling = [ends for _, ends in kept]
+
+    coast = land.boundary
+    lines, snapped = snap_endpoints(lines, dangling, coast)
+    old_borders = [
+        Polygon(u["body"]).buffer(0).boundary for u in source.get("uzemi", [])
+        if len(u.get("body", [])) >= 3
+    ]
+    old_borders.extend(
+        Polygon(body).buffer(0).boundary
+        for z in data.get("zeme", []) for body in z.get("body", []) if len(body) >= 3
+    )
+    faces = list(polygonize(unary_union([coast] + old_borders + lines)))
+    corners = cv2.perspectiveTransform(
+        np.array([[[0, 25]], [[image.shape[1], 25]], [[image.shape[1], image.shape[0]]], [[0, image.shape[0]]]], dtype=np.float32),
+        H_SOUTH,
+    ).reshape(-1, 2)
+    coverage = Polygon(corners).intersection(Polygon([(0, 0), (data["sirka"], 0),
+                                                        (data["sirka"], data["vyska"]), (0, data["vyska"])]))
+    blocked = unary_union([
+        Polygon(u["body"]).buffer(0) for u in source.get("uzemi", [])
+        if u.get("stat", "stat") is None and len(u.get("body", [])) >= 3
+    ])
+    old_states = {
+        z["nazev"]: unary_union([Polygon(body).buffer(0) for body in z.get("body", []) if len(body) >= 3])
+        for z in data.get("zeme", [])
+    }
+    targets = {name: old_states[name] for name in SOUTH_STATES if name in old_states}
+    seeds = {m["nazev"]: Point(m["x"], m["y"]) for m in
+             json.loads((R / "11_Mapy/mista.json").read_text(encoding="utf-8"))["mista"]
+             if m.get("typ") == "zeme" or m.get("nazev") == "Dräar"}
+    assigned = {name: [] for name in targets}
+    merges = 0
+    face_count = 0
+    for face in faces:
+        geom = face.intersection(land).intersection(coverage).difference(blocked)
+        if geom.area < 800:
+            continue
+        face_count += 1
+        owner = next((name for name in targets if name in seeds and face.covers(seeds[name])), None)
+        if owner is None:
+            scores = {name: geom.intersection(poly).area for name, poly in targets.items()}
+            owner = max(scores, key=scores.get) if scores else None
+            if owner is None or scores[owner] < 1:
+                coast_ratio = geom.boundary.intersection(coast).length / max(geom.boundary.length, 1)
+                if coast_ratio >= .2:
+                    merges += 1
+                    shared = {name: geom.boundary.intersection(unary_union(items).boundary).length
+                              for name, items in assigned.items() if items}
+                    owner = max(shared, key=shared.get) if shared and max(shared.values()) > 1 else None
+                if owner is None and targets:
+                    owner = min(targets, key=lambda name: geom.centroid.distance(seeds.get(name, geom.centroid)))
+        if owner in assigned:
+            assigned[owner].append(geom)
+
+    retained = []
+    for u in source.get("uzemi", []):
+        if u.get("pozn", "").startswith(SOUTH_TAG):
+            continue
+        if u.get("stat", "stat") is None:
+            retained.append(u)
+            continue
+        if u.get("nazev") not in targets or u.get("nazev") == "Divoký Sever":
+            retained.append(u)
+            continue
+        outside = Polygon(u["body"]).buffer(0).difference(coverage)
+        retained.extend(u | {"body": ring} for ring in rings(outside))
+    generated = []
+    assigned_counts = {}
+    for name, items in assigned.items():
+        geom = unary_union(items) if items else Polygon()
+        assigned_counts[name] = len(items)
+        generated.extend({"nazev": name, "pozn": SOUTH_TAG + " " + name, "body": ring}
+                         for ring in rings(geom))
+    solid_borders = [
+        {"typ": "hranice", "pozn": SOUTH_TAG + " vektorová hranice", "body": [
+            [int(round(x)), int(round(y))] for x, y in line.coords
+        ]}
+        for line in lines if line.length >= 25
+    ]
+    conflicts = 0
+    divoky = next((p for name, p in old_states.items() if name == "Divoký Sever"), Polygon())
+    briria = old_states.get("Briria", Polygon())
+    old_shared = divoky.boundary.intersection(briria.boundary).intersection(land)
+    shared_lines = [g for g in getattr(old_shared, "geoms", [old_shared]) if g.geom_type == "LineString" and g.length > 1]
+    if shared_lines:
+        old_shared = max(shared_lines, key=lambda g: g.length)
+        new_linework = unary_union(lines)
+        conflicts = sum(old_shared.interpolate(t, normalized=True).distance(new_linework) > 12
+                        for t in np.linspace(0, 1, 25))
+    return (retained + generated, solid_borders + dashed, face_count,
+            assigned_counts, snapped, len(dashed), merges, conflicts)
+
+
 def main():
     data = json.loads((R / "11_Mapy/svet.json").read_text(encoding="utf-8"))
     places = json.loads((R / "11_Mapy/mista.json").read_text(encoding="utf-8"))["mista"]
@@ -369,19 +514,39 @@ def main():
         note = TAG + (" severní pohoří s chrámy – DM potvrzeno" if name == "Nölien" else f" {name}")
         for ring in rings(geom):
             generated.append({"nazev": name, "pozn": note, "body": ring})
-    for name, geom in unassigned:
+    null_ids = (
+        ("samostatne-uzemi-severne-od-khearazu", "#838b8f"),
+        ("samostatne-uzemi-u-demona", "#8a9297"),
+        ("samostatne-uzemi-vychodni-pobrezi", "#79858c"),
+    )
+    for (name, geom), (territory_id, color) in zip(unassigned, null_ids):
         for ring in rings(geom):
-            generated.append({"nazev": "Nepřiřazené území", "stat": None, "pozn": "nepřiřazeno – čeká na DM (" + name + ")", "body": ring})
+            generated.append({
+                "id": territory_id,
+                "nazev": "Samostatné území (bez jména)",
+                "stat": None,
+                "barva": color,
+                "pozn": "nepřiřazeno – čeká na DM (" + name + ")",
+                "body": ring,
+            })
 
     retained_areas = [
         u for u in source.get("uzemi", [])
         if not u.get("pozn", "").startswith(TAG)
-        and not (u.get("nazev") == "Nepřiřazené území"
+        and not (u.get("stat", "stat") is None
                  and u.get("pozn", "").startswith("nepřiřazeno – čeká na DM"))
     ]
     retained_borders = [b for b in source.get("hranice", []) if not b.get("pozn", "").startswith(TAG)]
     source["uzemi"] = retained_areas + generated
     source["hranice"] = retained_borders + dashed
+    (source["uzemi"], south_borders, south_faces, south_assignments, south_snapped,
+     south_dashed, south_merges, south_conflicts) = southern_sheet(
+        cv2.imread(str(SOUTH_IMG_PATH)), data, source, land
+    )
+    source["hranice"] = (
+        [b for b in source["hranice"] if not b.get("pozn", "").startswith(SOUTH_TAG)]
+        + south_borders
+    )
     updated = replace_array(source_text, "hranice", source["hranice"])
     updated = replace_array(updated, "uzemi", source["uzemi"])
     json.loads(updated)
@@ -393,6 +558,10 @@ def main():
     print("Sloučené pobřežní plochy:", merges)
     print("Nesloučené neoznačené plochy:", unmerged)
     print(f"Připojené volné konce: {snapped}; čárkované úseky: {len(dashed)}")
+    print(f"Jižní polygonizované plochy v pokryté oblasti: {south_faces}")
+    print("Jižní přiřazení:", ", ".join(f"{name}={count}" for name, count in south_assignments.items()))
+    print(f"Jižní připojené volné konce: {south_snapped}; sloučené pobřežní plochy: {south_merges}")
+    print(f"Jižní čárkované úseky: {south_dashed}; vzorky konfliktu s Divokým Severem: {south_conflicts}/25")
 
 
 if __name__ == "__main__":

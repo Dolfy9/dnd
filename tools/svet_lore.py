@@ -257,7 +257,12 @@ def lore(svet):
         if u.get("stat", "stat") is None:
             g = Polygon(u["body"]).buffer(0)
             if g.area > 0:
-                neprirazene.append(g)
+                neprirazene.append({
+                    "id": u.get("id"),
+                    "barva": u.get("barva", "#838b8f"),
+                    "pozn": u.get("pozn", "nepřiřazeno – čeká na DM"),
+                    "geom": g,
+                })
             continue
         if not any(z["nazev"] == u["nazev"] for z in st):
             continue
@@ -316,12 +321,13 @@ def lore(svet):
     ob[:] = ob3
     svet["zeme"] = [{"nazev": z["nazev"], "body": [body(p.simplify(1.5)) for p in z["polys"] if p.area > 3000], "pozn": "území státu vypočtené z popisků a terénu (návrh)"}
                     | ({"barva": "#1e1614"} if z is kn else {"barva": "#6b6b6b"} if z["divoke"] else {}) for z in st]
-    for geom in neprirazene:
-        for p in geoms(geom):
+    for u in neprirazene:
+        for p in geoms(u["geom"]):
             if p.geom_type == "Polygon" and p.area > 1000:
                 svet["zeme"].append({
-                    "nazev": "Nepřiřazené území", "stat": None,
-                    "barva": "#838b8f", "pozn": "nepřiřazeno – čeká na DM",
+                    "id": u["id"],
+                    "nazev": "Samostatné území (bez jména)", "stat": None,
+                    "barva": u["barva"], "pozn": u["pozn"],
                     "body": [body(p.simplify(1.5))],
                 })
     cb = land.boundary.buffer(7)
