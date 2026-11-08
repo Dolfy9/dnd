@@ -3,14 +3,14 @@
 Seznam věcí k rozhodnutí DM. Po rozhodnutí položku přesuň do sekce *Vyřešeno* s odpovědí.
 
 ## Rozpory
-1. **Tirent a hvozdy:** Východní hvozd leží v Mönohenu a stvořil ho Tirent (kánon). Otevřené: jaký je vztah Východního hvozdu k Nöelienu a jeho lesům, co dalšího Tirent stvořil, zda žije a kde je.
+1. **Tirent a hvozdy:** Východní hvozd leží v Mönohenu a stvořil ho Tirent (kánon). Otevřené: jaký je vztah Východního hvozdu k Nölienu a jeho lesům, co dalšího Tirent stvořil, zda žije a kde je.
 2. **Zia × Zhia – názvy států:** Proč se dnes jedna polovina jmenuje „Knížectví“ a druhá „Država“?
 3. **Loutkoví vládci:** Kteří vládci jsou Ordenem dosazené loutky? (Forpa VII. ano. Iridin III., Wort XXIV., Breffan, Oltar, Szkunzi? Szkunzi a Oltar jsou popsaní jako vzdorovití.)
 4. **Pravopis Dräar / Draar:** Používají se obě varianty. Kterou sjednotit?
-5. **Poloha Nöelienu:** Na mapě je NÖELIEN ve středu severu, severovýchodně od Bririe a západně od Khearazu. Text říká „na západě“ – platí to z pohledu východních zemí (Khearaz, Mönohen, Zhia)? Viz [Geografie](11_Mapy/Geografie.md).
+5. **Poloha Nölienu:** Na mapě je NÖLIEN ve středu severu, severovýchodně od Bririe a západně od Khearazu. Text říká „na západě“ – platí to z pohledu východních zemí (Khearaz, Mönohen, Zhia)? Viz [Geografie](11_Mapy/Geografie.md).
 6. **Provincie Nöet:** Věta „V Mictimě kvituje odboj přítomnost zakázaných svazků“ – myšleno „kvete odboj“ / „odboj vítá“?
 7. **Měřítko mapy:** kontinent má podle měřítka ~3 500 × 2 500 km (velikost Evropy). Je to záměr?
-8. **Elfové a Východní hvozd:** Žili elfové původně v mönohenském Východním hvozdu, nebo vždy v Nöelienu?
+8. **Elfové a Východní hvozd:** Žili elfové původně v mönohenském Východním hvozdu, nebo vždy v Nölienu?
 
 ## Chybějící / nedopsané
 - **Kop Aram:** komu patří a kdo ho spravuje (Briria, Werenor, samospráva kupců)?
@@ -35,12 +35,14 @@ Seznam věcí k rozhodnutí DM. Po rozhodnutí položku přesuň do sekce *Vyře
 - **Khärghae / Knärghae Zia:** Původně sesterská města jedné země Zia, polovinu dnes ovládají temné síly (chodící mrtví, démoni). Zapsáno do obou zemí.
 - **Která polovina Zhie je temná:** **Knärghae Zia** (chodící mrtví a démoni). Zapsáno do obou zemí, Dar Kemmaru, Geografie a Knihy 09.
 - **Zia / Zhia:** obě podoby jsou správné.
-- **Východní hvozd:** leží v Mönohenu, stvořil ho Tirent (vztah k Nöelienu otevřený – bod 1).
+- **Východní hvozd:** leží v Mönohenu, stvořil ho Tirent (vztah k Nölienu otevřený – bod 1).
 
 ## Atlas mapy – prvky z loru (návrh, potvrď polohy)
 - Polohy odvozené z textů, ne z kresby: Východní hvozd (východ Mönohenu), Hinai Mihi (západní břeh Ordenské zátoky), ledovce Fornheimu (SV poloostrov), písek Dräaru, hranice mrtvé Knärghe Zhie, opuštěné císařské věže na pobřeží Divokého Severu, věže starého Kop Aramu čnějící z jezera. Zdroj: `tools/svet_lore.json`.
 - Obchodní cesty mezi sídly jsou vypočtené (terén, mosty, uzavřená Knärghe Zhia), ne z kresby. Které z nich platí?
 - Hranice států jsou vypočtené (od popisku země po terénu, hory jako přirozená hranice), ne z kresby ani textu. Kůly s lebkami stojí na hranici Knärghe Zhie. Sedí průběh hranic?
 - **Mönohen – řeka a pobřeží:** Dvojité čáry jsou nyní obkreslené jako jedna řeka ústící do východního moře; pobřeží Mönohenu je ručně obkreslené jako návrh. Odpovídá to kresbě?
-- **Černá skvrna v moři jižně od Tali (≈1357,1326):** v kresbě je plně začerněná skvrna. Co to je (útes, vrak, hlubina, ostrov, kraken)? Zatím v atlasu není. *(návrh – čeká na DM)*
-- **Sever Nöelienu (≈1050–1400, 150–430):** v kresbě jsou dlouhé tahy (≈1050–1260) a vysoký tvar s tváří nahoře (≈1250–1400). Atlas z toho dělá moře s tenkými ostrůvky a poloostrov s horami a tváří ve skále. Co tam je (pohoří, kořeny, obří socha)? *(návrh – čeká na DM)*
+- **Černá skvrna v moři jižně od Tali (≈1357,1326):** chyba kresby, potvrdil DM; do atlasu se nic nepřidává.
+- **Sever Nölienu (≈1040–1400, 110–430):** pohoří s malými chrámy. *(vyřešeno – potvrdil DM)*
+- **Tvor s holí u Khearazu (≈1338,568):** není jasné, zda jde o bytost, sochu, nebo jiný symbol; zatím bez samostatné značky. *(návrh – čeká na DM)*
+- **Velký jihovýchodní ostrov s loděmi (≈1870,1135):** kresba mu nedává čitelné jméno. Má mít vlastní název, nebo je součástí Svobodných Jižních ostrovů? *(návrh – čeká na DM)*

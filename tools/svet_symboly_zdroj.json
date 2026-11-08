@@ -79,11 +79,46 @@
   "pozn": "krystalové věže (SV poloostrov)"
  },
  {
-  "typ": "tvar",
+  "typ": "hora",
   "x": 1365,
   "y": 180,
-  "m": 1,
-  "pozn": "tvář/oči ve skále"
+  "m": 0.75,
+  "pozn": "horský vrchol na severním poloostrově Nölienu (kresba DM)"
+ },
+ {
+  "typ": "chram",
+  "x": 1365,
+  "y": 193,
+  "m": 0.55,
+  "pozn": "malý chrám na severním poloostrově Nölienu (kresba DM)"
+ },
+ {
+  "typ": "chram",
+  "x": 1090,
+  "y": 270,
+  "m": 0.6,
+  "pozn": "malý chrám na západním hřebeni Nölienu (kresba DM)"
+ },
+ {
+  "typ": "chram",
+  "x": 1170,
+  "y": 280,
+  "m": 0.6,
+  "pozn": "malý chrám na středním hřebeni Nölienu (kresba DM)"
+ },
+ {
+  "typ": "chram",
+  "x": 1290,
+  "y": 186,
+  "m": 0.55,
+  "pozn": "malý chrám na severním poloostrově Nölienu (kresba DM)"
+ },
+ {
+  "typ": "chram",
+  "x": 1328,
+  "y": 182,
+  "m": 0.55,
+  "pozn": "malý chrám na severním poloostrově Nölienu (kresba DM)"
  },
  {
   "typ": "obelisk",
@@ -195,7 +230,7 @@
   "x": 1100,
   "y": 540,
   "m": 1,
-  "pozn": "budovy u Nöelienu"
+  "pozn": "budovy u Nölienu"
  },
  {
   "typ": "majak",
@@ -203,5 +238,19 @@
   "y": 348,
   "m": 1,
   "pozn": "maják s paprsky na ostrůvku (kresba DM)"
+ },
+ {
+  "typ": "pevnost",
+  "x": 1530,
+  "y": 495,
+  "m": 0.8,
+  "pozn": "pevnost u Východního hvozdu Mönohenu (kresba DM)"
+ },
+ {
+  "typ": "kupole",
+  "x": 1167,
+  "y": 557,
+  "m": 1,
+  "pozn": "kopule v Khearazu (kresba DM)"
  }
 ]
