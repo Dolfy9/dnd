@@ -30,6 +30,15 @@ def _table(title, cells):
     return md + "".join("| " + " | ".join(r + [""] * (k - len(r))) + " |\n" for r in rows[1:])
 
 
+_CS_F = A / "preklad" / "pravidla_cs.json"
+CS = json.load(open(_CS_F, encoding="utf-8")) if _CS_F.exists() else {}
+
+
+def cs(x):
+    x = x.strip()
+    return CS.get(x, x)
+
+
 def para(t):
     lines = [x for x in str(t).split("\n")]
     out, i = [], 0
@@ -38,9 +47,9 @@ def para(t):
             title = out.pop() if out and len(out[-1]) < 60 and not out[-1].endswith(".") else ""
             cells = []
             while i < len(lines) and lines[i].strip().startswith("|"):
-                cells.append(lines[i].strip()[1:].strip().replace("|", "/")); i += 1
+                cells.append(cs(lines[i].strip()[1:]).replace("|", "/")); i += 1
             out.append(_table(title, cells)); continue
-        if lines[i].strip(): out.append(lines[i].strip())
+        if lines[i].strip(): out.append(cs(lines[i]))
         i += 1
     return "\n\n".join(out)
 
