@@ -165,7 +165,7 @@ def lore(svet):
 
     for o in Z["oblasti"]:
         for b in kousky(Polygon(o["body"]).buffer(0).intersection(land)):
-            ob.append({"typ": o["typ"], "pozn": o["pozn"] + " (lore, návrh)", "zdroj": o["zdroj"], "body": b})
+            ob.append(o | {"pozn": o["pozn"] + " (lore, návrh)", "body": b})
 
     for v in K.get("vyrezat", []):
         vyrez = Polygon(v["body"]).buffer(0)

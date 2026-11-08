@@ -2,6 +2,22 @@
  "_popis": "Ručně upřesněné plochy (px vyrovnané mapy 2048×1440). jezera = přidat vodu (jezero Amir podle DM), ostrovy = vrátit pevninu (Kop Aram, vnitrozemí Divokého Severu), mosty = lomená čára pevniny (most Werenor – Kop Aram). more_pres_kresbu = kresby v moři (lodě, vrak, měřítko), které nejsou pevnina. Kop Aram je město na malém ostrově (ne celý skalní masiv); záliv na jihu mezi Tali a Zairamem je moře. bez_kresby = plochy, kde se kresba nevykresluje; zmenseni = kresba přesunutá v menším měřítku. Průliv se dvěma rameny pod obloukem u Knärghe (východ jezera Amir → moře) a průtok z jezera u Tali do zálivu Zairamu (označeno DM).",
  "jezera": [
   [
+   [1365, 708],
+   [1372, 701],
+   [1382, 704],
+   [1384, 713],
+   [1378, 721],
+   [1368, 717]
+  ],
+  [
+   [1407, 705],
+   [1417, 700],
+   [1428, 707],
+   [1427, 718],
+   [1418, 724],
+   [1408, 718]
+  ],
+  [
    [
     1416,
     721

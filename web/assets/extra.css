@@ -13,6 +13,7 @@
 [data-md-color-scheme="default"] { --md-default-bg-color: #f7f0e1; }
 .md-typeset table:not([class]) { font-size: .78rem; }
 .md-typeset img { border-radius: 4px; }
+body.mapa-vyrez #mapa { position: relative; top: -8px !important; }
 
 /* Stav: návrh / kánon */
 .md-typeset blockquote.stav { border-left-width: 4px; padding: .3rem .8rem; border-radius: 0 4px 4px 0; }

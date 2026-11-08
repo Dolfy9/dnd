@@ -47,7 +47,7 @@
     o.push('<image href="' + A + 'barvy.jpg" width="' + W + '" height="' + H + '" preserveAspectRatio="none" opacity="' + (D.barvy_sila == null ? .8 : D.barvy_sila) + '"/>');
     o.push('<path d="' + landD + '" fill="none" stroke="#f6e7bb" stroke-opacity=".75" stroke-width="12" filter="url(#sv-mekce)"/>');
     o.push('<path d="' + landD + '" fill="none" stroke="#7a5a2a" stroke-opacity=".3" stroke-width="5" filter="url(#sv-mekce)"/>');
-    (D.oblasti || []).forEach(function (a) { var c = (OBL[a.typ] || {}).barva || "#b8c47a"; o.push('<path d="' + pathD(a.body, true) + '" fill="' + c + '" opacity="' + (a.typ === "mrtva_zeme" ? .55 : a.typ === "mrtvy" ? .4 : .22) + '" filter="url(#sv-mekce)"/>'); });
+    (D.oblasti || []).forEach(function (a) { var c = a.tmavy ? "#26372a" : (OBL[a.typ] || {}).barva || "#b8c47a"; o.push('<path d="' + pathD(a.body, true) + '" fill="' + c + '" opacity="' + (a.tmavy ? .58 : a.typ === "mrtva_zeme" ? .55 : a.typ === "mrtvy" ? .4 : .22) + '" filter="url(#sv-mekce)"/>'); });
     var ZPAL = ["#b0413e", "#3f6fa0", "#6a8f3a", "#a0702a", "#7a4f9a", "#2f8f86", "#b05a8a", "#8a8a2a", "#4a5aa8", "#a84a2a", "#3a7a4a", "#9a6a4a", "#5a8aa8", "#aa8a3a", "#6a4a3a"];
     (D.zeme || []).forEach(function (z, i) { var c = z.barva || ZPAL[i % ZPAL.length]; (z.pas || []).forEach(function (b) { o.push('<path d="' + (typeof b[0][0] === "number" ? pathD(b, true) : b.map(function (r) { return pathD(r, true); }).join(" ")) + '" fill="' + c + '" fill-rule="evenodd" opacity=".3"/>'); }); });
     (D.oblasti || []).forEach(function (a, i) {
@@ -81,8 +81,8 @@
     // symboly v oblastech (seřazené podle y, aby se překrývaly správně)
     var items = [];
     var REL = { kaktus: .3, balvan: .45, rakos: .55, ker: .5, suchy: .8 };
-    function spr(name, x, y, w, flip, rot) {
-      return META[name] ? { n: name, x: x, y: y, w: w, f: flip, r: rot || 0 } : "";
+    function spr(name, x, y, w, flip, rot, tmavy) {
+      return META[name] ? { n: name, x: x, y: y, w: w, f: flip, r: rot || 0, tmavy: !!tmavy } : "";
     }
     (D.oblasti || []).forEach(function (a, ai) {
       var t = OBL[a.typ]; if (!t || !t.spr || !t.spr.length) return;
@@ -95,8 +95,9 @@
           var n = .5 + .5 * Math.sin(px * .031 + f1) * Math.sin(py * .027 + f2) + .25 * Math.sin((px + py) * .07 + f3);
           if (R() > .2 + .9 * n) continue;
         }
-        var nm = t.spr[Math.floor(R() * t.spr.length)];
-        items.push([py, spr(nm, px, py, t.w * (REL[nm.split("_")[0]] || 1) * (sh ? .65 + R() * .7 : .8 + R() * .4), R() < .5)]);
+        var pool = a.tmavy && a.typ === "dzungle" ? ["dzung_1", "dzung_2"] : t.spr;
+        var nm = pool[Math.floor(R() * pool.length)];
+        items.push([py, spr(nm, px, py, t.w * (REL[nm.split("_")[0]] || 1) * (sh ? .65 + R() * .7 : .8 + R() * .4), R() < .5, 0, a.tmavy)]);
       }
     });
     // řídká drobná vegetace na volné pevnině (mimo oblasti a jezera)
@@ -179,6 +180,7 @@
         var img = im[s.n], m = META[s.n]; if (!img) return;
         var k = s.w / m.w;
         g.save(); g.translate(s.x, s.y); if (s.r) g.rotate(s.r * Math.PI / 180); g.scale(s.f ? -k : k, k);
+        if (s.tmavy) g.filter = "brightness(.58) saturate(.65)";
         g.drawImage(img, -m.w / 2, -m.h + 2, m.w, m.h); g.restore();
       });
       c.toBlob(function (b) {
