@@ -87,6 +87,7 @@ Repo je kompatibilní i s [Obsidianem](https://obsidian.md) (stačí otevřít s
 ### [04_Postavy](04_Postavy/)
 - **NPC**
   - ["Slepý" Corvin (Vůdce Odboje)](04_Postavy/NPC/Postava_Corvin.md)
+  - [Dluben](04_Postavy/NPC/Postava_Dluben.md)
   - [Kazi Nocostřel (Průvodce)](04_Postavy/NPC/Postava_Kazi.md)
   - [Inkvizitor Vaelen (NPC Antagonista)](04_Postavy/NPC/Postava_Vaelen.md)
 - **Stavitele a Bohove**
