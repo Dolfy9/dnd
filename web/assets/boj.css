@@ -92,3 +92,5 @@ body.ed-on .bj-pal { cursor: pointer; }
 .bj-l small { color: var(--md-default-fg-color--light); margin-right: 4px; }
 .bj-l.pj { border-left: 3px solid #e93; padding-left: 5px; background: color-mix(in srgb, #e93 10%, transparent); }
 .bj-l.blok, .bj-l.warn { border-left: 3px solid #e55; padding-left: 5px; background: color-mix(in srgb, #e55 10%, transparent); }
+.bj-sum { margin: 4px 0; display: flex; flex-wrap: wrap; gap: 4px; align-items: center; }
+.bj-sum button { font-size: .8em; padding: 1px 7px; border: 1px solid var(--bj-line); border-radius: 10px; background: rgba(150, 110, 220, .15); cursor: pointer; }

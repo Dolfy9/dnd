@@ -28,7 +28,7 @@
     "%": ["Bedny / sarkofág (half cover, těžký terén)", 2], "^": ["Těžký terén", 2], "~": ["Hluboká voda (plavání)", 2], ",": ["Mělčina (těžký terén)", 2],
     "=": ["Most / lávka", 1], "+": ["Dveře", 1], _: ["Propast / jáma", 0], x: ["Nebezpečí", 1], S: ["Schody", 1]
   };
-  const BASE = { mesto: "#8b8478", krypta: "#57524d", les: "#6d8c4c", ruiny: "#968b70", reka: "#789a54" };
+  const BASE = { mesto: "#8b8478", krypta: "#57524d", les: "#6d8c4c", ruiny: "#968b70", reka: "#789a54", more: "#1e4f78", pristav: "#7d7466", bazina: "#55684a", snih: "#dfe4ea", jeskyne: "#46423e", hory: "#827d73", poust: "#d4b882", plaz: "#dcc896" };
   const LIGHT = { druzina: "#a9d2fb", nepratele: "#f59a8a", neutral: "#f5dc9a" };
   const SIDE = { druzina: ["#2f6fb0", "Družina"], nepratele: ["#b03030", "Nepřátelé"], neutral: ["#b08a2f", "Neutrální"] };
   const RANGES = { longbow: [150, 600], shortbow: [80, 320], "heavy crossbow": [100, 400], "light crossbow": [80, 320], "hand crossbow": [30, 120], sling: [30, 120], dart: [20, 60], javelin: [30, 120], "throwing": [20, 60], handaxe: [20, 60], dagger: [20, 60], spear: [20, 60], blowgun: [25, 100], musket: [40, 120], pistol: [30, 90] };
@@ -66,7 +66,7 @@
     return ["Fighter", "Barbarian", "Monk", "Paladin", "Ranger"].some(n => L(n) >= 5) ? 2 : 1;
   }
   function parseSpell(name, K, dd, c, castAb, lvl) {
-    const k = K[name] || K[K._low[String(name).toLowerCase()]]; if (!k || !k.text) return null;
+    const k = K[name] || K[K._low[String(name).toLowerCase()]]; if (!k || !k.text || (/stat block/i.test(k.text) && /\n\s*\|/.test(k.text))) return null;
     const txt = k.text.split(/\n(?:Using a Higher-Level Spell Slot|At Higher Levels)/)[0];
     const dm = txt.match(/(\d+)d(\d+)(?:\s*\+\s*your spellcasting ability modifier)? (\w+) damage/i); if (!dm) return null;
     let n = Number(dm[1]); const f = Number(dm[2]);
@@ -105,7 +105,72 @@
     if (!atk.length) { const au = P.autoDpr(c, dd); atk.push({ nazev: "Útok (odhad z úrovně)", bonus: au.atk, dmg: String(Math.max(1, au.dpr)), avg: au.dpr, typ: "", kind: "weapon", melee: true, reach: 5, n: 1 }); }
     return { id: uid(), nazev: c.jmeno, kind: "pc", side: "druzina", s: SIZE[c.velikost] || 1, hp: dd.hp, max: dd.hp, tmp: 0, ac: dd.ac, initB: dd.init, speed: parseInt(dd.speed, 10) || 30, swim: 0, fly: 0,
       saves: dd.saves, atk, cond: [], conc: false, react: true, xp: (dd.cr && dd.cr.xp) || 0, lvl: dd.lvl, cr: dd.cr && dd.cr.cr, src: { cesta: e.cesta }, ds: { s: 0, f: 0 },
-      slots: (dd.slots || []).map(n => ({ max: Number(n) || 0, used: 0 })), pact: dd.pact && Number(dd.pact.pocet) ? { lvl: Number(dd.pact.uroven) || 1, max: Number(dd.pact.pocet), used: 0 } : null };
+      slots: (dd.slots || []).map(n => ({ max: Number(n) || 0, used: 0 })), sdc: castAb ? (dd.casting[0] || {}).dc : null, satk: castAb ? (dd.casting[0] || {}).atk : null, smod: castAb ? dd.mods[castAb] : 0, summ: (c.kouzla || []).map(k => k.nazev).filter(isSummon), pact: dd.pact && Number(dd.pact.pocet) ? { lvl: Number(dd.pact.uroven) || 1, max: Number(dd.pact.pocet), used: 0 } : null };
+  }
+  const NUMW = ["one", "one", "two", "three", "four", "five", "six"];
+  function spellK(n) { return A.K && (A.K[n] || A.K[(A.K._low || {})[String(n).toLowerCase()]]); }
+  function isSummon(n) { const k = spellK(n); return !!(k && k.text && /stat block/i.test(k.text) && /\n\s*\|/.test(k.text)); }
+  function summonList() { return Object.keys(A.K || {}).filter(n => n !== "_low" && isSummon(n)).sort(); }
+  function sbLines(n) { const k = spellK(n); return { k, L: k.text.split("\n").filter(l => /^\s*\|/.test(l)).map(l => l.replace(/^\s*\|\s*/, "").trim()).filter(Boolean) }; }
+  function summonVariants(n) {
+    const s = [];
+    sbLines(n).L.forEach(l => l.replace(/\(([^()]*)\)/g, (m, p) => { p.split(";").forEach(q => { const mm = q.trim().match(/^([A-Z][\w-]+(?: and [A-Z][\w-]+)*) only$/i); if (mm) mm[1].split(/ and /i).forEach(v => { if (s.indexOf(v) < 0) s.push(v); }); }); return m; }));
+    return s;
+  }
+  function summonMon(n, L, c, v) {
+    const ls = sbLines(n).L, atk = Number(c.satk) || 0, dc = Number(c.sdc) || 10, md = Number(c.smod) || 0;
+    const only = p => /\bonly\b/i.test(p), match = p => !v || new RegExp("\\b" + v + "\\b", "i").test(p);
+    const sub = s => String(s).replace(/(?:the|this) spell[’']s level/gi, L).replace(/your spellcasting ability modifier/gi, md)
+      .replace(/(\d+) (?:for each|per) spell level above (\d+)/gi, (m, a, b) => a * Math.max(0, L - b)).replace(/(\d+) per spell level/gi, (m, a) => a * L);
+    const num = s => {
+      const alts = []; s = sub(s).replace(/^HP\s*/i, "").replace(/(\+\s*)?(\d+)\s*\(([^)]*)\)\s*(?:or\s*)?/gi, (m, plus, a, p) => { if (!only(p)) return (plus ? "+ " : "") + a + " "; if (plus) return match(p) ? "+ " + a + " " : ""; alts.push([Number(a), p]); return ""; });
+      if (alts.length) { const al = alts.find(x => v && match(x[1])) || alts[0]; return al[0] + (s.match(/\+\s*\d+/g) || []).reduce((x, y) => x + Number(y.replace(/\D/g, "")), 0); }
+      const m = s.match(/\d+(?:\s*\+\s*\d+)*/); return m ? m[0].split("+").reduce((x, y) => x + Number(y), 0) : 10;
+    };
+    const get = re => { const l = ls.find(x => re.test(x)); return l ? l.replace(re, "").trim() : ""; };
+    const spd = sub(get(/^Speed:?/i)), rych = { walk: parseInt(spd, 10) || 0 };
+    spd.replace(/(Fly|Swim|Climb|Burrow) (\d+) ft\.?(?:\s*\(([^)]*)\))?/gi, (m, k, x, p) => { const rq = p && p.match(/requires level (\d+)/i); if (!p || (rq ? L >= Number(rq[1]) : !only(p) || match(p))) rych[k.toLowerCase()] = Number(x); return m; });
+    const ci = ls.findIndex(l => /^CHA\b/.test(l)), at = {}; ABS.forEach((a, i) => { at[a] = parseInt(ls[ci + 1 + i], 10) || 10; });
+    const tx = t => {
+      t = sub(t).replace(/(Melee or Ranged|Melee|Ranged) Attack:/g, "$1 Attack Roll:").replace(/Bonus equals your spell attack modifier/gi, "+" + atk)
+        .replace(/DC equals your spell save DC|Your spell save DC/gi, "DC " + dc).replace(/\bplus\b/g, "+").replace(/\+ (\d+) of /g, "+ $1 ").replace(/Hit:(\S)/g, "Hit: $1")
+        .replace(/reach (\d+) feet/g, "reach $1 ft").replace(/range (\d+) ft/g, "range $1/$1 ft")
+        .replace(/a number of (.*?)attacks equal to half (\d+) \(round down\)/i, (m, w, x) => NUMW[Math.min(6, Math.floor(x / 2))] + " " + w + "attacks");
+      return t.replace(/(\d+d\d+(?:\s*\+\s*\d+)*)\s+((?:[A-Z][a-z]+(?:\s*\([^)]*\))?(?:,\s*(?:or\s+)?|\s+or\s+)?)+?)\s*damage/g, (m, ex, ty) => {
+        const opts = ty.split(/,\s*(?:or\s+)?|\s+or\s+/).map(x => x.trim()).filter(Boolean).map(x => { const mm = x.match(/^([A-Z][a-z]+)(?:\s*\(([^)]*)\))?/) || [0, x, ""]; return [mm[1], mm[2] || ""]; });
+        const o = opts.find(x => v && x[1] && match(x[1])) || opts[0]; return Math.floor(avgOf(ex)) + " (" + ex.replace(/\s+/g, " ") + ") " + o[0] + " damage";
+      });
+    };
+    const sect = h => { const i = ls.indexOf(h); if (i < 0) return []; const out = []; for (let j = i + 1; j < ls.length && !/^(Actions|Bonus Actions|Reactions|Legendary Actions)$/.test(ls[j]); j++) { const m = ls[j].match(/^([^.]+?)\.\s*(.*)$/); if (!m) continue; const p = (m[1].match(/\(([^)]*)\)/) || [])[1] || ""; if (only(p) && !match(p)) continue; out.push({ nazev: m[1], text: tx(m[2]) }); } return out; };
+    return { nazev: ls[0], velikost: (ls[1] || "").split(" ")[0], typ: ls[1], hp: num(get(/^Hit Points:?/i)), ac: num(get(/^Armor Class:?/i)), iniciativa: c.initB || 0, atributy: at, zachrany: [], rychlost: rych, akce: sect("Actions"), bonusove_akce: sect("Bonus Actions"), xp: 0, cr: "—" };
+  }
+  function endConc(t) {
+    const k = t.conc; t.conc = false; if (typeof k !== "string") return;
+    S.tok.filter(x => x.src && x.src.owner === t.id && x.src.kouzlo === k).forEach(x => { removeTok(x.id); log(esc(x.nazev) + " mizí (" + esc(t.nazev) + ": konec Concentration na " + esc(k) + ")."); });
+  }
+  function ordFix() {
+    const sm = S.ord.filter(id => { const t = tok(id); return t && t.src && t.src.owner && tok(t.src.owner); });
+    const o = S.ord.filter(id => sm.indexOf(id) < 0); sm.forEach(id => { const t = tok(id); t.init = tok(t.src.owner).init; o.splice(o.indexOf(t.src.owner) + 1, 0, id); }); S.ord = o;
+  }
+  function castSummon(c, n) {
+    if (!c || !n || !isSummon(n)) return false;
+    const k = spellK(n), min = Number(k.uroven) || 1, vs = summonVariants(n);
+    const L = Number(prompt(n + " – úroveň spell slotu (min. " + min + ")", String(min))); if (!L) return false;
+    let v = ""; if (vs.length) { const x = prompt(n + " – varianta: " + vs.join(", "), vs[0]); if (x == null) return false; v = vs.find(y => y.toLowerCase() === x.trim().toLowerCase()) || x.trim(); }
+    if (c.sdc == null) { const x = prompt("Spell save DC a bonus útoku kouzlem sesilatele " + c.nazev + " (např. 14 6)", "13 5"); if (x == null) return false; const p = x.match(/\d+/g) || []; c.sdc = Number(p[0]) || 13; c.satk = Number(p[1]) || 5; }
+    const ba = /Bonus Action/i.test(k.cas || ""), viol = [], ex = c.slots && c.slots[L - 1] && c.slots[L - 1].used < c.slots[L - 1].max ? c.slots[L - 1] : c.pact && c.pact.lvl === L && c.pact.used < c.pact.max ? c.pact : null;
+    if (L < min) viol.push("slot " + L + ". úrovně je nižší než úroveň kouzla (" + min + ")"); if (L > 9) viol.push("spell sloty jsou jen do 9. úrovně");
+    if (((c.slots || []).some(x => x.max) || c.pact) && !ex) viol.push("nezbývá spell slot " + L + ". úrovně");
+    if (S.round) { if (actor() !== c) viol.push(c.nazev + " není na tahu"); if (incap(c)) viol.push(c.nazev + " nemůže jednat"); if (ba ? S.eco.b : S.eco.a) viol.push((ba ? "Bonus Action" : "Action") + " už byla v tomto tahu použita"); if (!ba && S.eco.baSpell) viol.push("po kouzle se slotem za Bonus Action nejde v tomtéž tahu seslat další kouzlo se slotem"); }
+    return gate(viol, "seslání " + n + " (" + L + ". úroveň) – " + c.nazev, () => {
+      if (S.round && actor() === c) { if (ba) { S.eco.b = 1; S.eco.baSpell = 1; } else { S.eco.a = 1; S.eco.spell = 1; } }
+      if (ex) { ex.used++; log(esc(c.nazev) + " spotřeboval " + (ex === c.pact ? "Pact slot" : "spell slot " + L + ". úrovně") + " (zbývá " + (ex.max - ex.used) + ")."); }
+      if (/Concentration/i.test(k.trvani || "")) { if (c.conc) log(esc(c.nazev) + ": předchozí Concentration" + (typeof c.conc === "string" ? " (" + esc(c.conc) + ")" : "") + " končí."); endConc(c); c.conc = n; }
+      const t = monToken(summonMon(n, L, c, v), c.side); t.nazev = t.nazev.replace(/ \d+$/, "") + (v ? " – " + v : "") + " (" + c.nazev + ")"; t.src = { kouzlo: n, owner: c.id, uroven: L }; t.summon = true; t.xp = 0;
+      addTokSilent(t, [c.x != null ? c.x + (c.s || 1) : 15, c.y != null ? c.y : 10]);
+      if (S.round) { const cur = S.ord[S.turn]; t.init = c.init; S.ord.splice(S.ord.indexOf(c.id) + 1, 0, t.id); S.turn = S.ord.indexOf(cur); }
+      log("✦ " + esc(c.nazev) + " sesílá " + esc(n) + " (" + L + ". úroveň" + (v ? ", " + esc(v) : "") + "): " + esc(t.nazev) + " – HP " + t.hp + ", AC " + t.ac + ", útoky " + (t.atk.map(x => esc(x.nazev) + (x.n > 1 ? " ×" + x.n : "")).join(", ") || "—") + ", pole " + cellName(t.x, t.y) + (S.round ? ", jedná hned po sesilateli" : "") + ".");
+    });
   }
   function monAttacks(m) {
     const out = [], acts = (m.akce || []).concat((m.bonusove_akce || []).map(a => Object.assign({ bonusova: true }, a)));
@@ -341,7 +406,7 @@
     if (o.oa || (cur && a !== cur)) { a.react = false; log(esc(a.nazev) + " používá Reaction."); }
     else if (S.round) { if (atk.ba) S.eco.b = 1; else S.eco.a = 1; if (atk.kind === "spell" && atk.lvl > 0) { if (atk.ba) S.eco.baSpell = 1; else S.eco.spell = 1; } }
     if (atk.kind === "spell" && atk.lvl > 0) { const sl = slotFor(a, atk.lvl); if (sl) { sl.o.used++; log(esc(a.nazev) + " spotřeboval " + sl.txt + " (zbývá " + (sl.o.max - sl.o.used) + ")."); } }
-    if (atk.kind === "spell" && atk.conc) { if (a.conc) log(esc(a.nazev) + ": předchozí Concentration" + (typeof a.conc === "string" ? " (" + esc(a.conc) + ")" : "") + " končí."); a.conc = atk.kouzlo; }
+    if (atk.kind === "spell" && atk.conc) { if (a.conc) log(esc(a.nazev) + ": předchozí Concentration" + (typeof a.conc === "string" ? " (" + esc(a.conc) + ")" : "") + " končí."); endConc(a); a.conc = atk.kouzlo; }
     if (atk.rc) { a.spent = a.spent || {}; a.spent[atk.nazev] = true; }
   }
   function forceEval(a, b, atk) { const dist = gap(a, b), cov = coverOf(a, b); return { atk, b, dist, cov: cov === 9 ? 3 : cov, adv: advFor(a, b, atk, dist), foes: [b], allies: [], p: 0, ev: 0 }; }
@@ -411,11 +476,11 @@
     const absorb = Math.min(t.tmp || 0, n); t.tmp -= absorb; const rest = n - absorb;
     if (t.kind === "pc" && t.hp <= 0) { t.ds.f += crit ? 2 : 1; log(esc(t.nazev) + " dostal zásah na 0 HP → " + (crit ? 2 : 1) + " neúspěch death save (" + t.ds.f + "/3)"); if (t.ds.f >= 3) { t.dead = true; log("☠ " + esc(t.nazev) + " umírá."); } return; }
     t.hp -= rest;
-    if (t.conc && rest > 0) { const dc = Math.min(30, Math.max(10, Math.floor(rest / 2))), r = d20(0), tot = r.r + ((t.saves || {}).CON || 0); log("Concentration " + esc(t.nazev) + ": " + r.txt + sg((t.saves || {}).CON || 0) + " = " + tot + " vs DC " + dc + (tot >= dc ? " – udrženo" : " – <b>ztraceno</b>")); if (tot < dc) t.conc = false; }
+    if (t.conc && rest > 0) { const dc = Math.min(30, Math.max(10, Math.floor(rest / 2))), r = d20(0), tot = r.r + ((t.saves || {}).CON || 0); log("Concentration " + esc(t.nazev) + ": " + r.txt + sg((t.saves || {}).CON || 0) + " = " + tot + " vs DC " + dc + (tot >= dc ? " – udrženo" : " – <b>ztraceno</b>")); if (tot < dc) endConc(t); }
     if (t.hp <= 0) {
-      const over = -t.hp; t.hp = 0; t.conc = false;
+      const over = -t.hp; t.hp = 0; endConc(t);
       if (t.kind === "pc") { if (over >= t.max) { t.dead = true; log("☠ " + esc(t.nazev) + ": masivní zranění – okamžitá smrt."); } else { if (!hasC(t, "Unconscious")) t.cond.push({ n: "Unconscious" }); log(esc(t.nazev) + " padá na 0 HP (Unconscious, death saves)."); } }
-      else { t.dead = true; log("☠ " + esc(t.nazev) + " je poražen."); }
+      else { t.dead = true; log("☠ " + esc(t.nazev) + " je poražen."); if (t.summon) { removeTok(t.id); log(esc(t.nazev) + " mizí."); } }
     }
   }
   function heal(t, n) { if (t.dead && t.kind !== "pc") t.dead = false; if (t.kind === "pc" && t.hp <= 0) { t.cond = t.cond.filter(c => c.n !== "Unconscious"); t.ds = { s: 0, f: 0 }; t.dead = false; } t.hp = Math.min(t.max, t.hp + n); }
@@ -456,8 +521,8 @@
   }
   function rollInit(all) {
     const grp = {};
-    S.tok.forEach(t => { if (!all && t.init != null) return; const g = S.groups && t.kind === "mon" ? t.src.srd : t.id; if (grp[g] == null) grp[g] = d(20); t.init = grp[g] + t.initB; });
-    S.ord = S.tok.slice().sort((a, b) => b.init - a.init || b.initB - a.initB).map(t => t.id);
+    S.tok.forEach(t => { if ((!all && t.init != null) || (t.src && t.src.owner && tok(t.src.owner))) return; const g = S.groups && t.kind === "mon" ? t.src.srd : t.id; if (grp[g] == null) grp[g] = d(20); t.init = grp[g] + t.initB; });
+    S.ord = S.tok.filter(t => t.init != null || !(t.src && t.src.owner)).sort((a, b) => b.init - a.init || b.initB - a.initB).map(t => t.id); S.tok.forEach(t => { if (t.src && t.src.owner && S.ord.indexOf(t.id) < 0) S.ord.push(t.id); }); ordFix();
     log("Iniciativa: " + S.ord.map(id => { const t = tok(id); return esc(t.nazev) + " " + t.init + " (" + sg(t.initB) + ")"; }).join(", ") + ".");
     if (S.round === 0) { S.round = 1; S.turn = -1; log("Iniciativa hozena – kolo 1."); next(); return; }
     save(); draw();
@@ -565,6 +630,7 @@
     const left = speedOf(a) * (S.dash ? 2 : 1) - S.moved;
     h += '<div class="bj-who"><b>' + esc(a.nazev) + "</b> na tahu · HP " + a.hp + "/" + a.max + " · AC " + a.ac + " · pohyb zbývá <b>" + left + " ft</b> z " + speedOf(a) + (a.swim ? " (swim " + a.swim + ")" : "") + (a.fly ? " (fly " + a.fly + ")" : "")
       + '<div class="bj-btns"><button data-act="dash" class="' + (S.dash ? "on" : "") + '">Dash</button><button data-act="dis" class="' + (S.disengage ? "on" : "") + '">Disengage</button><button data-act="dodge">Dodge</button><button data-act="next" class="bj-next">Další tah ▶</button></div></div>';
+    if (a.summ && a.summ.length) h += '<div class="bj-sum"><b>Vyvolání:</b> ' + a.summ.map(n => '<button data-act="summon" data-k="' + esc(n) + '">✦ ' + esc(n) + "</button>").join(" ") + "</div>";
     h += ecoHtml(a);
     if (a.kind === "pc" && a.hp <= 0 && !a.dead) h += '<p class="bj-warn">Na 0 HP: hoď <b>Death Saving Throw</b> (tlačítko v iniciativě). 10+ úspěch, 20 = vstává s 1 HP, 1 = dva neúspěchy.</p>';
     a.cond.forEach(c => { h += '<p class="bj-tip"><b>' + esc(c.n) + ":</b> " + esc(COND[c.n] || "") + "</p>"; });
@@ -598,6 +664,7 @@
     return '<div class="bj-add"><h4>Navržené střetnutí mapy</h4><p>' + ms.map(x => x.pocet + "× " + esc(x.nazev)).join(", ") + ' <button data-act="enc">Přidat</button> <button data-act="place">Rozestavit na startovní pozice</button></p>'
       + '<h4>Postavy z wiki</h4><div class="bj-row"><input data-q="pc" placeholder="Hledat postavu…"><select data-side="pc"><option value="druzina">Družina</option><option value="nepratele">Nepřátelé</option><option value="neutral">Neutrální</option></select></div><div class="bj-res" data-res="pc"></div>'
       + '<h4>Netvoři (SRD 5.2.1)</h4><div class="bj-row"><input data-q="mon" placeholder="Hledat netvora… (např. Zombie)"><select data-cr><option value="">CR vše</option>' + ["0", "1/8", "1/4", "1/2"].concat(Array.from({ length: 30 }, (_, i) => String(i + 1))).map(c => "<option>" + c + "</option>").join("") + '</select><input type="number" data-n value="1" min="1" max="20" title="Počet"><select data-side="mon"><option value="nepratele">Nepřátelé</option><option value="druzina">Spojenci</option><option value="neutral">Neutrální</option></select></div><div class="bj-res" data-res="mon"></div>'
+      + '<h4>Vyvolání kouzlem</h4><div class="bj-row"><select data-c="sum">' + summonList().map(n => "<option>" + esc(n) + "</option>").join("") + '</select><button data-act="summonx">Seslat</button></div><p class="bj-tip">Sesilatel je vybraný žeton, jinak postava na tahu. Tvor sdílí jeho iniciativu, jedná hned po něm, HP, AC a útoky se spočítají z úrovně slotu a zmizí při ztrátě Concentration. Find Familiar a další kouzla bez vlastního statbloku přidej jako netvora z bestiáře.</p>'
       + '<h4>Vlastní žeton</h4><div class="bj-row"><input data-c="n" placeholder="Jméno"><input data-c="hp" type="number" placeholder="HP"><input data-c="ac" type="number" placeholder="AC"><input data-c="i" type="number" placeholder="Init +"><button data-act="custom">Přidat</button></div></div>';
   }
   function mapHtml() {
@@ -683,7 +750,7 @@
         sel() { S.sel = t.id; draw(); centerOn(t); },
         sb() { window.MontelienSRD && window.MontelienSRD.show("bestiar", t.src.srd); },
         uncond() { const c = t.cond.splice(Number(b.dataset.i), 1)[0]; log(esc(t.nazev) + ": stav " + esc(c.n) + " odebrán."); save(); draw(); },
-        conc() { t.conc = false; log(esc(t.nazev) + " ukončil Concentration."); save(); draw(); },
+        conc() { endConc(t); log(esc(t.nazev) + " ukončil Concentration."); save(); draw(); },
         react() { t.react = t.react === false; log(esc(t.nazev) + ": Reaction " + (t.react ? "vrácena" : "použita") + "."); save(); draw(); },
         react2() { a.react = a.react === false; log(esc(a.nazev) + ": Reaction " + (a.react ? "vrácena" : "použita") + "."); save(); draw(); },
         ecoA() { if (!a) return; S.eco.a = S.eco.a ? 0 : 1; log(esc(a.nazev) + ": Action " + (S.eco.a ? "použita (ručně)" : "vrácena") + "."); save(); draw(); },
@@ -692,6 +759,8 @@
         oa() { const i = Number(b.dataset.i), o = S.oa[i], H = tok(o.h), T = tok(o.t), m = H && H.atk.filter(x => x.melee).sort((x, y) => y.avg - x.avg)[0]; if (m && T && attack(H, T, Object.assign({}, m, { n: 1 }), { oa: true, tpos: o.pos })) { S.oa.splice(i, 1); save(); draw(); } },
         oaskip() { const o = S.oa.splice(Number(b.dataset.i), 1)[0], H = o && tok(o.h); log(esc(H ? H.nazev : "?") + " nevyužil Opportunity Attack."); save(); draw(); },
         undo() { undo(); },
+        summon() { castSummon(a, b.dataset.k); },
+        summonx() { const c = tok(S.sel) || a; if (!c) { alert("Vyber sesilatele (klikni na žeton) nebo hoď iniciativu."); return; } castSummon(c, host.querySelector('[data-c="sum"]').value); },
         obr() { S.bezObr = !S.bezObr; save(); draw(); },
         teren() { S.teren = !S.teren; save(); draw(); },
         mriz() { S.mriz = S.mriz === false; save(); draw(); },
@@ -786,6 +855,6 @@
     ])).then(([M, P, B, R, K]) => { A = { host, M, P, B, R, K, hist: [] }; load(); bind(); draw(); })
       .catch(e => { host.innerHTML = '<p class="bj-warn">Bojový modul se nenačetl: ' + esc(e.message) + "</p>"; });
   }
-  window.MontelienBoj = { _test: () => ({ A, S, evalAtk, coverOf, bestPlan, dijkstra, monAttacks, checkAttack, attack, undo, logMd, moveTo }) };
+  window.MontelienBoj = { _test: () => ({ A, S, evalAtk, coverOf, bestPlan, dijkstra, monAttacks, checkAttack, attack, undo, logMd, moveTo, summonMon, summonVariants, summonList, castSummon, endConc }) };
   if (window.document$) window.document$.subscribe(init); else document.addEventListener("DOMContentLoaded", init);
 })();

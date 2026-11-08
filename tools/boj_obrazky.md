@@ -12,3 +12,10 @@ Každá bojová mapa v `11_Mapy/bojove_mapy.json` může mít pole `obrazek` (ce
 > Repaint this layout reference as a gorgeous, highly detailed, hand-painted top-down (orthographic, 90 degree overhead) fantasy tabletop RPG battle map, in the style of premium Dungeons & Dragons battlemaps. CRITICAL: preserve the exact layout, proportions and positions of every element of the reference image so it aligns with a 30 x 20 square grid. No grid lines, no text, no labels, no characters, no frame. Rich textures, soft shadows, painterly detail.
 
 Plus legenda barev předlohy (tmavá = zdi, modrá = voda, hnědé čtverce = bedny/keře podle prostředí…) a popis scény a světla podle `popis` a `osvetleni` mapy.
+
+## Realistický styl (mapy 6–15)
+Druhá várka map (`python3 tools/boj_mapy.py --pridat` doplní nové mapy do JSON, existující nechá být) používá realistický prompt:
+
+> Repaint this layout reference as a highly realistic top-down (orthographic, exactly 90 degree overhead) tabletop RPG battle map. Photorealistic look like a high-end realistic 3D render or aerial drone photograph: physically accurate natural lighting, real-world materials and textures, subtle ambient occlusion and soft shadows, no cartoon outlines, no painterly stylization. CRITICAL: preserve the exact layout … aligns with a 30 x 20 square grid. … No grid lines, no square tiles, no text, no labels, no people, no creatures, no frame.
+
+Pozor: těžký terén (`^`) kresli v předloze jako rozmazané skvrny, ne jako čtverce, a do promptu napiš, že skvrny nejsou předměty (rákos, suť, oblázky, bláto). Jinak z nich generátor udělá bedny.

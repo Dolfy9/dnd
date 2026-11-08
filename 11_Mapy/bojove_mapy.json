@@ -462,6 +462,994 @@
     "gggggggggg^ggrrrrggggoggoTgggT"
    ],
    "obrazek": "bojove/kop-aram-most.jpg"
+  },
+  {
+   "id": "more-abordaz",
+   "nazev": "Abordáž na otevřeném moři",
+   "misto": "01_Svet/Mista/More_a_ostrovy.md",
+   "podklad": "more",
+   "osvetleni": "Bright Light (den), zataženo",
+   "popis": "Dvě lodě svázané abordážními háky na rozbouřeném moři. Paluby jsou z prken, zábradlí (#) dává half cover. Mezi loděmi vedou tři úzké můstky (= , DC 10 Acrobatics při Dash). Kdo spadne do moře, je v hluboké vodě a musí plavat; trup je 10 ft nad hladinou. Poklopy (S) vedou do podpalubí.",
+   "stretnuti": [
+    {
+     "nazev": "Pirate Captain",
+     "pocet": 1
+    },
+    {
+     "nazev": "Pirate",
+     "pocet": 4
+    },
+    {
+     "nazev": "Reef Shark",
+     "pocet": 2
+    }
+   ],
+   "start": {
+    "druzina": [
+     [
+      8,
+      2
+     ],
+     [
+      10,
+      2
+     ],
+     [
+      12,
+      2
+     ],
+     [
+      14,
+      2
+     ],
+     [
+      16,
+      2
+     ],
+     [
+      18,
+      2
+     ]
+    ],
+    "nepratele": [
+     [
+      9,
+      13
+     ],
+     [
+      11,
+      13
+     ],
+     [
+      13,
+      13
+     ],
+     [
+      15,
+      13
+     ],
+     [
+      17,
+      13
+     ],
+     [
+      19,
+      13
+     ]
+    ]
+   },
+   "mrizka": [
+    "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~",
+    "~~#######################~~~~~",
+    "~~#^%%%.................##~~~~",
+    "~~#^%%%..................##~~~",
+    "~~#^....o.......o.........#~~~",
+    "~~#^........S.............#~~~",
+    "~~#^................%%...##~~~",
+    "~~#^....................##~~~~",
+    "~~#######=#####=####=####~~~~~",
+    "~~~~~~~~~=~~~~,=~~,~=~~~~,~~~~",
+    "~~,~~~~,~=,~~~~=~~~~=~~~~~~~~,",
+    "~~~~~~,~~=~~~~~=~~~~=,~~~~~~~,",
+    "~~~~~####=#####=####=##~~~~~~~",
+    "~~~~~#.%%.............##~~~~~~",
+    "~~~~~#.%%..............##~~~~~",
+    "~~~~~#.....o.....o......#~~~~~",
+    "~~~~~#........S........##~~~~~",
+    "~~~~~#................##~~~~~~",
+    "~~~~~##################~~~~~~~",
+    "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"
+   ],
+   "obrazek": "bojove/more-abordaz.jpg"
+  },
+  {
+   "id": "menkant-pristav",
+   "nazev": "Menkant, noční přístav",
+   "misto": "03_Mesta/Mesto_Menkant.md",
+   "podklad": "pristav",
+   "osvetleni": "Dim Light (lucerny), jinak Darkness",
+   "popis": "Dlážděné nábřeží se sklady a hromadami beden a sudů (half cover). Tři dřevěná mola vedou nad hlubokou vodu, u prostředního kotví loď. Nábřežní zeď je 10 ft vysoká, do vody se z ní dá skočit. Ze skladů vedou dveře na nábřeží.",
+   "stretnuti": [
+    {
+     "nazev": "Bandit Captain",
+     "pocet": 1
+    },
+    {
+     "nazev": "Bandit",
+     "pocet": 3
+    },
+    {
+     "nazev": "Spy",
+     "pocet": 1
+    }
+   ],
+   "start": {
+    "druzina": [
+     [
+      10,
+      6
+     ],
+     [
+      12,
+      6
+     ],
+     [
+      14,
+      6
+     ],
+     [
+      16,
+      6
+     ],
+     [
+      10,
+      8
+     ],
+     [
+      14,
+      8
+     ]
+    ],
+    "nepratele": [
+     [
+      3,
+      12
+     ],
+     [
+      5,
+      12
+     ],
+     [
+      13,
+      12
+     ],
+     [
+      15,
+      12
+     ],
+     [
+      23,
+      12
+     ],
+     [
+      25,
+      12
+     ]
+    ]
+   },
+   "mrizka": [
+    "r#########rrrrrrrrr##########r",
+    "r#.%%....#rrrrrrrrr#.....%%%#r",
+    "r#.%%....#rrrrrrrrr#.....%%%#r",
+    "r#.....%%#rrrrrrrrr#........#r",
+    "r#.....%%#rrrrrrrrr#........#r",
+    "r####+####rrrrrrrrr####++####r",
+    "rr%rrrrrrrrrrrrrrr%rrrrrrrrrrr",
+    "rrrrr%rrrrrrrr%r%rrrrro%rrrror",
+    "rrrr%rrrrrrr%rrrrrrrrrrrrrrrrr",
+    "rrrrrrrrrrrrrrrorrr%orr%rrrrrr",
+    "###===#######===#######===####",
+    "~~,===~,~~~,,===~~~~~,~===~~~~",
+    "~~~===~~~~~~~===#####~~===,~~~",
+    "~~~===~~~~~~~===#...#~~===~~~~",
+    "~~~===~~~~~~~===#...#~~===~~~~",
+    "~~~===~~~~~~~===#...#~~===~~~~",
+    "~~~===~~~~~~~===#####~~===~~~~",
+    "~~~===~~~~~~~===~~~~~~~===~~~~",
+    "~~~===~~~~~~~===~~~~~~~===~~~~",
+    "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"
+   ],
+   "obrazek": "bojove/menkant-pristav.jpg"
+  },
+  {
+   "id": "bazina-chatrc",
+   "nazev": "Mlžná bažina a čarodějnická chatrč",
+   "podklad": "bazina",
+   "osvetleni": "Dim Light (mlha), Heavily Obscured za 30 ft",
+   "popis": "Mělká stojatá voda (difficult terrain) s ostrůvky trávy a rákosu, mezi nimi hluboké tůně. Přes bažinu vede shnilý povalový chodník (normální pohyb). Na kůlech stojí chatrč, kam se dá dostat po lávce. Stromy dávají half cover, mlha omezuje výhled.",
+   "stretnuti": [
+    {
+     "nazev": "Green Hag",
+     "pocet": 1
+    },
+    {
+     "nazev": "Giant Frog",
+     "pocet": 2
+    },
+    {
+     "nazev": "Will-o'-Wisp",
+     "pocet": 1
+    }
+   ],
+   "start": {
+    "druzina": [
+     [
+      0,
+      9
+     ],
+     [
+      2,
+      9
+     ],
+     [
+      4,
+      9
+     ],
+     [
+      0,
+      11
+     ],
+     [
+      2,
+      11
+     ],
+     [
+      4,
+      11
+     ]
+    ],
+    "nepratele": [
+     [
+      20,
+      2
+     ],
+     [
+      22,
+      2
+     ],
+     [
+      24,
+      2
+     ],
+     [
+      26,
+      2
+     ],
+     [
+      28,
+      2
+     ],
+     [
+      20,
+      4
+     ]
+    ]
+   },
+   "mrizka": [
+    ",,,,,,,,,,,,,~,,,^,^,~,T,,,,,,",
+    ",,,,,T,,,,,,,,,,^,,,,^Tggg,,,,",
+    ",,,^^TgT,,~,,,,,,,,,,ggggg,,,,",
+    ",,,Tggg^~,,,,~,,,,g^g######,,^",
+    ",^ggggggT,,,,,^,,ggT,#....#,,,",
+    ",,,ggggg,,,,^,,~^Tggg#....#^,,",
+    ",,,ggggg,,,,,,,,,ggg,#..%.#^,,",
+    ",,,,,g,,,,,,,,,g,,g,,##+###,,,",
+    ",,,~^,,,,,,,,ggggg,~,,g=ggg,,,",
+    ",,,,,,,,,,,~,ggTgg,,,,^=^,,,,,",
+    "=========,,,^^ggggg^==========",
+    ",,,^,,,,~===========,,^g^,,,~,",
+    ",,,^,,,,,,,,,^ggg^TT,,,T,,,,,,",
+    ",,,,,,,,,~,,,,,^ggggg,,,,,,,,,",
+    ",^,~,,~,,,,,,,,,,g^T,,,,g~~^,,",
+    ",,,,,,,,,,,,,,,,,gTT,,,^gT,,,,",
+    ",,,,,,,,,,,,^,,,g^^gg,TTgg^,,,",
+    ",^,,,,,,,,,,,,,,,gTg,,~g^g,,,,",
+    ",,,,,,,,,,,,,^,,,,g~,,,,^,,,,,",
+    ",,^,,^,~^,,,,,,,,,,,,,,,,,~,,,"
+   ],
+   "obrazek": "bojove/bazina-chatrc.jpg"
+  },
+  {
+   "id": "sever-zamrzle-jezero",
+   "nazev": "Zamrzlé jezero na Divokém severu",
+   "misto": "01_Svet/Mista/Divoky_Sever.md",
+   "podklad": "snih",
+   "osvetleni": "Bright Light (den), sněžení",
+   "popis": "Zamrzlé jezero obklopené smrky a balvany. Led je slippery ice (difficult terrain; při Dash DC 10 Dexterity save, jinak Prone). Otvory v ledu (~) jsou ledová voda: Extreme Cold a hrozba podchlazení. Led se kolem otvorů láme pod Large tvory.",
+   "stretnuti": [
+    {
+     "nazev": "Winter Wolf",
+     "pocet": 1
+    },
+    {
+     "nazev": "Wolf",
+     "pocet": 4
+    },
+    {
+     "nazev": "Ice Mephit",
+     "pocet": 2
+    }
+   ],
+   "start": {
+    "druzina": [
+     [
+      0,
+      7
+     ],
+     [
+      2,
+      7
+     ],
+     [
+      0,
+      9
+     ],
+     [
+      2,
+      9
+     ],
+     [
+      0,
+      11
+     ],
+     [
+      2,
+      11
+     ]
+    ],
+    "nepratele": [
+     [
+      24,
+      5
+     ],
+     [
+      28,
+      5
+     ],
+     [
+      24,
+      7
+     ],
+     [
+      26,
+      7
+     ],
+     [
+      28,
+      7
+     ],
+     [
+      24,
+      9
+     ]
+    ]
+   },
+   "mrizka": [
+    "ggTgggggoTggggggggogggTgggTggg",
+    "gggggTgggggTgTgggggggggggggggg",
+    "gggTggggggggggTgggggoggggggggT",
+    "gTgggggggggg^^^^^^^ggggggTTggg",
+    "gTggggggg^^^^^^^~^^^^^gggggggg",
+    "ggggTgg^^~^^^^^^^^^^^^^^goTggg",
+    "gggggg~^^~^^^^^^^^^^^^^^^ggTgg",
+    "ggggT^~^^^^^^^^^^^^^^^^^^^gggT",
+    "ggggg^^^^^^^^^^^^^^^^^^^^^gggg",
+    "rrrrg^^^^^^^~~^^^^^^^^^^^^rrrr",
+    "rrrr^^^^^^^^~~^^^^^^^^^^^^rrrr",
+    "ggggg^^^^^^^^^^^^^^^^^^^^^gggg",
+    "ggggg^^^^^^^^^^^^^^~~^^^^^gggg",
+    "ggggg^^^^^^^^^^^^^^^^^^^^^gggg",
+    "gTgggg^^^^^^^^^^^^^^^^^^^gggog",
+    "ggggggo^^^^^^^^^^^^^^^^^gggTgg",
+    "ggggggggg^~^^^^^^^^^^^gggggTgg",
+    "ggggggggTggg^^^^^^^gTggggTgggg",
+    "gggoggoogggggggggggggggggggTgg",
+    "gTogggTggggTgggTgggggggggggggg"
+   ],
+   "obrazek": "bojove/sever-zamrzle-jezero.jpg"
+  },
+  {
+   "id": "jeskyne-jezero",
+   "nazev": "Jeskyně s podzemním jezerem",
+   "podklad": "jeskyne",
+   "osvetleni": "Darkness (světélkující houby: Dim Light u jezera)",
+   "popis": "Rozlehlá krasová jeskyně. Uprostřed leží černé podzemní jezero (hluboká voda, mělký okraj), stalagmity dávají half cover a sutě jsou difficult terrain. Přes puklinu vede úzký kamenný most. V koutě leží zbytky staré výpravy.",
+   "stretnuti": [
+    {
+     "nazev": "Giant Octopus",
+     "pocet": 1
+    },
+    {
+     "nazev": "Darkmantle",
+     "pocet": 2
+    },
+    {
+     "nazev": "Grick",
+     "pocet": 2
+    }
+   ],
+   "start": {
+    "druzina": [
+     [
+      2,
+      8
+     ],
+     [
+      4,
+      8
+     ],
+     [
+      0,
+      10
+     ],
+     [
+      2,
+      10
+     ],
+     [
+      4,
+      10
+     ],
+     [
+      2,
+      12
+     ]
+    ],
+    "nepratele": [
+     [
+      20,
+      14
+     ],
+     [
+      22,
+      14
+     ],
+     [
+      24,
+      14
+     ],
+     [
+      26,
+      14
+     ],
+     [
+      20,
+      16
+     ],
+     [
+      24,
+      16
+     ]
+    ]
+   },
+   "mrizka": [
+    "##############################",
+    "##############################",
+    "###########..o..o...##########",
+    "########...............#######",
+    "######.....^^......,.....#####",
+    "#####...^.o.....,,,~,,,...####",
+    "####...........,~~~~~~~,...###",
+    "###..o......oo,~~~~~~~~~,...##",
+    "##...........o,~~~~~~~~~,..#o#",
+    "..^^..^#.....,,~~~~~~~~~,,.o.#",
+    "...........^..,~~~~~~~~~,....#",
+    "......#.......,~~~~~~~~~,....#",
+    "##.^....^o.....,~~~~~~~,....^#",
+    "###.^.....^.....,,,~,,,.....##",
+    "####..oo.....__=__.,.......###",
+    "#####.^......__=__..#.....%%##",
+    "######.....#..o..#....#..#%%##",
+    "########o.^...........o#######",
+    "###########......o..##########",
+    "##############################"
+   ],
+   "obrazek": "bojove/jeskyne-jezero.jpg"
+  },
+  {
+   "id": "orden-prusmyk",
+   "nazev": "Horský průsmyk pod Ordenem",
+   "misto": "03_Mesta/Pevnost_Orden.md",
+   "podklad": "hory",
+   "osvetleni": "Bright Light (den), studený vítr",
+   "popis": "Úzká stezka sevřená skalními stěnami. Suť je difficult terrain, balvany dávají half cover. Průsmyk přetíná propast (pád 60 ft) s jediným vratkým provazovým mostem. Na římse nad cestou je pozorovatelna.",
+   "stretnuti": [
+    {
+     "nazev": "Griffon",
+     "pocet": 2
+    },
+    {
+     "nazev": "Ogre",
+     "pocet": 1
+    },
+    {
+     "nazev": "Scout",
+     "pocet": 2
+    }
+   ],
+   "start": {
+    "druzina": [
+     [
+      0,
+      6
+     ],
+     [
+      0,
+      8
+     ],
+     [
+      2,
+      8
+     ],
+     [
+      4,
+      8
+     ],
+     [
+      0,
+      10
+     ],
+     [
+      2,
+      10
+     ]
+    ],
+    "nepratele": [
+     [
+      24,
+      2
+     ],
+     [
+      26,
+      2
+     ],
+     [
+      24,
+      4
+     ],
+     [
+      26,
+      4
+     ],
+     [
+      22,
+      6
+     ],
+     [
+      24,
+      6
+     ]
+    ]
+   },
+   "mrizka": [
+    "##############################",
+    "##############################",
+    "###################^.###....##",
+    "##################__..o..%..##",
+    "#################.__^.o.....##",
+    "###############.^.__^o....o.##",
+    ".###########...^o.==rrrr^^....",
+    ".^.#^######......r==rrrrrr..^.",
+    "^^...^.###^.^..rrr==.^..rrrr..",
+    "r......^^.o...rrr.__...^.orrrr",
+    "rrr..o^...^^rrr...__.###^...rr",
+    ".rrrr....^rrrr...#__#####^^.o.",
+    "...rrrrrrrrr...###########.^..",
+    "#...^rrrrr.^..################",
+    "###.o^^o..^^oo################",
+    "####..^.^.#^##################",
+    "#####..#######################",
+    "##############################",
+    "##############################",
+    "##############################"
+   ],
+   "obrazek": "bojove/orden-prusmyk.jpg"
+  },
+  {
+   "id": "tali-oaza",
+   "nazev": "Oáza v poušti Tali",
+   "misto": "01_Svet/Mista/Tali.md",
+   "podklad": "poust",
+   "osvetleni": "Bright Light (poledne), Extreme Heat",
+   "popis": "Jezírko s palmami uprostřed písečných dun (duny jsou difficult terrain). U vody tábořila karavana, stany dávají half cover. Na východě trčí sloupy pohřbeného chrámu se schodištěm do podzemí. V poledním žáru hrozí Extreme Heat.",
+   "stretnuti": [
+    {
+     "nazev": "Lamia",
+     "pocet": 1
+    },
+    {
+     "nazev": "Jackal",
+     "pocet": 4
+    },
+    {
+     "nazev": "Giant Scorpion",
+     "pocet": 1
+    }
+   ],
+   "start": {
+    "druzina": [
+     [
+      1,
+      12
+     ],
+     [
+      3,
+      12
+     ],
+     [
+      5,
+      12
+     ],
+     [
+      1,
+      14
+     ],
+     [
+      5,
+      14
+     ],
+     [
+      7,
+      14
+     ]
+    ],
+    "nepratele": [
+     [
+      21,
+      1
+     ],
+     [
+      23,
+      1
+     ],
+     [
+      25,
+      1
+     ],
+     [
+      27,
+      1
+     ],
+     [
+      29,
+      1
+     ],
+     [
+      21,
+      3
+     ]
+    ]
+   },
+   "mrizka": [
+    "..^..............^............",
+    "...............^.^........^^..",
+    ".............^..............^.",
+    "..^......^..^..........^o..o..",
+    ".^.................^..##.SS...",
+    "^...^^..^...ggggg.....##.SS...",
+    ".....^...ggggggggggg.....SS...",
+    "^.......gggg,,,,,gggg...o..o^.",
+    ".......gTT,,~~~~~,,ggg..^.^.^.",
+    "......gTT,,~~~~~~~,,gTg.......",
+    "......ggT,~~~~~~~~~,ggg.^.....",
+    "^.....Tgg,,~~~~~~~,,Tgg......^",
+    ".......TgT,,~~~~~,,ggg^.......",
+    "......^.TgTg,,,,,gTgg.^.....^.",
+    "..%%.....ggggTgggggg^..^......",
+    "..%%^.......ggggg..^..........",
+    "......%%^....^........^....^..",
+    "......%%......................",
+    "............^.................",
+    "............^.........^......."
+   ],
+   "obrazek": "bojove/tali-oaza.jpg"
+  },
+  {
+   "id": "miria-trziste",
+   "nazev": "Miria, tržiště u přístavu",
+   "misto": "03_Mesta/Mesto_Miria.md",
+   "podklad": "mesto",
+   "osvetleni": "Bright Light (den), hustý dav",
+   "popis": "Rušné tržiště mezi kupeckými domy a přístavní hrází. Stánky a vozíky dávají half cover a dav je difficult terrain pro každého, kdo neuhne. Uprostřed stojí kamenná kašna. Na jihu vede dřevěná hráz nad hlubokou vodou přístavu.",
+   "stretnuti": [
+    {
+     "nazev": "Assassin",
+     "pocet": 1
+    },
+    {
+     "nazev": "Tough",
+     "pocet": 3
+    },
+    {
+     "nazev": "Spy",
+     "pocet": 1
+    }
+   ],
+   "start": {
+    "druzina": [
+     [
+      10,
+      1
+     ],
+     [
+      12,
+      1
+     ],
+     [
+      14,
+      1
+     ],
+     [
+      16,
+      1
+     ],
+     [
+      18,
+      1
+     ],
+     [
+      10,
+      3
+     ]
+    ],
+    "nepratele": [
+     [
+      6,
+      13
+     ],
+     [
+      8,
+      13
+     ],
+     [
+      10,
+      13
+     ],
+     [
+      12,
+      13
+     ],
+     [
+      14,
+      13
+     ],
+     [
+      16,
+      13
+     ]
+    ]
+   },
+   "mrizka": [
+    "#########rrrrrrrrrrrr#########",
+    "#.......#rrrrrrrrrrrr#....%%.#",
+    "#.......#rrrrrrrrrrrr#....%%.#",
+    "#.......#rrrrrrrrrrrr#.......#",
+    "#.......#rrrrrrrrrrrr#.......#",
+    "####+####rrrrrrrrrrrr####+####",
+    "rrrrrrrrrrrrrrrrrrrrrrrrrrrrrr",
+    "rrrrrrrrr%rrrrrrrrrrrrrrrrrrrr",
+    "rrrrrrr%%r%%r%%r%%r%%r%%rrrrrr",
+    "#####rrrrrrrrooor%rrrrrrrrrrrr",
+    "#...#rr%rrrrrr~rrrrrrrrrrrrr%r",
+    "#...+rrrrrr%rooorrrrrrrrrrrrrr",
+    "#...#rr%%r%%r%%r%%r%%r%%rr%rrr",
+    "#...#rrrrrrrrrrrrrrrrrrrrrrrrr",
+    "#####rrrrrrrrrrrrrrrrrrrrrrrrr",
+    "rrrrrrrrrrrrrrrrrrrrrrrrrrrrrr",
+    "==============================",
+    "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~",
+    "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~",
+    "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"
+   ],
+   "obrazek": "bojove/miria-trziste.jpg"
+  },
+  {
+   "id": "orden-nadvori",
+   "nazev": "Nádvoří ordenské pevnosti",
+   "misto": "03_Mesta/Pevnost_Orden.md",
+   "podklad": "ruiny",
+   "osvetleni": "Dim Light (pochodně, noc)",
+   "popis": "Hradby se čtyřmi věžemi, schodiště (S) vedou na ochoz. Brána na jihu, kaple Ordenu na severu. Uprostřed studna, u západní zdi cvičné panáky, u východní vozy se zásobami (half cover). Z ochozu je výhled na celé nádvoří.",
+   "stretnuti": [
+    {
+     "nazev": "Knight",
+     "pocet": 1
+    },
+    {
+     "nazev": "Guard",
+     "pocet": 4
+    },
+    {
+     "nazev": "Priest Acolyte",
+     "pocet": 1
+    }
+   ],
+   "start": {
+    "druzina": [
+     [
+      12,
+      14
+     ],
+     [
+      14,
+      14
+     ],
+     [
+      16,
+      14
+     ],
+     [
+      18,
+      14
+     ],
+     [
+      12,
+      16
+     ],
+     [
+      14,
+      16
+     ]
+    ],
+    "nepratele": [
+     [
+      12,
+      1
+     ],
+     [
+      14,
+      1
+     ],
+     [
+      16,
+      1
+     ],
+     [
+      18,
+      1
+     ],
+     [
+      10,
+      3
+     ],
+     [
+      12,
+      3
+     ]
+    ]
+   },
+   "mrizka": [
+    "##############################",
+    "####.....#%%........#.....####",
+    "####.....#..........#.....####",
+    "####.....#..........#.....####",
+    "#S.......#..........#.......S#",
+    "#........#####++#####........#",
+    "#............................#",
+    "#...o.................%%%%...#",
+    "#...o.................%%%%...#",
+    "#...o........................#",
+    "#...o.........~o.............#",
+    "#...o.................%%%%...#",
+    "#...o........................#",
+    "#..................^^........#",
+    "#.....^....^.................#",
+    "#S..........................S#",
+    "####......^......^.^......####",
+    "####........^.............####",
+    "####......................####",
+    "#############++++#############"
+   ],
+   "obrazek": "bojove/orden-nadvori.jpg"
+  },
+  {
+   "id": "ostrovy-pobrezi",
+   "nazev": "Pobřeží pod útesy",
+   "misto": "01_Svet/Mista/More_a_ostrovy.md",
+   "podklad": "plaz",
+   "osvetleni": "Bright Light (soumrak), příliv",
+   "popis": "Písečná pláž mezi strmými útesy a mořem. V příboji leží vrak lodi (half cover) a skály. Mělčina je difficult terrain, dál je hluboká voda. V útesu je jeskyně se schodištěm k pašerácké skrýši. Každé 3 kola příliv posune hranici mělčiny o 1 pole na pevninu.",
+   "stretnuti": [
+    {
+     "nazev": "Sahuagin Warrior",
+     "pocet": 3
+    },
+    {
+     "nazev": "Giant Crab",
+     "pocet": 2
+    },
+    {
+     "nazev": "Sea Hag",
+     "pocet": 1
+    }
+   ],
+   "start": {
+    "druzina": [
+     [
+      6,
+      0
+     ],
+     [
+      8,
+      0
+     ],
+     [
+      10,
+      0
+     ],
+     [
+      12,
+      0
+     ],
+     [
+      6,
+      2
+     ],
+     [
+      8,
+      2
+     ]
+    ],
+    "nepratele": [
+     [
+      13,
+      13
+     ],
+     [
+      15,
+      13
+     ],
+     [
+      13,
+      15
+     ],
+     [
+      15,
+      15
+     ],
+     [
+      13,
+      17
+     ],
+     [
+      15,
+      17
+     ]
+    ]
+   },
+   "mrizka": [
+    "#####...........,,~o~~~~~~~~~~",
+    "######...........,,~~~~~~~~~o~",
+    "######...........,,~~~~~~~~o~~",
+    "######............,,~o~~~~~~~~",
+    "######.o^.........,,~~~~~~~~~~",
+    "######.^..........,,~~~~~~~~~~",
+    "######......^.....,,~~~~~~~~~~",
+    "#####.....^...^..,,~~~~o~~~~~~",
+    "......^..........,,~o~~~~~~~~~",
+    "SS...^.......o..,,~~~~~~~~~~~~",
+    "SS.............^,,~~~o~~~~~~~~",
+    "...............,o~~~~~~o~~~~~~",
+    "####..........,,~~~~~%%%%%~~~~",
+    "####........o.,,~~~~~%%%%%~~~~",
+    "#####.........,,~~~~~%%%%%~~~~",
+    "#####.^......^,,~~~~~~~~~~~~~~",
+    "######..o.^...,,~~~~~~~~~~~~~~",
+    "######.......^.,,~~~~~~~~o~~~~",
+    "######.........,,~~~~~~~~~~~~~",
+    "######..........,o~~~~~~~~~~~~"
+   ],
+   "obrazek": "bojove/ostrovy-pobrezi.jpg"
   }
  ]
 }
