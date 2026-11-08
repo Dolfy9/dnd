@@ -20,8 +20,29 @@ def page(title, body, hide_toc=False):
     return f"{fm}# {title}\n\n{body}{LIC}"
 
 
+def _table(title, cells):
+    long = [i for i, c in enumerate(cells) if len(c) > 45]
+    k = 2
+    if long and long[0] - 1 >= 2 and len(cells) % (long[0] - 1) == 0: k = long[0] - 1
+    elif len(cells) % 2: k = 3 if len(cells) % 3 == 0 else 2
+    rows = [cells[i:i + k] for i in range(0, len(cells), k)]
+    md = (f"**{title}**\n\n" if title else "") + "| " + " | ".join(rows[0]) + " |\n|" + "---|" * k + "\n"
+    return md + "".join("| " + " | ".join(r + [""] * (k - len(r))) + " |\n" for r in rows[1:])
+
+
 def para(t):
-    return "\n\n".join(x.strip() for x in str(t).split("\n") if x.strip())
+    lines = [x for x in str(t).split("\n")]
+    out, i = [], 0
+    while i < len(lines):
+        if lines[i].strip().startswith("|"):
+            title = out.pop() if out and len(out[-1]) < 60 and not out[-1].endswith(".") else ""
+            cells = []
+            while i < len(lines) and lines[i].strip().startswith("|"):
+                cells.append(lines[i].strip()[1:].strip().replace("|", "/")); i += 1
+            out.append(_table(title, cells)); continue
+        if lines[i].strip(): out.append(lines[i].strip())
+        i += 1
+    return "\n\n".join(out)
 
 
 def build(docs: Path):

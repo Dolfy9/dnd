@@ -133,3 +133,4 @@ html[data-mont-theme] .md-typeset h1, html[data-mont-theme] .md-typeset h2 { col
 .sb2 .sb-li { display: block; margin: 3px 0 0 10px; padding-left: 10px; border-left: 2px solid var(--sbr); }
 .sb2 a.sb-a { color: inherit; text-decoration: underline dotted; text-underline-offset: 2px; cursor: pointer; } .sb2 a.sb-a:hover { color: var(--sbr); }
 .sb2 a.kz-link.sb-a { font-style: italic; } .sb2 a.sb-a-b { font-weight: 600; }
+.md-tabs__list { overflow-x: auto; white-space: nowrap; scrollbar-width: thin; } .md-tabs__item { display: inline-block; }

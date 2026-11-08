@@ -108,8 +108,11 @@ def main():
 
     import pravidla_pages
     P = pravidla_pages.build(DOCS)
-    nav = [{"Úvod": "README.md"}, {"Interaktivní mapa": "mapa.md"}] + P + sections + [
-        {"Otevřené otázky": "Otevrene_otazky.md"}, {"Pravidla projektu": "AGENTS.md"}]
+    GR = [("Svět", ["Svět", "Země", "Města", "Postavy", "Frakce", "Knihy a dokumenty", "Mapy"]), ("Hra", ["Kampaně", "Questy", "Hádanky", "Sezení"])]
+    byname = {list(x)[0]: x for x in sections}
+    grouped = [{g: [byname[n] for n in names if n in byname]} for g, names in GR]
+    rest = [x for x in sections if list(x)[0] not in sum([n for _, n in GR], [])]
+    nav = [{"Úvod": "README.md"}, {"Interaktivní mapa": "mapa.md"}] + grouped + [{"Pravidla 2024": P}] + [{"Projekt": rest + [{"Otevřené otázky": "Otevrene_otazky.md"}, {"Pravidla projektu": "AGENTS.md"}]}]
     watch = "\n".join(f"  - ../{d}" for d in [s for s in os.listdir(ROOT)
                       if (ROOT / s).is_dir() and s not in SKIP and not s.startswith(".")])
     cfg = f"""# Generováno web/build.py – neupravovat ručně
