@@ -1,0 +1,311 @@
+{
+  "_popis": "Ručně obkreslené prvky z kresby DM (11_Mapy/Montelien_mapa_vyrovnana.jpg), souřadnice atlasu 2048×1440. Řeky: obkreslený úsek z kresby; generátor je prodlouží k prameni v horách a k ústí do moře/jezera nebo do jiné řeky.",
+  "reky": [
+    {
+      "nazev": "řeka Divokého Severu (kresba DM)",
+      "body": [
+        [
+          520,
+          705
+        ],
+        [
+          495,
+          690
+        ],
+        [
+          485,
+          665
+        ],
+        [
+          460,
+          655
+        ],
+        [
+          420,
+          660
+        ],
+        [
+          385,
+          668
+        ]
+      ]
+    },
+    {
+      "nazev": "meandr Divokého Severu (kresba DM)",
+      "body": [
+        [
+          425,
+          712
+        ],
+        [
+          455,
+          720
+        ],
+        [
+          470,
+          745
+        ],
+        [
+          455,
+          768
+        ],
+        [
+          480,
+          790
+        ],
+        [
+          520,
+          800
+        ]
+      ]
+    },
+    {
+      "nazev": "řeka Bririe (kresba DM)",
+      "body": [
+        [
+          600,
+          722
+        ],
+        [
+          645,
+          715
+        ],
+        [
+          690,
+          722
+        ],
+        [
+          730,
+          735
+        ],
+        [
+          765,
+          745
+        ],
+        [
+          800,
+          742
+        ]
+      ]
+    },
+    {
+      "nazev": "řeka Nöetu (kresba DM)",
+      "body": [
+        [
+          662,
+          875
+        ],
+        [
+          652,
+          915
+        ],
+        [
+          668,
+          960
+        ],
+        [
+          692,
+          992
+        ],
+        [
+          698,
+          1025
+        ],
+        [
+          690,
+          1052
+        ],
+        [
+          718,
+          1085
+        ],
+        [
+          742,
+          1115
+        ]
+      ]
+    },
+    {
+      "nazev": "jižní řeka Nöetu (kresba DM)",
+      "body": [
+        [
+          605,
+          1150
+        ],
+        [
+          645,
+          1143
+        ],
+        [
+          685,
+          1140
+        ],
+        [
+          725,
+          1150
+        ],
+        [
+          770,
+          1160
+        ]
+      ]
+    }
+  ],
+  "hradby": [
+    {
+      "nazev": "jižní hradba Ordenu (kresba DM)",
+      "body": [
+        [
+          1048,
+          1078
+        ],
+        [
+          1075,
+          1083
+        ],
+        [
+          1100,
+          1084
+        ],
+        [
+          1125,
+          1081
+        ],
+        [
+          1148,
+          1074
+        ],
+        [
+          1165,
+          1062
+        ],
+        [
+          1180,
+          1045
+        ]
+      ]
+    },
+    {
+      "nazev": "západní hradba Ordenu (kresba DM)",
+      "body": [
+        [
+          1046,
+          935
+        ],
+        [
+          1042,
+          965
+        ],
+        [
+          1044,
+          1000
+        ],
+        [
+          1040,
+          1035
+        ],
+        [
+          1048,
+          1078
+        ]
+      ]
+    },
+    {
+      "nazev": "severozápadní hradba Ordenu (kresba DM)",
+      "body": [
+        [
+          952,
+          930
+        ],
+        [
+          968,
+          922
+        ],
+        [
+          990,
+          918
+        ],
+        [
+          1015,
+          925
+        ],
+        [
+          1046,
+          935
+        ]
+      ]
+    },
+    {
+      "nazev": "severovýchodní hradba Ordenu (kresba DM)",
+      "body": [
+        [
+          1118,
+          935
+        ],
+        [
+          1132,
+          928
+        ],
+        [
+          1146,
+          930
+        ],
+        [
+          1162,
+          945
+        ]
+      ]
+    }
+  ],
+  "pevnosti": [
+    {
+      "typ": "pevnost",
+      "x": 968,
+      "y": 925,
+      "m": 0.75,
+      "pozn": "pevnost na severozápadě Ordenu (kresba DM)"
+    },
+    {
+      "typ": "hrad",
+      "x": 1162,
+      "y": 985,
+      "m": 0.8,
+      "pozn": "hrad s branou, východ Ordenu (kresba DM)"
+    },
+    {
+      "typ": "strazni_vez",
+      "x": 1045,
+      "y": 958,
+      "m": 1.0,
+      "pozn": "věže na západní hradbě Ordenu (kresba DM)"
+    },
+    {
+      "typ": "strazni_vez",
+      "x": 1060,
+      "y": 988,
+      "m": 0.9,
+      "pozn": "věže na západní hradbě Ordenu (kresba DM)"
+    },
+    {
+      "typ": "pevnost",
+      "x": 1050,
+      "y": 1080,
+      "m": 0.6,
+      "pozn": "nárožní pevnost jižní hradby (kresba DM)"
+    },
+    {
+      "typ": "pevnost",
+      "x": 1180,
+      "y": 1046,
+      "m": 0.6,
+      "pozn": "nárožní pevnost jižní hradby (kresba DM)"
+    },
+    {
+      "typ": "hrad",
+      "x": 1175,
+      "y": 1200,
+      "m": 0.6,
+      "pozn": "opevnění v Laertmundu (kresba DM)"
+    }
+  ]
+}

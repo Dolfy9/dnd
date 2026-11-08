@@ -84,6 +84,72 @@ def staty(svet, land, ob, mista, k=4):
     return out
 
 
+def meandr(pts, amp, rng, krok=6):
+    L = LineString(pts)
+    if L.length < 2 * krok:
+        return [list(p) for p in pts]
+    d = np.arange(0, L.length, krok)
+    P = np.array([L.interpolate(x).coords[0] for x in d] + [pts[-1]])
+    t = np.gradient(P, axis=0); t /= np.linalg.norm(t, axis=1)[:, None] + 1e-9
+    nrm = np.c_[-t[:, 1], t[:, 0]]
+    nz = np.convolve(rng.normal(0, 1, len(P) + 8), np.ones(7) / 7, "same")[4:4 + len(P)] * amp
+    nz[0] = nz[-1] = 0
+    return (P + nrm * nz[:, None]).tolist()
+
+
+def hydro(svet, land, ob, seeds, rng, k=2):
+    W, H = svet["sirka"], svet["vyska"]
+    w, h = W // k, H // k
+    m = np.zeros((h, w), np.uint8)
+    for p in svet["pevnina"]:
+        cv2.fillPoly(m, [np.int32(np.array(p["body"]) / k)], 1 if p["typ"] == "pevnina" else 0)
+    hm = np.zeros((h, w), np.float32)
+    for o in ob:
+        if o["typ"] in ("hory", "velehory", "kopce") and len(o["body"]) > 2:
+            cv2.fillPoly(hm, [np.int32(np.array(o["body"]) / k)], 1.0)
+    hb = cv2.GaussianBlur(hm, (0, 0), 6)
+    nz = cv2.GaussianBlur(rng.random((h, w)).astype(np.float32), (0, 0), 4)
+    cost = np.where(m > 0, 1 + 8 * hb + 3 * nz, 1.0)
+    voda = (m == 0) & (cv2.dilate(m, np.ones((3, 3), np.uint8)) > 0)
+    mcp = MCP_Geometric(cost)
+    C, _ = mcp.find_costs(list(zip(*np.nonzero(voda))))
+    hy, hx = np.nonzero(hm > 0)
+    drawn = np.zeros((h, w), np.uint8)
+    out = []
+    def rc(p):
+        return min(max(int(p[1] / k), 0), h - 1), min(max(int(p[0] / k), 0), w - 1)
+    for sd in sorted(seeds, key=lambda r: -LineString(r["body"]).length):
+        pts = [list(map(float, p)) for p in sd["body"]]
+        if C[rc(pts[0])] < C[rc(pts[-1])]:
+            pts = pts[::-1]
+        # pramen: nejbližší hory/kopce do 140 px proti proudu
+        up = []
+        if len(hy):
+            r0, c0 = rc(pts[0]); d2 = (hy - r0) ** 2 + (hx - c0) ** 2; i = int(np.argmin(d2))
+            q = [float(hx[i] * k), float(hy[i] * k)]
+            u = np.subtract(pts[0], pts[min(2, len(pts) - 1)]); v = np.subtract(q, pts[0])
+            if d2[i] * k * k < 140 ** 2 and d2[i] > 9 and np.dot(u, v) > .35 * np.linalg.norm(u) * np.linalg.norm(v):
+                up = meandr([q, pts[0]], 5, rng)[:-1]
+        # ústí: cesta po spádu k vodě, končí v moři/jezeře nebo v jiné řece
+        down = []
+        for r, c in mcp.traceback(rc(pts[-1]))[::-1][1:]:
+            down.append([c * k + k / 2, r * k + k / 2])
+            if drawn[r, c] or m[r, c] == 0:
+                print("  řeka", sd.get("pozn", "")[:30], "ústí", "do řeky" if drawn[r, c] else "do vody", (c * k, r * k), len(down))
+                break
+        pts = meandr(pts, 2.5, rng, 5)
+        if down:
+            down = meandr([pts[-1]] + down[::3] + [down[-1]], 4, rng)[1:]
+        full = up + pts + down
+        full = chaikin([tuple(p) for p in full], 2)
+        Lf = LineString(full).simplify(.7)
+        if Lf.length < 40:
+            continue
+        cv2.polylines(drawn, [np.int32(np.array(Lf.coords) / k)], False, 1, 2)
+        out.append({"typ": "reka", "pozn": sd.get("pozn", "") + " – pramen a ústí dopočteny", "body": [[round(x), round(y)] for x, y in Lf.coords]})
+    return out
+
+
 def lore(svet):
     Z = json.loads((T / "svet_lore.json").read_text(encoding="utf-8"))
     mista = json.loads((R / "11_Mapy/mista.json").read_text(encoding="utf-8"))["mista"]
@@ -185,27 +251,17 @@ def lore(svet):
     kop = hor.buffer(34).difference(hor.buffer(3)).union(lae.difference(hor)).difference(jine).difference(mz).intersection(land.buffer(-8))
     for b in kousky(kop, 400):
         ob.append({"typ": "kopce", "pozn": "podhůří / pahorkatina (lore: hornatý Laertmund; podhůří pohoří)", "body": b})
-    # řeky: jen souvislé, vyhlazené, napojené na moře či jezero
-    nove, vzaté = [], []
-    for r in svet["reky"]:
-        L = LineString(r["body"])
-        if L.length < 60:
-            continue
-        p0, p1 = Point(r["body"][0]), Point(r["body"][-1])
-        d0, d1 = land.boundary.distance(p0), land.boundary.distance(p1)
-        pts = [tuple(p) for p in r["body"]]
-        if d0 < d1:
-            pts, d0, d1 = pts[::-1], d1, d0
-        if d1 > 40 and L.length < 170:
-            continue
-        if d1 <= 40:
-            q = nearest_points(land.boundary, Point(pts[-1]))[0]; pts.append((q.x, q.y))
-        L2 = LineString(pts)
-        if any(L2.buffer(7).intersection(v).length > .6 * v.length for v in vzaté):
-            continue
-        vzaté.append(L2)
-        nove.append(r | {"body": [[round(x), round(y)] for x, y in LineString(chaikin(pts, 3)).simplify(.8).coords]})
-    svet["reky"] = nove
+    # řeky: obkreslené úseky z kresby + ruční, prodloužené k prameni a ústí (hydrologicky)
+    K = json.loads((Path(__file__).with_name("svet_kresba.json")).read_text(encoding="utf-8"))
+    seeds = [{"typ": "reka", "pozn": r["nazev"], "body": r["body"]} for r in K["reky"]] + [r for r in svet["reky"] if "DM" in r.get("pozn", "") and not r.get("pozn", "").startswith("řeka u Nöetu")]
+    svet["reky"] = hydro(svet, land, ob, seeds, rng)
+    for hb in K.get("hradby", []):
+        svet.setdefault("hradby", []).append({"typ": "hradba", "pozn": hb["nazev"], "body": hb["body"]})
+        L = LineString(hb["body"])
+        for d in np.arange(16, L.length - 8, 24):
+            p = L.interpolate(d)
+            svet["symboly"].append({"typ": "strazni_vez", "x": int(p.x), "y": int(p.y), "m": .55, "pozn": "věž na hradbě (" + hb["nazev"] + ")"})
+    svet["symboly"] += K.get("pevnosti", [])
     # nic nepřetéká do moře: oblasti oříznout podle souše
     le = land.buffer(-7)
     ob2 = []

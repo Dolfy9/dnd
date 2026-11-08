@@ -64,7 +64,10 @@
     lakes.forEach(function (s) { o.push('<path d="' + pathD(s.body, true) + '" fill="url(#sv-mp)"/>'); });
     o.push("</g>");
     o.push('<g clip-path="url(#sv-souse)">');
-    (D.reky || []).forEach(function (r) { var d = pathD(r.body, false); o.push('<path d="' + d + '" fill="none" stroke="#3a2412" stroke-width="3.2" stroke-linecap="round" opacity=".55"/><path d="' + d + '" fill="none" stroke="#7fb3b8" stroke-width="2" stroke-linecap="round"/>'); });
+    (D.reky || []).forEach(function (r) {
+      var b = r.body, n = b.length, parts = n > 8 ? [[0, Math.floor(n / 3) + 1, 1.1], [Math.floor(n / 3), Math.floor(2 * n / 3) + 1, 1.7], [Math.floor(2 * n / 3), n, 2.4]] : [[0, n, 1.6]];
+      parts.forEach(function (q) { var d = pathD(b.slice(q[0], q[1]), false); o.push('<path d="' + d + '" fill="none" stroke="#3a2412" stroke-width="' + (q[2] + 1.3) + '" stroke-linecap="round" stroke-linejoin="round" opacity=".55"/><path d="' + d + '" fill="none" stroke="#7fb3b8" stroke-width="' + q[2] + '" stroke-linecap="round" stroke-linejoin="round"/>'); });
+    });
     o.push("</g>");
     (D.cesty || []).forEach(function (r) {
       var d = pathD(r.body, false);
@@ -72,6 +75,7 @@
       else if (r.typ === "stezka") o.push('<path d="' + d + '" fill="none" stroke="#7a5a3a" stroke-width="1.1" stroke-dasharray="2.5 3.5" stroke-linecap="round" opacity=".85"/>');
       else o.push('<path d="' + d + '" fill="none" stroke="#f4e6c0" stroke-width="3.6" stroke-linecap="round" opacity=".55"/><path d="' + d + '" fill="none" stroke="#6b4423" stroke-width="1.7" stroke-dasharray="7 4" stroke-linecap="round"/>');
     });
+    (D.hradby || []).forEach(function (r) { var d = pathD(r.body, false); o.push('<path d="' + d + '" fill="none" stroke="#4a3f33" stroke-width="9" stroke-linejoin="round" stroke-dasharray="3.2 2.6" opacity=".85"/><path d="' + d + '" fill="none" stroke="#2e241a" stroke-width="6.4" stroke-linecap="round" stroke-linejoin="round"/><path d="' + d + '" fill="none" stroke="#a39580" stroke-width="4.2" stroke-linecap="round" stroke-linejoin="round"/>'); });
     (D.hranice || []).forEach(function (r) { var d = pathD(r.body, false); o.push('<path d="' + d + '" fill="none" stroke="#f3e6c4" stroke-width="4" opacity=".5"/><path d="' + d + '" fill="none" stroke="#7a2416" stroke-width="1.6" stroke-dasharray="9 3 2 3" opacity=".85"/>'); });
     // symboly v oblastech (seřazené podle y, aby se překrývaly správně)
     var items = [];
