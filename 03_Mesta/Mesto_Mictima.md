@@ -26,7 +26,7 @@ Hlavní město Nöetu, sídlo arcimága Breffana plné magických věží a knih
 - Hadí stráž Breffanovy věže
 
 ## Setkání a scény (návrh)
-- Noční ulice, kde chodí mrtví (Zombie, Ghoul).
+- Noční ulice, kde chodí mrtví ([Zombie](#srd-bestiar-Zombie), [Ghoul](#srd-bestiar-Ghoul)).
 - Aukce zakázaných svazků v podzemí.
 
 ## Pro DM (tajné)

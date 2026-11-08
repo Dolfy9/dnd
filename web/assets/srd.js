@@ -10,8 +10,8 @@
     var sp = Object.keys(m.rychlost || {}).map(function (k) { return (k === "walk" ? "" : k + " ") + m.rychlost[k] + " ft"; }).join(", ");
     return '<div class="sb"><h2>' + esc(m.nazev) + '</h2><p class="sb-sub">' + esc(m.velikost + " " + m.typ + ", " + m.zarovnani) + '</p><hr>'
       + '<p><b>AC</b> ' + m.ac + ' &nbsp; <b>HP</b> ' + m.hp + ' (' + esc(m.hp_vzorec || "") + ') &nbsp; <b>Rychlost</b> ' + esc(sp || "30 ft") + '</p>'
-      + '<table class="sb-ab"><tr>' + Object.keys(m.atributy).map(function (k) { return '<th>' + k + '</th>'; }).join("") + '</tr><tr>' + Object.keys(m.atributy).map(function (k) { var v = m.atributy[k]; return '<td>' + v + ' (' + sg(md(v)) + ')' + (m.zachrany.indexOf(k) >= 0 ? '<br><small>save</small>' : '') + '</td>'; }).join("") + '</tr></table>'
-      + (m.dovednosti.length ? '<p><b>Dovednosti</b> ' + esc(m.dovednosti.join(", ")) + '</p>' : '') + (m.imunity ? '<p><b>Imunity</b> ' + esc(m.imunity) + '</p>' : '') + (m.odolnosti ? '<p><b>Odolnosti</b> ' + esc(m.odolnosti) + '</p>' : '')
+      + '<table class="sb-ab"><tr>' + Object.keys(m.atributy).map(function (k) { return '<th>' + k + '</th>'; }).join("") + '</tr><tr>' + Object.keys(m.atributy).map(function (k) { var v = m.atributy[k]; return '<td>' + v + ' (' + sg(md(v)) + ')' + '' + '</td>'; }).join("") + '</tr></table>'
+      + (m.zachrany.length ? '<p><b>Záchrany</b> ' + esc(m.zachrany.join(", ")) + '</p>' : '') + (m.dovednosti.length ? '<p><b>Dovednosti</b> ' + esc(m.dovednosti.join(", ")) + '</p>' : '') + (m.imunity ? '<p><b>Imunity</b> ' + esc(m.imunity) + '</p>' : '') + (m.odolnosti ? '<p><b>Odolnosti</b> ' + esc(m.odolnosti) + '</p>' : '')
       + '<p><b>Smysly</b> ' + esc(Object.keys(m.smysly || {}).map(function (k) { return k + " " + m.smysly[k] + " ft"; }).join(", ") || "—") + ' &nbsp; <b>Jazyky</b> ' + esc(m.jazyky || "—") + ' &nbsp; <b>CR</b> ' + esc(m.cr) + '</p><hr>'
       + list("Rysy", m.rysy) + list("Akce", m.akce) + list("Bonusové akce", m.bonusove_akce) + list("Reakce", m.reakce) + list("Legendární akce", m.legendarni) + '<p class="sb-src">SRD 5.2.1 (CC-BY 4.0)</p></div>';
   }
@@ -28,7 +28,10 @@
     });
   }
   window.MontelienSRD = { show: show, load: load };
-  document.addEventListener("click", function (e) { var a = e.target.closest && e.target.closest(".srd-link"); if (a) { e.preventDefault(); show(a.dataset.typ, a.dataset.nazev); } });
+  document.addEventListener("click", function (e) {
+    var h = e.target.closest && e.target.closest('a[href^="#srd-"]');
+    if (h) { var mm = h.getAttribute("href").match(/^#srd-(bestiar|predmety|glosar|featy)-(.+)$/); if (mm) { e.preventDefault(); show(mm[1], decodeURIComponent(mm[2]).replace(/_/g, " ")); return; } }
+    var a = e.target.closest && e.target.closest(".srd-link"); if (a) { e.preventDefault(); show(a.dataset.typ, a.dataset.nazev); } });
   var COLS = { bestiar: [["nazev", "Netvor"], ["cr", "CR"], ["typ", "Typ"], ["velikost", "Velikost"], ["ac", "AC"], ["hp", "HP"]], predmety: [["nazev", "Předmět"], ["kategorie", "Kategorie"], ["vzacnost", "Vzácnost"], ["druh", "Druh"]], glosar: [["nazev", "Heslo"], ["stitek", "Štítek"]] };
   function catalog() {
     document.querySelectorAll(".srd-katalog").forEach(function (el) {
@@ -47,5 +50,7 @@
       });
     });
   }
+  function fromHash() { var m = location.pathname.match(/\/(bestiar|predmety|glosar)\/$/); if (m && location.hash.length > 1) show(m[1], decodeURIComponent(location.hash.slice(1)).replace(/_/g, " ")); }
+  if (window.document$) window.document$.subscribe(fromHash); else document.addEventListener("DOMContentLoaded", fromHash);
   if (window.document$) window.document$.subscribe(catalog); else document.addEventListener("DOMContentLoaded", catalog);
 })();

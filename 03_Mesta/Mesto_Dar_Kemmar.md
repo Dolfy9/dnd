@@ -24,7 +24,7 @@ Uzavřené horské pevnostní město v Knärghae Zia.
 - Poslední živý strážce brány (návrh)
 
 ## Setkání a scény (návrh)
-- Pokus přelézt hradby – Wights, Shadows, Vrock.
+- Pokus přelézt hradby – [Wight](#srd-bestiar-Wight), [Shadow](#srd-bestiar-Shadow), [Vrock](#srd-bestiar-Vrock).
 - Hlas z druhé strany brány prosí o pomoc.
 
 ## Pro DM (tajné)

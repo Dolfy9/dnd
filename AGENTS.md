@@ -36,3 +36,4 @@ Tento repozitář je **lore wiki a příprava D&D 5e kampaní** ve světě Monte
 
 ## Struktura
 Viz `README.md`. Kontrola odkazů: `python3 tools/kontrola.py` (bez závislostí, Python 3).
+- Pravidla SRD 5.2.1 (CC-BY 4.0) jsou v `web/assets/srd/` (bestiář, předměty, featy, glosář) + kouzla v `web/assets/kouzla2024.json`. Odkaz na netvora/předmět/heslo v textu: `[Ghoul](#srd-bestiar-Ghoul)`, `[Longsword](#srd-predmety-Longsword)`, `[Prone](#srd-glosar-Prone)` – na webu otevře statblok/popis. Data obnovíš skripty mimo repo (Open5e API srd-2024, foundryvtt/dnd5e packs, PDF SRD).
