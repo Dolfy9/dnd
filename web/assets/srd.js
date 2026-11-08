@@ -60,6 +60,8 @@
     document.querySelectorAll(".srd-katalog").forEach(function (el) {
       if (el.dataset.ready) return; el.dataset.ready = "1"; var t = el.dataset.typ, cols = COLS[t];
       load(t).then(function (d) {
+        if (el.dataset.pole) { var P = el.dataset.pole.split("|"), H = el.dataset.hodnoty.split("|"); d = d.filter(function (x) { return P.every(function (p, i) { return H[i].split(",").indexOf(String(x[p])) >= 0; }); }); }
+        if (el.dataset.crmin) d = d.filter(function (x) { return x.cr_num >= Number(el.dataset.crmin) && x.cr_num <= Number(el.dataset.crmax); });
         var f2 = cols[2] ? cols[2][0] : null, vals = {}; d.forEach(function (x) { if (f2 && x[f2]) vals[x[f2]] = 1; });
         el.innerHTML = '<div class="kz-filtr"><input class="q" placeholder="Hledat…">' + (f2 ? '<select class="f"><option value="">' + cols[2][1] + ': vše</option>' + Object.keys(vals).sort().map(function (v) { return '<option>' + esc(v) + '</option>'; }).join("") + '</select>' : '') + (t === "bestiar" ? '<input class="crmin" type="number" placeholder="CR od" style="width:6em"><input class="crmax" type="number" placeholder="CR do" style="width:6em">' : '') + '<span class="n"></span></div><table class="kz-list"><thead><tr>' + cols.map(function (c) { return '<th>' + c[1] + '</th>'; }).join("") + '</tr></thead><tbody></tbody></table>';
         var tb = el.querySelector("tbody");

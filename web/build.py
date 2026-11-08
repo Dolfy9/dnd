@@ -106,7 +106,8 @@ def main():
     (DOCS / "glosar.md").write_text("---\nhide:\n  - toc\n---\n# Glosář pravidel (SRD 5.2.1)\n\nDefinice pravidel 2024 (stavy, akce, pojmy). Obsah SRD 5.2.1 je pod licencí CC-BY 4.0.\n\n<div class=\"srd-katalog\" data-typ=\"glosar\"></div>\n", encoding="utf-8")
     (DOCS / "kouzla.md").write_text("---\nhide:\n  - toc\n---\n# Katalog kouzel (D&D 2024)\n\nVšechna kouzla z pravidel 2024+. Klikni na název pro celý popis.\n\n<div id=\"katalog-kouzel\"></div>\n", encoding="utf-8")
 
-    nav = ["README.md", {"Interaktivní mapa": "mapa.md"}, {"Pravidla 2024": [{"Katalog kouzel": "kouzla.md"}, {"Bestiář": "bestiar.md"}, {"Předměty a výbava": "predmety.md"}, {"Glosář pravidel": "glosar.md"}]}] + sections + [
+    import pravidla_pages
+    nav = ["README.md", {"Interaktivní mapa": "mapa.md"}, {"Pravidla 2024": pravidla_pages.build(DOCS) + [{"Předměty a výbava (vše)": "predmety.md"}]}] + sections + [
         {"Otevřené otázky": "Otevrene_otazky.md"}, {"Pravidla projektu": "AGENTS.md"}]
     watch = "\n".join(f"  - ../{d}" for d in [s for s in os.listdir(ROOT)
                       if (ROOT / s).is_dir() and s not in SKIP and not s.startswith(".")])

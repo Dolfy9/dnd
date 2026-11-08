@@ -38,3 +38,22 @@
   function init() { oznac(); rezim(); }
   if (window.document$) window.document$.subscribe(init); else document.addEventListener("DOMContentLoaded", init);
 })();
+// Barevná schémata
+(function () {
+  var T = [["", "Schéma: podle režimu"], ["pergamen", "Pergamen"], ["noc", "Noc"], ["krev", "Krev a zlato"], ["popel", "Popel (Antemius)"], ["hvozd", "Hvozd"], ["mraz", "Mráz"], ["poust", "Poušť"]];
+  var DARK = { noc: 1, krev: 1, popel: 1 };
+  function apply() {
+    var t = localStorage.getItem("mont-theme") || "";
+    if (t) { document.documentElement.setAttribute("data-mont-theme", t); document.body.setAttribute("data-md-color-scheme", DARK[t] ? "slate" : "default"); }
+    else document.documentElement.removeAttribute("data-mont-theme");
+    var w = document.getElementById("tema-prepinac");
+    if (!w) {
+      w = document.createElement("div"); w.id = "tema-prepinac"; var hd = document.querySelector(".md-header__inner .md-search") || null;
+      w.innerHTML = '<select title="Barevné schéma">' + T.map(function (x) { return '<option value="' + x[0] + '">' + x[1] + '</option>'; }).join("") + '</select>';
+      w.firstChild.onchange = function () { localStorage.setItem("mont-theme", this.value); if (!this.value) location.reload(); else apply(); };
+      if (hd) hd.parentNode.insertBefore(w, hd); else document.body.appendChild(w);
+    }
+    w.firstChild.value = t;
+  }
+  if (window.document$) window.document$.subscribe(apply); else document.addEventListener("DOMContentLoaded", apply);
+})();
