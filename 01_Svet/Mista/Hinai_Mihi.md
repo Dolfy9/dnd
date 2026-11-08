@@ -1,8 +1,9 @@
 # Hinai Mihi – Prales neviditelných
 
-> **Stav:** návrh
+> **Stav:** kánon
 
-- **Typ:** malý prales uprostřed civilizovaných zemí, mezi Bririí a Zairamem (na mapě pravděpodobně temný prales na západním břehu Ordenské zátoky)
+- **Poloha:** severní břeh východní části jezera Amir, východně od krychlové stavby; polohu potvrdil DM
+- **Typ:** malý temný prales uprostřed civilizovaných zemí
 - **Obyvatelé:** po staletí neviditelní kanibalové
 - **Průvodce:** [Kazi Nocostřel](../../04_Postavy/NPC/Postava_Kazi.md)
 - **Nebezpečí:** vysoké (úrovně 5+)

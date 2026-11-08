@@ -5,7 +5,7 @@
   "pole_zeme": ["Briria", "Laertmund", "Zairam", "Khärghe Zhia", "Nöet", "Mönohen", "Khearaz", "Orden"],
   "oblasti": [
     {"typ": "haj", "zdroj": "01_Svet/Mista/Vychodni_hvozd.md", "pozn": "Východní hvozd – Tirentův les v Mönohenu (hranice odhadem)", "body": [[1660,480],[1760,455],[1830,520],[1820,620],[1750,665],[1670,630],[1640,550]]},
-    {"typ": "dzungle", "zdroj": "01_Svet/Mista/Hinai_Mihi.md", "pozn": "Hinai Mihi – temný prales kanibalů na západním břehu Ordenské zátoky", "body": [[790,990],[870,985],[905,1040],[880,1100],[815,1110],[775,1060]]},
+    {"typ": "dzungle", "zdroj": "01_Svet/Mista/Hinai_Mihi.md", "pozn": "Hinai Mihi – temný prales na severním břehu jezera Amir (potvrdil DM)", "body": [[1282,651],[1278,668],[1269,683],[1256,696],[1241,705],[1223,710],[1204,710],[1186,706],[1169,698],[1156,686],[1146,671],[1140,654],[1140,637],[1144,620],[1153,605],[1166,593],[1182,584],[1199,579],[1218,578],[1236,582],[1253,591],[1266,603],[1276,617],[1282,634]]},
     {"typ": "ledovec", "zdroj": "01_Svet/Mista/Fornheim.md", "pozn": "ledovce Fornheimu (poloha odhadem)", "body": [[1300,205],[1440,190],[1455,280],[1330,300]]},
     {"typ": "poust", "zdroj": "01_Svet/Mista/Trosky_Draaru.md", "pozn": "Dräar – ostrov písku a rozvalin", "body": [[200,1060],[480,1060],[520,1180],[430,1260],[200,1260]]}
   ],

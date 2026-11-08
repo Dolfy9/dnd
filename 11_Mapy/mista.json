@@ -433,13 +433,13 @@
    "pozn": "Chrám v palmovém pralese Nöetu."
   },
   {
-   "nazev": "Temný prales u zátoky",
-   "x": 830,
-   "y": 1040,
+   "nazev": "Hinai Mihi",
+   "x": 1210,
+   "y": 645,
    "typ": "misto",
-   "jistota": "odhad",
+   "jistota": "kanon",
    "odkaz": "01_Svet/Mista/Hinai_Mihi.md",
-   "pozn": "Hustý temný prales na západním břehu Ordenské zátoky – Hinai Mihi?"
+   "pozn": "Temný prales na severním břehu východní části jezera Amir – polohu potvrdil DM."
   },
   {
    "nazev": "Severní záliv",

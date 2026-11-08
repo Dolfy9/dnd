@@ -38,4 +38,4 @@ Poslední, kdo ještě zná stará tajemství magie a znalosti o historii posled
 
 - **Dräar (Trosky Dräaru):** Kdo se tam vydá, nejspíš už se nikdy nevrátí zpět, nebo se vrátí šílený. Démoni si rádi hrají s myslí každého, kdo se jen přiblíží k Draarským břehům.
 - **Divoký Sever:** Divoký, zamrzlý a temný severozápad Montelienu, o kterém koluje mnoho legend a odváží se tam jen ti nejstatečnější.
-- **Hinai Mihi:** Malý prales přímo uprostřed všech civilizovaných zemí, který však obývají po staletí nevidění kanibalové – nevidění stejně jako kdokoliv, kdo se do pralesa odváží.
+- **Hinai Mihi:** Malý prales na severním břehu jezera Amir, který obývají po staletí nevidění kanibalové – nevidění stejně jako kdokoliv, kdo se do pralesa odváží.

@@ -17,7 +17,7 @@
 | **NÖET** | jihozápad, pobřeží s palmovým pralesem a zříceným chrámem | [Provincie Nöet](../02_Zeme/Provincie_Noet.md) |
 | **DRÄAR** | jihozápadní poloostrov s pyramidami a sloupy, ostrůvky s pyramidami | [Trosky Dräaru](../01_Svet/Mista/Trosky_Draaru.md) |
 | **ORDEN** | jih středu, pevnost s hradbou na východním břehu Ordenské zátoky | [Teokracie Orden](../02_Zeme/Teokracie_Orden.md) |
-| **Ordenská zátoka** (DM) | jih středu, zátoka s lodí, na západním břehu temný prales | [Teokracie Orden](../02_Zeme/Teokracie_Orden.md) |
+| **Ordenská zátoka** (DM) | jih středu, zátoka s lodí, otevřená k jižnímu moři | [Teokracie Orden](../02_Zeme/Teokracie_Orden.md) |
 | **LAERTMUND** | jih, hornatý kraj s řekami jižně od Ordenu | [Království Laertmund](../02_Zeme/Kralovstvi_Laertmund.md) |
 | **TALI** | jihovýchod, poušť s kaktusy, chrámy a oázou | [Tali](../01_Svet/Mista/Tali.md) |
 | **ZAIRAM** | jihovýchod, úzký pobřežní pás za čárkovanou hranicí | [Země Zairam](../02_Zeme/Zeme_Zairam.md) |
@@ -26,6 +26,7 @@
 | **KNÄRGHE ZHIA** | východně od Khärghe, u kaňonu s vysokou věží (temná polovina – kánon) | [Država Knärghae Zia](../02_Zeme/Drzava_Knarghae_Zia.md) |
 | **MÖNOHEN** | východ, otočený nápis severně od ústí průlivu | [Klanové Země Mönohen](../02_Zeme/Klanove_Zeme_Monohen.md), v nich [Východní hvozd](../01_Svet/Mista/Vychodni_hvozd.md) (kánon) |
 | **Jezero Amir a Kop Aram** (DM) | velké jezero ve středu; na ostrově uprostřed částečně obnovený Kop Aram (centrum obchodu), dlouhý most na západ | [Jezero Amir a Kop Aram](../01_Svet/Mista/Jezero_Amir_a_Kop_Aram.md) |
+| **Hinai Mihi** (DM) | temný prales na severním břehu východní části jezera Amir | [Hinai Mihi](../01_Svet/Mista/Hinai_Mihi.md) |
 | **Divoký Sever** (DM) | severozápadní hornatý poloostrov se smrky | [Divoký Sever](../01_Svet/Mista/Divoky_Sever.md) |
 | **Svobodné Jižní ostrovy** (DM) | ostrovy jižně od Laertmundu | [Svobodné Jižní ostrovy](../02_Zeme/Svobodne_Jizni_Ostrovy.md) |
 
@@ -42,7 +43,7 @@
 | Hlavní sídlo Zairamu | jihovýchod | [Pertam](../03_Mesta/Mesto_Pertam.md)? |
 | Sídlo na největším z Jižních ostrovů | jih, pod Laertmundem | [Menkant](../03_Mesta/Mesto_Menkant.md)? |
 | Poloostrov s ledovými věžemi a tváří ve skále, maják | severovýchod nad Khearazem | [Fornheim](../01_Svet/Mista/Fornheim.md)? |
-| Temný prales na západním břehu Ordenské zátoky | jih středu | [Hinai Mihi](../01_Svet/Mista/Hinai_Mihi.md)? |
+| Lesy na západním břehu Ordenské zátoky | jih středu, podle kresby DM | [Analýza mapy](Analyza_mapy.md) |
 | Rozsáhlé lesy a řeky západu | západ | [Západní hvozd a Ertinova hora](../01_Svet/Mista/Zapadni_hvozd_a_Ertinova_hora.md) |
 | Kaňon s vysokou věží | východ, Knärghe Zhia | hranice mrtvé Zhie; [Dar Kemmar](../03_Mesta/Mesto_Dar_Kemmar.md)? |
 | Vír, mořský had, okřídlený démon, vrak | moře | [Moře a ostrovy](../01_Svet/Mista/More_a_ostrovy.md) |

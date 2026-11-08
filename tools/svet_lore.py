@@ -187,6 +187,20 @@ def lore(svet):
         if o["typ"] == "hory" and len(o["body"]) > 2 and Polygon(o["body"]).buffer(0).centroid.y < 480:
             o["typ"] = "velehory"
     st = staty(svet, land, ob, mista)
+    uzemi = {}
+    for u in K.get("uzemi", []):
+        if not any(z["nazev"] == u["nazev"] for z in st):
+            continue
+        g = Polygon(u["body"]).buffer(0).intersection(land)
+        if g.area > 0:
+            uzemi[u["nazev"]] = unary_union([uzemi[u["nazev"]], g]) if u["nazev"] in uzemi else g
+    if uzemi:
+        vyhra = unary_union(list(uzemi.values()))
+        for z in st:
+            g = unary_union(z["polys"]).difference(vyhra)
+            if z["nazev"] in uzemi:
+                g = unary_union([g, uzemi[z["nazev"]]])
+            z["polys"] = [p for p in geoms(g) if p.geom_type == "Polygon" and p.area > 1]
     kn = next((z for z in st if z["nazev"].startswith("Knärghe")), None)
     mz = unary_union(kn["polys"]) if kn else Polygon(Z["mrtva_zeme"]["body"])
     svet["zeme"] = [{"nazev": z["nazev"], "body": [body(p.simplify(1.5)) for p in z["polys"] if p.area > 3000], "pozn": "území státu vypočtené z popisků a terénu (návrh)"}
@@ -212,7 +226,7 @@ def lore(svet):
                         for d in np.arange(10, g.length - 5, 34):
                             p = g.interpolate(d); q = nearest_points(mz.buffer(-6), p)[0] if mz.buffer(-6).area > 0 else p
                             svet["symboly"].append({"typ": "kul", "x": int(q.x), "y": int(q.y), "m": round(float(rng.uniform(.85, 1.15)), 2), "pozn": "kůly s lebkami na hranici Knärghe Zhie (DM)"})
-    hranice_kresba = K.get("hranice", [])
+    hranice_kresba = K.get("hranice", []) if not K.get("uzemi") else []
     if hranice_kresba:
         pozns = {h["pozn"] for h in hranice_kresba}
         svet["hranice"] = [g for g in svet["hranice"] if g.get("pozn") not in pozns]

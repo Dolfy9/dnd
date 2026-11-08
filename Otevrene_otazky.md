@@ -38,9 +38,11 @@ Seznam věcí k rozhodnutí DM. Po rozhodnutí položku přesuň do sekce *Vyře
 - **Východní hvozd:** leží v Mönohenu, stvořil ho Tirent (vztah k Nölienu otevřený – bod 1).
 
 ## Atlas mapy – prvky z loru (návrh, potvrď polohy)
-- Polohy odvozené z textů, ne z kresby: Východní hvozd (východ Mönohenu), Hinai Mihi (západní břeh Ordenské zátoky), ledovce Fornheimu (SV poloostrov), písek Dräaru, hranice mrtvé Knärghe Zhie, opuštěné císařské věže na pobřeží Divokého Severu, věže starého Kop Aramu čnějící z jezera. Zdroj: `tools/svet_lore.json`.
+- Polohy odvozené z textů, ne z kresby: Východní hvozd (východ Mönohenu), ledovce Fornheimu (SV poloostrov), písek Dräaru, hranice mrtvé Knärghe Zhie, opuštěné císařské věže na pobřeží Divokého Severu, věže starého Kop Aramu čnějící z jezera. Zdroj: `tools/svet_lore.json`.
+- **Hinai Mihi (≈1210,645):** temný prales na severním břehu východní části jezera Amir. *(vyřešeno – potvrdil DM)*
 - Obchodní cesty mezi sídly jsou vypočtené (terén, mosty, uzavřená Knärghe Zhia), ne z kresby. Které z nich platí?
-- Hranice států jsou vypočtené (od popisku země po terénu, hory jako přirozená hranice), ne z kresby ani textu. Kůly s lebkami stojí na hranici Knärghe Zhie. Sedí průběh hranic?
+- Hranice států mimo pokrytí mapou DM jsou vypočtené (od popisku země po terénu, hory jako přirozená hranice); v pokrytém území jsou převzaté z mapy hranic DM. Kůly s lebkami stojí na hranici Knärghe Zhie. Sedí průběh hranic mimo mapu DM?
+- **Čárkovaná svislá čára v horní části mapy hranic (≈x 550):** význam nejasný, do hranic území nebyla zahrnuta. *(návrh – čeká na DM)*
 - **Mönohen – řeka a pobřeží:** Dvojité čáry jsou nyní obkreslené jako jedna řeka ústící do východního moře; pobřeží Mönohenu je ručně obkreslené jako návrh. Odpovídá to kresbě?
 - **Černá skvrna v moři jižně od Tali (≈1357,1326):** chyba kresby, potvrdil DM; do atlasu se nic nepřidává.
 - **Sever Nölienu (≈1040–1400, 110–430):** pohoří s malými chrámy. *(vyřešeno – potvrdil DM)*

@@ -10,6 +10,7 @@ from pathlib import Path
 import cv2
 import numpy as np
 from skimage.morphology import skeletonize
+from shapely.geometry import Polygon
 sys.path.insert(0, str(Path(__file__).parent))
 import mapa
 
@@ -42,6 +43,61 @@ def shapes(mask, eps, min_area, typ_even, typ_odd=None):
             out.append({"typ": typ, "uroven": d, "body": b})
     out.sort(key=lambda s: s["uroven"])
     return out
+
+
+def roughen_coasts(items):
+    originals = [Polygon(p["body"]).buffer(0) for p in items]
+    result = []
+    for i, item in enumerate(items):
+        points = np.asarray(item["body"], dtype=float)
+        lengths = np.linalg.norm(np.roll(points, -1, axis=0) - points, axis=1)
+        perimeter = lengths.sum()
+        if not perimeter or not np.any(lengths > 30):
+            result.append(item)
+            continue
+        rng = np.random.default_rng(7103 + i * 7919)
+        phases = rng.uniform(0, 2 * np.pi, 3)
+        samples = []
+        travelled = 0.0
+        for j, length in enumerate(lengths):
+            a, b = points[j], points[(j + 1) % len(points)]
+            if length <= 0:
+                samples.append((a, np.zeros(2), 0.0))
+                continue
+            steps = max(1, int(np.ceil(length / 24))) if length > 30 else 1
+            tangent = (b - a) / length
+            normal = np.array([-tangent[1], tangent[0]])
+            for k in range(steps):
+                t = k / steps
+                p = a + (b - a) * t
+                offset = 0.0
+                if length > 30 and k:
+                    u = (travelled + t * length) / perimeter
+                    noise = (.55 * np.sin(2 * np.pi * 7 * u + phases[0])
+                             + .3 * np.sin(2 * np.pi * 15 * u + phases[1])
+                             + .15 * np.sin(2 * np.pi * 29 * u + phases[2]))
+                    offset = np.clip(length * .08, 2, 6) * noise
+                samples.append((p, normal, offset))
+            travelled += length
+        original = originals[i]
+        accepted = None
+        for amplitude_scale in (1, .65, .4, .2, 0):
+            candidate = np.asarray([p + normal * offset * amplitude_scale for p, normal, offset in samples])
+            poly = Polygon(candidate)
+            if not poly.is_valid or poly.area < original.area * .75:
+                continue
+            crossed = False
+            for k, other in enumerate(originals):
+                if i == k or original.within(other) or other.within(original):
+                    continue
+                if poly.intersection(other).area > original.intersection(other).area + 1:
+                    crossed = True
+                    break
+            if not crossed:
+                accepted = candidate
+                break
+        result.append(item | {"body": [[round(float(x)), round(float(y))] for x, y in accepted]} if accepted is not None else item)
+    return result
 
 
 def trace(sk, min_len):
@@ -82,13 +138,14 @@ def barvy(data, out):
     yy = np.linspace(0, 1, h)[:, None].repeat(w, 1)
     chlad = np.clip((.30 - yy) / .13 + sum_(30) * .3, 0, 1)[..., None] * .85
     t = np.clip(yy * 1.25 - .2 + sum_(40) * .22 + sum_(12) * .08, 0, 1)[..., None]
-    sever, stred, jih = np.array([108, 176, 150.]), np.array([112, 190, 206.]), np.array([126, 189, 220.])
+    sever, stred, jih = np.array([99, 151, 126.]), np.array([121, 167, 103.]), np.array([151, 163, 91.])
     img = np.where(t < .5, sever + (stred - sever) * (t / .5), stred + (jih - stred) * ((t - .5) / .5))
-    img = img + sum_(6)[..., None] * np.array([6, 9, 5.])
+    img = img + sum_(72)[..., None] * np.array([3, 5, 3.]) + sum_(24)[..., None] * np.array([2, 3, 2.])
+    img = img + sum_(6)[..., None] * np.array([4, 6, 3.])
     img = img * (1 - chlad) + np.array([246, 242, 238.]) * chlad
-    pal = {"louky": ((86, 178, 147), .75), "les": ((76, 132, 92), .7), "haj": ((80, 150, 112), .7), "dzungle": ((70, 140, 88), .75),
-           "hory": ((135, 150, 166), .7), "velehory": ((215, 214, 214), .7), "poust": ((134, 206, 232), .85), "pole": ((110, 196, 214), .6),
-           "bazina": ((110, 150, 120), .7), "mrtvy": ((96, 112, 122), .7), "mrtva_zeme": ((52, 58, 66), .78), "kopce": ((100, 168, 190), .45), "ledovec": ((238, 234, 226), .85)}
+    pal = {"louky": ((103, 164, 91), .68), "les": ((54, 105, 59), .78), "haj": ((83, 135, 73), .72), "dzungle": ((34, 82, 43), .86),
+           "hory": ((126, 139, 126), .66), "velehory": ((216, 218, 213), .76), "poust": ((190, 157, 88), .78), "pole": ((144, 163, 91), .56),
+           "bazina": ((83, 121, 78), .68), "mrtvy": ((88, 102, 84), .72), "mrtva_zeme": ((43, 45, 38), .82), "kopce": ((113, 151, 87), .48), "ledovec": ((228, 237, 238), .84)}
     for typ, (c, a) in pal.items():
         m = np.zeros((h, w), np.uint8)
         for o in data["oblasti"]:
@@ -107,7 +164,7 @@ def main():
     water = mapa.water_mask(clean, data)
     land = (~water).astype(np.uint8)
     land = cv2.morphologyEx(land, cv2.MORPH_OPEN, cv2.getStructuringElement(cv2.MORPH_ELLIPSE, (3, 3)))
-    pevnina = shapes(land, 1.3, 25, "pevnina", "jezero")
+    pevnina = roughen_coasts(shapes(land, 1.3, 25, "pevnina", "jezero"))
 
     pod = cv2.imread(str(mapa.MAPY / "zdroje" / "Montelien_ilustrace_podklad.jpg"))
     pod = cv2.resize(pod, (W, H), interpolation=cv2.INTER_AREA)
