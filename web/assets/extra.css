@@ -35,10 +35,15 @@ body.rezim-hrac .dm-sekce, body.rezim-hrac h2.dm-nadpis { display: none !importa
 .md-content__inner:has(#mapa) { max-width: none; }
 .mapa-legenda { display: flex; gap: 1.2rem; flex-wrap: wrap; font-size: .75rem; margin-bottom: .5rem; }
 .mapa-pozn { font-size: .7rem; opacity: .8; }
+.mapa-vlozena { margin: 1rem 0 1.5rem; }
+.mapa-vlozena iframe { display: block; width: 100%; height: 360px; border: 1px solid #b59a6a; border-radius: 6px; }
+.mapa-zobrazit { margin-bottom: .5rem; }
 .tecka { display: inline-block; width: .7rem; height: .7rem; border-radius: 50%; border: 2px solid #3a2412; vertical-align: middle; }
 .jistota-mapa { background: #c0392b; } .jistota-kanon { background: #2e8b57; } .jistota-odhad { background: #f0b429; }
 .leaflet-tooltip.mapa-stitek { font-family: "IM Fell", serif; font-size: 13px; background: rgba(246,233,200,.92);
   color: #3a2412; border: 1px solid #8a6a3f; }
+.leaflet-tooltip.mapa-stav-stitek { font-family: "IM Fell", serif; font-size: 16px; font-weight: 700;
+  color: #3a2412; background: rgba(255,244,170,.96); border: 2px solid #fff1a0; box-shadow: 0 1px 10px #402d19; }
 .leaflet-popup-content { font-family: Georgia, serif; }
 .leaflet-popup-content h4 { font-family: "Cinzel", serif; margin: 0 0 .3rem; }
 
@@ -138,6 +143,15 @@ html[data-mont-theme] .md-typeset h1, html[data-mont-theme] .md-typeset h2 { col
 #mapa-hledat { padding: 2px 6px; border: 1px solid #b59a6a; border-radius: 4px; min-width: 12rem; }
 #mapa-meric { border: 1px solid #b59a6a; border-radius: 4px; padding: 1px 8px; cursor: pointer; background: transparent; }
 #mapa-meric.on { background: #7a1f12; color: #fff; }
+body.mapa-vyrez .md-header, body.mapa-vyrez .md-tabs, body.mapa-vyrez .md-sidebar,
+body.mapa-vyrez .md-footer, body.mapa-vyrez .mapa-legenda, body.mapa-vyrez .mapa-pozn,
+body.mapa-vyrez .md-typeset > h1, body.mapa-vyrez #rezim-prepinac, body.mapa-vyrez #tema-prepinac,
+body.mapa-vyrez .leaflet-control-container, body.mapa-vyrez #ed-toolbar { display: none !important; }
+body.mapa-vyrez .md-typeset > p:has(> link[rel="stylesheet"]) { display: none !important; }
+body.mapa-vyrez { margin: 0 !important; padding: 0 !important; overflow: hidden !important; }
+body.mapa-vyrez .md-main, body.mapa-vyrez .md-main__inner, body.mapa-vyrez .md-content,
+body.mapa-vyrez .md-content__inner, body.mapa-vyrez .md-typeset { margin: 0 !important; padding: 0 !important; max-width: none !important; }
+body.mapa-vyrez #mapa { height: 360px; min-height: 360px; margin: 0; border-radius: 0; box-shadow: none; }
 .ed-only { display: none; }
 body.ed-on .ed-only { display: inline-block; }
 #mapa-editor { border: 1px solid #b59a6a; border-radius: 4px; padding: 1px 8px; cursor: pointer; background: #8b2c1c; color: #fff; }

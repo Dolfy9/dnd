@@ -2,18 +2,59 @@
   var D = window.MONTELIEN_MISTA, el = document.getElementById("mapa");
   if (!D || !el || el.dataset.ready) return;
   el.dataset.ready = "1";
+  var qs = new URLSearchParams(location.search), crop = qs.get("vyrez") === "1";
+  if (crop) document.body.classList.add("mapa-vyrez");
   var W = D.sirka, H = D.vyska, bounds = [[0, 0], [H, W]], KM_PX = 1.7;
   var map = L.map(el, { crs: L.CRS.Simple, minZoom: -1.5, maxZoom: 2.5, zoomSnap: 0.25, attributionControl: false });
   window.MontelienMapa = map;
   var svgEl = document.createElementNS("http://www.w3.org/2000/svg", "svg");
   var atlas = L.svgOverlay(svgEl, bounds, { interactive: false });
   var SV = { map: map, el: el, svg: svgEl, base: "../", D: null, M: D };
-  fetch("../11_Mapy/svet.json?t=" + Date.now()).then(function (r) { return r.json(); }).then(function (j) { SV.D = j; if (window.MontelienSvet) window.MontelienSvet.render(svgEl, j, D, "../"); }).catch(function () { });
+  var stateData = [], stateHighlight = L.layerGroup().addTo(map), stateTip = null, activeState = null;
+  function inRing(x, y, ring) {
+    var inside = false;
+    for (var i = 0, j = ring.length - 1; i < ring.length; j = i++) {
+      if ((ring[i][1] > y) !== (ring[j][1] > y) && x < (ring[j][0] - ring[i][0]) * (y - ring[i][1]) / (ring[j][1] - ring[i][1]) + ring[i][0]) inside = !inside;
+    }
+    return inside;
+  }
+  function clearState() {
+    activeState = null;
+    stateHighlight.clearLayers();
+    if (stateTip) map.removeLayer(stateTip);
+    stateTip = null;
+  }
+  function showState(z, ll) {
+    if (activeState === z.nazev) return;
+    activeState = z.nazev;
+    stateHighlight.clearLayers();
+    (z.body || []).forEach(function (ring) {
+      if (ring.length < 3) return;
+      stateHighlight.addLayer(L.polygon(ring.map(function (p) { return [H - p[1], p[0]]; }), {
+        interactive: false, color: "#fff1a0", weight: 5, opacity: .96, fillColor: "#fff3b0", fillOpacity: .19,
+        lineCap: "round", lineJoin: "round"
+      }));
+    });
+    if (stateTip) map.removeLayer(stateTip);
+    stateTip = L.tooltip({ permanent: true, direction: "top", className: "mapa-stav-stitek" })
+      .setLatLng(ll).setContent(esc(z.nazev)).addTo(map);
+  }
+  map.on("mousemove", function (e) {
+    if (crop || SV.open || !stateData.length) return;
+    var x = e.latlng.lng, y = H - e.latlng.lat, found = null;
+    stateData.some(function (z) {
+      if ((z.body || []).some(function (ring) { return inRing(x, y, ring); })) { found = z; return true; }
+      return false;
+    });
+    if (found) showState(found, e.latlng);
+  });
+  el.addEventListener("mouseleave", clearState);
+  fetch("../11_Mapy/svet.json?t=" + Date.now()).then(function (r) { return r.json(); }).then(function (j) { SV.D = j; stateData = j.zeme || []; if (window.MontelienSvet) window.MontelienSvet.render(svgEl, j, D, "../"); }).catch(function () { });
   var ilu = L.imageOverlay("../11_Mapy/Montelien_mapa_ilustrovana.jpg", bounds);
   var barevna = L.imageOverlay("../11_Mapy/Montelien_mapa.jpg", bounds);
   var kresba = L.imageOverlay("../11_Mapy/Montelien_mapa_vyrovnana.jpg", bounds);
   var vrstvy = { "Atlas (z dat)": atlas, "Ilustrovaná mapa": ilu, "Věrná barevná mapa": barevna, "Původní kresba (DM)": kresba };
-  var pam = localStorage.getItem("mapa-vrstva"); (vrstvy[pam] || atlas).addTo(map);
+  var pam = localStorage.getItem("mapa-vrstva"); (crop ? atlas : (vrstvy[pam] || atlas)).addTo(map);
   L.control.layers(vrstvy).addTo(map);
   map.on("baselayerchange", function (e) { localStorage.setItem("mapa-vrstva", e.name); });
   map.fitBounds(bounds);
@@ -32,7 +73,7 @@
       return "<a href='../boj/?mapa=" + encodeURIComponent(b.id) + "'>" + esc(b.nazev) + "</a>" + (n ? " <small>(" + n + " ulož. bojů)</small>" : "");
     }).join("<br>") + "</p>";
   }
-  var body = L.layerGroup().addTo(map), sidla = L.layerGroup(), bojL = L.layerGroup().addTo(map), byName = {};
+  var body = L.layerGroup().addTo(map), sidla = L.layerGroup(), bojL = L.layerGroup().addTo(map), byName = {}, cropHighlight = null;
   D.mista.forEach(function (m) {
     var c = L.circleMarker([H - m.y, m.x], {
       radius: m.typ === "zeme" ? 8 : 6, color: "#3a2412", weight: 2,
@@ -56,11 +97,17 @@
     if (!x) { var k = Object.keys(byName).filter(function (n) { return n.indexOf(String(q).toLowerCase()) >= 0; })[0]; x = k && byName[k]; }
     if (!x) return;
     if (x.m.typ === "sidlo") map.addLayer(sidla); else map.addLayer(body);
-    map.flyTo([H - x.m.y, x.m.x], 1, { duration: .8 }); setTimeout(function () { x.c.openPopup(); }, 850);
+    var pos = [H - x.m.y, x.m.x];
+    map.flyTo(pos, crop ? 1.2 : 1, { duration: .8 });
+    if (crop) {
+      if (cropHighlight) map.removeLayer(cropHighlight);
+      cropHighlight = L.circleMarker(pos, { interactive: false, radius: 20, color: "#fff1a0", weight: 4, fillColor: "#fff3b0", fillOpacity: .2 }).addTo(map);
+      x.c.openTooltip();
+    } else setTimeout(function () { x.c.openPopup(); }, 850);
   }
   var hl = document.getElementById("mapa-hledat");
   if (hl) hl.addEventListener("change", function () { najdi(this.value); });
-  var qs = new URLSearchParams(location.search); if (qs.get("misto")) setTimeout(function () { najdi(qs.get("misto")); }, 300);
+  if (qs.get("misto")) setTimeout(function () { najdi(qs.get("misto")); }, 300);
   function tog(id, layer) { var e = document.getElementById(id); if (e) e.addEventListener("change", function (ev) { if (ev.target.checked) map.addLayer(layer); else map.removeLayer(layer); }); }
   tog("mapa-sidla", sidla); tog("mapa-body", body); tog("mapa-boj", bojL);
   var st = document.getElementById("mapa-stitky");
@@ -71,6 +118,7 @@
   if (eb) eb.addEventListener("click", function () {
     if (!SV.D || !window.MontelienSvet || SV.open) return;
     if (!map.pm) { alert("Knihovna editoru se nenačetla."); return; }
+    clearState();
     Object.keys(vrstvy).forEach(function (k) { map.removeLayer(vrstvy[k]); }); atlas.addTo(map); map.removeLayer(body); map.removeLayer(sidla);
     SV.open = true; window.MontelienSvet.editor(SV);
   });
