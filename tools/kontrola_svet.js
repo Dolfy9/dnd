@@ -4,6 +4,7 @@ global.window = {};
 new Function(fs.readFileSync(path.join(R, "web/assets/svet_symboly.js"), "utf8"))();
 new Function(fs.readFileSync(path.join(R, "web/assets/svet/sprity.js"), "utf8"))();
 const { SVET_SYMBOLY: S, SVET_OBLASTI: O, SVET_SPRITY: P, SVET_SPRITY_META: M } = window;
+const PAL = JSON.parse(fs.readFileSync(path.join(R, "web/assets/svet/paleta.json"), "utf8"));
 const D = JSON.parse(fs.readFileSync(path.join(R, "11_Mapy/svet.json"), "utf8")), err = [];
 if (D.sirka !== 2048 || D.vyska !== 1440) err.push("rozměry svet.json");
 const used = new Set();
@@ -50,6 +51,33 @@ function vzdalenostKeKrajiPevniny(x, y) {
   (D.pevnina || []).forEach(f => f.body.forEach((p, i) => { min = Math.min(min, vzdalenostKUseku(x, y, f.body[(i + f.body.length - 1) % f.body.length], p)); }));
   return min;
 }
+function spriteBox(s) {
+  const spec = P[s.typ];
+  if (!spec) return null;
+  const name = spec.spr[Math.abs(s.x * 7 + s.y * 13) % spec.spr.length], meta = M[name];
+  if (!meta) return null;
+  const view = PAL.viewport_sprites || {}, maxScale = Math.pow(2, view.max_zoom || 2.5);
+  const w = Math.min(spec.w * (s.m || 1), meta.w / (maxScale * (view.min_resolution_ratio || 2)));
+  const h = w * meta.h / meta.w, angle = (s.typ === "ledovy_utes" ? 0 : (s.rot || 0)) * Math.PI / 180;
+  const cx = s.x + (h / 2 - 2) * Math.sin(angle), cy = s.y + (2 - h / 2) * Math.cos(angle);
+  const hw = (Math.abs(Math.cos(angle)) * w + Math.abs(Math.sin(angle)) * h) / 2;
+  const hh = (Math.abs(Math.sin(angle)) * w + Math.abs(Math.cos(angle)) * h) / 2;
+  return { x0: cx - hw, x1: cx + hw, y0: cy - hh, y1: cy + hh };
+}
+function boxOverlap(a, b) {
+  const w = Math.max(0, Math.min(a.x1, b.x1) - Math.max(a.x0, b.x0));
+  const h = Math.max(0, Math.min(a.y1, b.y1) - Math.max(a.y0, b.y0));
+  const area = box => (box.x1 - box.x0) * (box.y1 - box.y0);
+  return w * h / Math.min(area(a), area(b));
+}
+function boxInArea(box, body) {
+  let inside = 0, samples = 200;
+  for (let y = 0; y < 10; y++) for (let x = 0; x < 20; x++) {
+    if (uvnitr(box.x0 + (x + .5) * (box.x1 - box.x0) / 20,
+               box.y0 + (y + .5) * (box.y1 - box.y0) / 10, body)) inside++;
+  }
+  return inside / samples;
+}
 ["pevnina", "oblasti", "reky", "cesty", "hranice", "hradby", "utesy"].forEach(k => (D[k] || []).forEach((f, i) => { if (!ok(f.body)) err.push(k + "[" + i + "] neplatné body"); }));
 (D.oblasti || []).forEach((f, i) => { if (!O[f.typ]) err.push("neznámý typ oblasti " + f.typ); });
 (D.oblasti || []).forEach((f, i) => {
@@ -84,6 +112,22 @@ const souse = (D.pevnina || []).map((f, i) => ({ f, i })).filter(({ f }) => f.ty
   if (!vodniSymboly.has(s.typ)) return;
   const nalez = souse.find(({ f }) => uvnitr(s.x, s.y, f.body));
   if (nalez) err.push("vodní symbol " + s.typ + "[" + i + "] (" + s.x + "," + s.y + ") uvnitř pevnina[" + nalez.i + "]");
+});
+const landmarkTypes = new Set(["ledovy_utes", "chram", "hora", "hora2", "hora_snih", "masiv", "hreben", "skala"]);
+const landmarks = (D.symboly || []).map((s, i) => ({ s, i, box: landmarkTypes.has(s.typ) ? spriteBox(s) : null }))
+  .filter(x => x.box);
+for (let i = 0; i < landmarks.length; i++) for (let j = i + 1; j < landmarks.length; j++) {
+  const a = landmarks[i], b = landmarks[j], overlap = boxOverlap(a.box, b.box);
+  if (overlap > .15) err.push("překryv orientačních symbolů " + a.s.typ + "[" + a.i + "] / " + b.s.typ + "[" + b.i + "] " + Math.round(overlap * 100) + "% (limit 15%)");
+}
+(D.symboly || []).forEach((s, i) => {
+  if (s.typ !== "ledovy_utes") return;
+  const box = spriteBox(s);
+  (D.oblasti || []).forEach((area, j) => {
+    if (area.typ !== "hory" && area.typ !== "velehory") return;
+    const overlap = boxInArea(box, area.body);
+    if (overlap > .15) err.push("ledový útes[" + i + "] překrývá horský terén oblasti[" + j + "] " + Math.round(overlap * 100) + "% (limit 15%)");
+  });
 });
 if (err.length) { console.error(err.join("\n")); process.exit(1); }
 console.log("atlas OK:", D.pevnina.length, "tvarů,", D.oblasti.length, "oblastí,", D.symboly.length, "symbolů,", used.size, "spritů");

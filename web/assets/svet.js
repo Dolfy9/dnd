@@ -128,7 +128,11 @@
     });
     (D.hradby || []).forEach(function (r) { o.push('<path d="' + pathD(r.body, false) + '" fill="none" stroke="#2e241a" stroke-width="2.2" opacity=".5"/>'); });
     (D.utesy || []).forEach(function (r) { o.push('<path d="' + pathD(r.body, false) + '" fill="none" stroke="#3a2e22" stroke-width="3" opacity=".3"/>'); });
-    (D.hranice || []).forEach(function (r) { var d = pathD(r.body, false), dash = r.carkovana ? "7 6" : "9 3 2 3"; o.push('<path d="' + d + '" fill="none" stroke="#f3e6c4" stroke-width="4" opacity=".5"/><path d="' + d + '" fill="none" stroke="#7a2416" stroke-width="1.6" stroke-dasharray="' + dash + '" opacity=".85"/>'); });
+    (D.hranice || []).forEach(function (r) {
+      var d = pathD(r.body, false);
+      if (r.carkovana) o.push('<path d="' + d + '" fill="none" stroke="#3a2412" stroke-width="1.2" stroke-dasharray="6 4" vector-effect="non-scaling-stroke" data-map-dashed-border="1" opacity=".9"/>');
+      else o.push('<path d="' + d + '" fill="none" stroke="#f3e6c4" stroke-width="4" opacity=".5"/><path d="' + d + '" fill="none" stroke="#7a2416" stroke-width="1.6" stroke-dasharray="9 3 2 3" opacity=".85"/>');
+    });
     // symboly v oblastech (seřazené podle y, aby se překrývaly správně)
     var items = [], landPolys = (D.pevnina || []).filter(function (p) { return p.typ === "pevnina" || p.typ === "ostrov"; }),
       ridgeAreas = (D.oblasti || []).filter(function (a) { return a.typ === "hory" || a.typ === "velehory"; });
@@ -206,7 +210,7 @@
     }
     (D.symboly || []).forEach(function (s, si) {
       var sp = SPR[s.typ];
-      if (sp) items.push([s.y, spr(sp.spr[(Math.abs(s.x * 7 + s.y * 13)) % sp.spr.length], s.x, s.y, sp.w * (s.m || 1), !!s.zrcadlo, s.rot || 0)]);
+      if (sp) items.push([s.y, spr(sp.spr[(Math.abs(s.x * 7 + s.y * 13)) % sp.spr.length], s.x, s.y, sp.w * (s.m || 1), !!s.zrcadlo, s.typ === "ledovy_utes" ? 0 : (s.rot || 0))]);
       else if (SYM[s.typ]) items.push([s.y, '<use href="#sv-' + s.typ + '" transform="translate(' + s.x + "," + s.y + ") rotate(" + (s.rot || 0) + ") scale(" + (s.m || 1) + ')"/>']);
     });
     (M.mista || []).forEach(function (m) { if ((m.typ === "sidlo" || m.typ === "mesto") && !(D.symboly || []).some(function (q) { return SPR[q.typ] && Math.abs(q.x - m.x) < 45 && Math.abs(q.y - m.y) < 90; })) items.push([m.y + 6, spr(m.typ === "mesto" ? "mesto" : (Math.round(m.x + m.y) % 2 ? "vesnice" : "vesnice2"), m.x, m.y + 6, m.typ === "mesto" ? 28 : 16, Math.round(m.x) % 2 === 0)]); });
@@ -329,10 +333,6 @@
       var drawMinY = Math.max(minY, top), drawMaxY = Math.min(maxY, bottom);
       ctx.save(); ctx.beginPath(); ctx.moveTo(pts[0][0], pts[0][1]);
       pts.slice(1).forEach(function (p) { ctx.lineTo(p[0], p[1]); }); ctx.closePath();
-      if (area.typ === "ledovec") {
-        ctx.lineWidth = 1.35 / scaleNow; ctx.strokeStyle = vectors.glacier_outline_shadow || "rgba(54,81,94,.42)"; ctx.stroke();
-        ctx.lineWidth = .65 / scaleNow; ctx.strokeStyle = vectors.glacier_outline || "rgba(135,164,178,.72)"; ctx.stroke();
-      }
       ctx.clip();
       ctx.lineWidth = line;
       if (area.typ === "ledovec") {
@@ -490,7 +490,7 @@
       var f = lay._sv, box = panel.querySelector(".sv-props"), o = f.obj, h = "";
       if (vr === "oblasti") h = 'Typ oblasti <select data-p="typ">' + Object.keys(OBL).map(function (k) { return '<option value="' + k + '"' + (o.typ === k ? " selected" : "") + ">" + OBL[k].nazev + "</option>"; }).join("") + '</select> Hustota <input data-p="hustota" type="number" step=".1" min=".4" max="3" value="' + (o.hustota || 1) + '">';
       else if (vr === "pevnina") h = 'Typ <select data-p="typ"><option value="pevnina"' + (o.typ === "pevnina" ? " selected" : "") + '>pevnina / ostrov</option><option value="jezero"' + (o.typ === "jezero" ? " selected" : "") + '>jezero</option></select> Úroveň <input data-p="uroven" type="number" min="0" max="6" value="' + (o.uroven || 0) + '">';
-      else if (vr === "symboly") h = 'Symbol <select data-p="typ">' + Object.keys(SYM).map(function (k) { return '<option value="' + k + '"' + (o.typ === k ? " selected" : "") + ">" + SYM[k].nazev + "</option>"; }).join("") + '</select> Velikost <input data-p="m" type="number" step=".1" value="' + (o.m || 1) + '"> Otočení <input data-p="rot" type="number" step="5" value="' + (o.rot || 0) + '">';
+      else if (vr === "symboly") h = 'Symbol <select data-p="typ">' + Object.keys(SYM).map(function (k) { return '<option value="' + k + '"' + (o.typ === k ? " selected" : "") + ">" + SYM[k].nazev + "</option>"; }).join("") + '</select> Velikost <input data-p="m" type="number" step=".1" value="' + (o.m || 1) + '">' + (o.typ === "ledovy_utes" ? "" : ' Otočení <input data-p="rot" type="number" step="5" value="' + (o.rot || 0) + '">');
       else if (vr === "popisky" && f.kind === "pop") h = esc(o.nazev) + ': otočení <input data-p="popisek.rot" type="number" step="2" value="' + (o.popisek.rot || 0) + '"> velikost <input data-p="popisek.velikost" type="number" value="' + (o.popisek.velikost || "") + '" placeholder="auto"> styl <select data-p="popisek.styl"><option>zeme</option><option' + (o.popisek.styl === "mesto" ? " selected" : "") + '>mesto</option><option' + (o.popisek.styl === "more" ? " selected" : "") + ">more</option></select>";
       else if (f.kind === "misto") h = esc(o.nazev) + (o.popisek ? "" : ' <button data-addpop>+ popisek na mapě</button>');
       h += ' <input data-p="pozn" placeholder="poznámka" value="' + esc(o.pozn || "") + '">';

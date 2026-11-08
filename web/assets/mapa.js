@@ -14,6 +14,7 @@
   var LABELS = (window.SVET_PALETA || {}).labels || {};
   function refreshLabels() {
     var scale = map.getZoomScale(map.getZoom(), 0), fitZoom = map.getBoundsZoom(bounds, false),
+      showDashedBorders = map.getZoom() >= fitZoom + .5,
       statePx = Math.min(LABELS.state_size_max || 18, (LABELS.state_size_fit || 13) + Math.max(0, map.getZoom() - fitZoom) * (LABELS.state_zoom_gain || 1.5)),
       tracking = (LABELS.state_tracking || 1) / scale;
     svgEl.querySelectorAll('[data-map-label="state"]').forEach(function (label) {
@@ -23,6 +24,9 @@
     var showCities = map.getZoom() >= (LABELS.city_min_zoom == null ? .25 : LABELS.city_min_zoom);
     svgEl.querySelectorAll("[data-city-label]").forEach(function (label) {
       label.style.display = showCities ? "" : "none";
+    });
+    svgEl.querySelectorAll("[data-map-dashed-border]").forEach(function (line) {
+      line.style.display = showDashedBorders ? "" : "none";
     });
   }
   function inRing(x, y, ring) {

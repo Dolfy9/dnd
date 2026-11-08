@@ -59,6 +59,45 @@ def densify(points, max_step=5):
     return result
 
 
+def smooth_axis_steps(points, limit=6):
+    points = [tuple(p) for p in points]
+    corners = {}
+    for i in range(1, len(points) - 1):
+        a, b, c = points[i - 1:i + 2]
+        u = (b[0] - a[0], b[1] - a[1])
+        v = (c[0] - b[0], c[1] - b[1])
+        lu, lv = math.hypot(*u), math.hypot(*v)
+        if not lu or not lv:
+            continue
+        horizontal = abs(u[1]) < lu * .04 and abs(v[0]) < lv * .04
+        vertical = abs(u[0]) < lu * .04 and abs(v[1]) < lv * .04
+        if not ((horizontal or vertical) and max(lu, lv) > limit):
+            continue
+        ru, rv = max(0, lu - limit), max(0, lv - limit)
+        if ru and not rv:
+            rv = min(lv * .8, ru * .4)
+        if rv and not ru:
+            ru = min(lu * .8, rv * .4)
+        if not ru and not rv:
+            continue
+        start = (b[0] - u[0] / lu * ru, b[1] - u[1] / lu * ru)
+        end = (b[0] + v[0] / lv * rv, b[1] + v[1] / lv * rv)
+        corners[i] = (start, end, b)
+    result = [points[0]]
+    for i in range(1, len(points) - 1):
+        if i not in corners:
+            result.append(points[i])
+            continue
+        start, end, control = corners[i]
+        result.append(start)
+        for step in range(1, 5):
+            t = step / 4
+            result.append(((1 - t) ** 2 * start[0] + 2 * (1 - t) * t * control[0] + t ** 2 * end[0],
+                           (1 - t) ** 2 * start[1] + 2 * (1 - t) * t * control[1] + t ** 2 * end[1]))
+    result.append(points[-1])
+    return result
+
+
 def trace_lines(mask):
     skeleton = skeletonize(mask > 0)
     ys, xs = np.nonzero(skeleton)
@@ -92,7 +131,8 @@ def trace_lines(mask):
         if len(path) < 2:
             continue
         simplified = list(LineString(path).simplify(2.0, preserve_topology=False).coords)
-        line = LineString(chaikin(densify(simplified), 2))
+        fitted = smooth_axis_steps(simplified)
+        line = LineString(chaikin(densify(fitted), 2))
         if line.length < 1:
             continue
         lines.append(line)

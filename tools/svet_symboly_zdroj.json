@@ -89,7 +89,7 @@
   "typ": "chram",
   "x": 1365,
   "y": 193,
-  "m": 0.55,
+  "m": 0.45,
   "pozn": "malý chrám na severním poloostrově Nölienu (kresba DM)"
  },
  {
@@ -310,13 +310,6 @@
   "m": 0.56,
   "rot": -130,
   "pozn": "ledovcový jazyk k severnímu fjordu Nölienu"
- },
- {
-  "typ": "ledovy_utes",
-  "x": 1064,
-  "y": 295,
-  "m": 0.9,
-  "pozn": "ledový útes u severního fjordu Nölienu"
  },
  {
   "typ": "ledovcovy_jazyk",

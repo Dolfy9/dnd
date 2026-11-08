@@ -296,10 +296,15 @@ def lore(svet):
     ob3 = []
     for i, o in enumerate(ob):
         if o["typ"] in ("ledovec", "velehory") and len(o["body"]) >= 3:
-            amp = 7 if o["typ"] == "ledovec" else 3
-            shaped = irregular(Polygon(o["body"]).buffer(0), 42001 + i * 271, amp, spacing=6).intersection(land)
-            for b in kousky(shaped, 45 if o["typ"] == "ledovec" else 100):
-                ob3.append(o | {"body": b})
+            poly = Polygon(o["body"]).buffer(0)
+            ice = o["typ"] == "ledovec"
+            amp = min(9, max(2.5, math.sqrt(poly.area) * .075)) if ice else 6
+            shaped = irregular(poly, 42001 + i * 271, amp, spacing=4 if ice else 2).intersection(land)
+            parts = []
+            for j, b in enumerate(kousky(shaped, 45 if ice else 100)):
+                detail = irregular(Polygon(b).buffer(0), 52001 + i * 541 + j * 137, amp * .45, spacing=3.5 if ice else 2).intersection(land)
+                parts.extend(kousky(detail, 35 if ice else 80))
+            ob3.extend(o | {"body": b} for b in parts)
             continue
         if o["typ"] not in ("les", "haj", "dzungle", "mrtvy") or len(o["body"]) < 3:
             ob3.append(o)
