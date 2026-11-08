@@ -46,7 +46,14 @@
       } }]);
       m.box.classList.add("ed-wide");
       var mde = new EasyMDE({ element: ta, initialValue: d.obsah, spellChecker: false, autofocus: true, status: false,
-        toolbar: ["bold", "italic", "heading", "|", "quote", "unordered-list", "ordered-list", "table", "link", "|", "preview", "side-by-side", "fullscreen"] });
+        toolbar: ["bold", "italic", "heading", "|", "quote", "unordered-list", "ordered-list", "table", "link", "|",
+          { name: "srd", className: "fa fa-dragon", text: "SRD", title: "Vložit odkaz na netvora / předmět / pravidlo (SRD 5.2.1)", action: function (ed) {
+            var typ = prompt("Typ: bestiar / predmety / glosar", "bestiar"); if (!typ) return; var n = prompt("Přesný anglický název (např. Ghoul, Longsword, Prone)"); if (!n) return;
+            ed.codemirror.replaceSelection("[" + n + "](#srd-" + typ + "-" + n.replace(/ /g, "_") + ")"); } },
+          { name: "pdm", className: "fa fa-eye-slash", text: "Pro DM", title: "Vložit tajnou sekci Pro DM", action: function (ed) { ed.codemirror.replaceSelection("\n## Pro DM (tajné)\n- "); } },
+          { name: "navrh", className: "fa fa-pen", text: "Návrh", title: "Označit jako návrh", action: function (ed) { ed.codemirror.replaceSelection("> **Stav:** návrh\n"); } },
+          "|", "preview", "side-by-side", "fullscreen"] });
+      function sv() { m.box.querySelector(".ed-primary").click(); } mde.codemirror.setOption("extraKeys", { "Ctrl-S": sv, "Cmd-S": sv });
     }).catch(function (e) { alert("Nelze načíst: " + e.message); });
   }
 

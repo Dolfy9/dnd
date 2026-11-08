@@ -19,12 +19,33 @@
     if (t === "bestiar") return statblock(x);
     return '<h2>' + esc(x.nazev) + '</h2>' + (x.stitek ? '<p><i>' + esc(x.stitek) + '</i></p>' : '') + (x.kategorie ? '<p><i>' + esc(x.kategorie + (x.vzacnost ? " · " + x.vzacnost : "") + (x.attunement ? " · attunement" : "")) + '</i></p>' : '') + '<div class="kz-text">' + esc(x.text).replace(/\n/g, "<br>") + '</div><p class="sb-src">SRD 5.2.1 (CC-BY 4.0)</p>';
   }
+  function toMd(m) {
+    var L = function (ttl, a) { return a && a.length ? "\n### " + ttl + "\n" + a.map(function (x) { return "- **" + x.nazev + ".** " + x.text.replace(/\n/g, " "); }).join("\n") + "\n" : ""; };
+    var sp = Object.keys(m.rychlost || {}).map(function (k) { return (k === "walk" ? "" : k + " ") + m.rychlost[k] + " ft"; }).join(", ");
+    return "# Netvor: " + m.nazev + "\n\n> **Stav:** návrh (statblok ze SRD 5.2.1, CC-BY 4.0 – upravuj volně pro Montelien)\n\n## Role v Montelienu\n- Kde žije: \n- Proč tu je: \n\n## Statblok\n*" + m.velikost + " " + m.typ + ", " + m.zarovnani + "*\n\n"
+      + "| AC | HP | Rychlost | CR |\n|---|---|---|---|\n| " + m.ac + " | " + m.hp + " (" + (m.hp_vzorec || "") + ") | " + (sp || "30 ft") + " | " + m.cr + " (" + (m.xp || "") + " XP) |\n\n"
+      + "| " + Object.keys(m.atributy).join(" | ") + " |\n|" + Object.keys(m.atributy).map(function () { return "---"; }).join("|") + "|\n| " + Object.keys(m.atributy).map(function (k) { var v = m.atributy[k]; return v + " (" + sg(md(v)) + ")"; }).join(" | ") + " |\n\n"
+      + (m.zachrany.length ? "- **Záchrany:** " + m.zachrany.join(", ") + "\n" : "") + (m.dovednosti.length ? "- **Dovednosti:** " + m.dovednosti.join(", ") + "\n" : "") + (m.imunity ? "- **Imunity:** " + m.imunity + "\n" : "") + (m.odolnosti ? "- **Odolnosti:** " + m.odolnosti + "\n" : "")
+      + "- **Smysly:** " + (Object.keys(m.smysly || {}).map(function (k) { return k + " " + m.smysly[k] + " ft"; }).join(", ") || "—") + "; **Jazyky:** " + (m.jazyky || "—") + "\n"
+      + L("Rysy", m.rysy) + L("Akce", m.akce) + L("Bonusové akce", m.bonusove_akce) + L("Reakce", m.reakce) + L("Legendární akce", m.legendarni)
+      + "\n## Pro DM (tajné)\n- \n";
+  }
+  function addToWiki(m) {
+    var slug = m.nazev.normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/[^A-Za-z0-9]+/g, "_"), cesta = "04_Postavy/Netvori/Netvor_" + slug + ".md";
+    window.MontelienEditor.api("POST", "soubor", { cesta: cesta, obsah: toMd(m) })
+      .then(function () { location.href = base() + cesta.replace(/\.md$/, "/"); })
+      .catch(function (e) { alert("Chyba: " + e.message); });
+  }
   function show(t, n) {
     load(t).then(function (d) {
       var x = d.filter(function (e) { return e.nazev.toLowerCase() === String(n).toLowerCase(); })[0];
       var bg = document.createElement("div"); bg.className = "ed-modal-bg";
-      bg.innerHTML = '<div class="ed-modal kz-modal">' + (x ? detail(t, x) : '<h2>' + esc(n) + '</h2><p>Není v SRD 5.2.1.</p>') + '<div class="ed-bar"><button class="ed-btn">Zavřít</button></div></div>';
-      document.body.appendChild(bg); bg.addEventListener("click", function (e) { if (e.target === bg || e.target.tagName === "BUTTON") bg.remove(); });
+      var add = x && t === "bestiar" && document.body.classList.contains("ed-on") ? '<button class="ed-btn ed-primary srd-add">+ Přidat do wiki jako netvora</button> ' : '';
+      var cp = x ? '<button class="ed-btn srd-copy" title="Zkopíruje Markdown odkaz pro vložení do stránky">Kopírovat odkaz</button> ' : '';
+      bg.innerHTML = '<div class="ed-modal kz-modal">' + (x ? detail(t, x) : '<h2>' + esc(n) + '</h2><p>Není v SRD 5.2.1.</p>') + '<div class="ed-bar">' + add + cp + '<button class="ed-btn srd-close">Zavřít</button></div></div>';
+      var ad = bg.querySelector(".srd-add"); if (ad) ad.addEventListener("click", function (e) { e.stopPropagation(); addToWiki(x); });
+      var c = bg.querySelector(".srd-copy"); if (c) c.addEventListener("click", function (e) { e.stopPropagation(); navigator.clipboard && navigator.clipboard.writeText("[" + x.nazev + "](#srd-" + t + "-" + x.nazev.replace(/ /g, "_") + ")"); c.textContent = "Zkopírováno ✓"; });
+      document.body.appendChild(bg); bg.addEventListener("click", function (e) { if (e.target === bg || e.target.classList.contains("srd-close")) bg.remove(); });
     });
   }
   window.MontelienSRD = { show: show, load: load };
