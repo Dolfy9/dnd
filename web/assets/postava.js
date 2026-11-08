@@ -680,7 +680,7 @@
     if (canEdit && offer.length && confirm(kind === "long" ? "Chceš teď změnit připravená kouzla podle pravidel Long Rest?" : "Memorize Spell: vyměnit jedno připravené kouzlo?")) { spellUi(c, cesta, kind === "long" ? "lr" : "sr"); return; }
     setTimeout(function () { location.reload(); }, 1200);
   }
-  window.MontelienPostava = { novaPostava: newCharUi };
+  window.MontelienPostava = { novaPostava: newCharUi, compute: compute, rules: rules, autoDpr: autoDpr };
   function toolbarBtn() {
     var bar = document.getElementById("ed-toolbar"); if (!bar || bar.querySelector("[data-nova-postava]")) return;
     var b = document.createElement("button"); b.className = "ed-btn"; b.dataset.novaPostava = "1"; b.textContent = "+ Nová postava"; b.addEventListener("click", newCharUi); bar.appendChild(b);

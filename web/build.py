@@ -60,6 +60,23 @@ def yaml_nav(items, indent=2):
     return out
 
 
+def boj_index():
+    """Seznam postav s daty z front matter pro bojový modul."""
+    import yaml
+    out = []
+    for p in sorted((ROOT / "04_Postavy").rglob("*.md")):
+        t = p.read_text(encoding="utf-8")
+        if not t.startswith("---"):
+            continue
+        try:
+            meta = yaml.safe_load(t.split("---", 2)[1]) or {}
+        except Exception:
+            continue
+        if meta.get("postava"):
+            out.append({"cesta": str(p.relative_to(ROOT)), "postava": meta["postava"]})
+    (DOCS / "boj_postavy.json").write_text(json.dumps(out, ensure_ascii=False, default=str), encoding="utf-8")
+
+
 def map_page():
     data = json.loads((ROOT / "11_Mapy" / "mista.json").read_text(encoding="utf-8"))
     for m in data["mista"]:
@@ -104,6 +121,8 @@ def main():
     (DOCS / "bestiar.md").write_text("---\nhide:\n  - toc\n---\n# Bestiář (SRD 5.2.1)\n\nNetvoři ze SRD 5.2.1 se statbloky. Filtruj podle typu a CR, klikni pro statblok. Obsah SRD 5.2.1 je pod licencí CC-BY 4.0.\n\n<div class=\"srd-katalog\" data-typ=\"bestiar\"></div>\n", encoding="utf-8")
     (DOCS / "predmety.md").write_text("---\nhide:\n  - toc\n---\n# Předměty a výbava (SRD 5.2.1)\n\nZbraně, zbroje, výbava a kouzelné předměty. Obsah SRD 5.2.1 je pod licencí CC-BY 4.0.\n\n<div class=\"srd-katalog\" data-typ=\"predmety\"></div>\n", encoding="utf-8")
     (DOCS / "glosar.md").write_text("---\nhide:\n  - toc\n---\n# Glosář pravidel (SRD 5.2.1)\n\nDefinice pravidel 2024 (stavy, akce, pojmy). Obsah SRD 5.2.1 je pod licencí CC-BY 4.0.\n\n<div class=\"srd-katalog\" data-typ=\"glosar\"></div>\n", encoding="utf-8")
+    (DOCS / "boj.md").write_text("---\nhide:\n  - toc\n  - navigation\n---\n# Bojový modul\n\nBojové mapy s mřížkou (1 pole = 5 ft), žetony postav a netvorů, iniciativa a bojový pomocník podle pravidel 2024.\n\n<div id=\"boj-app\"></div>\n", encoding="utf-8")
+    boj_index()
     (DOCS / "kouzla.md").write_text("---\nhide:\n  - toc\n---\n# Katalog kouzel (D&D 2024)\n\nVšechna kouzla z pravidel 2024+. Klikni na název pro celý popis.\n\n<div id=\"katalog-kouzel\"></div>\n", encoding="utf-8")
 
     import pravidla_pages
@@ -111,6 +130,7 @@ def main():
     GR = [("Svět", ["Svět", "Země", "Města", "Postavy", "Frakce", "Knihy a dokumenty", "Mapy"]), ("Hra", ["Kampaně", "Questy", "Hádanky", "Sezení"])]
     byname = {list(x)[0]: x for x in sections}
     grouped = [{g: [byname[n] for n in names if n in byname]} for g, names in GR]
+    grouped[1]["Hra"].insert(0, {"Bojový modul": "boj.md"})
     rest = [x for x in sections if list(x)[0] not in sum([n for _, n in GR], [])]
     nav = [{"Úvod": "README.md"}, {"Interaktivní mapa": "mapa.md"}] + grouped + [{"Pravidla 2024": P}] + [{"Projekt": rest + [{"Otevřené otázky": "Otevrene_otazky.md"}, {"Pravidla projektu": "AGENTS.md"}]}]
     watch = "\n".join(f"  - ../{d}" for d in [s for s in os.listdir(ROOT)
@@ -161,6 +181,7 @@ extra_css:
   - assets/easymde/easymde.min.css
   - assets/extra.css
   - assets/postava.css
+  - assets/boj.css
 extra_javascript:
   - assets/easymde/easymde.min.js
   - assets/extra.js
@@ -169,6 +190,7 @@ extra_javascript:
   - assets/postava.js
   - assets/kouzla.js
   - assets/srd.js
+  - assets/boj.js
 not_in_nav: |
   /mapa.md
   /kouzla.md

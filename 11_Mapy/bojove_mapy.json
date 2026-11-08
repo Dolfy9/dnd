@@ -1,0 +1,462 @@
+{
+ "mapy": [
+  {
+   "id": "octowerin-ulicka",
+   "nazev": "Octowerin – Ulička pod Katedrálou",
+   "misto": "03_Mesta/Mesto_Octowerin.md",
+   "podklad": "mesto",
+   "osvetleni": "Dim Light (noc, lucerny)",
+   "popis": "Noční křižovatka pod schody ke Katedrále. Domy s dveřmi do dílen, kašna uprostřed, stánky a bedny jako kryt. Lucerna v rohu (x) hoří – Fire 1d4 při vstupu.",
+   "start": {
+    "druzina": [
+     [
+      1,
+      9
+     ],
+     [
+      1,
+      10
+     ],
+     [
+      2,
+      9
+     ],
+     [
+      2,
+      10
+     ],
+     [
+      3,
+      9
+     ],
+     [
+      3,
+      10
+     ]
+    ],
+    "nepratele": [
+     [
+      27,
+      9
+     ],
+     [
+      27,
+      10
+     ],
+     [
+      14,
+      2
+     ],
+     [
+      15,
+      2
+     ],
+     [
+      26,
+      11
+     ]
+    ]
+   },
+   "stretnuti": [
+    {
+     "nazev": "Guard",
+     "pocet": 3
+    },
+    {
+     "nazev": "Guard Captain",
+     "pocet": 1
+    }
+   ],
+   "mrizka": [
+    "############.SSSS.############",
+    "#..........#.rrrr.#..........#",
+    "#..........#.rrrr.#...%.....%#",
+    "#..........#.rrrr.#..........#",
+    "#.......%..#.rrrr.#........%.#",
+    "#.......%%.#.rrrr.#..........#",
+    "######+#####.rrrr.####+#######",
+    ".........%%...............x...",
+    "rrrrrrrrrrrrrrrrrrrrrrrrrrrrrr",
+    "rrrrrrrrrrrrrrorrrrrrrrrrrrrrr",
+    "rrrrrrrrrrrrrrrorrrrrrrrrrrrrr",
+    "rrrrrrrrrrrrrrrrrrrrrrrrrrrrrr",
+    "..%......^^.........%%........",
+    "####+####..####+####..###+####",
+    "#.......#..#......%#..#%...%.#",
+    "#..%....#..#.......#..#.....%#",
+    "#.......#..#.......#..#......#",
+    "#%......#..#....%..#..#......#",
+    "#%......#..#...%...#..#......#",
+    "#########..#########..########"
+   ]
+  },
+  {
+   "id": "mictima-krypta",
+   "nazev": "Mictima – Zatopená krypta",
+   "misto": "03_Mesta/Mesto_Mictima.md",
+   "podklad": "krypta",
+   "osvetleni": "Darkness (bez světla)",
+   "popis": "Krypta pod hřbitovem Mictimy. Řady sarkofágů (half cover), sloupy (three-quarters cover), zatopený kout s hlubokou vodou a boční jáma (10 ft, 1d6 Bludgeoning). Oltář (x) vyzařuje Necrotic 1d6 na začátku tahu.",
+   "start": {
+    "druzina": [
+     [
+      4,
+      2
+     ],
+     [
+      5,
+      2
+     ],
+     [
+      4,
+      3
+     ],
+     [
+      5,
+      3
+     ],
+     [
+      4,
+      4
+     ],
+     [
+      5,
+      4
+     ]
+    ],
+    "nepratele": [
+     [
+      18,
+      9
+     ],
+     [
+      20,
+      10
+     ],
+     [
+      24,
+      9
+     ],
+     [
+      26,
+      10
+     ],
+     [
+      19,
+      4
+     ],
+     [
+      23,
+      15
+     ]
+    ]
+   },
+   "stretnuti": [
+    {
+     "nazev": "Zombie",
+     "pocet": 4
+    },
+    {
+     "nazev": "Ghoul",
+     "pocet": 2
+    }
+   ],
+   "mrizka": [
+    "##############################",
+    "###.SS.#######################",
+    "###....#######################",
+    "###....######..^...........^.#",
+    "###....######...^............#",
+    "###....######...........^....#",
+    "###....######..o...o...o...o.#",
+    "#........####......^.........#",
+    "#........####...%%...%%..%...#",
+    "#........+............^.....x#",
+    "#...........................x#",
+    "#........####^..%%...%%..%...#",
+    "#........####.......^........#",
+    "###....######..o...o...o...o.#",
+    "###....######,,,,,,,,........#",
+    "###....######,~~~~,,,........#",
+    "###....######,~~~~,,,.^......#",
+    "###.__.#######################",
+    "###.__.#######################",
+    "##############################"
+   ]
+  },
+  {
+   "id": "divoke-kraje-brod",
+   "nazev": "Divoké kraje – Lesní brod",
+   "misto": "",
+   "podklad": "les",
+   "osvetleni": "Bright Light (den) / Dim Light v podrostu",
+   "popis": "Lesní cesta přechází potok mělkým brodem. Hluboká voda (swim) uprostřed, mělčina je těžký terén. Stromy dávají three-quarters cover, podrost je těžký terén – ideální přepadení ze zálohy.",
+   "start": {
+    "druzina": [
+     [
+      1,
+      9
+     ],
+     [
+      1,
+      10
+     ],
+     [
+      2,
+      9
+     ],
+     [
+      2,
+      10
+     ],
+     [
+      3,
+      9
+     ],
+     [
+      3,
+      10
+     ]
+    ],
+    "nepratele": [
+     [
+      20,
+      3
+     ],
+     [
+      22,
+      6
+     ],
+     [
+      19,
+      15
+     ],
+     [
+      24,
+      14
+     ],
+     [
+      27,
+      10
+     ]
+    ]
+   },
+   "stretnuti": [
+    {
+     "nazev": "Bandit",
+     "pocet": 4
+    },
+    {
+     "nazev": "Bandit Captain",
+     "pocet": 1
+    }
+   ],
+   "mrizka": [
+    "ggTggggTgggg,~~~,gggTggTggTgg^",
+    "gggg^gggg^gg,~~~,ggTgggggT^ggg",
+    "gggg^g^ggg^gg,~~~,^ggg^ggg^ggg",
+    "^gggggg^gggggg,~~~,gggg^^^^gg^",
+    "gggggggggggggg,~~~,gTgg^o^^ggg",
+    "^gg^g^g^gggggg,~~~,gggg^^^^ggg",
+    "gggg^gggggg^gg,~~~,Tg^TgggggTg",
+    "gggggg^gTggggg,~~~,gg^Tggggggg",
+    "ggggggTggTg^g,~~~,gggggggogggg",
+    "rrrrrrrrrrrr,,,,,rrrrggTgggg^g",
+    "rrrrrrrrrrrr,,,,,rrrrrrrrrrrrr",
+    "gTgg^ggggTT,~~~,ggTggrrrrrrrrr",
+    "ggggggg^gg,~~~,ggggggggggggggT",
+    "goTggggggg,~~~,gTgggTggTgggggg",
+    "ggTggggggg,~~~,ggggggT^gggggg^",
+    "g^gggggg^^,~~~,ggggggg^gggoggg",
+    "TTgggogggg,~~~,ggggg^Tgggg^ggg",
+    "g^TTg^ggggg,~~~,^gggggggg^gggg",
+    "^gTggggo^ggg,~~~,gggToggggTg^g",
+    "ggTgg^gg^g^g,~~~,gg^gTgggggggg"
+   ]
+  },
+  {
+   "id": "dar-kemmar-ruiny",
+   "nazev": "Dar Kemmar – Zřícená svatyně Stavitelů",
+   "misto": "03_Mesta/Mesto_Dar_Kemmar.md",
+   "podklad": "ruiny",
+   "osvetleni": "Dim Light (soumrak)",
+   "popis": "Rozpadlá svatyně z éry Stavitelů. Průlomy ve zdech (sutiny = těžký terén), řady sloupů, vnitřní cela a oltář s rudými runami (x): kdo začne tah vedle, hází CON save DC 13, při neúspěchu Necrotic 2d6. V rohu se propadla zem do hlubiny.",
+   "start": {
+    "druzina": [
+     [
+      1,
+      9
+     ],
+     [
+      1,
+      10
+     ],
+     [
+      2,
+      9
+     ],
+     [
+      2,
+      10
+     ],
+     [
+      1,
+      11
+     ],
+     [
+      2,
+      11
+     ]
+    ],
+    "nepratele": [
+     [
+      20,
+      7
+     ],
+     [
+      16,
+      10
+     ],
+     [
+      12,
+      12
+     ],
+     [
+      19,
+      12
+     ]
+    ]
+   },
+   "stretnuti": [
+    {
+     "nazev": "Wight",
+     "pocet": 1
+    },
+    {
+     "nazev": "Shadow",
+     "pocet": 2
+    },
+    {
+     "nazev": "Zombie",
+     "pocet": 2
+    }
+   ],
+   "mrizka": [
+    "ggggggggggoggggggoggggggo_____",
+    "gg^gggggggggggggggTgTgggT_____",
+    "gggggggggggg^gggggggggggg_____",
+    "gggggg########^^########^ggg^g",
+    "gggggg#^...^.......^...#gggg^g",
+    "gggg^g#....^...........#gg^ggg",
+    "ggggg^#.^o.^.o...o...o.#gggggg",
+    "gogggg#......^.......^.#gggggg",
+    "gggggg^...####...^x....#gggggg",
+    "gggggg^.^.^.^#.....%%..#ggggg^",
+    "gggggg^...#..^.....%%..#gggggg",
+    "gggggg#...####^......x.^ggggg^",
+    "g^^ggg#..........^^....^^gggg^",
+    "gggggg#..o...o...o...o.#oggggg",
+    "gggggg#..............^.#gggggg",
+    "ggggg^#...........^..^^#^g^ggg",
+    "gTgggg####^^#######^####gggggg",
+    "gg^ggo^gggggTgggggggoggggggggg",
+    "ggggggg^ggggggggggggggTggggggg",
+    "gggggg^gggggggggog^ggggg^ggggg"
+   ]
+  },
+  {
+   "id": "kop-aram-most",
+   "nazev": "Most Kop Aramu",
+   "misto": "03_Mesta/Mesto_Kop_Aram.md",
+   "podklad": "reka",
+   "osvetleni": "Bright Light (den)",
+   "popis": "Starý kamenný most přes dravou řeku (hluboká voda, proud strhne 10 ft po proudu na konci tahu). Zábradlí dává half cover, průlomy vedou rovnou do vody. Na jižním břehu stojí mýtnice.",
+   "start": {
+    "druzina": [
+     [
+      13,
+      0
+     ],
+     [
+      14,
+      0
+     ],
+     [
+      15,
+      0
+     ],
+     [
+      16,
+      0
+     ],
+     [
+      14,
+      1
+     ],
+     [
+      15,
+      1
+     ]
+    ],
+    "nepratele": [
+     [
+      14,
+      15
+     ],
+     [
+      15,
+      15
+     ],
+     [
+      20,
+      16
+     ],
+     [
+      8,
+      15
+     ],
+     [
+      24,
+      15
+     ]
+    ]
+   },
+   "stretnuti": [
+    {
+     "nazev": "Ogre",
+     "pocet": 1
+    },
+    {
+     "nazev": "Bugbear Warrior",
+     "pocet": 2
+    },
+    {
+     "nazev": "Goblin Warrior",
+     "pocet": 3
+    }
+   ],
+   "mrizka": [
+    "gggggTggTggggrrrrggTg^gggggggg",
+    "ggggggggTggggrrrrgggggggTgTggg",
+    "oggggggggggggrrrrggggggggggggg",
+    "Tgggggggoogg^%==%ggggggggggggT",
+    "gTggggT^ggTTg====ggggggggg^^gg",
+    "TggggggggggTg====ggggggggggggg",
+    ",,,,,,,,,,,,#====#,,,,,,,,,,,,",
+    "~~~~~~~~~~~~#====#~~~~~~~~~~~~",
+    "~~~~~~~~~~~~#====#~~~~~~~~~~~~",
+    "~~~~~~~~~~~~=====#~~~~~~~~~~~~",
+    "~~~~~~~~~~~~#====_~~~~~~~~~~~~",
+    "~~~~~~~~~~~~#=_==#~~~~~~~~~~~~",
+    "~~~~~~~~~~~~#====#~~~~~~~~~~~~",
+    ",,,,,,,,,,,,#====#,,,,,,,,,,,,",
+    "gggggg^g^gggg====^######ggggg^",
+    "T^ggTgToggggg====^+....#gggggg",
+    "ggggggggTg^Tg====g#.%..#gg^ggg",
+    "ggggggTgg^Tggrrrrg#....#gggggg",
+    "gggggoggg^gggrrrrg######oggTgg",
+    "gggggggggg^ggrrrrggggoggoTgggT"
+   ]
+  }
+ ]
+}
