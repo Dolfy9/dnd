@@ -25,6 +25,7 @@ def _table(title, cells):
     k = 2
     if long and long[0] - 1 >= 2 and len(cells) % (long[0] - 1) == 0: k = long[0] - 1
     elif len(cells) % 2: k = 3 if len(cells) % 3 == 0 else 2
+    if cells and cells[0] in ("Name", "Název"): k = 1
     rows = [cells[i:i + k] for i in range(0, len(cells), k)]
     md = (f"**{title}**\n\n" if title else "") + "| " + " | ".join(rows[0]) + " |\n|" + "---|" * k + "\n"
     return md + "".join("| " + " | ".join(r + [""] * (k - len(r))) + " |\n" for r in rows[1:])
