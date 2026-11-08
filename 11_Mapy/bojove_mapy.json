@@ -88,7 +88,8 @@
     "#%......#..#....%..#..#......#",
     "#%......#..#...%...#..#......#",
     "#########..#########..########"
-   ]
+   ],
+   "obrazek": "bojove/octowerin-ulicka.jpg"
   },
   {
    "id": "mictima-krypta",
@@ -182,7 +183,8 @@
     "###.__.#######################",
     "###.__.#######################",
     "##############################"
-   ]
+   ],
+   "obrazek": "bojove/mictima-krypta.jpg"
   },
   {
    "id": "divoke-kraje-brod",
@@ -272,7 +274,8 @@
     "g^TTg^ggggg,~~~,^gggggggg^gggg",
     "^gTggggo^ggg,~~~,gggToggggTg^g",
     "ggTgg^gg^g^g,~~~,gg^gTgggggggg"
-   ]
+   ],
+   "obrazek": "bojove/divoke-kraje-brod.jpg"
   },
   {
    "id": "dar-kemmar-ruiny",
@@ -362,7 +365,8 @@
     "gg^ggo^gggggTgggggggoggggggggg",
     "ggggggg^ggggggggggggggTggggggg",
     "gggggg^gggggggggog^ggggg^ggggg"
-   ]
+   ],
+   "obrazek": "bojove/dar-kemmar-ruiny.jpg"
   },
   {
    "id": "kop-aram-most",
@@ -456,7 +460,8 @@
     "ggggggTgg^Tggrrrrg#....#gggggg",
     "gggggoggg^gggrrrrg######oggTgg",
     "gggggggggg^ggrrrrggggoggoTgggT"
-   ]
+   ],
+   "obrazek": "bojove/kop-aram-most.jpg"
   }
  ]
 }

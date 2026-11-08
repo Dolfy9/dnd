@@ -5,11 +5,46 @@ Znaky dlaždic: . podlaha/zem, g tráva, r cesta, # zeď, o sloup/balvan/socha,
 T strom, % bedny/sarkofág/stůl (half cover, těžký terén), ^ těžký terén (sutiny, podrost),
 ~ hluboká voda, , mělčina, = most/lávka, + dveře, _ propast/jáma, x nebezpečí, S schody.
 Spuštění: python3 tools/boj_mapy.py [--prepsat]
+         python3 tools/boj_mapy.py --predlohy   # schematické předlohy pro ilustrace (viz tools/boj_obrazky.md)
+Ilustrace map leží v 11_Mapy/bojove/<id>.jpg a mapa na ně odkazuje polem "obrazek".
 """
 import json, random, sys
 from pathlib import Path
 
 OUT = Path(__file__).resolve().parent.parent / "11_Mapy" / "bojove_mapy.json"
+
+
+PRED = {"%": (130, 85, 45), "g": (96, 140, 70), "r": (170, 140, 100), "#": (45, 40, 38), "o": (130, 125, 120),
+        "T": (40, 90, 40), "^": (110, 95, 75), "~": (30, 80, 140), ",": (90, 140, 175), "=": (140, 105, 65),
+        "+": (110, 70, 35), "_": (5, 5, 5), "x": (230, 110, 30), "S": (150, 150, 150)}
+PODKLAD = {"mesto": (140, 134, 122), "krypta": (90, 85, 80), "les": (96, 140, 70), "ruiny": (150, 140, 112), "reka": (110, 150, 80)}
+
+
+def predlohy():
+    """Vykreslí schematické předlohy (1536×1024) z mřížek v OUT do 11_Mapy/bojove/predlohy/."""
+    from PIL import Image, ImageDraw
+    cil = OUT.parent / "bojove" / "predlohy"
+    cil.mkdir(parents=True, exist_ok=True)
+    for m in json.loads(OUT.read_text(encoding="utf-8"))["mapy"]:
+        g = m["mrizka"]; w, h = len(g[0]), len(g); c = 1536 // w
+        im = Image.new("RGB", (w * c, h * c), PODKLAD.get(m.get("podklad"), PODKLAD["mesto"])); dr = ImageDraw.Draw(im)
+        for y, row in enumerate(g):
+            for x, ch in enumerate(row):
+                col = PRED.get(ch); x0, y0 = x * c, y * c
+                if not col:
+                    continue
+                if ch in "oT":
+                    dr.ellipse((x0 + 4, y0 + 4, x0 + c - 4, y0 + c - 4), fill=col)
+                elif ch == "%":
+                    dr.rectangle((x0 + 6, y0 + 6, x0 + c - 6, y0 + c - 6), fill=col)
+                elif ch == "+":
+                    dr.rectangle((x0 + 4, y0 + c // 3, x0 + c - 4, y0 + 2 * c // 3), fill=col)
+                elif ch == "x":
+                    dr.ellipse((x0 + 8, y0 + 8, x0 + c - 8, y0 + c - 8), fill=col)
+                else:
+                    dr.rectangle((x0, y0, x0 + c - 1, y0 + c - 1), fill=col)
+        im.resize((1536, 1024)).save(cil / f"{m['id']}.png")
+        print("předloha:", cil / f"{m['id']}.png")
 
 
 class G:
@@ -164,8 +199,14 @@ def most():
 
 
 if __name__ == "__main__":
+    if "--predlohy" in sys.argv:
+        predlohy()
+        sys.exit(0)
     if OUT.exists() and "--prepsat" not in sys.argv:
         sys.exit(f"{OUT} existuje (mapy mohly být upravené na webu); použij --prepsat")
     maps = [ulicka(), krypta(), brod(), ruiny(), most()]
+    for m in maps:
+        if (OUT.parent / "bojove" / f"{m['id']}.jpg").exists():
+            m["obrazek"] = f"bojove/{m['id']}.jpg"
     OUT.write_text(json.dumps({"mapy": maps}, ensure_ascii=False, indent=1), encoding="utf-8")
     print("zapsáno", len(maps), "map →", OUT)

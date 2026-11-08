@@ -75,3 +75,20 @@
 .bj-pal.on { outline: 2px solid var(--bj-acc); }
 body.ed-on .bj-pal { cursor: pointer; }
 .bj-log div { padding: 2px 0; border-bottom: 1px dotted var(--bj-line); }
+
+/* ilustrované mapy, žetony, kontrola a deník */
+.bj-board { background: #0f0e0c; }
+.bj-tok text { font-family: "Cinzel", Georgia, serif; paint-order: stroke; stroke: rgba(0,0,0,.7); stroke-width: .045px; letter-spacing: .01em; }
+.bj-tok:hover > g { filter: brightness(1.15); }
+#boj-app button:disabled { opacity: .45; cursor: default; }
+.bj-eco, .bj-slots { display: flex; flex-wrap: wrap; gap: 4px; margin: 4px 0; align-items: center; }
+.bj-eco span, .bj-slots span { border: 1px solid #3a3; color: #3a3; border-radius: 999px; padding: 0 8px; font-weight: 700; font-size: .64rem; cursor: pointer; }
+.bj-eco span.bj-mv { cursor: default; border-color: #69f; color: #69f; }
+.bj-eco span.used { color: #999; border-color: var(--bj-line); text-decoration: line-through; }
+.bj-slots span { border-color: #8a6ad8; color: #8a6ad8; letter-spacing: 1px; }
+.bj-oa { border-left: 4px solid #e55; background: color-mix(in srgb, #e55 14%, transparent); padding: 5px 8px; border-radius: 4px; margin: 6px 0; }
+.bj-logh { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; margin-bottom: 6px; }
+.bj-logh span { margin-right: auto; color: var(--md-default-fg-color--light); }
+.bj-l small { color: var(--md-default-fg-color--light); margin-right: 4px; }
+.bj-l.pj { border-left: 3px solid #e93; padding-left: 5px; background: color-mix(in srgb, #e93 10%, transparent); }
+.bj-l.blok, .bj-l.warn { border-left: 3px solid #e55; padding-left: 5px; background: color-mix(in srgb, #e55 10%, transparent); }

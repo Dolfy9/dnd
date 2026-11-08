@@ -29,10 +29,12 @@
     "=": ["Most / lávka", 1], "+": ["Dveře", 1], _: ["Propast / jáma", 0], x: ["Nebezpečí", 1], S: ["Schody", 1]
   };
   const BASE = { mesto: "#8b8478", krypta: "#57524d", les: "#6d8c4c", ruiny: "#968b70", reka: "#789a54" };
+  const LIGHT = { druzina: "#a9d2fb", nepratele: "#f59a8a", neutral: "#f5dc9a" };
   const SIDE = { druzina: ["#2f6fb0", "Družina"], nepratele: ["#b03030", "Nepřátelé"], neutral: ["#b08a2f", "Neutrální"] };
   const RANGES = { longbow: [150, 600], shortbow: [80, 320], "heavy crossbow": [100, 400], "light crossbow": [80, 320], "hand crossbow": [30, 120], sling: [30, 120], dart: [20, 60], javelin: [30, 120], "throwing": [20, 60], handaxe: [20, 60], dagger: [20, 60], spear: [20, 60], blowgun: [25, 100], musket: [40, 120], pistol: [30, 90] };
 
   let A = null, S = null;
+  const MUT = { uncond: "Odebrání stavu", conc: "Konec Concentration", react: "Reaction", react2: "Reaction", del: "Odebrání žetonu", ds: "Death save", init: "Iniciativa", ecoA: "Action", ecoB: "Bonus Action", slot: "Spell slot", oaskip: "Opportunity Attack", enc: "Přidání střetnutí", place: "Rozestavení", addpc: "Přidání postavy", addmon: "Přidání netvora", custom: "Vlastní žeton", dash: "Dash", dis: "Disengage", dodge: "Dodge" };
   const esc = s => String(s == null ? "" : s).replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
   const sg = n => (n >= 0 ? "+" : "") + n;
   const mod = v => Math.floor(((Number(v) || 10) - 10) / 2);
@@ -76,7 +78,7 @@
     const dos = String(k.dosah || ""), area = (dos + " " + txt).match(/(\d+)-foot(?:-radius)?(?:[- ]long)?,?\s*(?:\d+-foot-wide\s*)?(Cone|Sphere|Cube|Line|Emanation|Cylinder)/i);
     let range = /touch/i.test(dos) ? 5 : (Number((dos.match(/(\d+)\s*feet/) || [])[1]) || (/self/i.test(dos) ? 0 : 60));
     const cast = dd.casting.find(x => x.ab === castAb) || dd.casting[0] || { dc: 8 + dd.pb + m, atk: dd.pb + m };
-    const o = { nazev: name + (Number(k.uroven) ? " (" + k.uroven + ". úr.)" : ""), kouzlo: name, dmg, avg: avgOf(dmg), typ: dm[3], kind: "spell", range, reach: range <= 5 ? 5 : 0, n: 1 };
+    const o = { nazev: name + (Number(k.uroven) ? " (" + k.uroven + ". úr.)" : ""), kouzlo: name, dmg, avg: avgOf(dmg), typ: dm[3], kind: "spell", lvl: Number(k.uroven) || 0, conc: /Concentration/i.test(k.trvani || ""), ba: /Bonus Action/i.test(k.cas || ""), range, reach: range <= 5 ? 5 : 0, n: 1 };
     if (area) { o.area = { size: Number(area[1]), shape: area[2].toLowerCase() }; if (!range) o.self = true; }
     if (sv) { o.save = ABN[sv[1].toLowerCase()]; o.dc = cast.dc; o.half = /half as much damage|Half damage/i.test(txt); }
     else { o.bonus = cast.atk; o.melee = range <= 5; }
@@ -102,7 +104,8 @@
     if (castAb) (c.kouzla || []).forEach(k => { const o = parseSpell(k.nazev, A.K, dd, c, castAb, dd.lvl); if (o) atk.push(o); });
     if (!atk.length) { const au = P.autoDpr(c, dd); atk.push({ nazev: "Útok (odhad z úrovně)", bonus: au.atk, dmg: String(Math.max(1, au.dpr)), avg: au.dpr, typ: "", kind: "weapon", melee: true, reach: 5, n: 1 }); }
     return { id: uid(), nazev: c.jmeno, kind: "pc", side: "druzina", s: SIZE[c.velikost] || 1, hp: dd.hp, max: dd.hp, tmp: 0, ac: dd.ac, initB: dd.init, speed: parseInt(dd.speed, 10) || 30, swim: 0, fly: 0,
-      saves: dd.saves, atk, cond: [], conc: false, react: true, xp: (dd.cr && dd.cr.xp) || 0, lvl: dd.lvl, cr: dd.cr && dd.cr.cr, src: { cesta: e.cesta }, ds: { s: 0, f: 0 } };
+      saves: dd.saves, atk, cond: [], conc: false, react: true, xp: (dd.cr && dd.cr.xp) || 0, lvl: dd.lvl, cr: dd.cr && dd.cr.cr, src: { cesta: e.cesta }, ds: { s: 0, f: 0 },
+      slots: (dd.slots || []).map(n => ({ max: Number(n) || 0, used: 0 })), pact: dd.pact && Number(dd.pact.pocet) ? { lvl: Number(dd.pact.uroven) || 1, max: Number(dd.pact.pocet), used: 0 } : null };
   }
   function monAttacks(m) {
     const out = [], acts = (m.akce || []).concat((m.bonusove_akce || []).map(a => Object.assign({ bonusova: true }, a)));
@@ -113,6 +116,7 @@
       let dmgAvg = 0, dice = [], typ = []; t.replace(/(\d+) \(([^)]+)\) (\w+) damage/g, (x, av, ex, ty) => { dmgAvg += Number(av); dice.push(ex); typ.push(ty); return x; });
       if (!dmgAvg || (!am && !sv)) return;
       const o = { nazev: a.nazev + (a.bonusova ? " (BA)" : ""), dmg: dice.join(" + "), avg: dmgAvg, typ: typ.join("/"), kind: "mon", n: 1 };
+      if (a.bonusova) o.ba = true; const rc0 = a.nazev.match(/Recharge (\d)/); if (rc0) { o.rc = Number(rc0[1]); o.pozn = "Recharge " + rc0[1] + "–6"; }
       if (am) {
         o.bonus = Number(am[2]);
         const re = t.match(/reach (\d+) ft/), rg = t.match(/range (\d+)\/(\d+) ft/);
@@ -208,6 +212,7 @@
     if (["Blinded", "Paralyzed", "Restrained", "Stunned", "Unconscious", "Petrified"].some(n => hasC(b, n))) { adv = 1; why.push("cíl je oslabený"); }
     if (hasC(b, "Prone")) { if (dist <= 5) { adv = 1; why.push("cíl Prone"); } else { dis = 1; why.push("cíl Prone z dálky"); } }
     if (hasC(b, "Invisible")) { dis = 1; why.push("cíl Invisible"); }
+    if (hasC(b, "Dodge")) { dis = 1; why.push("cíl Dodge"); }
     if (hasC(a, "Invisible")) { adv = 1; why.push("útočník Invisible"); }
     if (["Blinded", "Poisoned", "Prone", "Restrained", "Frightened"].some(n => hasC(a, n))) { dis = 1; why.push("útočník oslabený"); }
     const thrownNow = atk.melee && atk.thrown && dist > (atk.reach || 5);
@@ -290,7 +295,117 @@
   }
 
   // ---------- akce ----------
-  function log(t) { S.log.unshift("<b>K" + (S.round || 0) + "</b> " + t); S.log = S.log.slice(0, 200); }
+  function log(t, o) { o = o || {}; const a = actor(), now = new Date(); S.log.unshift({ k: S.round || 0, c: now.toTimeString().slice(0, 8), d: now.toISOString().slice(0, 10), kdo: a ? a.nazev : "", t: t, pj: !!o.pj, blok: !!o.blok, warn: !!o.warn }); if (S.log.length > 3000) S.log.length = 3000; }
+  // ---------- kontrola pravidel, zápis a návrat kroků ----------
+  function snap(label) { A.hist.push({ l: label, s: JSON.stringify(S) }); if (A.hist.length > 80) A.hist.shift(); }
+  function undo() { const x = A.hist.pop(); if (!x) return; const keep = { tab: S.tab, zoom: S.zoom }; S = JSON.parse(x.s); Object.assign(S, keep); log("↶ Vrácen krok: " + esc(x.l), { pj: true }); save(); draw(); }
+  function gate(v, label, fn, noSnap) {
+    if (v.length && !confirm("Kontrola pravidel – " + label + ":\n\n• " + v.join("\n• ") + "\n\nOK = provést přesto (zapíše se jako zásah PJ)\nZrušit = neprovádět")) { log("✋ Zablokováno – " + esc(label) + ": " + v.map(esc).join("; "), { blok: true }); save(); draw(); return false; }
+    if (!noSnap) snap(label);
+    if (v.length) log("⚠ Zásah PJ – " + esc(label) + ": " + v.map(esc).join("; "), { pj: true });
+    fn(); save(); draw(); return true;
+  }
+  function econ(a, kind) {
+    const v = []; if (!S.round) v.push("boj ještě nezačal – hoď iniciativu"); if (!a) return v.concat(["nikdo není na tahu"]);
+    if (incap(a)) v.push(a.nazev + " nemůže jednat");
+    if (kind === "a" && S.eco.a) v.push("Action už byla v tomto tahu použita");
+    if (kind === "b" && S.eco.b) v.push("Bonus Action už byla v tomto tahu použita");
+    return v;
+  }
+  function slotFor(a, lvl) {
+    if (a.pact && a.pact.lvl >= lvl && a.pact.used < a.pact.max) return { o: a.pact, txt: "Pact Magic slot (" + a.pact.lvl + ". úr.)" };
+    for (let l = lvl; l <= (a.slots || []).length; l++) { const x = a.slots[l - 1]; if (x && x.used < x.max) return { o: x, txt: "spell slot " + l + ". úrovně" }; }
+    return null;
+  }
+  function checkAttack(a, b, atk, o) {
+    const v = [], cur = actor(), dist = gap(a, b), reaction = o.oa || (cur && a !== cur);
+    if (!S.round) v.push("boj ještě nezačal – hoď iniciativu");
+    if (incap(a)) v.push(a.nazev + " nemůže jednat");
+    if (b.dead) v.push(b.nazev + " je už poražen");
+    if (reaction) { if (a.react === false) v.push(a.nazev + " už v tomto kole použil Reaction"); }
+    else if (S.round) {
+      if (atk.ba) { if (S.eco.b) v.push("Bonus Action už byla v tomto tahu použita"); }
+      else if (S.eco.a) v.push("Action už byla v tomto tahu použita");
+      if (atk.kind === "spell" && atk.lvl > 0 && atk.ba && S.eco.spell) v.push("po kouzle se spell slotem nejde v tomtéž tahu seslat kouzlo se slotem za Bonus Action");
+      if (atk.kind === "spell" && atk.lvl > 0 && !atk.ba && S.eco.baSpell) v.push("po kouzle se slotem za Bonus Action nejde v tomtéž tahu seslat další kouzlo se slotem");
+    }
+    if (!inRange(atk, dist)) v.push("cíl je mimo dosah (" + dist + " ft)");
+    else if (coverOf(a, b) === 9) v.push("cíl je za Total Cover");
+    if (a.side === b.side) v.push("cíl je na stejné straně");
+    if (atk.kind === "spell" && atk.lvl > 0 && ((a.slots || []).some(x => x.max) || a.pact) && !slotFor(a, atk.lvl)) v.push("nezbývá spell slot " + atk.lvl + ". úrovně ani vyšší");
+    if (atk.rc && (a.spent || {})[atk.nazev]) v.push(atk.nazev + " se ještě nenabil (Recharge " + atk.rc + "–6)");
+    return v;
+  }
+  function spend(a, atk, o) {
+    const cur = actor();
+    if (o.oa || (cur && a !== cur)) { a.react = false; log(esc(a.nazev) + " používá Reaction."); }
+    else if (S.round) { if (atk.ba) S.eco.b = 1; else S.eco.a = 1; if (atk.kind === "spell" && atk.lvl > 0) { if (atk.ba) S.eco.baSpell = 1; else S.eco.spell = 1; } }
+    if (atk.kind === "spell" && atk.lvl > 0) { const sl = slotFor(a, atk.lvl); if (sl) { sl.o.used++; log(esc(a.nazev) + " spotřeboval " + sl.txt + " (zbývá " + (sl.o.max - sl.o.used) + ")."); } }
+    if (atk.kind === "spell" && atk.conc) { if (a.conc) log(esc(a.nazev) + ": předchozí Concentration" + (typeof a.conc === "string" ? " (" + esc(a.conc) + ")" : "") + " končí."); a.conc = atk.kouzlo; }
+    if (atk.rc) { a.spent = a.spent || {}; a.spent[atk.nazev] = true; }
+  }
+  function forceEval(a, b, atk) { const dist = gap(a, b), cov = coverOf(a, b); return { atk, b, dist, cov: cov === 9 ? 3 : cov, adv: advFor(a, b, atk, dist), foes: [b], allies: [], p: 0, ev: 0 }; }
+  function attack(a, b, atk, o) {
+    o = o || {}; if (!a || !b || !atk) return false;
+    let sx, sy; if (o.tpos) { sx = b.x; sy = b.y; b.x = o.tpos[0]; b.y = o.tpos[1]; }
+    const v = checkAttack(a, b, atk, o), r = evalAtk(a, b, atk) || forceEval(a, b, atk);
+    if (o.tpos) { b.x = sx; b.y = sy; }
+    return gate(v, (o.oa ? "Opportunity Attack " : "útok ") + a.nazev + " → " + b.nazev + " (" + atk.nazev + ")", () => { spend(a, atk, o); doAttack(a, r); });
+  }
+  function oaInfo(t, path) {
+    if (S.disengage && actor() === t) return [];
+    const res = [];
+    S.tok.filter(h => h.x != null && alive(h) && hostile(t, h) && !incap(h) && h.react !== false).forEach(h => {
+      const r = meleeReach(h);
+      for (let i = 1; i < path.length; i++) if (gap(t, h, path[i - 1][0], path[i - 1][1]) <= r && gap(t, h, path[i][0], path[i][1]) > r) { res.push({ h, pos: path[i - 1] }); break; }
+    });
+    return res;
+  }
+  function strip(h) { const el = document.createElement("div"); el.innerHTML = h; return el.textContent.replace(/\|/g, "\\|").replace(/\s+/g, " ").trim(); }
+  function logMd() {
+    const m = map(), now = new Date(), ent = S.log.slice().reverse(), df = difficulty();
+    let s = "# Boj: " + m.nazev + " (" + now.toISOString().slice(0, 10) + ")\n\n> **Stav:** záznam z bojového modulu (vygenerováno automaticky)\n\n"
+      + "- **Mapa:** " + m.nazev + (m.misto ? " – [" + m.misto.replace(/^.*\/|\.md$/g, "").replace(/_/g, " ") + "](../" + m.misto + ")" : "") + "\n"
+      + "- **Odehraná kola:** " + (S.round || 0) + "\n- **Obtížnost (DMG 2024):** " + df.lab + " (XP nepřátel " + df.xp + ")\n"
+      + "- **Kroků v deníku:** " + ent.length + " (zásahy PJ: " + ent.filter(e => e.pj).length + ", zablokováno: " + ent.filter(e => e.blok).length + ")\n\n"
+      + "## Účastníci\n\n| Žeton | Strana | HP | AC | Stavy |\n|---|---|---|---|---|\n"
+      + S.tok.map(t => "| " + strip(esc(t.nazev)) + " | " + SIDE[t.side][1] + " | " + (t.dead ? "☠ " : "") + t.hp + "/" + t.max + " | " + t.ac + " | " + (t.cond.map(c => c.n).join(", ") || "—") + " |").join("\n") + "\n\n"
+      + "## Průběh (všechny kroky)\n\n| # | Kolo | Čas | Na tahu | Událost |\n|---|---|---|---|---|\n"
+      + ent.map((e, i) => typeof e === "string" ? "| " + (i + 1) + " | | | | " + strip(e) + " |" : "| " + (i + 1) + " | " + e.k + " | " + e.c + " | " + strip(esc(e.kdo)) + " | " + (e.pj ? "**[zásah PJ]** " : "") + (e.blok ? "**[zablokováno]** " : "") + (e.warn ? "**[kontrola]** " : "") + strip(e.t) + " |").join("\n") + "\n";
+    return s;
+  }
+  function dlMd() { const blob = new Blob([logMd()], { type: "text/markdown" }), u = document.createElement("a"); u.href = URL.createObjectURL(blob); u.download = "Sezeni_Boj_" + map().id + ".md"; u.click(); }
+  function saveLog() {
+    const n = new Date(), p = "10_Sezeni/Sezeni_Boj_" + n.toISOString().slice(0, 10) + "_" + n.toTimeString().slice(0, 5).replace(":", "") + "_" + map().id + ".md", E = window.MontelienEditor;
+    if (!E || !E.api) { dlMd(); return Promise.resolve(); }
+    return E.api("POST", "soubor", { cesta: p, obsah: logMd() }).then(() => { log("Deník uložen do " + esc(p) + "."); save(); draw(); status('Uloženo: <a href="' + base() + p.replace(/\.md$/, "/") + '">' + esc(p) + "</a>"); })
+      .catch(er => { alert("Uložení na server selhalo (" + er.message + "), stahuji soubor."); dlMd(); });
+  }
+  function logPane() {
+    const n = S.log.length, pj = S.log.filter(e => e.pj).length, bl = S.log.filter(e => e.blok).length;
+    return '<div class="bj-logh"><span>' + n + " kroků · zásahy PJ " + pj + " · zablokováno " + bl + '</span><button data-act="savelog" class="ed-primary">Uložit do záznamu sezení</button><button data-act="dlmd">Stáhnout .md</button></div><div class="bj-log">'
+      + (n ? S.log.map(e => typeof e === "string" ? "<div>" + e + "</div>" : '<div class="bj-l' + (e.pj ? " pj" : "") + (e.blok ? " blok" : "") + (e.warn ? " warn" : "") + '"><small>K' + e.k + " · " + esc(e.c) + (e.kdo ? " · " + esc(e.kdo) : "") + "</small> " + e.t + "</div>").join("") : "Zatím nic.") + "</div>";
+  }
+  function ecoHtml(a) {
+    const e = S.eco || {}, sp = speedOf(a) * (S.dash ? 2 : 1), left = sp - S.moved, pip = x => "●".repeat(Math.max(0, x.max - x.used)) + "○".repeat(x.used);
+    let h = '<div class="bj-eco"><span data-act="ecoA" class="' + (e.a ? "used" : "") + '" title="Klik = označit / vrátit">Action</span><span data-act="ecoB" class="' + (e.b ? "used" : "") + '" title="Klik = označit / vrátit">Bonus Action</span><span data-act="react2" class="' + (a.react === false ? "used" : "") + '" title="Klik = označit / vrátit">Reaction</span><span class="bj-mv' + (left <= 0 ? " used" : "") + '">Pohyb ' + Math.max(0, left) + "/" + sp + " ft</span></div>";
+    const sl = (a.slots || []).map((x, i) => x.max ? '<span data-act="slot" data-l="' + (i + 1) + '" title="Klik = spotřebovat slot (po vyčerpání obnoví)">' + (i + 1) + ". " + pip(x) + "</span>" : "").join("");
+    if (sl || a.pact) h += '<div class="bj-slots"><b>Spell sloty:</b> ' + sl + (a.pact ? '<span data-act="slot" data-p="1" title="Pact Magic">Pakt ' + a.pact.lvl + ". " + pip(a.pact) + "</span>" : "") + "</div>";
+    const sp2 = Object.keys(a.spent || {}); if (sp2.length) h += '<div class="bj-slots"><b>Nenabito (Recharge):</b> ' + sp2.map(esc).join(", ") + "</div>";
+    return h;
+  }
+  function oaHtml() {
+    return (S.oa || []).map((o, i) => {
+      const H = tok(o.h), T = tok(o.t); if (!H || !T) return ""; const m = H.atk.filter(x => x.melee).sort((x, y) => y.avg - x.avg)[0];
+      return '<div class="bj-oa"><b>Opportunity Attack:</b> ' + esc(H.nazev) + " → " + esc(T.nazev) + (H.react === false ? " (Reaction už použita)" : "") + " " + (m ? '<button data-act="oa" data-i="' + i + '">Hodit ' + esc(m.nazev) + "</button> " : "<small>nemá útok na blízko</small> ") + '<button data-act="oaskip" data-i="' + i + '">Nevyužít</button></div>';
+    }).join("");
+  }
+  function topExtra() {
+    const m = map();
+    return '<button data-act="undo" title="Vrátit poslední krok (Ctrl+Z)"' + (A.hist.length ? "" : " disabled") + ">↶ Zpět</button>"
+      + (m.obrazek ? '<button data-act="obr" class="' + (S.bezObr ? "" : "on") + '" title="Ilustrovaná mapa / schéma">Ilustrace</button>' : "")
+      + '<button data-act="teren" class="' + (S.teren ? "on" : "") + '" title="Zobrazit terén z mřížky (zdi, voda, krytí)">Terén</button><button data-act="mriz" class="' + (S.mriz === false ? "" : "on") + '" title="Mřížka">Mřížka</button>';
+  }
   function damage(t, n, crit) {
     n = Math.max(0, Math.round(n)); if (!n) return;
     const absorb = Math.min(t.tmp || 0, n); t.tmp -= absorb; const rest = n - absorb;
@@ -317,7 +432,7 @@
         const s = d20(r.adv.v), tot = s.r + atk.bonus - 2 * exh(a), ac = b.ac + covB(r.cov), crit = s.r === 20 || (s.r !== 1 && tot >= ac && r.dist <= 5 && (hasC(b, "Paralyzed") || hasC(b, "Unconscious")));
         const hit = s.r === 20 || (s.r !== 1 && tot >= ac);
         let txt = esc(a.nazev) + " → " + esc(b.nazev) + ": <b>" + esc(atk.nazev) + "</b> " + s.txt + sg(atk.bonus) + " = " + tot + " vs AC " + ac + (crit ? " <b>KRITICKÝ ZÁSAH</b>" : hit ? " zásah" : " minul");
-        if (hit) { const dm = roll(atk.dmg, crit).t; txt += " → " + dm + " " + esc(atk.typ); damage(b, dm, crit); }
+        if (hit) { const dm = roll(atk.dmg, crit).t; txt += " → " + dm + " " + esc(atk.typ); damage(b, dm, crit); txt += " · HP " + b.hp + "/" + b.max; }
         log(txt);
       }
     }
@@ -325,12 +440,16 @@
   }
   function next() {
     if (!S.ord.length) return;
+    snap("Další tah");
+    const prev = actor(); if (prev && prev.kind === "pc" && prev.hp <= 0 && !prev.dead && !prev.stable && prev.dsK !== S.round) log("⚠ Kontrola: " + esc(prev.nazev) + " je na 0 HP a v tomto tahu nehodil Death Saving Throw.", { warn: true });
     for (let i = 0; i < S.ord.length + 1; i++) {
       S.turn++; if (S.turn >= S.ord.length) { S.turn = 0; S.round++; log("— kolo " + S.round + " —"); }
       const t = actor(); if (t && !(t.dead && t.kind !== "pc")) break;
     }
-    const t = actor(); S.moved = 0; S.dash = false; S.disengage = false; if (!t) return;
+    const t = actor(); S.moved = 0; S.dash = false; S.disengage = false; S.eco = { a: 0, b: 0, spell: 0, baSpell: 0 }; S.oa = []; if (!t) return;
     t.react = true;
+    log("▶ Na tahu: <b>" + esc(t.nazev) + "</b>" + (incap(t) ? " (nemůže jednat)" : ""));
+    if (t.spent) Object.keys(t.spent).forEach(n => { const at = t.atk.find(x => x.nazev === n), r = d(6); if (at && r >= at.rc) { delete t.spent[n]; log(esc(t.nazev) + ": " + esc(n) + " se nabil (d6 = " + r + ")."); } else log(esc(t.nazev) + ": " + esc(n) + " se nenabil (d6 = " + r + ")."); });
     t.cond = (t.cond || []).filter(c => { if (c.r) { c.r--; if (!c.r) { log(esc(t.nazev) + ": " + c.n + " skončil."); return false; } } return true; });
     if (t.x != null && cells(t).some(([x, y]) => tile(x, y) === "x")) log("⚠ " + esc(t.nazev) + " začíná tah na nebezpečném poli – viz popis mapy.");
     S.sel = t.id; save(); draw(); centerOn(t);
@@ -339,6 +458,7 @@
     const grp = {};
     S.tok.forEach(t => { if (!all && t.init != null) return; const g = S.groups && t.kind === "mon" ? t.src.srd : t.id; if (grp[g] == null) grp[g] = d(20); t.init = grp[g] + t.initB; });
     S.ord = S.tok.slice().sort((a, b) => b.init - a.init || b.initB - a.initB).map(t => t.id);
+    log("Iniciativa: " + S.ord.map(id => { const t = tok(id); return esc(t.nazev) + " " + t.init + " (" + sg(t.initB) + ")"; }).join(", ") + ".");
     if (S.round === 0) { S.round = 1; S.turn = -1; log("Iniciativa hozena – kolo 1."); next(); return; }
     save(); draw();
   }
@@ -348,14 +468,15 @@
     for (let r = 0; r < Math.max(W, H) && !best; r++) for (let x = want[0] - r; x <= want[0] + r && !best; x++) for (let y = want[1] - r; y <= want[1] + r && !best; y++) { if (x < 0 || y < 0 || x + t.s > W || y + t.s > H) continue; t.x = x; t.y = y; if (canEnd(t, x, y)) best = [x, y]; }
     if (!best) { t.x = want[0]; t.y = want[1]; }
     S.tok.push(t);
-    if (S.round > 0) { t.init = d(20) + t.initB; S.ord.push(t.id); const cur = S.ord[S.turn]; S.ord.sort((a, b) => tok(b).init - tok(a).init); S.turn = S.ord.indexOf(cur); log(esc(t.nazev) + " vstupuje do boje (iniciativa " + t.init + ")."); }
+    if (S.round > 0) { t.init = d(20) + t.initB; S.ord.push(t.id); const cur = S.ord[S.turn]; S.ord.sort((a, b) => tok(b).init - tok(a).init); S.turn = S.ord.indexOf(cur); log(esc(t.nazev) + " vstupuje do boje (iniciativa " + t.init + ", pole " + cellName(t.x, t.y) + ")."); } else if (!A.quiet) log(esc(t.nazev) + " přidán na mapu (" + cellName(t.x, t.y) + ").");
   }
   function removeTok(id) { const cur = S.ord[S.turn]; S.tok = S.tok.filter(t => t.id !== id); S.ord = S.ord.filter(x => x !== id); S.turn = cur === id ? Math.min(S.turn, S.ord.length - 1) : S.ord.indexOf(cur); }
 
   // ---------- stav ----------
-  function fresh(mapIdx) { return { map: mapIdx || 0, tok: [], ord: [], turn: -1, round: 0, log: [], moved: 0, dash: false, disengage: false, sel: null, zoom: 1, paint: null, groups: true, tab: "pomocnik" }; }
+  function fresh(mapIdx) { return { map: mapIdx || 0, tok: [], ord: [], turn: -1, round: 0, log: [], moved: 0, dash: false, disengage: false, sel: null, zoom: 1, paint: null, groups: true, tab: "pomocnik", eco: { a: 0, b: 0, spell: 0, baSpell: 0 }, oa: [] }; }
   function save() { try { localStorage.setItem("boj-stav", JSON.stringify(S)); } catch (e) { } }
-  function load() { try { S = JSON.parse(localStorage.getItem("boj-stav")) || fresh(); } catch (e) { S = fresh(); } if (S.map >= A.M.mapy.length) S.map = 0; }
+  function load2() { S.eco = S.eco || { a: 0, b: 0, spell: 0, baSpell: 0 }; S.oa = S.oa || []; S.log = S.log || []; }
+  function load() { try { S = JSON.parse(localStorage.getItem("boj-stav")) || fresh(); } catch (e) { S = fresh(); } if (S.map >= A.M.mapy.length) S.map = 0; S.eco = S.eco || { a: 0, b: 0, spell: 0, baSpell: 0 }; S.oa = S.oa || []; }
 
   // ---------- vykreslení ----------
   function boardSvg() {
@@ -363,9 +484,16 @@
     let s = '<svg class="bj-svg" viewBox="-0.7 -0.7 ' + (W + 0.7) + " " + (H + 0.7) + '" width="' + Math.round((W + 0.7) * C) + '" height="' + Math.round((H + 0.7) * C) + '">'
       + '<defs><pattern id="bj-w" width="1" height="0.5" patternUnits="userSpaceOnUse"><path d="M0 .3 Q.25 .15 .5 .3 T1 .3" stroke="rgba(255,255,255,.35)" stroke-width=".04" fill="none"/></pattern>'
       + '<pattern id="bj-st" width=".25" height=".25" patternUnits="userSpaceOnUse"><rect width=".25" height=".12" fill="rgba(0,0,0,.25)"/></pattern>'
-      + '<radialGradient id="bj-fire"><stop offset="0" stop-color="#ffd27a"/><stop offset=".6" stop-color="#e2541b"/><stop offset="1" stop-color="rgba(120,20,0,0)"/></radialGradient></defs>';
+      + '<radialGradient id="bj-fire"><stop offset="0" stop-color="#ffd27a"/><stop offset=".6" stop-color="#e2541b"/><stop offset="1" stop-color="rgba(120,20,0,0)"/></radialGradient>'
+      + '<filter id="bj-sh" x="-50%" y="-50%" width="200%" height="200%"><feDropShadow dx=".04" dy=".07" stdDeviation=".05" flood-color="#000" flood-opacity=".75"/></filter>'
+      + '<linearGradient id="bj-rim-pc" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#fff1b8"/><stop offset=".5" stop-color="#c9982f"/><stop offset="1" stop-color="#6e4c10"/></linearGradient>'
+      + '<linearGradient id="bj-rim-mon" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#e0e0e0"/><stop offset=".5" stop-color="#707070"/><stop offset="1" stop-color="#262626"/></linearGradient>'
+      + Object.keys(SIDE).map(k => '<radialGradient id="bj-f-' + k + '" cx=".35" cy=".3" r=".85"><stop offset="0" stop-color="' + LIGHT[k] + '"/><stop offset="1" stop-color="' + SIDE[k][0] + '"/></radialGradient>').join("") + "</defs>";
     s += '<rect x="0" y="0" width="' + W + '" height="' + H + '" fill="' + bg + '"/>';
-    for (let y = 0; y < H; y++) for (let x = 0; x < W; x++) {
+    const img = m.obrazek && !S.bezObr, tiles = !img || S.teren || S.paint;
+    if (img) s += '<image href="' + base() + "11_Mapy/" + esc(m.obrazek) + '" x="0" y="0" width="' + W + '" height="' + H + '" preserveAspectRatio="none"/>';
+    if (tiles) s += "<g" + (img ? ' opacity=".55"' : "") + ">";
+    if (tiles) for (let y = 0; y < H; y++) for (let x = 0; x < W; x++) {
       const c = m.mrizka[y][x], r = (f, extra) => '<rect x="' + x + '" y="' + y + '" width="1" height="1" fill="' + f + '"' + (extra || "") + "/>";
       switch (c) {
         case "g": s += r("#6d8c4c"); break;
@@ -384,7 +512,8 @@
         case "S": s += r("url(#bj-st)"); break;
       }
     }
-    s += '<g stroke="rgba(0,0,0,.28)" stroke-width=".025">';
+    if (tiles) s += "</g>";
+    s += '<g stroke="' + (img ? "rgba(255,255,255,.22)" : "rgba(0,0,0,.28)") + '" stroke-width="' + (img ? ".02" : ".025") + '"' + (S.mriz === false ? ' display="none"' : "") + ">";
     for (let x = 0; x <= W; x++) s += '<line x1="' + x + '" y1="0" x2="' + x + '" y2="' + H + '"/>';
     for (let y = 0; y <= H; y++) s += '<line x1="0" y1="' + y + '" x2="' + W + '" y2="' + y + '"/>';
     s += "</g><g class=\"bj-lab\">";
@@ -397,8 +526,9 @@
       const hpP = t.max ? clamp(t.hp / t.max, 0, 1) : 1;
       s += '<g class="bj-tok' + (t.dead ? " dead" : "") + (act === t ? " act" : "") + (S.sel === t.id ? " sel" : "") + '" data-id="' + t.id + '" transform="translate(' + cx + " " + cy + ')">'
         + (act === t ? '<circle r="' + (R + .12) + '" class="bj-ring"/>' : "")
-        + '<circle r="' + R + '" fill="' + col + '" stroke="' + (S.sel === t.id ? "#ffd54a" : "#111") + '" stroke-width="' + (S.sel === t.id ? .09 : .05) + '"/>'
-        + '<text y=".14" font-size="' + (t.s > 1 ? .5 : .36) + '">' + esc(ini) + "</text>"
+        + '<g filter="url(#bj-sh)"><circle r="' + R + '" fill="url(#bj-rim-' + (t.kind === "pc" ? "pc" : "mon") + ')"/><circle r="' + (R - .07) + '" fill="url(#bj-f-' + t.side + ')" stroke="rgba(0,0,0,.55)" stroke-width=".02"/></g>'
+        + (S.sel === t.id ? '<circle r="' + (R + .05) + '" fill="none" stroke="#ffd54a" stroke-width=".07"/>' : "")
+        + '<text y="' + (t.s > 1 ? .19 : .12) + '" font-size="' + (t.s > 1 ? .55 : .34) + '">' + esc(ini) + "</text>"
         + '<rect x="' + (-R) + '" y="' + (R - .12) + '" width="' + 2 * R + '" height=".12" fill="#300"/><rect x="' + (-R) + '" y="' + (R - .12) + '" width="' + 2 * R * hpP + '" height=".12" fill="' + (hpP > .5 ? "#3c3" : hpP > .25 ? "#e93" : "#e33") + '"/>'
         + (t.conc ? '<circle cx="' + (R * .75) + '" cy="' + (-R * .75) + '" r=".13" fill="#8af" stroke="#124" stroke-width=".03"/>' : "")
         + (t.cond.length ? '<circle cx="' + (-R * .75) + '" cy="' + (-R * .75) + '" r=".13" fill="#f6c343" stroke="#432" stroke-width=".03"/>' : "")
@@ -419,7 +549,7 @@
         + '<td class="bj-ini"><input type="number" autocomplete="off" value="' + (t.init != null ? t.init : "") + '" data-f="init" title="Iniciativa (' + sg(t.initB) + ')"></td>'
         + '<td class="bj-nm"><i style="background:' + SIDE[t.side][0] + '"></i><a href="#" data-act="sel">' + esc(t.nazev) + "</a>"
         + (t.src && t.src.srd ? ' <a href="#" data-act="sb" title="Statblok">↗</a>' : t.src && t.src.cesta ? ' <a href="' + base() + t.src.cesta.replace(/\.md$/, "/") + '" target="_blank" title="Character sheet">↗</a>' : "")
-        + '<div class="bj-conds">' + t.cond.map((c, i) => '<span class="bj-cond" title="' + esc(COND[c.n] || "") + '">' + esc(c.n) + (c.lvl ? " " + c.lvl : "") + (c.r ? " (" + c.r + ")" : "") + '<b data-act="uncond" data-i="' + i + '">×</b></span>').join("") + (t.conc ? '<span class="bj-cond bj-conc">Concentration<b data-act="conc">×</b></span>' : "")
+        + '<div class="bj-conds">' + t.cond.map((c, i) => '<span class="bj-cond" title="' + esc(COND[c.n] || "") + '">' + esc(c.n) + (c.lvl ? " " + c.lvl : "") + (c.r ? " (" + c.r + ")" : "") + '<b data-act="uncond" data-i="' + i + '">×</b></span>').join("") + (t.conc ? '<span class="bj-cond bj-conc">Concentration' + (typeof t.conc === "string" ? ": " + esc(t.conc) : "") + '<b data-act="conc">×</b></span>' : "")
         + (t.kind === "pc" && t.hp <= 0 && !t.dead ? '<span class="bj-ds">Death saves ✓' + t.ds.s + " ✗" + t.ds.f + ' <button data-act="ds">hodit</button></span>' : "") + "</div></td>"
         + '<td class="bj-hp"><div class="bj-hpbar"><s style="width:' + hpP * 100 + "%;background:" + (hpP > .5 ? "#3a3" : hpP > .25 ? "#e93" : "#d33") + '"></s></div><span>' + t.hp + "/" + t.max + (t.tmp ? " +" + t.tmp : "") + '</span><input type="number" autocomplete="off" placeholder="±" data-f="dmg" title="Číslo + Enter = zranění, s + = léčení"></td>'
         + '<td class="bj-ac" title="Armor Class">' + t.ac + "</td>"
@@ -430,10 +560,12 @@
   function helperHtml() {
     const a = actor(), df = difficulty();
     let h = '<div class="bj-diff"><b>Obtížnost (DMG 2024):</b> <span class="bj-dl bj-d-' + df.lab.replace(/\s/g, "") + '">' + df.lab + "</span> · XP nepřátel " + df.xp + " · rozpočet Low " + df.b[0] + " / Moderate " + df.b[1] + " / High " + df.b[2] + "</div>";
+    h += oaHtml();
     if (!a) return h + '<p class="bj-empty">Až hodíš iniciativu, pomocník ukáže pro postavu na tahu dosah, cover, šance na zásah, doporučený tah a hrozby.</p>';
     const left = speedOf(a) * (S.dash ? 2 : 1) - S.moved;
     h += '<div class="bj-who"><b>' + esc(a.nazev) + "</b> na tahu · HP " + a.hp + "/" + a.max + " · AC " + a.ac + " · pohyb zbývá <b>" + left + " ft</b> z " + speedOf(a) + (a.swim ? " (swim " + a.swim + ")" : "") + (a.fly ? " (fly " + a.fly + ")" : "")
       + '<div class="bj-btns"><button data-act="dash" class="' + (S.dash ? "on" : "") + '">Dash</button><button data-act="dis" class="' + (S.disengage ? "on" : "") + '">Disengage</button><button data-act="dodge">Dodge</button><button data-act="next" class="bj-next">Další tah ▶</button></div></div>';
+    h += ecoHtml(a);
     if (a.kind === "pc" && a.hp <= 0 && !a.dead) h += '<p class="bj-warn">Na 0 HP: hoď <b>Death Saving Throw</b> (tlačítko v iniciativě). 10+ úspěch, 20 = vstává s 1 HP, 1 = dva neúspěchy.</p>';
     a.cond.forEach(c => { h += '<p class="bj-tip"><b>' + esc(c.n) + ":</b> " + esc(COND[c.n] || "") + "</p>"; });
     if (incap(a)) return h + '<p class="bj-warn">Postava nemůže jednat.</p>';
@@ -473,7 +605,7 @@
     let h = '<div class="bj-mapi"><select data-f="map">' + A.M.mapy.map((x, i) => '<option value="' + i + '"' + (i === S.map ? " selected" : "") + ">" + esc(x.nazev) + "</option>").join("") + "</select>"
       + "<p>" + esc(m.popis || "") + "</p><p><b>Světlo:</b> " + esc(m.osvetleni || "—") + (m.misto ? ' · <a href="' + base() + m.misto.replace(/\.md$/, "/") + '">' + esc(m.misto.replace(/^.*\/|\.md$/g, "").replace(/_/g, " ")) + "</a>" : "") + " · " + m.mrizka[0].length * 5 + " × " + m.mrizka.length * 5 + " ft</p>"
       + '<div class="bj-legend">' + Object.keys(TILE).map(k => '<span class="bj-pal' + (S.paint === k ? " on" : "") + '" data-paint="' + esc(k) + '" title="' + esc(TILE[k][0]) + '"><svg viewBox="0 0 1 1" width="18" height="18">' + tileIcon(k) + "</svg>" + esc(TILE[k][0].replace(/ \(.*/, "")) + "</span>").join("") + "</div>";
-    if (ed) h += '<p class="bj-edit">Režim úprav: vyber dlaždici v legendě a maluj do mapy (tah myší). ' + (S.paint ? '<button data-act="nopaint">Ukončit malování</button> ' : "") + '<button data-act="savemap" class="ed-primary">Uložit mapy</button> <button data-act="newmap">+ Nová mapa</button> <button data-act="mapjson">Upravit JSON</button></p>';
+    if (ed) h += '<p class="bj-edit">Režim úprav: vyber dlaždici v legendě a maluj do mapy (tah myší). ' + (S.paint ? '<button data-act="nopaint">Ukončit malování</button> ' : "") + '<button data-act="savemap" class="ed-primary">Uložit mapy</button> <button data-act="newmap">+ Nová mapa</button> <button data-act="mapjson">Upravit JSON</button> <button data-act="mapimg">Obrázek mapy…</button></p>';
     else h += '<p class="bj-edit"><small>Mapy jde upravovat v režimu úprav (lokální editační server).</small></p>';
     return h + '<p><button data-act="reset">Nové střetnutí (vyčistit)</button> <button data-act="export">Export stavu</button> <button data-act="import">Import</button> <label><input type="checkbox" data-f="groups"' + (S.groups ? " checked" : "") + "> stejní netvoři sdílí iniciativu</label></p></div>";
   }
@@ -482,11 +614,11 @@
   function draw() {
     const host = A.host, keep = host.querySelector(".bj-board") ? [host.querySelector(".bj-board").scrollLeft, host.querySelector(".bj-board").scrollTop] : null;
     const tabs = [["pomocnik", "Pomocník"], ["pridat", "Přidat"], ["mapa", "Mapa"], ["log", "Deník"]];
-    host.innerHTML = '<div class="bj"><div class="bj-left"><div class="bj-top"><b>' + esc(map().nazev) + '</b><span class="bj-round">' + (S.round ? "Kolo " + S.round : "Před bojem") + '</span><span class="bj-zoom"><button data-act="zo">−</button><button data-act="zi">+</button></span>'
+    host.innerHTML = '<div class="bj"><div class="bj-left"><div class="bj-top"><b>' + esc(map().nazev) + '</b><span class="bj-round">' + (S.round ? "Kolo " + S.round : "Před bojem") + '</span><span class="bj-zoom"><button data-act="zo">−</button><button data-act="zi">+</button></span>' + topExtra()
       + '<button data-act="init" class="ed-primary">⚄ ' + (S.round ? "Přehodit iniciativu" : "Hodit iniciativu") + "</button>" + (S.round ? '<button data-act="next">Další tah ▶</button>' : "") + "</div>"
       + '<div class="bj-board">' + boardSvg() + '</div><div class="bj-status">Najeď na pole: vzdálenost a cover od vybraného žetonu.</div></div>'
       + '<div class="bj-right"><h3>Iniciativa</h3>' + initList() + '<nav class="bj-tabs">' + tabs.map(t => '<button data-tab="' + t[0] + '" class="' + (S.tab === t[0] ? "on" : "") + '">' + t[1] + "</button>").join("") + '</nav><div class="bj-pane">'
-      + (S.tab === "pridat" ? addHtml() : S.tab === "mapa" ? mapHtml() : S.tab === "log" ? '<div class="bj-log">' + (S.log.map(l => "<div>" + l + "</div>").join("") || "Zatím nic.") + "</div>" : helperHtml()) + "</div></div></div>";
+      + (S.tab === "pridat" ? addHtml() : S.tab === "mapa" ? mapHtml() : S.tab === "log" ? logPane() : helperHtml()) + "</div></div></div>";
     if (keep) { const b = host.querySelector(".bj-board"); b.scrollLeft = keep[0]; b.scrollTop = keep[1]; }
     if (S.tab === "pridat") { search("pc"); search("mon"); }
   }
@@ -511,7 +643,7 @@
     const host = A.host;
     let drag = null, painting = false;
     host.addEventListener("pointerdown", e => {
-      if (S.paint && e.target.closest(".bj-svg")) { painting = true; paintAt(e); e.preventDefault(); return; }
+      if (S.paint && e.target.closest(".bj-svg")) { snap("Malování mapy"); painting = true; paintAt(e); e.preventDefault(); return; }
       const g = e.target.closest(".bj-tok"); if (!g) return;
       const t = tok(g.dataset.id); if (!t) return;
       e.preventDefault(); S.sel = t.id;
@@ -533,7 +665,7 @@
       status(s);
     });
     host.addEventListener("pointerup", e => {
-      if (painting) { painting = false; return; }
+      if (painting) { painting = false; log("PJ přemaloval mapu (" + esc((TILE[S.paint] || ["?"])[0]) + ").", { pj: true }); save(); return; }
       if (!drag) return; const t = drag.t, d0 = drag; drag = null;
       if (!d0.moved) { draw(); return; }
       const [px, py] = cellAt(e), x = Math.floor(px - t.s / 2 + .5), y = Math.floor(py - t.s / 2 + .5);
@@ -546,67 +678,92 @@
       const pal = e.target.closest("[data-paint]"); if (pal && document.body.classList.contains("ed-on")) { S.paint = pal.dataset.paint; draw(); return; }
       const b = e.target.closest("[data-act]"); if (!b) return; e.preventDefault();
       const row = b.closest("tr[data-id]"), t = row ? tok(row.dataset.id) : null, act = b.dataset.act, a = actor();
+      if (MUT[act]) snap(MUT[act] + (t ? " – " + t.nazev : a && /^(eco|react2|slot|dash|dis|dodge)/.test(act) ? " – " + a.nazev : ""));
       ({
         sel() { S.sel = t.id; draw(); centerOn(t); },
         sb() { window.MontelienSRD && window.MontelienSRD.show("bestiar", t.src.srd); },
-        uncond() { t.cond.splice(Number(b.dataset.i), 1); save(); draw(); },
-        conc() { t.conc = false; save(); draw(); },
-        react() { t.react = t.react === false; save(); draw(); },
-        del() { if (confirm("Odebrat " + t.nazev + "?")) { removeTok(t.id); save(); draw(); } },
-        ds() { const r = d(20); if (r === 20) { heal(t, 1); log(esc(t.nazev) + ": death save 20 – vstává s 1 HP!"); } else if (r === 1) { t.ds.f += 2; log(esc(t.nazev) + ": death save 1 – dva neúspěchy."); } else if (r >= 10) { t.ds.s++; log(esc(t.nazev) + ": death save " + r + " – úspěch (" + t.ds.s + "/3)."); } else { t.ds.f++; log(esc(t.nazev) + ": death save " + r + " – neúspěch (" + t.ds.f + "/3)."); } if (t.ds.s >= 3) { log(esc(t.nazev) + " je stabilizován."); t.ds = { s: 0, f: 0 }; t.stable = true; } if (t.ds.f >= 3) { t.dead = true; log("☠ " + esc(t.nazev) + " umírá."); } save(); draw(); },
+        uncond() { const c = t.cond.splice(Number(b.dataset.i), 1)[0]; log(esc(t.nazev) + ": stav " + esc(c.n) + " odebrán."); save(); draw(); },
+        conc() { t.conc = false; log(esc(t.nazev) + " ukončil Concentration."); save(); draw(); },
+        react() { t.react = t.react === false; log(esc(t.nazev) + ": Reaction " + (t.react ? "vrácena" : "použita") + "."); save(); draw(); },
+        react2() { a.react = a.react === false; log(esc(a.nazev) + ": Reaction " + (a.react ? "vrácena" : "použita") + "."); save(); draw(); },
+        ecoA() { if (!a) return; S.eco.a = S.eco.a ? 0 : 1; log(esc(a.nazev) + ": Action " + (S.eco.a ? "použita (ručně)" : "vrácena") + "."); save(); draw(); },
+        ecoB() { if (!a) return; S.eco.b = S.eco.b ? 0 : 1; log(esc(a.nazev) + ": Bonus Action " + (S.eco.b ? "použita (ručně)" : "vrácena") + "."); save(); draw(); },
+        slot() { if (!a) return; const x = b.dataset.p ? a.pact : a.slots[Number(b.dataset.l) - 1]; if (!x) return; if (x.used < x.max) { x.used++; log(esc(a.nazev) + ": ručně spotřebován " + (b.dataset.p ? "Pact slot" : "spell slot " + b.dataset.l + ". úrovně") + "."); } else { x.used = 0; log(esc(a.nazev) + ": sloty " + (b.dataset.p ? "Pact Magic" : b.dataset.l + ". úrovně") + " obnoveny.", { pj: true }); } save(); draw(); },
+        oa() { const i = Number(b.dataset.i), o = S.oa[i], H = tok(o.h), T = tok(o.t), m = H && H.atk.filter(x => x.melee).sort((x, y) => y.avg - x.avg)[0]; if (m && T && attack(H, T, Object.assign({}, m, { n: 1 }), { oa: true, tpos: o.pos })) { S.oa.splice(i, 1); save(); draw(); } },
+        oaskip() { const o = S.oa.splice(Number(b.dataset.i), 1)[0], H = o && tok(o.h); log(esc(H ? H.nazev : "?") + " nevyužil Opportunity Attack."); save(); draw(); },
+        undo() { undo(); },
+        obr() { S.bezObr = !S.bezObr; save(); draw(); },
+        teren() { S.teren = !S.teren; save(); draw(); },
+        mriz() { S.mriz = S.mriz === false; save(); draw(); },
+        savelog() { saveLog(); },
+        dlmd() { dlMd(); },
+        mapimg() { const v = prompt("Obrázek mapy – cesta relativně k 11_Mapy (např. bojove/moje.jpg), prázdné = bez obrázku", map().obrazek || ""); if (v == null) return; snap("Obrázek mapy"); if (v.trim()) map().obrazek = v.trim(); else delete map().obrazek; log("PJ změnil obrázek mapy.", { pj: true }); save(); draw(); },
+        del() { if (confirm("Odebrat " + t.nazev + "?")) { removeTok(t.id); log(esc(t.nazev) + " odebrán z boje."); save(); draw(); } },
+        ds() { t.dsK = S.round; const r = d(20); if (r === 20) { heal(t, 1); log(esc(t.nazev) + ": death save 20 – vstává s 1 HP!"); } else if (r === 1) { t.ds.f += 2; log(esc(t.nazev) + ": death save 1 – dva neúspěchy."); } else if (r >= 10) { t.ds.s++; log(esc(t.nazev) + ": death save " + r + " – úspěch (" + t.ds.s + "/3)."); } else { t.ds.f++; log(esc(t.nazev) + ": death save " + r + " – neúspěch (" + t.ds.f + "/3)."); } if (t.ds.s >= 3) { log(esc(t.nazev) + " je stabilizován."); t.ds = { s: 0, f: 0 }; t.stable = true; } if (t.ds.f >= 3) { t.dead = true; log("☠ " + esc(t.nazev) + " umírá."); } save(); draw(); },
         init() { rollInit(S.round > 0 && confirm("Přehodit iniciativu všem?")); },
         next() { next(); },
-        dash() { S.dash = !S.dash; draw(); },
-        dis() { S.disengage = !S.disengage; draw(); },
-        dodge() { if (a && !hasC(a, "Dodge")) { log(esc(a.nazev) + " používá Dodge (útoky proti mají Disadvantage, Advantage na DEX záchrany do jeho dalšího tahu)."); } save(); draw(); },
-        atk() { const tg = tok(b.dataset.b), atk = a.atk[Number(b.dataset.a)], r = evalAtk(a, tg, atk); if (r) doAttack(a, r); },
+        dash() { if (a && S.dash) { S.dash = false; S.eco.a = 0; log(esc(a.nazev) + " ruší Dash (Action vrácena)."); save(); draw(); return; } gate(econ(a, "a"), "Dash", () => { S.dash = true; S.eco.a = 1; log(esc(a.nazev) + " používá Dash (pohyb ×2, Action)."); }, true); },
+        dis() { if (a && S.disengage) { S.disengage = false; S.eco.a = 0; log(esc(a.nazev) + " ruší Disengage (Action vrácena)."); save(); draw(); return; } gate(econ(a, "a"), "Disengage", () => { S.disengage = true; S.eco.a = 1; log(esc(a.nazev) + " používá Disengage (pohyb nevyvolá Opportunity Attack, Action)."); }, true); },
+        dodge() { if (!a || hasC(a, "Dodge")) return; gate(econ(a, "a"), "Dodge", () => { S.eco.a = 1; a.cond.push({ n: "Dodge", r: 1 }); log(esc(a.nazev) + " používá Dodge (útoky proti mají Disadvantage, Advantage na DEX záchrany do jeho dalšího tahu; Action)."); }, true); },
+        atk() { attack(a, tok(b.dataset.b), a.atk[Number(b.dataset.a)]); },
         go() { const x = Number(b.dataset.x), y = Number(b.dataset.y), dj = dijkstra(a, 9999); moveTo(a, x, y, dj); },
         zi() { S.zoom = Math.min(2.5, (S.zoom || 1) * 1.2); save(); draw(); },
         zo() { S.zoom = Math.max(.4, (S.zoom || 1) / 1.2); save(); draw(); },
         enc() { (map().stretnuti || []).forEach(x => { const m = A.B.find(mm => mm.nazev === x.nazev); if (m) for (let i = 0; i < x.pocet; i++) addTok(monToken(m, "nepratele")); }); place(); save(); draw(); },
-        place() { place(); save(); draw(); },
+        place() { place(); log("Žetony rozestaveny na startovní pozice."); save(); draw(); },
         addpc() { const e2 = A.P[Number(b.dataset.i)], side = A.host.querySelector('[data-side="pc"]').value, t2 = pcToken(e2); t2.side = side; addTok(t2, startPos(side)); save(); draw(); },
         addmon() { const m = A.B.find(mm => mm.nazev === b.dataset.n), n = Number(A.host.querySelector("[data-n]").value) || 1, side = A.host.querySelector('[data-side="mon"]').value; for (let i = 0; i < n; i++) addTok(monToken(m, side), startPos(side)); save(); draw(); },
         custom() { const g = k => A.host.querySelector('[data-c="' + k + '"]').value; const hp = Number(g("hp")) || 10; addTok({ id: uid(), nazev: g("n") || "Žeton", kind: "mon", side: "nepratele", s: 1, hp, max: hp, tmp: 0, ac: Number(g("ac")) || 12, initB: Number(g("i")) || 0, speed: 30, swim: 0, fly: 0, saves: {}, atk: [], cond: [], conc: false, react: true, xp: 0, src: {} }); save(); draw(); },
         nopaint() { S.paint = null; draw(); },
-        savemap() { window.MontelienEditor.api("PUT", "soubor", { cesta: "11_Mapy/bojove_mapy.json", obsah: JSON.stringify(A.M, null, 1) }).then(() => { status("Mapy uloženy do 11_Mapy/bojove_mapy.json."); }).catch(er => alert("Chyba: " + er.message)); },
-        newmap() { const w = Number(prompt("Šířka (polí po 5 ft)", "30")), h = Number(prompt("Výška", "20")), n = prompt("Název mapy", "Nová mapa"); if (!w || !h) return; A.M.mapy.push({ id: "mapa-" + uid(), nazev: n || "Nová mapa", podklad: "mesto", osvetleni: "", popis: "", start: { druzina: [], nepratele: [] }, stretnuti: [], mrizka: Array.from({ length: h }, () => ".".repeat(w)) }); S.map = A.M.mapy.length - 1; S.tok.forEach(t => { t.x = null; }); save(); draw(); },
-        mapjson() { const E = window.MontelienEditor, ta = E.el("textarea", { rows: 26, class: "pf-raw" }); ta.value = JSON.stringify(map(), null, 1); const m = E.modal("Mapa – JSON", ta, [{ text: "Použít", primary: true, click() { try { A.M.mapy[S.map] = JSON.parse(ta.value); m.close ? m.close() : document.querySelector(".ed-modal-bg").remove(); draw(); } catch (er) { alert(er.message); } } }]); },
-        reset() { if (confirm("Vyčistit střetnutí (žetony, iniciativu, deník)?")) { S = fresh(S.map); save(); draw(); } },
+        savemap() { window.MontelienEditor.api("PUT", "soubor", { cesta: "11_Mapy/bojove_mapy.json", obsah: JSON.stringify(A.M, null, 1) }).then(() => { log("Mapy uloženy do 11_Mapy/bojove_mapy.json.", { pj: true }); save(); draw(); status("Mapy uloženy do 11_Mapy/bojove_mapy.json."); }).catch(er => alert("Chyba: " + er.message)); },
+        newmap() { const w = Number(prompt("Šířka (polí po 5 ft)", "30")), h = Number(prompt("Výška", "20")), n = prompt("Název mapy", "Nová mapa"); if (!w || !h) return; A.M.mapy.push({ id: "mapa-" + uid(), nazev: n || "Nová mapa", podklad: "mesto", osvetleni: "", popis: "", start: { druzina: [], nepratele: [] }, stretnuti: [], mrizka: Array.from({ length: h }, () => ".".repeat(w)) }); S.map = A.M.mapy.length - 1; S.tok.forEach(t => { t.x = null; }); log("PJ založil mapu " + esc(n || "Nová mapa") + ".", { pj: true }); save(); draw(); },
+        mapjson() { const E = window.MontelienEditor, ta = E.el("textarea", { rows: 26, class: "pf-raw" }); ta.value = JSON.stringify(map(), null, 1); const m = E.modal("Mapa – JSON", ta, [{ text: "Použít", primary: true, click() { try { snap("JSON mapy"); A.M.mapy[S.map] = JSON.parse(ta.value); log("PJ upravil JSON mapy.", { pj: true }); save(); m.close ? m.close() : document.querySelector(".ed-modal-bg").remove(); draw(); } catch (er) { alert(er.message); } } }]); },
+        reset() { if (!confirm("Vyčistit střetnutí (žetony, iniciativu, deník)?")) return; const go2 = () => { S = fresh(S.map); log("Nové střetnutí."); save(); draw(); }; if (S.log.length && confirm("Uložit nejdřív deník do záznamu sezení?")) saveLog().then(go2); else go2(); },
         export() { const blob = new Blob([JSON.stringify(S, null, 1)], { type: "application/json" }), u = document.createElement("a"); u.href = URL.createObjectURL(blob); u.download = "stretnuti.json"; u.click(); },
-        import() { const i = document.createElement("input"); i.type = "file"; i.accept = ".json"; i.onchange = () => i.files[0].text().then(t2 => { S = JSON.parse(t2); save(); draw(); }); i.click(); }
+        import() { const i = document.createElement("input"); i.type = "file"; i.accept = ".json"; i.onchange = () => i.files[0].text().then(t2 => { snap("Import"); S = JSON.parse(t2); load2(); log("Stav střetnutí importován.", { pj: true }); save(); draw(); }); i.click(); }
       }[act] || (() => { }))();
     });
     host.addEventListener("change", e => {
       const f = e.target.dataset.f, row = e.target.closest("tr[data-id]"), t = row ? tok(row.dataset.id) : null;
-      if (f === "init" && t) { t.init = Number(e.target.value); const cur = S.ord[S.turn]; S.ord = S.tok.filter(x => x.init != null).sort((a, b) => b.init - a.init || b.initB - a.initB).map(x => x.id); S.turn = S.ord.indexOf(cur); save(); draw(); }
+      if (f === "init" && t) { snap("Iniciativa – " + t.nazev); const old = t.init; t.init = Number(e.target.value); log(esc(t.nazev) + ": iniciativa " + (old == null ? "—" : old) + " → " + t.init + " (ručně)."); const cur = S.ord[S.turn]; S.ord = S.tok.filter(x => x.init != null).sort((a, b) => b.init - a.init || b.initB - a.initB).map(x => x.id); S.turn = S.ord.indexOf(cur); save(); draw(); }
       if (f === "cond" && t && e.target.value) {
-        const v = e.target.value; if (v === "conc") t.conc = true;
+        const v = e.target.value; snap("Stav – " + t.nazev); if (v === "conc") { t.conc = true; log(esc(t.nazev) + ": Concentration (ručně)."); }
         else { const c = { n: v }; if (v === "Exhaustion") c.lvl = Number(prompt("Úroveň Exhaustion (1–6)", "1")) || 1; const r = prompt("Trvání v kolech (prázdné = dokud neodebereš)", ""); if (Number(r)) c.r = Number(r); t.cond.push(c); log(esc(t.nazev) + ": " + v); }
         save(); draw();
       }
-      if (f === "map") { S.map = Number(e.target.value); S.tok.forEach(t2 => { t2.x = null; }); place(); save(); draw(); }
+      if (f === "map") { snap("Změna mapy"); S.map = Number(e.target.value); log("Mapa: " + esc(map().nazev) + "."); S.tok.forEach(t2 => { t2.x = null; }); place(); save(); draw(); }
       if (f === "groups") { S.groups = e.target.checked; save(); }
       if (e.target.dataset.cr != null) search("mon");
     });
     host.addEventListener("keydown", e => {
       if (e.target.dataset.f === "dmg" && e.key === "Enter") {
         const t = tok(e.target.closest("tr").dataset.id), v = e.target.value.trim(); if (!v) return;
-        if (/^\+/.test(v)) { heal(t, Number(v.slice(1))); log(esc(t.nazev) + " léčen o " + v.slice(1) + "."); } else if (/^t/i.test(v)) { t.tmp = Number(v.slice(1)); } else { damage(t, Number(v)); log(esc(t.nazev) + " dostal " + Number(v) + " zranění."); }
+        snap("HP – " + t.nazev); if (/^\+/.test(v)) { heal(t, Number(v.slice(1))); log(esc(t.nazev) + " léčen o " + v.slice(1) + " (HP " + t.hp + "/" + t.max + ")."); } else if (/^t/i.test(v)) { t.tmp = Number(v.slice(1)); log(esc(t.nazev) + ": dočasné HP " + t.tmp + "."); } else { damage(t, Number(v)); log(esc(t.nazev) + " dostal " + Number(v) + " zranění (HP " + t.hp + "/" + t.max + ")."); }
         save(); draw();
       }
     });
     host.addEventListener("input", e => { if (e.target.dataset.q) search(e.target.dataset.q); });
-    document.addEventListener("keydown", e => { if (!document.getElementById("boj-app") || /INPUT|TEXTAREA|SELECT/.test(e.target.tagName)) return; if (e.key === "n" || e.key === "N") next(); });
+    document.addEventListener("keydown", e => { if (!document.getElementById("boj-app") || /INPUT|TEXTAREA|SELECT/.test(e.target.tagName)) return; if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === "z") { e.preventDefault(); undo(); return; } if (e.key === "n" || e.key === "N") next(); });
   }
   function moveTo(t, x, y, dj) {
-    const path = dj && dj.dist[x + "," + y] != null ? dj.path(x, y) : [[t.x, t.y], [x, y]], cost = dj && dj.dist[x + "," + y] != null ? dj.dist[x + "," + y] : null, oa = oaAlong(t, path);
-    t.x = x; t.y = y;
-    let txt = esc(t.nazev) + " → " + cellName(x, y) + (cost != null ? " (" + cost + " ft)" : " (mimo dosah, přesun PJ)");
-    if (actor() === t && cost != null) { S.moved += cost; const left = speedOf(t) * (S.dash ? 2 : 1) - S.moved; if (left < 0) txt += ' <span class="bj-red">překročen pohyb o ' + (-left) + " ft</span>"; }
-    if (oa.length) txt += ' <span class="bj-red">⚠ Opportunity Attack: ' + oa.map(h => esc(h.nazev)).join(", ") + "</span>";
-    if (cells(t).some(([cx, cy]) => tile(cx, cy) === "x")) txt += " ⚠ nebezpečné pole";
-    log(txt); save(); draw(); if (oa.length) status("Opportunity Attack: " + oa.map(h => h.nazev).join(", "));
+    const ok = dj && dj.dist[x + "," + y] != null, path = ok ? dj.path(x, y) : [[t.x, t.y], [x, y]], cost = ok ? dj.dist[x + "," + y] : null, cur = actor(), oa = S.round ? oaInfo(t, path) : [], v = [];
+    if (S.round) {
+      if (cur !== t) v.push(t.nazev + " není na tahu (pohyb mimo tah)");
+      else {
+        if (incap(t)) v.push(t.nazev + " nemůže jednat");
+        else if (!speedOf(t)) v.push("rychlost je 0 (" + ((t.cond || []).map(c => c.n).join(", ") || "stav") + ")");
+        if (cost == null) v.push("cíl je mimo dosah pohybu nebo k němu nevede cesta");
+        else { const left = speedOf(t) * (S.dash ? 2 : 1) - S.moved; if (cost > left) v.push("pohyb " + cost + " ft, zbývá jen " + Math.max(0, left) + " ft"); }
+      }
+    }
+    return gate(v, "pohyb " + t.nazev + " → " + cellName(x, y), () => {
+      const from = t.x != null ? cellName(t.x, t.y) : "mimo mapu"; t.x = x; t.y = y;
+      let txt = esc(t.nazev) + ": " + from + " → " + cellName(x, y) + (cost != null ? " (" + cost + " ft)" : " (přesun PJ)");
+      if (cur === t && cost != null) S.moved += cost;
+      if (oa.length) { txt += ' <span class="bj-red">⚠ provokuje Opportunity Attack: ' + oa.map(o => esc(o.h.nazev)).join(", ") + "</span>"; S.oa = (S.oa || []).concat(oa.map(o => ({ h: o.h.id, t: t.id, pos: o.pos }))); }
+      if (cells(t).some(([cx, cy]) => tile(cx, cy) === "x")) txt += " ⚠ nebezpečné pole";
+      log(txt); if (oa.length) S.tab = "pomocnik";
+    });
   }
   function startPos(side) { const st = (map().start || {})[side === "druzina" ? "druzina" : "nepratele"] || []; const used = S.tok.filter(t => t.x != null).length; return st[used % Math.max(1, st.length)] || null; }
   function place() {
@@ -615,7 +772,7 @@
     const all = S.tok.slice(); S.tok = [];
     all.forEach(t => { const list = st[t.side === "druzina" ? "druzina" : "nepratele"] || [], p = list[idx[t.side]++ % Math.max(1, list.length)]; S.tok.push(t); t.x = -99; const tmp = S.tok.pop(); addTokSilent(tmp, p); });
   }
-  function addTokSilent(t, pos) { const r = S.round; S.round = 0; addTok(t, pos); S.round = r; }
+  function addTokSilent(t, pos) { const r = S.round; S.round = 0; A.quiet = true; addTok(t, pos); A.quiet = false; S.round = r; }
   function paintAt(e) { const [px, py] = cellAt(e), x = Math.floor(px), y = Math.floor(py), m = map(); if (x < 0 || y < 0 || y >= m.mrizka.length || x >= m.mrizka[0].length) return; const row = m.mrizka[y]; if (row[x] === S.paint) return; m.mrizka[y] = row.slice(0, x) + S.paint + row.slice(x + 1); draw(); }
   function status(t) { const s = A.host.querySelector(".bj-status"); if (s) s.innerHTML = t; }
 
@@ -626,9 +783,9 @@
       fetch(base() + "11_Mapy/bojove_mapy.json").then(r => r.json()),
       fetch(base() + "boj_postavy.json").then(r => r.ok ? r.json() : []).catch(() => []),
       window.MontelienSRD.load("bestiar"), window.MontelienPostava.rules(), window.MontelienKouzla.load()
-    ])).then(([M, P, B, R, K]) => { A = { host, M, P, B, R, K }; load(); bind(); draw(); })
+    ])).then(([M, P, B, R, K]) => { A = { host, M, P, B, R, K, hist: [] }; load(); bind(); draw(); })
       .catch(e => { host.innerHTML = '<p class="bj-warn">Bojový modul se nenačetl: ' + esc(e.message) + "</p>"; });
   }
-  window.MontelienBoj = { _test: () => ({ A, S, evalAtk, coverOf, bestPlan, dijkstra, monAttacks }) };
+  window.MontelienBoj = { _test: () => ({ A, S, evalAtk, coverOf, bestPlan, dijkstra, monAttacks, checkAttack, attack, undo, logMd, moveTo }) };
   if (window.document$) window.document$.subscribe(init); else document.addEventListener("DOMContentLoaded", init);
 })();
