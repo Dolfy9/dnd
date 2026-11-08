@@ -109,3 +109,24 @@ html[data-mont-theme] .md-typeset h1, html[data-mont-theme] .md-typeset h2 { col
 .ps-spell-bar { margin-bottom: 6px; } .sp-head { display: flex; flex-wrap: wrap; gap: 14px; font-size: .74rem; margin: 6px 0; } .sp-over { color: #c0392b; } .sp-full { color: #2e7d32; }
 .sp-rules { font-size: .68rem; opacity: .85; margin: 2px 0 6px; } .sp-mode { font-size: .74rem; font-style: italic; } .sp-vzdy { font-size: .7rem; }
 .sp-tab td, .sp-tab th { padding: 2px 6px; font-size: .72rem; } .sp-tab tr.sp-on td { background: rgba(184,137,43,.15); }
+/* ===== Statblok v duchu Monster Manualu 2024 ===== */
+.kz-modal:has(.sb2) { max-width: 780px; padding: 0; background: transparent; border: 0; box-shadow: none; }
+.sb2 { --sbr: #8b1e14; --sbbg: #fbf1dc; --sbink: #2a1a0c; background: var(--sbbg) radial-gradient(ellipse at top, #fffaf0, #f3e3bf); color: var(--sbink);
+  border: 1px solid #c9a96a; border-top: 6px solid var(--sbr); border-bottom: 6px solid var(--sbr); border-radius: 4px; padding: 14px 20px 10px; box-shadow: 0 8px 30px rgba(0,0,0,.45); font-family: Georgia, "Times New Roman", serif; }
+[data-md-color-scheme="slate"] .sb2 { --sbr: #c8543f; --sbbg: #241b14; --sbink: #eadcc0; background: #241b14 radial-gradient(ellipse at top, #2e231a, #1b140f); border-color: #5a4630; }
+.sb2 h2 { margin: 0; font: 700 1.55rem/1.1 "Cinzel", serif; color: var(--sbr); letter-spacing: .02em; }
+.sb2 .sb-sub { margin: 2px 0 4px; font-style: italic; font-size: .78rem; opacity: .9; }
+.sb2 .sb-top { display: grid; grid-template-columns: 1fr auto; align-items: end; } .sb2 .sb-top h2, .sb2 .sb-top .sb-sub { grid-column: 1; } .sb2 .lang-bar { grid-column: 2; grid-row: 1 / span 2; margin: 0; }
+.sb2 .sb-rule { height: 4px; margin: 6px 0; background: linear-gradient(90deg, var(--sbr), var(--sbr) 60%, transparent); clip-path: polygon(0 0, 100% 50%, 0 100%); }
+.sb2 .sb-l { font-size: .78rem; line-height: 1.45; } .sb2 .sb-l b { color: var(--sbr); font-weight: 700; } .sb2 .sb-sep { display: inline-block; width: 18px; }
+.sb2 .sb-abil { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.sb2 .sb-at { width: 100%; border-collapse: separate; border-spacing: 0 2px; font-size: .76rem; text-align: center; margin: 0; }
+.sb2 .sb-at th { font: 700 .55rem "Cinzel", serif; color: var(--sbr); opacity: .85; padding: 0; }
+.sb2 .sb-at td { padding: 2px 4px; background: rgba(139,30,20,.07); } .sb2 .sb-at td:first-child { border-radius: 4px 0 0 4px; } .sb2 .sb-at td:last-child { border-radius: 0 4px 4px 0; }
+.sb2 .sb-an { font: 700 .7rem "Cinzel", serif; color: var(--sbr); text-align: left; } .sb2 .sb-am { background: rgba(139,30,20,.14) !important; font-weight: 700; }
+.sb2 .sb-h { font: 700 1rem "Cinzel", serif; color: var(--sbr); border-bottom: 1.5px solid var(--sbr); margin: 12px 0 5px; padding-bottom: 1px; letter-spacing: .03em; }
+.sb2 .sb-e { font-size: .78rem; line-height: 1.5; margin: 0 0 6px; } .sb2 .sb-e > b i { color: var(--sbink); }
+.sb2 .sb-e em { font-style: italic; font-weight: 600; color: var(--sbr); } .sb2 .sb-intro { font-size: .74rem; margin: 0 0 6px; opacity: .9; }
+.sb2 .sb-src { font-size: .6rem; opacity: .55; margin: 8px 0 0; text-align: right; }
+@media (min-width: 900px) { .sb2 .sb-body { column-count: 1; } }
+.kz-modal:has(.sb2) .ed-bar { background: var(--md-default-bg-color); padding: 8px; border-radius: 0 0 6px 6px; }

@@ -7,17 +7,32 @@
   function load(t) { return loadCs(t).then(function () { return C[t] ? C[t] : fetch(base() + "assets/srd/" + F[t]).then(function (r) { return r.json(); }).then(function (j) { C[t] = j; return j; }); }); }
   function esc(s) { return String(s == null ? "" : s).replace(/[&<>"]/g, function (c) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]; }); }
   function md(n) { return Math.floor((n - 10) / 2); } function sg(n) { return (n >= 0 ? "+" : "") + n; }
-  function lt(en) { var cs = (CS.bestiar || {})[en], L = window.MontelienLang ? window.MontelienLang.lang() : "cs"; return '<span class="lt" data-cs="' + esc(cs || en) + '" data-en="' + esc(en) + '">' + esc(cs && L === "cs" ? cs : en).replace(/\n/g, "<br>").replace(/\*\*(.+?)\*\*/g, "<b>$1</b>") + '</span>'; }
-  function list(t, a) { return a && a.length ? '<h4>' + t + '</h4>' + a.map(function (x) { return '<p><b><i>' + esc(x.nazev) + '.</i></b> ' + lt(x.text) + '</p>'; }).join("") : ""; }
+  var SB_RE = /((?:Melee or Ranged|Melee|Ranged) Attack Roll:|(?:Strength|Dexterity|Constitution|Intelligence|Wisdom|Charisma) Saving Throw:|Neúspěch i úspěch:|První neúspěch:|Druhý neúspěch:|Další neúspěchy:|Neúspěch o \d+ a více:|Neúspěch:|Úspěch:|Zásah i minutí:|Zásah:|Failure or Success:|First Failure|Second Failure|Failure:|Success:|Hit or Miss:|Hit:|_?Spouštěč:_?|_?Reakce:_?|_?Trigger:_?|_?Response:_?)/g;
+  function sbFmt(html) { return html.replace(/\*\*(.+?)\*\*/g, "<b>$1</b>").replace(SB_RE, function (m) { return "<em>" + m.replace(/_/g, "") + "</em>"; }).replace(/_([^_<]+)_/g, "<em>$1</em>"); }
+  window.MontelienSbFmt = sbFmt;
+  function lt(en) { var cs = (CS.bestiar || {})[en], L = window.MontelienLang ? window.MontelienLang.lang() : "cs"; return '<span class="lt sb-t" data-cs="' + esc(cs || en) + '" data-en="' + esc(en) + '">' + sbFmt(esc(cs && L === "cs" ? cs : en).replace(/\n/g, "<br>")) + '</span>'; }
+  function list(t, a, intro) { return a && a.length ? '<h3 class="sb-h">' + t + '</h3>' + (intro || '') + a.map(function (x) { return '<p class="sb-e"><b><i>' + esc(x.nazev) + '.</i></b> ' + lt(x.text) + '</p>'; }).join("") : ""; }
+  function pbOf(cr) { return cr < 5 ? 2 : cr < 9 ? 3 : cr < 13 ? 4 : cr < 17 ? 5 : cr < 21 ? 6 : cr < 25 ? 7 : cr < 29 ? 8 : 9; }
   function statblock(m) {
-    var sp = Object.keys(m.rychlost || {}).map(function (k) { return (k === "walk" ? "" : k + " ") + m.rychlost[k] + " ft"; }).join(", ");
+    var sp = Object.keys(m.rychlost || {}).map(function (k) { return (k === "walk" ? "" : k + " ") + m.rychlost[k] + " ft."; }).join(", ");
     var all = [].concat(m.rysy || [], m.akce || [], m.bonusove_akce || [], m.reakce || [], m.legendarni || []), hasCs = all.some(function (x) { return (CS.bestiar || {})[x.text]; });
-    return '<div class="sb"><h2>' + esc(m.nazev) + '</h2><p class="sb-sub">' + esc(m.velikost + " " + m.typ + ", " + m.zarovnani) + '</p>' + (window.MontelienLang && all.length ? window.MontelienLang.bar(hasCs) : '') + '<hr>'
-      + '<p><b>AC</b> ' + m.ac + ' &nbsp; <b>HP</b> ' + m.hp + ' (' + esc(m.hp_vzorec || "") + ') &nbsp; <b>Rychlost</b> ' + esc(sp || "30 ft") + '</p>'
-      + '<table class="sb-ab"><tr>' + Object.keys(m.atributy).map(function (k) { return '<th>' + k + '</th>'; }).join("") + '</tr><tr>' + Object.keys(m.atributy).map(function (k) { var v = m.atributy[k]; return '<td>' + v + ' (' + sg(md(v)) + ')' + '' + '</td>'; }).join("") + '</tr></table>'
-      + (m.zachrany.length ? '<p><b>Záchrany</b> ' + esc(m.zachrany.join(", ")) + '</p>' : '') + (m.dovednosti.length ? '<p><b>Dovednosti</b> ' + esc(m.dovednosti.join(", ")) + '</p>' : '') + (m.imunity ? '<p><b>Imunity</b> ' + esc(m.imunity) + '</p>' : '') + (m.odolnosti ? '<p><b>Odolnosti</b> ' + esc(m.odolnosti) + '</p>' : '')
-      + '<p><b>Smysly</b> ' + esc(Object.keys(m.smysly || {}).map(function (k) { return k + " " + m.smysly[k] + " ft"; }).join(", ") || "—") + ' &nbsp; <b>Jazyky</b> ' + esc(m.jazyky || "—") + ' &nbsp; <b>CR</b> ' + esc(m.cr) + '</p><hr>'
-      + list("Rysy", m.rysy) + list("Akce", m.akce) + list("Bonusové akce", m.bonusove_akce) + list("Reakce", m.reakce) + list("Legendární akce", m.legendarni) + '<p class="sb-src">SRD 5.2.1 (CC-BY 4.0)</p></div>';
+    var sv = {}; (m.zachrany || []).forEach(function (z) { var p = z.split(" "); sv[p[0]] = p[1]; });
+    function cell(k) { var v = m.atributy[k], md = sg(md2(v)); return '<td class="sb-an">' + k + '</td><td>' + v + '</td><td class="sb-am">' + md + '</td><td class="sb-am">' + (sv[k] || md) + '</td>'; }
+    function md2(v) { return Math.floor((v - 10) / 2); }
+    var head = '<tr><th></th><th></th><th>MOD</th><th>SAVE</th></tr>';
+    var abil = '<div class="sb-abil">' + [["STR", "DEX", "CON"], ["INT", "WIS", "CHA"]].map(function (g) { return '<table class="sb-at">' + head + g.map(function (k) { return '<tr>' + cell(k) + '</tr>'; }).join("") + '</table>'; }).join("") + '</div>';
+    var senses = Object.keys(m.smysly || {}).map(function (k) { return k + " " + m.smysly[k] + " ft."; }).concat(["Passive Perception " + (m.pasivni_vnimani || 10)]).join(", ");
+    var crn = m.cr_num || 0, line = function (l, v) { return v ? '<div class="sb-l"><b>' + l + '</b> ' + esc(v) + '</div>' : ''; };
+    var leg = m.legendarni && m.legendarni.length ? '<p class="sb-intro"><i>Legendary Action Uses: 3 (4 v doupěti). Hned po tahu jiného tvora může ' + esc(m.nazev) + ' utratit jedno použití a provést jednu z následujících akcí. Použití obnoví na začátku svého tahu.</i></p>' : '';
+    return '<div class="sb2"><div class="sb-top"><h2>' + esc(m.nazev) + '</h2><p class="sb-sub">' + esc(m.velikost + " " + m.typ + ", " + m.zarovnani) + '</p>' + (window.MontelienLang && all.length ? window.MontelienLang.bar(hasCs) : '') + '</div>'
+      + '<div class="sb-rule"></div>'
+      + '<div class="sb-core"><div class="sb-l"><b>AC</b> ' + m.ac + (m.ac_detail ? ' <small>(' + esc(m.ac_detail) + ')</small>' : '') + '<span class="sb-sep"></span><b>Initiative</b> ' + sg(m.iniciativa != null ? m.iniciativa : md2(m.atributy.DEX)) + ' (' + (10 + (m.iniciativa != null ? m.iniciativa : md2(m.atributy.DEX))) + ')</div>'
+      + '<div class="sb-l"><b>HP</b> ' + m.hp + ' <small>(' + esc(m.hp_vzorec || "") + ')</small></div><div class="sb-l"><b>Speed</b> ' + esc(sp || "30 ft.") + '</div></div>'
+      + '<div class="sb-rule"></div>' + abil + '<div class="sb-rule"></div>'
+      + '<div class="sb-props">' + line("Skills", (m.dovednosti || []).join(", ")) + line("Resistances", m.odolnosti) + line("Immunities", m.imunity) + line("Senses", senses) + line("Languages", m.jazyky || "—")
+      + '<div class="sb-l"><b>CR</b> ' + esc(m.cr) + ' <small>(XP ' + (m.xp || 0).toLocaleString("cs-CZ") + '; PB +' + pbOf(crn) + ')</small></div></div>'
+      + '<div class="sb-body">' + list("Rysy", m.rysy) + list("Akce", m.akce) + list("Bonusové akce", m.bonusove_akce) + list("Reakce", m.reakce) + list("Legendární akce", m.legendarni, leg) + '</div>'
+      + '<p class="sb-src">SRD 5.2.1 (CC-BY 4.0)</p></div>';
   }
   function detail(t, x) {
     if (t === "bestiar") return statblock(x);
