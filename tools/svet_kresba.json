@@ -233,6 +233,27 @@
       "y": 1110,
       "m": 1.5,
       "pozn": "loď v Ordenské zátoce (kresba DM; dřív chybně jako ostrov)"
+    },
+    {
+      "typ": "vlny",
+      "x": 630,
+      "y": 1385,
+      "m": 1.0,
+      "pozn": "mořské vlny jižně od Nöetu (kresba DM; dřív chybně ostrůvky)"
+    },
+    {
+      "typ": "vlny",
+      "x": 700,
+      "y": 1378,
+      "m": 1.1,
+      "pozn": "mořské vlny jižně od Nöetu (kresba DM; dřív chybně ostrůvky)"
+    },
+    {
+      "typ": "vlny",
+      "x": 770,
+      "y": 1388,
+      "m": 0.9,
+      "pozn": "mořské vlny jižně od Nöetu (kresba DM; dřív chybně ostrůvky)"
     }
   ]
 }
