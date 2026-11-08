@@ -80,13 +80,15 @@ def barvy(data, out):
         n = cv2.GaussianBlur(rng.random((h, w)).astype(np.float32), (0, 0), s)
         return (n - n.mean()) / (n.std() + 1e-6)
     yy = np.linspace(0, 1, h)[:, None].repeat(w, 1)
+    chlad = np.clip((.24 - yy) / .16 + sum_(30) * .25, 0, 1)[..., None] * .55
     t = np.clip(yy * 1.25 - .2 + sum_(40) * .22 + sum_(12) * .08, 0, 1)[..., None]
     sever, stred, jih = np.array([108, 176, 150.]), np.array([112, 190, 206.]), np.array([126, 189, 220.])
     img = np.where(t < .5, sever + (stred - sever) * (t / .5), stred + (jih - stred) * ((t - .5) / .5))
     img = img + sum_(6)[..., None] * np.array([6, 9, 5.])
+    img = img * (1 - chlad) + np.array([222, 222, 214.]) * chlad
     pal = {"louky": ((86, 178, 147), .75), "les": ((76, 132, 92), .7), "haj": ((80, 150, 112), .7), "dzungle": ((70, 140, 88), .75),
            "hory": ((135, 150, 166), .7), "velehory": ((215, 214, 214), .7), "poust": ((134, 206, 232), .85), "pole": ((110, 196, 214), .6),
-           "bazina": ((110, 150, 120), .7), "kopce": ((112, 180, 196), .5), "mrtvy": ((120, 150, 160), .6)}
+           "bazina": ((110, 150, 120), .7), "kopce": ((112, 180, 196), .5), "mrtvy": ((96, 112, 122), .7), "mrtva_zeme": ((104, 116, 126), .45), "ledovec": ((238, 234, 226), .85)}
     for typ, (c, a) in pal.items():
         m = np.zeros((h, w), np.uint8)
         for o in data["oblasti"]:
@@ -160,6 +162,8 @@ def main():
         "cesty": [],
         "hranice": [{"typ": "hranice", "pozn": "hranice Tali / Zairam (čárkovaně v kresbě DM)", "body": [[1480, 960], [1530, 1000], [1545, 1100], [1525, 1230]]}], "symboly": sym,
     }
+    from svet_lore import lore
+    lore(svet)
     OUT.write_text(json.dumps(svet, ensure_ascii=False, separators=(",", ":")).replace('},{', '},\n{'), encoding="utf-8")
     barvy(svet, Path(__file__).resolve().parent.parent / "web/assets/svet/barvy.jpg")
     print("pevnina", len(pevnina), "oblasti", {t: sum(o["typ"] == t for o in oblasti) for t in cls}, "reky", len(reky), "symboly", len(sym))

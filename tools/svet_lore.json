@@ -1,0 +1,16 @@
+{
+  "_popis": "Prvky atlasu odvozené z loru wiki (ne z kresby DM). Polohy oblastí jsou odhad podle popisů – upravuj zde nebo v editoru mapy. Stav: návrh.",
+  "mrtva_zeme": {"zdroj": "02_Zeme/Drzava_Knarghae_Zia.md", "pozn": "Knärghe Zhia – temná polovina Zhie, vládnou mrtví a démoni", "body": [[1340,738],[1600,722],[1655,800],[1640,935],[1500,958],[1365,930],[1330,840]]},
+  "uzavrena_zeme_cena": 6,
+  "pole_zeme": ["Briria", "Laertmund", "Zairam", "Khärghe Zhia", "Nöet", "Mönohen", "Khearaz", "Orden"],
+  "oblasti": [
+    {"typ": "haj", "zdroj": "01_Svet/Mista/Vychodni_hvozd.md", "pozn": "Východní hvozd – Tirentův les v Mönohenu (hranice odhadem)", "body": [[1660,480],[1760,455],[1830,520],[1820,620],[1750,665],[1670,630],[1640,550]]},
+    {"typ": "dzungle", "zdroj": "01_Svet/Mista/Hinai_Mihi.md", "pozn": "Hinai Mihi – temný prales kanibalů na západním břehu Ordenské zátoky", "body": [[790,990],[870,985],[905,1040],[880,1100],[815,1110],[775,1060]]},
+    {"typ": "ledovec", "zdroj": "01_Svet/Mista/Fornheim.md", "pozn": "ledovce Fornheimu (poloha odhadem)", "body": [[1300,205],[1440,190],[1455,280],[1330,300]]},
+    {"typ": "poust", "zdroj": "01_Svet/Mista/Trosky_Draaru.md", "pozn": "Dräar – ostrov písku a rozvalin", "body": [[200,1060],[480,1060],[520,1180],[430,1260],[200,1260]]}
+  ],
+  "symboly": [
+    {"typ": "zricenina", "x": 300, "y": 1150, "m": 0.8, "zdroj": "01_Svet/Mista/Trosky_Draaru.md", "pozn": "pohřbené bulváry Dräaru"},
+    {"typ": "zricenina", "x": 420, "y": 1180, "m": 0.7, "zdroj": "01_Svet/Mista/Trosky_Draaru.md", "pozn": "trosky Dräaru"}
+  ]
+}

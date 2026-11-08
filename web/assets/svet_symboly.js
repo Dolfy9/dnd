@@ -63,6 +63,8 @@
     bazina: { nazev: "Bažina", barva: "#8fa68a", spr: ["bazina_1", "bazina_2", "rakos_1", "rakos_2", "ker_2", "suchy_2"], rozestup: 18, w: 22 },
     pole: { nazev: "Pole a vinice", barva: "#dcc57a", spr: ["pole_1", "pole_2", "vinice", "pole_1"], rozestup: 24, w: 24 },
     mrtvy: { nazev: "Mrtvý les", barva: "#a59a7a", spr: ["suchy_1", "suchy_2", "ker_2"], rozestup: 10, w: 14 },
+    ledovec: { nazev: "Ledovec", barva: "#e4ecef", spr: ["snih", "kamen_3", "snih", "utes_1"], rozestup: 30, w: 30 },
+    mrtva_zeme: { nazev: "Mrtvá země", barva: "#a39a86", spr: ["suchy_1", "kamen_1", "suchy_2", "utes_2", "sucha_6"], rozestup: 34, w: 12 },
     louky: { nazev: "Louky", barva: "#b8c47a", spr: ["ker_1", "list_2", "ker_2", "list_5", "kopec_3", "ker_1"], rozestup: 16, w: 10 }
   };
   // jednotlivé symboly: typ -> sprity (malované, web/assets/svet/*.webp) a šířka v px mapy

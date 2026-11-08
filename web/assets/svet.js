@@ -52,7 +52,12 @@
     o.push('<g clip-path="url(#sv-souse)">');
     (D.reky || []).forEach(function (r) { var d = pathD(r.body, false); o.push('<path d="' + d + '" fill="none" stroke="#3a2412" stroke-width="3.2" stroke-linecap="round" opacity=".55"/><path d="' + d + '" fill="none" stroke="#7fb3b8" stroke-width="2" stroke-linecap="round"/>'); });
     o.push("</g>");
-    (D.cesty || []).forEach(function (r) { o.push('<path d="' + pathD(r.body, false) + '" fill="none" stroke="#6b4423" stroke-width="1.6" stroke-dasharray="6 5" stroke-linecap="round"/>'); });
+    (D.cesty || []).forEach(function (r) {
+      var d = pathD(r.body, false);
+      if (r.typ === "most") o.push('<path d="' + d + '" fill="none" stroke="#4a2e16" stroke-width="5" stroke-linecap="round"/><path d="' + d + '" fill="none" stroke="#c9a676" stroke-width="2.6" stroke-linecap="round"/><path d="' + d + '" fill="none" stroke="#4a2e16" stroke-width="2.6" stroke-dasharray="1 4"/>');
+      else if (r.typ === "stezka") o.push('<path d="' + d + '" fill="none" stroke="#7a5a3a" stroke-width="1.1" stroke-dasharray="2.5 3.5" stroke-linecap="round" opacity=".85"/>');
+      else o.push('<path d="' + d + '" fill="none" stroke="#f4e6c0" stroke-width="3.6" stroke-linecap="round" opacity=".55"/><path d="' + d + '" fill="none" stroke="#6b4423" stroke-width="1.7" stroke-dasharray="7 4" stroke-linecap="round"/>');
+    });
     (D.hranice || []).forEach(function (r) { o.push('<path d="' + pathD(r.body, false) + '" fill="none" stroke="#8b2c1c" stroke-width="1.8" stroke-dasharray="10 4 2 4" opacity=".8"/>'); });
     // symboly v oblastech (seřazené podle y, aby se překrývaly správně)
     var items = [];
@@ -94,7 +99,7 @@
       if (sp) items.push([s.y, spr(sp.spr[(Math.abs(s.x * 7 + s.y * 13)) % sp.spr.length], s.x, s.y, sp.w * (s.m || 1), !!s.zrcadlo, s.rot || 0)]);
       else if (SYM[s.typ]) items.push([s.y, '<use href="#sv-' + s.typ + '" transform="translate(' + s.x + "," + s.y + ") rotate(" + (s.rot || 0) + ") scale(" + (s.m || 1) + ')"/>']);
     });
-    (M.mista || []).forEach(function (m) { if ((m.typ === "sidlo" || m.typ === "mesto") && !(D.symboly || []).some(function (q) { return SPR[q.typ] && Math.abs(q.x - m.x) < 45 && Math.abs(q.y - m.y) < 90; })) items.push([m.y + 4, '<use href="#sv-sidlo" transform="translate(' + m.x + "," + (m.y + 4) + ") scale(" + (m.typ === "mesto" ? 1.1 : .8) + ')"/>']); });
+    (M.mista || []).forEach(function (m) { if ((m.typ === "sidlo" || m.typ === "mesto") && !(D.symboly || []).some(function (q) { return SPR[q.typ] && Math.abs(q.x - m.x) < 45 && Math.abs(q.y - m.y) < 90; })) items.push([m.y + 6, spr(m.typ === "mesto" ? "mesto" : (Math.round(m.x + m.y) % 2 ? "vesnice" : "vesnice2"), m.x, m.y + 6, m.typ === "mesto" ? 28 : 16, Math.round(m.x) % 2 === 0)]); });
     var sprites = [];
     o.push('<image id="sv-spr" x="0" y="0" width="' + W + '" height="' + H + '" preserveAspectRatio="none"/>');
     items.sort(function (a, b) { return a[0] - b[0]; }).forEach(function (i) { if (typeof i[1] === "string") o.push(i[1]); else sprites.push(i[1]); });

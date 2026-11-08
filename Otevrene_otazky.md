@@ -36,3 +36,7 @@ Seznam věcí k rozhodnutí DM. Po rozhodnutí položku přesuň do sekce *Vyře
 - **Která polovina Zhie je temná:** **Knärghae Zia** (chodící mrtví a démoni). Zapsáno do obou zemí, Dar Kemmaru, Geografie a Knihy 09.
 - **Zia / Zhia:** obě podoby jsou správné.
 - **Východní hvozd:** leží v Mönohenu, stvořil ho Tirent (vztah k Nöelienu otevřený – bod 1).
+
+## Atlas mapy – prvky z loru (návrh, potvrď polohy)
+- Polohy odvozené z textů, ne z kresby: Východní hvozd (východ Mönohenu), Hinai Mihi (západní břeh Ordenské zátoky), ledovce Fornheimu (SV poloostrov), písek Dräaru, hranice mrtvé Knärghe Zhie, opuštěné císařské věže na pobřeží Divokého Severu, věže starého Kop Aramu čnějící z jezera. Zdroj: `tools/svet_lore.json`.
+- Obchodní cesty mezi sídly jsou vypočtené (terén, mosty, uzavřená Knärghe Zhia), ne z kresby. Které z nich platí?
