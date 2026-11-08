@@ -3,7 +3,7 @@
 Tento repozitář je **lore wiki a příprava D&D 5e kampaní** ve světě Montelien. Nejde o software.
 
 ## Jazyk a styl
-- Veškerý obsah piš **česky** (s diakritikou). D&D mechaniky (kouzla, subclassy, schopnosti) nech v **angličtině** pod názvy z pravidel 2024.
+- Veškerý obsah piš **česky** (s diakritikou). D&D mechaniky (kouzla, subclassy, schopnosti) nech v **angličtině** pod názvy z pravidel 2024 (funkční názvy a typy – kouzla, schopnosti, typy zranění, typy tvorů, stavy, akce – se nepřekládají). Popisné texty pravidel jsou česky (překlady v `web/assets/preklad/`).
 - Názvy souborů: bez diakritiky, slova oddělená `_`, prefix podle typu (`Postava_`, `Mesto_`, `Quest_`, `Hadanka_`, `Sezeni_` ...).
 - Tón: temné fantasy, politické intriky, ztracené vědění, náboženský útlak (Orden) vs. stará víra ve Stavitele.
 
