@@ -8,7 +8,7 @@ postava:
   zarovnani: Chaotic Good
   tridy:
   - trida: Bard
-    uroven: 10
+    uroven: 11
     podtrida: College of Lore
   atributy:
     STR: 8
@@ -124,6 +124,9 @@ postava:
     poznamka: Magical Discoveries
   - nazev: Dancing Lights
     uroven: 0
+    trida: Bard
+  - nazev: Blindness/Deafness
+    uroven: 2
     trida: Bard
   vlastni_rysy:
   - nazev: Oslepen Ordenem (DM)
