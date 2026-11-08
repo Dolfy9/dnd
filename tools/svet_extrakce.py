@@ -16,6 +16,9 @@ import mapa
 
 OUT = mapa.MAPY / "svet.json"
 W, H = mapa.W, mapa.H
+ROOT = Path(__file__).resolve().parent.parent
+ASSETS = ROOT / "web/assets/svet"
+PALETA = json.loads((ASSETS / "paleta.json").read_text(encoding="utf-8"))
 
 
 def poly(c, eps):
@@ -129,32 +132,67 @@ def trace(sk, min_len):
 
 
 def barvy(data, out):
-    """Barevný podklad terénu (1024×720): klima podle zeměpisné šířky + šum + oblasti ze svet.json."""
+    """Barevný podklad terénu s plynulým klimatem a barevnými oblastmi."""
     w, h, k = 1024, 720, .5
     rng = np.random.default_rng(7)
     def sum_(s):
         n = cv2.GaussianBlur(rng.random((h, w)).astype(np.float32), (0, 0), s)
         return (n - n.mean()) / (n.std() + 1e-6)
-    yy = np.linspace(0, 1, h)[:, None].repeat(w, 1)
-    chlad = np.clip((.30 - yy) / .13 + sum_(30) * .3, 0, 1)[..., None] * .85
-    t = np.clip(yy * 1.25 - .2 + sum_(40) * .22 + sum_(12) * .08, 0, 1)[..., None]
-    sever, stred, jih = np.array([99, 151, 126.]), np.array([121, 167, 103.]), np.array([151, 163, 91.])
-    img = np.where(t < .5, sever + (stred - sever) * (t / .5), stred + (jih - stred) * ((t - .5) / .5))
-    img = img + sum_(72)[..., None] * np.array([3, 5, 3.]) + sum_(24)[..., None] * np.array([2, 3, 2.])
-    img = img + sum_(6)[..., None] * np.array([4, 6, 3.])
-    img = img * (1 - chlad) + np.array([246, 242, 238.]) * chlad
-    pal = {"louky": ((103, 164, 91), .68), "les": ((54, 105, 59), .78), "haj": ((83, 135, 73), .72), "dzungle": ((34, 82, 43), .86),
-           "hory": ((126, 139, 126), .66), "velehory": ((216, 218, 213), .76), "poust": ((190, 157, 88), .78), "pole": ((144, 163, 91), .56),
-           "bazina": ((83, 121, 78), .68), "mrtvy": ((88, 102, 84), .72), "mrtva_zeme": ((43, 45, 38), .82), "kopce": ((113, 151, 87), .48), "ledovec": ((228, 237, 238), .84)}
-    for typ, (c, a) in pal.items():
+    def rgb(v):
+        return np.array([int(v[i:i + 2], 16) for i in (1, 3, 5)], dtype=np.float32)
+    def smooth(x):
+        x = np.clip(x, 0, 1)
+        return x * x * (3 - 2 * x)
+    yy = np.linspace(0, 1, h, dtype=np.float32)[:, None].repeat(w, 1)
+    t = np.clip(yy + sum_(72) * .045 + sum_(24) * .018, 0, 1)
+    stops = [(0, "north_sage"), (.34, "meadow"), (.66, "grass"), (1, "olive")]
+    img = np.stack([np.interp(t, [p[0] for p in stops], [rgb(PALETA["land"][p[1]])[c] for p in stops]) for c in range(3)], axis=2)
+    img += sum_(42)[..., None] * np.array([3.2, 3.0, 2.2]) + sum_(8)[..., None] * np.array([1.2, 1.1, .8])
+    snow_pos = yy + sum_(48) * .018
+    snow_t = smooth((snow_pos - PALETA["land"]["snow_start"]) / (PALETA["land"]["snow_end"] - PALETA["land"]["snow_start"]))
+    snow = 1 - snow_t
+    snow_shade = np.clip(.14 + sum_(34) * .025, .06, .23)
+    snow_color = rgb(PALETA["land"]["snow"])[None, None, :] * (1 - snow_shade[..., None]) + rgb(PALETA["land"]["snow_shade"])[None, None, :] * snow_shade[..., None]
+    img = img * (1 - snow[..., None]) + snow_color * snow[..., None]
+    for typ, color in PALETA["areas"].items():
+        if typ == "tmavy":
+            continue
         m = np.zeros((h, w), np.uint8)
         for o in data["oblasti"]:
             if o["typ"] == typ:
                 cv2.fillPoly(m, [np.int32(np.array(o["body"]) * k)], 255)
-        m = cv2.GaussianBlur(m.astype(np.float32) / 255, (0, 0), 7)[..., None] * a
-        img = img * (1 - m) + np.array(c, float) * m
+        m = cv2.GaussianBlur(m.astype(np.float32) / 255, (0, 0), 7)[..., None] * PALETA["area_opacity"].get(typ, .3)
+        img = img * (1 - m) + rgb(color) * m
     img = cv2.GaussianBlur(img, (0, 0), 1.5)
-    cv2.imwrite(str(out), np.clip(img, 0, 255).astype(np.uint8), [cv2.IMWRITE_JPEG_QUALITY, 88])
+    cv2.imwrite(str(out), cv2.cvtColor(np.clip(img, 0, 255).astype(np.uint8), cv2.COLOR_RGB2BGR), [cv2.IMWRITE_JPEG_QUALITY, 90])
+
+
+def hloubka(data, out):
+    """Plnobarevný stínovaný podklad moře podle vzdálenosti od pobřeží."""
+    land = np.zeros((H, W), np.uint8)
+    lake = np.zeros((H, W), np.uint8)
+    for s in sorted(data["pevnina"], key=lambda p: p.get("uroven", 0)):
+        pts = np.int32([s["body"]])
+        is_land = s["typ"] == "pevnina"
+        cv2.fillPoly(land, pts, 255 if is_land else 0)
+        cv2.fillPoly(lake, pts, 0 if is_land else 255)
+    water = (land == 0).astype(np.uint8) * 255
+    distance = cv2.distanceTransform(water, cv2.DIST_L2, 3)
+    def rgb(v):
+        return np.array([int(v[i:i + 2], 16) for i in (1, 3, 5)], dtype=np.float32)
+    def smooth(x):
+        x = np.clip(x, 0, 1)
+        return x * x * (3 - 2 * x)
+    sea = PALETA["sea"]
+    coast, middle, deep = rgb(sea["coast"]), rgb(sea["open"]), rgb(sea["deep"])
+    t1 = smooth((distance - sea["shallow_distance"]) / (sea["mid_distance"] - sea["shallow_distance"]))
+    t2 = smooth((distance - sea["mid_distance"]) / (sea["deep_distance"] - sea["mid_distance"]))
+    img = coast[None, None, :] * (1 - t1[..., None]) + middle[None, None, :] * t1[..., None]
+    img = img * (1 - t2[..., None]) + deep[None, None, :] * t2[..., None]
+    shallow = 1 - smooth(distance / sea["shallow_distance"])
+    img = img * (1 - shallow[..., None] * .36) + rgb(sea["shallow"])[None, None, :] * (shallow[..., None] * .36)
+    img[lake > 0] = rgb(sea["lake"])
+    cv2.imwrite(str(out), cv2.cvtColor(np.clip(img, 0, 255).astype(np.uint8), cv2.COLOR_RGB2BGR), [cv2.IMWRITE_JPEG_QUALITY, 92])
 
 def main():
     if OUT.exists() and "--prepsat" not in sys.argv:
@@ -222,7 +260,8 @@ def main():
     from svet_lore import lore
     lore(svet)
     OUT.write_text(json.dumps(svet, ensure_ascii=False, separators=(",", ":")).replace('},{', '},\n{'), encoding="utf-8")
-    barvy(svet, Path(__file__).resolve().parent.parent / "web/assets/svet/barvy.jpg")
+    barvy(svet, ASSETS / "barvy.jpg")
+    hloubka(svet, ASSETS / "hloubka.jpg")
     print("pevnina", len(pevnina), "oblasti", {t: sum(o["typ"] == t for o in oblasti) for t in cls}, "reky", len(reky), "symboly", len(sym))
     dbg = cv2.cvtColor(clean, cv2.COLOR_GRAY2BGR) if clean.ndim == 2 else clean.copy()
     col = {"les": (40, 120, 30), "hory": (130, 110, 140), "velehory": (200, 200, 220), "poust": (60, 170, 230), "dzungle": (20, 90, 20), "bazina": (120, 140, 90), "pole": (60, 200, 220), "kopce": (90, 150, 190)}

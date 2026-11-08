@@ -52,6 +52,7 @@
     kotva: { nazev: "Kotva", kat: "moře", svg: '<path d="M0,-14 v13 M-4,-11 h8 M-7,-5 q2,6 7,4 q5,2 7,-4" ' + I + ' stroke-width="1.3"/><circle cx="0" cy="-15" r="1.6" fill="none" stroke="#3a2412" stroke-width="1"/>' }
   };
   // Výplň oblastí: které symboly a jak hustě (rozestup v px).
+  var BARVY_OBLASTI = (window.SVET_PALETA || {}).areas || {};
   var OBLASTI = {
     les: { nazev: "Jehličnatý les", barva: "#567b45", spr: ["jehl_1", "jehl_2", "jehl_3", "jehl_4", "jehl_5", "jehl_6", "jehl_2", "list_6"], rozestup: 6, w: 12 },
     haj: { nazev: "Listnatý les", barva: "#789958", spr: ["list_1", "list_2", "list_3", "list_4", "list_5", "list_6", "jehl_3"], rozestup: 7, w: 13 },
@@ -67,6 +68,7 @@
     mrtva_zeme: { nazev: "Mrtvá země", barva: "#3d3633", spr: ["suchy_1", "suchy_2", "sibenice", "kamen_1", "suchy_1", "utes_2", "palisada", "suchy_2"], rozestup: 22, w: 14 },
     louky: { nazev: "Louky", barva: "#97b477", spr: ["ker_1", "list_2", "ker_2", "list_5", "kopec_3", "ker_1"], rozestup: 16, w: 10 }
   };
+  Object.keys(OBLASTI).forEach(function (typ) { if (BARVY_OBLASTI[typ]) OBLASTI[typ].barva = BARVY_OBLASTI[typ]; });
   // jednotlivé symboly: typ -> sprity (malované, web/assets/svet/*.webp) a šířka v px mapy
   var SPRITY = {
     hora: { nazev: "Hora", spr: ["hora_a", "hora_d", "hora_e"], w: 46 }, hora2: { nazev: "Dvojhora", spr: ["hora_b"], w: 50 },

@@ -60,7 +60,8 @@
   map.fitBounds(bounds);
   map.setMaxBounds([[-200, -200], [H + 200, W + 200]]);
   var coord = document.createElement("div"); coord.className = "mapa-souradnice"; el.appendChild(coord);
-  var barvy = { mapa: "#c0392b", kanon: "#2e8b57", odhad: "#f0b429" };
+  var MP = (window.SVET_PALETA || {}).markers || {};
+  var barvy = { mapa: MP.mapa || "#8e4f45", kanon: MP.kanon || "#4f7657", odhad: MP.odhad || "#9a8050" };
   var jistotaText = { mapa: "popsáno na mapě DM", kanon: "potvrzeno DM", odhad: "odhad – čeká na potvrzení" };
   var esc = function (s) { return String(s == null ? "" : s).replace(/[&<>"]/g, function (c) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]; }); };
   var boje = { boje: [] };
@@ -76,14 +77,14 @@
   var body = L.layerGroup().addTo(map), sidla = L.layerGroup(), bojL = L.layerGroup().addTo(map), byName = {}, cropHighlight = null;
   D.mista.forEach(function (m) {
     var c = L.circleMarker([H - m.y, m.x], {
-      radius: m.typ === "zeme" ? 8 : 6, color: "#3a2412", weight: 2,
-      fillColor: barvy[m.jistota] || "#999", fillOpacity: .95
+      radius: m.typ === "zeme" ? (MP.state_radius || 5) : (MP.radius || 4), color: MP.stroke || "#4a3f31", weight: MP.stroke_width || 1.25,
+      fillColor: barvy[m.jistota] || "#777", fillOpacity: MP.fill_opacity || .9
     });
     c.bindTooltip(m.nazev, { className: "mapa-stitek", direction: "top", offset: [0, -6] });
     c.bindPopup(function () {
       return "<h4>" + esc(m.nazev) + "</h4><p>" + esc(m.pozn || "") + "</p>" + bojHtml(m) + "<p><small>" + jistotaText[m.jistota] + "</small></p><a href='" + m.url + "'>Otevřít stránku →</a>";
     });
-    if (m.typ === "sidlo") { c.setRadius(4); sidla.addLayer(c); } else body.addLayer(c);
+    if (m.typ === "sidlo") { c.setRadius(MP.radius || 4); sidla.addLayer(c); } else body.addLayer(c);
     byName[m.nazev.toLowerCase()] = { m: m, c: c };
     if ((D.boj || []).some(function (b) { return b.misto && b.misto === m.odkaz; })) {
       var ic = L.divIcon({ className: "mapa-boj", html: "⚔", iconSize: [18, 18], iconAnchor: [-4, 22] });

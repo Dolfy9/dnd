@@ -1,0 +1,102 @@
+{
+  "sea": {
+    "coast": "#6f9aa0",
+    "open": "#4a7686",
+    "deep": "#2f5468",
+    "shallow": "#84a5a6",
+    "shallow_distance": 6,
+    "mid_distance": 170,
+    "deep_distance": 640,
+    "lake": "#62867f",
+    "edge": "#365c67",
+    "light_edge": "#839e9e",
+    "wave_opacity": 0.23,
+    "lake_wave_opacity": 0.18,
+    "beach": "#d6c596",
+    "beach_opacity": 0.32
+  },
+  "land": {
+    "north_sage": "#a4ab88",
+    "meadow": "#9fae68",
+    "grass": "#87a058",
+    "olive": "#8e8f57",
+    "moss": "#6f8a4f",
+    "dry": "#c8b27a",
+    "snow": "#e9ece8",
+    "snow_shade": "#c9d2d6",
+    "snow_start": 0.07,
+    "snow_end": 0.24
+  },
+  "areas": {
+    "louky": "#9fae68",
+    "les": "#587346",
+    "haj": "#6f8a4f",
+    "dzungle": "#355b3b",
+    "hory": "#918d79",
+    "velehory": "#c9d2d6",
+    "poust": "#c8b27a",
+    "pole": "#929861",
+    "bazina": "#687c5d",
+    "mrtvy": "#5a4d41",
+    "mrtva_zeme": "#4b4338",
+    "kopce": "#8b9a65",
+    "ledovec": "#e9ece8",
+    "tmavy": "#26372a"
+  },
+  "area_opacity": {
+    "louky": 0.3,
+    "les": 0.34,
+    "haj": 0.32,
+    "dzungle": 0.38,
+    "hory": 0.28,
+    "velehory": 0.42,
+    "poust": 0.38,
+    "pole": 0.22,
+    "bazina": 0.3,
+    "mrtvy": 0.34,
+    "mrtva_zeme": 0.44,
+    "kopce": 0.26,
+    "ledovec": 0.52,
+    "tmavy": 0.58
+  },
+  "fields": {
+    "patterns": [
+      ["#b5b381", "#96966b"],
+      ["#aeb282", "#8f946c"],
+      ["#b9aa82", "#998d68"]
+    ],
+    "line": "#6d684d",
+    "opacity": 0.64,
+    "stroke_opacity": 0.36
+  },
+  "state_tints": [
+    "#92766a", "#6f8390", "#71815e", "#97855f", "#81758c",
+    "#68837f", "#967578", "#8f895c", "#6e7c92", "#927260",
+    "#6b8069", "#89745f", "#66818b", "#92815c", "#806d64"
+  ],
+  "grade": {
+    "parchment": "#efe0bd",
+    "multiply_opacity": 0.17,
+    "vignette": "#33342e",
+    "vignette_opacity": 0.25,
+    "sprite_saturation": 0.92
+  },
+  "sprite_filters": {
+    "dune_saturation": 0.5,
+    "dune_brightness": 0.97,
+    "cactus_saturation": 0.66,
+    "cactus_brightness": 0.98,
+    "hill_saturation": 0.42,
+    "hill_brightness": 1.03
+  },
+  "markers": {
+    "mapa": "#8e4f45",
+    "kanon": "#4f7657",
+    "odhad": "#9a8050",
+    "stroke": "#4a3f31",
+    "radius": 4,
+    "state_radius": 5,
+    "stroke_width": 1.25,
+    "fill_opacity": 0.9
+  }
+}

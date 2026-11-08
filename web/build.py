@@ -80,6 +80,7 @@ def boj_index():
 
 def map_page():
     data = json.loads((ROOT / "11_Mapy" / "mista.json").read_text(encoding="utf-8"))
+    palette = json.loads((WEB / "assets" / "svet" / "paleta.json").read_text(encoding="utf-8"))
     for m in data["mista"]:
         m["url"] = "../" + re.sub(r"(README)?\.md$", "", m["odkaz"]) + ("" if m["odkaz"].endswith("README.md") else "/")
     bm = json.loads((ROOT / "11_Mapy" / "bojove_mapy.json").read_text(encoding="utf-8"))
@@ -110,6 +111,7 @@ Měření trasy počítá s měřítkem z kresby DM (150 km dílek) a cestovním
 Polohy „odhad“ čekají na potvrzení – viz <a href="../11_Mapy/Geografie/">Geografie</a>.</p>
 <script src="../assets/leaflet/leaflet.js"></script>
 <script>window.MONTELIEN_MISTA = {json.dumps(data, ensure_ascii=False)};</script>
+<script>window.SVET_PALETA = {json.dumps(palette, ensure_ascii=False)};</script>
 <script src="../assets/leaflet/leaflet-geoman.min.js"></script>
 <script src="../assets/svet_symboly.js"></script>
 <script src="../assets/svet/sprity.js"></script>
