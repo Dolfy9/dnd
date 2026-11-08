@@ -144,16 +144,42 @@ def barvy(data, out):
         x = np.clip(x, 0, 1)
         return x * x * (3 - 2 * x)
     yy = np.linspace(0, 1, h, dtype=np.float32)[:, None].repeat(w, 1)
-    t = np.clip(yy + sum_(72) * .045 + sum_(24) * .018, 0, 1)
+    variation = PALETA["land"]["variation"]
+    scales = [v * k for v in variation["noise_scales_px"]]
+    noise = .5 * sum_(scales[0]) + .3 * sum_(scales[1]) + .2 * sum_(scales[2])
+    t = np.clip(yy + noise * variation["climate_blend"], 0, 1)
     stops = [(0, "north_sage"), (.34, "meadow"), (.66, "grass"), (1, "olive")]
     img = np.stack([np.interp(t, [p[0] for p in stops], [rgb(PALETA["land"][p[1]])[c] for p in stops]) for c in range(3)], axis=2)
+    img *= (1 + np.tanh(noise)[..., None] * variation["luminance"])
     img += sum_(42)[..., None] * np.array([3.2, 3.0, 2.2]) + sum_(8)[..., None] * np.array([1.2, 1.1, .8])
-    snow_pos = yy + sum_(48) * .018
+    snow_jitter = np.tanh(noise) * variation["snow_edge_noise_px"] / H
+    snow_jitter += sum_(variation["snow_edge_noise_scale_px"] * k) * variation["snow_edge_noise_px"] * .25 / H
+    snow_pos = yy + snow_jitter
     snow_t = smooth((snow_pos - PALETA["land"]["snow_start"]) / (PALETA["land"]["snow_end"] - PALETA["land"]["snow_start"]))
     snow = 1 - snow_t
     snow_shade = np.clip(.14 + sum_(34) * .025, .06, .23)
     snow_color = rgb(PALETA["land"]["snow"])[None, None, :] * (1 - snow_shade[..., None]) + rgb(PALETA["land"]["snow_shade"])[None, None, :] * snow_shade[..., None]
     img = img * (1 - snow[..., None]) + snow_color * snow[..., None]
+    water = np.zeros((h, w), np.uint8)
+    for lake in data.get("pevnina", []):
+        if lake["typ"] == "jezero":
+            cv2.fillPoly(water, [np.int32(np.array(lake["body"]) * k)], 255)
+    for river in data.get("reky", []):
+        if len(river["body"]) > 1:
+            cv2.polylines(water, [np.int32(np.array(river["body"]) * k)], False, 255, 2, cv2.LINE_AA)
+    water_distance = cv2.distanceTransform(cv2.bitwise_not(water), cv2.DIST_L2, 3) / k
+    wet = (1 - smooth(water_distance / variation["wet_distance_px"])) * variation["wet_strength"]
+    wet *= snow_t
+    img = img * (1 - wet[..., None]) + rgb(PALETA["land"]["moss"]) * wet[..., None]
+    hills = np.zeros((h, w), np.uint8)
+    for area in data.get("oblasti", []):
+        if area["typ"] in ("hory", "velehory", "kopce"):
+            cv2.fillPoly(hills, [np.int32(np.array(area["body"]) * k)], 255)
+    hill_distance = cv2.distanceTransform(cv2.bitwise_not(hills), cv2.DIST_L2, 3) / k
+    dry = (1 - smooth(hill_distance / variation["foothill_distance_px"])) * variation["foothill_strength"]
+    dry *= snow_t
+    dry[hills > 0] = 0
+    img = img * (1 - dry[..., None]) + rgb(PALETA["land"]["dry"]) * dry[..., None]
     for typ, color in PALETA["areas"].items():
         if typ == "tmavy":
             continue

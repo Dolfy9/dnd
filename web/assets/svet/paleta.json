@@ -25,8 +25,19 @@
     "dry": "#c8b27a",
     "snow": "#e9ece8",
     "snow_shade": "#c9d2d6",
-    "snow_start": 0.07,
-    "snow_end": 0.24
+    "snow_start": 0.055,
+    "snow_end": 0.34,
+    "variation": {
+      "noise_scales_px": [360, 240, 150],
+      "climate_blend": 0.035,
+      "luminance": 0.06,
+      "wet_distance_px": 40,
+      "wet_strength": 0.28,
+      "foothill_distance_px": 120,
+      "foothill_strength": 0.22,
+      "snow_edge_noise_px": 60,
+      "snow_edge_noise_scale_px": 110
+    }
   },
   "areas": {
     "louky": "#9fae68",
@@ -62,13 +73,13 @@
   },
   "fields": {
     "patterns": [
-      ["#b5b381", "#96966b"],
-      ["#aeb282", "#8f946c"],
-      ["#b9aa82", "#998d68"]
+      ["#a8a879", "#92976a"],
+      ["#a6ab79", "#8d9568"],
+      ["#b1a77d", "#978c68"]
     ],
-    "line": "#6d684d",
-    "opacity": 0.38,
-    "stroke_opacity": 0.36
+    "line": "#696849",
+    "opacity": 0.27,
+    "stroke_opacity": 0.3
   },
   "state_tint_opacity": 0.12,
   "state_tints": [
@@ -88,8 +99,32 @@
     "dune_brightness": 0.97,
     "cactus_saturation": 0.66,
     "cactus_brightness": 0.98,
-    "hill_saturation": 0.42,
-    "hill_brightness": 1.03
+    "hill_saturation": 0.62,
+    "hill_brightness": 1,
+    "hill_tint": "#90906e",
+    "hill_tint_opacity": 0.1,
+    "mountain_saturation": 0.42,
+    "mountain_brightness": 0.98,
+    "mountain_tint": "#8f8d7d",
+    "mountain_tint_opacity": 0.38,
+    "snow_highlight_luminance": 205,
+    "autumn_saturation": 0.28,
+    "autumn_brightness": 0.86,
+    "flower_saturation": 0.32,
+    "flower_brightness": 0.84,
+    "dry_grass_saturation": 0.52,
+    "dry_grass_brightness": 0.92
+  },
+  "scatter": {
+    "flower_chance": 0.012,
+    "poppy_share": 0.15,
+    "flower_scale": 0.5,
+    "dry_grass_chance": 0.08,
+    "dry_grass_share": 0.5,
+    "dry_grass_scale": 0.75,
+    "autumn_chance": 0.018,
+    "autumn_share": 0.5,
+    "autumn_scale": 0.65
   },
   "markers": {
     "mapa": "#8e4f45",

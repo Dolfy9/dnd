@@ -105,11 +105,12 @@
     // řídká drobná vegetace na volné pevnině (mimo oblasti a jezera)
     if (D.rozptyl !== false) {
       var R2 = rng(4242), land = (D.pevnina || []).filter(function (p) { return p.typ === "pevnina"; });
-      var ZEL = ["zel_1", "zel_2", "zel_3", "zel_5", "zel_1", "kvety", "maky", "vres", "krik_1", "krik_2", "list_2", "list_5", "kopec_3"],
+      var ZEL = ["zel_1", "zel_2", "zel_3", "zel_5", "zel_1", "vres", "krik_1", "krik_2", "list_2", "list_5", "kopec_3"],
         SEV = ["zel_4", "zel_6", "zel_2", "kamen_1", "kamen_3", "vres", "utes_1", "jehl_4", "krik_1", "zel_4"],
-        JIH = ["sucha_1", "sucha_2", "sucha_3", "sucha_4", "sucha_5", "sucha_6", "kamen_2", "zel_3", "podzim_1", "podzim_2", "kopec_5", "utes_2"],
+        JIH = ["kamen_2", "zel_3", "kopec_5", "utes_2"],
         PSK = ["sucha_2", "sucha_5", "kamen_2", "kamen_1", "kaktus_2", "sucha_4"];
       var VEL = { zel: 7, sucha: 7, kamen: 8, vres: 7, maky: 7, kvety: 7, krik: 9, podzim: 9, utes: 13, list: 11, jehl: 11, kopec: 20, kaktus: 6 };
+      var DEC = PAL.scatter || {};
       for (var gy = 14; gy < H; gy += 20) for (var gx = 10; gx < W; gx += 22) {
         if (R2() > .62) continue;
         var qx = gx + (R2() - .5) * 20, qy = gy + (R2() - .5) * 16;
@@ -119,7 +120,14 @@
         if (qy < 400 && R2() < .6) { items.push([qy, spr(["kamen_3", "zel_4", "utes_1", "kamen_1", "zel_6"][Math.floor(R2() * 5)], qx, qy, 8 * (.8 + R2() * .4), R2() < .5)]); continue; }
         var pool = vO === "poust" ? PSK : vO === "louky" ? ZEL : qy < 520 ? (R2() < .6 ? SEV : ZEL) : qy > 950 ? (R2() < .65 ? JIH : ZEL) : (R2() < .5 ? ZEL : JIH);
         var nm2 = pool[Math.floor(R2() * pool.length)];
-        items.push([qy, spr(nm2, qx, qy, (VEL[nm2.split("_")[0]] || 8) * (.8 + R2() * .45), R2() < .5)]);
+        if (pool === JIH && R2() < (DEC.dry_grass_chance || 0)) nm2 = R2() < DEC.dry_grass_share ? "sucha_2" : "sucha_5";
+        else if (pool === ZEL && R2() < (DEC.flower_chance || 0)) nm2 = R2() < (DEC.poppy_share || 0) ? "maky" : "kvety";
+        else if (qy > 950 && vO !== "poust" && R2() < (DEC.autumn_chance || 0)) nm2 = R2() < DEC.autumn_share ? "podzim_1" : "podzim_2";
+        var size = (VEL[nm2.split("_")[0]] || 8) * (.8 + R2() * .45);
+        if (nm2 === "maky" || nm2 === "kvety") size *= DEC.flower_scale || 1;
+        if (/^sucha/.test(nm2)) size *= DEC.dry_grass_scale || 1;
+        if (/^podzim/.test(nm2)) size *= DEC.autumn_scale || 1;
+        items.push([qy, spr(nm2, qx, qy, size, R2() < .5)]);
       }
     }
     (D.symboly || []).forEach(function (s, si) {
@@ -160,13 +168,22 @@
 
   var IMG = {}, K = Math.max(1, Math.min(2, window.devicePixelRatio || 1));
   function nacti(src) { if (!IMG[src]) IMG[src] = new Promise(function (ok) { var i = new Image(); i.onload = function () { ok(i); }; i.onerror = function () { ok(null); }; i.src = src; }); return IMG[src]; }
-  function upravObraz(img, saturation, brightness) {
+  function upravObraz(img, saturation, brightness, grade) {
     saturation = saturation == null ? 1 : saturation; brightness = brightness == null ? 1 : brightness;
-    if (saturation === 1 && brightness === 1) return img;
+    if (saturation === 1 && brightness === 1 && !grade) return img;
     var c = document.createElement("canvas"); c.width = img.naturalWidth || img.width; c.height = img.naturalHeight || img.height;
     var g = c.getContext("2d"); g.drawImage(img, 0, 0);
     var px = g.getImageData(0, 0, c.width, c.height), d = px.data;
-    for (var j = 0; j < d.length; j += 4) { var l = .3 * d[j] + .59 * d[j + 1] + .11 * d[j + 2]; d[j] = (l + (d[j] - l) * saturation) * brightness; d[j + 1] = (l + (d[j + 1] - l) * saturation) * brightness; d[j + 2] = (l + (d[j + 2] - l) * saturation) * brightness; }
+    var tint = grade && grade.tint ? [1, 3, 5].map(function (i) { return parseInt(grade.tint.slice(i, i + 2), 16); }) : null;
+    for (var j = 0; j < d.length; j += 4) {
+      var l = .3 * d[j] + .59 * d[j + 1] + .11 * d[j + 2], r = (l + (d[j] - l) * saturation) * brightness, gg = (l + (d[j + 1] - l) * saturation) * brightness, b = (l + (d[j + 2] - l) * saturation) * brightness;
+      if (tint) {
+        var opacity = grade.tint_opacity || 0;
+        if (grade.preserve_highlights) { var hi = Math.max(0, Math.min(1, (l - grade.highlight_luminance) / (255 - grade.highlight_luminance))); opacity *= 1 - hi * hi * (3 - 2 * hi); }
+        r = r * (1 - opacity) + tint[0] * opacity; gg = gg * (1 - opacity) + tint[1] * opacity; b = b * (1 - opacity) + tint[2] * opacity;
+      }
+      d[j] = r; d[j + 1] = gg; d[j + 2] = b;
+    }
     g.putImageData(px, 0, 0); return c;
   }
   function kresliSprity(svg, sprites, A, W, H, META) {
@@ -176,9 +193,16 @@
     Promise.all(keys.map(function (n) { return nacti(A + n + ".webp"); })).then(function (imgs) {
       if (tok !== svg._tok) return;
       var im = {}; keys.forEach(function (n, i) {
-        var img = imgs[i], filters = window.SVET_PALETA.sprite_filters || {}, f = /^duna/.test(n) ? [filters.dune_saturation, filters.dune_brightness] : /^kaktus/.test(n) ? [filters.cactus_saturation, filters.cactus_brightness] : /^kopec/.test(n) ? [filters.hill_saturation, filters.hill_brightness] : null;
+        var img = imgs[i], filters = window.SVET_PALETA.sprite_filters || {}, f = null, grade = null;
+        if (/^(hora|masiv|skala|hreben|utes)/.test(n)) { f = [filters.mountain_saturation, filters.mountain_brightness]; grade = { tint: filters.mountain_tint, tint_opacity: filters.mountain_tint_opacity, preserve_highlights: true, highlight_luminance: filters.snow_highlight_luminance }; }
+        else if (/^kopec/.test(n)) { f = [filters.hill_saturation, filters.hill_brightness]; grade = { tint: filters.hill_tint, tint_opacity: filters.hill_tint_opacity }; }
+        else if (/^duna/.test(n)) f = [filters.dune_saturation, filters.dune_brightness];
+        else if (/^kaktus/.test(n)) f = [filters.cactus_saturation, filters.cactus_brightness];
+        else if (/^sucha/.test(n)) f = [filters.dry_grass_saturation, filters.dry_grass_brightness];
+        else if (/^podzim/.test(n)) f = [filters.autumn_saturation, filters.autumn_brightness];
+        else if (/^(kvety|maky)/.test(n)) f = [filters.flower_saturation, filters.flower_brightness];
         if (img) {
-          if (f) img = upravObraz(img, f[0], f[1]);
+          if (f) img = upravObraz(img, f[0], f[1], grade);
           im[n] = upravObraz(img, window.SVET_PALETA.grade.sprite_saturation, 1);
           if (tmave[n]) im[n + "#tmavy"] = upravObraz(img, .65, .58);
         } else {
