@@ -44,7 +44,7 @@ def regenerate():
     root_lines = []
     for folder in sorted(d for d in ROOT.iterdir() if d.is_dir() and d.name[:2].isdigit()):
         root_lines.append(f"\n### [{folder.name}]({folder.name}/)")
-        sub = sorted(d for d in folder.iterdir() if d.is_dir())
+        sub = sorted(d for d in folder.iterdir() if d.is_dir() and any(d.rglob("*.md")))
         if sub:
             for s in sub:
                 root_lines.append(f"- **{s.name.replace('_', ' ')}**")
