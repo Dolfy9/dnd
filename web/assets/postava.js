@@ -6,6 +6,8 @@
   var SKILLS = { "Acrobatics": "DEX", "Animal Handling": "WIS", "Arcana": "INT", "Athletics": "STR", "Deception": "CHA", "History": "INT",
     "Insight": "WIS", "Intimidation": "CHA", "Investigation": "INT", "Medicine": "WIS", "Nature": "INT", "Perception": "WIS",
     "Performance": "CHA", "Persuasion": "CHA", "Religion": "INT", "Sleight of Hand": "DEX", "Stealth": "DEX", "Survival": "WIS" };
+  var CONDITIONS = ["Blinded", "Charmed", "Deafened", "Frightened", "Grappled", "Incapacitated", "Invisible", "Paralyzed", "Petrified", "Poisoned", "Prone", "Restrained", "Stunned", "Unconscious"];
+  var XP_LEVELS = [0, 300, 900, 2700, 6500, 14000, 23000, 34000, 48000, 64000, 85000, 100000, 120000, 140000, 165000, 195000, 225000, 265000, 305000, 355000];
   var CASTER = { Bard: [1, "CHA"], Cleric: [1, "WIS"], Druid: [1, "WIS"], Sorcerer: [1, "CHA"], Wizard: [1, "INT"], Paladin: [2, "CHA"], Ranger: [2, "WIS"] };
   var THIRD = { "Eldritch Knight": "INT", "Arcane Trickster": "INT" };
   var MULTI = [[], [2], [3], [4, 2], [4, 3], [4, 3, 2], [4, 3, 3], [4, 3, 3, 1], [4, 3, 3, 2], [4, 3, 3, 3, 1], [4, 3, 3, 3, 2],
@@ -30,31 +32,114 @@
     return R ? Promise.resolve(R) : fetch(base() + "assets/pravidla2024.json").then(function (r) { return r.json(); }).then(function (j) {
       R = j; if (window.MontelienPravidla) window.MontelienPravidla.init(j).setSpells(j.kouzla); var low = {}; Object.keys(j.kouzla).forEach(function (k) { low[k.toLowerCase()] = j.kouzla[k]; });
       R.spell = function (n) { return j.kouzla[n] || low[String(n || "").toLowerCase()]; };
-      return fetch(base() + "assets/preklad/pravidla_cs.json").then(function (r) { return r.ok ? r.json() : {}; }).catch(function () { return {}; }).then(function (cs) { CS = cs || {}; return j; }); });
+      return fetch(base() + "assets/preklad/pravidla_cs.json").then(function (r) { return r.ok ? r.json() : {}; }).catch(function () { return {}; }).then(function (cs) {
+        CS = cs || {};
+        return fetch(base() + "assets/kouzla2024.json").then(function (r) { return r.ok ? r.json() : {}; }).catch(function () { return {}; }).then(function (spells) {
+          R.spellDetails = spells || {}; R.spellDetailsLow = {};
+          Object.keys(R.spellDetails).forEach(function (n) { R.spellDetailsLow[n.toLowerCase()] = R.spellDetails[n]; });
+          return j;
+        });
+      }); });
   }
   function mod(s) { return Math.floor((Number(s) || 10) - 10) >> 1; }
   function sg(n) { return (n >= 0 ? "+" : "") + n; }
   function esc(s) { return String(s == null ? "" : s).replace(/[&<>"]/g, function (c) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]; }); }
   function has(list, name) { return (list || []).some(function (f) { return (f.nazev || f) === name; }); }
   function para(t) { return esc(t).replace(/\n/g, "<br>"); }
+  function sessionState(key) {
+    var s = {};
+    try { s = JSON.parse(localStorage.getItem(key + ":session") || "{}") || {}; } catch (e) {}
+    return {
+      inspiration: !!s.inspiration,
+      successes: Math.max(0, Math.min(3, Number(s.successes) || 0)),
+      failures: Math.max(0, Math.min(3, Number(s.failures) || 0)),
+      exhaustion: Math.max(0, Math.min(6, Number(s.exhaustion) || 0)),
+      conditions: Array.isArray(s.conditions) ? s.conditions.filter(function (x) { return CONDITIONS.indexOf(x) >= 0; }) : [],
+      concentrating: !!s.concentrating,
+      concentrationSpell: String(s.concentrationSpell || "")
+    };
+  }
+  function saveSession(key, state) { localStorage.setItem(key + ":session", JSON.stringify(state)); }
+  function spellMeta(name) { return R.spellDetails[name] || R.spellDetailsLow[String(name || "").toLowerCase()] || null; }
+  function listValues(value) {
+    return Array.isArray(value) ? value.map(String).map(function (x) { return x.trim(); }).filter(Boolean) : String(value || "").split(/[\n,]/).map(function (x) { return x.trim(); }).filter(Boolean);
+  }
+  function sensesFor(c, species) {
+    var senses = listValues(c.smysly);
+    Object.keys(species.rysy || {}).forEach(function (name) {
+      if (!/^(Darkvision|Blindsight|Tremorsense|Truesight)$/i.test(name)) return;
+      var range = String(species.rysy[name]).match(/(\d+)\s*(?:feet|ft\.?)/i);
+      senses.push(name + (range ? " " + range[1] + " ft" : ""));
+    });
+    return senses.filter(function (x, i) { return senses.indexOf(x) === i; });
+  }
+  function concentrationSpells(c) {
+    return (c.kouzla || []).map(function (k) { var m = spellMeta(k.nazev); return m && /concentration/i.test(m.trvani || "") ? k.nazev : ""; }).filter(Boolean);
+  }
+  function trackerHtml(c, key) {
+    var s = sessionState(key), known = concentrationSpells(c), spellOptions = known.map(function (n) { return '<option value="' + esc(n) + '"' + (s.concentrationSpell === n ? " selected" : "") + '>' + esc(n) + '</option>'; }).join(""),
+      concentrationInput = known.length ? '<select data-concentration-spell><option value="">Vyber spell</option>' + spellOptions + '</select>' : '<input data-concentration-spell type="text" value="' + esc(s.concentrationSpell) + '" placeholder="Spell name">';
+    return '<div class="p2-trackers"><div class="p2-tr-card"><button type="button" class="p2-inspiration' + (s.inspiration ? " on" : "") + '" data-inspiration aria-pressed="' + s.inspiration + '">Heroic Inspiration</button></div>'
+      + '<div class="p2-tr-card"><b>Death Saves</b><div class="p2-death"><span>Success</span>' + [1, 2, 3].map(function (i) { return '<button type="button" class="p2-death-pip' + (i <= s.successes ? " on" : "") + '" data-death="success" data-step="' + i + '" aria-label="Success ' + i + '"></button>'; }).join("") + '<span>Failure</span>' + [1, 2, 3].map(function (i) { return '<button type="button" class="p2-death-pip fail' + (i <= s.failures ? " on" : "") + '" data-death="failure" data-step="' + i + '" aria-label="Failure ' + i + '"></button>'; }).join("") + '</div></div>'
+      + '<div class="p2-tr-card"><b>Exhaustion</b><div class="p2-exhaustion"><button type="button" data-exhaustion="-1" aria-label="Snížit Exhaustion">−</button><strong>' + s.exhaustion + '</strong><button type="button" data-exhaustion="1" aria-label="Zvýšit Exhaustion">+</button>' + (s.exhaustion ? '<small>−' + (s.exhaustion * 2) + ' D20 · −' + (s.exhaustion * 5) + ' ft</small>' : '') + (s.exhaustion === 6 ? '<em>Death</em>' : '') + '</div></div>'
+      + '<div class="p2-tr-card p2-concentration"><label><input type="checkbox" data-concentrating' + (s.concentrating ? " checked" : "") + '> Concentration</label>' + concentrationInput + '</div>'
+      + '<div class="p2-condition-list"><b>Conditions</b><div>' + CONDITIONS.map(function (name) { var active = s.conditions.indexOf(name) >= 0; return '<span class="p2-condition' + (active ? " on" : "") + '"><button type="button" data-condition="' + esc(name) + '" aria-pressed="' + active + '">' + esc(name) + '</button><a href="#srd-glosar-' + encodeURIComponent(name).replace(/%20/g, "_") + '" aria-label="Glossary: ' + esc(name) + '" title="Open glossary">?</a></span>'; }).join("") + '</div></div></div>';
+  }
+  function bindTrackers(root, key, draw) {
+    var w = root.querySelector(".p2-trackers"); if (!w) return;
+    w.addEventListener("click", function (e) {
+      var s = sessionState(key), b = e.target.closest("button");
+      if (!b) return;
+      if (b.hasAttribute("data-inspiration")) s.inspiration = !s.inspiration;
+      else if (b.hasAttribute("data-exhaustion")) s.exhaustion = Math.max(0, Math.min(6, s.exhaustion + Number(b.dataset.exhaustion)));
+      else if (b.hasAttribute("data-death")) s[b.dataset.death === "success" ? "successes" : "failures"] = Number(b.dataset.step) <= s[b.dataset.death === "success" ? "successes" : "failures"] ? Number(b.dataset.step) - 1 : Number(b.dataset.step);
+      else if (b.hasAttribute("data-condition")) {
+        var at = s.conditions.indexOf(b.dataset.condition);
+        if (at < 0) s.conditions.push(b.dataset.condition); else s.conditions.splice(at, 1);
+      } else return;
+      saveSession(key, s); draw();
+    });
+    w.addEventListener("change", function (e) {
+      var s = sessionState(key);
+      if (e.target.hasAttribute("data-concentrating")) { s.concentrating = e.target.checked; if (!s.concentrating) s.concentrationSpell = ""; }
+      else if (e.target.hasAttribute("data-concentration-spell")) { s.concentrationSpell = e.target.value; s.concentrating = !!e.target.value || s.concentrating; }
+      else return;
+      saveSession(key, s); draw();
+    });
+  }
+  function compactPostava(value) {
+    if (Array.isArray(value)) {
+      var items = value.map(compactPostava).filter(function (x) { return x !== undefined; });
+      return items.length ? items : undefined;
+    }
+    if (value && typeof value === "object") {
+      var out = {};
+      Object.keys(value).forEach(function (k) { var v = compactPostava(value[k]); if (v !== undefined) out[k] = v; });
+      return Object.keys(out).length ? out : undefined;
+    }
+    return value === "" || value === null || value === undefined ? undefined : value;
+  }
 
-  function compute(c) {
+  function compute(c, cesta) {
     var d = {}, tridy = c.tridy || [];
     d.lvl = tridy.reduce(function (a, t) { return a + (Number(t.uroven) || 0); }, 0) || 1;
+    d.exhaustion = sessionState("ps-hp:" + (cesta || c.jmeno)).exhaustion;
+    d.exhaustPenalty = 2 * d.exhaustion;
     d.pb = 2 + Math.floor((d.lvl - 1) / 4);
     d.mods = {}; AB.forEach(function (a) { d.mods[a] = mod((c.atributy || {})[a]); });
+    d.checkMods = {}; AB.forEach(function (a) { d.checkMods[a] = d.mods[a] - d.exhaustPenalty; });
     var first = tridy[0] && R.tridy[tridy[0].trida];
     d.saveProf = (c.zachrany_navic || []).slice();
     if (first) Object.keys(AB_EN).forEach(function (k) { if ((first.core["Saving Throw Proficiencies"] || "").indexOf(k) >= 0) d.saveProf.push(AB_EN[k]); });
-    d.saves = {}; AB.forEach(function (a) { d.saves[a] = d.mods[a] + (d.saveProf.indexOf(a) >= 0 ? d.pb : 0); });
+    d.saves = {}; AB.forEach(function (a) { d.saves[a] = d.mods[a] + (d.saveProf.indexOf(a) >= 0 ? d.pb : 0) - d.exhaustPenalty; });
     var bardLvl = lvlOf(c, "Bard"), jack = bardLvl >= 2;
     d.skills = {};
     Object.keys(SKILLS).forEach(function (s) {
       var prof = (c.dovednosti || []).indexOf(s) >= 0, exp = (c.expertiza || []).indexOf(s) >= 0;
-      d.skills[s] = { val: d.mods[SKILLS[s]] + (prof ? d.pb : 0) + (exp ? d.pb : 0) + (!prof && jack ? Math.floor(d.pb / 2) : 0), prof: prof, exp: exp };
+      d.skills[s] = { val: d.mods[SKILLS[s]] + (prof ? d.pb : 0) + (exp ? d.pb : 0) + (!prof && jack ? Math.floor(d.pb / 2) : 0) - d.exhaustPenalty, prof: prof, exp: exp };
     });
     d.passive = 10 + d.skills.Perception.val;
-    d.init = d.mods.DEX + (has(c.featy, "Alert") ? d.pb : 0);
+    d.init = d.mods.DEX + (has(c.featy, "Alert") ? d.pb : 0) - d.exhaustPenalty;
     // AC
     var z = c.zbroj || { typ: "none" }, ac;
     if (z.typ === "heavy") ac = Number(z.zakladni_ac);
@@ -90,7 +175,7 @@
     var monk = lvlOf(c, "Monk"); if (monk && z.typ === "none") { var um = (row("Monk", monk)["Unarmored Movement"] || "").match(/\d+/); if (um) sp += Number(um[0]); }
     if (has(c.featy, "Speedy")) sp += 10;
     if (has(c.featy, "Boon of Speed")) sp += 30;
-    d.speed = c.rychlost_rucne || sp;
+    d.speed = Math.max(0, Number(c.rychlost_rucne || sp) - d.exhaustion * 5);
     // kouzlení
     d.casting = []; var cl = 0, n = 0, single = null;
     tridy.forEach(function (t) {
@@ -105,11 +190,11 @@
     if (n === 1) { var lv = Number(single[0].uroven); cl = single[1] === 1 ? lv : single[1] === 2 ? Math.ceil(lv / 2) : Math.ceil(lv / 3); }
     d.slots = MULTI[Math.min(cl, 20)] || [];
     if (window.MontelienPravidla) { var ed = window.MontelienPravidla.init(R).derive(c); d.slots = ed.slots; if (ed.pact) d.pact = { pocet: ed.pact.pocet, uroven: ed.pact.uroven }; }
-    d.casting.forEach(function (x) { x.dc = 8 + d.pb + d.mods[x.ab]; x.atk = d.pb + d.mods[x.ab]; });
+    d.casting.forEach(function (x) { x.dc = 8 + d.pb + d.mods[x.ab]; x.atk = d.pb + d.mods[x.ab] - d.exhaustPenalty; });
     var b = c.boj || {}, bestAtk = 0;
-    (c.utoky || []).forEach(function (u) { var a = u.atribut === "FIN" ? Math.max(d.mods.STR, d.mods.DEX) : u.atribut === "SPELL" ? (d.casting[0] ? d.mods[d.casting[0].ab] : 0) : d.mods[u.atribut || "STR"] || 0; bestAtk = Math.max(bestAtk, a + d.pb + (Number(u.bonus) || 0)); });
+    (c.utoky || []).forEach(function (u) { var a = u.atribut === "FIN" ? Math.max(d.mods.STR, d.mods.DEX) : u.atribut === "SPELL" ? (d.casting[0] ? d.mods[d.casting[0].ab] : 0) : d.mods[u.atribut || "STR"] || 0; bestAtk = Math.max(bestAtk, a + d.pb + (Number(u.bonus) || 0) - d.exhaustPenalty); });
     var bestDc = d.casting.reduce(function (m, x) { return Math.max(m, x.dc); }, 0);
-    var au = autoDpr(c, d); d.dprAuto = au.dpr; d.dprPopis = au.popis; if (!bestAtk) bestAtk = au.atk;
+    var au = autoDpr(c, d); d.dprAuto = au.dpr; d.dprPopis = au.popis; if (!bestAtk) bestAtk = au.atk - d.exhaustPenalty;
     d.dpr = Number(b.dpr) || d.dprAuto;
     d.cr = computeCR(d.hp, d.ac, d.dpr, bestAtk, bestDc);
     return d;
@@ -165,12 +250,15 @@
   function render(c, d, cesta, portraitUrl) {
     var bg = R.pozadi[c.pozadi] || {}, sp = R.druhy[c.druh] || {}, bj = c.boj || {}, o = c.osobnost || {}, key = "ps-hp:" + (cesta || c.jmeno);
     var initials = String(c.jmeno || "?").split(/\s+/).map(function (w) { return w[0]; }).join("").slice(0, 2);
-    var h = '<div class="ps ps2">';
-    // ---- hlavička ----
-    h += '<header class="p2-hero' + (portraitUrl ? ' p2-hero-portret' : '') + '"><div class="p2-crest' + (portraitUrl ? ' p2-crest-portret' : '') + '">' + (portraitUrl ? '<a class="p2-portret" href="' + esc(portraitUrl) + '" target="_blank" rel="noopener"><img src="' + esc(portraitUrl) + '" alt="' + esc(c.jmeno) + '"></a>' : '<span>' + esc(initials) + '</span>') + '<div class="p2-lvl" title="Celková úroveň">' + d.lvl + '</div></div>'
-      + '<div class="p2-id"><h2 class="p2-name">' + esc(c.jmeno) + '</h2><div class="p2-title">' + esc(c.titul || "") + '</div><div class="p2-chips">'
+    var xpHtml = "";
+    if (c.xp != null && c.xp !== "" && Number.isFinite(Number(c.xp))) xpHtml = '<div class="p2-xp">XP ' + Number(c.xp).toLocaleString("cs-CZ") + (d.lvl < 20 ? ' / ' + XP_LEVELS[d.lvl].toLocaleString("cs-CZ") + ' to level ' + (d.lvl + 1) : ' · Level 20') + '</div>';
+    var h = '<div class="ps ps2"><div class="p2-top' + (portraitUrl ? ' p2-top-portret' : '') + '">';
+    if (portraitUrl) h += '<div class="p2-portrait"><div class="p2-crest p2-crest-portret"><a class="p2-portret" href="' + esc(portraitUrl) + '" target="_blank" rel="noopener"><img src="' + esc(portraitUrl) + '" alt="' + esc(c.jmeno) + '"></a><div class="p2-lvl" title="Celková úroveň">' + d.lvl + '</div></div></div>';
+    h += '<div class="p2-top-main"><header class="p2-hero">';
+    if (!portraitUrl) h += '<div class="p2-crest"><span>' + esc(initials) + '</span><div class="p2-lvl" title="Celková úroveň">' + d.lvl + '</div></div>';
+    h += '<div class="p2-id"><h2 class="p2-name">' + esc(c.jmeno) + '</h2><div class="p2-title">' + esc(c.titul || "") + '</div><div class="p2-chips">'
       + (c.tridy || []).map(function (t) { return '<span class="p2-chip p2-class">' + esc(t.trida) + ' ' + t.uroven + (t.podtrida ? ' · ' + esc(t.podtrida) : '') + '</span>'; }).join("")
-      + '<span class="p2-chip">' + esc(c.druh || "—") + '</span><span class="p2-chip">' + esc(c.pozadi || "—") + '</span><span class="p2-chip">' + esc(c.zarovnani || "—") + '</span><span class="p2-chip">' + esc(c.velikost || "Medium") + '</span></div></div>'
+      + '<span class="p2-chip">' + esc(c.druh || "—") + '</span><span class="p2-chip">' + esc(c.pozadi || "—") + '</span><span class="p2-chip">' + esc(c.zarovnani || "—") + '</span><span class="p2-chip">' + esc(c.velikost || "Medium") + '</span></div>' + xpHtml + (d.exhaustion ? '<span class="p2-exhaust-warning">Exhaustion ' + d.exhaustion + ' · −' + d.exhaustPenalty + ' D20 · −' + (d.exhaustion * 5) + ' ft Speed' + (d.exhaustion === 6 ? ' · Death' : '') + '</span>' : '') + '</div>'
       + '<div class="p2-cr"><div class="p2-cr-v" title="obrana CR ' + d.cr.def + ' · útok CR ' + d.cr.off + '">' + d.cr.cr + '</div><div class="p2-cr-l">CR (odhad)</div><div class="p2-cr-x">' + d.cr.xp + ' XP' + (bj.cr_rucne ? '<br>' + esc(bj.cr_rucne) : '') + '</div></div></header>';
     if (cesta && document.body.classList.contains("ed-on")) h += '<div class="ps-edit"><button class="ed-btn" data-ps-lvl>⬆ Level up</button> <button class="ed-btn ed-primary" data-ps-edit>✎ Upravit postavu</button></div>';
     // ---- životní hodnoty ----
@@ -179,32 +267,35 @@
       + stat("Iniciativa", '<a class="ps-roll" data-roll="1d20' + sg(d.init) + '" data-label="Iniciativa">' + sg(d.init) + '</a>') + stat("Rychlost", d.speed + ' ft') + stat("Proficiency", sg(d.pb)) + stat("Pasivní Perception", d.passive) + stat("Hit Dice", d.dice + ' <small class="ps-hdleft" data-key="' + esc(key) + '" data-total="' + d.lvl + '"></small>') + stat("DPR", bj.dpr ? esc(bj.dpr) : '<span title="Automatický odhad: ' + esc(d.dprPopis || "") + ' (ručně: Upravit postavu → Připravenost na boj)">~' + d.dprAuto + '</span>') + '</div>'
       + '<div class="p2-rest"><button class="ed-btn" data-rest="short" title="Short Rest: utratit Hit Dice, obnovit Pact Magic a zdroje na krátký odpočinek">☀ Short Rest</button><button class="ed-btn" data-rest="long" title="Long Rest: plné HP, všechny sloty, zdroje a Hit Dice">☾ Long Rest</button></div>';
     // ---- atributy ----
-    h += '<div class="p2-abil">' + AB.map(function (a) { return '<div class="p2-ab"><div class="p2-ab-n">' + AB_CZ[a] + '</div><a class="p2-ab-mod ps-roll" data-roll="1d20' + sg(d.mods[a]) + '" data-label="' + AB_CZ[a] + '">' + sg(d.mods[a]) + '</a><div class="p2-ab-s">' + esc((c.atributy || {})[a]) + '</div><a class="p2-ab-save ps-roll' + (d.saveProf.indexOf(a) >= 0 ? ' p' : '') + '" data-roll="1d20' + sg(d.saves[a]) + '" data-label="Záchrana ' + a + '">záchrana ' + sg(d.saves[a]) + '</a></div>'; }).join("") + '</div>';
+    h += '<div class="p2-abil">' + AB.map(function (a) { return '<div class="p2-ab"><div class="p2-ab-n">' + AB_CZ[a] + '</div><a class="p2-ab-mod ps-roll" data-roll="1d20' + sg(d.checkMods[a]) + '" data-label="' + AB_CZ[a] + '">' + sg(d.checkMods[a]) + '</a><div class="p2-ab-s">' + esc((c.atributy || {})[a]) + '</div><a class="p2-ab-save ps-roll' + (d.saveProf.indexOf(a) >= 0 ? ' p' : '') + '" data-roll="1d20' + sg(d.saves[a]) + '" data-label="Záchrana ' + a + '">záchrana ' + sg(d.saves[a]) + '</a></div>'; }).join("") + '</div>';
+    h += trackerHtml(c, key) + '</div></div>';
     // ---- záložky ----
     var tabs = [];
     // Boj
     var atk = '<table class="p2-tab"><tr><th>Útok</th><th>Zásah</th><th>Zranění</th><th>Mastery / pozn.</th></tr>' + (c.utoky || []).map(function (u) {
       var a = u.atribut === "FIN" ? Math.max(d.mods.STR, d.mods.DEX) : u.atribut === "SPELL" ? (d.casting[0] ? d.mods[d.casting[0].ab] : 0) : d.mods[u.atribut || "STR"] || 0;
-      var bon = a + d.pb + (Number(u.bonus) || 0), dm = (u.bez_modu ? 0 : a) + (Number(u.bonus) || 0) + (Number(u.bonus_zraneni) || 0);
+      var bon = a + d.pb + (Number(u.bonus) || 0) - d.exhaustPenalty, dm = (u.bez_modu ? 0 : a) + (Number(u.bonus) || 0) + (Number(u.bonus_zraneni) || 0);
       return '<tr><td><b>' + esc(u.nazev) + '</b>' + (u.dosah ? '<br><small>' + esc(u.dosah) + '</small>' : '') + '</td><td>' + (u.bez_hodu ? "—" : '<a class="p2-pill ps-roll" data-roll="1d20' + sg(bon) + '" data-label="' + esc(u.nazev) + ' – útok">' + sg(bon) + '</a>') + '</td><td>' + (u.kostka ? '<a class="p2-pill p2-dmg ps-roll" data-roll="' + esc(u.kostka) + (dm ? sg(dm) : "") + '" data-label="' + esc(u.nazev) + ' – zásah">' + esc(u.kostka) + (dm ? " " + sg(dm) : "") + '</a> ' : '') + '<small>' + esc(u.typ || "") + '</small></td><td><small>' + esc([u.mastery, u.poznamka].filter(Boolean).join(" · ")) + '</small></td></tr>';
     }).join("") + '</table>';
     var res = [];
+    var defenseRows = [["Resistance", listValues(c.odolnosti).join(", ")], ["Immunity", listValues(c.imunity).join(", ")], ["Vulnerability", listValues(c.zranitelnosti).join(", ")], ["Senses", sensesFor(c, sp).join(", ")]].filter(function (x) { return x[1]; });
+    var defenseCard = defenseRows.length ? card("Obrany a smysly", '<dl class="p2-dl">' + defenseRows.map(function (x) { return '<dt>' + x[0] + '</dt><dd>' + esc(x[1]) + '</dd>'; }).join("") + '</dl>') : "";
     (c.tridy || []).forEach(function (t) { var r = row(t.trida, t.uroven); Object.keys(r).forEach(function (k) { if (SKIP_COLS.indexOf(k) < 0 && r[k] && r[k] !== "-") res.push([t.trida + ": " + k, r[k]]); }); });
     (c.zdroje || []).forEach(function (z) { res.push([z.nazev, z.pocet + (z.obnova ? " / " + z.obnova : "")]); });
-    tabs.push(["Boj", '<div class="p2-2col"><div>' + card("Útoky", atk) + (res.length ? card("Zdroje povolání", '<ul class="p2-res">' + res.map(function (r) { var n = /^\d+$/.test(String(r[1]).trim()) ? Number(r[1]) : 0, nm = String(r[0]).replace(/^.*?: /, ""), sr = SR_RES[nm] || (/short|krátk/i.test(String(r[1])) ? "all" : ""); return "<li><span>" + esc(r[0]) + "</span><b>" + esc(r[1]) + "</b>" + (n && n <= 20 ? ' <span class="p2-pips" data-k="' + esc(key + ':z:' + r[0]) + '" data-sr="' + sr + '">' + pips(n) + '</span>' : '') + "</li>"; }).join("") + '</ul>') : '') + '</div><div>'
+    tabs.push(["Boj", '<div class="p2-2col"><div>' + card("Útoky", atk) + defenseCard + (res.length ? card("Zdroje povolání", '<ul class="p2-res">' + res.map(function (r) { var n = /^\d+$/.test(String(r[1]).trim()) ? Number(r[1]) : 0, nm = String(r[0]).replace(/^.*?: /, ""), sr = SR_RES[nm] || (/short|krátk/i.test(String(r[1])) ? "all" : ""); return "<li><span>" + esc(r[0]) + "</span><b>" + esc(r[1]) + "</b>" + (n && n <= 20 ? ' <span class="p2-pips" data-k="' + esc(key + ':z:' + r[0]) + '" data-sr="' + sr + '">' + pips(n) + '</span>' : '') + "</li>"; }).join("") + '</ul>') : '') + '</div><div>'
       + card("V tahu", actList("Akce", bj.akce) + actList("Bonusové akce", bj.bonusove_akce) + actList("Reakce", bj.reakce) + actList("Legendární akce", bj.legendarni) + (bj.taktika ? '<p class="p2-tactic">' + para(bj.taktika) + '</p>' : '')) + '</div></div>']);
     // Dovednosti
     tabs.push(["Dovednosti", '<div class="p2-2col"><div>' + card("Dovednosti", '<ul class="p2-skills">' + Object.keys(SKILLS).sort().map(function (s) { var k = d.skills[s]; return '<li class="' + (k.exp ? "e" : k.prof ? "p" : "") + '"><i></i><span>' + s + ' <small>' + SKILLS[s] + '</small></span><a class="ps-roll" data-roll="1d20' + sg(k.val) + '" data-label="' + s + '">' + sg(k.val) + '</a></li>'; }).join("") + '</ul>') + '</div><div>'
       + card("Výcvik a zdatnosti", '<dl class="p2-dl"><dt>Zbroj</dt><dd>' + esc(train(c, "Armor Training")) + '</dd><dt>Zbraně</dt><dd>' + esc(train(c, "Weapon Proficiencies")) + '</dd>' + (c.mastery && c.mastery.length ? '<dt>Weapon Mastery</dt><dd>' + esc(c.mastery.join(", ")) + '</dd>' : '') + '<dt>Nástroje</dt><dd>' + esc((c.nastroje || []).join(", ") || "—") + '</dd><dt>Jazyky</dt><dd>' + esc((c.jazyky || []).join(", ") || "—") + '</dd>' + (c.zbroj && c.zbroj.nazev ? '<dt>Zbroj na sobě</dt><dd>' + esc(c.zbroj.nazev) + (c.zbroj.stit ? " + Shield" : "") + '</dd>' : '') + '</dl>') + '</div></div>']);
     // Kouzla
     if (true) {
-      var s = '<div class="p2-cast">' + d.casting.map(function (x) { var r = row(x.trida.split(" ")[0], lvlOf(c, x.trida.split(" ")[0])); return '<div class="p2-castbox"><div class="p2-l">' + esc(x.trida) + ' · ' + x.ab + '</div><div><b>DC ' + x.dc + '</b> · útok <a class="ps-roll" data-roll="1d20' + sg(x.atk) + '" data-label="Spell attack">' + sg(x.atk) + '</a></div><small>' + (r["Prepared Spells"] ? "připravených " + r["Prepared Spells"] : "") + (r.Cantrips ? " · cantripů " + r.Cantrips : "") + '</small></div>'; }).join("") + '</div>';
+      var s = '<div class="p2-cast">' + d.casting.map(function (x) { var r = row(x.trida.split(" ")[0], lvlOf(c, x.trida.split(" ")[0])); return '<div class="p2-castbox"><div class="p2-l">' + esc(x.trida) + ' · Spellcasting ability ' + x.ab + '</div><div><b>Spell save DC ' + x.dc + '</b> · Spell attack <a class="ps-roll" data-roll="1d20' + sg(x.atk) + '" data-label="Spell attack">' + sg(x.atk) + '</a></div><small>' + (r["Prepared Spells"] ? "připravených " + r["Prepared Spells"] : "") + (r.Cantrips ? " · cantripů " + r.Cantrips : "") + '</small></div>'; }).join("") + '</div>';
       var byLvl = {}; (c.kouzla || []).forEach(function (k) { var l = k.uroven != null ? Number(k.uroven) : ((R.spell(k.nazev) || {}).uroven); if (l == null) l = "?"; (byLvl[l] = byLvl[l] || []).push(k); });
       s += '<div class="p2-spells">';
       for (var l = 0; l <= 9; l++) {
         var slots = l ? (d.slots[l - 1] || 0) : 0, pact = d.pact && Number(d.pact.uroven) === l ? Number(d.pact.pocet) : 0;
         if (!byLvl[l] && !slots && !pact) continue;
-        s += '<div class="p2-sl"><div class="p2-sl-h"><span>' + (l ? l + '. úroveň' : 'Cantripy') + '</span><span class="p2-pips" data-k="' + esc(key + ':s' + l) + '">' + pips(slots) + '</span>' + (pact ? ' <em title="Pact Magic (obnova po Short i Long Rest)">pakt <span class="p2-pips" data-k="' + esc(key + ':p') + '">' + pips(pact) + '</span></em>' : '') + '</div><ul>' + (byLvl[l] || []).map(function (k) { var r = R.spell(k.nazev); return '<li><a href="#" class="kz-link" data-kouzlo="' + esc(k.nazev) + '">' + esc(k.nazev) + '</a>' + (r ? ' <small>' + esc(r.skola) + '</small>' : ' <small class="ps-warn">mimo seznam 2024?</small>') + (k.poznamka ? ' <small>– ' + esc(k.poznamka) + '</small>' : '') + '</li>'; }).join("") + '</ul></div>';
+        s += '<div class="p2-sl"><div class="p2-sl-h"><span>' + (l ? l + '. úroveň' : 'Cantripy') + '</span><span class="p2-pips" data-k="' + esc(key + ':s' + l) + '">' + pips(slots) + '</span>' + (pact ? ' <em title="Pact Magic (obnova po Short i Long Rest)">pakt <span class="p2-pips" data-k="' + esc(key + ':p') + '">' + pips(pact) + '</span></em>' : '') + '</div><ul>' + (byLvl[l] || []).map(function (k) { var r = R.spell(k.nazev), meta = spellMeta(k.nazev), markers = meta ? (/(?:^|, )?ritual|ritual/i.test(meta.cas || "") ? " · R" : "") + (/concentration/i.test(meta.trvani || "") ? " · C" : "") : "", timing = meta ? [meta.cas, meta.dosah].filter(Boolean).join(" · ") : ""; return '<li><a href="#" class="kz-link" data-kouzlo="' + esc(k.nazev) + '">' + esc(k.nazev) + '</a>' + (r ? ' <small>' + esc(r.skola) + '</small>' : ' <small class="ps-warn">mimo seznam 2024?</small>') + (timing || markers ? '<br><small class="p2-spell-meta">' + esc(timing + markers) + '</small>' : '') + (k.poznamka ? ' <small>– ' + esc(k.poznamka) + '</small>' : '') + '</li>'; }).join("") + '</ul></div>';
       }
       if (byLvl["?"]) s += '<div class="p2-sl"><div class="p2-sl-h">Neznámá úroveň</div><ul>' + byLvl["?"].map(function (k) { return "<li>" + esc(k.nazev) + "</li>"; }).join("") + '</ul></div>';
       if (!d.casting.length && !(c.kouzla || []).length) s += '<p class="ps-note">Postava nemá rys Spellcasting. Kouzla jí může přidat PJ (např. z featu, předmětu nebo požehnání) tlačítkem <b>+ Kouzlo dle PJ</b> v režimu úprav.</p>';
@@ -218,7 +309,8 @@
       + card("Featy", (c.featy || []).map(function (f) { var r = R.featy[f.nazev] || {}; return detR(esc(f.nazev) + ' <small>' + esc(f.zdroj || "") + '</small>', (f.poznamka ? "Volba: " + f.poznamka + "\n" : "") + (r.text || "")); }).join(""))
       + (c.vlastni_rysy && c.vlastni_rysy.length ? card("Zvláštní a božské rysy", c.vlastni_rysy.map(function (f) { return det(esc(f.nazev), f.text); }).join("")) : '') + '</div></div>']);
     // Výbava
-    tabs.push(["Výbava", '<div class="p2-2col"><div>' + card("Výbava", '<ul class="p2-gear">' + (c.vybava || []).map(function (v) { return "<li>" + esc(v) + "</li>"; }).join("") + '</ul>') + '</div><div>' + (c.penize ? card("Peníze", '<div class="p2-coins">' + Object.keys(c.penize).map(function (k) { return '<span><b>' + esc(c.penize[k]) + '</b> ' + esc(k) + '</span>'; }).join("") + '</div>') : '') + '</div></div>']);
+    var attunement = listValues(c.naladeni), attSlots = [0, 1, 2].map(function (i) { return '<li' + (attunement[i] ? ' class="filled"' : '') + '>' + (attunement[i] ? esc(attunement[i]) : 'Empty') + '</li>'; }).join("");
+    tabs.push(["Výbava", '<div class="p2-2col"><div>' + card("Výbava", '<ul class="p2-gear">' + (c.vybava || []).map(function (v) { return "<li>" + esc(v) + "</li>"; }).join("") + '</ul>') + card("Attunement", '<ol class="p2-attunement">' + attSlots + '</ol>' + (attunement.length > 3 ? '<p class="ps-warn">More than 3 items are attuned; the limit is three.</p>' : '')) + '</div><div>' + (c.penize ? card("Peníze", '<div class="p2-coins">' + Object.keys(c.penize).map(function (k) { return '<span><b>' + esc(c.penize[k]) + '</b> ' + esc(k) + '</span>'; }).join("") + '</div>') : '') + '</div></div>']);
     // Příběh
     tabs.push(["Příběh", '<div class="p2-2col"><div>' + card("Osobnost", '<dl class="p2-dl"><dt>Rysy</dt><dd>' + esc(o.rysy || "—") + '</dd><dt>Ideály</dt><dd>' + esc(o.idealy || "—") + '</dd><dt>Pouta</dt><dd>' + esc(o.pouta || "—") + '</dd><dt>Vady</dt><dd>' + esc(o.vady || "—") + '</dd></dl>') + (c.vzhled ? card("Vzhled", '<p>' + para(c.vzhled) + '</p>') : '') + '</div><div>'
       + card("Pozadí: " + esc(c.pozadi || "—"), bg.feat ? '<dl class="p2-dl"><dt>Atributy</dt><dd>' + esc(bg.atributy) + '</dd><dt>Origin feat</dt><dd>' + esc(bg.feat) + '</dd><dt>Dovednosti</dt><dd>' + esc(bg.dovednosti) + '</dd><dt>Nástroj</dt><dd>' + esc(bg.nastroj) + '</dd></dl>' : '<p>—</p>')
@@ -269,7 +361,12 @@
     var w = root.querySelector(".ps-hptrack"); if (!w) return;
     var key = w.dataset.key, max = Number(w.dataset.max), cur = w.querySelector(".ps-hpcur"), tmp = w.querySelector(".ps-hptmp");
     var st = JSON.parse(localStorage.getItem(key) || "null") || { hp: max, tmp: "" };
-    function save() { localStorage.setItem(key, JSON.stringify(st)); cur.value = st.hp; tmp.value = st.tmp; w.classList.toggle("ps-bloodied", st.hp <= max / 2); w.classList.toggle("ps-down", st.hp <= 0); var bar = w.querySelector(".p2-hpbar i"); if (bar) bar.style.width = Math.max(0, Math.min(100, 100 * st.hp / max)) + "%"; }
+    function save() {
+      localStorage.setItem(key, JSON.stringify(st));
+      if (Number(st.hp) > 0) { var session = sessionState(key); if (session.successes || session.failures) { session.successes = 0; session.failures = 0; saveSession(key, session); } }
+      cur.value = st.hp; tmp.value = st.tmp; w.classList.toggle("ps-bloodied", st.hp <= max / 2); w.classList.toggle("ps-down", st.hp <= 0);
+      var bar = w.querySelector(".p2-hpbar i"); if (bar) bar.style.width = Math.max(0, Math.min(100, 100 * st.hp / max)) + "%";
+    }
     w.addEventListener("click", function (e) {
       var b = e.target.dataset.hp; if (!b) return;
       if (b === "reset") { st.hp = max; st.tmp = ""; }
@@ -313,7 +410,7 @@
   // ---------- formulář ----------
   function editor(c, cesta) {
     var E = window.MontelienEditor; if (!E) return;
-    var data = JSON.parse(JSON.stringify(c)), el = E.el, body = el("div", { class: "pf" });
+    var data = JSON.parse(JSON.stringify(c)), armorDefault = !data.zbroj, el = E.el, body = el("div", { class: "pf" });
     var tabs = el("div", { class: "pf-tabs" }), panes = el("div");
     function tab(name, build) {
       var b = el("button", { class: "ed-btn" }, name), p = el("div", { class: "pf-pane" }); build(p);
@@ -364,6 +461,7 @@
       var dl = el("datalist", { id: "pf-species" }); species.forEach(function (s) { dl.appendChild(el("option", { value: s })); }); p.appendChild(dl);
       field(p, data, "druh_volby", "Volby druhu (lineage, ancestry…)"); field(p, data, "pozadi", "Pozadí (Background)", null, bgs);
       field(p, data, "zarovnani", "Přesvědčení (alignment)"); field(p, data, "velikost", "Velikost", null, ["Small", "Medium", "Large"]);
+      field(p, data, "xp", "Experience Points (XP)", "number"); strList(p, data, "smysly", "Senses");
       field(p, data, "vzhled", "Vzhled", "area"); field(p, data, "prevod_2024", "Převod na 2024", "area");
     });
     tab("Povolání a atributy", function (p) {
@@ -392,6 +490,7 @@
       data.zbroj = data.zbroj || { typ: "none" };
       field(p, data.zbroj, "nazev", "Zbroj"); field(p, data.zbroj, "typ", "Typ zbroje", null, ["none", "light", "medium", "heavy"]);
       field(p, data.zbroj, "zakladni_ac", "Základní AC zbroje", "number"); field(p, data.zbroj, "stit", "Štít (+2)", "check"); field(p, data.zbroj, "bonus", "Bonus k AC (magie…)", "number");
+      strList(p, data, "odolnosti", "Resistances"); strList(p, data, "imunity", "Immunities"); strList(p, data, "zranitelnosti", "Vulnerabilities");
       field(p, data, "ac_rucne", "AC ručně (přepíše výpočet)", "number"); field(p, data, "hp_rucne", "HP ručně (přepíše výpočet)", "number"); field(p, data, "rychlost_rucne", "Rychlost ručně", "number");
       list(p, data, "utoky", "Útoky", [["nazev", "Název"], ["atribut", "Atribut", ["STR", "DEX", "FIN", "SPELL", "CON", "INT", "WIS", "CHA"]], ["kostka", "Kostka"], ["typ", "Typ zranění"], ["mastery", "Mastery"], ["dosah", "Dosah"], ["bonus", "Bonus (útok i zásah)", "number"], ["bonus_zraneni", "Bonus jen k zásahu", "number"], ["poznamka", "Pozn."]]);
       list(p, data, "zdroje", "Další zdroje", [["nazev", "Název"], ["pocet", "Počet"], ["obnova", "Obnova"]]);
@@ -408,6 +507,7 @@
     });
     tab("Výbava a osobnost", function (p) {
       strList(p, data, "vybava", "Výbava");
+      strList(p, data, "naladeni", "Attunement");
       data.penize = data.penize || {}; ["GP", "SP", "CP", "PP"].forEach(function (k) { field(p, data.penize, k, k, "number"); });
       data.osobnost = data.osobnost || {}; [["rysy", "Rysy osobnosti"], ["idealy", "Ideály"], ["pouta", "Pouta"], ["vady", "Vady"]].forEach(function (x) { field(p, data.osobnost, x[0], x[1], "area"); });
       field(p, data, "poznamky", "Poznámky", "area");
@@ -422,6 +522,9 @@
     var m = E.modal("Upravit postavu – " + (c.jmeno || ""), body, [{ text: "Uložit", primary: true, click: function () {
       var out = data;
       if (raw && raw.value !== raw.dataset.orig) { try { out = JSON.parse(raw.value); } catch (e) { return alert("Chybný JSON: " + e.message); } }
+      else if (armorDefault && data.zbroj && data.zbroj.typ === "none" && Object.keys(data.zbroj).length === 1) delete data.zbroj;
+      var cleaned = compactPostava(out) || {};
+      out = JSON.stringify(cleaned) === JSON.stringify(compactPostava(c) || {}) ? JSON.parse(JSON.stringify(c)) : cleaned;
       document.body.classList.add("ed-busy");
       E.api("PUT", "postava", { cesta: cesta, postava: out }).then(function () { location.reload(); })
         .catch(function (e) { document.body.classList.remove("ed-busy"); alert("Chyba: " + e.message); });
@@ -662,6 +765,7 @@
     if (kind === "long") {
       if (!confirm("Long Rest (8 hodin): plné HP, všechny spell sloty, zdroje a Hit Dice. Pokračovat?")) return;
       st = { hp: d.hp, tmp: "" }; used = 0; clear(key + ":s"); clear(key + ":p"); clear(key + ":z:");
+      var session = sessionState(key); session.successes = 0; session.failures = 0; session.exhaustion = Math.max(0, session.exhaustion - 1); session.concentrating = false; session.concentrationSpell = ""; saveSession(key, session);
       msg.push("Long Rest: HP " + d.hp + ", sloty a zdroje obnoveny, Hit Dice " + d.lvl + "/" + d.lvl + ".");
     } else {
       var left = d.lvl - used, n = prompt("Short Rest (1 hodina). Kolik Hit Dice utratíš? Zbývá " + left + " (" + d.dice + ").", left > 0 && st.hp < d.hp ? "1" : "0");
@@ -694,12 +798,12 @@
     var c = JSON.parse(dataEl.textContent), portraitUrl = holder.dataset.portretUrl || "", src = document.getElementById("zdroj-stranky"), cesta = src && src.dataset.cesta;
     rules().then(function () {
       var draw = function () {
-        holder.innerHTML = render(c, compute(c), cesta, portraitUrl); hpTracker(holder); sheetUi(holder);
+        holder.innerHTML = render(c, compute(c, cesta), cesta, portraitUrl); hpTracker(holder); sheetUi(holder); bindTrackers(holder, "ps-hp:" + (cesta || c.jmeno), draw);
         var b = holder.querySelector("[data-ps-edit]"); if (b) b.addEventListener("click", function () { editor(c, cesta); });
         var lb = holder.querySelector("[data-ps-lvl]"); if (lb) lb.addEventListener("click", function () { levelUpUi(c, cesta); });
         var sb = holder.querySelector("[data-ps-spells]"); if (sb) sb.addEventListener("click", function () { spellUi(c, cesta, "free"); });
         var db = holder.querySelector("[data-ps-dmspell]"); if (db) db.addEventListener("click", function () { dmSpellUi(c, cesta); });
-        holder.querySelectorAll("[data-rest]").forEach(function (b) { b.addEventListener("click", function () { rest(b.dataset.rest, c, compute(c), cesta, "ps-hp:" + (cesta || c.jmeno)); }); });
+        holder.querySelectorAll("[data-rest]").forEach(function (b) { b.addEventListener("click", function () { rest(b.dataset.rest, c, compute(c, cesta), cesta, "ps-hp:" + (cesta || c.jmeno)); }); });
         hdLeft(holder);
         var hm = location.hash.match(/^#kouzla-(lvl|lr|sr|free)(?:-(\d+))?$/);
         if (hm && cesta) { var tt = setInterval(function () { if (document.body.classList.contains("ed-on")) { clearInterval(tt); history.replaceState(null, "", location.pathname); spellUi(c, cesta, hm[1], Number(hm[2]) || 1); } }, 200); setTimeout(function () { clearInterval(tt); }, 6000); }
