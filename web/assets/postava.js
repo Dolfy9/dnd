@@ -76,20 +76,28 @@
   function concentrationSpells(c) {
     return (c.kouzla || []).map(function (k) { var m = spellMeta(k.nazev); return m && /concentration/i.test(m.trvani || "") ? k.nazev : ""; }).filter(Boolean);
   }
+  function inspirationHtml(key) {
+    var active = sessionState(key).inspiration;
+    return '<button type="button" class="p2-inspiration' + (active ? " on" : "") + '" data-inspiration aria-pressed="' + active + '"><span aria-hidden="true">' + (active ? "★" : "☆") + '</span> Inspirace</button>';
+  }
   function trackerHtml(c, key) {
     var s = sessionState(key), known = concentrationSpells(c), spellOptions = known.map(function (n) { return '<option value="' + esc(n) + '"' + (s.concentrationSpell === n ? " selected" : "") + '>' + esc(n) + '</option>'; }).join(""),
       concentrationInput = known.length ? '<select data-concentration-spell><option value="">Vyber kouzlo</option>' + spellOptions + '</select>' : '<input data-concentration-spell type="text" value="' + esc(s.concentrationSpell) + '" placeholder="Spell name">';
-    return '<div class="p2-trackers"><div class="p2-tr-card"><button type="button" class="p2-inspiration' + (s.inspiration ? " on" : "") + '" data-inspiration aria-pressed="' + s.inspiration + '">Heroic Inspiration</button></div>'
-      + '<div class="p2-tr-card"><b>Death Saves</b><div class="p2-death"><span>Success</span>' + [1, 2, 3].map(function (i) { return '<button type="button" class="p2-death-pip' + (i <= s.successes ? " on" : "") + '" data-death="success" data-step="' + i + '" aria-label="Success ' + i + '"></button>'; }).join("") + '<span>Failure</span>' + [1, 2, 3].map(function (i) { return '<button type="button" class="p2-death-pip fail' + (i <= s.failures ? " on" : "") + '" data-death="failure" data-step="' + i + '" aria-label="Failure ' + i + '"></button>'; }).join("") + '</div></div>'
-      + '<div class="p2-tr-card"><b>Exhaustion</b><div class="p2-exhaustion"><button type="button" data-exhaustion="-1" aria-label="Snížit Exhaustion">−</button><strong>' + s.exhaustion + '</strong><button type="button" data-exhaustion="1" aria-label="Zvýšit Exhaustion">+</button>' + (s.exhaustion ? '<small>−' + (s.exhaustion * 2) + ' D20 · −' + (s.exhaustion * 5) + ' ft</small>' : '') + (s.exhaustion === 6 ? '<em>Death</em>' : '') + '</div></div>'
-      + '<div class="p2-tr-card p2-concentration"><label><input type="checkbox" data-concentrating' + (s.concentrating ? " checked" : "") + '> Concentration</label>' + concentrationInput + '</div>'
-      + '<div class="p2-condition-list"><b>Conditions</b><div>' + CONDITIONS.map(function (name) { var active = s.conditions.indexOf(name) >= 0; return '<span class="p2-condition' + (active ? " on" : "") + '"><button type="button" data-condition="' + esc(name) + '" aria-pressed="' + active + '">' + esc(name) + '</button><a href="#srd-glosar-' + encodeURIComponent(name).replace(/%20/g, "_") + '" aria-label="Glossary: ' + esc(name) + '" title="Open glossary">?</a></span>'; }).join("") + '</div></div></div>';
+    var activeConditions = s.conditions.map(function (name) {
+      return '<span class="p2-condition on"><button type="button" data-condition="' + esc(name) + '" aria-label="Remove ' + esc(name) + '">' + esc(name) + ' ×</button><a href="#srd-glosar-' + encodeURIComponent(name).replace(/%20/g, "_") + '" aria-label="Glossary: ' + esc(name) + '" title="Open glossary">?</a></span>';
+    }).join(""), available = CONDITIONS.filter(function (name) { return s.conditions.indexOf(name) < 0; });
+    return '<div class="p2-trackers p2-status"><div class="p2-tr-card p2-death-card"><b>Death Saves</b><div class="p2-death"><span aria-label="Successes">✓</span>' + [1, 2, 3].map(function (i) { return '<button type="button" class="p2-death-pip' + (i <= s.successes ? " on" : "") + '" data-death="success" data-step="' + i + '" aria-label="Success ' + i + '"></button>'; }).join("") + '<span aria-label="Failures">✕</span>' + [1, 2, 3].map(function (i) { return '<button type="button" class="p2-death-pip fail' + (i <= s.failures ? " on" : "") + '" data-death="failure" data-step="' + i + '" aria-label="Failure ' + i + '"></button>'; }).join("") + '</div></div>'
+      + '<div class="p2-tr-card p2-exhaust-card"><b>Exhaustion</b><div class="p2-exhaustion"><button type="button" data-exhaustion="-1" aria-label="Snížit Exhaustion">−</button><strong>' + s.exhaustion + '</strong><button type="button" data-exhaustion="1" aria-label="Zvýšit Exhaustion">+</button></div>' + (s.exhaustion ? '<small class="p2-exhaust-effect">−' + (s.exhaustion * 2) + ' D20 · −' + (s.exhaustion * 5) + ' ft' + (s.exhaustion === 6 ? ' · Death' : '') + '</small>' : '') + '</div>'
+      + '<div class="p2-tr-card p2-concentration"><b>Concentration</b><label><input type="checkbox" data-concentrating' + (s.concentrating ? " checked" : "") + '> Aktivní</label>' + concentrationInput + '</div>'
+      + '<div class="p2-condition-list"><b>Conditions</b><div class="p2-active-conditions">' + (activeConditions || '<span class="p2-condition-empty">Žádné</span>') + '</div><select data-condition-add aria-label="Přidat stav"><option value="">+ Stav</option>' + available.map(function (name) { return '<option value="' + esc(name) + '">' + esc(name) + '</option>'; }).join("") + '</select></div>'
+      + '<div class="p2-rest"><button class="ed-btn" data-rest="short" title="Short Rest: utratit Hit Dice, obnovit Pact Magic a zdroje na krátký odpočinek">☀ Short Rest</button><button class="ed-btn ed-primary" data-rest="long" title="Long Rest: plné HP, všechny sloty, zdroje a Hit Dice">☾ Long Rest</button></div></div>';
   }
   function bindTrackers(root, key, draw) {
-    var w = root.querySelector(".p2-trackers"); if (!w) return;
-    w.addEventListener("click", function (e) {
+    if (root.dataset.trackersBound) return;
+    root.dataset.trackersBound = "1";
+    root.addEventListener("click", function (e) {
       var s = sessionState(key), b = e.target.closest("button");
-      if (!b) return;
+      if (!b || !root.contains(b)) return;
       if (b.hasAttribute("data-inspiration")) s.inspiration = !s.inspiration;
       else if (b.hasAttribute("data-exhaustion")) s.exhaustion = Math.max(0, Math.min(6, s.exhaustion + Number(b.dataset.exhaustion)));
       else if (b.hasAttribute("data-death")) s[b.dataset.death === "success" ? "successes" : "failures"] = Number(b.dataset.step) <= s[b.dataset.death === "success" ? "successes" : "failures"] ? Number(b.dataset.step) - 1 : Number(b.dataset.step);
@@ -99,9 +107,10 @@
       } else return;
       saveSession(key, s); draw();
     });
-    w.addEventListener("change", function (e) {
+    root.addEventListener("change", function (e) {
       var s = sessionState(key);
-      if (e.target.hasAttribute("data-concentrating")) { s.concentrating = e.target.checked; if (!s.concentrating) s.concentrationSpell = ""; }
+      if (e.target.hasAttribute("data-condition-add")) { var name = e.target.value; if (name && s.conditions.indexOf(name) < 0) s.conditions.push(name); }
+      else if (e.target.hasAttribute("data-concentrating")) { s.concentrating = e.target.checked; if (!s.concentrating) s.concentrationSpell = ""; }
       else if (e.target.hasAttribute("data-concentration-spell")) { s.concentrationSpell = e.target.value; s.concentrating = !!e.target.value || s.concentrating; }
       else return;
       saveSession(key, s); draw();
@@ -251,23 +260,36 @@
     var bg = R.pozadi[c.pozadi] || {}, sp = R.druhy[c.druh] || {}, bj = c.boj || {}, o = c.osobnost || {}, key = "ps-hp:" + (cesta || c.jmeno);
     var initials = String(c.jmeno || "?").split(/\s+/).map(function (w) { return w[0]; }).join("").slice(0, 2);
     var xpHtml = "";
-    if (c.xp != null && c.xp !== "" && Number.isFinite(Number(c.xp))) xpHtml = '<div class="p2-xp">XP ' + Number(c.xp).toLocaleString("cs-CZ") + (d.lvl < 20 ? ' / ' + XP_LEVELS[d.lvl].toLocaleString("cs-CZ") + ' to level ' + (d.lvl + 1) : ' · Level 20') + '</div>';
-    var h = '<div class="ps ps2"><div class="p2-top' + (portraitUrl ? ' p2-top-portret' : '') + '">';
-    if (portraitUrl) h += '<div class="p2-portrait"><div class="p2-crest p2-crest-portret"><a class="p2-portret" href="' + esc(portraitUrl) + '" target="_blank" rel="noopener"><img src="' + esc(portraitUrl) + '" alt="' + esc(c.jmeno) + '"></a><div class="p2-lvl" title="Celková úroveň">' + d.lvl + '</div></div></div>';
-    h += '<div class="p2-top-main"><header class="p2-hero">';
-    if (!portraitUrl) h += '<div class="p2-crest"><span>' + esc(initials) + '</span><div class="p2-lvl" title="Celková úroveň">' + d.lvl + '</div></div>';
-    h += '<div class="p2-id"><h2 class="p2-name">' + esc(c.jmeno) + '</h2><div class="p2-title">' + esc(c.titul || "") + '</div><div class="p2-chips">'
+    if (c.xp != null && c.xp !== "" && Number.isFinite(Number(c.xp))) xpHtml = '<div class="p2-xp">XP ' + Number(c.xp).toLocaleString("cs-CZ") + (d.lvl < 20 ? ' / ' + XP_LEVELS[d.lvl].toLocaleString("cs-CZ") + ' · další úroveň ' + (d.lvl + 1) : ' · Level 20') + '</div>';
+    var senses = sensesFor(c, sp), languages = listValues(c.jazyky);
+    var defenses = [["Resistance", listValues(c.odolnosti)], ["Immunity", listValues(c.imunity)], ["Vulnerability", listValues(c.zranitelnosti)]].filter(function (x) { return x[1].length; });
+    var castingSummary = d.casting.map(function (x) { return '<li><b>' + esc(x.trida) + '</b> · ' + x.ab + '<br>DC ' + x.dc + ' · <a class="ps-roll" data-roll="1d20' + sg(x.atk) + '" data-label="Spell attack">' + sg(x.atk) + '</a></li>'; }).join("");
+    var overview = '<aside class="p2-overview"><h3>Přehled</h3>'
+      + (senses.length ? '<div><b>Senses</b><span>' + esc(senses.join(", ")) + '</span></div>' : '')
+      + (languages.length ? '<div><b>Languages</b><span>' + esc(languages.join(", ")) + '</span></div>' : '')
+      + (defenses.length ? '<div><b>Defenses</b><span>' + defenses.map(function (x) { return esc(x[0]) + ': ' + esc(x[1].join(", ")); }).join(" · ") + '</span></div>' : '')
+      + (castingSummary ? '<div><b>Spellcasting</b><ul>' + castingSummary + '</ul></div>' : '')
+      + '<div><b>Weapon Mastery</b><span>' + ((c.mastery || []).length) + ' proficiencies</span></div></aside>';
+    var toolbar = cesta && document.body.classList.contains("ed-on") ? '<div class="p2-toolbar"><button class="ed-btn" data-ps-lvl title="Level up">⬆</button><button class="ed-btn ed-primary" data-ps-edit title="Upravit postavu">✎</button></div>' : '';
+    var badgeXp = c.xp != null && c.xp !== "" && Number.isFinite(Number(c.xp)) ? xpHtml : "";
+    var diceCompact = String(d.dice).split(" + ").map(function (die) { var m = die.match(/(\d+)d(\d+)/); return m ? "d" + m[2] + "×" + m[1] : die; }).join(" · ");
+    var h = '<div class="ps ps2"><div class="p2-top">';
+    h += '<aside class="p2-portrait"><div class="p2-crest' + (portraitUrl ? ' p2-crest-portret' : ' p2-crest-initial') + '">'
+      + (portraitUrl ? '<a class="p2-portret" href="' + esc(portraitUrl) + '" target="_blank" rel="noopener"><img src="' + esc(portraitUrl) + '" alt="' + esc(c.jmeno) + '"></a>' : '<span>' + esc(initials) + '</span>')
+      + '<div class="p2-lvl" title="Celková úroveň">' + d.lvl + '</div></div></aside>' + overview;
+    h += '<div class="p2-top-main"><header class="p2-hero"><div class="p2-id"><div class="p2-identity-head"><div><h2 class="p2-name">' + esc(c.jmeno) + '</h2><div class="p2-title">' + esc(c.titul || "") + '</div></div>' + toolbar + '</div><div class="p2-chips">'
       + (c.tridy || []).map(function (t) { return '<span class="p2-chip p2-class">' + esc(t.trida) + ' ' + t.uroven + (t.podtrida ? ' · ' + esc(t.podtrida) : '') + '</span>'; }).join("")
-      + '<span class="p2-chip">' + esc(c.druh || "—") + '</span><span class="p2-chip">' + esc(c.pozadi || "—") + '</span><span class="p2-chip">' + esc(c.zarovnani || "—") + '</span><span class="p2-chip">' + esc(c.velikost || "Medium") + '</span></div>' + xpHtml + (d.exhaustion ? '<span class="p2-exhaust-warning">Exhaustion ' + d.exhaustion + ' · −' + d.exhaustPenalty + ' D20 · −' + (d.exhaustion * 5) + ' ft Speed' + (d.exhaustion === 6 ? ' · Death' : '') + '</span>' : '') + '</div>'
-      + '<div class="p2-cr"><div class="p2-cr-v" title="obrana CR ' + d.cr.def + ' · útok CR ' + d.cr.off + '">' + d.cr.cr + '</div><div class="p2-cr-l">CR <span class="p2-cr-kind">(odhad)</span></div><div class="p2-cr-x">' + d.cr.xp + ' XP' + (bj.cr_rucne ? '<br>' + esc(bj.cr_rucne) : '') + '</div></div></header>';
-    if (cesta && document.body.classList.contains("ed-on")) h += '<div class="ps-edit"><button class="ed-btn" data-ps-lvl>⬆ Level up</button> <button class="ed-btn ed-primary" data-ps-edit>✎ Upravit postavu</button></div>';
+      + '<span class="p2-chip">' + esc(c.druh || "—") + '</span><span class="p2-chip">' + esc(c.pozadi || "—") + '</span><span class="p2-chip">' + esc(c.zarovnani || "—") + '</span><span class="p2-chip">' + esc(c.velikost || "Medium") + '</span></div>'
+      + (d.exhaustion ? '<span class="p2-exhaust-warning">Exhaustion ' + d.exhaustion + ' · −' + d.exhaustPenalty + ' D20 · −' + (d.exhaustion * 5) + ' ft Speed' + (d.exhaustion === 6 ? ' · Death' : '') + '</span>' : '') + '</div>'
+      + '<div class="p2-badges"><div class="p2-cr"><strong class="p2-cr-v" title="obrana CR ' + d.cr.def + ' · útok CR ' + d.cr.off + '">' + d.cr.cr + '</strong><span class="p2-cr-l">CR</span><small class="p2-cr-x">' + d.cr.xp + ' XP' + (bj.cr_rucne ? '<br>' + esc(bj.cr_rucne) : '') + '</small></div>' + inspirationHtml(key) + badgeXp + '</div></header>';
     // ---- životní hodnoty ----
     h += '<div class="p2-vitals"><div class="p2-shield"><div class="p2-v">' + d.ac + '</div><div class="p2-l">Armor Class</div></div>'
-      + '<div class="p2-hp ps-hptrack" data-key="' + esc(key) + '" data-max="' + d.hp + '"><div class="p2-l">Hit Points</div><div class="p2-hp-row"><button data-hp="-5">−5</button><button data-hp="-1">−1</button><input class="ps-hpcur" type="number"><span class="p2-hp-max">/ ' + d.hp + '</span><button data-hp="1">+1</button><button data-hp="5">+5</button></div><div class="p2-hpbar"><i></i></div><div class="p2-hp-row p2-small"><label>dočasné <input class="ps-hptmp" type="number"></label><button data-hp="reset" title="Plné HP">↺ plné</button></div></div>'
-      + stat("Iniciativa", '<a class="ps-roll" data-roll="1d20' + sg(d.init) + '" data-label="Iniciativa">' + sg(d.init) + '</a>') + stat("Rychlost", d.speed + ' ft') + stat("Proficiency", sg(d.pb)) + stat("Pasivní Perception", d.passive) + stat('<span class="p2-hd-label-long">Hit Dice</span><span class="p2-hd-label-short">HD</span>', d.dice + ' <small class="ps-hdleft" data-key="' + esc(key) + '" data-total="' + d.lvl + '" title="Zbývající Hit Dice"></small>', "p2-hd-stat") + stat("DPR", bj.dpr ? esc(bj.dpr) : '<span title="Automatický odhad: ' + esc(d.dprPopis || "") + ' (ručně: Upravit postavu → Připravenost na boj)">~' + d.dprAuto + '</span>') + '</div>'
-      + '<div class="p2-rest"><button class="ed-btn" data-rest="short" title="Short Rest: utratit Hit Dice, obnovit Pact Magic a zdroje na krátký odpočinek">☀ Short Rest</button><button class="ed-btn" data-rest="long" title="Long Rest: plné HP, všechny sloty, zdroje a Hit Dice">☾ Long Rest</button></div>';
-    // ---- atributy ----
-    h += '<div class="p2-abil">' + AB.map(function (a) { return '<div class="p2-ab"><div class="p2-ab-n"><span class="p2-ab-name-wide">' + AB_CZ[a] + '</span><span class="p2-ab-name-short">' + a + '</span></div><a class="p2-ab-mod ps-roll" data-roll="1d20' + sg(d.checkMods[a]) + '" data-label="' + AB_CZ[a] + '">' + sg(d.checkMods[a]) + '</a><div class="p2-ab-s">' + esc((c.atributy || {})[a]) + '</div><a class="p2-ab-save ps-roll' + (d.saveProf.indexOf(a) >= 0 ? ' p' : '') + '" data-roll="1d20' + sg(d.saves[a]) + '" data-label="Záchrana ' + a + '">záchrana ' + sg(d.saves[a]) + '</a></div>'; }).join("") + '</div>';
+      + '<div class="p2-hp ps-hptrack" data-key="' + esc(key) + '" data-max="' + d.hp + '"><div class="p2-l">Hit Points</div><div class="p2-hp-row"><button data-hp="-1" aria-label="Snížit HP">−</button><input class="ps-hpcur" type="number"><span class="p2-hp-max">/ ' + d.hp + '</span><button data-hp="1" aria-label="Zvýšit HP">+</button></div><div class="p2-hpbar"><i></i></div><div class="p2-hp-utility"><label>Temp <input class="ps-hptmp" type="number"></label><label>Δ <input class="p2-hp-delta" type="number" placeholder="± HP" aria-label="Změnit HP o zadanou hodnotu; Enter"></label><button data-hp="reset" title="Plné HP">↺</button></div></div>'
+      + stat("Iniciativa", '<a class="ps-roll" data-roll="1d20' + sg(d.init) + '" data-label="Iniciativa">' + sg(d.init) + '</a>', "p2-initiative") + stat("Rychlost", d.speed + ' ft', "p2-speed")
+      + stat('<span class="p2-l-long">Proficiency</span><span class="p2-l-short">PB</span>', sg(d.pb)) + stat('<span class="p2-l-long">Passive Perception</span><span class="p2-l-short">PP</span>', d.passive)
+      + stat("Hit Dice", '<span class="p2-hd-left ps-hdleft" data-key="' + esc(key) + '" data-total="' + d.lvl + '"></span>/' + d.lvl + '<small class="p2-hd-dice">' + esc(diceCompact) + '</small>', "p2-hd-stat")
+      + stat("DPR", bj.dpr ? esc(bj.dpr) : '<span title="Automatický odhad: ' + esc(d.dprPopis || "") + ' (ručně: Upravit postavu → Připravenost na boj)">~' + d.dprAuto + '</span>') + '</div>'
+      + '<div class="p2-abil">' + AB.map(function (a) { return '<div class="p2-ab"><div class="p2-ab-n"><span class="p2-ab-name-wide">' + AB_CZ[a] + '</span><span class="p2-ab-name-short">' + a + '</span></div><a class="p2-ab-mod ps-roll" data-roll="1d20' + sg(d.checkMods[a]) + '" data-label="' + AB_CZ[a] + '">' + sg(d.checkMods[a]) + '</a><div class="p2-ab-s">' + esc((c.atributy || {})[a]) + '</div><a class="p2-ab-save ps-roll' + (d.saveProf.indexOf(a) >= 0 ? ' p' : '') + '" data-roll="1d20' + sg(d.saves[a]) + '" data-label="Záchrana ' + a + '">save ' + sg(d.saves[a]) + '</a></div>'; }).join("") + '</div>';
     h += trackerHtml(c, key) + '</div></div>';
     // ---- záložky ----
     var tabs = [];
@@ -368,13 +390,21 @@
       var bar = w.querySelector(".p2-hpbar i"); if (bar) bar.style.width = Math.max(0, Math.min(100, 100 * st.hp / max)) + "%";
     }
     w.addEventListener("click", function (e) {
-      var b = e.target.dataset.hp; if (!b) return;
+      var button = e.target.closest("[data-hp]"), b = button && button.dataset.hp; if (!b) return;
       if (b === "reset") { st.hp = max; st.tmp = ""; }
       else { var v = Number(b); if (v < 0 && Number(st.tmp) > 0) { var left = Number(st.tmp) + v; st.tmp = left > 0 ? left : ""; v = Math.min(0, left); } st.hp = Math.max(0, Math.min(max, st.hp + v)); }
       save();
     });
-    cur.addEventListener("change", function () { st.hp = Number(cur.value); save(); });
+    cur.addEventListener("change", function () { st.hp = Math.max(0, Math.min(max, Number(cur.value) || 0)); save(); });
     tmp.addEventListener("change", function () { st.tmp = tmp.value; save(); });
+    var delta = w.querySelector(".p2-hp-delta");
+    if (delta) delta.addEventListener("keydown", function (e) {
+      if (e.key !== "Enter") return;
+      e.preventDefault();
+      var v = Number(delta.value); if (!Number.isFinite(v) || !v) return;
+      if (v < 0 && Number(st.tmp) > 0) { var left = Number(st.tmp) + v; st.tmp = left > 0 ? left : ""; v = Math.min(0, left); }
+      st.hp = Math.max(0, Math.min(max, Number(st.hp) + v)); delta.value = ""; save();
+    });
     save();
   }
   function box(l, v, cls) { return '<div class="ps-box ' + (cls || "") + '"><div class="ps-lbl">' + l + '</div><div class="ps-val">' + v + '</div></div>'; }
@@ -758,7 +788,7 @@
     m.box.classList.add("ed-wide");
   }
   // ---------- odpočinek ----------
-  function hdLeft(root) { root.querySelectorAll(".ps-hdleft").forEach(function (x) { var used = Number(localStorage.getItem(x.dataset.key + ":hd") || 0), left = Math.max(0, Number(x.dataset.total) - used); x.innerHTML = '<span class="p2-hdleft-long">(zbývá ' + left + ')</span><span class="p2-hdleft-short">(' + left + ')</span>'; }); }
+  function hdLeft(root) { root.querySelectorAll(".ps-hdleft").forEach(function (x) { var used = Number(localStorage.getItem(x.dataset.key + ":hd") || 0); x.textContent = Math.max(0, Number(x.dataset.total) - used); }); }
   function rest(kind, c, d, cesta, key) {
     var st = JSON.parse(localStorage.getItem(key) || "null") || { hp: d.hp, tmp: "" }, used = Number(localStorage.getItem(key + ":hd") || 0), msg = [];
     function clear(prefix) { Object.keys(localStorage).forEach(function (k) { if (k.indexOf(prefix) === 0 && k !== key + ":session") localStorage.removeItem(k); }); }

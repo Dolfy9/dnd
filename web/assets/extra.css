@@ -109,12 +109,11 @@ html[data-mont-theme] .md-typeset h1, html[data-mont-theme] .md-typeset h2 { col
 .lu-step h5 { margin: 0 0 4px; color: var(--red); } .lu-meta { font-size: .68rem; opacity: .85; margin: 0 0 4px; }
 .lu-choice { display: block; font-weight: 700; font-size: .72rem; margin: 6px 0; } .lu-choice select { max-width: 100%; margin-left: 6px; }
 .lu-feat { display: inline-block; font-weight: 400; } .lu-ab select { margin-left: 4px; } .lu-txt { font-size: .66rem; opacity: .8; white-space: pre-line; max-width: 70ch; }
-.lu-err { color: #c0392b; font-size: .75rem; margin: 6px 0; } .pv-list { font-size: .74rem; } .pv-chyba { color: var(--red3); } .pv-varovani { opacity: .85; } .pv-ok { color: #2e7d32; }
+.lu-err { color: color-mix(in srgb, var(--red) 45%, var(--ink)); font-size: .75rem; margin: 6px 0; } .pv-list { font-size: .74rem; } .pv-chyba { color: color-mix(in srgb, var(--red3) 40%, var(--ink)); } .pv-varovani { opacity: .85; } .pv-ok { color: color-mix(in srgb, var(--red3) 40%, var(--ink)); }
 .lu-step h5 { font-size: .85rem; letter-spacing: .02em; } .lu-choice { display: flex; flex-direction: column; gap: 3px; } .lu-choice select { margin-left: 0; } .lu-feat { display: block; } .lu-ab { display: flex; gap: 6px; align-items: center; margin-top: 3px; } .lu-ab select { margin-left: 0; max-width: 12rem; }
-.p2-rest { display: flex; gap: 6px; justify-content: flex-end; margin: -2px 0 6px; } .p2-rest .ed-btn { padding: 2px 10px; font-size: .62rem; }
-.ps-spell-bar { margin-bottom: 6px; } .sp-head { display: flex; flex-wrap: wrap; gap: 14px; font-size: .74rem; margin: 6px 0; } .sp-over { color: #c0392b; } .sp-full { color: #2e7d32; }
-.sp-rules { font-size: .68rem; opacity: .85; margin: 2px 0 6px; } .sp-mode { font-size: .74rem; font-style: italic; } .sp-vzdy { font-size: .7rem; }
-.sp-tab td, .sp-tab th { padding: 2px 6px; font-size: .72rem; } .sp-tab tr.sp-on td { background: rgba(184,137,43,.15); }
+.ps-spell-bar { margin-bottom: 6px; } .sp-head { display: flex; flex-wrap: wrap; gap: 14px; font-size: .74rem; margin: 6px 0; } .sp-over { color: color-mix(in srgb, var(--red) 45%, var(--ink)); } .sp-full { color: color-mix(in srgb, var(--gold) 35%, var(--ink)); }
+.sp-rules { font-size: .68rem; color: var(--ink); margin: 2px 0 6px; } .sp-mode { font-size: .74rem; font-style: italic; color: var(--ink); } .sp-vzdy { font-size: .7rem; color: var(--ink); }
+.sp-tab td, .sp-tab th { padding: 2px 6px; font-size: .72rem; color: var(--ink); } .sp-tab tr.sp-on td { background: color-mix(in srgb, var(--gold) 15%, transparent); }
 /* ===== Statblok v duchu Monster Manualu 2024 ===== */
 .kz-modal:has(.sb2) { max-width: 780px; padding: 0; background: transparent; border: 0; box-shadow: none; }
 .sb2 { --sbr: #8b1e14; --sbbg: #fbf1dc; --sbink: #2a1a0c; background: var(--sbbg) radial-gradient(ellipse at top, #fffaf0, #f3e3bf); color: var(--sbink);
