@@ -130,3 +130,6 @@ html[data-mont-theme] .md-typeset h1, html[data-mont-theme] .md-typeset h2 { col
 .sb2 .sb-src { font-size: .6rem; opacity: .55; margin: 8px 0 0; text-align: right; }
 @media (min-width: 900px) { .sb2 .sb-body { column-count: 1; } }
 .kz-modal:has(.sb2) .ed-bar { background: var(--md-default-bg-color); padding: 8px; border-radius: 0 0 6px 6px; }
+.sb2 .sb-li { display: block; margin: 3px 0 0 10px; padding-left: 10px; border-left: 2px solid var(--sbr); }
+.sb2 a.sb-a { color: inherit; text-decoration: underline dotted; text-underline-offset: 2px; cursor: pointer; } .sb2 a.sb-a:hover { color: var(--sbr); }
+.sb2 a.kz-link.sb-a { font-style: italic; } .sb2 a.sb-a-b { font-weight: 600; }

@@ -8,7 +8,42 @@
   function esc(s) { return String(s == null ? "" : s).replace(/[&<>"]/g, function (c) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]; }); }
   function md(n) { return Math.floor((n - 10) / 2); } function sg(n) { return (n >= 0 ? "+" : "") + n; }
   var SB_RE = /((?:Melee or Ranged|Melee|Ranged) Attack Roll:|(?:Strength|Dexterity|Constitution|Intelligence|Wisdom|Charisma) Saving Throw:|Neúspěch i úspěch:|První neúspěch:|Druhý neúspěch:|Další neúspěchy:|Neúspěch o \d+ a více:|Neúspěch:|Úspěch:|Zásah i minutí:|Zásah:|Failure or Success:|First Failure|Second Failure|Failure:|Success:|Hit or Miss:|Hit:|_?Spouštěč:_?|_?Reakce:_?|_?Trigger:_?|_?Response:_?)/g;
-  function sbFmt(html) { return html.replace(/\*\*(.+?)\*\*/g, "<b>$1</b>").replace(SB_RE, function (m) { return "<em>" + m.replace(/_/g, "") + "</em>"; }).replace(/_([^_<]+)_/g, "<em>$1</em>"); }
+  function sbFmt0(html) { return html.replace(/\*\*(.+?)\*\*/g, "<b>$1</b>").replace(SB_RE, function (m) { return "<em>" + m.replace(/_/g, "") + "</em>"; }).replace(/_([^_<]+)_/g, "<em>$1</em>"); }
+  var LINK_RE = null, LINK = {}, CUR = "";
+  var GLOS_EXTRA = ["Advantage", "Disadvantage", "Concentration", "Bloodied", "Difficult Terrain", "Total Cover", "Half Cover", "Three-Quarters Cover", "Heavily Obscured", "Lightly Obscured", "Temporary Hit Points", "Exhaustion", "Opportunity Attack", "Bright Light", "Dim Light", "Darkness", "Darkvision", "Blindsight", "Tremorsense", "Truesight", "Resistance", "Vulnerability", "Immunity", "Critical Hit", "Long Rest", "Short Rest", "Heroic Inspiration", "Teleportation", "Suffocation"];
+  function buildLinks() {
+    if (LINK_RE || !C.glosar) return;
+    C.glosar.forEach(function (g) { if (/Condition|Area of Effect|Hazard|Action/.test(g.stitek || "") || GLOS_EXTRA.indexOf(g.nazev) >= 0) LINK[g.nazev] = "g"; });
+    var K = window.MontelienKouzla && window.MontelienKouzla.cache ? window.MontelienKouzla.cache() : null;
+    if (K) Object.keys(K).forEach(function (n) { if (n !== "_low" && n.length > 3) LINK[n] = "k"; });
+    (C.bestiar || []).forEach(function (m) { if (!LINK[m.nazev]) LINK[m.nazev] = "b"; });
+    ["Action", "Attack", "Magic", "Help", "Search", "Study", "Utilize", "Influence"].forEach(function (x) { delete LINK[x]; });
+    var names = Object.keys(LINK).sort(function (a, b) { return b.length - a.length; }).map(function (n) { return n.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"); });
+    LINK_RE = new RegExp("\\b(" + names.join("|") + ")(?![\\w-])", "g");
+  }
+  function linkify(html) {
+    buildLinks(); if (!LINK_RE) return html;
+    var inA = false;
+    return html.split(/(<[^>]+>)/).map(function (part) {
+      if (part.charAt(0) === "<") { if (/^<a\b/.test(part)) inA = true; if (/^<\/a>/.test(part)) inA = false; return part; }
+      if (inA) return part;
+      return part.replace(LINK_RE, function (m) {
+        if (m === CUR) return m; var t = LINK[m];
+        if (t === "k") return '<a href="#" class="kz-link sb-a" data-kouzlo="' + m + '">' + m + '</a>';
+        return '<a href="#srd-' + (t === "g" ? "glosar" : "bestiar") + '-' + m.replace(/ /g, "_") + '" class="sb-a sb-a-' + t + '">' + m + '</a>';
+      });
+    }).join("");
+  }
+  function lists(html) {
+    var lines = html.split("<br>"), out = [], li = false;
+    lines.forEach(function (l) {
+      var m = l.match(/^\s*-\s+(.*)$/);
+      if (m) { out.push('<span class="sb-li">' + m[1] + '</span>'); li = true; }
+      else if (!l.trim() && li) { } else { if (l.trim() || !li) out.push((out.length && !/sb-li/.test(out[out.length - 1]) ? "<br>" : "") + l); }
+    });
+    return out.join("").replace(/^(<br>)+/, "");
+  }
+  function sbFmt(html) { return linkify(lists(sbFmt0(html))); }
   window.MontelienSbFmt = sbFmt;
   function lt(en) { var cs = (CS.bestiar || {})[en], L = window.MontelienLang ? window.MontelienLang.lang() : "cs"; return '<span class="lt sb-t" data-cs="' + esc(cs || en) + '" data-en="' + esc(en) + '">' + sbFmt(esc(cs && L === "cs" ? cs : en).replace(/\n/g, "<br>")) + '</span>'; }
   function list(t, a, intro) { return a && a.length ? '<h3 class="sb-h">' + t + '</h3>' + (intro || '') + a.map(function (x) { return '<p class="sb-e"><b><i>' + esc(x.nazev) + '.</i></b> ' + lt(x.text) + '</p>'; }).join("") : ""; }
@@ -56,7 +91,9 @@
       .catch(function (e) { alert("Chyba: " + e.message); });
   }
   function show(t, n) {
-    load(t).then(function (d) {
+    var pre = t === "bestiar" ? Promise.all([load("glosar"), window.MontelienKouzla ? window.MontelienKouzla.load() : null]).then(function () { return load(t); }) : load(t);
+    if (t === "bestiar") CUR = String(n);
+    pre.then(function (d) {
       var x = d.filter(function (e) { return e.nazev.toLowerCase() === String(n).toLowerCase(); })[0];
       var bg = document.createElement("div"); bg.className = "ed-modal-bg";
       var add = x && t === "bestiar" && document.body.classList.contains("ed-on") ? '<button class="ed-btn ed-primary srd-add">+ Přidat do wiki jako netvora</button> ' : '';
