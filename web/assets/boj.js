@@ -431,6 +431,7 @@
     const m = map(), now = new Date(), ent = S.log.slice().reverse(), df = difficulty();
     let s = "# Boj: " + m.nazev + " (" + now.toISOString().slice(0, 10) + ")\n\n> **Stav:** záznam z bojového modulu (vygenerováno automaticky)\n\n"
       + "- **Mapa:** " + m.nazev + (m.misto ? " – [" + m.misto.replace(/^.*\/|\.md$/g, "").replace(/_/g, " ") + "](../" + m.misto + ")" : "") + "\n"
+      + (S.meta.nazev ? "- **Boj:** " + S.meta.nazev + "\n" : "") + (S.meta.kampan ? "- **Kampaň:** [" + pgName(S.meta.kampan) + "](../" + S.meta.kampan + ")\n" : "") + (S.meta.quest ? "- **Quest:** [" + pgName(S.meta.quest) + "](../" + S.meta.quest + ")\n" : "")
       + "- **Odehraná kola:** " + (S.round || 0) + "\n- **Obtížnost (DMG 2024):** " + df.lab + " (XP nepřátel " + df.xp + ")\n"
       + "- **Kroků v deníku:** " + ent.length + " (zásahy PJ: " + ent.filter(e => e.pj).length + ", zablokováno: " + ent.filter(e => e.blok).length + ")\n\n"
       + "## Účastníci\n\n| Žeton | Strana | HP | AC | Stavy |\n|---|---|---|---|---|\n"
@@ -443,7 +444,7 @@
   function saveLog() {
     const n = new Date(), p = "10_Sezeni/Sezeni_Boj_" + n.toISOString().slice(0, 10) + "_" + n.toTimeString().slice(0, 5).replace(":", "") + "_" + map().id + ".md", E = window.MontelienEditor;
     if (!E || !E.api) { dlMd(); return Promise.resolve(); }
-    return E.api("POST", "soubor", { cesta: p, obsah: logMd() }).then(() => { log("Deník uložen do " + esc(p) + "."); save(); draw(); status('Uloženo: <a href="' + base() + p.replace(/\.md$/, "/") + '">' + esc(p) + "</a>"); })
+    return E.api("POST", "soubor", { cesta: p, obsah: logMd() }).then(() => { log("Deník uložen do " + esc(p) + "."); if (!S.meta.sezeni) S.meta.sezeni = p; if (S.meta.id) storePut(); save(); draw(); status('Uloženo: <a href="' + base() + p.replace(/\.md$/, "/") + '">' + esc(p) + "</a>"); })
       .catch(er => { alert("Uložení na server selhalo (" + er.message + "), stahuji soubor."); dlMd(); });
   }
   function logPane() {
@@ -538,10 +539,11 @@
   function removeTok(id) { const cur = S.ord[S.turn]; S.tok = S.tok.filter(t => t.id !== id); S.ord = S.ord.filter(x => x !== id); S.turn = cur === id ? Math.min(S.turn, S.ord.length - 1) : S.ord.indexOf(cur); }
 
   // ---------- stav ----------
-  function fresh(mapIdx) { return { map: mapIdx || 0, tok: [], ord: [], turn: -1, round: 0, log: [], moved: 0, dash: false, disengage: false, sel: null, zoom: 1, paint: null, groups: true, tab: "pomocnik", eco: { a: 0, b: 0, spell: 0, baSpell: 0 }, oa: [] }; }
-  function save() { try { localStorage.setItem("boj-stav", JSON.stringify(S)); } catch (e) { } }
-  function load2() { S.eco = S.eco || { a: 0, b: 0, spell: 0, baSpell: 0 }; S.oa = S.oa || []; S.log = S.log || []; }
-  function load() { try { S = JSON.parse(localStorage.getItem("boj-stav")) || fresh(); } catch (e) { S = fresh(); } if (S.map >= A.M.mapy.length) S.map = 0; S.eco = S.eco || { a: 0, b: 0, spell: 0, baSpell: 0 }; S.oa = S.oa || []; }
+  function fresh(mapIdx) { return { map: mapIdx || 0, tok: [], ord: [], turn: -1, round: 0, log: [], moved: 0, dash: false, disengage: false, sel: null, zoom: 1, paint: null, groups: true, tab: "pomocnik", eco: { a: 0, b: 0, spell: 0, baSpell: 0 }, oa: [], meta: freshMeta() }; }
+  function freshMeta(o) { return Object.assign({ id: null, nazev: "", stav: "priprava", kampan: "", quest: "", sezeni: "", poznamky: "", vysledek: "", auto: true }, o || {}); }
+  function save() { try { localStorage.setItem("boj-stav", JSON.stringify(S)); } catch (e) { } autoSave(); }
+  function load2() { S.eco = S.eco || { a: 0, b: 0, spell: 0, baSpell: 0 }; S.oa = S.oa || []; S.log = S.log || []; S.meta = freshMeta(S.meta); }
+  function load() { try { S = JSON.parse(localStorage.getItem("boj-stav")) || fresh(); } catch (e) { S = fresh(); } if (S.map >= A.M.mapy.length) S.map = 0; S.eco = S.eco || { a: 0, b: 0, spell: 0, baSpell: 0 }; S.oa = S.oa || []; S.meta = freshMeta(S.meta); }
 
   // ---------- vykreslení ----------
   function boardSvg() {
@@ -680,12 +682,12 @@
 
   function draw() {
     const host = A.host, keep = host.querySelector(".bj-board") ? [host.querySelector(".bj-board").scrollLeft, host.querySelector(".bj-board").scrollTop] : null;
-    const tabs = [["pomocnik", "Pomocník"], ["pridat", "Přidat"], ["mapa", "Mapa"], ["log", "Deník"]];
+    const tabs = [["pomocnik", "Pomocník"], ["pridat", "Přidat"], ["mapa", "Mapa"], ["log", "Deník"], ["boje", "Boje"]];
     host.innerHTML = '<div class="bj"><div class="bj-left"><div class="bj-top"><b>' + esc(map().nazev) + '</b><span class="bj-round">' + (S.round ? "Kolo " + S.round : "Před bojem") + '</span><span class="bj-zoom"><button data-act="zo">−</button><button data-act="zi">+</button></span>' + topExtra()
       + '<button data-act="init" class="ed-primary">⚄ ' + (S.round ? "Přehodit iniciativu" : "Hodit iniciativu") + "</button>" + (S.round ? '<button data-act="next">Další tah ▶</button>' : "") + "</div>"
       + '<div class="bj-board">' + boardSvg() + '</div><div class="bj-status">Najeď na pole: vzdálenost a cover od vybraného žetonu.</div></div>'
       + '<div class="bj-right"><h3>Iniciativa</h3>' + initList() + '<nav class="bj-tabs">' + tabs.map(t => '<button data-tab="' + t[0] + '" class="' + (S.tab === t[0] ? "on" : "") + '">' + t[1] + "</button>").join("") + '</nav><div class="bj-pane">'
-      + (S.tab === "pridat" ? addHtml() : S.tab === "mapa" ? mapHtml() : S.tab === "log" ? logPane() : helperHtml()) + "</div></div></div>";
+      + (S.tab === "pridat" ? addHtml() : S.tab === "mapa" ? mapHtml() : S.tab === "log" ? logPane() : S.tab === "boje" ? bojeHtml() : helperHtml()) + "</div></div></div>";
     if (keep) { const b = host.querySelector(".bj-board"); b.scrollLeft = keep[0]; b.scrollTop = keep[1]; }
     if (S.tab === "pridat") { search("pc"); search("mon"); }
   }
@@ -765,6 +767,16 @@
         teren() { S.teren = !S.teren; save(); draw(); },
         mriz() { S.mriz = S.mriz === false; save(); draw(); },
         savelog() { saveLog(); },
+        bsave() { storePut(true); },
+        bsaveas() { S.meta.id = null; storePut(true); },
+        bnew() { if (!confirm("Připravit nový boj? Současný stav " + (S.meta.id ? "zůstane uložený" : "se ztratí, pokud ho neuložíš") + ".")) return; const keep = { kampan: S.meta.kampan, quest: S.meta.quest, sezeni: S.meta.sezeni }; S = fresh(S.map); S.tab = "boje"; S.meta = freshMeta(keep); log("Nový boj (příprava)."); save(); draw(); },
+        bload() { openBoj(b.dataset.id); },
+        bdup() { Store.get(b.dataset.id).then(x => { x = JSON.parse(JSON.stringify(x)); x.id = newId(x.nazev + " kopie"); x.nazev = (x.nazev || "Boj") + " (kopie)"; x.vytvoreno = x.upraveno = new Date().toISOString(); return Store.put(x); }).then(refreshList); },
+        bdel() { const x = (A.lib || []).find(y => y.id === b.dataset.id); if (!confirm("Smazat uložený boj „" + ((x && x.nazev) || b.dataset.id) + "“?")) return; Store.del(b.dataset.id).then(() => { if (S.meta.id === b.dataset.id) { S.meta.id = null; save(); } refreshList(); }); },
+        bstav() { Store.get(b.dataset.id).then(x => { x.stav = b.dataset.v; x.upraveno = new Date().toISOString(); if (S.meta.id === x.id) S.meta.stav = x.stav; return Store.put(x); }).then(refreshList); },
+        bexpall() { Promise.all((A.lib || []).map(x => Store.get(x.id))).then(all => { const blob = new Blob([JSON.stringify({ boje: all }, null, 1)], { type: "application/json" }), u = document.createElement("a"); u.href = URL.createObjectURL(blob); u.download = "boje_montelien.json"; u.click(); }); },
+        bimp() { const i = document.createElement("input"); i.type = "file"; i.accept = ".json"; i.onchange = () => i.files[0].text().then(t2 => { const j = JSON.parse(t2), arr = j.boje || (j.stav_boje ? [j] : [{ id: newId("import"), nazev: "Importovaný boj", stav: "probiha", stav_boje: j }]); return Promise.all(arr.map(x => { x.id = x.id && !(A.lib || []).some(y => y.id === x.id) ? x.id : newId(x.nazev || "import"); return Store.put(x); })); }).then(refreshList); i.click(); },
+        bnewpage() { newPage(b.dataset.k); },
         dlmd() { dlMd(); },
         mapimg() { const v = prompt("Obrázek mapy – cesta relativně k 11_Mapy (např. bojove/moje.jpg), prázdné = bez obrázku", map().obrazek || ""); if (v == null) return; snap("Obrázek mapy"); if (v.trim()) map().obrazek = v.trim(); else delete map().obrazek; log("PJ změnil obrázek mapy.", { pj: true }); save(); draw(); },
         del() { if (confirm("Odebrat " + t.nazev + "?")) { removeTok(t.id); log(esc(t.nazev) + " odebrán z boje."); save(); draw(); } },
@@ -802,6 +814,8 @@
       }
       if (f === "map") { snap("Změna mapy"); S.map = Number(e.target.value); log("Mapa: " + esc(map().nazev) + "."); S.tok.forEach(t2 => { t2.x = null; }); place(); save(); draw(); }
       if (f === "groups") { S.groups = e.target.checked; save(); }
+      const mf = e.target.dataset.meta; if (mf) { S.meta[mf] = e.target.type === "checkbox" ? e.target.checked : e.target.value; if (mf === "kampan" && S.meta.quest && (qById(S.meta.quest) || {}).kampan && qById(S.meta.quest).kampan !== S.meta.kampan) S.meta.quest = ""; if (mf === "quest" && !S.meta.kampan && (qById(e.target.value) || {}).kampan) S.meta.kampan = qById(e.target.value).kampan; save(); if (/kampan|quest/.test(mf)) draw(); }
+      const bf = e.target.dataset.bf; if (bf) { A.bf = A.bf || {}; A.bf[bf] = e.target.value; draw(); }
       if (e.target.dataset.cr != null) search("mon");
     });
     host.addEventListener("keydown", e => {
@@ -811,7 +825,7 @@
         save(); draw();
       }
     });
-    host.addEventListener("input", e => { if (e.target.dataset.q) search(e.target.dataset.q); });
+    host.addEventListener("input", e => { if (e.target.dataset.q) search(e.target.dataset.q); if (e.target.dataset.bq != null) { A.bf = A.bf || {}; A.bf.q = e.target.value; const l = host.querySelector(".bj-blist"); if (l) l.innerHTML = bojeList(); } });
     document.addEventListener("keydown", e => { if (!document.getElementById("boj-app") || /INPUT|TEXTAREA|SELECT/.test(e.target.tagName)) return; if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === "z") { e.preventDefault(); undo(); return; } if (e.key === "n" || e.key === "N") next(); });
   }
   function moveTo(t, x, y, dj) {
@@ -845,14 +859,146 @@
   function paintAt(e) { const [px, py] = cellAt(e), x = Math.floor(px), y = Math.floor(py), m = map(); if (x < 0 || y < 0 || y >= m.mrizka.length || x >= m.mrizka[0].length) return; const row = m.mrizka[y]; if (row[x] === S.paint) return; m.mrizka[y] = row.slice(0, x) + S.paint + row.slice(x + 1); draw(); }
   function status(t) { const s = A.host.querySelector(".bj-status"); if (s) s.innerHTML = t; }
 
+  // ---------- uložené boje (11_Mapy/boje/<id>.json přes lokální server, jinak localStorage) ----------
+  const STAV = { priprava: "Příprava", probiha: "Probíhá", dokonceno: "Dokončeno", archiv: "Archiv" };
+  const Store = {
+    srv: null,
+    test() { if (this.srv != null) return Promise.resolve(this.srv); return fetch(base() + "api/boje").then(r => { this.srv = r.ok; return this.srv; }).catch(() => (this.srv = false)); },
+    loc() { try { return JSON.parse(localStorage.getItem("boj-knihovna")) || {}; } catch (e) { return {}; } },
+    locSet(o) { localStorage.setItem("boj-knihovna", JSON.stringify(o)); },
+    index() {
+      return this.test().then(srv => srv ? fetch(base() + "api/boje").then(r => r.json())
+        : fetch(base() + "boje_index.json").then(r => r.ok ? r.json() : {}).catch(() => ({})).then(ix => { const L = this.loc(); ix.boje = (ix.boje || []).filter(x => !L[x.id]).map(x => Object.assign(x, { repo: true })).concat(Object.values(L).map(summ)); return ix; }));
+    },
+    get(id) { return this.test().then(srv => { const L = this.loc(); if (!srv && L[id]) return L[id]; return fetch(base() + (srv ? "api/boj?id=" + encodeURIComponent(id) : "11_Mapy/boje/" + id + ".json")).then(r => { if (!r.ok) throw new Error("boj nenalezen"); return r.json(); }); }); },
+    put(b) { return this.test().then(srv => srv ? fetch(base() + "api/boj", { method: "PUT", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ boj: b }) }).then(r => r.json()).then(j => { if (j.chyba) throw new Error(j.chyba); return b; }) : (() => { const L = this.loc(); L[b.id] = b; this.locSet(L); return b; })()); },
+    del(id) { return this.test().then(srv => { if (srv) return fetch(base() + "api/boj?id=" + encodeURIComponent(id), { method: "DELETE" }).then(r => r.json()); const L = this.loc(); delete L[id]; this.locSet(L); }); }
+  };
+  function summ(b) { const st = b.stav_boje || {}; return Object.assign({}, b, { stav_boje: undefined, kola: st.round || 0, kroku: (st.log || []).length, ucastnici: (st.tok || []).map(t => ({ nazev: strip(t.nazev), strana: t.side, hp: t.hp, max: t.max, mrtvy: !!t.dead })) }); }
+  function slug(t) { return String(t || "boj").toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "").slice(0, 50) || "boj"; }
+  function newId(n) { return slug(n) + "-" + Date.now().toString(36); }
+  function pgName(p) { const all = [].concat(A.ix && A.ix.kampane || [], A.ix && A.ix.questy || [], A.ix && A.ix.sezeni || []), x = all.find(y => y.cesta === p); return x ? x.nazev : String(p || "").replace(/^.*\/|\.md$/g, "").replace(/_/g, " "); }
+  function qById(p) { return ((A.ix && A.ix.questy) || []).find(x => x.cesta === p); }
+  function mapById(id) { return A.M.mapy.findIndex(m => m.id === id); }
+  function record() {
+    const now = new Date().toISOString(), m = S.meta;
+    if (!m.id) { m.id = newId(m.nazev || map().nazev); m.vytvoreno = now; }
+    if (!m.nazev) m.nazev = map().nazev + " – " + now.slice(0, 10);
+    if (m.stav === "priprava" && S.round > 0) m.stav = "probiha";
+    const st = JSON.parse(JSON.stringify(S)); delete st.meta; st.sel = null; st.paint = null;
+    return { id: m.id, nazev: m.nazev, stav: m.stav, kampan: m.kampan, quest: m.quest, sezeni: m.sezeni, poznamky: m.poznamky, vysledek: m.vysledek, vytvoreno: m.vytvoreno || now, upraveno: now, mapa: map().id, stav_boje: st };
+  }
+  function storePut(loud) {
+    clearTimeout(A.autoT); const r = record();
+    return Store.put(r).then(() => { try { localStorage.setItem("boj-stav", JSON.stringify(S)); } catch (e) { } if (loud) { log("Boj uložen: " + esc(r.nazev) + (Store.srv ? " (11_Mapy/boje/" + r.id + ".json)" : " (v prohlížeči)") + "."); draw(); } refreshList(); })
+      .catch(er => { if (loud) alert("Uložení boje selhalo: " + er.message); });
+  }
+  function autoSave() { if (!A || !S.meta || !S.meta.id || !S.meta.auto) return; clearTimeout(A.autoT); A.autoT = setTimeout(() => storePut(false), 2500); }
+  function openBoj(id) {
+    return Store.get(id).then(x => {
+      if (S.meta.id && S.meta.auto && S.meta.id !== id) storePut(false);
+      snap("Načtení boje"); S = Object.assign(fresh(), x.stav_boje || {}); const mi = mapById(x.mapa); if (mi >= 0) S.map = mi;
+      S.meta = freshMeta({ id: x.id, nazev: x.nazev, stav: x.stav, kampan: x.kampan, quest: x.quest, sezeni: x.sezeni, poznamky: x.poznamky, vysledek: x.vysledek, vytvoreno: x.vytvoreno });
+      load2(); S.tab = "boje"; log("Načten uložený boj: " + esc(x.nazev) + ".", { pj: true }); try { localStorage.setItem("boj-stav", JSON.stringify(S)); } catch (e) { } draw();
+    }).catch(er => alert("Boj se nenačetl: " + er.message));
+  }
+  function refreshList() { return Store.index().then(ix => { A.ix = ix; A.lib = ix.boje || []; if (S.tab === "boje") { const l = A.host.querySelector(".bj-blist"); if (l) l.innerHTML = bojeList(); else draw(); } }).catch(() => { }); }
+  function urlStart() {
+    const q = new URLSearchParams(location.search);
+    if (q.get("boj")) return openBoj(q.get("boj"));
+    if (q.get("mapa") || q.get("novy") || q.get("quest") || q.get("kampan")) {
+      const mi = q.get("mapa") ? mapById(q.get("mapa")) : S.map;
+      if (S.meta.id && S.meta.auto) storePut(false);
+      S = fresh(mi >= 0 ? mi : 0); S.meta = freshMeta({ kampan: q.get("kampan") || "", quest: q.get("quest") || "", sezeni: q.get("sezeni") || "" });
+      if (q.get("quest") || q.get("kampan")) S.tab = "boje"; log("Nový boj" + (q.get("mapa") ? " na mapě " + esc(map().nazev) : "") + ".");
+      save(); history.replaceState(null, "", location.pathname);
+    }
+    return Promise.resolve();
+  }
+  function newPage(k) {
+    const E = window.MontelienEditor, n = prompt(k === "kampan" ? "Název nové kampaně" : "Název nového questu"); if (!n) return;
+    const dir = k === "kampan" ? "07_Kampane/Kampan_" : "08_Questy/Quest_", p = dir + slug(n).replace(/-/g, "_").replace(/^./, c => c.toUpperCase()) + ".md";
+    const obsah = k === "kampan" ? "# Kampaň: " + n + "\n\n> **Stav:** návrh\n\n- **Úrovně postav:**\n- **Hlavní region:**\n- **Hlavní antagonista:**\n- **Témata a tón:**\n\n## Premisa (pro hráče)\n## Pozadí (pro DM)\n## Struktura (akty / kapitoly)\n## Klíčová NPC\n## Questy\n## Možné konce\n## Pro DM (tajné)\n"
+      : "# Quest: " + n + "\n\n> **Stav:** návrh\n\n- **Typ:** vedlejší\n- **Doporučená úroveň:**\n- **Kampaň:** " + (S.meta.kampan ? "[" + pgName(S.meta.kampan) + "](../" + S.meta.kampan + ")" : "") + "\n- **Zadavatel:**\n- **Lokace:**" + (map().misto ? " [" + pgName(map().misto) + "](../" + map().misto + ")" : "") + "\n\n## Háček (jak se k tomu hráči dostanou)\n## Pozadí (co se doopravdy děje)\n## Průběh / scény\n## Setkání a nepřátelé (CR, statbloky)\n## Odměny (zlato, předměty, XP / milníky, informace)\n## Důsledky (úspěch / neúspěch)\n## Pro DM (tajné)\n";
+    if (!E || !E.api) { alert("Nové stránky jde zakládat jen přes lokální editační server (režim úprav)."); return; }
+    E.api("POST", "soubor", { cesta: p, obsah }).then(() => { A.ix = A.ix || {}; const arr = k === "kampan" ? (A.ix.kampane = A.ix.kampane || []) : (A.ix.questy = A.ix.questy || []); arr.push({ cesta: p, nazev: n, kampan: k === "quest" ? S.meta.kampan : undefined }); S.meta[k] = p; log("Založena stránka " + esc(p) + "."); save(); draw(); })
+      .catch(er => alert("Založení selhalo: " + er.message));
+  }
+  function opt(list, v, empty) { return '<option value="">' + empty + "</option>" + list.map(x => '<option value="' + esc(x.cesta) + '"' + (x.cesta === v ? " selected" : "") + ">" + esc(x.nazev) + "</option>").join(""); }
+  function bojeHtml() {
+    const m = S.meta, ix = A.ix || {}, ed = document.body.classList.contains("ed-on"), qs = (ix.questy || []).filter(q => !m.kampan || !q.kampan || q.kampan === m.kampan), bf = A.bf || {};
+    return '<div class="bj-boje"><h4>Tento boj ' + (m.id ? '<small class="bj-g">uložen' + (m.auto ? ", ukládá se sám" : "") + "</small>" : '<small class="bj-red">neuložen</small>') + "</h4>"
+      + '<div class="bj-bform"><label>Název<input data-meta="nazev" value="' + esc(m.nazev) + '" placeholder="' + esc(map().nazev) + '"></label>'
+      + '<label>Stav<select data-meta="stav">' + Object.keys(STAV).map(k => '<option value="' + k + '"' + (m.stav === k ? " selected" : "") + ">" + STAV[k] + "</option>").join("") + "</select></label>"
+      + '<label>Kampaň<span class="bj-row"><select data-meta="kampan">' + opt(ix.kampane || [], m.kampan, "— bez kampaně —") + "</select>" + (ed ? '<button data-act="bnewpage" data-k="kampan" title="Založit novou kampaň">+</button>' : "") + "</span></label>"
+      + '<label>Quest<span class="bj-row"><select data-meta="quest">' + opt(qs, m.quest, "— bez questu —") + "</select>" + (ed ? '<button data-act="bnewpage" data-k="quest" title="Založit nový quest">+</button>' : "") + "</span></label>"
+      + '<label>Sezení<select data-meta="sezeni">' + opt(ix.sezeni || [], m.sezeni, "— bez sezení —") + "</select></label>"
+      + '<label class="bj-wide">Poznámky PJ (příprava, taktika nepřátel, odměny)<textarea data-meta="poznamky" rows="3">' + esc(m.poznamky) + "</textarea></label>"
+      + '<label class="bj-wide">Výsledek boje<textarea data-meta="vysledek" rows="2">' + esc(m.vysledek) + "</textarea></label>"
+      + '<label class="bj-chk"><input type="checkbox" data-meta="auto"' + (m.auto ? " checked" : "") + "> ukládat automaticky po každém kroku</label></div>"
+      + '<p><button data-act="bsave" class="ed-primary">Uložit</button> <button data-act="bsaveas">Uložit jako nový</button> <button data-act="bnew">+ Připravit nový boj</button> <button data-act="savelog">Deník → záznam sezení</button></p>'
+      + (Store.srv === false ? '<p class="bj-tip">Bez lokálního serveru se boje ukládají jen v tomto prohlížeči. Export je přenese jinam.</p>' : "")
+      + '<h4>Uložené boje <small>(' + (A.lib || []).length + ')</small> <a href="' + base() + 'boje/">správa bojů →</a></h4>'
+      + '<div class="bj-row"><input data-bq placeholder="Hledat…" value="' + esc(bf.q || "") + '"><select data-bf="kampan">' + opt(ix.kampane || [], bf.kampan, "všechny kampaně") + '</select><select data-bf="stav"><option value="">všechny stavy</option>' + Object.keys(STAV).map(k => '<option value="' + k + '"' + (bf.stav === k ? " selected" : "") + ">" + STAV[k] + "</option>").join("") + "</select></div>"
+      + '<div class="bj-blist">' + bojeList() + '</div><p><button data-act="bexpall">Export všech bojů</button> <button data-act="bimp">Import bojů</button></p></div>';
+  }
+  function bojeList() {
+    const bf = A.bf || {}, q = (bf.q || "").toLowerCase();
+    const L = (A.lib || []).filter(x => (!bf.kampan || x.kampan === bf.kampan) && (!bf.stav || x.stav === bf.stav) && (!q || (x.nazev + " " + pgName(x.kampan) + " " + pgName(x.quest)).toLowerCase().indexOf(q) >= 0));
+    if (!L.length) return '<p class="bj-tip">Žádné uložené boje.</p>';
+    return L.map(x => { const mm = A.M.mapy[mapById(x.mapa)]; return '<div class="bj-bitem' + (x.id === S.meta.id ? " on" : "") + '"><b>' + esc(x.nazev) + '</b> <span class="bj-bst st-' + esc(x.stav) + '">' + (STAV[x.stav] || x.stav) + "</span><br><small>" + esc(mm ? mm.nazev : x.mapa) + " · kolo " + (x.kola || 0) + " · " + (x.ucastnici || []).length + " žetonů" + (x.kampan ? " · " + esc(pgName(x.kampan)) : "") + (x.quest ? " › " + esc(pgName(x.quest)) : "") + " · " + esc(String(x.upraveno || "").slice(0, 16).replace("T", " ")) + (x.repo ? " · z repa" : "") + "</small><br>"
+      + '<button data-act="bload" data-id="' + esc(x.id) + '">Načíst</button> <button data-act="bdup" data-id="' + esc(x.id) + '">Duplikovat</button> ' + (x.stav !== "dokonceno" ? '<button data-act="bstav" data-v="dokonceno" data-id="' + esc(x.id) + '">✓ Dokončeno</button> ' : "") + '<button data-act="bdel" data-id="' + esc(x.id) + '">Smazat</button></div>'; }).join("");
+  }
+
+  // ---------- stránka Správa bojů ----------
+  function initManager() {
+    const host = document.getElementById("boje-app"); if (!host || host.dataset.done) return; host.dataset.done = "1";
+    let ix = {}, mapy = [], f = { q: "", stav: "" };
+    const nm = (p, list) => { const x = (list || []).find(y => y.cesta === p); return x ? x.nazev : String(p || "").replace(/^.*\/|\.md$/g, "").replace(/_/g, " "); };
+    const link = p => p ? '<a href="' + base() + p.replace(/(README)?\.md$/, "") + (p.endsWith("README.md") ? "" : "/").replace(/\/\/$/, "/") + '">' + esc(nm(p, [].concat(ix.kampane || [], ix.questy || [], ix.sezeni || []))) + "</a>" : "";
+    function card(x) {
+      const m = mapy.find(y => y.id === x.mapa) || {}, alive = (x.ucastnici || []).filter(u => !u.mrtvy);
+      return '<div class="bm-card">' + (m.obrazek ? '<img src="' + base() + "11_Mapy/" + esc(m.obrazek) + '" alt="" loading="lazy">' : "") + '<div><b>' + esc(x.nazev) + '</b> <span class="bj-bst st-' + esc(x.stav) + '">' + (STAV[x.stav] || x.stav) + "</span><br><small>" + esc(m.nazev || x.mapa) + " · kolo " + (x.kola || 0) + " · " + (x.kroku || 0) + " kroků v deníku" + (x.sezeni ? " · sezení " + link(x.sezeni) : "") + "</small><br><small>"
+        + (x.ucastnici || []).map(u => (u.mrtvy ? "☠ " : "") + esc(u.nazev) + " " + u.hp + "/" + u.max).join(", ") + "</small>" + (x.vysledek ? "<p><i>" + esc(x.vysledek) + "</i></p>" : "") + (x.poznamky ? '<details><summary>Poznámky PJ</summary><p>' + esc(x.poznamky) + "</p></details>" : "")
+        + '<p><a class="md-button" href="' + base() + "boj/?boj=" + encodeURIComponent(x.id) + '">Otevřít v bojovém modulu</a> ' + Object.keys(STAV).filter(k => k !== x.stav).map(k => '<button data-st="' + k + '" data-id="' + esc(x.id) + '">→ ' + STAV[k] + "</button>").join(" ") + ' <button data-del="' + esc(x.id) + '">Smazat</button></p></div></div>';
+    }
+    function draw2() {
+      const q = f.q.toLowerCase(), B = (ix.boje || []).filter(x => (!f.stav || x.stav === f.stav) && (!q || JSON.stringify(x).toLowerCase().indexOf(q) >= 0));
+      const cnt = k => (ix.boje || []).filter(x => x.stav === k).length;
+      let h = '<div class="bm-top"><input data-mq placeholder="Hledat boj, postavu, quest…" value="' + esc(f.q) + '"><select data-ms><option value="">všechny stavy (' + (ix.boje || []).length + ")</option>" + Object.keys(STAV).map(k => '<option value="' + k + '"' + (f.stav === k ? " selected" : "") + ">" + STAV[k] + " (" + cnt(k) + ")</option>").join("") + '</select> <a class="md-button md-button--primary" href="' + base() + 'boj/?novy=1">+ Nový boj</a></div>';
+      const groups = {}; B.forEach(x => { const k = x.kampan || ""; (groups[k] = groups[k] || {}); const qk = x.quest || ""; (groups[k][qk] = groups[k][qk] || []).push(x); });
+      const ks = Object.keys(groups).sort((a, b) => (a ? 0 : 1) - (b ? 0 : 1) || nm(a, ix.kampane).localeCompare(nm(b, ix.kampane)));
+      if (!ks.length) h += "<p>Zatím žádné uložené boje. Boj uložíš v bojovém modulu v záložce Boje.</p>";
+      ks.forEach(k => {
+        h += "<h2>" + (k ? "Kampaň: " + link(k) : "Bez kampaně") + "</h2>";
+        Object.keys(groups[k]).sort((a, b) => (a ? 0 : 1) - (b ? 0 : 1)).forEach(qk => {
+          h += "<h3>" + (qk ? "Quest: " + link(qk) + ' <a class="bm-new" href="' + base() + "boj/?novy=1&quest=" + encodeURIComponent(qk) + (k ? "&kampan=" + encodeURIComponent(k) : "") + '">+ boj</a>' : "Bez questu") + "</h3>" + groups[k][qk].map(card).join("");
+        });
+      });
+      const free = (ix.questy || []).filter(x => !(ix.boje || []).some(y => y.quest === x.cesta));
+      if (free.length) h += "<h2>Questy bez bojů</h2><p>" + free.map(x => link(x.cesta) + ' <a class="bm-new" href="' + base() + "boj/?novy=1&quest=" + encodeURIComponent(x.cesta) + (x.kampan ? "&kampan=" + encodeURIComponent(x.kampan) : "") + '">+ boj</a>').join(" · ") + "</p>";
+      host.innerHTML = h;
+    }
+    host.addEventListener("input", e => { if (e.target.dataset.mq != null) { f.q = e.target.value; draw2(); const i = host.querySelector("[data-mq]"); i.focus(); i.setSelectionRange(i.value.length, i.value.length); } });
+    host.addEventListener("change", e => { if (e.target.dataset.ms != null) { f.stav = e.target.value; draw2(); } });
+    host.addEventListener("click", e => {
+      const st = e.target.closest("[data-st]"), del = e.target.closest("[data-del]");
+      if (st) Store.get(st.dataset.id).then(x => { x.stav = st.dataset.st; x.upraveno = new Date().toISOString(); return Store.put(x); }).then(go);
+      if (del && confirm("Smazat uložený boj?")) Store.del(del.dataset.id).then(go);
+    });
+    function go() { return Promise.all([Store.index(), fetch(base() + "11_Mapy/bojove_mapy.json").then(r => r.json())]).then(([i, M]) => { ix = i; mapy = M.mapy; draw2(); }).catch(er => { host.innerHTML = '<p class="bj-warn">Správa bojů se nenačetla: ' + esc(er.message) + "</p>"; }); }
+    host.innerHTML = "<p>Načítám…</p>"; go();
+  }
+
   function init() {
+    initManager();
     const host = document.getElementById("boj-app"); if (!host || host.dataset.done) return; host.dataset.done = "1"; host.innerHTML = "<p>Načítám bojový modul…</p>";
     const wait = () => window.MontelienPostava && window.MontelienPostava.compute && window.MontelienSRD && window.MontelienKouzla ? Promise.resolve() : new Promise(r => setTimeout(r, 100)).then(wait);
     wait().then(() => Promise.all([
       fetch(base() + "11_Mapy/bojove_mapy.json").then(r => r.json()),
       fetch(base() + "boj_postavy.json").then(r => r.ok ? r.json() : []).catch(() => []),
       window.MontelienSRD.load("bestiar"), window.MontelienPostava.rules(), window.MontelienKouzla.load()
-    ])).then(([M, P, B, R, K]) => { A = { host, M, P, B, R, K, hist: [] }; load(); bind(); draw(); })
+    ])).then(([M, P, B, R, K]) => { A = { host, M, P, B, R, K, hist: [] }; load(); load2(); bind(); urlStart().then(() => { draw(); refreshList(); }); })
       .catch(e => { host.innerHTML = '<p class="bj-warn">Bojový modul se nenačetl: ' + esc(e.message) + "</p>"; });
   }
   window.MontelienBoj = { _test: () => ({ A, S, evalAtk, coverOf, bestPlan, dijkstra, monAttacks, checkAttack, attack, undo, logMd, moveTo, summonMon, summonVariants, summonList, castSummon, endConc }) };

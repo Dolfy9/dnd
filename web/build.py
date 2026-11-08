@@ -6,6 +6,7 @@ a web/mkdocs.yml s navigací podle nadpisů souborů. Spuštění: web/serve.sh
 """
 import json, os, re, shutil
 from pathlib import Path
+import boje
 
 WEB = Path(__file__).resolve().parent
 ROOT = WEB.parent
@@ -81,6 +82,8 @@ def map_page():
     data = json.loads((ROOT / "11_Mapy" / "mista.json").read_text(encoding="utf-8"))
     for m in data["mista"]:
         m["url"] = "../" + re.sub(r"(README)?\.md$", "", m["odkaz"]) + ("" if m["odkaz"].endswith("README.md") else "/")
+    bm = json.loads((ROOT / "11_Mapy" / "bojove_mapy.json").read_text(encoding="utf-8"))
+    data["boj"] = [{"id": x["id"], "nazev": x["nazev"], "misto": x.get("misto") or "", "obrazek": x.get("obrazek", "")} for x in bm["mapy"]]
     return f"""---
 hide:
   - toc
@@ -89,14 +92,19 @@ hide:
 
 <link rel="stylesheet" href="../assets/leaflet/leaflet.css">
 <div class="mapa-legenda">
+  <input type="search" id="mapa-hledat" placeholder="Hledat místo…" list="mapa-seznam"><datalist id="mapa-seznam"></datalist>
   <span><i class="tecka jistota-mapa"></i> popsáno na mapě DM</span>
   <span><i class="tecka jistota-kanon"></i> potvrzeno DM</span>
   <span><i class="tecka jistota-odhad"></i> odhad (návrh)</span>
   <label><input type="checkbox" id="mapa-body" checked> místa</label>
   <label><input type="checkbox" id="mapa-sidla"> sídla bez jména</label>
+  <label><input type="checkbox" id="mapa-stitky"> jména měst</label>
+  <label><input type="checkbox" id="mapa-boj" checked> ⚔ bojové mapy</label>
+  <button type="button" id="mapa-meric" title="Klikáním do mapy změříš trasu">⟷ Měřit trasu</button>
 </div>
 <div id="mapa"></div>
-<p class="mapa-pozn">Kolečkem přibližuj, klikni na bod pro detail. Vrstvy vpravo nahoře: barevná mapa / původní kresba.
+<p class="mapa-pozn">Kolečkem přibližuj, klikni na bod pro detail. Vrstvy vpravo nahoře: ilustrovaná mapa / věrná barevná mapa / původní kresba DM.
+Měření trasy počítá s měřítkem z kresby DM (150 km dílek) a cestovním tempem PHB 2024 (Slow 18, Normal 24, Fast 30 mil za den).
 Polohy „odhad“ čekají na potvrzení – viz <a href="../11_Mapy/Geografie/">Geografie</a>.</p>
 <script src="../assets/leaflet/leaflet.js"></script>
 <script>window.MONTELIEN_MISTA = {json.dumps(data, ensure_ascii=False)};</script>
@@ -123,6 +131,8 @@ def main():
     (DOCS / "glosar.md").write_text("---\nhide:\n  - toc\n---\n# Glosář pravidel (SRD 5.2.1)\n\nDefinice pravidel 2024 (stavy, akce, pojmy). Obsah SRD 5.2.1 je pod licencí CC-BY 4.0.\n\n<div class=\"srd-katalog\" data-typ=\"glosar\"></div>\n", encoding="utf-8")
     (DOCS / "boj.md").write_text("---\nhide:\n  - toc\n  - navigation\n---\n# Bojový modul\n\nBojové mapy s mřížkou (1 pole = 5 ft), žetony postav a netvorů, iniciativa a bojový pomocník podle pravidel 2024.\n\n<div id=\"boj-app\"></div>\n", encoding="utf-8")
     boj_index()
+    boje.write_index(DOCS)
+    (DOCS / "boje.md").write_text("---\nhide:\n  - toc\n  - navigation\n---\n# Správa bojů\n\nUložené boje podle kampaní a questů: stav, účastníci, kola a deník. Boj otevřeš v bojovém modulu, kde ho můžeš dál hrát, přiřadit nebo uložit jako nový.\n\n<div id=\"boje-app\"></div>\n", encoding="utf-8")
     (DOCS / "kouzla.md").write_text("---\nhide:\n  - toc\n---\n# Katalog kouzel (D&D 2024)\n\nVšechna kouzla z pravidel 2024+. Klikni na název pro celý popis.\n\n<div id=\"katalog-kouzel\"></div>\n", encoding="utf-8")
 
     import pravidla_pages
@@ -130,6 +140,7 @@ def main():
     GR = [("Svět", ["Svět", "Země", "Města", "Postavy", "Frakce", "Knihy a dokumenty", "Mapy"]), ("Hra", ["Kampaně", "Questy", "Hádanky", "Sezení"])]
     byname = {list(x)[0]: x for x in sections}
     grouped = [{g: [byname[n] for n in names if n in byname]} for g, names in GR]
+    grouped[1]["Hra"].insert(0, {"Správa bojů": "boje.md"})
     grouped[1]["Hra"].insert(0, {"Bojový modul": "boj.md"})
     rest = [x for x in sections if list(x)[0] not in sum([n for _, n in GR], [])]
     nav = [{"Úvod": "README.md"}, {"Interaktivní mapa": "mapa.md"}] + grouped + [{"Pravidla 2024": P}] + [{"Projekt": rest + [{"Otevřené otázky": "Otevrene_otazky.md"}, {"Pravidla projektu": "AGENTS.md"}]}]

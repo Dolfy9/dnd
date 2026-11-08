@@ -94,3 +94,24 @@ body.ed-on .bj-pal { cursor: pointer; }
 .bj-l.blok, .bj-l.warn { border-left: 3px solid #e55; padding-left: 5px; background: color-mix(in srgb, #e55 10%, transparent); }
 .bj-sum { margin: 4px 0; display: flex; flex-wrap: wrap; gap: 4px; align-items: center; }
 .bj-sum button { font-size: .8em; padding: 1px 7px; border: 1px solid var(--bj-line); border-radius: 10px; background: rgba(150, 110, 220, .15); cursor: pointer; }
+.bj-boje h4 small { font-weight: normal; margin-left: 6px; }
+.bj-bform { display: grid; grid-template-columns: 1fr 1fr; gap: 6px 10px; }
+.bj-bform label { display: flex; flex-direction: column; font-size: .8em; gap: 2px; }
+.bj-bform .bj-wide, .bj-bform .bj-chk { grid-column: 1 / -1; }
+.bj-bform .bj-chk { flex-direction: row; align-items: center; gap: 6px; }
+.bj-bform input, .bj-bform select, .bj-bform textarea { font: inherit; font-size: .95em; padding: 2px 4px; border: 1px solid var(--bj-line); border-radius: 4px; background: transparent; color: inherit; width: 100%; box-sizing: border-box; }
+.bj-bform .bj-row { display: flex; gap: 4px; }
+.bj-blist { max-height: 340px; overflow: auto; }
+.bj-bitem { border: 1px solid var(--bj-line); border-radius: 6px; padding: 5px 8px; margin: 5px 0; font-size: .85em; }
+.bj-bitem.on { border-color: #c9982f; box-shadow: 0 0 0 1px #c9982f inset; }
+.bj-bitem button { font-size: .85em; padding: 0 6px; }
+.bj-bst { font-size: .75em; padding: 0 6px; border-radius: 8px; background: rgba(128,128,128,.25); }
+.bj-bst.st-probiha { background: rgba(220,120,30,.35); } .bj-bst.st-dokonceno { background: rgba(60,160,80,.35); } .bj-bst.st-priprava { background: rgba(70,120,200,.3); }
+.bm-top { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; margin-bottom: 1rem; }
+.bm-top input, .bm-top select { padding: 4px 8px; border: 1px solid #b59a6a; border-radius: 4px; background: transparent; color: inherit; }
+.bm-card { display: flex; gap: 12px; border: 1px solid rgba(128,128,128,.35); border-radius: 8px; padding: 8px; margin: 8px 0; font-size: .8rem; }
+.bm-card img { width: 180px; height: 120px; object-fit: cover; border-radius: 6px; flex: none; }
+.bm-card button { font-size: .75rem; margin: 2px; }
+.bm-new { font-size: .7em; font-weight: normal; margin-left: 6px; }
+.boje-box { border: 1px solid rgba(128,128,128,.4); border-left: 4px solid #8b2c1c; border-radius: 6px; padding: .5rem .8rem; margin: 1rem 0; font-size: .8rem; }
+@media (max-width: 700px) { .bm-card { flex-direction: column; } .bm-card img { width: 100%; height: 160px; } .bj-bform { grid-template-columns: 1fr; } }

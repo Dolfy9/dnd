@@ -9,6 +9,7 @@ from http.server import ThreadingHTTPServer, SimpleHTTPRequestHandler
 from pathlib import Path
 from urllib.parse import urlparse, parse_qs
 import yaml
+import boje
 
 WEB = Path(__file__).resolve().parent
 ROOT = WEB.parent
@@ -33,6 +34,7 @@ def rebuild(index=False, mapa=False):
     with LOCK:
         if mapa:
             subprocess.run([sys.executable, str(ROOT / "tools" / "mapa.py")], cwd=ROOT)
+            subprocess.run([sys.executable, str(ROOT / "tools" / "mapa_ilustrace.py")], cwd=ROOT / "tools")
         if index:
             subprocess.run([sys.executable, str(ROOT / "tools" / "kontrola.py"), "--index"], cwd=ROOT)
         subprocess.run([sys.executable, str(WEB / "build.py")], cwd=WEB, check=True)
@@ -116,6 +118,21 @@ class Handler(SimpleHTTPRequestHandler):
                 meta["postava"] = d["postava"]
                 p.write_text(join_front(meta, body), encoding="utf-8")
                 rebuild()
+                return self.send_json({"ok": True})
+            if u.path == "/api/boje" and method == "GET":
+                return self.send_json(boje.index_data())
+            if u.path == "/api/boj" and method == "GET":
+                return self.send_json(json.loads(boje.path_for(q["id"]).read_text(encoding="utf-8")))
+            if u.path == "/api/boj" and method == "PUT":
+                b = self.body()["boj"]
+                p = boje.path_for(b.get("id"))
+                p.parent.mkdir(parents=True, exist_ok=True)
+                p.write_text(json.dumps(b, ensure_ascii=False, indent=1), encoding="utf-8")
+                boje.write_index(SITE, WEB / "docs")
+                return self.send_json({"ok": True, "id": b["id"]})
+            if u.path == "/api/boj" and method == "DELETE":
+                boje.path_for(q["id"]).unlink()
+                boje.write_index(SITE, WEB / "docs")
                 return self.send_json({"ok": True})
             if u.path == "/api/strom" and method == "GET":
                 files = sorted(str(f.relative_to(ROOT)) for f in ROOT.rglob("*.md")

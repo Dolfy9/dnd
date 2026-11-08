@@ -5,3 +5,4 @@ web/docs/
 web/site/
 web/mkdocs.yml
 11_Mapy/*_debug.jpg
+tools/__pycache__/

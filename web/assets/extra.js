@@ -57,3 +57,27 @@
   }
   if (window.document$) window.document$.subscribe(apply); else document.addEventListener("DOMContentLoaded", apply);
 })();
+
+// Boje přiřazené ke kampani / questu / sezení (boje_index.json z web/build.py nebo serveru)
+(function () {
+  function base() { var s = document.querySelector('script[src*="assets/extra.js"]'); return s ? s.src.replace(/assets\/extra\.js.*$/, "") : "/"; }
+  function esc(s) { return String(s == null ? "" : s).replace(/[&<>"]/g, function (c) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]; }); }
+  var STAV = { priprava: "Příprava", probiha: "Probíhá", dokonceno: "Dokončeno", archiv: "Archiv" };
+  function box() {
+    var b = base(), rel = decodeURIComponent(location.href.split("#")[0].split("?")[0].replace(b, "")).replace(/index\.html$/, "");
+    if (!/^(07_Kampane|08_Questy|10_Sezeni)\/[^/]+\/$/.test(rel)) return;
+    var path = rel.replace(/\/$/, "") + ".md", art = document.querySelector(".md-content__inner"); if (!art || art.querySelector(".boje-box")) return;
+    fetch(b + "api/boje").then(function (r) { if (!r.ok) throw 0; return r.json(); }).catch(function () { return fetch(b + "boje_index.json").then(function (r) { return r.ok ? r.json() : {}; }); }).then(function (ix) {
+      var key = path.indexOf("07_") === 0 ? "kampan" : path.indexOf("08_") === 0 ? "quest" : "sezeni";
+      var L = (ix.boje || []).filter(function (x) { return x[key] === path; });
+      var q = key === "quest" ? (ix.questy || []).filter(function (x) { return x.cesta === path; })[0] : null;
+      var nov = b + "boj/?novy=1&" + key + "=" + encodeURIComponent(path) + (q && q.kampan ? "&kampan=" + encodeURIComponent(q.kampan) : "");
+      var d = document.createElement("div"); d.className = "boje-box";
+      d.innerHTML = "<b>⚔ Boje</b> (" + L.length + ") · <a href='" + nov + "'>+ připravit boj</a> · <a href='" + b + "boje/'>správa bojů</a>" + (L.length ? "<ul>" + L.map(function (x) {
+        return "<li><a href='" + b + "boj/?boj=" + encodeURIComponent(x.id) + "'>" + esc(x.nazev) + "</a> – " + (STAV[x.stav] || x.stav) + ", kolo " + (x.kola || 0) + (x.vysledek ? " – <i>" + esc(x.vysledek) + "</i>" : "") + "</li>";
+      }).join("") + "</ul>" : "");
+      var h1 = art.querySelector("h1"); if (h1) h1.insertAdjacentElement("afterend", d); else art.prepend(d);
+    }).catch(function () { });
+  }
+  if (window.document$) window.document$.subscribe(box); else document.addEventListener("DOMContentLoaded", box);
+})();

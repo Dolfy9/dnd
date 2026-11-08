@@ -1466,6 +1466,1458 @@
     "######.......^^...,,~~~~~~~~o~"
    ],
    "obrazek": "bojove/ostrovy-pobrezi.jpg"
+  },
+  {
+   "id": "noelien-posvatny-haj",
+   "nazev": "Nöelien – Posvátný háj u tůně",
+   "misto": "02_Zeme/Elfsky_Stat_Noelien.md",
+   "podklad": "les",
+   "osvetleni": "Dim Light (soumrak, světlušky)",
+   "popis": "Prastaré stromy kolem průzračné tůně a kruh devíti mechových menhirů s runami (three-quarters cover). Tůň je ve středu hluboká, kořeny a kapradí jsou difficult terrain. Kdo v kruhu sešle kouzlo školy Enchantment, hází záchranu s advantage. Potok odtéká na východ.",
+   "stretnuti": [
+    {
+     "nazev": "Dryad",
+     "pocet": 1
+    },
+    {
+     "nazev": "Awakened Tree",
+     "pocet": 2
+    },
+    {
+     "nazev": "Sprite",
+     "pocet": 3
+    }
+   ],
+   "stav": "návrh",
+   "start": {
+    "druzina": [
+     [
+      0,
+      7
+     ],
+     [
+      2,
+      7
+     ],
+     [
+      0,
+      9
+     ],
+     [
+      2,
+      9
+     ],
+     [
+      0,
+      11
+     ],
+     [
+      2,
+      11
+     ]
+    ],
+    "nepratele": [
+     [
+      24,
+      2
+     ],
+     [
+      26,
+      2
+     ],
+     [
+      28,
+      2
+     ],
+     [
+      26,
+      4
+     ],
+     [
+      28,
+      4
+     ],
+     [
+      24,
+      6
+     ]
+    ]
+   },
+   "mrizka": [
+    "gggggggggg^^gTTggggg^ggggggggg",
+    "^^ggggTgggg^ggTggggTgggggggggg",
+    "^^^TTTggggg^^^gggggTTTTggggTgg",
+    "^^TTTTgggggg^gggggggTTTTggTTgg",
+    "gTTTTTgggggggo^gggggTTTTTggggg",
+    "gTTTTTggoggggg^gggggTTTTgggggg",
+    "ggg^^^gggggggggggogggTTTgTTTTg",
+    "ggggg^ggg,,,,,,ggg^^^^^TgTTTTg",
+    "ggTggogg,,~~~~,,gggTT^^ggTTTgg",
+    "gggggggg,~~~~~~,ggoTTg^ggTTgTT",
+    "^ggggggg,~~~~~~,,goggg^ggggggg",
+    "^ggggogg,~~~~~~,,,gggg,ggggggg",
+    "TT^ggggggg,,,,,g^g,,,,,T,ggggT",
+    "TTggggggggggg^g^^ogggggT,,,,,T",
+    "ggggTTggogggg^g^^^gggggggg,,,,",
+    "gggTTTTggggggo^^^^^TTTTggggggg",
+    "gggTTTTggggggggg^^^TTTTggggTTg",
+    "ggTTTTgggggggggg^^^TTTTggggTTg",
+    "gggggggggggggggg^^gggggggggggg",
+    "gggggTgggggggggg^TTggggg^^^^gg"
+   ],
+   "obrazek": "bojove/noelien-posvatny-haj.jpg"
+  },
+  {
+   "id": "amir-rakosovy-ostrov",
+   "nazev": "Jezero Amir – Rákosový ostrov a potopená věž",
+   "misto": "01_Svet/Mista/Jezero_Amir_a_Kop_Aram.md",
+   "podklad": "more",
+   "osvetleni": "Bright Light (ráno), mlha: Lightly Obscured nad vodou",
+   "popis": "Rákosový ostrůvek uprostřed jezera, z vody čouhá vrchol utopené věže starého Kop Aramu. Ostrov a věž spojuje vratké molo (=). Rákos je difficult terrain a Lightly Obscured. Kolem je hluboká voda, plavání stojí dvojnásob pohybu. Ve věži je otvor do zatopených pater.",
+   "stretnuti": [
+    {
+     "nazev": "Merrow",
+     "pocet": 2
+    },
+    {
+     "nazev": "Giant Frog",
+     "pocet": 3
+    }
+   ],
+   "stav": "návrh",
+   "start": {
+    "druzina": [
+     [
+      5,
+      8
+     ],
+     [
+      7,
+      8
+     ],
+     [
+      9,
+      8
+     ],
+     [
+      3,
+      10
+     ],
+     [
+      5,
+      10
+     ],
+     [
+      7,
+      10
+     ]
+    ],
+    "nepratele": [
+     [
+      21,
+      6
+     ],
+     [
+      23,
+      6
+     ],
+     [
+      23,
+      8
+     ],
+     [
+      20,
+      5
+     ],
+     [
+      21,
+      5
+     ],
+     [
+      22,
+      5
+     ]
+    ]
+   },
+   "mrizka": [
+    "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~",
+    "~~~~~~~~~~~~~~~~~~~~~~~~~o~~~~",
+    "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~",
+    "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~",
+    "~~~~~~~~~~~~~~~~~~~~####~~~~~o",
+    "~~~~~~~~~~~~~~~~~~~#...#~~~~~~",
+    "~~~~~,TTgT,,~~~~~~##....#~~~~~",
+    "~~~~,ggggTT^g~~oo~~#..,,~~~~~~",
+    "~~~~g^gg^g^^T,,~~o~~=##,~~~~~~",
+    "~~~,g^g^^^^^^^,,~o~=~~~~~~~~~~",
+    "~~~,^^^^^^^gg^,,===~~~~~~~~~~~",
+    "~~~TT^^^^gggT^==~~~~~~~~~~~~~~",
+    "~~~,ggggggggTT,~~~~~~~~~~~~~~~",
+    "~~~~,T^gggggg,~~%%~~~~~~~~~~~~",
+    "~~~~~T^Tggg^,~~~~~~~~~~~~~~~~~",
+    "~~~~~,,,,,,,~~~~~~~~~~~~o~~~~~",
+    "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~",
+    "~~~~~~~~~~~~~~~~~~~~~~o~~~~~~~",
+    "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~",
+    "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"
+   ],
+   "obrazek": "bojove/amir-rakosovy-ostrov.jpg"
+  },
+  {
+   "id": "werenor-vodopad",
+   "nazev": "Starý Werenor – Ruiny u vodopádu",
+   "misto": "03_Mesta/Mesto_Werenor.md",
+   "podklad": "ruiny",
+   "osvetleni": "Dim Light (mlha z vodopádu)",
+   "popis": "Ruiny předpádového Werenoru u skalního prahu, přes který padá řeka. Skalní práh (#) je 15 ft vysoký, nahoru vedou schody na východě. Proud pod vodopádem (x): kdo do něj vstoupí, hází Strength save DC 13, jinak ho strhne 10 ft po proudu a je Prone. Tůň je hluboká, zlomené arkády dávají half cover.",
+   "stretnuti": [
+    {
+     "nazev": "Ghost",
+     "pocet": 1
+    },
+    {
+     "nazev": "Specter",
+     "pocet": 2
+    },
+    {
+     "nazev": "Skeleton",
+     "pocet": 4
+    }
+   ],
+   "stav": "návrh",
+   "start": {
+    "druzina": [
+     [
+      2,
+      13
+     ],
+     [
+      4,
+      13
+     ],
+     [
+      6,
+      13
+     ],
+     [
+      8,
+      13
+     ],
+     [
+      2,
+      15
+     ],
+     [
+      4,
+      15
+     ]
+    ],
+    "nepratele": [
+     [
+      17,
+      0
+     ],
+     [
+      19,
+      0
+     ],
+     [
+      21,
+      0
+     ],
+     [
+      23,
+      0
+     ],
+     [
+      25,
+      0
+     ],
+     [
+      27,
+      0
+     ]
+    ]
+   },
+   "mrizka": [
+    "ggggggggg..gg,,,gg..T.TgggggTT",
+    "ggggggggggggg,,,gg...TTTggggTT",
+    "gggg.gggggggg,,,,g..ggT..ggggg",
+    "ggTTgggggggggg,,,gggTTg.gg..gg",
+    ".ggggTggTTgg##xxxggggTgTT...gg",
+    ".ggggTTggT####xxx###gTg.....g#",
+    "###ggT########xxx######SS#####",
+    "###########ggg.g..######S####g",
+    "gg#####ggggg,,,,,ggg.g##SS#ggg",
+    "ggg.ooggg.g,~~~~~,.....ggSgggg",
+    "ggTgggggggg,~~~~~,googgggggggg",
+    "gggg##ggggg,~~~~~,gggggggggg..",
+    "gggggg#^ggggg,,,,g.Tggg##ggg..",
+    "ggggggg.gggggg,,ggggg##.^ggggg",
+    "gggggggggggggg,,ggg......ggggg",
+    "TTgggggggoogggg,ggg.gog.gggggg",
+    "Tggggg#ggggggg,,gggggogggggggg",
+    "ggggggggg^gggg,,gggggggggggggg",
+    "gggg..gggggggg,gggggggggggggTT",
+    "ggg....gggggg,,gggggggggTTggTT"
+   ],
+   "obrazek": "bojove/werenor-vodopad.jpg"
+  },
+  {
+   "id": "draar-cerne-utesy",
+   "nazev": "Trosky Dräaru – Černé útesy a šeptající písky",
+   "misto": "01_Svet/Mista/Trosky_Draaru.md",
+   "podklad": "poust",
+   "osvetleni": "Dim Light (rudý soumrak)",
+   "popis": "Černý písek mezi čedičovými útesy, polozasypané sochy říše a kruh obelisků kolem propadu do Draarského podzemí. Okraj propadu (x) je popel a žhavá suť: 1d6 Fire při vstupu. Propad je 60 ft hluboký. Šepot démonů: na začátku každého kola Wisdom save DC 14, jinak postava do konce tahu nemůže používat Reaction. Duny jsou difficult terrain.",
+   "stretnuti": [
+    {
+     "nazev": "Glabrezu",
+     "pocet": 1
+    },
+    {
+     "nazev": "Quasit",
+     "pocet": 4
+    }
+   ],
+   "stav": "návrh",
+   "start": {
+    "druzina": [
+     [
+      5,
+      13
+     ],
+     [
+      7,
+      13
+     ],
+     [
+      9,
+      13
+     ],
+     [
+      11,
+      13
+     ],
+     [
+      13,
+      13
+     ],
+     [
+      5,
+      15
+     ]
+    ],
+    "nepratele": [
+     [
+      18,
+      1
+     ],
+     [
+      20,
+      1
+     ],
+     [
+      22,
+      1
+     ],
+     [
+      24,
+      1
+     ],
+     [
+      18,
+      3
+     ],
+     [
+      20,
+      3
+     ]
+    ]
+   },
+   "mrizka": [
+    "####.....^^^.......^.......###",
+    "####.....^^^^......o^......###",
+    "#####^^.....^.......^o.....###",
+    "#####^^.....^^......^^....####",
+    "#####^^..oo.^o....o..^^^..####",
+    "#####^^^^.o.^^.x......^^..####",
+    "####..^^^...^^x__xx....^^^####",
+    "####..^^^..o.x____x....^^^^###",
+    "###...^^...o.x____x.o....^^###",
+    "##..o.^^.....xx__xx......^^.##",
+    "##..o.^^^.....^x^^..oo...^..##",
+    "##.....^^^o..o.^^^o.oo.o..^.##",
+    "###......^^oo..^^^^^^^.o..^^##",
+    "###.....^^....,,,,,o^^...o^^##",
+    "###^....^^^.,,,,,~,,,^...^^^##",
+    "###^....^,,,~~~~~~~~~,,...^###",
+    "####^.,,,,~~~~~~~~~~~~~,,,####",
+    "#####,,~~~~~~~~~~~~~~~~~~~####",
+    "#####~~~~~~~~~~~~~~~~~~~~~####",
+    "#####~~~~~~~~~~~~~~~~~~~~~####"
+   ],
+   "obrazek": "bojove/draar-cerne-utesy.jpg"
+  },
+  {
+   "id": "hinai-mihi-myti",
+   "nazev": "Hinai Mihi – Mýtina v pralese neviditelných",
+   "misto": "01_Svet/Mista/Hinai_Mihi.md",
+   "podklad": "les",
+   "osvetleni": "Dim Light (pod korunami)",
+   "popis": "Malá mýtina s obětním kamenem uprostřed hustého pralesa. Prales kolem (T) je heavily obscured a difficult terrain. Ticho: Wisdom (Perception) podle sluchu má disadvantage. Kanibalové jsou Invisible (viz stránka místa). Kolem kamene je oltář s krví (x): kdo na něm skončí tah, má disadvantage na Wisdom saves do konce dalšího tahu.",
+   "stretnuti": [
+    {
+     "nazev": "Tough",
+     "pocet": 4
+    },
+    {
+     "nazev": "Tough Boss",
+     "pocet": 1
+    }
+   ],
+   "stav": "návrh",
+   "start": {
+    "druzina": [
+     [
+      16,
+      16
+     ],
+     [
+      15,
+      16
+     ],
+     [
+      15,
+      17
+     ],
+     [
+      15,
+      18
+     ],
+     [
+      14,
+      19
+     ],
+     [
+      15,
+      19
+     ]
+    ],
+    "nepratele": [
+     [
+      8,
+      6
+     ],
+     [
+      10,
+      6
+     ],
+     [
+      12,
+      6
+     ],
+     [
+      14,
+      6
+     ],
+     [
+      16,
+      6
+     ],
+     [
+      18,
+      6
+     ]
+    ]
+   },
+   "mrizka": [
+    "TTTTTTTTTTTTT^TTTTTTTTTTTTTTTT",
+    "TTTTTTTTTTTTTTTTTTTTTTTTTTTTTT",
+    ",TTTTTTTTTTTTTTTTTTTTTTTTTTTTT",
+    ",,T^TTTTTTTTT^^TTTTTT,,,TTT^TT",
+    "TTT,,TTT,,,,,gggg^,,,^TTT,,,,,",
+    "TTTT,,,,,ggg,,,,,,,ggg^TTTTTT,",
+    "TTTTTTT^gggggoggggggggg^TTTTTT",
+    "TTTTTT^ggggggggggogggg^^TTTTTT",
+    "TTTTT^gggggggg....ggggg^TTTTTT",
+    "TTTTT^gggggggg.%%.gggggg^TTTTT",
+    "TTTTT^ggggogog....ggoogg^TTTTT",
+    "TTTTTTgggggggrggggggggggTTTTTT",
+    "TTTTTT^ggggggrrgggggggg^TTTTTT",
+    "TT^TTTTT^gggggrrgggggg^TTTTTTT",
+    "TTTTTTTTT^ggggrrggggg^TTTTTTTT",
+    "TTTTTTTTTT^^^^grgg^^^TTTTTTTTT",
+    "TTTTTTTTTTTTTTTrgTTTTTTTTTTTTT",
+    "TTTTTTTTTTTTTTTrTTTTTTTTTTTTTT",
+    "TTTTTTTTTTTTTTTrTTTTTTTTTTTTTT",
+    "T^TTTTTTTTTTTTrrTTTTTTTTTTTTTT"
+   ],
+   "obrazek": "bojove/hinai-mihi-myti.jpg"
+  },
+  {
+   "id": "ertinova-hora-upati",
+   "nazev": "Západní hvozd – Úpatí Ertinovy hory",
+   "misto": "01_Svet/Mista/Zapadni_hvozd_a_Ertinova_hora.md",
+   "podklad": "les",
+   "osvetleni": "Dim Light (zelené přítmí)",
+   "popis": "Hromada kamení tvaru zlomených kostí porostlá mechem a kořeny, kolem ní stromy ve spirálách. Uvnitř je dutina s runovým kamenem. Kouzla školy Divination tu mají advantage na související ověření, každé seslání ale vyvolá Wisdom save DC 13 proti vizím Temného dne (viz stránka místa). Suť a kořeny jsou difficult terrain.",
+   "stretnuti": [
+    {
+     "nazev": "Shambling Mound",
+     "pocet": 1
+    },
+    {
+     "nazev": "Awakened Shrub",
+     "pocet": 4
+    }
+   ],
+   "stav": "návrh",
+   "start": {
+    "druzina": [
+     [
+      0,
+      12
+     ],
+     [
+      2,
+      12
+     ],
+     [
+      4,
+      12
+     ],
+     [
+      0,
+      14
+     ],
+     [
+      2,
+      14
+     ],
+     [
+      4,
+      14
+     ]
+    ],
+    "nepratele": [
+     [
+      17,
+      9
+     ],
+     [
+      19,
+      9
+     ],
+     [
+      17,
+      8
+     ],
+     [
+      18,
+      8
+     ],
+     [
+      19,
+      8
+     ],
+     [
+      20,
+      8
+     ]
+    ]
+   },
+   "mrizka": [
+    "ggggggggggogoggTgggggg^ggggg^g",
+    "^ggggggg^^^^Tggggg^ggggggggggg",
+    "^^gggggg^^^^gggggTTggTggggoTgg",
+    "oggggggg^gggggTggggggggggggggg",
+    "^ggggggggggggggggg^#gggggTgggg",
+    "^^gggggggggTgggg^T####gggggggT",
+    "^ggggggTggggggT########TgggTgg",
+    "ggggggggggggg.r##########ggggg",
+    "gg^gggggggTggrr##....####ggggg",
+    "ggggoggTggggrr###....#####gTgg",
+    "ggggggggg^rrg^###########gg^^g",
+    "^ggggggggrrrggT########Tgggg^g",
+    "^ggggggrrrggggg######^ggggTggg",
+    "^ggggrrrrgggTTggg##gggg^^ggg^g",
+    "rrrrrrrggg^^gggggggggggT^ggggg",
+    "rgggggggggT^ggggTgggT^^^^ggggg",
+    "ggggggggggggggggggg^gggg^Tg^gg",
+    "ggggggggggggggggggT^ggTgg^^ggg",
+    "gggggggggggggggggggggggggggggg",
+    "ggggg^g^gg^^ggggggggoogggggg^g"
+   ],
+   "obrazek": "bojove/ertinova-hora-upati.jpg"
+  },
+  {
+   "id": "fornheim-ledovec",
+   "nazev": "Fornheim – Ledovec pod zamrzlou tvrzí",
+   "misto": "01_Svet/Mista/Fornheim.md",
+   "podklad": "snih",
+   "osvetleni": "Dim Light (polární záře)",
+   "popis": "Ledovcové pole se dvěma trhlinami (_, 40 ft hluboké) a sněhovým mostem. Zmrzlé postavy v ledu (o) dávají three-quarters cover. Celá mapa je slippery ice a difficult terrain kvůli sněhu. Extreme Cold: Constitution save DC 10 každou hodinu bez ochrany. Tavná voda je mělká a ledová.",
+   "stretnuti": [
+    {
+     "nazev": "Frost Giant",
+     "pocet": 1
+    },
+    {
+     "nazev": "Ice Devil",
+     "pocet": 1
+    },
+    {
+     "nazev": "Winter Wolf",
+     "pocet": 2
+    }
+   ],
+   "stav": "návrh",
+   "start": {
+    "druzina": [
+     [
+      1,
+      9
+     ],
+     [
+      3,
+      9
+     ],
+     [
+      5,
+      9
+     ],
+     [
+      1,
+      11
+     ],
+     [
+      3,
+      11
+     ],
+     [
+      5,
+      11
+     ]
+    ],
+    "nepratele": [
+     [
+      19,
+      1
+     ],
+     [
+      21,
+      1
+     ],
+     [
+      27,
+      1
+     ],
+     [
+      19,
+      3
+     ],
+     [
+      21,
+      3
+     ],
+     [
+      25,
+      3
+     ]
+    ]
+   },
+   "mrizka": [
+    "....^^^^..................^^^.",
+    ".................^^....###....",
+    "...............##^^...####....",
+    "...............##^^....##.....",
+    "....^^^^^..^^^.........^^.,,,,",
+    "....^^^^^...^^..........,,,^^.",
+    "___.^._____...........,,,^^^^^",
+    "..._____..__.........,,..^..^^",
+    "....^^^^..====......,...^^....",
+    "....^^^^^..=====..,.......^^..",
+    "....^^^^...^^^=.,,..........^.",
+    "...........^^,,..^............",
+    "^..........,,....^.______..___",
+    ".^........,,^....___....____..",
+    "..###^.^^,..^....^^^..^^^^^^..",
+    "..##...^,...^....^^..^^^..^^^^",
+    "........,....^...........^##^^",
+    ".......,.....^^^^^^.....^^##.^",
+    "......,.......^^^^^......^^^^^",
+    "..^...,..^^^..^^^^^........^^^"
+   ],
+   "obrazek": "bojove/fornheim-ledovec.jpg"
+  },
+  {
+   "id": "vychodni-hvozd-brod",
+   "nazev": "Východní hvozd – Brod bílých kamenů",
+   "misto": "01_Svet/Mista/Vychodni_hvozd.md",
+   "podklad": "les",
+   "osvetleni": "Bright Light (ráno), mlha nad řekou",
+   "popis": "Průzračná řeka v Tirentově hvozdu, přes brod vedou bílé kameny. Hluboká koryta (~) jsou mimo brod. Na jihovýchodním břehu stojí rozpadlý elfí altán se sloupy (three-quarters cover). Les, který se dívá: kdo se pokusí o Hide, hází s disadvantage.",
+   "stretnuti": [
+    {
+     "nazev": "Owlbear",
+     "pocet": 1
+    },
+    {
+     "nazev": "Worg",
+     "pocet": 2
+    }
+   ],
+   "stav": "návrh",
+   "start": {
+    "druzina": [
+     [
+      0,
+      7
+     ],
+     [
+      4,
+      7
+     ],
+     [
+      0,
+      9
+     ],
+     [
+      2,
+      9
+     ],
+     [
+      4,
+      9
+     ],
+     [
+      0,
+      11
+     ]
+    ],
+    "nepratele": [
+     [
+      25,
+      6
+     ],
+     [
+      27,
+      6
+     ],
+     [
+      29,
+      6
+     ],
+     [
+      25,
+      8
+     ],
+     [
+      29,
+      8
+     ],
+     [
+      25,
+      10
+     ]
+    ]
+   },
+   "mrizka": [
+    "TT^^^Tggggggg,~~~,ggggTTgggggg",
+    "TT^^gTTgTTg^^g,~~,,gggTTgggTTg",
+    "gg^Tgggggg^^^g,~~~,gggggTTgTTT",
+    "Tg^Tggggg^^^^^^,~~~,ggggTTTggT",
+    "T^^^ggggTT^g^^^,~~~,TTgggggTTT",
+    "g^^^ggTggggggg^,~~~,gggggggTTg",
+    "gg^^gggggTTTggg,~~,TTggTgggggg",
+    "gTTgggTTgTTTgg,~~~,TTgTTgggTT^",
+    "ggg^^gTTgggggoo,oogggggggggTTg",
+    "ggrrrrrrrrrro,o,orrrgggggrrrrr",
+    "rrrrrrrgggrr,,,o,rrrrrrrrrrrgg",
+    "gTTggggggg^oo,,,ogggg^^ggggggg",
+    "gTTggTTggg,,~~,,^ggg^^^ggggTgg",
+    "gg^ggTTggT,,~~,ggggggg#..#gTTg",
+    "gg^ggggggT,~~~,gg^^gTg....^^gg",
+    "gTTTTTTggg,~~~,gg^^TTT....^TTg",
+    "gTg^ggTgggg,~~~,gggg^^#..#^^TT",
+    "g^^^^^^^^^gg,~~,,gg^^^g++ggg^T",
+    "ggTT^^^^^^Tg,~~~,gg^TTgggTTT^^",
+    "^gTTgTT^^TTT^,~~~,ggTTggggTg^g"
+   ],
+   "obrazek": "bojove/vychodni-hvozd-brod.jpg"
+  },
+  {
+   "id": "ordenska-zatoka-tune",
+   "nazev": "Ordenská zátoka – Přílivové tůně a pašerácká jeskyně",
+   "misto": "02_Zeme/Teokracie_Orden.md",
+   "podklad": "plaz",
+   "osvetleni": "Dim Light (soumrak, odliv)",
+   "popis": "Skalnaté pobřeží při odlivu, kluzké kameny s chaluhami (difficult terrain) a přílivové tůně. Ve skalní stěně na západě je vstup do pašerácké jeskyně. Na pláži leží dva čluny s bednami (half cover). Příliv: od 5. kola se mělčina (,) mění v hlubokou vodu.",
+   "stretnuti": [
+    {
+     "nazev": "Sahuagin Warrior",
+     "pocet": 4
+    },
+    {
+     "nazev": "Giant Crab",
+     "pocet": 2
+    }
+   ],
+   "stav": "návrh",
+   "start": {
+    "druzina": [
+     [
+      7,
+      1
+     ],
+     [
+      9,
+      1
+     ],
+     [
+      11,
+      1
+     ],
+     [
+      13,
+      1
+     ],
+     [
+      7,
+      3
+     ],
+     [
+      9,
+      3
+     ]
+    ],
+    "nepratele": [
+     [
+      12,
+      12
+     ],
+     [
+      14,
+      12
+     ],
+     [
+      16,
+      12
+     ],
+     [
+      12,
+      14
+     ],
+     [
+      14,
+      14
+     ],
+     [
+      16,
+      14
+     ]
+    ]
+   },
+   "mrizka": [
+    "#####...........,,~~~o~~~~~~~~",
+    "######..^^....,,,~~~~oo~~~~~~~",
+    "#######.^^....,,~~~~~~~~~~~~~~",
+    "######.^^^...,,,~~~~~~~~~~~~~~",
+    "####.#.......,,~~~~~~~~~~~~~~~",
+    "##_........,.,,,~~~~~~~~~~~~~~",
+    "##_.^^...o.,.,,,~~~~~~~~oo~~oo",
+    "####.^.......,,~~~~~~~~~~~~~~~",
+    "####.........,,,~~~o~~~o~~~~oo",
+    "####......^^..,,~~~~~~~o~~~~o~",
+    "####.^..^..^..,oo~~~~~~~~~~~~~",
+    "####...^.^^....,,,~~~~~~~~~~~~",
+    "####...^..o..,..,,~~~~~~~~~~~~",
+    "####.........,.%%%,~~~~~~~~~o~",
+    "#####......,...,.,,,~o~~~~~~~~",
+    "######..^^.,..%%%.,,~~~~~~~~~~",
+    "######..^..^^^....,,,~~~~~~~~~",
+    "######......^^.....,,~~~~~~~~~",
+    "######.............,,~~~~~~~~~",
+    "######.^....^.^....,,~~~~~~~~~"
+   ],
+   "obrazek": "bojove/ordenska-zatoka-tune.jpg"
+  },
+  {
+   "id": "jizni-ostrovy-laguna",
+   "nazev": "Svobodné jižní ostrovy – Laguna s vesnicí na kůlech",
+   "misto": "02_Zeme/Svobodne_Jizni_Ostrovy.md",
+   "podklad": "more",
+   "osvetleni": "Bright Light (poledne)",
+   "popis": "Tyrkysová laguna s chýšemi na kůlech spojenými lávkami (=). Laguna je mělká (,), za korálovým útesem (^, difficult terrain, 1 Slashing při vstupu bez bot) začíná hluboký oceán. Na jihu je pláž s palmami. Lávky jsou úzké: Dash po nich vyžaduje Acrobatics DC 10.",
+   "stretnuti": [
+    {
+     "nazev": "Merfolk Skirmisher",
+     "pocet": 3
+    },
+    {
+     "nazev": "Sea Hag",
+     "pocet": 1
+    }
+   ],
+   "stav": "návrh",
+   "start": {
+    "druzina": [
+     [
+      8,
+      18
+     ],
+     [
+      10,
+      18
+     ],
+     [
+      12,
+      18
+     ],
+     [
+      14,
+      18
+     ],
+     [
+      16,
+      18
+     ],
+     [
+      18,
+      18
+     ]
+    ],
+    "nepratele": [
+     [
+      13,
+      3
+     ],
+     [
+      17,
+      3
+     ],
+     [
+      19,
+      3
+     ],
+     [
+      21,
+      3
+     ],
+     [
+      13,
+      5
+     ],
+     [
+      15,
+      5
+     ]
+    ]
+   },
+   "mrizka": [
+    "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~",
+    "~~~~~~~~~~~~~~~~~~~~~~o~~~~~~~",
+    "~~~~~~~~~~,,^,^^^,~~~~~~~~~~~~",
+    "~~~~~~~~,,,,,,##,,,,,,,~~~~~~~",
+    "~~~~~~~^,,,,,,..,,,,,,,,~~~~~~",
+    "~o~~,,^,..,,,,..,,,,##,,,^~~~~",
+    "~o~,,,,,..,,,,,=,,,,..,,,,~~~~",
+    "~~~^,,,,,=,,,,,=,,,,..,,,,,~~~",
+    "~~^,,,,,,,=,,,,=,,,,=,,,,,,~~~",
+    "~~^,,,,,,,,=,,,=,,,==,,,,,^~~~",
+    "~~o^,,,,,,,..,,=====,,,,,,,,~o",
+    "~~~,,,,,,,,..,,,,,..,,,,,,,^~~",
+    "~~~^,,,,,,,=,,,,,,..,,,,,,,o~~",
+    "~~~~^^,,,,,=,,,,,,,=,,,,,,~~~~",
+    "~~~~~^,,,,,=,,,,,,,=,,,,,^~~~~",
+    "~~~~~~~^,,,=,,,,,,,=,,,~,~~~~,",
+    ",,,~~~,,,,,=.....,,=,,,,~,,,,,",
+    ".T,,,,,,...=..TT...T.,,,,,,...",
+    "...TT............T..TT........",
+    "..............T..T...T...T...T"
+   ],
+   "obrazek": "bojove/jizni-ostrovy-laguna.jpg"
+  },
+  {
+   "id": "zairam-rokle",
+   "nazev": "Zairam – Rokle na hranici s Tali",
+   "misto": "02_Zeme/Zeme_Zairam.md",
+   "podklad": "reka",
+   "osvetleni": "Bright Light (odpoledne)",
+   "popis": "Hluboká zelená rokle (_, 50 ft) s řekou na dně dělí satyrské vinice na západě od tábora nájezdníků z Tali na východě. Přes rokli vede houpavý provazový most (=): kdo po něm běží, hází Dexterity save DC 10, jinak Prone. Okraje rokle porostlé liánami jsou difficult terrain.",
+   "stretnuti": [
+    {
+     "nazev": "Gnoll Warrior",
+     "pocet": 4
+    },
+    {
+     "nazev": "Hyena",
+     "pocet": 3
+    }
+   ],
+   "stav": "návrh",
+   "start": {
+    "druzina": [
+     [
+      0,
+      9
+     ],
+     [
+      2,
+      9
+     ],
+     [
+      4,
+      9
+     ],
+     [
+      6,
+      9
+     ],
+     [
+      0,
+      11
+     ],
+     [
+      0,
+      13
+     ]
+    ],
+    "nepratele": [
+     [
+      22,
+      1
+     ],
+     [
+      24,
+      1
+     ],
+     [
+      26,
+      1
+     ],
+     [
+      28,
+      1
+     ],
+     [
+      22,
+      3
+     ],
+     [
+      24,
+      3
+     ]
+    ]
+   },
+   "mrizka": [
+    "ggggggggggg^^_~~__^^ggTggggggg",
+    "gTTgggggggg^^__~~__^gggggggggT",
+    "ggggggggggggoo_~~__^gggggggggT",
+    "g%%%gggggggg^^_~~__^oggggTgggg",
+    "TTgg.TTggggg^^__~~_^^gggggoggT",
+    "TgggggTgggggg^__~~_^^ggggggggg",
+    "gggggoggg========~g^^ggggggggg",
+    "gg%%%%gTggggg========TTggggggg",
+    "g.gggggggggg^^_~~__^^ggggggggg",
+    "gggggggggggg^__~~__^gggggTTggg",
+    "gggTTTggggg^^_~~__^^gggTgTTggg",
+    "g%%gTT%ggg^^__~~_^^ggggggggggg",
+    "gggggogggg^^_~~~_^ggggggg..Tgg",
+    "gggggTTgg^^__~~_^^gggggg.xx.gT",
+    "ggggggggg^^_~~__^^gggTgg.xx.gT",
+    "TgTT%%%gg^__~~__^^ggTTTgg..ggg",
+    "ggTT.ggog^^_~~__^ggggggggggggg",
+    "ggggggggg^^_~~_^^ggggggggggggg",
+    "gTggggggg^^__~__^ggggggggggggg",
+    "gggggggggg^^_~~_^^gggggggTTggg"
+   ],
+   "obrazek": "bojove/zairam-rokle.jpg"
+  },
+  {
+   "id": "monohen-vir",
+   "nazev": "Mönohen – Skaliska u Víru",
+   "misto": "02_Zeme/Klanove_Zeme_Monohen.md",
+   "podklad": "more",
+   "osvetleni": "Dim Light (bouře)",
+   "popis": "Skalnaté ostrůvky na okraji obřího víru východně od Mönohenu, zřícený maják a trosky lodí. Vír (x): na konci tahu ve víru Strength (Athletics) DC 15, jinak tě strhne 10 ft ke středu. Střed víru (_) táhne do hlubin. Skály jsou kluzké (difficult terrain), trosky dávají half cover.",
+   "stretnuti": [
+    {
+     "nazev": "Giant Octopus",
+     "pocet": 1
+    },
+    {
+     "nazev": "Merrow",
+     "pocet": 2
+    }
+   ],
+   "stav": "návrh",
+   "start": {
+    "druzina": [
+     [
+      3,
+      11
+     ],
+     [
+      5,
+      11
+     ],
+     [
+      3,
+      13
+     ],
+     [
+      5,
+      13
+     ],
+     [
+      7,
+      13
+     ],
+     [
+      9,
+      13
+     ]
+    ],
+    "nepratele": [
+     [
+      11,
+      14
+     ],
+     [
+      11,
+      16
+     ],
+     [
+      13,
+      16
+     ],
+     [
+      11,
+      15
+     ],
+     [
+      12,
+      15
+     ],
+     [
+      13,
+      15
+     ]
+    ]
+   },
+   "mrizka": [
+    "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~",
+    "~~~~~~~~~~~~~~~o~~~~~~~~~~~~~~",
+    "~~#..#~~~~~~o~~~~~~~~~~~~~~~~~",
+    "~~#...~~~~~~o~~~~~~xxx~~~~~~~~",
+    "~~~...~~~~~~~~~~xxxxxxxx~~~x~~",
+    "~~~~~~~~~~~~~~~xxxxx~xxxx~~xx~",
+    "~~~~~~~~~~~~~~~xxx~~~__xx~~~x~",
+    "~~~~~~~~~o~~~~~xx~~~____x~~~x~",
+    "~~~~~~~~oo%%~~~xx~~x____~~~xx~",
+    "~~~######~~%%~~x~~~xx__~~~xxx~",
+    "~~#......#~~~~~xx~~xxxx~xxxxx~",
+    "~~#.#..#.##~~~%%x~~~xxxxxxxx~~",
+    "~##.#..#.##~~~~~~~~~~~xxxx~~~~",
+    "~~#.....#=~~~~~~~~~~~~~~~~~~~~",
+    "~~~~#####~=.###~~~~~~~~~~~~~~~",
+    "~oo~~~~~~~#=...oo~~~~~~~~~~~~~",
+    "~~~~~~~~~~~....~~~~~~~~~~~~~~~",
+    "~~~~~~o~~~~~###~~~~~~~~~~~~~~~",
+    "~~~~~~o~~~~~~~~oo~~~~~~~~~~~~~",
+    "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"
+   ],
+   "obrazek": "bojove/monohen-vir.jpg"
+  },
+  {
+   "id": "khaeraz-lovecky-tabor",
+   "nazev": "Khaeraz – Lovecký tábor u horského jezera",
+   "misto": "02_Zeme/Khaeraz.md",
+   "podklad": "les",
+   "osvetleni": "Bright Light (podzim, nízké slunce)",
+   "popis": "Tábor lovců z kmenů náčelníka Oltara u horského jezera. Stany a sušáky (%) dávají half cover, ohniště (x) 1d6 Fire při vstupu. Na severozápadě jsou skály a suť. Ordenská posádka přichází od jihovýchodu.",
+   "stretnuti": [
+    {
+     "nazev": "Warrior Veteran",
+     "pocet": 1
+    },
+    {
+     "nazev": "Guard",
+     "pocet": 4
+    }
+   ],
+   "stav": "návrh",
+   "start": {
+    "druzina": [
+     [
+      4,
+      11
+     ],
+     [
+      8,
+      11
+     ],
+     [
+      10,
+      11
+     ],
+     [
+      4,
+      13
+     ],
+     [
+      6,
+      13
+     ],
+     [
+      8,
+      13
+     ]
+    ],
+    "nepratele": [
+     [
+      26,
+      13
+     ],
+     [
+      22,
+      15
+     ],
+     [
+      24,
+      15
+     ],
+     [
+      28,
+      15
+     ],
+     [
+      24,
+      17
+     ],
+     [
+      28,
+      17
+     ]
+    ]
+   },
+   "mrizka": [
+    "##############gggggggTTggTgggg",
+    "##############gggggg^TTgTTgggg",
+    "ggT##^g^gggg##gggg,,^^^gggggTT",
+    "g^T^^ggggggTT^g,,~~~~~oo,ggggg",
+    "g^^^^gggggggg^g~~~~~~~~~,ggggg",
+    "^^^gggggggTg^g,~~~~~~~~~~,,ggT",
+    "^TTggTTgggT^^,~~~~~~~~~~~~,gTT",
+    "oTgggggggg^T^,~~~~~~~~~~~~,ggg",
+    "^ggTT^^ggTgTg,~~~~~~~~~~~,,^^T",
+    "TTg%g^ToTTTggg,,~~~~~~~~,,g^gg",
+    "TTg^^^^o^T^grggg,,~~~~,,,g^ggg",
+    "gggT^^%%^ggrg%gggg,gggggg^^ggg",
+    "Tggggg%%ggrggTggggggggggTT^^^^",
+    "TggTggggrr%gggg^gggggTTgTTg^Tg",
+    "ggTTgggrr%%%gggggggggTTg^^Togg",
+    "gTTg%%grr^%ggggggTTgggggg^TTgg",
+    "gTTg%%rrgggggggTTggggggggggTgg",
+    "rrrrrr^ggggggggTTgggggogggTTgg",
+    "rgggg^^^gggggggg^gTgggggggTTgg",
+    "gg^ggg^^ggggggggggTTTTgggg^ggg"
+   ],
+   "obrazek": "bojove/khaeraz-lovecky-tabor.jpg"
+  },
+  {
+   "id": "urkal-palacova-zahrada",
+   "nazev": "Urkal – Zarostlá palácová zahrada",
+   "misto": "01_Svet/Mista/Urkal.md",
+   "podklad": "ruiny",
+   "osvetleni": "Dim Light (úplněk)",
+   "popis": "Zahrada zapečetěného Urkalského paláce: dlouhý odrazný bazén (hluboký 5 ft) s rozbitou fontánou, sochy králů s vydlabanýma očima (three-quarters cover) a zřícený pavilon na východě. Zarostlé živé ploty jsou heavily obscured. Palác hlídá ordenská stráž.",
+   "stretnuti": [
+    {
+     "nazev": "Knight",
+     "pocet": 1
+    },
+    {
+     "nazev": "Guard",
+     "pocet": 4
+    }
+   ],
+   "stav": "návrh",
+   "start": {
+    "druzina": [
+     [
+      0,
+      7
+     ],
+     [
+      2,
+      7
+     ],
+     [
+      4,
+      7
+     ],
+     [
+      0,
+      9
+     ],
+     [
+      2,
+      9
+     ],
+     [
+      4,
+      9
+     ]
+    ],
+    "nepratele": [
+     [
+      22,
+      4
+     ],
+     [
+      24,
+      4
+     ],
+     [
+      26,
+      4
+     ],
+     [
+      28,
+      4
+     ],
+     [
+      22,
+      6
+     ],
+     [
+      24,
+      6
+     ]
+    ]
+   },
+   "mrizka": [
+    "gTTgggggggggggggggggggTTgggggg",
+    "gggggggggggg^ggggggggg^ggggggg",
+    "ggTTTTTTTTTT^gggggTTTTTTTTTggg",
+    "^ggTTTgggggTTgggggggggggTTTggg",
+    "gggggggg^ggggggggggggggggTgggg",
+    "ggggggggg^^oggggggoggggggggggT",
+    "ggggggggg^^oggggggogg^ggggggTT",
+    "ggggggggggggggggggggggggg##ggg",
+    "ggggggg^ggg,,,,,,,,ggggg#..#gg",
+    "rrrrrrrrrrr~~~oo~~~rrrrr^...#g",
+    "rrrrrrrrrrr~~~oo~~~g^^rr....#g",
+    "^^gg^gg^ggg,,,,,,,,gggg^#..##g",
+    "^^^^^^g^^gggggggggggggg^^##ggg",
+    "^gg^^^g^gggoggggggogg^^gg^gggg",
+    "^gg^^^g^^ggoggggggogggggg^^ggg",
+    "^gg^^gg^ggggg^^ggggggggggggggg",
+    "gggTgggggg^gg^^gggggggggggT^^g",
+    "gggTTTTTTT^TTgggg^^TTTTTTTTggg",
+    "gggggggggggTggggg^^^^^^ggTgggg",
+    "Tgggggggg^^gggggTgggg^^^^ggggg"
+   ],
+   "obrazek": "bojove/urkal-palacova-zahrada.jpg"
+  },
+  {
+   "id": "noet-mlyn-ve-vinicich",
+   "nazev": "Nöet – Vodní mlýn ve vinicích",
+   "misto": "02_Zeme/Provincie_Noet.md",
+   "podklad": "reka",
+   "osvetleni": "Bright Light (podvečer)",
+   "popis": "Kamenný mlýn u řeky s vodním kolem (x: kdo se dostane do kola, 2d6 Bludgeoning a je Restrained, únik Athletics DC 13). Přes řeku vede kamenný most. Na jižním svahu jsou řady vinné révy (%, half cover, difficult terrain napříč řadami). V mlýně se schovávají kultisté.",
+   "stretnuti": [
+    {
+     "nazev": "Cultist",
+     "pocet": 4
+    },
+    {
+     "nazev": "Cultist Fanatic",
+     "pocet": 1
+    }
+   ],
+   "stav": "návrh",
+   "start": {
+    "druzina": [
+     [
+      2,
+      0
+     ],
+     [
+      4,
+      0
+     ],
+     [
+      6,
+      0
+     ],
+     [
+      2,
+      2
+     ],
+     [
+      4,
+      2
+     ],
+     [
+      6,
+      2
+     ]
+    ],
+    "nepratele": [
+     [
+      16,
+      11
+     ],
+     [
+      18,
+      11
+     ],
+     [
+      20,
+      11
+     ],
+     [
+      22,
+      11
+     ],
+     [
+      12,
+      13
+     ],
+     [
+      14,
+      13
+     ]
+    ]
+   },
+   "mrizka": [
+    "ggggggggTgggggggggggggggTgggTT",
+    "gggTTggggggggggggggggggTTTgggg",
+    "rrgggggTTggggggggggggTTgTggggg",
+    "rTrrrrrTrrrgggg###ggggggggTggg",
+    "gTgggTTrrrrrrrr....ggggTggTTgg",
+    "ggggggggggggggg....,~,,TTggggg",
+    ",ggggggg===,,,~#..#xx~~T,,,ggg",
+    "~~~,,,,,==,~~~~~~~~xx~~~~~~,,,",
+    "~~~~~~~~==~~~~,,,,,g,,,~~~~~~~",
+    ",~~~~~~===~,,,ggggggggg,,,~~~~",
+    "gg,,,~~~rr,ggggggggggggggg,,,,",
+    "ggggggggrr%%%%%ggggggggg%%gggg",
+    "gg%%%%%%rr%%%%gg%%%%%%%gg%gggg",
+    "gg%%%%%%rgggggg%%%%%%%%%%ggggg",
+    "gggggg%%r%%gg%%%%ggggg%%%%gggg",
+    "gg%%%%ggr%%%%%%%gg%%%gg%%%gggg",
+    "gg%%%%%gr%%%%%%g%%%%%%%gg%gggg",
+    "gg%%%%%%rgg%%gg%%%%%%%%%gggggg",
+    "gggggg%rr%ggg%%%%%gggg%%%%gggg",
+    "ggg%%ggrrgggggggggg%%ggggggggg"
+   ],
+   "obrazek": "bojove/noet-mlyn-ve-vinicich.jpg"
   }
  ]
 }

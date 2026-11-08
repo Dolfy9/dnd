@@ -26,3 +26,12 @@ Přírodní mapy (brod, most, ruiny, bažina, zamrzlé jezero, jeskyně, průsmy
 1. `python3 tools/boj_organicke.py` vypíše mřížky a uloží předlohy a popisy scén (`sceny.json`); `--zapsat` přepíše mřížky a starty těchto map v `bojove_mapy.json`.
 2. Předlohu dej generátoru s promptem „realistic aerial drone photograph … natural, organic, wild and chaotic … no blocky, tiled or Minecraft-like look …“ + popis scény.
 3. Zkontroluj tlačítkem **Terén**: velké prvky (voda, útesy, zdi, most, propast) sedí, jednotlivé stromy a balvany jen přibližně. Případné rozdíly přemaluj v režimu úprav.
+
+## Poetické přegenerování a třetí várka (`tools/boj_nove15.py`)
+Všech 15 původních map je přemalováno „poeticky“ (obrázek mapy jako vstup, prompt: cinematic, volumetric light, mist, organic shapes, no tiles). Přesné zarovnání s mřížkou už není cílem, mřížka odpovídá hlavním prvkům přibližně.
+
+Třetí várka 15 map vzniká stejně jako organické mapy: `python3 tools/boj_nove15.py` (předlohy a mřížky), `--zapsat` doplní chybějící mapy do `bojove_mapy.json` (existující nepřepíše). Předlohu dej generátoru jako „rough colour-coded composition sketch“ s popisem scény ze `sceny.json`. Názvy, popisy a střetnutí těchto map jsou návrh (`"stav": "návrh"`).
+
+## Mapa světa
+- `python3 tools/mapa.py` – věrná barevná mapa z kresby DM (maska vody: `11_Mapy/vodstvo.json`, včetně `more_pres_kresbu` pro lodě, vrak a měřítko nakreslené v moři).
+- `python3 tools/mapa_ilustrace.py` – ilustrovaná mapa: malovaný podklad `11_Mapy/zdroje/Montelien_ilustrace_podklad.jpg` (generátor obrázků, 4 dlaždice podle věrné barevné mapy, bez textu) + sázené popisky z `mista.json` + měřítko.

@@ -78,7 +78,7 @@ def water_mask(clean, data):
         water[y0:y1, x0:x1] &= ~inside
     voda = json.loads((MAPY / "vodstvo.json").read_text(encoding="utf-8"))
     extra = np.zeros((H, W), np.uint8)
-    for poly in voda.get("jezera", []):
+    for poly in voda.get("jezera", []) + voda.get("more_pres_kresbu", []):
         cv2.fillPoly(extra, [np.int32(poly)], 1)
     for poly in voda.get("ostrovy", []):
         cv2.fillPoly(extra, [np.int32(poly)], 0)
