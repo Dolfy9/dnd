@@ -72,6 +72,31 @@ def trace(sk, min_len):
     return lines
 
 
+def barvy(data, out):
+    """Barevný podklad terénu (1024×720): klima podle zeměpisné šířky + šum + oblasti ze svet.json."""
+    w, h, k = 1024, 720, .5
+    rng = np.random.default_rng(7)
+    def sum_(s):
+        n = cv2.GaussianBlur(rng.random((h, w)).astype(np.float32), (0, 0), s)
+        return (n - n.mean()) / (n.std() + 1e-6)
+    yy = np.linspace(0, 1, h)[:, None].repeat(w, 1)
+    t = np.clip(yy * 1.25 - .2 + sum_(40) * .22 + sum_(12) * .08, 0, 1)[..., None]
+    sever, stred, jih = np.array([108, 176, 150.]), np.array([112, 190, 206.]), np.array([126, 189, 220.])
+    img = np.where(t < .5, sever + (stred - sever) * (t / .5), stred + (jih - stred) * ((t - .5) / .5))
+    img = img + sum_(6)[..., None] * np.array([6, 9, 5.])
+    pal = {"louky": ((86, 178, 147), .75), "les": ((76, 132, 92), .7), "haj": ((80, 150, 112), .7), "dzungle": ((70, 140, 88), .75),
+           "hory": ((135, 150, 166), .7), "velehory": ((215, 214, 214), .7), "poust": ((134, 206, 232), .85), "pole": ((110, 196, 214), .6),
+           "bazina": ((110, 150, 120), .7), "kopce": ((112, 180, 196), .5), "mrtvy": ((120, 150, 160), .6)}
+    for typ, (c, a) in pal.items():
+        m = np.zeros((h, w), np.uint8)
+        for o in data["oblasti"]:
+            if o["typ"] == typ:
+                cv2.fillPoly(m, [np.int32(np.array(o["body"]) * k)], 255)
+        m = cv2.GaussianBlur(m.astype(np.float32) / 255, (0, 0), 7)[..., None] * a
+        img = img * (1 - m) + np.array(c, float) * m
+    img = cv2.GaussianBlur(img, (0, 0), 1.5)
+    cv2.imwrite(str(out), np.clip(img, 0, 255).astype(np.uint8), [cv2.IMWRITE_JPEG_QUALITY, 88])
+
 def main():
     if OUT.exists() and "--prepsat" not in sys.argv:
         print("svet.json existuje – použij --prepsat"); return
@@ -129,11 +154,14 @@ def main():
         "sirka": W, "vyska": H,
         "pevnina": pevnina, "oblasti": oblasti, "reky": reky + [
             {"typ": "reka", "pozn": "řeka u Nöetu (kresba DM)", "body": [[700, 820], [690, 900], [660, 980], [650, 1060], [680, 1140]]},
+            {"typ": "reka", "pozn": "přítok zálivu Zairamu (DM)", "body": [[1335, 948], [1350, 975], [1342, 1000], [1365, 1020], [1395, 1030], [1410, 1055], [1435, 1068], [1450, 1085], [1462, 1090]]},
+            {"typ": "reka", "pozn": "přítok zálivu Zairamu (DM)", "body": [[1395, 1030], [1392, 1065], [1410, 1090], [1405, 1115], [1428, 1135], [1445, 1150], [1458, 1158]]},
             ],
         "cesty": [],
         "hranice": [{"typ": "hranice", "pozn": "hranice Tali / Zairam (čárkovaně v kresbě DM)", "body": [[1480, 960], [1530, 1000], [1545, 1100], [1525, 1230]]}], "symboly": sym,
     }
     OUT.write_text(json.dumps(svet, ensure_ascii=False, separators=(",", ":")).replace('},{', '},\n{'), encoding="utf-8")
+    barvy(svet, Path(__file__).resolve().parent.parent / "web/assets/svet/barvy.jpg")
     print("pevnina", len(pevnina), "oblasti", {t: sum(o["typ"] == t for o in oblasti) for t in cls}, "reky", len(reky), "symboly", len(sym))
     dbg = cv2.cvtColor(clean, cv2.COLOR_GRAY2BGR) if clean.ndim == 2 else clean.copy()
     col = {"les": (40, 120, 30), "hory": (130, 110, 140), "velehory": (200, 200, 220), "poust": (60, 170, 230), "dzungle": (20, 90, 20), "bazina": (120, 140, 90), "pole": (60, 200, 220), "kopce": (90, 150, 190)}

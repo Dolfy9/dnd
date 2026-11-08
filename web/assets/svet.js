@@ -43,8 +43,10 @@
       else o.push('<path d="' + d + '" fill="url(#sv-pp)" stroke="#3a2412" stroke-width="1.3" stroke-linejoin="round"/>');
     });
     o.push('<g clip-path="url(#sv-souse)"><rect width="' + W + '" height="' + H + '" fill="#fff" filter="url(#sv-papir)" opacity=".45"/>');
-    o.push('<path d="' + landD + '" fill="none" stroke="#7a5a2a" stroke-opacity=".28" stroke-width="22" filter="url(#sv-mekce)"/>');
-    (D.oblasti || []).forEach(function (a) { var c = (OBL[a.typ] || {}).barva || "#b8c47a"; o.push('<path d="' + pathD(a.body, true) + '" fill="' + c + '" opacity=".42" filter="url(#sv-mekce)"/>'); });
+    o.push('<image href="' + A + 'barvy.jpg" width="' + W + '" height="' + H + '" preserveAspectRatio="none" opacity="' + (D.barvy_sila == null ? .8 : D.barvy_sila) + '"/>');
+    o.push('<path d="' + landD + '" fill="none" stroke="#f6e7bb" stroke-opacity=".75" stroke-width="12" filter="url(#sv-mekce)"/>');
+    o.push('<path d="' + landD + '" fill="none" stroke="#7a5a2a" stroke-opacity=".3" stroke-width="5" filter="url(#sv-mekce)"/>');
+    (D.oblasti || []).forEach(function (a) { var c = (OBL[a.typ] || {}).barva || "#b8c47a"; o.push('<path d="' + pathD(a.body, true) + '" fill="' + c + '" opacity=".22" filter="url(#sv-mekce)"/>'); });
     lakes.forEach(function (s) { o.push('<path d="' + pathD(s.body, true) + '" fill="url(#sv-mp)"/>'); });
     o.push("</g>");
     o.push('<g clip-path="url(#sv-souse)">');
@@ -70,13 +72,21 @@
     });
     // řídká drobná vegetace na volné pevnině (mimo oblasti a jezera)
     if (D.rozptyl !== false) {
-      var R2 = rng(4242), land = (D.pevnina || []).filter(function (p) { return p.typ === "pevnina"; }), DROB = ["ker_1", "ker_2", "list_2", "list_5", "jehl_4", "kopec_3", "kopec_5", "balvan_2"];
-      for (var gy = 20; gy < H; gy += 30) for (var gx = 15; gx < W; gx += 34) {
-        if (R2() > .5) continue;
-        var qx = gx + (R2() - .5) * 28, qy = gy + (R2() - .5) * 24, nm2 = DROB[Math.floor(R2() * DROB.length)];
-        if (!land.some(function (p) { return inPoly(qx, qy, p.body); }) || lakes.some(function (l) { return inPoly(qx, qy, l.body); }) || (D.oblasti || []).some(function (o) { return inPoly(qx, qy, o.body); })) continue;
-        var base2 = nm2.indexOf("kopec") === 0 ? 22 : nm2.indexOf("balvan") === 0 ? 9 : nm2.indexOf("ker") === 0 ? 8 : 11;
-        items.push([qy, spr(nm2, qx, qy, base2 * (.8 + R2() * .4), R2() < .5)]);
+      var R2 = rng(4242), land = (D.pevnina || []).filter(function (p) { return p.typ === "pevnina"; });
+      var ZEL = ["zel_1", "zel_2", "zel_3", "zel_5", "zel_1", "kvety", "maky", "vres", "krik_1", "krik_2", "list_2", "list_5", "kopec_3"],
+        SEV = ["zel_4", "zel_6", "zel_2", "kamen_1", "kamen_3", "vres", "utes_1", "jehl_4", "krik_1", "zel_4"],
+        JIH = ["sucha_1", "sucha_2", "sucha_3", "sucha_4", "sucha_5", "sucha_6", "kamen_2", "zel_3", "podzim_1", "podzim_2", "kopec_5", "utes_2"],
+        PSK = ["sucha_2", "sucha_5", "kamen_2", "kamen_1", "kaktus_2", "sucha_4"];
+      var VEL = { zel: 7, sucha: 7, kamen: 8, vres: 7, maky: 7, kvety: 7, krik: 9, podzim: 9, utes: 13, list: 11, jehl: 11, kopec: 20, kaktus: 6 };
+      for (var gy = 14; gy < H; gy += 20) for (var gx = 10; gx < W; gx += 22) {
+        if (R2() > .62) continue;
+        var qx = gx + (R2() - .5) * 20, qy = gy + (R2() - .5) * 16;
+        if (!land.some(function (p) { return inPoly(qx, qy, p.body); }) || lakes.some(function (l) { return inPoly(qx, qy, l.body); })) continue;
+        var vO = null; (D.oblasti || []).some(function (o2) { if (inPoly(qx, qy, o2.body)) { vO = o2.typ; return true; } return false; });
+        if (vO && vO !== "louky" && vO !== "poust") continue;
+        var pool = vO === "poust" ? PSK : vO === "louky" ? ZEL : qy < 520 ? (R2() < .6 ? SEV : ZEL) : qy > 950 ? (R2() < .65 ? JIH : ZEL) : (R2() < .5 ? ZEL : JIH);
+        var nm2 = pool[Math.floor(R2() * pool.length)];
+        items.push([qy, spr(nm2, qx, qy, (VEL[nm2.split("_")[0]] || 8) * (.8 + R2() * .45), R2() < .5)]);
       }
     }
     (D.symboly || []).forEach(function (s, si) {

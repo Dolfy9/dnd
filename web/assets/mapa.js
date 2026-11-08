@@ -4,6 +4,7 @@
   el.dataset.ready = "1";
   var W = D.sirka, H = D.vyska, bounds = [[0, 0], [H, W]], KM_PX = 1.7;
   var map = L.map(el, { crs: L.CRS.Simple, minZoom: -1.5, maxZoom: 2.5, zoomSnap: 0.25, attributionControl: false });
+  window.MontelienMapa = map;
   var svgEl = document.createElementNS("http://www.w3.org/2000/svg", "svg");
   var atlas = L.svgOverlay(svgEl, bounds, { interactive: false });
   var SV = { map: map, el: el, svg: svgEl, base: "../", D: null, M: D };
