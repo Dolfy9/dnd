@@ -11,6 +11,7 @@ Seznam věcí k rozhodnutí DM. Po rozhodnutí položku přesuň do sekce *Vyře
 6. **Provincie Nöet:** Věta „V Mictimě kvituje odboj přítomnost zakázaných svazků“ – myšleno „kvete odboj“ / „odboj vítá“?
 7. **Měřítko mapy:** kontinent má podle měřítka ~3 500 × 2 500 km (velikost Evropy). Je to záměr?
 8. **Elfové a Východní hvozd:** Žili elfové původně v mönohenském Východním hvozdu, nebo vždy v Nölienu?
+9. **Mictima – hranice států:** Značka Mictimy leží na straně Divokého Severu u hranice podle mapy DM, ale její stránka ji označuje za hlavní město Nöetu. Ke kterému státu město politicky patří? *(návrh – čeká na DM)*
 
 ## Chybějící / nedopsané
 - **Kop Aram:** komu patří a kdo ho spravuje (Briria, Werenor, samospráva kupců)?
@@ -28,6 +29,7 @@ Seznam věcí k rozhodnutí DM. Po rozhodnutí položku přesuň do sekce *Vyře
 - **Pravidla (DM):** vše jen na systému 2024+, žádný legacy obsah. Všechny postavy převedeny (řádek *Převod na 2024*), species/subclassy/featy/kouzla ověřeny proti pravidlům 2024.
 - **Kop Aram (DM):** město uprostřed jezera Amir se super dlouhým mostem na západ; dnes částečně obnovené v menším měřítku, centrum středozemního obchodu. **Werenor (DM):** leží v Bririi na západním břehu jezera Amir, odkud vede most do Kop Aramu; kletba z Dräaru mu nehrozí. **Svobodné Jižní ostrovy (DM):** jižně od Laertmundu (velký ostrov s loděmi na jihovýchodě je bez jména).
 - **Mapa (DM):** na mapě jsou Laertmund (jihovýchodně od Ordenu), Tali, Zairam (jihovýchod), Ordenská zátoka. **Divoký Sever je severozápadní část Montelienu** (jak uvádí archiv).
+- **Západní hranice států (DM):** severozápadní poloostrov, pevnina jižně od něj až k Mictimě a západní ostrov patří k Divokému Severu; Briria leží východně od fialové hranice a Nöet jižně od Mictimy.
 - **Rozsah Kodexu (návrh):** Kniha I. vyšla hned po sněmu jen pro země pod přímou správou; ostatní přidal [Kodex II.](06_Knihy_a_Dokumenty/Kniha_16_Kodex_Radu_a_Poradku_II.md).
 - **Mechanika:** Grand Inquisitor → titul (Fiend Patron), Ice → Cold immunity, Kazi → Halfling (2024).
 - **Délka vlády Ordenu:** 2 roky. Upravena historie, pamflet *Odpárané oči Urkalu*, README a AGENTS.
