@@ -483,7 +483,7 @@ def lore(svet):
         for _ in range(2):
             a = rng.uniform(0, 2 * np.pi); d = rng.uniform(16, 28)
             cx, cy = s["x"] + np.cos(a) * d, s["y"] + np.sin(a) * d * .7
-            if v_oblasti(cx, cy, {"hory", "velehory", "les", "haj", "dzungle", "poust", "ledovec"}):
+            if v_oblasti(cx, cy, {"hory", "velehory", "kopce", "les", "haj", "dzungle", "poust", "ledovec"}):
                 continue
             r = rng.uniform(11, 19)
             poly = Polygon([(cx + np.cos(t) * r * rng.uniform(.75, 1.2), cy + np.sin(t) * r * .75 * rng.uniform(.75, 1.2)) for t in np.linspace(0, 2 * np.pi, 9)[:-1]])
@@ -553,6 +553,37 @@ def lore(svet):
             s for s in svet["symboly"]
             if s.get("typ") not in ledove_symboly or not bez_snehu.covers(Point(s["x"], s["y"]))
         ]
+    dm_pole = unary_union([
+        Polygon(o["body"]).buffer(0) for o in ob
+        if o["typ"] == "pole" and "kresba DM" in o.get("pozn", "")
+        and not (
+            o.get("pozn") == "kostkovaná pole jižního Nöetu (kresba DM)"
+            and Polygon(o["body"]).area < 300
+        )
+    ])
+    relief = unary_union([
+        Polygon(o["body"]).buffer(0) for o in ob
+        if o["typ"] == "kopce" and len(o["body"]) > 2
+    ])
+    upravene = []
+    for o in ob:
+        shape = Polygon(o["body"]).buffer(0)
+        if (
+            o["typ"] == "pole"
+            and o.get("pozn") == "kostkovaná pole jižního Nöetu (kresba DM)"
+            and shape.area < 300
+        ):
+            continue
+        if o["typ"] == "kopce":
+            shape = shape.difference(dm_pole)
+        elif o["typ"] == "pole" and "kresba DM" not in o.get("pozn", ""):
+            shape = shape.difference(relief.difference(dm_pole))
+        else:
+            upravene.append(o)
+            continue
+        for b in kousky(shape, 60):
+            upravene.append(o | {"body": b})
+    ob[:] = upravene
     # nic nepřetéká do moře: oblasti oříznout podle souše
     le = land.buffer(-7)
     ob2 = []

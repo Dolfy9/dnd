@@ -80,36 +80,6 @@
 ]
 },
 {
-"typ": "pole",
-"pozn": "šrafovaná pole/mokřad (kresba DM)",
-"body": [
-[
-545,
-1180
-],
-[
-640,
-1150
-],
-[
-705,
-1200
-],
-[
-700,
-1300
-],
-[
-600,
-1310
-],
-[
-550,
-1260
-]
-]
-},
-{
 "typ": "poust",
 "pozn": "poušť Tali (kaktusy v kresbě DM)",
 "body": [

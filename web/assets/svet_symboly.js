@@ -59,7 +59,7 @@
     dzungle: { nazev: "Prales", barva: "#355d37", spr: ["palma_1", "palma_2", "palmy", "dzung_1", "dzung_2", "palma_3", "dzung_1"], rozestup: 7, w: 18 },
     hory: { nazev: "Hory", barva: "#a09e8d", spr: ["hora_a", "hora_b", "hora_c", "hora_d", "hora_e", "hora_f", "masiv_a", "skala", "masiv_c"], rozestup: 14, w: 28, shluky: true },
     velehory: { nazev: "Velehory (sníh)", barva: "#c2b8a6", spr: ["snih", "snih", "snih", "hora_e", "snih"], rozestup: 16, w: 31 },
-    kopce: { nazev: "Kopce", barva: "#8ea86a", spr: ["kopec_1", "kopec_2", "kopec_3", "kopec_4", "kopec_5"], rozestup: 24, w: 30, shluky: true },
+    kopce: { nazev: "Kopce", barva: "#817c55", spr: ["kopec_1", "kopec_2", "kopec_3", "kopec_4", "kopec_5", "balvan_1"], rozestup: 24, w: 30, shluky: true },
     poust: { nazev: "Poušť", barva: "#d8c08a", spr: ["duna_1", "duna_2", "duna_3", "duna_4", "duna_5", "duna_2", "duna_3", "duna_1", "duna_4", "kaktus_1", "duna_5", "balvan_2", "kaktus_2", "balvan_1", "kopec_4", "utes_2"], rozestup: 18, w: 30 },
     bazina: { nazev: "Bažina", barva: "#8fa68a", spr: ["bazina_1", "bazina_2", "rakos_1", "rakos_2", "ker_2", "suchy_2"], rozestup: 18, w: 22 },
     pole: { nazev: "Pole a vinice", barva: "#b2ae70", spr: ["vinice", "ker_1"], rozestup: 40, w: 14 },
