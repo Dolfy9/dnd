@@ -39,6 +39,7 @@ body.rezim-hrac .dm-sekce, body.rezim-hrac h2.dm-nadpis { display: none !importa
 .mapa-pozn { font-size: .7rem; opacity: .8; }
 .mapa-vlozena { margin: 1rem 0 1.5rem; }
 .mapa-vlozena iframe { display: block; width: 100%; height: 360px; border: 1px solid #b59a6a; border-radius: 6px; }
+.mapa-vlozena.mapa-preview-zeme iframe { width: min(100%, 520px); height: 480px; margin-inline: auto; }
 .mapa-zobrazit { margin-bottom: .5rem; }
 .tecka { display: inline-block; width: .7rem; height: .7rem; border-radius: 50%; border: 1px solid #4e493f; vertical-align: middle; }
 .jistota-mapa { background: #8a7465; } .jistota-kanon { background: #697b63; } .jistota-odhad { background: #9c875e; }
@@ -187,6 +188,7 @@ body.mapa-vyrez .md-main, body.mapa-vyrez .md-main__inner, body.mapa-vyrez .md-c
 body.mapa-vyrez .md-content__inner, body.mapa-vyrez .md-typeset { margin: 0 !important; padding: 0 !important; max-width: none !important; }
 body.mapa-vyrez #mapa { width: 100%; max-width: none; height: 360px; max-height: none; min-height: 360px;
                         aspect-ratio: auto; margin: 0; border-radius: 0; box-shadow: none; }
+body.mapa-vyrez.mapa-vyrez-zeme #mapa { height: 480px; min-height: 480px; }
 .ed-only { display: none; }
 body.ed-on .ed-only { display: inline-block; }
 #mapa-editor { border: 1px solid #b59a6a; border-radius: 4px; padding: 1px 8px; cursor: pointer; background: #8b2c1c; color: #fff; }

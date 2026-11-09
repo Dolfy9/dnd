@@ -81,6 +81,10 @@
       } }]);
     });
   }
+  window.MontelienEditor = {
+    newPage: function () { var src = document.getElementById("zdroj-stranky"); newPage(src ? src.dataset.cesta : "mapa.md"); },
+    newCharacter: function () { newPage("04_Postavy/NPC/Postava_Nova.md"); }
+  };
 
   function deletePage(cesta) {
     if (!confirm("Opravdu smazat stránku " + cesta + "?\n(Smazání jde vrátit přes git.)")) return;

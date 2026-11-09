@@ -7,9 +7,65 @@ from pathlib import Path
 from urllib.parse import quote
 
 
+def homepage_tiles(root):
+    def pages(path):
+        folder = root / path
+        if not folder.is_dir():
+            return 0
+        count = len([p for p in folder.rglob("*.md") if p.name != "README.md"])
+        return count or int((folder / "README.md").exists())
+
+    def entries(path):
+        try:
+            value = json.loads((root / path).read_text(encoding="utf-8"))
+            return len(value) if isinstance(value, list) else len(value.get("results", value))
+        except (OSError, ValueError, TypeError):
+            return 0
+
+    def count_label(count):
+        if count == 1:
+            noun = "položka"
+        elif 2 <= count <= 4:
+            noun = "položky"
+        else:
+            noun = "položek"
+        return f"{count} {noun}"
+
+    tiles = [
+        ("mapa", "Mapa", "mapa/", 1, "Prozkoumej svět a jeho vrstvy."),
+        ("zeme", "Země", "zeme/", pages("02_Zeme"), "Státy, knížectví a svobodná území."),
+        ("mesta", "Města", "mesta/", pages("03_Mesta"), "Sídla, přístavy a pevnosti."),
+        ("postavy", "Postavy", "postavy/", pages("04_Postavy"), "Najdi postavu podle jména a vazeb."),
+        ("frakce", "Frakce", "frakce/", pages("05_Frakce"), "Řády, odboj a další mocenské skupiny."),
+        ("kampane", "Kampaně", "kampane/", pages("07_Kampane"), "Příběhové oblouky a jejich záznamy."),
+        ("questy", "Questy", "questy/", pages("08_Questy"), "Dobrodružství a úkoly."),
+        ("sezeni", "Sezení", "sezeni/", pages("10_Sezeni"), "Záznamy odehraných her."),
+        ("hadanky", "Hádanky", "hadanky/", pages("09_Hadanky"), "Šifry, pasti a záhady."),
+        ("knihy", "Knihy", "knihy/", pages("06_Knihy_a_Dokumenty"), "Texty, kroniky a listiny."),
+        ("bestiar", "Bestiář", "bestiar/", entries("web/assets/srd/bestiar.json"), "Netvoři ze SRD 5.2.1."),
+        ("kouzla", "Kouzla", "kouzla/", entries("web/assets/kouzla2024.json"), "Kouzla podle pravidel 2024."),
+        ("predmety", "Předměty", "predmety/", entries("web/assets/srd/predmety.json"), "Výbava a magické předměty."),
+        ("glosar", "Glosář", "glosar/", entries("web/assets/srd/glosar.json"), "Pojmy a stavy pravidel."),
+        ("boj", "Bojový modul", "boj/", 1, "Mapa střetu, iniciativa a přehled boje."),
+    ]
+    links = []
+    for icon, name, href, count, description in tiles:
+        links.append(
+            f'<a class="nav-home-tile nav-tile-{icon}" href="{href}" data-icon="{icon}">'
+            f'<span class="nav-home-icon" aria-hidden="true"></span><span class="nav-home-copy">'
+            f'<strong>{name}</strong><small>{count_label(count)}</small><span>{description}</span></span></a>'
+        )
+    return '<section class="nav-home-tiles" aria-label="Rychlý rozcestník">' + "".join(links) + "</section>"
+
+
 def on_page_markdown(markdown, page, config, files):
     src = page.file.src_path
     root = Path(__file__).resolve().parent.parent
+    if src == "README.md" and not 'class="nav-home-tiles"' in markdown:
+        heading = re.search(r"(?m)^#\s+.+$", markdown)
+        if heading:
+            pos = heading.end()
+            markdown = markdown[:pos] + "\n\n" + homepage_tiles(root) + "\n" + markdown[pos:]
     data = page.meta.get("postava")
     override = data.get("portret") if isinstance(data, dict) else None
     portrait_path = override_path = None
@@ -43,7 +99,10 @@ def on_page_markdown(markdown, page, config, files):
             query = quote(place["nazev"], safe="")
             href = f"{map_url}?misto={query}"
             crop = f"{href}&amp;vyrez=1"
-            block = (f'\n\n<div class="mapa-vlozena"><p><a class="md-button mapa-zobrazit" href="{href}">Zobrazit na mapě</a></p>'
+            preview_class = " mapa-preview-zeme" if place.get("typ") == "zeme" else ""
+            if place.get("typ") == "zeme":
+                crop += "&amp;typ=zeme"
+            block = (f'\n\n<div class="mapa-vlozena{preview_class}"><p><a class="md-button mapa-zobrazit" href="{href}">Zobrazit na mapě</a></p>'
                      f'<iframe title="Mapa: {html.escape(place["nazev"], quote=True)}" src="{crop}" loading="lazy"></iframe></div>\n\n')
             heading = re.search(r"^#\s+.+?$", markdown, re.M)
             if heading:

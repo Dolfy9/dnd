@@ -23,6 +23,23 @@ NAMES = {
 }
 PREFIX = re.compile(r"^(Postava|Město|Mesto|Země|Quest|Hádanka|Sezení|Kampaň|Šablona)\s*:\s*", re.I)
 MD_LINK = re.compile(r"(?<!!)\[[^\]]*\]\((<[^>]+>|[^)\s]+)(?:\s+[^)]*)?\)")
+COUNTRY_MENU = {
+    "02_Zeme/Drzava_Knarghae_Zia.md": ("Knärghae Zia", "Nezávislá država"),
+    "02_Zeme/Elfsky_Stat_Nolien.md": ("Nölien", "Elfský stát"),
+    "02_Zeme/Khaeraz.md": ("Khaeraz", "Země"),
+    "02_Zeme/Klanove_Zeme_Monohen.md": ("Mönohen", "Klanové země"),
+    "02_Zeme/Kralovstvi_Briria.md": ("Briria", "Království"),
+    "02_Zeme/Kralovstvi_Imonir.md": ("Imonir", "Království"),
+    "02_Zeme/Kralovstvi_Kharghae_Zia.md": ("Khärghae Zia", "Knížectví"),
+    "02_Zeme/Kralovstvi_Laertmund.md": ("Laertmund", "Království"),
+    "02_Zeme/Provincie_Noet.md": ("Nöet", "Provincie"),
+    "02_Zeme/Svobodne_Jizni_Ostrovy.md": ("Svobodné Jižní ostrovy", "Svobodné ostrovy"),
+    "02_Zeme/Svobodne_Mesto_Miria.md": ("Miria", "Svobodné město"),
+    "02_Zeme/Svobodne_Mesto_Werenor.md": ("Werenor", "Svobodné město"),
+    "02_Zeme/Teokracie_Orden.md": ("Orden", "Teokracie"),
+    "02_Zeme/Zeme_Zairam.md": ("Zairam", "Země"),
+}
+NAV_INDEX = {}
 
 
 def title(md: Path) -> str:
@@ -36,10 +53,21 @@ def nav_for(dir_: Path, rel: str):
     items = []
     readme = dir_ / "README.md"
     if readme.exists():
-        items.append(f"{rel}/README.md")
+        path = f"{rel}/README.md"
+        NAV_INDEX[page_url(path)] = title(readme)
+        items.append(path)
     files = sorted(p for p in dir_.glob("*.md") if p.name != "README.md")
     for f in files:
-        items.append({title(f): f"{rel}/{f.name}"})
+        path = f"{rel}/{f.name}"
+        full_title = title(f)
+        NAV_INDEX[page_url(path)] = full_title
+        label = full_title
+        if path in COUNTRY_MENU:
+            short, kind = COUNTRY_MENU[path]
+            label = f"{short} · {kind}"
+        elif rel == "03_Mesta":
+            label = re.sub(r"^Město\s+", "", full_title, flags=re.I)
+        items.append({label: path})
     for sub in sorted(p for p in dir_.iterdir() if p.is_dir()):
         sub_items = nav_for(sub, f"{rel}/{sub.name}")
         if sub_items:
@@ -289,7 +317,27 @@ Polohy „odhad“ čekají na potvrzení – viz <a href="../11_Mapy/Geografie/
 """
 
 
+def listing_page(filename, heading, folder):
+    entries = sorted((ROOT / folder).rglob("*.md"))
+    lines = [f"# {heading}", ""]
+    for path in entries:
+        if path.name == "README.md":
+            continue
+        rel = path.relative_to(ROOT).as_posix()
+        label = title(path)
+        if rel in COUNTRY_MENU:
+            short, kind = COUNTRY_MENU[rel]
+            label = f"{short} · {kind}"
+        elif rel.startswith("03_Mesta/"):
+            label = re.sub(r"^Město\s+", "", label, flags=re.I)
+        lines.append(f"- [{label}]({page_url(rel)})")
+    lines.append("")
+    (DOCS / filename).write_text("\n".join(lines), encoding="utf-8")
+    NAV_INDEX[page_url(filename)] = heading
+
+
 def main():
+    NAV_INDEX.clear()
     if DOCS.exists():
         shutil.rmtree(DOCS)
     DOCS.mkdir()
@@ -314,17 +362,54 @@ def main():
     boje.write_index(DOCS)
     (DOCS / "boje.md").write_text("---\nhide:\n  - toc\n  - navigation\n---\n# Správa bojů\n\nUložené boje podle kampaní a questů: stav, účastníci, kola a deník. Boj otevřeš v bojovém modulu, kde ho můžeš dál hrát, přiřadit nebo uložit jako nový.\n\n<div id=\"boje-app\"></div>\n", encoding="utf-8")
     (DOCS / "kouzla.md").write_text("---\nhide:\n  - toc\n---\n# Katalog kouzel (D&D 2024)\n\nVšechna kouzla z pravidel 2024+. Klikni na název pro celý popis.\n\n<div id=\"katalog-kouzel\"></div>\n", encoding="utf-8")
+    for filename, heading, folder in [
+        ("zeme.md", "Země", "02_Zeme"), ("mesta.md", "Města", "03_Mesta"),
+        ("frakce.md", "Frakce", "05_Frakce"), ("kampane.md", "Kampaně", "07_Kampane"),
+        ("questy.md", "Questy", "08_Questy"), ("sezeni.md", "Sezení", "10_Sezeni"),
+        ("hadanky.md", "Hádanky", "09_Hadanky"), ("knihy.md", "Knihy", "06_Knihy_a_Dokumenty"),
+    ]:
+        listing_page(filename, heading, folder)
 
     import pravidla_pages
     P = pravidla_pages.build(DOCS)
-    GR = [("Svět", ["Svět", "Země", "Města", "Postavy", "Frakce", "Knihy a dokumenty", "Mapy"]), ("Hra", ["Kampaně", "Questy", "Hádanky", "Sezení"])]
     byname = {list(x)[0]: x for x in sections}
-    grouped = [{g: [byname[n] for n in names if n in byname]} for g, names in GR]
-    grouped[0]["Svět"].insert(0, {"Katalog postav": "postavy.md"})
-    grouped[1]["Hra"].insert(0, {"Správa bojů": "boje.md"})
-    grouped[1]["Hra"].insert(0, {"Bojový modul": "boj.md"})
-    rest = [x for x in sections if list(x)[0] not in sum([n for _, n in GR], [])]
-    nav = [{"Úvod": "README.md"}, {"Interaktivní mapa": "mapa.md"}] + grouped + [{"Pravidla 2024": P}] + [{"Projekt": rest + [{"Otevřené otázky": "Otevrene_otazky.md"}, {"Pravidla projektu": "AGENTS.md"}]}]
+    visible_sections = {"Svět", "Země", "Města", "Postavy", "Frakce", "Knihy a dokumenty",
+                        "Mapy", "Kampaně", "Questy", "Hádanky", "Sezení"}
+    rest = [x for x in sections if list(x)[0] not in visible_sections]
+    def section_items(name):
+        section = byname.get(name)
+        return next(iter(section.values())) if section else []
+
+    world = list(section_items("Svět"))
+    world.extend([
+        {"Země": section_items("Země")},
+        {"Města": section_items("Města")},
+    ])
+    characters = list(section_items("Postavy"))
+    characters.insert(0, {"Katalog postav": "postavy.md"})
+    NAV_INDEX["/postavy/"] = "Katalog postav postavy katalog NPC"
+    world.extend([
+        {"Postavy": characters},
+        {"Frakce": section_items("Frakce")},
+        {"Knihy a dokumenty": section_items("Knihy a dokumenty")},
+        {"Mapy": section_items("Mapy")},
+    ])
+    game = [
+        {"Kampaně": section_items("Kampaně")},
+        {"Questy": section_items("Questy")},
+        {"Hádanky": section_items("Hádanky")},
+        {"Sezení": section_items("Sezení")},
+    ]
+    game[0]["Kampaně"].insert(0, {"Správa bojů": "boje.md"})
+    NAV_INDEX["/boje/"] = "Správa bojů"
+    game[0]["Kampaně"].insert(0, {"Bojový modul": "boj.md"})
+    NAV_INDEX["/boj/"] = "Bojový modul"
+    rules = P
+    nav = [{"Úvod": "README.md"}, {"Mapa": "mapa.md"}, {"Svět": world}, {"Hra": game},
+           {"Pravidla 2024": rules}, {"Projekt": rest + [{"Otevřené otázky": "Otevrene_otazky.md"}, {"Pravidla projektu": "AGENTS.md"}]}]
+    NAV_INDEX["/"] = "Úvod Montelien"
+    NAV_INDEX["/mapa/"] = "Mapa Interaktivní mapa"
+    (DOCS / "nav_index.json").write_text(json.dumps(NAV_INDEX, ensure_ascii=False), encoding="utf-8")
     watch = "\n".join(f"  - ../{d}" for d in [s for s in os.listdir(ROOT)
                       if (ROOT / s).is_dir() and s not in SKIP and not s.startswith(".")])
     cfg = f"""# Generováno web/build.py – neupravovat ručně
@@ -372,6 +457,7 @@ markdown_extensions:
 extra_css:
   - assets/easymde/easymde.min.css
   - assets/extra.css
+  - assets/navigation.css
   - assets/postava.css
   - assets/postavy.css
   - assets/heraldika.css
@@ -379,6 +465,7 @@ extra_css:
 extra_javascript:
   - assets/easymde/easymde.min.js
   - assets/extra.js
+  - assets/navigation.js
   - assets/editor.js
   - assets/pravidla_engine.js
   - assets/postava.js

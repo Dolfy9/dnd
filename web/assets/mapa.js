@@ -2,8 +2,9 @@
   var D = window.MONTELIEN_MISTA, el = document.getElementById("mapa");
   if (!D || !el || el.dataset.ready) return;
   el.dataset.ready = "1";
-  var qs = new URLSearchParams(location.search), crop = qs.get("vyrez") === "1";
+  var qs = new URLSearchParams(location.search), crop = qs.get("vyrez") === "1", cropState = crop && qs.get("typ") === "zeme";
   if (crop) document.body.classList.add("mapa-vyrez");
+  if (cropState) document.body.classList.add("mapa-vyrez-zeme");
   var W = D.sirka, H = D.vyska, bounds = [[0, 0], [H, W]], KM_PX = 1.7;
   var map = L.map(el, { crs: L.CRS.Simple, minZoom: -3, maxZoom: 2.5, zoomSnap: 0.05, attributionControl: false });
   window.MontelienMapa = map;
@@ -176,16 +177,42 @@
   });
   var dl = document.getElementById("mapa-seznam");
   if (dl) dl.innerHTML = D.mista.filter(function (m) { return m.typ !== "sidlo"; }).map(function (m) { return "<option value='" + esc(m.nazev) + "'>"; }).join("");
+  function focusCropState(place, attempts) {
+    var state = stateData.find(function (z) { return z.nazev === place.nazev; });
+    if (!state) {
+      if (attempts < 30) setTimeout(function () { focusCropState(place, attempts + 1); }, 100);
+      else map.flyTo([H - place.y, place.x], .2, { duration: .25 });
+      return;
+    }
+    if (cropHighlight) map.removeLayer(cropHighlight);
+    cropHighlight = L.layerGroup();
+    var points = [];
+    (state.body || []).forEach(function (ring) {
+      if (ring.length < 3) return;
+      var latlngs = ring.map(function (p) { points.push([H - p[1], p[0]]); return [H - p[1], p[0]]; });
+      L.polygon(latlngs, { interactive: false, color: "#b8892b", weight: 2.5, opacity: .9,
+        fillColor: "#b8892b", fillOpacity: .035, lineJoin: "round" }).addTo(cropHighlight);
+    });
+    if (!points.length) return;
+    var focus = L.latLngBounds(points).pad(.16);
+    cropHighlight.addTo(map);
+    map.invalidateSize({ pan: false });
+    map.fitBounds(focus, { padding: [18, 18], maxZoom: .2, animate: false });
+  }
   function najdi(q) {
     var x = byName[String(q || "").toLowerCase()];
     if (!x) { var k = Object.keys(byName).filter(function (n) { return n.indexOf(String(q).toLowerCase()) >= 0; })[0]; x = k && byName[k]; }
     if (!x) return;
+    if (crop && x.m.typ === "zeme") {
+      focusCropState(x.m, 0);
+      return;
+    }
     if (x.m.typ === "sidlo") map.addLayer(sidla); else map.addLayer(body);
     var pos = [H - x.m.y, x.m.x];
-    map.flyTo(pos, crop ? 1.2 : 1, { duration: .8 });
+    map.flyTo(pos, crop ? .35 : 1, { duration: .5 });
     if (crop) {
       if (cropHighlight) map.removeLayer(cropHighlight);
-      cropHighlight = L.circleMarker(pos, { interactive: false, radius: 20, color: "#fff1a0", weight: 4, fillColor: "#fff3b0", fillOpacity: .2 }).addTo(map);
+      cropHighlight = L.circleMarker(pos, { interactive: false, radius: 6, color: "#b8892b", weight: 2, fillColor: "#d9b85a", fillOpacity: .3 }).addTo(map);
       x.c.openTooltip();
     } else setTimeout(function () { x.c.openPopup(); }, 850);
   }
