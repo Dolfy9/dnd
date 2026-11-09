@@ -278,55 +278,55 @@
       "rysy": {
         "Tinker’s Magic": {
           "uroven": 1,
-          "text": "You know the Mending cantrip. While holding Tinker’s Tools, you can take a Magic action to create one of these items in an unoccupied space within 5 feet: Ball Bearings, Basket, Bedroll, Bell, Blanket, Block and Tackle, Bottle (Glass), Bucket, Caltrops, Candle, Crowbar, Flask, Grappling Hook, Hunting Trap, Jug, Lamp, Manacles, Net, Oil, Paper, Parchment, Pole, Pouch, Rope, Sack, Shovel, Spikes (Iron), String, Tinderbox, Torch, or Vial. It lasts until you finish a Long Rest. You can use this feature a number of times equal to your Intelligence modifier (minimum once), regaining all uses when you finish a Long Rest."
+          "text": "Znáš cantrip Mending. S Tinker’s Tools v ruce můžeš akcí Magic vytvořit v neobsazeném prostoru do 5 stop jeden předmět z nabídky běžné výbavy dobrodruha (například Rope, Torch nebo Caltrops); zmizí po dokončení Long Rest. Tuto možnost použiješ tolikrát, kolik činí tvůj Intelligence modifier (nejméně jednou), a všechna použití získáš zpět po Long Rest."
         },
         "Spellcasting": {
           "uroven": 1,
-          "text": "Intelligence is your spellcasting ability. You must hold Thieves’ Tools, Tinker’s Tools, or another kind of Artisan’s Tools with which you are proficient as a Spellcasting Focus when casting an Artificer spell. You know two Artificer cantrips and can replace one after a Long Rest; you learn additional cantrips at Artificer levels 10 and 14. Prepare the number of level 1+ Artificer spells shown in the class table, choosing only spells for which you have spell slots. You can replace your prepared spells after a Long Rest. The table gives your spell slots, recovered after a Long Rest; subclass spells that are always prepared don’t count against the prepared-spell total."
+          "text": "Tvé sesílací atributy jsou založené na Intelligence a jako Spellcasting Focus při sesílání Artificer spellů držíš Thieves’ Tools, Tinker’s Tools nebo Artisan’s Tools, s nimiž jsi proficient. Znáš 2 Artificer cantripy; jeden můžeš vyměnit po Long Rest a další se naučíš na Artificer levelu 10 a 14. Po Long Rest si připravíš počet spellů úrovně 1+, který uvádí class table, jen takových, k nimž máš spell slot; připravené spelly můžeš po Long Rest změnit a sloty se po něm také obnoví. Spelly, které ti subclass připravuje stále, se do tohoto počtu nezapočítávají."
         },
         "Replicate Magic Item": {
           "uroven": 2,
-          "text": "At Artificer level 2, learn four plans from the Artificer Level 2+ Magic Item Plans table. You can replace one known plan whenever you gain an Artificer level, and learn additional plans at the levels shown in Plans Known. After a Long Rest with Tinker’s Tools in hand, create the number of magic items shown in Magic Items, each from a different plan you know; an item requiring attunement can be attuned to immediately. You can’t exceed the table’s item limit; the oldest replicated item vanishes if you exceed it. Replicated items otherwise function as their normal magic item, but their magic ends 1d4 days after your death or immediately if you replace their plan. A replicated Wand or Weapon can be your Spellcasting Focus."
+          "text": "Na Artificer levelu 2 si vybereš 4 plány z tabulky Level 2+ Magic Item Plans; při každém dalším Artificer levelu můžeš jeden známý plán vyměnit a další plány získáš podle sloupce Plans Known. Po Long Restu s Tinker’s Tools v ruce vytvoříš počet předmětů určený sloupcem Magic Items, každý podle jiného známého plánu; attunement můžeš zahájit hned a při překročení limitu zmizí nejstarší replika. Repliky fungují jako odpovídající magic item, jejich magie ale vyprchá 1d4 dny po tvé smrti nebo okamžitě při nahrazení plánu; repliku Wand či Weapon můžeš použít jako Spellcasting Focus."
         },
         "Artificer Subclass": {
           "uroven": 3,
-          "text": "Choose an Artificer subclass; its features are gained at Artificer levels 3, 5, 9, and 15."
+          "text": "Na Artificer levelu 3 si vybereš subclass; její další features získáš na Artificer levelech 3, 5, 9 a 15."
         },
         "Magic Item Tinker": {
           "uroven": 6,
-          "text": "Your Replicate Magic Item feature gains three options. Charge Magic Item: as a Bonus Action, touch within 5 feet a replicated item that uses charges, expend a level 1+ spell slot, and restore charges equal to the slot’s level. Drain Magic Item: as a Bonus Action, make one replicated item vanish and gain a level 1 spell slot if it is Common or level 2 if it is Uncommon or Rare; you can do this once per Long Rest, and the slot vanishes at your next Long Rest. Transmute Magic Item: as a Magic action, touch a replicated item within 5 feet and transform it into another item based on a plan you know; once per Long Rest."
+          "text": "Replicate Magic Item získá tři nové způsoby použití. Charge Magic Item: Bonus Actionem a dotykem do 5 stop můžeš vydat spell slot úrovně 1+ a doplnit tolik charge, kolik činí jeho úroveň. Drain Magic Item: Bonus Actionem zničíš jednu repliku, abys získal slot 1. úrovně za Common, nebo 2. úrovně za Uncommon či Rare předmět; lze to jednou za Long Rest a slot zmizí při následujícím Long Rest. Transmute Magic Item: akcí Magic přeměníš repliku do 5 stop na předmět podle jiného plánu, který znáš; i to lze jednou za Long Rest."
         },
         "Flash of Genius": {
           "uroven": 7,
-          "text": "When you or a creature you can see within 30 feet fails an ability check or saving throw, you can take a Reaction to add your Intelligence modifier (minimum +1) to the roll, possibly turning the failure into a success. You can use this Reaction a number of times equal to your Intelligence modifier (minimum once), regaining all expended uses when you finish a Long Rest."
+          "text": "Když ty nebo viditelný tvor do 30 stop neuspějete v ability checku nebo save, můžeš Reactionem přidat k hodu svůj Intelligence modifier (nejméně +1), čímž můžeš neúspěch změnit v úspěch. Použiješ to tolikrát, kolik činí tvůj Intelligence modifier (nejméně jednou); všechna použití obnoví Long Rest."
         },
         "Magic Item Adept": {
           "uroven": 10,
-          "text": "You can attune to up to four magic items at once."
+          "text": "Současně můžeš mít attuned až 4 magic items."
         },
         "Spell-Storing Item": {
           "uroven": 11,
-          "text": "When you finish a Long Rest, store one level 1–3 Artificer spell with an Action casting time and no consumed Material component in a Simple or Martial weapon or an item usable as a Spellcasting Focus; you needn’t have it prepared. A creature holding the item can take a Magic action to produce the spell’s effect using your spellcasting ability. The item can be used again at the start of each user’s next turn; the stored spell ends after a number of uses equal to twice your Intelligence modifier (minimum twice) or when you store another spell with this feature."
+          "text": "Po Long Restu vložíš do Simple či Martial weapon nebo předmětu použitelnému jako Spellcasting Focus jeden Artificer spell úrovně 1–3, který se sesílá akcí a nespotřebuje Material component; nemusíš jej mít připravený. Držitel vyvolá jeho efekt akcí Magic s využitím tvé spellcasting ability a může předmět znovu použít na začátku svého dalšího tahu. Uložený spell skončí po počtu použití rovném dvojnásobku tvého Intelligence modifier (nejméně 2), nebo když uložíš jiný."
         },
         "Advanced Artifice": {
           "uroven": 14,
-          "text": "You can attune to up to five magic items at once. When you finish a Short Rest, you regain one expended use of Flash of Genius."
+          "text": "Limit attunementu se zvýší na 5 magic items. Po Short Restu získáš zpět jedno použité využití Flash of Genius."
         },
         "Magic Item Master": {
           "uroven": 18,
-          "text": "You can attune to up to six magic items at once."
+          "text": "Můžeš být attuned až k 6 magic items současně."
         },
         "Epic Boon": {
           "uroven": 19,
-          "text": "You gain an Epic Boon feat or another feat of your choice for which you qualify."
+          "text": "Získáš feat Epic Boon, případně jiný feat, jehož požadavky splňuješ."
         },
         "Soul of Artifice": {
           "uroven": 20,
-          "text": "If reduced to 0 Hit Points but not killed outright, you can destroy any number of Uncommon or Rare items made with Replicate Magic Item; your Hit Points instead become 20 times the number destroyed. When you finish a Short Rest, you regain all expended Flash of Genius uses if you are attuned to at least one magic item."
+          "text": "Když klesneš na 0 Hit Points, ale nezemřeš okamžitě, můžeš zničit libovolný počet Uncommon nebo Rare replik vytvořených pomocí Replicate Magic Item; místo toho získáš Hit Points v počtu 20 za každou zničenou repliku. Po Short Restu obnovíš všechna použití Flash of Genius, pokud jsi attuned alespoň k 1 magic item."
         },
         "Ability Score Improvement": {
           "uroven": 4,
-          "text": "You gain the Ability Score Improvement feat or another feat of your choice for which you qualify. You gain this feature again at Artificer levels 8, 12, and 16."
+          "text": "Získáš feat Ability Score Improvement nebo jiný feat, jehož požadavky splňuješ; tuto možnost získáš znovu na Artificer levelech 8, 12 a 16."
         }
       }
     },
@@ -3952,7 +3952,11 @@
           "uroven": 14,
           "text": "When you are subjected to an effect that allows you to make a Dexterity saving throw to take only half damage, you instead take no damage if you succeed on the saving throw and only half damage if you fail. If any creatures within 5 feet of you are making the same Dexterity saving throw, you can share this benefit with them for that save.\nYou can’t use this feature if you have the Incapacitated condition."
         }
-      }
+      },
+      "rok": 2024,
+      "overeno": [
+        "https://dnd2024.wikidot.com/bard:college-of-dance"
+      ]
     },
     "Shadow Sorcery": {
       "trida": "Sorcerer",
@@ -3978,7 +3982,11 @@
           "uroven": 18,
           "text": "When you use Innate Sorcery, you can adopt a shadowy form, gaining the benefits below while your Innate Sorcery is active or until you end the form (no action required). Once you use this feature, you can’t use it again until you finish a Long Rest unless you spend 6 Sorcery Points (no action required) to restore your use of it.\nIncorporeal Movement. You can move through creatures and objects as if they were Difficult Terrain, but you take 1d10 Force damage if you end your turn inside a creature or an object.\nShadow Resilience. You have Resistance to all damage except Force and Radiant damage."
         }
-      }
+      },
+      "rok": 2026,
+      "overeno": [
+        "https://dnd2024.wikidot.com/sorcerer:shadow-sorcery"
+      ]
     },
     "College of Spirits": {
       "trida": "Bard",
@@ -4000,7 +4008,11 @@
           "uroven": 14,
           "text": "You gain mastery over the spirits you call forth. Whenever you roll on the Spirits from Beyond table, you can roll the die twice and choose which of the two effects to bestow. If you roll the same number on both dice, you can instead choose any effect on the table."
         }
-      }
+      },
+      "rok": 2026,
+      "overeno": [
+        "https://dnd2024.wikidot.com/bard:college-of-spirits"
+      ]
     },
     "Thief": {
       "trida": "Rogue",
@@ -4026,7 +4038,11 @@
           "uroven": 17,
           "text": "You are adept at laying ambushes and quickly escaping danger. You can take two turns during the first round of any combat. You take your first turn at your normal Initiative and your second turn at your Initiative minus 10."
         }
-      }
+      },
+      "rok": 2024,
+      "overeno": [
+        "https://dnd2024.wikidot.com/rogue:thief"
+      ]
     },
     "Warrior of the Elements": {
       "trida": "Monk",
@@ -4052,7 +4068,11 @@
           "uroven": 17,
           "text": "While your Elemental Attunement is active, you also gain the following benefits.\nDamage Resistance. You gain Resistance to one of the following damage types of your choice: Acid, Cold, Fire, Lightning, or Thunder. At the start of each of your turns, you can change this choice.\nDestructive Stride. When you use your Step of the Wind, your Speed increases by 20 feet until the end of the turn. For that duration, any creature of your choice takes damage equal to one roll of your Martial Arts die when you enter a space within 5 feet of it. The damage type is your choice of Acid, Cold, Fire, Lightning, or Thunder. A creature can take this damage only once per turn.\nEmpowered Strikes. Once on each of your turns, you can deal extra damage to a target equal to one roll of your Martial Arts die when you hit it with an Unarmed Strike. The extra damage is the same type dealt by that strike."
         }
-      }
+      },
+      "rok": 2024,
+      "overeno": [
+        "https://dnd2024.wikidot.com/monk:warrior-of-the-elements"
+      ]
     },
     "Hollow Warden": {
       "trida": "Ranger",
@@ -4078,7 +4098,11 @@
           "uroven": 15,
           "text": "You become wholly suffused with the wild’s ancient and terrible power, granting you the following benefits.\nOminous Strikes. When you hit a creature that has the Frightened condition with an attack roll, that attack deals extra damage equal to your Wisdom modifier.\nPersistent Wrath. If you’re reduced to 0 Hit Points but not killed outright while transformed using Wrath of the Wild, you can surge with wild power. Your Hit Points instead change to a number equal to twice your Ranger level. Once you use this feature, you can’t do so again until you finish a Long Rest. You can also expend a level 4+ spell slot (no action required) to restore your use of this feature.\nTimeless. You have Immunity to the Exhaustion condition."
         }
-      }
+      },
+      "rok": 2026,
+      "overeno": [
+        "https://dnd2024.wikidot.com/ranger:hollow-warden"
+      ]
     },
     "Archfey Patron": {
       "trida": "Warlock",
@@ -4104,7 +4128,11 @@
           "uroven": 14,
           "text": "Your patron grants you the ability to weave your magic with teleportation. Immediately after you cast an Enchantment or Illusion spell using an action and a spell slot, you can cast Misty Step as part of the same action and without expending a spell slot."
         }
-      }
+      },
+      "rok": 2024,
+      "overeno": [
+        "https://dnd2024.wikidot.com/warlock:archfey-patron"
+      ]
     },
     "College of the Moon": {
       "trida": "Bard",
@@ -4126,7 +4154,11 @@
           "uroven": 14,
           "text": "You become suffused with the might of the moon, improving your Moon’s Inspiration in the following ways.\nShadow of the New Moon. When you use Inspired Eclipse, the creature who received the Bardic Inspiration die can also have the Invisible condition and immediately take a Reaction to teleport up to 30 feet to an unoccupied space it can see. The creature remains Invisible until the start of its next turn.\nVibrance of the Full Moon. When you use Lunar Vitality, you can roll 1d6 and use the number rolled in place of expending a Bardic Inspiration die."
         }
-      }
+      },
+      "rok": 2025,
+      "overeno": [
+        "https://dnd2024.wikidot.com/bard:college-of-the-moon"
+      ]
     },
     "Beast Master": {
       "trida": "Ranger",
@@ -4148,13 +4180,19 @@
           "uroven": 15,
           "text": "When you cast a spell targeting yourself, you can also affect your Primal Companion beast with the spell if the beast is within 30 feet of you."
         }
-      }
+      },
+      "rok": 2024,
+      "overeno": [
+        "https://dnd2024.wikidot.com/ranger:beast-master"
+      ]
     },
     "Path of the Zealot": {
       "trida": "Barbarian",
       "zdroj": "Player's Handbook",
       "rok": 2024,
-      "overeno": ["https://dnd2024.wikidot.com/barbarian:path-of-the-zealot"],
+      "overeno": [
+        "https://dnd2024.wikidot.com/barbarian:path-of-the-zealot"
+      ],
       "rysy": {
         "Divine Fury": {
           "uroven": 3,
@@ -4202,7 +4240,11 @@
           "uroven": 15,
           "text": "When you take damage, you can take a Reaction to give yourself Resistance to that damage and any other damage of the same type until the end of the current turn."
         }
-      }
+      },
+      "rok": 2024,
+      "overeno": [
+        "https://dnd2024.wikidot.com/ranger:hunter"
+      ]
     },
     "Bladesinger": {
       "trida": "Wizard",
@@ -4228,7 +4270,11 @@
           "uroven": 14,
           "text": "After you cast a spell that has a casting time of an action, you can make one attack with a weapon as a Bonus Action."
         }
-      }
+      },
+      "rok": 2025,
+      "overeno": [
+        "https://dnd2024.wikidot.com/wizard:bladesinger"
+      ]
     },
     "Oath of the Noble Genies": {
       "trida": "Paladin",
@@ -4258,7 +4304,11 @@
           "uroven": 20,
           "text": "As a Bonus Action, you gain the benefits below for 10 minutes or until you end them (no action required). Once you use this feature, you can’t use it again until you finish a Long Rest. You can also restore your use of it by expending a level 5 spell slot (no action required).\nFlight. You have a Fly Speed of 60 feet and can hover.\nMinor Wish. When you or an ally in your Aura of Protection fails a D20 Test, you can take a Reaction to make you or that ally succeed instead."
         }
-      }
+      },
+      "rok": 2025,
+      "overeno": [
+        "https://dnd2024.wikidot.com/paladin:oath-of-the-noble-genies"
+      ]
     },
     "Circle of the Sea": {
       "trida": "Druid",
@@ -4284,7 +4334,11 @@
           "uroven": 14,
           "text": "Instead of manifesting the Emanation of Wrath of the Sea around yourself, you can manifest it around one willing creature within 60 feet of yourself. That creature gains all the benefits of the Emanation and uses your spell save DC and Wisdom modifier for it.\nIn addition, you can manifest the Emanation around both the other creature and yourself if you expend two uses of your Wild Shape instead of one when manifesting it."
         }
-      }
+      },
+      "rok": 2024,
+      "overeno": [
+        "https://dnd2024.wikidot.com/druid:circle-of-the-sea"
+      ]
     },
     "Champion": {
       "trida": "Fighter",
@@ -4314,7 +4368,11 @@
           "uroven": 18,
           "text": "You attain the pinnacle of resilience in battle, giving you these benefits.\nDefy Death. You have Advantage on Death Saving Throws. Moreover, when you roll 18-20 on a Death Saving Throw, you gain the benefit of rolling a 20 on it.\nHeroic Rally. At the start of each of your turns, you regain Hit Points equal to 5 plus your Constitution modifier if you are Bloodied and have at least 1 Hit Point."
         }
-      }
+      },
+      "rok": 2024,
+      "overeno": [
+        "https://dnd2024.wikidot.com/fighter:champion"
+      ]
     },
     "Great Old One Patron": {
       "trida": "Warlock",
@@ -4348,7 +4406,11 @@
           "uroven": 14,
           "text": "When you cast Summon Aberration, you can modify it so that it doesn’t require Concentration. If you do so, the spell’s duration becomes 1 minute for that casting, and when summoned, the Aberration has a number of Temporary Hit Points equal to your Warlock level plus your Charisma modifier.\nIn addition, the first time each turn the Aberration hits a creature under the effect of your Hex, the Aberration deals extra Psychic damage to the target equal to the bonus damage of that spell."
         }
-      }
+      },
+      "rok": 2024,
+      "overeno": [
+        "https://dnd2024.wikidot.com/warlock:great-old-one-patron"
+      ]
     },
     "Oath of Vengeance": {
       "trida": "Paladin",
@@ -4374,7 +4436,11 @@
           "uroven": 20,
           "text": "As a Bonus Action, you gain the benefits below for 10 minutes or until you end them (no action required). Once you use this feature, you can't use it again until you finish a Long Rest. You can also restore your use of it by expending a level 5 spell slot (no action required).\nFlight. You sprout spectral wings on your back and have a Fly Speed of 60 feet, and can hover.\nFrightful Aura. Whenever an enemy starts its turn in your Aura of Protection, that creature must succeed on a Wisdom saving throw or have the Frightened condition for 1 minute or until it takes any damage. Attack rolls against the Frightened creature have Advantage."
         }
-      }
+      },
+      "rok": 2024,
+      "overeno": [
+        "https://dnd2024.wikidot.com/paladin:oath-of-vengeance"
+      ]
     },
     "Arcane Trickster": {
       "trida": "Rogue",
@@ -4400,7 +4466,11 @@
           "uroven": 17,
           "text": "You gain the ability to magically steal the knowledge of how to cast a spell from another spellcaster.\nImmediately after a creature casts a spell that targets you or includes you in its area of effect, you can take a Reaction to force the creature to make an Intelligence saving throw. The DC equals your spell save DC. On a failed save, you negate the spell's effect against you, and you steal the knowledge of the spell if it is at least level 1 and of a level you can cast (it doesn't need to be a Wizard spell). For the next 8 hours, you have the spell prepared. The creature can't cast it until 8 hours have passed.\nOnce you steal a spell with this feature, you can't use this feature again until you finish a Long Rest."
         }
-      }
+      },
+      "rok": 2024,
+      "overeno": [
+        "https://dnd2024.wikidot.com/rogue:arcane-trickster"
+      ]
     },
     "Life Domain": {
       "trida": "Cleric",
@@ -4426,7 +4496,11 @@
           "uroven": 17,
           "text": "When you would normally roll one or more dice to restore Hit Points to a creature with a spell or Channel Divinity, don’t roll those dice for the healing; instead use the highest number possible for each die. For example, instead of restoring 2d6 Hit Points to a creature with a spell, you restore 12."
         }
-      }
+      },
+      "rok": 2024,
+      "overeno": [
+        "https://dnd2024.wikidot.com/cleric:life-domain"
+      ]
     },
     "College of Glamour": {
       "trida": "Bard",
@@ -4448,18 +4522,19 @@
           "uroven": 14,
           "text": "As a Bonus Action, you can assume a magically majestic presence for 1 minute or until you have the Incapacitated condition. For the duration, whenever any creature hits you with an attack roll for the first time on a turn, the attacker must succeed on a Charisma saving throw against your spell save DC, or the attack misses instead, as the creature recoils from your majesty.\nOnce you assume this majestic presence, you can't do so again until you finish a Short or Long Rest."
         }
-      }
-    },
-    "Metamagic": {
-      "trida": "Sorcerer",
-      "zdroj": "",
-      "rysy": {}
+      },
+      "rok": 2024,
+      "overeno": [
+        "https://dnd2024.wikidot.com/bard:college-of-glamour"
+      ]
     },
     "Path of the Berserker": {
       "trida": "Barbarian",
       "zdroj": "Player's Handbook",
       "rok": 2024,
-      "overeno": ["https://dnd2024.wikidot.com/barbarian:path-of-the-berserker"],
+      "overeno": [
+        "https://dnd2024.wikidot.com/barbarian:path-of-the-berserker"
+      ],
       "rysy": {
         "Frenzy": {
           "uroven": 3,
@@ -4507,7 +4582,11 @@
           "uroven": 18,
           "text": "You can unleash a space-warping anomaly. As a Magic action, you teleport to an unoccupied space you can see within 120 feet of yourself. Immediately after you disappear, each creature within 30 feet of the space you left must make a Strength saving throw against your spell save DC. On a failed save, a creature takes 3d10 Force damage and is pulled straight toward the space you left, ending in an unoccupied space as close to your former space as possible. On a successful save, the creature takes half as much damage only.\nOnce you use this feature, you can’t do so again until you finish a Long Rest unless you spend 5 Sorcery Points (no action required) to restore your use of it."
         }
-      }
+      },
+      "rok": 2024,
+      "overeno": [
+        "https://dnd2024.wikidot.com/sorcerer:aberrant-sorcery"
+      ]
     },
     "Winter Walker": {
       "trida": "Ranger",
@@ -4537,7 +4616,11 @@
           "uroven": 15,
           "text": "When you cast Hunter’s Mark, you can adopt a ghostly, snowy form. This form lasts until the spell ends, and while you are in this form, you gain the following benefits. Once you use this feature, you can’t use it again until you finish a Long Rest unless you expend a level 4+ spell slot (no action required).\nFrozen Soul. You have Immunity to Cold damage. When you first adopt this form and at the start of each of your subsequent turns, each creature of your choice in a 15-foot Emanation originating from you takes 2d4 Cold damage.\nPartially Incorporeal. You have Immunity to the Grappled, Prone, and Restrained conditions. You can move through creatures and objects as if they were Difficult Terrain, but you take 1d10 Force damage if you end your turn inside a creature or an object. If the form ends while you are inside a creature or an object, you are shunted to the nearest unoccupied space."
         }
-      }
+      },
+      "rok": 2025,
+      "overeno": [
+        "https://dnd2024.wikidot.com/ranger:winter-walker"
+      ]
     },
     "Gloom Stalker": {
       "trida": "Ranger",
@@ -4567,7 +4650,11 @@
           "uroven": 15,
           "text": "When a creature makes an attack roll against you, you can take a Reaction to impose Disadvantage on that roll. Whether the attack hits or misses, you can teleport up to 30 feet to an unoccupied space that you can see."
         }
-      }
+      },
+      "rok": 2024,
+      "overeno": [
+        "https://dnd2024.wikidot.com/ranger:gloom-stalker"
+      ]
     },
     "Circle of the Stars": {
       "trida": "Druid",
@@ -4593,7 +4680,11 @@
           "uroven": 14,
           "text": "While in your Starry Form, you become partially incorporeal, giving you Resistance to Bludgeoning, Piercing, and Slashing damage."
         }
-      }
+      },
+      "rok": 2024,
+      "overeno": [
+        "https://dnd2024.wikidot.com/druid:circle-of-the-stars"
+      ]
     },
     "Fey Wanderer": {
       "trida": "Ranger",
@@ -4623,7 +4714,11 @@
           "uroven": 15,
           "text": "You can cast Misty Step without expending a spell slot. You can do so a number of times equal to your Wisdom modifier (minimum of once), and you regain all expended uses when you finish a Long Rest.\nIn addition, whenever you cast Misty Step, you can bring along one willing creature you can see within 5 feet of yourself. That creature teleports to an unoccupied space of your choice within 5 feet of your destination space."
         }
-      }
+      },
+      "rok": 2024,
+      "overeno": [
+        "https://dnd2024.wikidot.com/ranger:fey-wanderer"
+      ]
     },
     "Illusionist": {
       "trida": "Wizard",
@@ -4649,7 +4744,11 @@
           "uroven": 14,
           "text": "You have learned to weave shadow magic into your illusions to give them a semi-reality. When you cast an Illusion spell with a spell slot, you can choose one inanimate, nonmagical object that is part of the illusion and make that object real. You can do this on your turn as a Bonus Action while the spell is ongoing. The object remains real for 1 minute, during which it can't deal damage or give any conditions. For example, you can create an illusion of a bridge over a chasm and then make it real and cross it."
         }
-      }
+      },
+      "rok": 2024,
+      "overeno": [
+        "https://dnd2024.wikidot.com/wizard:illusionist"
+      ]
     },
     "Knowledge Domain": {
       "trida": "Cleric",
@@ -4675,7 +4774,11 @@
           "uroven": 17,
           "text": "As a Bonus Action, you magically expand your mind to the future. For 1 hour, you have Advantage on D20 Tests. Once you use this feature, you can’t use it again until you finish a Long Rest. You can also restore your use of this feature by expending a level 6+ spell slot (no action required)."
         }
-      }
+      },
+      "rok": 2025,
+      "overeno": [
+        "https://dnd2024.wikidot.com/cleric:knowledge-domain"
+      ]
     },
     "Oath of Devotion": {
       "trida": "Paladin",
@@ -4701,7 +4804,11 @@
           "uroven": 20,
           "text": "As a Bonus Action, you can imbue your Aura of Protection with holy power, granting the benefits below for 10 minutes or until you end them (no action required). Once you use this feature, you can't use it again until you finish a Long Rest. You can also restore your use of it by expending a level 5 spell slot (no action required).\nHoly Ward. You have Advantage on any saving throw you are forced to make by a Fiend or an Undead.\nRadiant Damage. Whenever an enemy starts its turn in the aura, that creature takes Radiant damage equal to your Charisma modifier plus your Proficiency Bonus.\nSunlight. The aura is filled with Bright Light that is sunlight."
         }
-      }
+      },
+      "rok": 2024,
+      "overeno": [
+        "https://dnd2024.wikidot.com/paladin:oath-of-devotion"
+      ]
     },
     "Phantom": {
       "trida": "Rogue",
@@ -4731,7 +4838,11 @@
           "uroven": 17,
           "text": "Your association with death has become so close that you gain the following benefits.\nDeath’s Lament. When you use Wails from the Grave, you can deal the feature’s Necrotic damage to both the first and the second creature.\nDraw of Death. When you roll Initiative, you gain one soul trinket for your Tokens of the Departed if you have none remaining."
         }
-      }
+      },
+      "rok": 2026,
+      "overeno": [
+        "https://dnd2024.wikidot.com/rogue:phantom"
+      ]
     },
     "Battle Master": {
       "trida": "Fighter",
@@ -4761,7 +4872,11 @@
           "uroven": 18,
           "text": "Your Superiority Die becomes a d12.\nManeuver Options\nThe maneuvers are presented here in alphabetical order.\nAmbush.\nWhen you make a Dexterity (Stealth) check or an Initiative roll, you can expend one Superiority Die and add the die to the roll, unless you have the Incapacitated condition.\nBait and Switch.\nWhen you’re within 5 feet of a creature on your turn, you can expend one Superiority Die and switch places with that creature, provided you spend at least 5 feet of movement and the creature is willing and doesn’t have the Incapacitated condition. This movement doesn’t provoke Opportunity Attacks.\nRoll the Superiority Die. Until the start of your next turn, you or the other creature (your choice) gains a bonus to AC equal to the number rolled."
         }
-      }
+      },
+      "rok": 2024,
+      "overeno": [
+        "https://dnd2024.wikidot.com/fighter:battle-master"
+      ]
     },
     "Assassin": {
       "trida": "Rogue",
@@ -4787,7 +4902,11 @@
           "uroven": 17,
           "text": "When you hit with your Sneak Attack on the first round of a combat, the target must succeed on a Constitution saving throw (DC 8 plus your Dexterity modifier and Proficiency Bonus), or the attack's damage is doubled against the target."
         }
-      }
+      },
+      "rok": 2024,
+      "overeno": [
+        "https://dnd2024.wikidot.com/rogue:assassin"
+      ]
     },
     "Circle of the Moon": {
       "trida": "Druid",
@@ -4813,7 +4932,11 @@
           "uroven": 14,
           "text": "The power of the moon suffuses you, granting you the following benefits.\nImproved Lunar Radiance. Once per turn, you can deal an extra 2d10 Radiant damage to a target you hit with a Wild Shape form’s attack.\nShared Moonlight. Whenever you use Moonlight Step, you can also teleport one willing creature. That creature must be within 10 feet of you, and you teleport it to an unoccupied space you can see within 10 feet of your destination space."
         }
-      }
+      },
+      "rok": 2024,
+      "overeno": [
+        "https://dnd2024.wikidot.com/druid:circle-of-the-moon"
+      ]
     },
     "Oath of Glory": {
       "trida": "Paladin",
@@ -4843,7 +4966,11 @@
           "uroven": 20,
           "text": "You can empower yourself with the legends - whether true or exaggerated - of your great deeds. As a Bonus Action, you gain the benefits below for 10 minutes. Once you use this feature, you can't use it again until you finish a Long Rest. You can also restore your use of it by expending a level 5 spell slot (no action required).\nCharismatic. You are blessed with an otherworldly presence and have Advantage on all Charisma checks.\nSaving Throw Reroll. If you fail a saving throw, you can take a Reaction to reroll it. You must use this new roll.\nUnerring Strike. Once on each of your turns when you make an attack roll with a weapon and miss, you can cause that attack to hit instead."
         }
-      }
+      },
+      "rok": 2024,
+      "overeno": [
+        "https://dnd2024.wikidot.com/paladin:oath-of-glory"
+      ]
     },
     "Clockwork Sorcery": {
       "trida": "Sorcerer",
@@ -4869,7 +4996,11 @@
           "uroven": 18,
           "text": "You momentarily summon spirits of order to expunge disorder around you. As a Magic action, you summon the spirits in a 30-foot Cube originating from you. The spirits look like modrons or other Constructs of your choice. The spirits are intangible and invulnerable, and they create the effects below within the Cube before vanishing. Once you use this action, you can’t use it again until you finish a Long Rest unless you spend 7 Sorcery Points (no action required) to restore your use of it.\nHeal. The spirits restore up to 100 Hit Points, divided as you choose among any number of creatures of your choice in the Cube.\nRepair. Any damaged objects entirely in the Cube are repaired instantly.\nDispel. Every spell of level 6 and lower ends on creatures and objects of your choice in the Cube."
         }
-      }
+      },
+      "rok": 2024,
+      "overeno": [
+        "https://dnd2024.wikidot.com/sorcerer:clockwork-sorcery"
+      ]
     },
     "Evoker": {
       "trida": "Wizard",
@@ -4895,7 +5026,11 @@
           "uroven": 14,
           "text": "You can increase the power of your spells. When you cast a Wizard spell with a spell slot of levels 1-5 that deals damage, you can deal maximum damage with that spell on the turn you cast it.\nThe first time you do so, you suffer no adverse effect. If you use this feature again before you finish a Long Rest, you take 2d12 Necrotic damage for each level of the spell slot immediately after you cast it. This damage ignores Resistance and Immunity.\nEach time you use this feature again before finishing a Long Rest, the Necrotic damage per spell level increases by 1d12."
         }
-      }
+      },
+      "rok": 2024,
+      "overeno": [
+        "https://dnd2024.wikidot.com/wizard:evoker"
+      ]
     },
     "Psi Warrior": {
       "trida": "Fighter",
@@ -4921,12 +5056,11 @@
           "uroven": 18,
           "text": "You always have the telekinesis spell prepared. With this feature, you can cast it without a spell slot or components, and your spellcasting ability for it is Intelligence. On each of your turns while you maintain Concentration on it, including the turn when you cast it, you can make one attack with a weapon as a Bonus Action.\nOnce you cast the spell with this feature, you can’t do so in this way again until you finish a Long Rest unless you expend a Psionic Energy Die (no action required) to restore your use of it."
         }
-      }
-    },
-    "Eldritch Invocation": {
-      "trida": "Warlock",
-      "zdroj": "",
-      "rysy": {}
+      },
+      "rok": 2024,
+      "overeno": [
+        "https://dnd2024.wikidot.com/fighter:psi-warrior"
+      ]
     },
     "Oath of the Ancients": {
       "trida": "Paladin",
@@ -4952,7 +5086,11 @@
           "uroven": 20,
           "text": "As a Bonus Action, you can imbue your Aura of Protection with primal power, granting the benefits below for 1 minute or until you end them (no action required). Once you use this feature, you can't use it again until you finish a Long Rest. You can also restore your use of it by expending a level 5 spell slot (no action required).\nDiminish Defiance. Enemies in the aura have Disadvantage on saving throws against your spells and Channel Divinity options.\nRegeneration. At the start of each of your turns, you regain 10 Hit Points.\nSwift Spells. Whenever you cast a spell that has a casting time of an action, you can cast it using a Bonus Action instead."
         }
-      }
+      },
+      "rok": 2024,
+      "overeno": [
+        "https://dnd2024.wikidot.com/paladin:oath-of-the-ancients"
+      ]
     },
     "College of Valor": {
       "trida": "Bard",
@@ -4974,7 +5112,11 @@
           "uroven": 14,
           "text": "After you cast a spell that has a casting time of an action, you can make one attack with a weapon as a Bonus Action."
         }
-      }
+      },
+      "rok": 2024,
+      "overeno": [
+        "https://dnd2024.wikidot.com/bard:college-of-valor"
+      ]
     },
     "Light Domain": {
       "trida": "Cleric",
@@ -5000,35 +5142,43 @@
           "uroven": 17,
           "text": "As a Magic action, you cause yourself to emit an aura of sunlight that lasts for 1 minute or until you dismiss it (no action required). You emit Bright Light in a 60-foot radius and Dim Light for an additional 30 feet. Your enemies in the Bright Light have Disadvantage on saving throws against your Radiance of the Dawn and any spell that deals Fire or Radiant damage.\nYou can use this feature a number of times equal to your Wisdom modifier (minimum of once), and you regain all expended uses when you finish a Long Rest."
         }
-      }
+      },
+      "rok": 2024,
+      "overeno": [
+        "https://dnd2024.wikidot.com/cleric:light-domain"
+      ]
     },
     "Sorrow Knight": {
       "trida": "Fighter",
       "zdroj": "D&D Beyond Drops - October 2026",
+      "rok": 2026,
+      "overeno": [
+        "https://dnd2024.wikidot.com/fighter:sorrow-knight"
+      ],
       "rysy": {
         "Despairing Strikes": {
           "uroven": 3,
-          "text": "Each sorrow knight bears an emotional wound like a deep scar, through which they channel despair against their enemies. This misery is fueled by special dice called Despairing Strike Dice.\nThe Despairing Strike Dice table shows the die size and number of these dice you have when you reach certain Fighter levels. A Despairing Strike Die is expended when you use it. You regain all expended Despairing Strike Dice when you finish a Short or Long Rest.\nDespairing Strike Dice\n | Fighter Level\n | Dice Size\n | Number\n | 3\n | D8\n | 3\n | 10\n | D10\n | 4\n | 15\n | D12\n | 5\nWhen you hit a creature with an attack roll using a weapon, you can expend a Despairing Strike Die and roll that die. You deal additional Psychic damage equal to the roll and can also add one of the following effects. You can’t expend more than one die per attack.\nIf a Despairing Strike effect requires a saving throw, the DC equals 8 plus your Wisdom modifier and Proficiency Bonus.\nAbandoned. The target must succeed on an Intelligence saving throw or have the Deafened condition until the end of your next turn. While Deafened, the target regards all creatures it can see as enemies until the end of your next turn.\nDread. The target has Disadvantage on the next saving throw it makes before the start of your next turn."
+          "text": "Když zasáhneš zbraní, můžeš spotřebovat nejvýše jeden Despairing Strike Die na útok a přidat Psychic damage rovný hodu; zvolit můžeš také efekt Abandoned (Intelligence save, jinak Deafened do konce dalšího tahu a cíl považuje všechny viděné tvory za nepřátele) nebo Dread (Disadvantage na příští save před začátkem tvého dalšího tahu). Save DC je 8 + Wisdom modifier + Proficiency Bonus. Máš 3d8 kostky na Fighter levelu 3, 4d10 na 10. a 5d12 na 15.; všechny se obnoví po Short nebo Long Rest."
         },
         "Solemn Gaze": {
           "uroven": 3,
-          "text": "You can see through the darkness around you and recognize the darkness in others. You gain the following benefits.\nDarkvision. You gain Darkvision with a range of 60 feet. If you already have Darkvision, its range increases by 60 feet.\nEmpathetic Inquiry. As a Magic action, you can attempt to search the mind of a creature you can see within 30 feet. The target must succeed on a Wisdom saving throw (DC equals 8 plus your Wisdom modifier and Proficiency Bonus) or you learn an emotion that looms large in its mind, such as a worry, love, or hate. If the target can see you, it knows you have read its emotions. You can use this feature a number of times equal to your Wisdom modifier (minimum of once). You regain all expended uses when you finish a Long Rest."
+          "text": "Získáš Darkvision 60 feet; pokud ji už máš, její dosah se zvýší o 60 feet. Jako akci Magic můžeš vybrat viděného tvora do 30 feet a při neúspěšném Wisdom save proti DC 8 + Wisdom modifier + Proficiency Bonus zjistit jeho výraznou emoci; pokud tě vidí, pozná, že jsi do jeho emocí nahlédl. Počet použití odpovídá Wisdom modifieru (nejméně 1) a obnoví se po Long Rest."
         },
         "Dreaded Appearance": {
           "uroven": 7,
-          "text": "When you use Tactical Shift, you can teleport to an unoccupied space you can see within 30 feet of yourself instead of moving.\nImmediately after you reappear, you can briefly take on the appearance of creatures’ fears, visible only to those creatures. Each creature of your choice within a 10-foot Emanation originating from you makes a Wisdom saving throw (DC equals 8 plus your Wisdom modifier and your Proficiency Bonus). On a failed save, a target takes Psychic damage equal to a roll of your Despairing Strike die and has the Frightened condition until the end of your next turn. On a successful save, it takes half damage only.\nOnce you take on this appearance, you can’t do so again until you finish a Short or Long Rest."
+          "text": "Při použití Tactical Shift se můžeš místo pohybu teleportovat na viditelné volné místo do 30 feet; po objevení můžeš na Short nebo Long Rest dostupné použití vyvolat děsivý zjev. Tebou vybraní tvorové v 10-foot Emanation házejí Wisdom save proti DC 8 + Wisdom modifier + Proficiency Bonus; při neúspěchu utrpí Psychic damage rovný hodu Despairing Strike Die a jsou Frightened do konce tvého dalšího tahu, při úspěchu utrpí polovinu damage."
         },
         "Unsettled Strikes": {
           "uroven": 10,
-          "text": "You further channel the pathos of the Shadowfell through your fighting abilities. The following effects are now among your Despairing Strike options.\nApathetic. The target must succeed on a Wisdom saving throw or have the Incapacitated condition until the start of your next turn. While Incapacitated in this way, the target can give only one-word responses when spoken to.\nLost. The target makes a Charisma saving throw. On a failed save, the target has the Blinded condition, and its Speed is reduced to 0 until the end of its next turn. On a successful save, the target’s Speed is halved until the end of its next turn.\nWeary. The target must succeed on a Constitution saving throw or gain 1 Exhaustion level. This effect can’t increase the target’s Exhaustion level above 2. Exhaustion levels gained from this effect are removed at the end of your next turn."
+          "text": "K Despairing Strikes přidáš tři možnosti: Apathetic vyžaduje Wisdom save, jinak je cíl Incapacitated do začátku tvého dalšího tahu a může odpovídat jen jedním slovem; Lost při neúspěšném Charisma save cíl Blinds a sníží jeho Speed na 0 do konce dalšího tahu, při úspěchu Speed pouze půlí; Weary vyžaduje Constitution save, jinak přidá 1 Exhaustion level, nejvýše však do úrovně 2, a tento level zmizí na konci tvého dalšího tahu."
         },
         "Grim Constitution": {
           "uroven": 15,
-          "text": "You have Resistance to Necrotic and Psychic damage.\nIn addition, when you are subjected to an effect that reduces your Hit Point maximum, you can make a DC 15 Constitution saving throw. If you succeed, your Hit Point maximum isn’t decreased. Each time you make this Constitution saving throw after the first, the DC increases by 5. When you finish a Short or Long Rest, the DC resets to 15."
+          "text": "Získáš Resistance vůči Necrotic a Psychic damage. Když efekt sníží tvé Hit Point maximum, můžeš uspět na DC 15 Constitution save, aby k tomu nedošlo; DC se po prvním hodu zvýší o 5 za každý další pokus a po Short nebo Long Rest se vrátí na 15."
         },
         "Grieving Mantle": {
           "uroven": 18,
-          "text": "When you use your Action Surge, you attune yourself to the Shadowfell for 1 minute or until you have the Incapacitated condition. For the duration, you gain the following benefits.\nShade Form. When you are hit by an attack roll, you can take a Reaction to become insubstantial for a moment and reduce the attack’s total damage against you to 0.\nUnwavering Resolve. You have Immunity to the Charmed and Frightened conditions. If you’re Charmed or Frightened when you activate your Grieving Mantle, the condition ends on you."
+          "text": "Při použití Action Surge se na 1 minutu nebo do Incapacitated condition napojíš na Shadowfell; Reactionem po zásahu attack rollu můžeš snížit damage z tohoto útoku na 0. Získáš Immunity vůči Charmed a Frightened a při aktivaci ti tyto podmínky skončí."
         }
       }
     },
@@ -5056,7 +5206,11 @@
           "uroven": 17,
           "text": "You gain Resistance to Bludgeoning, Piercing, and Slashing damage."
         }
-      }
+      },
+      "rok": 2024,
+      "overeno": [
+        "https://dnd2024.wikidot.com/cleric:war-domain"
+      ]
     },
     "Scion of the Three": {
       "trida": "Rogue",
@@ -5082,7 +5236,11 @@
           "uroven": 17,
           "text": "You gain the following benefits.\nCutthroat. You regain one expended use of Bloodthirst when you finish a Short Rest.\nMurderous Intent. When you roll for your Sneak Attack damage, you can treat a roll of a 1 or 2 on the die as a 3."
         }
-      }
+      },
+      "rok": 2025,
+      "overeno": [
+        "https://dnd2024.wikidot.com/rogue:scion-of-the-three"
+      ]
     },
     "Circle of the Land": {
       "trida": "Druid",
@@ -5108,7 +5266,11 @@
           "uroven": 14,
           "text": "As a Magic action, you can expend a use of your Wild Shape and cause spectral trees and vines to appear in a 15-foot Cube on the ground within 120 feet of yourself. They last there for 1 minute or until you have the Incapacitated condition or die. You and your allies have Half Cover while in that area, and your allies gain the current Resistance of your Nature’s Ward while there.\nAs a Bonus Action, you can move the Cube up to 60 feet to ground within 120 feet of yourself."
         }
-      }
+      },
+      "rok": 2024,
+      "overeno": [
+        "https://dnd2024.wikidot.com/druid:circle-of-the-land"
+      ]
     },
     "Warrior of the Open Hand": {
       "trida": "Monk",
@@ -5130,13 +5292,19 @@
           "uroven": 17,
           "text": "You gain the ability to set up lethal vibrations in someone’s body. When you hit a creature with an Unarmed Strike, you can expend 4 Focus Points to start these imperceptible vibrations, which last for a number of days equal to your Monk level. The vibrations are harmless unless you take an action to end them. Alternatively, when you take the Attack action on your turn, you can forgo one of the attacks to end the vibrations. To end them, you and the target must be on the same plane of existence. When you end them, the target must make a Constitution saving throw, taking 10d12 Force damage on a failed save or half as much damage on a successful one.\nYou can have only one creature under the effect of this feature at a time. You can end the vibrations harmlessly (no action required)."
         }
-      }
+      },
+      "rok": 2024,
+      "overeno": [
+        "https://dnd2024.wikidot.com/monk:warrior-of-the-open-hand"
+      ]
     },
     "Path of the Wild Heart": {
       "trida": "Barbarian",
       "zdroj": "Player's Handbook",
       "rok": 2024,
-      "overeno": ["https://dnd2024.wikidot.com/barbarian:path-of-the-wild-heart"],
+      "overeno": [
+        "https://dnd2024.wikidot.com/barbarian:path-of-the-wild-heart"
+      ],
       "rysy": {
         "Animal Speaker": {
           "uroven": 3,
@@ -5180,7 +5348,11 @@
           "uroven": 17,
           "text": "As a Magic action while entirely within Dim Light or Darkness, you can expend 3 Focus Points to shroud yourself with shadows for 1 minute, until you have the Incapacitated condition, or until you end your turn in Bright Light. While shrouded by these shadows, you gain the following benefits.\nInvisibility. You have the Invisible condition.\nPartially Incorporeal. You can move through occupied spaces as if they were Difficult Terrain. If you end your turn in such a space, you are shunted to the last unoccupied space you were in.\nShadow Flurry. You can use your Flurry of Blows without expending any Focus Points."
         }
-      }
+      },
+      "rok": 2024,
+      "overeno": [
+        "https://dnd2024.wikidot.com/monk:warrior-of-shadow"
+      ]
     },
     "Celestial Patron": {
       "trida": "Warlock",
@@ -5206,13 +5378,19 @@
           "uroven": 14,
           "text": "When you or an ally within 60 feet of you is about to make a Death Saving Throw, you can unleash radiant energy to save the creature. The creature regains Hit Points equal to half its Hit Point maximum and can end the Prone condition on itself. Each creature of your choice that is within 30 feet of the creature takes Radiant damage equal to 2d8 plus your Charisma modifier, and each has the Blinded condition until the end of the current turn.\nOnce you use this feature, you can’t use it again until you finish a Long Rest."
         }
-      }
+      },
+      "rok": 2024,
+      "overeno": [
+        "https://dnd2024.wikidot.com/warlock:celestial-patron"
+      ]
     },
     "Path of the World Tree": {
       "trida": "Barbarian",
       "zdroj": "Player's Handbook",
       "rok": 2024,
-      "overeno": ["https://dnd2024.wikidot.com/barbarian:path-of-the-world-tree"],
+      "overeno": [
+        "https://dnd2024.wikidot.com/barbarian:path-of-the-world-tree"
+      ],
       "rysy": {
         "Vitality of the Tree": {
           "uroven": 3,
@@ -5260,7 +5438,11 @@
           "uroven": 18,
           "text": "When you take the Attack action on your turn, you can replace two of the attacks with a casting of one of your level 1 or level 2 Wizard spells that has a casting time of an action."
         }
-      }
+      },
+      "rok": 2024,
+      "overeno": [
+        "https://dnd2024.wikidot.com/fighter:eldritch-knight"
+      ]
     },
     "Banneret": {
       "trida": "Fighter",
@@ -5290,7 +5472,11 @@
           "uroven": 18,
           "text": "You gain the following benefits.\nBolstered Rally. The area of effect for both Group Recovery and Rallying Surge is now a 60-foot Emanation.\nUnshakable Bravery. You have Immunity to the Charmed and Frightened conditions."
         }
-      }
+      },
+      "rok": 2025,
+      "overeno": [
+        "https://dnd2024.wikidot.com/fighter:banneret"
+      ]
     },
     "Grave Domain": {
       "trida": "Cleric",
@@ -5316,7 +5502,11 @@
           "uroven": 17,
           "text": "Your deep connection to this domain renders you a hallowed harbinger of death, granting you the following benefits.\nEnhanced Necromancy. When you cast a spell of level 5 or lower from the Necromancy school that targets one creature, or when you cast a spell from the Grave Domain Spells table, you can expend a use of Channel Divinity to target a second creature within the spell’s range. If the spell requires costly or consumed Material components, you must provide Material components for each target.\nKeeper of Souls. When an enemy dies within 60 feet of you, you or one creature you can see within 60 feet of yourself regains Hit Points equal to twice your Cleric level. You can’t use this feature if you have the Incapacitated condition. Once you use this feature, you can’t use it again until you finish a Short or Long Rest, unless you expend a level 6+ spell slot (no action required) to restore your use of it."
         }
-      }
+      },
+      "rok": 2026,
+      "overeno": [
+        "https://dnd2024.wikidot.com/cleric:grave-domain"
+      ]
     },
     "Diviner": {
       "trida": "Wizard",
@@ -5338,7 +5528,11 @@
           "uroven": 14,
           "text": "The visions in your dreams intensify and paint a more accurate picture in your mind of what is to come. Roll three d20s for your Portent feature rather than two."
         }
-      }
+      },
+      "rok": 2024,
+      "overeno": [
+        "https://dnd2024.wikidot.com/wizard:diviner"
+      ]
     },
     "Wild Magic Sorcery": {
       "trida": "Sorcerer",
@@ -5364,7 +5558,11 @@
           "uroven": 18,
           "text": "Immediately after you cast a Sorcerer spell with a spell slot, you can create an effect of your choice from the Wild Magic Surge table instead of rolling on that table. You can choose any effect in the table except for the final row, and if the chosen effect involves a roll, you must make it.\nOnce you use this feature, you can’t do so again until you finish a Long Rest.\nWild Magic Surge\n | 1d100\n | Effect\n | 01-04\n | Roll on this table at the start of each of your turns for the next minute, ignoring this result on subsequent rolls.\n | 05-08\n | A creature that is Friendly toward you appears in a random unoccupied space within 60 feet of you. The creature is under the DM’s control and disappears 1 minute later. Roll 1d4 to determine the creature: on a 1, a Modron Duodrone appears; on a 2, a Flumph appears; on a 3, a Modron Monodrone appears; on a 4, a Unicorn appears. See the Monster Manual for the creature’s stat block.\n | 09-12\n | For the next minute, you regain 5 Hit Points at the start of each of your turns.\n | 13-16\n | Creatures have Disadvantage on saving throws against the next spell you cast in the next minute that involves a saving throw.\n | 17-20\n | You are subjected to an effect that lasts for 1 minute unless its description says otherwise. Roll 1d8 to determine the effect: on a 1, you’re surrounded by faint, ethereal music only you and creatures within 5 feet of you can hear; on a 2, your size increases by one size category; on a 3, you grow a long beard made of feathers that remains until you sneeze, at which point the feathers explode from your face and vanish; on a 4, you must shout when you speak; on a 5, illusory butterflies flutter in the air within 10 feet of you; on a 6, an eye appears on your forehead, granting you Advantage on Wisdom (Perception) checks; on an 7, pink bubbles float out of your mouth whenever you speak; on an 8, your skin turns a vibrant shade of blue for 24 hours or until the effect is ended by a Remove Curse spell.\n | 21-24\n | For the next minute, all your spells with a casting time of an action have a casting time of a Bonus Action.\n | 25-28\n | You are transported to the Astral Plane until the end of your next turn. You then return to the space you previously occupied or the nearest unoccupied space if that space is occupied.\n | 29-32\n | The next time you cast a spell that deals damage within the next minute, don’t roll the spell’s damage dice for the damage. Instead use the highest number possible for each damage die.\n | 33-36\n | You have Resistance to all damage for the next minute.\n | 37-40\n | You turn into a potted plant until the start of your next turn. While you’re a plant, you have the Incapacitated condition and have Vulnerability to all damage. If you drop to 0 Hit Points, your pot breaks, and your form reverts.\n | 41-44\n | For the next minute, you can teleport up to 20 feet as a Bonus Action on each of your turns.\n | 45-48\n | You and up to three creatures you choose within 30 feet of you have the Invisible condition for 1 minute. This invisibility ends on a creature immediately after it makes an attack roll, deals damage, or casts a spell.\n | 49-52\n | A spectral shield hovers near you for the next minute, granting you a +2 bonus to AC and immunity to Magic Missile.\n | 53-56\n | You can take one extra action on this turn.\n | 57-60\n | You cast a random spell. If the spell normally requires Concentration, it doesn’t require Concentration in this case; the spell lasts for its full duration. Roll 1d10 to determine the spell: on a 1, Confusion; on a 2, Fireball; on a 3, Fog Cloud; on a 4, Fly (cast on a random creature within 60 feet of you), on a 5, Grease; on a 6, Levitate (cast on yourself); on a 7, Magic Missile (cast as a level 5 spell); on an 8, Mirror Image; on a 9, Polymorph (cast on yourself), and if you fail the saving throw, you turn into a Goat (see appendix B); on a 10, See Invisibility.\n | 61-64\n | For the next minute, any flammable, nonmagical object you touch that isn’t being worn or carried by another creature bursts into flame, takes 1d4 Fire damage, and is burning.\n | 65-68\n | If you die within the next hour, you immediately revive as if by the Reincarnate spell.\n | 69-72\n | You have the Frightened condition until the end of your next turn. The DM determines the source of your fear.\n | 73-76\n | You teleport up to 60 feet to an unoccupied space you can see.\n | 77-80\n | A random creature within 60 feet of you has the Poisoned condition for 1d4 hours.\n | 81-84\n | You radiate Bright Light in a 30-foot radius for the next minute. Any creature that ends its turn within 5 feet of you has the Blinded condition until the end of its next turn.\n | 85-88\n | Up to three creatures of your choice that you can see within 30 feet of you take 1d10 Necrotic damage. You regain Hit Points equal to the sum of the Necrotic damage dealt.\n | 89-92\n | Up to three creatures of your choice that you can see within 30 feet of you take 4d10 Lightning damage.\n | 93-96\n | You and all creatures within 30 feet of you have Vulnerability to Piercing damage for the next minute.\n | 97-00\n | Roll 1d6: On a 1, you regain 2d10 Hit Points; on a 2, one ally of your choice within 300 feet of you regains 2d10 Hit Points; on a 3, you regain your lowest-level expended spell slot; on a 4, one ally of your choice within 300 feet of you regains their lowest-level expended spell slot; on a 5, you regain all your expended Sorcery Points; on a 6, all the effects of row 17–20 affect you simultaneously."
         }
-      }
+      },
+      "rok": 2024,
+      "overeno": [
+        "https://dnd2024.wikidot.com/sorcerer:wild-magic-sorcery"
+      ]
     },
     "Draconic Sorcery": {
       "trida": "Sorcerer",
@@ -5390,7 +5588,11 @@
           "uroven": 18,
           "text": "You can cast Summon Dragon without a Material component. You can also cast it once without a spell slot, and you regain the ability to cast it in this way when you finish a Long Rest.\nWhenever you start casting the spell, you can modify it so that it doesn’t require Concentration. If you do so, the spell’s duration becomes 1 minute for that casting."
         }
-      }
+      },
+      "rok": 2024,
+      "overeno": [
+        "https://dnd2024.wikidot.com/sorcerer:draconic-sorcery"
+      ]
     },
     "Warrior of Mercy": {
       "trida": "Monk",
@@ -5420,7 +5622,11 @@
           "uroven": 17,
           "text": "Your mastery of life energy opens the door to the ultimate mercy. As a Magic action, you can touch the corpse of a creature that died within the past 24 hours and expend 5 Focus Points. The creature then returns to life with a number of Hit Points equal to 4d10 plus your Wisdom modifier. If the creature died with any of the following conditions, the creature revives with the conditions removed: Blinded, Deafened, Paralyzed, Poisoned, and Stunned.\nOnce you use this feature, you can’t use it again until you finish a Long Rest."
         }
-      }
+      },
+      "rok": 2024,
+      "overeno": [
+        "https://dnd2024.wikidot.com/monk:warrior-of-mercy"
+      ]
     },
     "Undead Patron": {
       "trida": "Warlock",
@@ -5446,7 +5652,11 @@
           "uroven": 14,
           "text": "Your Form of Dread improves, granting you the following benefits while you are using it.\nDread Resistance. You have Resistance to Bludgeoning, Piercing, and Slashing damage.\nGhostly Flight. You have a Fly Speed equal to your Speed and can hover. You can move through creatures and objects as if they were Difficult Terrain, but you take 1d10 Force damage if you end your turn inside a creature or an object.\nProfane Casting. Whenever you cast a Warlock spell from the Conjuration or Necromancy school, you cast it without any Verbal, Somatic, or Material components, except Material components that are costly or consumed."
         }
-      }
+      },
+      "rok": 2026,
+      "overeno": [
+        "https://dnd2024.wikidot.com/warlock:undead-patron"
+      ]
     },
     "Soulknife": {
       "trida": "Rogue",
@@ -5472,7 +5682,11 @@
           "uroven": 17,
           "text": "You can sweep your Psychic Blades through a creature's mind. When you use you Psychic Blades to deal Sneak Attack damage to a creature, you can force that target to make a Wisdom saving throw (DC 8 plus your Dexterity modifier and Proficiency Bonus). If the save fails, the target has the Stunned condition for 1 minute. The Stunned target repeats the save at the end of each of its turns, ending the effect on itself with a success.\nOnce you use this feature, you can't do so again until you finish a Long Rest unless you expend three Psionic Energy Dice (no action required) to restore your use of it."
         }
-      }
+      },
+      "rok": 2024,
+      "overeno": [
+        "https://dnd2024.wikidot.com/rogue:soulknife"
+      ]
     },
     "Fiend Patron": {
       "trida": "Warlock",
@@ -5498,7 +5712,11 @@
           "uroven": 14,
           "text": "Once per turn when you hit a creature with an attack roll, you can try to instantly transport the target through the Lower Planes. The target must succeed on a Charisma saving throw against your spell save DC, or the target disappears and hurtles through a nightmare landscape. The target takes 8d10 Psychic damage if it isn’t a Fiend, and it has the Incapacitated condition until the end of your next turn, when it returns to the space it previously occupied or the nearest unoccupied space.\nOnce you use this feature, you can’t use it again until you finish a Long Rest unless you expend a Pact Magic spell slot (no action required) to restore your use of it."
         }
-      }
+      },
+      "rok": 2024,
+      "overeno": [
+        "https://dnd2024.wikidot.com/warlock:fiend-patron"
+      ]
     },
     "Spellfire Sorcery": {
       "trida": "Sorcerer",
@@ -5524,7 +5742,11 @@
           "uroven": 18,
           "text": "When you use Innate Sorcery, you can alter it and infuse yourself with the essence of spellfire, gaining the following benefits while this use of Innate Sorcery is active. Once you use this feature to alter Innate Sorcery, you can’t use it again until you finish a Long Rest unless you spend 5 Sorcery Points (no action required) to restore your use of it.\nBurning Life Force. Once per turn when you are hit by an attack roll, you can expend a number of Hit Point Dice, up to a maximum equal to your Charisma modifier (minimum of one). Roll the expended dice, and reduce the amount of damage from that attack equal to the total rolled.\nFlight. You gain a Fly Speed of 60 feet and can hover.\nSpell Avoidance. When you’re subjected to a spell or magical effect that allows you to make a saving throw to take only half damage, you instead take no damage if you succeed on the save and only half damage if you fail. You can’t use this benefit if you have the Incapacitated condition."
         }
-      }
+      },
+      "rok": 2025,
+      "overeno": [
+        "https://dnd2024.wikidot.com/sorcerer:spellfire-sorcery"
+      ]
     },
     "Trickery Domain": {
       "trida": "Cleric",
@@ -5550,7 +5772,11 @@
           "uroven": 17,
           "text": "The illusion of your Invoke Duplicity has grown more powerful in the following ways.\nShared Distraction. When you and your allies make attack rolls against a creature within 5 feet of the illusion, the attack rolls have Advantage.\nHealing Illusion. When the illusion ends, you or a creature of your choice within 5 feet of it regains a number of Hit Points equal to your Cleric level."
         }
-      }
+      },
+      "rok": 2024,
+      "overeno": [
+        "https://dnd2024.wikidot.com/cleric:trickery-domain"
+      ]
     },
     "Abjurer": {
       "trida": "Wizard",
@@ -5576,7 +5802,11 @@
           "uroven": 14,
           "text": "You have Advantage on saving throws against spells, and you have Resistance to the damage of spells."
         }
-      }
+      },
+      "rok": 2024,
+      "overeno": [
+        "https://dnd2024.wikidot.com/wizard:abjurer"
+      ]
     },
     "College of Lore": {
       "trida": "Bard",
@@ -5598,37 +5828,43 @@
           "uroven": 14,
           "text": "When you make an ability check or attack roll and fail, you can expend one use of Bardic Inspiration; roll the Bardic Inspiration die, and add the number rolled to the d20, potentially turning a failure into a success. On a failure, the Bardic Inspiration isn’t expended."
         }
-      }
+      },
+      "rok": 2024,
+      "overeno": [
+        "https://dnd2024.wikidot.com/bard:college-of-lore"
+      ]
     },
     "Alchemist": {
       "trida": "Artificer",
       "zdroj": "Eberron: Forge of the Artificer",
       "rok": 2025,
-      "overeno": ["http://dnd2024.wikidot.com/artificer:alchemist"],
+      "overeno": [
+        "http://dnd2024.wikidot.com/artificer:alchemist"
+      ],
       "rysy": {
         "Tools of the Trade": {
           "uroven": 3,
-          "text": "You gain proficiency with Alchemist’s Supplies and the Herbalism Kit, replacing either proficiency you already have with another Artisan’s Tools proficiency. Crafting a potion takes half the normal time."
+          "text": "Získáš proficiency s Alchemist’s Supplies a Herbalism Kit; jednu z nich můžeš vyměnit za jiný druh Artisan’s Tools, pokud ji už máš. Potiony vyrábíš za polovinu běžného času."
         },
         "Alchemist Spells": {
           "uroven": 3,
-          "text": "You always have these spells prepared at the listed Artificer levels: 3 Healing Word, Ray of Sickness; 5 Flaming Sphere, Melf’s Acid Arrow; 9 Gaseous Form, Mass Healing Word; 13 Death Ward, Vitriolic Sphere; 17 Cloudkill, Raise Dead."
+          "text": "Tato kouzla máš vždy připravená od uvedené úrovně Artificera: 3—Healing Word, Ray of Sickness; 5—Flaming Sphere, Melf’s Acid Arrow; 9—Gaseous Form, Mass Healing Word; 13—Death Ward, Vitriolic Sphere; 17—Cloudkill, Raise Dead."
         },
         "Experimental Elixir": {
           "uroven": 3,
-          "text": "After a Long Rest while holding Alchemist’s Supplies, create two elixirs, rolling for each effect on the feature table; they disappear if not used by your next Long Rest. A creature can drink or administer one as a Bonus Action. As a Magic action, expend a spell slot while holding the supplies to create one more elixir and choose its effect. The Long Rest total rises to three at Artificer 5, four at 9, and five at 15."
+          "text": "Po Long Restu s Alchemist’s Supplies vytvoříš dva elixíry s náhodnými účinky; pokud je nepoužiješ do dalšího Long Restu, zmizí. Tvor je může vypít nebo podat jako Bonus Action, případně můžeš při držení nástrojů akcí Magic a spotřebováním spell slotu vyrobit další s vybraným účinkem. Počet elixírů vytvořených po Long Restu se zvýší na tři na 5. úrovni Artificera, čtyři na 9. a pět na 15."
         },
         "Alchemical Savant": {
           "uroven": 5,
-          "text": "When you cast a spell using Alchemist’s Supplies as its Spellcasting Focus, add your Intelligence modifier (minimum +1) to one roll that restores Hit Points or deals Acid, Fire, or Poison damage."
+          "text": "Když sesíláš spell s Alchemist’s Supplies jako Spellcasting Focus, přičti Intelligence modifier (nejméně +1) k jednomu hodu, který obnovuje Hit Points nebo způsobuje Acid, Fire či Poison damage."
         },
         "Restorative Reagents": {
           "uroven": 9,
-          "text": "While using Alchemist’s Supplies as your Spellcasting Focus, cast Lesser Restoration without preparing it or spending a spell slot a number of times equal to your Intelligence modifier (minimum once), recovering all uses on a Long Rest."
+          "text": "Při použití Alchemist’s Supplies jako Spellcasting Focus můžeš seslat Lesser Restoration bez přípravy a spell slotu tolikrát, kolik činí tvůj Intelligence modifier (nejméně jednou); všechny použití obnovíš po Long Restu."
         },
         "Chemical Mastery": {
           "uroven": 15,
-          "text": "Once on each of your turns, an Artificer spell that deals Acid, Fire, or Poison damage can also deal 2d8 Force damage to a target. You gain Resistance to Acid and Poison damage and Immunity to the Poisoned condition. You can cast Tasha’s Bubbling Cauldron without preparing it, a slot, or Material components while using Alchemist’s Supplies; regain this use after a Long Rest."
+          "text": "Jednou za tah může tvůj Artificer spell způsobující Acid, Fire nebo Poison damage přidat cíli 2d8 Force damage. Získáš Resistance vůči Acid a Poison damage a Immunity vůči Poisoned; s Alchemist’s Supplies můžeš jednou za Long Rest seslat Tasha’s Bubbling Cauldron bez přípravy, slotu a Material components."
         }
       }
     },
@@ -5636,35 +5872,37 @@
       "trida": "Artificer",
       "zdroj": "Eberron: Forge of the Artificer",
       "rok": 2025,
-      "overeno": ["http://dnd2024.wikidot.com/artificer:armorer"],
+      "overeno": [
+        "http://dnd2024.wikidot.com/artificer:armorer"
+      ],
       "rysy": {
         "Tools of the Trade": {
           "uroven": 3,
-          "text": "You gain Heavy armor training and Smith’s Tools proficiency, replacing the latter with another Artisan’s Tools proficiency if you already have it. Crafting armor takes half the normal time."
+          "text": "Získáš Heavy armor training a proficiency s Smith’s Tools; už existující proficiency s nimi můžeš vyměnit za jiný druh Artisan’s Tools. Armor vyrábíš za polovinu běžného času."
         },
         "Armorer Spells": {
           "uroven": 3,
-          "text": "You always have these spells prepared at the listed Artificer levels: 3 Magic Missile, Thunderwave; 5 Mirror Image, Shatter; 9 Hypnotic Pattern, Lightning Bolt; 13 Fire Shield, Greater Invisibility; 17 Passwall, Wall of Force."
+          "text": "Tato kouzla máš vždy připravená od uvedené úrovně Artificera: 3—Magic Missile, Thunderwave; 5—Mirror Image, Shatter; 9—Hypnotic Pattern, Lightning Bolt; 13—Fire Shield, Greater Invisibility; 17—Passwall, Wall of Force."
         },
         "Arcane Armor": {
           "uroven": 3,
-          "text": "With Smith’s Tools in hand, use a Magic action to make worn armor your Arcane Armor until you don another suit or die. It ignores its Strength requirement for you, can be donned or doffed as a Utilize action and cannot be removed against your will; you can use it as an Artificer Spellcasting Focus."
+          "text": "S Smith’s Tools v ruce můžeš akcí Magic proměnit nošený armor v Arcane Armor až do chvíle, kdy si oblékneš jiný nebo zemřeš. Ignoruje Strength requirement, lze jej obléknout či svléknout akcí Utilize, nelze ti ho proti vůli odejmout a může sloužit jako Artificer Spellcasting Focus."
         },
         "Armor Model": {
           "uroven": 3,
-          "text": "Choose Dreadnaught, Guardian, or Infiltrator as your armor model; each grants a special weapon whose attack and damage rolls can use Intelligence instead of Strength or Dexterity. With Smith’s Tools, you can change the model after a Short or Long Rest."
+          "text": "Vyber si model Dreadnaught, Guardian nebo Infiltrator; každý poskytuje zvláštní zbraň, jejíž attack a damage rolls mohou místo Strength či Dexterity používat Intelligence. Se Smith’s Tools můžeš model změnit po Short nebo Long Restu."
         },
         "Extra Attack": {
           "uroven": 5,
-          "text": "You can attack twice, instead of once, whenever you take the Attack action on your turn."
+          "text": "Při akci Attack můžeš zaútočit dvakrát místo jednou."
         },
         "Improved Armorer": {
           "uroven": 9,
-          "text": "Learn an additional Armor plan for Replicate Magic Item and create an additional replicated item, which must also use an Armor plan. Your model’s special weapon gains +1 to attack and damage rolls."
+          "text": "Získáš další Armor plan pro Replicate Magic Item a můžeš vytvořit ještě jeden replikovaný předmět; i ten musí používat Armor plan. Zvláštní zbraň tvého modelu dostane +1 k attack a damage rolls."
         },
         "Perfected Armor": {
           "uroven": 15,
-          "text": "Your model improves: Dreadnaught increases Force Demolisher’s damage die and enhances Giant Stature; Guardian increases Thunder Pulse damage; Infiltrator gains improved Powered Steps and Dampening Field benefits."
+          "text": "Model se zdokonalí: Dreadnaught posílí Force Demolisher a Giant Stature, Guardian zvýší damage Thunder Pulse a Infiltrator vylepší účinky Powered Steps a Dampening Field."
         }
       }
     },
@@ -5672,31 +5910,33 @@
       "trida": "Artificer",
       "zdroj": "Eberron: Forge of the Artificer",
       "rok": 2025,
-      "overeno": ["http://dnd2024.wikidot.com/artificer:artillerist"],
+      "overeno": [
+        "http://dnd2024.wikidot.com/artificer:artillerist"
+      ],
       "rysy": {
         "Tools of the Trade": {
           "uroven": 3,
-          "text": "You gain proficiency with Martial Ranged weapons and Woodcarver’s Tools, replacing the tool proficiency with another Artisan’s Tools proficiency if already proficient. Crafting a magic Wand takes half the normal time."
+          "text": "Získáš proficiency s Martial Ranged weapons a Woodcarver’s Tools; pokud už nástrojovou proficiency máš, můžeš ji vyměnit za jiný druh Artisan’s Tools. Magic Wandy vyrábíš za polovinu běžného času."
         },
         "Artillerist Spells": {
           "uroven": 3,
-          "text": "You always have these spells prepared at the listed Artificer levels: 3 Shield, Thunderwave; 5 Scorching Ray, Shatter; 9 Fireball, Wind Wall; 13 Ice Storm, Wall of Fire; 17 Cone of Cold, Wall of Force."
+          "text": "Tato kouzla máš vždy připravená od uvedené úrovně Artificera: 3—Shield, Thunderwave; 5—Scorching Ray, Shatter; 9—Fireball, Wind Wall; 13—Ice Storm, Wall of Fire; 17—Cone of Cold, Wall of Force."
         },
         "Eldritch Cannon": {
           "uroven": 3,
-          "text": "Using Smith’s or Woodcarver’s Tools, create a Small or Tiny cannon in an unoccupied space within 5 feet. It lasts up to 1 hour, until destroyed, or until dismissed. Create one per Long Rest, or spend a spell slot to create another; you can activate it with a Bonus Action and choose Flamethrower, Force Ballista, or Protector."
+          "text": "Pomocí Smith’s nebo Woodcarver’s Tools vytvoříš v neobsazeném místě do 5 feet Small či Tiny cannon; vydrží nejvýše 1 hodinu, do zničení nebo rozpuštění. Po Long Restu vytvoříš jeden zdarma, další za spell slot; aktivuješ jej Bonus Action a vybereš Flamethrower, Force Ballista nebo Protector."
         },
         "Arcane Firearm": {
           "uroven": 5,
-          "text": "After a Long Rest, use Woodcarver’s Tools to inscribe a Rod, Staff, Wand, or Martial Ranged weapon as your Arcane Firearm. It can be your Artificer Spellcasting Focus; when you cast a spell through it, add 1d8 to one damage roll."
+          "text": "Po Long Restu můžeš Woodcarver’s Tools označit Rod, Staff, Wand nebo Martial Ranged weapon jako Arcane Firearm. Slouží jako Artificer Spellcasting Focus a spell seslaný skrze něj přidá 1d8 k jednomu damage rollu."
         },
         "Explosive Cannon": {
           "uroven": 9,
-          "text": "When your cannon takes damage, use a Reaction within 60 feet to destroy it and force creatures within 20 feet to make a Dexterity save against your spell DC, taking 3d10 Force damage on a failure or half on a success. Cannon damage and Protector Temporary Hit Points each increase by 1d8."
+          "text": "Když tvůj cannon utrpí damage, můžeš Reactionem do 60 feet od něj cannon zničit a přimět tvory v okruhu 20 feet k Dexterity save proti tvému spell DC; při neúspěchu utrpí 3d10 Force damage, při úspěchu polovinu. Damage cannonu i Temporary Hit Points od Protectora se zvýší o 1d8."
         },
         "Fortified Position": {
           "uroven": 15,
-          "text": "You can have two Eldritch Cannons and create both with one Magic action, spending a slot for each if needed; one Bonus Action can activate both. You and allies gain Half Cover while within 10 feet of a cannon."
+          "text": "Můžeš mít dva Eldritch Cannons a vytvořit oba jednou akcí Magic, se spell slotem za každý, který není vytvořen zdarma. Jedna Bonus Action aktivuje oba a ty i spojenci získáte Half Cover, pokud jste do 10 feet od některého cannonu."
         }
       }
     },
@@ -5704,35 +5944,37 @@
       "trida": "Artificer",
       "zdroj": "Eberron: Forge of the Artificer",
       "rok": 2025,
-      "overeno": ["http://dnd2024.wikidot.com/artificer:battle-smith"],
+      "overeno": [
+        "http://dnd2024.wikidot.com/artificer:battle-smith"
+      ],
       "rysy": {
         "Tools of the Trade": {
           "uroven": 3,
-          "text": "You gain Smith’s Tools proficiency, replacing it with another Artisan’s Tools proficiency if already proficient. Crafting a nonmagical or magic weapon takes half the normal time."
+          "text": "Získáš proficiency se Smith’s Tools, kterou můžeš vyměnit za jiný druh Artisan’s Tools, pokud ji už máš. Nemagické i Magic weapons vyrábíš za polovinu běžného času."
         },
         "Battle Smith Spells": {
           "uroven": 3,
-          "text": "You always have these spells prepared at the listed Artificer levels: 3 Heroism, Shield; 5 Shining Smite, Warding Bond; 9 Aura of Vitality, Conjure Barrage; 13 Aura of Purity, Fire Shield; 17 Banishing Smite, Mass Cure Wounds."
+          "text": "Tato kouzla máš vždy připravená od uvedené úrovně Artificera: 3—Heroism, Shield; 5—Shining Smite, Warding Bond; 9—Aura of Vitality, Conjure Barrage; 13—Aura of Purity, Fire Shield; 17—Banishing Smite, Mass Cure Wounds."
         },
         "Battle Ready": {
           "uroven": 3,
-          "text": "Use Intelligence instead of Strength or Dexterity for attack and damage rolls with a Magic weapon. You gain Martial weapon proficiency and can use a proficient weapon as an Artificer Spellcasting Focus."
+          "text": "K útokům Magic weaponem můžeš místo Strength či Dexterity použít Intelligence pro attack i damage rolls. Získáš Martial weapon proficiency a zbraň, se kterou jsi proficient, může být tvým Artificer Spellcasting Focus."
         },
         "Steel Defender": {
           "uroven": 3,
-          "text": "You create a friendly Steel Defender that acts on your turn; it Dodges unless you use a Bonus Action to command another action. If destroyed, you can restore it within an hour using a Magic action and a spell slot, or create a replacement during a Long Rest with Smith’s Tools."
+          "text": "Vytvoříš přátelského Steel Defendera, který jedná v tvém tahu a obvykle používá Dodge, pokud mu Bonus Action nezadáš jinou akci. Je-li zničen, můžeš jej do 1 hodiny obnovit akcí Magic a spell slotem, nebo během Long Restu vytvořit náhradu pomocí Smith’s Tools."
         },
         "Extra Attack": {
           "uroven": 5,
-          "text": "You can attack twice when you take the Attack action. You can forgo one attack to command your Steel Defender to use Force-Empowered Rend."
+          "text": "Při akci Attack můžeš zaútočit dvakrát; jeden útok můžeš vynechat a místo něj přikázat Steel Defenderovi použít Force-Empowered Rend."
         },
         "Arcane Jolt": {
           "uroven": 9,
-          "text": "Once per turn when you or your Steel Defender hits with a Magic weapon, expend one of a number of uses equal to your Intelligence modifier (minimum once) to deal 2d6 extra Force damage or restore 2d6 Hit Points to a creature or object you can see within 30 feet of the target. Uses return after a Long Rest."
+          "text": "Jednou za tah po zásahu tebe nebo Steel Defendera Magic weaponem můžeš spotřebovat jedno z použití v počtu rovném Intelligence modifieru (nejméně jedno) a způsobit 2d6 Force damage, nebo obnovit 2d6 Hit Points tvorovi či objektu, který vidíš do 30 feet od cíle zásahu. Použití se obnoví po Long Restu."
         },
         "Improved Defender": {
           "uroven": 15,
-          "text": "Arcane Jolt’s damage and healing increase to 4d6. When the Steel Defender uses Deflect Attack, the attacker takes 1d4 plus your Intelligence modifier Force damage."
+          "text": "Arcane Jolt způsobuje nebo obnovuje 4d6 místo 2d6. Když Steel Defender použije Deflect Attack, útočník utrpí 1d4 + tvůj Intelligence modifier Force damage."
         }
       }
     },
@@ -5740,35 +5982,37 @@
       "trida": "Artificer",
       "zdroj": "Eberron: Forge of the Artificer",
       "rok": 2025,
-      "overeno": ["http://dnd2024.wikidot.com/artificer:cartographer"],
+      "overeno": [
+        "http://dnd2024.wikidot.com/artificer:cartographer"
+      ],
       "rysy": {
         "Tools of the Trade": {
           "uroven": 3,
-          "text": "You gain proficiency with Calligrapher’s Supplies and Cartographer’s Tools, replacing proficiencies you already have with other Artisan’s Tools. Scribing a Spell Scroll takes half the normal time."
+          "text": "Získáš proficiency s Calligrapher’s Supplies a Cartographer’s Tools; už existující proficiency můžeš vyměnit za jiné Artisan’s Tools. Spell Scrolls zapisuješ za polovinu běžného času."
         },
         "Cartographer Spells": {
           "uroven": 3,
-          "text": "You always have these spells prepared at the listed Artificer levels: 3 Faerie Fire, Guiding Bolt, Healing Word; 5 Locate Object, Mind Spike; 9 Call Lightning, Clairvoyance; 13 Banishment, Locate Creature; 17 Scrying, Teleportation Circle."
+          "text": "Tato kouzla máš vždy připravená od uvedené úrovně Artificera: 3—Faerie Fire, Guiding Bolt, Healing Word; 5—Locate Object, Mind Spike; 9—Call Lightning, Clairvoyance; 13—Banishment, Locate Creature; 17—Scrying, Teleportation Circle."
         },
         "Adventurer’s Atlas": {
           "uroven": 3,
-          "text": "After a Long Rest while holding Cartographer’s Tools, make a linked map for at least two creatures, up to one plus your Intelligence modifier (minimum two). Carriers add 1d4 to Initiative, track one another on the same plane, and can target another carrier with effects that require sight if it is in range. Maps end when you die or remake them."
+          "text": "Po Long Restu s Cartographer’s Tools vytvoříš propojenou mapu pro nejméně 2 tvory, nejvýše pro 1 + tvůj Intelligence modifier (minimálně 2). Nosiči přidají 1d4 k Initiative, dokážou se sledovat na stejné rovině existence a mohou cílit na jiného nosiče účinkem vyžadujícím sight, pokud je v dosahu; mapa zanikne, když zemřeš nebo vytvoříš novou."
         },
         "Mapping Magic": {
           "uroven": 3,
-          "text": "Cast Faerie Fire without a slot a number of times equal to your Intelligence modifier (minimum once), recovering uses after a Long Rest. On your turn, spend half your Speed to teleport to a space within 10 feet or to a space within 5 feet of a map carrier you can see within 30 feet."
+          "text": "Faerie Fire můžeš seslat bez spell slotu tolikrát, kolik činí tvůj Intelligence modifier (nejméně jednou); použití obnovíš po Long Restu. Ve svém tahu můžeš obětovat polovinu Speed a teleportovat se do místa do 10 feet, nebo do místa do 5 feet od viditelného nosiče mapy, který je do 30 feet."
         },
         "Guided Precision": {
           "uroven": 5,
-          "text": "Once per turn, add your Intelligence modifier to one damage roll when casting a Cartographer spell or hitting a creature affected by your Faerie Fire. Damage cannot break your Concentration on Faerie Fire."
+          "text": "Jednou za tah přičti Intelligence modifier k jednomu damage rollu svého Cartographer spellu nebo útoku proti tvorovi zasaženému tvým Faerie Fire. Takto způsobený damage nemůže přerušit tvou Concentration na Faerie Fire."
         },
         "Ingenious Movement": {
           "uroven": 9,
-          "text": "When you use Flash of Genius, you or a willing creature you can see within 30 feet can also teleport up to 30 feet to an unoccupied space you can see."
+          "text": "Když použiješ Flash of Genius, můžeš sobě nebo ochotnému tvorovi, kterého vidíš do 30 feet, zároveň umožnit teleport až o 30 feet na viditelné neobsazené místo."
         },
         "Superior Atlas": {
           "uroven": 15,
-          "text": "A map carrier reduced to 0 Hit Points can destroy its map to instead have Hit Points equal to twice your Artificer level and teleport next to you or another map carrier. While carrying a map, you can cast Find the Path without a slot, preparation, or components once per Long Rest."
+          "text": "Když nosič mapy klesne na 0 Hit Points, může mapu zničit, získat místo toho Hit Points ve výši dvojnásobku tvé úrovně Artificera a teleportovat se vedle tebe nebo jiného nosiče. S mapou u sebe můžeš jednou za Long Rest seslat Find the Path bez spell slotu, přípravy a komponent."
         }
       }
     },
@@ -5778,7 +6022,9 @@
       "rok": 2015,
       "legacy": true,
       "alternativa_2024": "Path of the Berserker",
-      "overeno": ["http://dnd5e.wikidot.com/barbarian:battlerager"],
+      "overeno": [
+        "http://dnd5e.wikidot.com/barbarian:battlerager"
+      ],
       "rysy": {
         "Battlerager Armor": {
           "uroven": 3,
@@ -5805,7 +6051,9 @@
       "legacy": true,
       "alternativa_2024": "Path of the World Tree",
       "revize": "Ohlášená varianta Path of the Spiritual Guardian vyjde v D&D: World of Warcraft 17. 11. 2026; do vydání nenahrazuje tuto legacy podtřídu.",
-      "overeno": ["http://dnd5e.wikidot.com/barbarian:ancestral-guardian"],
+      "overeno": [
+        "http://dnd5e.wikidot.com/barbarian:ancestral-guardian"
+      ],
       "rysy": {
         "Ancestral Protectors": {
           "uroven": 3,
@@ -5831,7 +6079,9 @@
       "rok": 2020,
       "legacy": true,
       "alternativa_2024": "Path of the Wild Heart",
-      "overeno": ["http://dnd5e.wikidot.com/barbarian:beast"],
+      "overeno": [
+        "http://dnd5e.wikidot.com/barbarian:beast"
+      ],
       "rysy": {
         "Form of the Beast": {
           "uroven": 3,
@@ -5857,7 +6107,9 @@
       "rok": 2023,
       "legacy": true,
       "alternativa_2024": "Path of the World Tree",
-      "overeno": ["https://dnd5e.wikidot.com/barbarian:giant"],
+      "overeno": [
+        "https://dnd5e.wikidot.com/barbarian:giant"
+      ],
       "rysy": {
         "Giant's Power": {
           "uroven": 3,
@@ -5887,7 +6139,9 @@
       "rok": 2017,
       "legacy": true,
       "alternativa_2024": "Path of the World Tree",
-      "overeno": ["http://dnd5e.wikidot.com/barbarian:storm-herald"],
+      "overeno": [
+        "http://dnd5e.wikidot.com/barbarian:storm-herald"
+      ],
       "rysy": {
         "Storm Aura": {
           "uroven": 3,
@@ -5913,7 +6167,9 @@
       "rok": 2020,
       "legacy": true,
       "alternativa_2024": "Path of the World Tree",
-      "overeno": ["http://dnd5e.wikidot.com/barbarian:wild-magic"],
+      "overeno": [
+        "http://dnd5e.wikidot.com/barbarian:wild-magic"
+      ],
       "rysy": {
         "Magic Awareness": {
           "uroven": 3,
@@ -5943,7 +6199,9 @@
       "rok": 2020,
       "legacy": true,
       "alternativa_2024": "College of Lore",
-      "overeno": ["https://dnd5e.wikidot.com/bard:creation"],
+      "overeno": [
+        "https://dnd5e.wikidot.com/bard:creation"
+      ],
       "rysy": {
         "Mote of Potential": {
           "uroven": 3,
@@ -5969,7 +6227,9 @@
       "rok": 2020,
       "legacy": true,
       "alternativa_2024": "College of Glamour",
-      "overeno": ["https://dnd5e.wikidot.com/bard:eloquence"],
+      "overeno": [
+        "https://dnd5e.wikidot.com/bard:eloquence"
+      ],
       "rysy": {
         "Silver Tongue": {
           "uroven": 3,
@@ -5999,7 +6259,9 @@
       "rok": 2017,
       "legacy": true,
       "alternativa_2024": "College of Dance / College of Valor",
-      "overeno": ["https://dnd5e.wikidot.com/bard:swords"],
+      "overeno": [
+        "https://dnd5e.wikidot.com/bard:swords"
+      ],
       "rysy": {
         "Bonus Proficiencies": {
           "uroven": 3,
@@ -6029,7 +6291,9 @@
       "rok": 2017,
       "legacy": true,
       "alternativa_2024": "College of Glamour",
-      "overeno": ["https://dnd5e.wikidot.com/bard:whispers"],
+      "overeno": [
+        "https://dnd5e.wikidot.com/bard:whispers"
+      ],
       "rysy": {
         "Psychic Blades": {
           "uroven": 3,
@@ -6053,7 +6317,9 @@
       "trida": "Cleric",
       "zdroj": "Arcana Unleashed",
       "rok": 2026,
-      "overeno": ["https://dnd2024.wikidot.com/cleric:arcana-domain"],
+      "overeno": [
+        "https://dnd2024.wikidot.com/cleric:arcana-domain"
+      ],
       "rysy": {
         "Arcana Domain Spells": {
           "uroven": 3,
@@ -6083,7 +6349,9 @@
       "rok": 2014,
       "legacy": true,
       "alternativa_2024": "Grave Domain",
-      "overeno": ["http://dnd5e.wikidot.com/cleric:death"],
+      "overeno": [
+        "http://dnd5e.wikidot.com/cleric:death"
+      ],
       "rysy": {
         "Bonus Proficiency": {
           "uroven": 1,
@@ -6117,7 +6385,9 @@
       "rok": 2017,
       "legacy": true,
       "alternativa_2024": "War Domain",
-      "overeno": ["http://dnd5e.wikidot.com/cleric:forge"],
+      "overeno": [
+        "http://dnd5e.wikidot.com/cleric:forge"
+      ],
       "rysy": {
         "Bonus Proficiencies": {
           "uroven": 1,
@@ -6151,7 +6421,9 @@
       "rok": 2020,
       "legacy": true,
       "alternativa_2024": "War Domain",
-      "overeno": ["http://dnd5e.wikidot.com/cleric:order"],
+      "overeno": [
+        "http://dnd5e.wikidot.com/cleric:order"
+      ],
       "rysy": {
         "Bonus Proficiencies": {
           "uroven": 1,
@@ -6185,7 +6457,9 @@
       "rok": 2020,
       "legacy": true,
       "alternativa_2024": "Life Domain",
-      "overeno": ["http://dnd5e.wikidot.com/cleric:peace"],
+      "overeno": [
+        "http://dnd5e.wikidot.com/cleric:peace"
+      ],
       "rysy": {
         "Implement of Peace": {
           "uroven": 1,
@@ -6219,7 +6493,9 @@
       "rok": 2020,
       "legacy": true,
       "alternativa_2024": "Light Domain",
-      "overeno": ["http://dnd5e.wikidot.com/cleric:twilight"],
+      "overeno": [
+        "http://dnd5e.wikidot.com/cleric:twilight"
+      ],
       "rysy": {
         "Bonus Proficiencies": {
           "uroven": 1,
@@ -6257,7 +6533,9 @@
       "rok": 2017,
       "legacy": true,
       "alternativa_2024": "Circle of the Stars",
-      "overeno": ["https://dnd5e.wikidot.com/druid:dreams"],
+      "overeno": [
+        "https://dnd5e.wikidot.com/druid:dreams"
+      ],
       "rysy": {
         "Balm of the Summer Court": {
           "uroven": 2,
@@ -6284,7 +6562,9 @@
       "legacy": true,
       "alternativa_2024": "Circle of the Land",
       "revize": "Existuje pouze UA aktualizace; k 7. 11. 2026 nebyla vydána jako náhrada 2024.",
-      "overeno": ["https://dnd5e.wikidot.com/druid:spores"],
+      "overeno": [
+        "https://dnd5e.wikidot.com/druid:spores"
+      ],
       "rysy": {
         "Circle Spells": {
           "uroven": 2,
@@ -6318,7 +6598,9 @@
       "rok": 2017,
       "legacy": true,
       "alternativa_2024": "Circle of the Land",
-      "overeno": ["https://dnd5e.wikidot.com/druid:shepherd"],
+      "overeno": [
+        "https://dnd5e.wikidot.com/druid:shepherd"
+      ],
       "rysy": {
         "Speech of the Woods": {
           "uroven": 2,
@@ -6348,7 +6630,9 @@
       "rok": 2020,
       "legacy": true,
       "alternativa_2024": "Circle of the Stars",
-      "overeno": ["https://dnd5e.wikidot.com/druid:wildfire"],
+      "overeno": [
+        "https://dnd5e.wikidot.com/druid:wildfire"
+      ],
       "rysy": {
         "Circle Spells": {
           "uroven": 2,
@@ -6376,7 +6660,9 @@
       "trida": "Fighter",
       "zdroj": "Arcana Unleashed",
       "rok": 2026,
-      "overeno": ["https://dnd2024.wikidot.com/fighter:arcane-archer"],
+      "overeno": [
+        "https://dnd2024.wikidot.com/fighter:arcane-archer"
+      ],
       "rysy": {
         "Arcane Archer Lore": {
           "uroven": 3,
@@ -6414,7 +6700,9 @@
       "rok": 2017,
       "legacy": true,
       "alternativa_2024": "Battle Master",
-      "overeno": ["http://dnd5e.wikidot.com/fighter:cavalier"],
+      "overeno": [
+        "http://dnd5e.wikidot.com/fighter:cavalier"
+      ],
       "rysy": {
         "Bonus Proficiency": {
           "uroven": 3,
@@ -6452,7 +6740,9 @@
       "rok": 2020,
       "legacy": true,
       "alternativa_2024": "Eldritch Knight / Psi Warrior",
-      "overeno": ["http://dnd5e.wikidot.com/fighter:echo-knight"],
+      "overeno": [
+        "http://dnd5e.wikidot.com/fighter:echo-knight"
+      ],
       "rysy": {
         "Manifest Echo": {
           "uroven": 3,
@@ -6486,7 +6776,9 @@
       "rok": 2020,
       "legacy": true,
       "alternativa_2024": "Psi Warrior",
-      "overeno": ["http://dnd5e.wikidot.com/fighter:rune-knight"],
+      "overeno": [
+        "http://dnd5e.wikidot.com/fighter:rune-knight"
+      ],
       "rysy": {
         "Bonus Proficiencies": {
           "uroven": 3,
@@ -6524,7 +6816,9 @@
       "rok": 2017,
       "legacy": true,
       "alternativa_2024": "Champion",
-      "overeno": ["http://dnd5e.wikidot.com/fighter:samurai"],
+      "overeno": [
+        "http://dnd5e.wikidot.com/fighter:samurai"
+      ],
       "rysy": {
         "Bonus Proficiency": {
           "uroven": 3,
@@ -6556,7 +6850,9 @@
       "trida": "Monk",
       "zdroj": "Arcana Unleashed",
       "rok": 2026,
-      "overeno": ["https://dnd2024.wikidot.com/monk:warrior-of-the-mystic-arts"],
+      "overeno": [
+        "https://dnd2024.wikidot.com/monk:warrior-of-the-mystic-arts"
+      ],
       "rysy": {
         "Spellcasting": {
           "uroven": 3,
@@ -6586,7 +6882,9 @@
       "rok": 2021,
       "legacy": true,
       "alternativa_2024": "Warrior of the Elements",
-      "overeno": ["http://dnd5e.wikidot.com/monk:ascendant-dragon"],
+      "overeno": [
+        "http://dnd5e.wikidot.com/monk:ascendant-dragon"
+      ],
       "rysy": {
         "Draconic Disciple": {
           "uroven": 3,
@@ -6616,7 +6914,9 @@
       "rok": 2020,
       "legacy": true,
       "alternativa_2024": "Warrior of Shadow",
-      "overeno": ["http://dnd5e.wikidot.com/monk:astral-self"],
+      "overeno": [
+        "http://dnd5e.wikidot.com/monk:astral-self"
+      ],
       "rysy": {
         "Arms of the Astral Self": {
           "uroven": 3,
@@ -6643,7 +6943,9 @@
       "legacy": true,
       "alternativa_2024": "Warrior of the Open Hand",
       "revize": "Warrior of Mystic Brews byl ohlášen pro D&D: World of Warcraft na 17. 11. 2026; do vydání nenahrazuje legacy variantu.",
-      "overeno": ["http://dnd5e.wikidot.com/monk:drunken-master"],
+      "overeno": [
+        "http://dnd5e.wikidot.com/monk:drunken-master"
+      ],
       "rysy": {
         "Bonus Proficiencies": {
           "uroven": 3,
@@ -6674,7 +6976,9 @@
       "legacy": true,
       "alternativa_2024": "Warrior of the Elements",
       "revize": "Warrior of Mystic Brews byl ohlášen pro D&D: World of Warcraft na 17. 11. 2026; do vydání nenahrazuje legacy variantu.",
-      "overeno": ["http://dnd5e.wikidot.com/monk:kensei"],
+      "overeno": [
+        "http://dnd5e.wikidot.com/monk:kensei"
+      ],
       "rysy": {
         "Path of the Kensei": {
           "uroven": 3,
@@ -6700,7 +7004,9 @@
       "rok": 2015,
       "legacy": true,
       "alternativa_2024": "Warrior of Shadow",
-      "overeno": ["http://dnd5e.wikidot.com/monk:long-death"],
+      "overeno": [
+        "http://dnd5e.wikidot.com/monk:long-death"
+      ],
       "rysy": {
         "Touch of Death": {
           "uroven": 3,
@@ -6726,7 +7032,9 @@
       "rok": 2015,
       "legacy": true,
       "alternativa_2024": "Warrior of the Elements",
-      "overeno": ["http://dnd5e.wikidot.com/monk:sun-soul"],
+      "overeno": [
+        "http://dnd5e.wikidot.com/monk:sun-soul"
+      ],
       "rysy": {
         "Radiant Sun Bolt": {
           "uroven": 3,
@@ -6752,7 +7060,9 @@
       "rok": 2017,
       "legacy": true,
       "alternativa_2024": "Oath of Vengeance",
-      "overeno": ["https://dnd5e.wikidot.com/paladin:conquest"],
+      "overeno": [
+        "https://dnd5e.wikidot.com/paladin:conquest"
+      ],
       "rysy": {
         "Channel Divinity": {
           "uroven": 3,
@@ -6778,7 +7088,9 @@
       "rok": 2017,
       "legacy": true,
       "alternativa_2024": "Oath of Devotion",
-      "overeno": ["https://dnd5e.wikidot.com/paladin:redemption"],
+      "overeno": [
+        "https://dnd5e.wikidot.com/paladin:redemption"
+      ],
       "rysy": {
         "Channel Divinity": {
           "uroven": 3,
@@ -6804,7 +7116,9 @@
       "rok": 2015,
       "legacy": true,
       "alternativa_2024": "Oath of Devotion",
-      "overeno": ["https://dnd5e.wikidot.com/paladin:crown"],
+      "overeno": [
+        "https://dnd5e.wikidot.com/paladin:crown"
+      ],
       "rysy": {
         "Channel Divinity": {
           "uroven": 3,
@@ -6830,7 +7144,9 @@
       "rok": 2020,
       "legacy": true,
       "alternativa_2024": "Oath of the Ancients",
-      "overeno": ["https://dnd5e.wikidot.com/paladin:watchers"],
+      "overeno": [
+        "https://dnd5e.wikidot.com/paladin:watchers"
+      ],
       "rysy": {
         "Channel Divinity": {
           "uroven": 3,
@@ -6856,7 +7172,9 @@
       "rok": 2014,
       "legacy": true,
       "alternativa_2024": "Oath of Vengeance",
-      "overeno": ["https://dnd5e.wikidot.com/paladin:oathbreaker"],
+      "overeno": [
+        "https://dnd5e.wikidot.com/paladin:oathbreaker"
+      ],
       "rysy": {
         "Channel Divinity": {
           "uroven": 3,
@@ -6882,7 +7200,9 @@
       "rok": 2021,
       "legacy": true,
       "alternativa_2024": "Beast Master",
-      "overeno": ["https://dnd5e.wikidot.com/ranger:drakewarden"],
+      "overeno": [
+        "https://dnd5e.wikidot.com/ranger:drakewarden"
+      ],
       "rysy": {
         "Draconic Gift": {
           "uroven": 3,
@@ -6912,7 +7232,9 @@
       "rok": 2017,
       "legacy": true,
       "alternativa_2024": "Fey Wanderer",
-      "overeno": ["https://dnd5e.wikidot.com/ranger:horizon-walker"],
+      "overeno": [
+        "https://dnd5e.wikidot.com/ranger:horizon-walker"
+      ],
       "rysy": {
         "Horizon Walker Magic": {
           "uroven": 3,
@@ -6946,7 +7268,9 @@
       "rok": 2017,
       "legacy": true,
       "alternativa_2024": "Hunter",
-      "overeno": ["https://dnd5e.wikidot.com/ranger:monster-slayer"],
+      "overeno": [
+        "https://dnd5e.wikidot.com/ranger:monster-slayer"
+      ],
       "rysy": {
         "Monster Slayer Magic": {
           "uroven": 3,
@@ -6980,7 +7304,9 @@
       "rok": 2020,
       "legacy": true,
       "alternativa_2024": "Fey Wanderer",
-      "overeno": ["https://dnd5e.wikidot.com/ranger:swarmkeeper"],
+      "overeno": [
+        "https://dnd5e.wikidot.com/ranger:swarmkeeper"
+      ],
       "rysy": {
         "Gathered Swarm": {
           "uroven": 3,
@@ -7003,6 +7329,709 @@
           "text": "When damaged, use your Reaction to gain Resistance to that damage, vanish into the swarm, and reappear in a visible unoccupied space within 30 feet; uses equal your Proficiency Bonus return after a Long Rest."
         }
       }
+    },
+    "Reanimator": {
+      "trida": "Artificer",
+      "zdroj": "Ravenloft: The Horrors Within",
+      "rok": 2026,
+      "overeno": [
+        "https://dnd2024.wikidot.com/artificer:reanimator"
+      ],
+      "rysy": {
+        "Reanimator Spells": {
+          "uroven": 3,
+          "text": "Tato kouzla máš vždy připravená od uvedené úrovně Artificera: 3—False Life, Spare the Dying, Witch Bolt; 5—Blindness/Deafness, Enhance Ability; 9—Animate Dead, Lightning Bolt; 13—Blight, Death Ward; 17—Antilife Shell, Raise Dead."
+        },
+        "Reanimator’s Skill Set": {
+          "uroven": 3,
+          "text": "Při seslání Spare the Dying můžeš zacíleného tvora oživit s Hit Points rovnými své úrovni Artificera a vyvolat elektrický výboj: vybraní tvorové v 10-foot Emanation házejí Dexterity save proti tvému spell DC, jinak utrpí 2d4 Lightning damage (při úspěchu polovinu). Použití odpovídají tvému Intelligence modifieru (nejméně 1), obnovují se po Long Restu a damage vzroste o 1d4 na úrovních Artificera 11 a 17. Získáš proficiency s Alchemist’s Supplies, případně s jinými Artisan’s Tools, pokud ji už máš."
+        },
+        "Reanimated Companion": {
+          "uroven": 3,
+          "text": "Pomocí Tinker’s Tools nebo nástrojů, s nimiž jsi proficient, akcí Magic vytvoříš na volném místě do 5 feet jednoho přátelského Medium Undead; zmizí po Long Restu, tvé smrti nebo rozpuštění akcí Magic a můžeš jej znovu vytvořit akcí Magic po Long Restu či za spell slot. Má AC 10 + Intelligence modifier, Hit Points 5 + pětinásobek tvé úrovně Artificera, tolik d8 Hit Dice jako úrovní Artificera a Speed 30 feet; má Resistance vůči Necrotic a Poison, Immunity vůči Lightning, Charmed, Exhaustion a Poisoned, Blindsight 60 feet a Passive Perception 10. Ve tvém tahu se pohybuje a používá Reaction, ale bez tvé Bonus Action obvykle jen Dodge; pokud máš Incapacitated condition, jedná bez omezení. Death Burst zasáhne 10-foot Emanation a vyžaduje Dexterity save proti tvému spell DC (2d4 Necrotic damage, při úspěchu polovina); Lightning damage místo toho obnoví Hit Points ve výši způsobeného poškození. Dreadful Swipe má reach 5 feet, používá tvůj spell attack modifier, způsobuje 1d4 + Intelligence modifier Necrotic damage a zasažený cíl do začátku svého dalšího tahu nemůže provádět Opportunity Attacks."
+        },
+        "Strange Modifications": {
+          "uroven": 5,
+          "text": "Při vytvoření společníka vybereš jednu modifikaci: Arcane Conduit mu dovolí sesílat spell z jeho prostoru s použitím vlastních smyslů a jednou za tah přidat tvůj Intelligence modifier k jednomu damage rollu Evocation nebo Necromancy Artificer spellu, pokud je společník do 120 feet; Ferocity zvýší damage Dreadful Swipe na 1d6."
+        },
+        "Improved Reanimation": {
+          "uroven": 9,
+          "text": "Death Burst způsobuje 4d4 damage a Necrotic damage společníka ignoruje Resistance."
+        },
+        "Macabre Modifications": {
+          "uroven": 9,
+          "text": "Společník může získat 2 Strange Modifications a nově může vybrat i následující: Bloated zvětší společníka na Large, dovolí mu po zásahu odsunout Large či menšího tvora až o 10 feet a přičíst Intelligence modifier k Death Burst; Gaunt zvýší Speed na 45 feet, přidá stejně dlouhý Climb Speed, umožní lezení po náročných površích i stropech bez ability checku a tvorové, které vybereš a kteří začínají tah v jeho 10-foot Emanation, házejí Wisdom save proti tvému spell DC, jinak jsou Frightened do začátku dalšího tahu. Moist dá společníkovi Swim Speed rovný jeho Speed, dovolí mu projít prostorem širokým 1 inch bez vyšší ceny pohybu a útočník do 10 feet, který jej zasáhne, utrpí Acid damage rovný tvému Intelligence modifieru."
+        },
+        "Refined Reanimation": {
+          "uroven": 15,
+          "text": "S nástroji jako Spellcasting Focus můžeš jednou za Long Rest seslat Raise Dead bez spell slotu a Material components. Když ty nebo společník utrpíte damage, můžeš Reactionem získat Hit Points rovné aktuálním Hit Points společníka; ten pak klesne na 0 a spustí Death Burst. Při vytvoření mu nyní můžeš zvolit 3 Strange Modifications."
+        }
+      }
+    },
+    "Vestige Patron": {
+      "trida": "Warlock",
+      "zdroj": "Arcana Unleashed",
+      "rok": 2026,
+      "overeno": [
+        "https://dnd2024.wikidot.com/warlock:vestige-patron"
+      ],
+      "rysy": {
+        "Vestige Companion": {
+          "uroven": 3,
+          "text": "Vybereš si Celestial, Fiend nebo Undead podobu přátelského Vestige Companion, který zmizí při tvé smrti; v boji jedná v tvém tahu a bez Bonus Action příkazu obvykle použije Dodge, ale můžeš mu také obětovat jeden útok z Attack action. Je Small, má AC 13 + Charisma modifier, Initiative +2, Hit Points 4 + čtyřnásobek Warlock levelu, stejný počet d6 Hit Dice, Speed 5 feet, 30-foot hover, Passive Perception 12 a Proficiency Bonus k ability checkům i save; jeho typ určuje Resistance vůči Fire, Necrotic nebo Radiant damage a je imunní vůči Charmed, Frightened a Prone. Vestige’s Strike používá tvůj spell attack modifier, má reach 5 feet nebo range 60 feet a způsobí 1d6 + 3 + Charisma modifier damage odpovídající jeho typu. Jednou za den může jako Bonus Action použít schopnost formy: Undead prokleje viděného tvora do 30 feet na 1 minutu (Disadvantage na jeho útoky proti tobě a vestige), Fiend si s tebou vymění pozici do 60 feet, nebo Celestial obnoví 2d8 + Charisma modifier Hit Points a odstraní Blinded, Deafened či Poisoned; po Long Rest můžeš změnit jeho formu. Když klesne na 0 Hit Points, po 1minutovém magickém obřadu se vrátí s maximem Hit Points na volném místě do 5 feet; akcí Magic jej můžeš odložit do pocket dimension či vrátit na místo do 30 feet."
+        },
+        "Vestige Spells": {
+          "uroven": 3,
+          "text": "Zvolíš si Cleric domain Life, Light, Trickery nebo War; jeho Domain Spells jsou pro tebe Warlock spells a připravuješ je automaticky při dosažení Warlock levelů uvedených v tabulce zvoleného domainu."
+        },
+        "Vestige Power": {
+          "uroven": 6,
+          "text": "Vestige obnoví Divine Power po Short nebo Long Rest nebo po použití Magical Cunning. Dokud jsi do 30 feet od něj, máš Resistance vůči stejným typům damage jako tvůj vestige."
+        },
+        "Vestige Recovery": {
+          "uroven": 10,
+          "text": "Když by companion klesl na 0 Hit Points, můžeš Reactionem spotřebovat Pact Magic spell slot a místo toho jej nastavit na maximum Hit Points; teleportuje se na viditelné volné místo do 30 feet. Toto použití obnovíš po Long Rest."
+        },
+        "Semblance of Life": {
+          "uroven": 14,
+          "text": "Akcí Magic, pokud je companion do 90 feet, jej proměníš na 1 hodinu ve Spirit odpovídající jeho typu (Celestial, Fiend nebo Undead), s úrovní kouzla rovnou polovině Warlock levelu zaokrouhlené dolů, nejvýše 9. Jeho stat block se nahradí podobou příslušného Spiritu, ale zachová si osobnost, Divine Power, Hit Points a Hit Dice a získá Temporary Hit Points rovné Hit Points nové podoby; zbývající dočasné body zmizí po 1 hodině a proměna skončí dříve, když dojdou. Použití obnovíš po Long Rest."
+        }
+      }
+    },
+    "Conjurer": {
+      "trida": "Wizard",
+      "zdroj": "Arcana Unleashed",
+      "rok": 2026,
+      "overeno": [
+        "https://dnd2024.wikidot.com/wizard:conjurer"
+      ],
+      "rysy": {
+        "Benign Transposition": {
+          "uroven": 3,
+          "text": "Bonus Actionem se teleportuješ až o 30 feet na viditelné volné místo, nebo vyměníš místo s ochotným Medium či menším tvorem v dosahu. Počet použití se rovná Intelligence modifieru (nejméně 1) a obnoví jej Long Rest."
+        },
+        "Conjuration Savant": {
+          "uroven": 3,
+          "text": "Do spellbooku zdarma zapíšeš 2 Wizard spells ze školy Conjuration nejvýše 2. úrovně; při získání přístupu k nové úrovni spell slotů přidáš zdarma další Conjuration spell, který můžeš seslat dostupným slotem."
+        },
+        "Distant Transposition": {
+          "uroven": 6,
+          "text": "Dosah Benign Transposition se zvýší na 60 feet; navíc obnovíš jedno jeho použití bez akce vydáním spell slotu úrovně 3+."
+        },
+        "Durable Summons": {
+          "uroven": 6,
+          "text": "Tvor, kterého vyvoláš či vytvoříš Conjuration spellem za spell slot, získá při objevení Temporary Hit Points rovné dvojnásobku tvého Wizard levelu. Dokud je má, má Resistance ke všem typům damage kromě Force, Necrotic, Psychic a Radiant."
+        },
+        "Focused Conjuration": {
+          "uroven": 10,
+          "text": "Utrpěný damage ti nemůže přerušit Concentration na Conjuration spelly."
+        },
+        "Splintered Summons": {
+          "uroven": 14,
+          "text": "Když slotem sesíláš Conjuration spell, který vyvolává Spirita s uvedeným stat blockem, můžeš místo jednoho vyvolat 2 stejné tvory na různých volných místech v dosahu; jejich current i maximum Hit Points se půlí a oba zmizí při ztrátě Concentration. Použití obnovíš po Long Rest nebo bez akce vydáním spell slotu úrovně 5+."
+        }
+      }
+    },
+    "Enchanter": {
+      "trida": "Wizard",
+      "zdroj": "Arcana Unleashed",
+      "rok": 2026,
+      "overeno": [
+        "https://dnd2024.wikidot.com/wizard:enchanter"
+      ],
+      "rysy": {
+        "Enchanting Conversationalist": {
+          "uroven": 3,
+          "text": "Zvolíš si proficiency v Deception, Intimidation nebo Persuasion; k ability checkům s vybranou dovedností přičítáš Intelligence modifier (nejméně +1)."
+        },
+        "Enchantment Savant": {
+          "uroven": 3,
+          "text": "Do spellbooku zdarma zapíšeš 2 Wizard spells ze školy Enchantment nejvýše 2. úrovně a při získání přístupu k nové úrovni spell slotů přidáš další Enchantment spell dostupné úrovně."
+        },
+        "Hypnotic Presence": {
+          "uroven": 3,
+          "text": "Akcí Magic vybereš tvora, kterého vidíš do 10 feet a který tě vidí nebo slyší; při neúspěšném Wisdom save proti tvému spell DC je Charmed 1 minutu, zároveň Incapacitated a se Speed 0. Efekt skončí také, když se vzdálí za 10 feet, přestane tě vidět i slyšet nebo utrpí damage; použití v počtu Intelligence modifieru (nejméně 1) se obnoví po Long Rest."
+        },
+        "Split Enchantment": {
+          "uroven": 6,
+          "text": "Při seslání Enchantment spellu slotem, který lze seslat na vyšší úrovni pro zacílení dalšího tvora, můžeš zvýšit jeho effective level o 1; počet použití odpovídá Intelligence modifieru a obnoví se po Long Rest."
+        },
+        "Instinctive Charm": {
+          "uroven": 10,
+          "text": "Když tě viditelný tvor do 30 feet zasáhne attack roll, Reactionem jej donutíš k Wisdom save proti spell DC; při neúspěchu útok mine tebe a případně zasáhne jiného tvora v dosahu původního útoku podle stejného hodu. Použití obnovíš po Long Rest nebo sesláním Enchantment spellu za spell slot."
+        },
+        "Alter Memories": {
+          "uroven": 14,
+          "text": "Když slotem sesíláš Enchantment spell způsobující Charmed, jeden cíl si nemusí uvědomovat, že jej očarování ovlivňuje. Jednou před koncem spella ho můžeš akcí Magic přinutit k Intelligence save; při neúspěchu zapomene až 1 + tvůj Intelligence modifier hodin (nejméně 1), nejvýše však po dobu trvání spellu."
+        }
+      }
+    },
+    "Necromancer": {
+      "trida": "Wizard",
+      "zdroj": "Arcana Unleashed",
+      "rok": 2026,
+      "overeno": [
+        "https://dnd2024.wikidot.com/wizard:necromancer"
+      ],
+      "rysy": {
+        "Necromancy Savant": {
+          "uroven": 3,
+          "text": "Do spellbooku zdarma zapíšeš 2 Wizard spells ze školy Necromancy nejvýše 2. úrovně a při získání přístupu k nové úrovni spell slotů přidáš další Necromancy spell dostupné úrovně."
+        },
+        "Necromancy Spellbook": {
+          "uroven": 3,
+          "text": "Získáš Resistance vůči Necrotic damage; Find Familiar může vytvořit Skeleton nebo Zombie, případně Undead běžnou podobu familiaru, který může Reactionem zaútočit, když v Attack action obětuješ jeden svůj útok. Když slotem sesíláš Necromancy spell, můžeš vyléčit viděného Undead do 60 feet o počet Hit Points rovnající se úrovni slotu + tvému Wizard levelu."
+        },
+        "Grave Power": {
+          "uroven": 6,
+          "text": "Když držíš spellbook a použiješ Arcane Recovery, můžeš snížit Exhaustion level o 1; damage tvých Wizard spells a class features ignoruje Resistance vůči Necrotic damage."
+        },
+        "Undead Thralls": {
+          "uroven": 6,
+          "text": "Animate Dead máš vždy připravený a jednou mezi Long Rests jej můžeš seslat bez spell slotu; při seslání můžeš zvýšit effective level o 1. Při držení spellbooku získá Undead vytvořený či vyvolaný Necromancy spellem bonus k current i maximum Hit Points rovný Intelligence modifieru + polovině Wizard levelu zaokrouhlené dolů; Undead pod tvou kontrolou do 60 feet přidá k zásahu Necrotic damage rovný Intelligence modifieru (nejméně 1)."
+        },
+        "Harvest Undead": {
+          "uroven": 10,
+          "text": "Hned poté, co se staneš Bloodied, ale zůstaneš nad 0 Hit Points, můžeš Reactionem snížit viděného Undead pod svou kontrolou na 0 Hit Points a vyléčit si Hit Points rovné svému Wizard levelu."
+        },
+        "Death’s Master": {
+          "uroven": 14,
+          "text": "Při držení spellbooku můžeš Bonus Actionem dát libovolnému počtu tebou vytvořených či vyvolaných Undead do 60 feet Temporary Hit Points rovné tvému Wizard levelu; použití se obnoví po Long Rest. Když viděný Undead klesne na 0 Hit Points, můžeš jej nechat explodovat: tvorové v 10-foot Emanation házejí Dexterity save a při neúspěchu utrpí Necrotic damage rovný součtu poloviny jeho neutracených Hit Dice zaokrouhlených nahoru (nejméně 1d6) a nemohou provádět Reaction do začátku dalšího tahu; při úspěchu utrpí polovinu. Pro cizího Undead musíš navíc použít Reaction a slot úrovně 5+."
+        }
+      }
+    },
+    "Transmuter": {
+      "trida": "Wizard",
+      "zdroj": "Arcana Unleashed",
+      "rok": 2026,
+      "overeno": [
+        "https://dnd2024.wikidot.com/wizard:transmuter"
+      ],
+      "rysy": {
+        "Transmutation Savant": {
+          "uroven": 3,
+          "text": "Do spellbooku zdarma zapíšeš 2 Wizard spells ze školy Transmutation nejvýše 2. úrovně a při získání přístupu k nové úrovni spell slotů přidáš další Transmutation spell dostupné úrovně."
+        },
+        "Transmuter's Stone": {
+          "uroven": 3,
+          "text": "Po Long Rest vytvoříš Tiny kámen použitelný jako Spellcasting Focus; jeho nositel získá proficiency v Constitution saves a zvolený přínos. Možnosti jsou Darkvision 60 feet nebo její rozšíření o 60 feet, Resistance vůči Acid, Cold, Fire, Lightning, Poison či Thunder damage, nebo +10 feet Speed; volbu změníš při seslání Transmutation spella za slot."
+        },
+        "Wondrous Alteration": {
+          "uroven": 3,
+          "text": "Alter Self máš vždy připravený a jednou mezi Long Rests jej sesíláš bez slotu. Při jeho trvání může Aquatic Adaptation ve vodě použít Dash jako Bonus Action, Change Appearance dává Advantage na Charisma (Deception) a Natural Weapons zvýší damage nového výrůstku na 2d6 a dá Advantage na Constitution saves k udržení Concentration."
+        },
+        "Empowered Transmutation": {
+          "uroven": 6,
+          "text": "Při seslání Transmutation spella slotem, který nevyžaduje attack roll ani save, můžeš zvýšit jeho effective level o 1; použití odpovídají Intelligence modifieru (nejméně 1) a vrací se po Long Rest."
+        },
+        "Potent Stone": {
+          "uroven": 10,
+          "text": "Při tvorbě Transmuter's Stone zvolíš až 2 přínosy; každý kromě Resistance můžeš vybrat jen jednou a dvě Resistance musí mít různé typy damage, přičemž volby lze změnit při seslání Transmutation spella za slot. Nové přínosy jsou Advantage na Strength saves a počítání nositele jako o jednu Size většího pro nosnost, nebo Tremorsense 30 feet."
+        },
+        "Shape-Shifter": {
+          "uroven": 10,
+          "text": "Polymorph máš vždy připravený a jednou mezi Long Rests jej sesíláš bez slotu; při seslání na sebe jej můžeš upravit jednou za Long Rest. Zachováš si vzpomínky, komunikaci, Intelligence, Wisdom a Charisma, proficiencies, class features a featy; můžeš také sesílat Transmutation spelly bez Material componentu se stanovenou cenou nebo spotřebou."
+        },
+        "Master Transmuter": {
+          "uroven": 14,
+          "text": "Držíš-li Transmuter's Stone, můžeš akcí Magic spotřebovat jeho energii na jednu ze čtyř možností; kámen se pak rozpadne, pokud během téže akce nevydáš slot úrovně 7+. Major Transformation změní za 10 minut jeden nemagický předmět nejvýše 10-foot Cube nebo 8 propojených 5-foot Cubes na podobně velký a těžký předmět stejné či nižší ceny; Panacea vyléčí polovinu maxima Hit Points a odstraní magické nákazy, kletby včetně attunementu k cursed itemu a Poisoned či Petrified; Restore Life sesílá Raise Dead bez slotu s kamenem místo Material components. Restore Youth dotykem sníží Exhaustion na 0 a učiní ochotného tvora trvale o 3d10 let mladším, nejméně na mladou dospělost."
+        }
+      }
+    },
+    "Inquisitive": {
+      "trida": "Rogue",
+      "zdroj": "Xanathar's Guide to Everything",
+      "rok": 2017,
+      "legacy": true,
+      "alternativa_2024": "Assassin",
+      "overeno": [
+        "http://dnd5e.wikidot.com/rogue:inquisitive"
+      ],
+      "rysy": {
+        "Ear for Deceit": {
+          "uroven": 3,
+          "text": "Když pomocí Wisdom (Insight) ověřuješ, zda někdo lže, považuj hod d20 o hodnotě 7 nebo méně za 8."
+        },
+        "Eye for Detail": {
+          "uroven": 3,
+          "text": "Bonus Actionem můžeš provést Wisdom (Perception) k odhalení skrytého tvora či předmětu, nebo Intelligence (Investigation) k rozluštění stop."
+        },
+        "Insightful Fighting": {
+          "uroven": 3,
+          "text": "Bonus Actionem porovnáš Wisdom (Insight) s Charisma (Deception) viděného, ne-Incapacitated tvora; při úspěchu na něj můžeš použít Sneak Attack i bez Advantage, pokud nemáš Disadvantage. Účinek trvá 1 minutu nebo do úspěšného použití na jiný cíl."
+        },
+        "Steady Eye": {
+          "uroven": 9,
+          "text": "Pokud se v tahu pohneš nejvýše o polovinu Speed, máš Advantage na Wisdom (Perception) a Intelligence (Investigation) checky."
+        },
+        "Unerring Eye": {
+          "uroven": 13,
+          "text": "Nejsi-li Blinded ani Deafened, můžeš akcí vycítit do 30 feet iluze, přeměněné shapechangery a magii klamající smysly; poznáš pokus o klam, nikoli jeho obsah ani pravou podobu. Použití v počtu Wisdom modifieru (nejméně 1) se obnoví po Long Rest."
+        },
+        "Eye for Weakness": {
+          "uroven": 17,
+          "text": "Proti tvorovi, na nějž působí Insightful Fighting, způsobí tvůj Sneak Attack navíc 3d6 damage."
+        }
+      }
+    },
+    "Mastermind": {
+      "trida": "Rogue",
+      "zdroj": "Xanathar's Guide to Everything",
+      "rok": 2017,
+      "legacy": true,
+      "alternativa_2024": "Assassin",
+      "overeno": [
+        "http://dnd5e.wikidot.com/rogue:mastermind"
+      ],
+      "rysy": {
+        "Master of Intrigue": {
+          "uroven": 3,
+          "text": "Získáš proficiency s Disguise Kit, Forgery Kit a jednou gaming sadou a naučíš se 2 jazyky. Po nejméně 1 minutě poslechu dokážeš napodobit řeč a přízvuk tvora a vydávat se za rodilého mluvčího, pokud znáš daný jazyk."
+        },
+        "Master of Tactics": {
+          "uroven": 3,
+          "text": "Help můžeš použít jako Bonus Action; při pomoci spojenci s útokem může být cíl místo 5 feet až 30 feet od tebe, pokud tě vidí nebo slyší."
+        },
+        "Insightful Manipulator": {
+          "uroven": 9,
+          "text": "Po nejméně 1 minutě pozorování či rozhovoru mimo boj zjistíš, zda je tvor vůči tobě roven, lepší, či horší ve 2 tebou zvolených kategoriích: Intelligence, Wisdom, Charisma nebo Class levels. DM může doplnit i poznatek o jeho minulosti či povaze."
+        },
+        "Misdirection": {
+          "uroven": 13,
+          "text": "Když na tebe míří útok a tvor do 5 feet ti proti němu poskytuje Cover, můžeš Reactionem přesměrovat útok na tohoto tvora."
+        },
+        "Soul of Deceit": {
+          "uroven": 17,
+          "text": "Bez svolení nelze číst tvé myšlenky; falešné můžeš předložit Charisma (Deception) proti Wisdom (Insight) čtenáře. Magie určující pravdomluvnost tě podle tvé volby vyhodnotí jako pravdomluvného a magií tě nelze přinutit říci pravdu."
+        }
+      }
+    },
+    "Scout": {
+      "trida": "Rogue",
+      "zdroj": "Xanathar's Guide to Everything",
+      "rok": 2017,
+      "legacy": true,
+      "alternativa_2024": "Thief",
+      "overeno": [
+        "http://dnd5e.wikidot.com/rogue:scout"
+      ],
+      "rysy": {
+        "Skirmisher": {
+          "uroven": 3,
+          "text": "Když nepřítel ukončí tah do 5 feet od tebe, můžeš Reactionem urazit až polovinu Speed bez vyvolání Opportunity Attacks."
+        },
+        "Survivalist": {
+          "uroven": 3,
+          "text": "Získáš proficiency v Nature a Survival a k checkům s nimi přičítáš dvojnásobek Proficiency Bonus."
+        },
+        "Superior Mobility": {
+          "uroven": 9,
+          "text": "Walking Speed se zvýší o 10 feet; stejné zvýšení dostaneš i pro Climb či Swim Speed, pokud je máš."
+        },
+        "Ambush Master": {
+          "uroven": 13,
+          "text": "Máš Advantage na Initiative. První tvor, kterého zasáhneš v prvním kole boje, poskytne Advantage na útoky proti sobě tobě i spojencům až do začátku tvého dalšího tahu."
+        },
+        "Sudden Strike": {
+          "uroven": 17,
+          "text": "Po Attack action můžeš Bonus Actionem zaútočit ještě jednou a použít Sneak Attack, i pokud jsi jej tento tah už využil; Sneak Attack však nemůžeš v jednom tahu použít dvakrát proti stejnému cíli."
+        }
+      }
+    },
+    "Swashbuckler": {
+      "trida": "Rogue",
+      "zdroj": "Sword Coast Adventurer's Guide",
+      "rok": 2015,
+      "legacy": true,
+      "alternativa_2024": "Thief",
+      "revize": "Ohlášená úprava Swashbucklera je v D&D: World of Warcraft, které vychází 17. 11. 2026; do vydání zůstává tato možnost legacy.",
+      "overeno": [
+        "http://dnd5e.wikidot.com/rogue:swashbuckler"
+      ],
+      "rysy": {
+        "Fancy Footwork": {
+          "uroven": 3,
+          "text": "Když během svého tahu zaútočíš na tvora v melee, tento tvor proti tobě do konce tahu nemůže provádět Opportunity Attacks."
+        },
+        "Rakish Audacity": {
+          "uroven": 3,
+          "text": "K Initiative přičítáš Charisma modifier; Sneak Attack můžeš použít i bez Advantage, když jsi do 5 feet cíle, žádný jiný tvor není do 5 feet od tebe a nemáš Disadvantage."
+        },
+        "Panache": {
+          "uroven": 9,
+          "text": "Akcí porovnáš Charisma (Persuasion) s Wisdom (Insight) tvora, který tě slyší a sdílí s tebou jazyk. U nepřátelského cíle úspěch na 1 minutu znevýhodní jeho útoky proti jiným tvorům a zakáže mu proti nim Opportunity Attacks; skončí po škodlivém zásahu spojence či když se vzdálíte přes 60 feet. U nehostilního cíle úspěch způsobí Charmed na 1 minutu a efekt skončí, pokud mu ty či spojenci ublížíte."
+        },
+        "Elegant Maneuver": {
+          "uroven": 13,
+          "text": "Bonus Actionem získáš Advantage na příští Dexterity (Acrobatics) nebo Strength (Athletics) check v témže tahu."
+        },
+        "Master Duelist": {
+          "uroven": 17,
+          "text": "Po minutí útokem můžeš hodit znovu s Advantage; použití se obnoví po Short nebo Long Rest."
+        }
+      }
+    },
+    "Divine Soul": {
+      "trida": "Sorcerer",
+      "zdroj": "Xanathar's Guide to Everything",
+      "rok": 2017,
+      "legacy": true,
+      "alternativa_2024": "Draconic Sorcery",
+      "overeno": [
+        "https://dnd5e.wikidot.com/sorcerer:divine-soul"
+      ],
+      "rysy": {
+        "Divine Magic": {
+          "uroven": 1,
+          "text": "Nové Sorcerer cantripy a spelly můžeš vybírat také z Cleric spell listu a vybraný spell se pro tebe počítá jako Sorcerer spell. Zvolíš si afinitu Good, Evil, Law, Chaos nebo Neutrality, která ti dá další spell mimo limit známých; při jeho výměně musí být náhradou spell z Cleric listu."
+        },
+        "Favored by the Gods": {
+          "uroven": 1,
+          "text": "Po neúspěšném saving throw nebo minutém attack rollu přičti k výsledku 2d4; použití obnovíš po Short nebo Long Rest."
+        },
+        "Empowered Healing": {
+          "uroven": 6,
+          "text": "Když ty nebo spojenec do 5 feet házíš kostkami pro léčení spellem, můžeš utratit 1 Sorcery Point a jednou přehodit libovolný počet těchto kostek; můžeš to udělat nejvýše jednou za tah a nesmíš být Incapacitated."
+        },
+        "Angelic Form": {
+          "uroven": 14,
+          "text": "Bonus Actionem zhmotníš spektrální křídla a získáš Fly Speed 30 feet; zmizí při Incapacitated condition, tvé smrti nebo když je Bonus Actionem zrušíš. Vzhled křídel určuje zvolená afinita."
+        },
+        "Unearthly Recovery": {
+          "uroven": 18,
+          "text": "Máš-li méně než polovinu maxima Hit Points, Bonus Actionem obnovíš jejich polovinu; použití se vrací po Long Rest."
+        }
+      }
+    },
+    "Storm Sorcery": {
+      "trida": "Sorcerer",
+      "zdroj": "Xanathar's Guide to Everything",
+      "rok": 2017,
+      "legacy": true,
+      "alternativa_2024": "Draconic Sorcery",
+      "overeno": [
+        "https://dnd5e.wikidot.com/sorcerer:storm-sorcery"
+      ],
+      "rysy": {
+        "Tempestuous Magic": {
+          "uroven": 1,
+          "text": "Těsně před nebo po seslání spella úrovně 1+ se můžeš Bonus Actionem obklopit poryvy a uletět až 10 feet bez vyvolání Opportunity Attacks."
+        },
+        "Heart of the Storm": {
+          "uroven": 6,
+          "text": "Získáš Resistance vůči Lightning a Thunder damage; při sesílání spella úrovně 1+ s některým z těchto typů damage zasáhneš tebou vybrané viděné tvory do 10 feet Lightning nebo Thunder damage (zvol při aktivaci) rovnou polovině Sorcerer levelu."
+        },
+        "Storm Guide": {
+          "uroven": 6,
+          "text": "Za deště můžeš akcí zastavit déšť ve 20-foot-radius Sphere kolem sebe a Bonus Actionem efekt ukončit. Za větru můžeš každé kolo Bonus Actionem určit jeho směr ve 100-foot-radius Sphere do konce svého dalšího tahu; jeho rychlost se nemění."
+        },
+        "Storm's Fury": {
+          "uroven": 14,
+          "text": "Když tě zasáhne melee útok, Reactionem způsobíš útočníkovi Lightning damage rovný svému Sorcerer levelu a přinutíš jej k Strength save proti spell DC; při neúspěchu jej odstrčíš v přímce až o 20 feet."
+        },
+        "Wind Soul": {
+          "uroven": 18,
+          "text": "Získáš Immunity vůči Lightning a Thunder damage a magickou Fly Speed 60 feet. Akcí ji můžeš na 1 hodinu snížit na 30 feet a dát až 3 + Charisma modifier tvorům do 30 feet magickou Fly Speed 30 feet; tuto možnost obnovíš po Short nebo Long Rest."
+        }
+      }
+    },
+    "Lunar Sorcery": {
+      "trida": "Sorcerer",
+      "zdroj": "Dragonlance: Shadow of the Dragon Queen",
+      "rok": 2022,
+      "legacy": true,
+      "alternativa_2024": "Draconic Sorcery",
+      "overeno": [
+        "https://dnd5e.wikidot.com/sorcerer:lunar-sorcery"
+      ],
+      "rysy": {
+        "Lunar Embodiment": {
+          "uroven": 1,
+          "text": "Naučíš se další spelly podle zvolené měsíční fáze, bez započítání do limitu známých Sorcerer spells: Full Moon—Shield, Lesser Restoration, Dispel Magic, Death Ward, Rary's Telepathic Bond; New Moon—Ray of Sickness, Blindness/Deafness, Vampiric Touch, Confusion, Hold Monster; Crescent Moon—Color Spray, Alter Self, Phantom Steed, Hallucinatory Terrain, Mislead. Po Long Rest zvolíš fázi a jednou můžeš seslat její spell 1. úrovně bez slotu."
+        },
+        "Moon Fire": {
+          "uroven": 1,
+          "text": "Získáš Sacred Flame mimo limit známých cantripů; při seslání můžeš místo jednoho zacílit 2 tvory do 5 feet od sebe v dosahu."
+        },
+        "Lunar Boons": {
+          "uroven": 6,
+          "text": "Metamagic u spellu příslušné školy stojí o 1 Sorcery Point méně (nejméně 0): Full Moon—Abjuration nebo Divination, New Moon—Enchantment nebo Necromancy, Crescent Moon—Illusion nebo Transmutation. Počet použití odpovídá Proficiency Bonusu a obnoví se po Long Rest."
+        },
+        "Waxing and Waning": {
+          "uroven": 6,
+          "text": "Bonus Actionem můžeš za 1 Sorcery Point změnit měsíční fázi; navíc můžeš bez slotu jednou seslat spell 1. úrovně každé fáze, pokud je daná fáze právě aktivní, a použití obnovíš po Long Rest."
+        },
+        "Lunar Empowerment": {
+          "uroven": 14,
+          "text": "Full Moon dovolí Bonus Actionem rozsvítit 10 feet Bright Light a dalších 10 feet Dim Light, v nichž ty a tebou zvolení tvorové máte Advantage na Intelligence (Investigation) a Wisdom (Perception); New Moon dává Advantage na Dexterity (Stealth) a v úplné tmě mají útoky proti tobě Disadvantage; Crescent Moon poskytuje Resistance vůči Necrotic a Radiant damage."
+        },
+        "Lunar Phenomenon": {
+          "uroven": 18,
+          "text": "Bonus Actionem aktivuješ sílu aktuální fáze, případně ji můžeš použít při změně fáze: Full Moon oslepí tebou vybrané tvory do 30 feet při neúspěšném Constitution save a vyléčí jednomu z nich 3d8 Hit Points; New Moon při neúspěšném Dexterity save způsobí tvorům do 30 feet 3d10 Necrotic damage a sníží Speed na 0 do konce dalšího tahu, zatímco ty se staneš Invisible do konce dalšího tahu nebo do útoku či seslání spellu. Crescent Moon tě teleportuje do 60 feet a může vzít ochotného tvora do 5 feet; oba získáte Resistance vůči veškerému damage do začátku dalšího tahu. Každý z těchto účinků obnovíš po Long Rest nebo opětovným použitím za 5 Sorcery Points."
+        }
+      }
+    },
+    "The Hexblade": {
+      "trida": "Warlock",
+      "zdroj": "Xanathar's Guide to Everything",
+      "rok": 2017,
+      "legacy": true,
+      "alternativa_2024": "Fiend Patron + Pact of the Blade",
+      "overeno": [
+        "https://dnd5e.wikidot.com/warlock:hexblade"
+      ],
+      "rysy": {
+        "Hexblade's Curse": {
+          "uroven": 1,
+          "text": "Bonus Actionem prokleješ viděného tvora do 30 feet na 1 minutu (nebo do jeho či tvé smrti či tvé Incapacitated condition); proti němu přičítáš Proficiency Bonus k damage, kritický zásah máš už na 19–20 a při jeho smrti získáš Hit Points rovné Warlock levelu + Charisma modifier (nejméně 1). Použití se vrací po Short nebo Long Rest."
+        },
+        "Hex Warrior": {
+          "uroven": 1,
+          "text": "Získáš proficiency s Medium Armor, Shields a Martial Weapons; po Long Rest se můžeš dotknout zbraně, se kterou jsi proficient a která nemá vlastnost Two-Handed, a používat Charisma místo Strength či Dexterity k útoku i damage. Po získání Pact of the Blade se to vztahuje na všechny tvé pact weapons."
+        },
+        "Accursed Specter": {
+          "uroven": 6,
+          "text": "Po zabití Humanoida můžeš jednou před Long Restem vytvořit spectera s Temporary Hit Points rovnými polovině Warlock levelu a bonusem k attack rollům rovnym Charisma modifieru (nejméně +0); má vlastní Initiative, poslouchá slovní příkazy a zmizí po příštím Long Restu."
+        },
+        "Armor of Hexes": {
+          "uroven": 10,
+          "text": "Když tě prokletý cíl zasáhne attack roll, můžeš Reactionem hodit d6; při výsledku 4 nebo vyšším útok mine."
+        },
+        "Master of Hexes": {
+          "uroven": 14,
+          "text": "Když prokletý tvor zemře, můžeš Curse přenést na viděného tvora do 30 feet, pokud nejsi Incapacitated; přenos neobnoví Hit Points za smrt původního cíle."
+        }
+      }
+    },
+    "The Fathomless": {
+      "trida": "Warlock",
+      "zdroj": "Tasha's Cauldron of Everything",
+      "rok": 2020,
+      "legacy": true,
+      "alternativa_2024": "Archfey Patron",
+      "overeno": [
+        "https://dnd5e.wikidot.com/warlock:fathomless"
+      ],
+      "rysy": {
+        "Tentacle of the Deep": {
+          "uroven": 1,
+          "text": "Bonus Actionem vytvoříš na viditelném místě do 60 feet spektrální chapadlo dlouhé 10 feet, které trvá 1 minutu; při vytvoření a jeho posunu Bonus Actionem až o 30 feet zaútočí na tvora do 10 feet melee spell attackem, při zásahu způsobí 1d8 Cold damage a sníží Speed o 10 feet do začátku tvého dalšího tahu. Na levelu 10 damage vzroste na 2d8; počet použití odpovídá Proficiency Bonusu a obnoví se po Long Rest."
+        },
+        "Gift of the Sea": {
+          "uroven": 1,
+          "text": "Získáš Swim Speed 40 feet a můžeš dýchat pod vodou."
+        },
+        "Oceanic Soul": {
+          "uroven": 6,
+          "text": "Získáš Resistance vůči Cold damage; když jsi plně ponořený, rozumíš řeči ostatních plně ponořených tvorů a oni rozumějí tobě."
+        },
+        "Guardian Coil": {
+          "uroven": 6,
+          "text": "Když ty nebo tvor do 10 feet od chapadla utrpí damage, můžeš Reactionem snížit damage jednomu z vás o 1d8, na Warlock levelu 10 o 2d8."
+        },
+        "Grasping Tentacles": {
+          "uroven": 10,
+          "text": "Evard's Black Tentacles máš jako Warlock spell mimo limit známých a jednou mezi Long Rests jej sesíláš bez slotu. Při každém seslání získáš Temporary Hit Points rovné Warlock levelu a damage ti nemůže přerušit Concentration na tento spell."
+        },
+        "Fathomless Plunge": {
+          "uroven": 14,
+          "text": "Akcí teleportuješ sebe a až 5 ochotných viděných tvorů do 30 feet až 1 míli k vodní ploše alespoň velikosti rybníka, kterou jsi viděl, nebo do 30 feet od ní; na místě se objevíte na volných místech do 30 feet od sebe. Použití se obnoví po Short nebo Long Rest."
+        }
+      }
+    },
+    "The Genie": {
+      "trida": "Warlock",
+      "zdroj": "Tasha's Cauldron of Everything",
+      "rok": 2020,
+      "legacy": true,
+      "alternativa_2024": "Fiend Patron",
+      "overeno": [
+        "https://dnd5e.wikidot.com/warlock:the-genie"
+      ],
+      "rysy": {
+        "Expanded Spell List": {
+          "uroven": 1,
+          "text": "Podle druhu patrona Dao, Djinni, Efreeti nebo Marid si při učení Warlock spellů můžeš vybírat také z rozšířeného seznamu jejich spojených kouzel, který sahá od 1. do 5. úrovně a obsahuje Wish jako spell 9. úrovně."
+        },
+        "Genie's Vessel": {
+          "uroven": 1,
+          "text": "Dostaneš Tiny magický předmět jako Spellcasting Focus, s AC rovnou tvému spell DC, Hit Points rovnými Warlock levelu + Proficiency Bonus a Immunity vůči Poison a Psychic damage; zničený či ztracený předmět nahradíš 1hodinovým obřadem. Akcí můžeš do nádoby vstoupit až na počet hodin rovnající se dvojnásobku Proficiency Bonusu; další vstup je možný po Long Rest a dřívější odchod je Bonus Actionem. Jednou za tah po zásahu útokem způsobíš navíc damage rovný Proficiency Bonusu podle patrona: Dao Bludgeoning, Djinni Thunder, Efreeti Fire nebo Marid Cold."
+        },
+        "Elemental Gift": {
+          "uroven": 6,
+          "text": "Získáš Resistance k damage typu svého patrona a Bonus Actionem si udělíš Fly Speed 30 feet s hover na 10 minut; počet použití odpovídá Proficiency Bonusu a obnoví se po Long Rest."
+        },
+        "Sanctuary Vessel": {
+          "uroven": 10,
+          "text": "Při vstupu do nádoby můžeš vzít až 5 ochotných tvorů do 30 feet; Bonus Actionem je můžeš vypustit a odejdou také při tvém odchodu, smrti nebo zničení nádoby. Kdo uvnitř stráví alespoň 10 minut, získá výsledek Short Restu a při utracení Hit Dice přičte tvůj Proficiency Bonus k obnoveným Hit Points."
+        },
+        "Limited Wish": {
+          "uroven": 14,
+          "text": "Akcí požádáš nádobu o účinek libovolného spella nejvýše 6. úrovně s casting time 1 action; neplatí pro něj omezení ani nákladné komponenty a projeví se v rámci stejné akce. Znovu to můžeš použít po 1d4 Long Rests."
+        }
+      }
+    },
+    "The Undying": {
+      "trida": "Warlock",
+      "zdroj": "Sword Coast Adventurer's Guide",
+      "rok": 2015,
+      "legacy": true,
+      "alternativa_2024": "Great Old One Patron",
+      "overeno": [
+        "https://dnd5e.wikidot.com/warlock:undying"
+      ],
+      "rysy": {
+        "Among the Dead": {
+          "uroven": 1,
+          "text": "Získáš Spare the Dying jako Warlock cantrip a Advantage na saves proti nemocem. Undead útočící přímo na tebe nebo sesílající na tebe škodlivý spell musí uspět na Wisdom save proti spell DC, jinak zvolí jiný cíl nebo akci vzdají; na úspěch jsou vůči tomuto účinku imunní 24 hodin, stejně jako Undead, na nějž zaútočíš či sešleš škodlivý spell."
+        },
+        "Defy Death": {
+          "uroven": 6,
+          "text": "Po úspěšném death saving throw nebo když pomocí Spare the Dying stabilizuješ tvora, obnovíš si 1d8 + Constitution modifier Hit Points (nejméně 1); použití se vrací po Long Rest."
+        },
+        "Undying Nature": {
+          "uroven": 10,
+          "text": "Můžeš neomezeně zadržet dech a nepotřebuješ jídlo, vodu ani spánek, přesto stále odpočíváš a odstraňuješ Exhaustion běžným způsobem. Stárneš tempem 1 rok na každých 10 let a magie tě nemůže zestárnout."
+        },
+        "Indestructible Life": {
+          "uroven": 14,
+          "text": "Bonus Actionem si obnovíš 1d8 + Warlock level Hit Points a můžeš připojit oddělenou část těla, pokud ji přiložíš zpět. Použití obnovíš po Short nebo Long Rest."
+        }
+      }
+    },
+    "War Magic": {
+      "trida": "Wizard",
+      "zdroj": "Xanathar's Guide to Everything",
+      "rok": 2017,
+      "legacy": true,
+      "alternativa_2024": "Abjurer",
+      "overeno": [
+        "https://dnd5e.wikidot.com/wizard:war-magic"
+      ],
+      "rysy": {
+        "Arcane Deflection": {
+          "uroven": 2,
+          "text": "Po zásahu nebo neúspěšném saving throw můžeš Reactionem získat +2 AC proti útoku, případně +4 k danému save; do konce dalšího tahu pak nemůžeš sesílat jiné než cantripy."
+        },
+        "Tactical Wit": {
+          "uroven": 2,
+          "text": "K Initiative přičítáš svůj Intelligence modifier."
+        },
+        "Power Surge": {
+          "uroven": 6,
+          "text": "Uložíš nejvýše tolik Power Surges, kolik činí Intelligence modifier (nejméně 1); po Long Restu se jejich počet nastaví na 1, za úspěšné ukončení spella Dispel Magic či Counterspell získáš 1 a po Short Restu bez surges také 1. Jednou za tah při damage Wizard spellem můžeš utratit surge a přidat Force damage rovný polovině Wizard levelu."
+        },
+        "Durable Magic": {
+          "uroven": 10,
+          "text": "Při Concentration na spell získáš +2 AC a +2 ke všem saving throwům."
+        },
+        "Deflecting Shroud": {
+          "uroven": 14,
+          "text": "Když použiješ Arcane Deflection, můžeš rozvést energii na nejvýše 3 tebou zvolené tvory do 60 feet; každý utrpí Force damage rovný polovině Wizard levelu."
+        }
+      }
+    },
+    "Order of Scribes": {
+      "trida": "Wizard",
+      "zdroj": "Tasha's Cauldron of Everything",
+      "rok": 2020,
+      "legacy": true,
+      "alternativa_2024": "Diviner",
+      "overeno": [
+        "https://dnd5e.wikidot.com/wizard:order-of-scribes"
+      ],
+      "rysy": {
+        "Wizardly Quill": {
+          "uroven": 2,
+          "text": "Bonus Actionem vytvoříš Tiny magické pero bez inkoustu, které píše zvolenou barvou; při opisování spellu zkrátí práci na 2 minuty za jeho úroveň. Bonus Actionem jím smažeš vlastní text do 5 feet; pero zmizí, když vytvoříš další nebo zemřeš."
+        },
+        "Awakened Spellbook": {
+          "uroven": 2,
+          "text": "Při držení knihy ji můžeš použít jako Wizard Spellcasting Focus; při slotovém seslání můžeš změnit damage type na typ uvedený v jiném spellu stejné úrovně ve spellbooku. Rituál můžeš jednou za Long Rest seslat běžným casting time bez dalších 10 minut; ztracenou knihu nahradíš během Short Restu pomocí Wizardly Quill."
+        },
+        "Manifest Mind": {
+          "uroven": 6,
+          "text": "Bonus Actionem vyvoláš do 60 feet Tiny nehmotnou spektrální mysl, která vidí a slyší, má Darkvision 60 feet a telepaticky ti předává vjemy; září Dim Light v 10 feet. Wizard spelly můžeš sesílat z jejího prostoru s použitím jejích smyslů tolikrát za den, kolik činí Proficiency Bonus; Bonus Actionem ji přesuneš až o 30 feet, ale pokud se vzdálí přes 300 feet, je rozptýlena. Znovu ji přivoláš po Long Rest nebo utracením libovolného spell slotu."
+        },
+        "Master Scrivener": {
+          "uroven": 10,
+          "text": "Po Long Rest vytvoříš z prázdného papíru a spellbooku do 5 feet jeden scroll spella úrovně 1 nebo 2 s casting time 1 action; jeho efektivní úroveň je o 1 vyšší, ty jej můžeš akcí seslat a zmizí sesláním nebo po příštím Long Restu. Při výrobě běžných spell scrollů se Wizardly Quill půlí cena i čas."
+        },
+        "One with the Word": {
+          "uroven": 14,
+          "text": "Při knize u sebe máš Advantage na Intelligence (Arcana). Když utrpíš damage s manifestovanou myslí, můžeš ji Reactionem rozptýlit a zabránit veškerému damage; hoď 3d6 a dočasně ztratíš spelly s celkovou úrovní alespoň rovnou hodu, při nedostatečném součtu klesneš na 0 Hit Points. Ztracené spelly nemůžeš sesílat po dobu 1d6 odpočinků, poté se vrátí; použití obnovíš po Long Rest."
+        }
+      }
+    },
+    "Chronurgy Magic": {
+      "trida": "Wizard",
+      "zdroj": "Explorer's Guide to Wildemount",
+      "rok": 2020,
+      "legacy": true,
+      "alternativa_2024": "Diviner",
+      "overeno": [
+        "https://dnd5e.wikidot.com/wizard:chronurgy"
+      ],
+      "rysy": {
+        "Chronal Shift": {
+          "uroven": 2,
+          "text": "Reactionem přiměješ sebe nebo viděného tvora do 30 feet po attack rollu, ability checku či saving throwu hod opakovat; rozhodneš až po zjištění úspěchu a musí se použít nový výsledek. Použití obnovíš po Long Rest."
+        },
+        "Temporal Awareness": {
+          "uroven": 2,
+          "text": "K Initiative přičítáš Intelligence modifier."
+        },
+        "Momentary Stasis": {
+          "uroven": 6,
+          "text": "Akcí donutíš viděného Large či menšího tvora do 60 feet k Constitution save proti spell DC; při neúspěchu je do konce tvého dalšího tahu nebo do utržení damage v magické stázi, Incapacitated a se Speed 0. Použití odpovídá Intelligence modifieru (nejméně 1) a obnoví se po Long Rest."
+        },
+        "Arcane Abeyance": {
+          "uroven": 10,
+          "text": "Když slotem úrovně 4 nebo nižší sešleš spell, můžeš jeho energii na 1 hodinu uložit do Tiny bead s AC 15, 1 Hit Point a Immunity vůči Poison a Psychic damage; držitel jej může akcí uvolnit a použije tvůj spell attack bonus i save DC, ale pro ostatní účely je sesilatelem. Kulička zmizí po uplynutí času či zničení a spell se ztratí; použití obnovíš po Short nebo Long Rest."
+        },
+        "Convergent Future": {
+          "uroven": 14,
+          "text": "Reactionem při attack rollu, ability checku či saving throwu tebe nebo viděného tvora do 60 feet nahradíš hod číslem potřebným k úspěchu, nebo o 1 nižším, podle své volby. Získáš 1 Exhaustion level, který lze odstranit pouze Long Restem."
+        }
+      }
+    },
+    "Graviturgy Magic": {
+      "trida": "Wizard",
+      "zdroj": "Explorer's Guide to Wildemount",
+      "rok": 2020,
+      "legacy": true,
+      "alternativa_2024": "Evoker",
+      "overeno": [
+        "https://dnd5e.wikidot.com/wizard:graviturgy"
+      ],
+      "rysy": {
+        "Adjust Density": {
+          "uroven": 2,
+          "text": "Akcí na 1 minutu nebo do konce Concentration zdvojnásobíš či rozpůlíš hmotnost viděného Large či menšího tvora nebo předmětu do 30 feet. Při poloviční hmotnosti má tvor +10 feet Speed, skáče dvakrát dál a má Disadvantage na Strength checks a saves; při dvojnásobné hmotnosti má −10 feet Speed a Advantage na těchto hodech. Od Wizard levelu 10 můžeš cílit i Huge tvory a objekty."
+        },
+        "Gravity Well": {
+          "uroven": 6,
+          "text": "Když se spell zaměří na tvora, můžeš ho posunout o 5 feet na volné místo, pokud je ochoten se pohnout, spell jej zasáhne nebo neuspěje na save proti spellu."
+        },
+        "Violent Attraction": {
+          "uroven": 10,
+          "text": "Reactionem můžeš přidat 1d10 damage stejného typu k weapon attacku tvora do 60 feet, který jsi viděl, nebo zvýšit damage z pádu tvora do 60 feet o 2d10. Počet použití odpovídá Intelligence modifieru (nejméně 1) a obnoví se po Long Rest."
+        },
+        "Event Horizon": {
+          "uroven": 14,
+          "text": "Akcí vytvoříš gravitační pole na 1 minutu nebo do ztráty Concentration; nepřátelský tvor začínající tah do 30 feet hází Strength save proti spell DC. Při neúspěchu utrpí 2d10 Force damage a jeho Speed je 0 do začátku dalšího tahu; při úspěchu utrpí polovinu damage a každý foot pohybu stojí další 2 feet. Použití obnovíš po Long Rest nebo utracením spell slotu úrovně 3+."
+        }
+      }
+    }
+  },
+  "volby_trid": {
+    "Metamagic": {
+      "trida": "Sorcerer",
+      "feature": "Metamagic"
+    },
+    "Eldritch Invocation": {
+      "trida": "Warlock",
+      "feature": "Eldritch Invocations"
     }
   },
   "druhy": {
@@ -8766,7 +9795,7 @@
         "Darkvision": "V šeru vidíš do 60 stop jako za jasného světla a ve tmě jako v šeru; barvy ve tmě rozeznáváš jen jako odstíny šedi.",
         "Spider Climb": "Máš Climb Speed rovnou své Speed. Od 3. úrovně můžeš lézt po svislých plochách i stropech a při tom mít ruce volné.",
         "Trace of Undeath": "Máš Resistance vůči Necrotic damage.",
-      "Vampiric Bite": "Když použiješ Unarmed Strike a způsobíš damage, můžeš místo běžného účinku kousnout tesáky a způsobit Piercing damage 1d4 + Constitution modifier. Pokud cíl není Construct ani Undead, můžeš utratit jedno z použití Vampiric Bite (počet odpovídá Proficiency Bonus, obnoví se po Long Rest) a zvolit Drain (získáš Hit Points rovné způsobenému Piercing damage) nebo Strengthen (na 1 minutu přičteš stejnou hodnotu k jednomu následujícímu ability checku či attack rollu)."
+        "Vampiric Bite": "Když použiješ Unarmed Strike a způsobíš damage, můžeš místo běžného účinku kousnout tesáky a způsobit Piercing damage 1d4 + Constitution modifier. Pokud cíl není Construct ani Undead, můžeš utratit jedno z použití Vampiric Bite (počet odpovídá Proficiency Bonus, obnoví se po Long Rest) a zvolit Drain (získáš Hit Points rovné způsobenému Piercing damage) nebo Strengthen (na 1 minutu přičteš stejnou hodnotu k jednomu následujícímu ability checku či attack rollu)."
       },
       "overeno": [
         "https://www.dndbeyond.com/species",
@@ -8785,8 +9814,8 @@
       "typ": "Humanoid",
       "rysy": {
         "Escaped Death": "Máš Advantage na Death Saving Throws.",
-      "Everlasting": "Nezískáváš Exhaustion levels z dehydratace, podvýživy ani dušení. Nepotřebuješ spát a magie tě nemůže uspat. Long Rest můžeš dokončit za 4 hodiny, pokud celou dobu zůstaneš neaktivní a nehybný; i tehdy si zachováváš vědomí.",
-      "Knowledge from a Past Life": "Získáš Proficiency v jedné dovednosti podle svého výběru. Když neuspěješ na ability checku, můžeš hodit 1d6 a přičíst výsledek k hodu d20, čímž můžeš neúspěch změnit v úspěch. Použití odpovídají Proficiency Bonus a obnovují se po Long Rest.",
+        "Everlasting": "Nezískáváš Exhaustion levels z dehydratace, podvýživy ani dušení. Nepotřebuješ spát a magie tě nemůže uspat. Long Rest můžeš dokončit za 4 hodiny, pokud celou dobu zůstaneš neaktivní a nehybný; i tehdy si zachováváš vědomí.",
+        "Knowledge from a Past Life": "Získáš Proficiency v jedné dovednosti podle svého výběru. Když neuspěješ na ability checku, můžeš hodit 1d6 a přičíst výsledek k hodu d20, čímž můžeš neúspěch změnit v úspěch. Použití odpovídají Proficiency Bonus a obnovují se po Long Rest.",
         "Strange Endurance": "Vyber Cold, Necrotic nebo Poison damage; máš vůči němu Resistance."
       },
       "overeno": [

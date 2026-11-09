@@ -56,6 +56,36 @@
     var species = R.druhy[name] || {};
     return name + (species.legacy ? " — legacy, kompatibilní" : species.treti_strana ? " — třetí strana" : "");
   }
+  function subclassCategory(name) {
+    var subclass = R.podtridy[name] || {};
+    return subclass.legacy ? "legacy" : subclass.treti_strana ? "třetí strana" : "2024";
+  }
+  function appendSubclassOptions(select, names, selected, trida, el) {
+    select.appendChild(el("option", { value: "" }, "—"));
+    var available = [];
+    ["2024", "třetí strana", "legacy"].forEach(function (category) {
+      var group = names.filter(function (name) {
+        return subclassCategory(name) === category && (!trida || (R.podtridy[name] || {}).trida === trida);
+      }).sort(function (a, b) { return a.localeCompare(b); });
+      if (!group.length) return;
+      available = available.concat(group);
+      var optgroup = el("optgroup", { label: category });
+      group.forEach(function (name) {
+        var badge = category === "legacy" ? " — legacy, kompatibilní" : category === "třetí strana" ? " — třetí strana" : "";
+        var option = el("option", { value: name }, name + badge);
+        if (name === selected) option.selected = true;
+        optgroup.appendChild(option);
+      });
+      select.appendChild(optgroup);
+    });
+    if (selected && available.indexOf(selected) < 0) select.appendChild(el("option", { value: selected, selected: "selected" }, selected + " — mimo nabídku"));
+  }
+  function updateSubclassBadge(badge, name) {
+    var subclass = R.podtridy[name] || {};
+    badge.hidden = !subclass.legacy && !subclass.treti_strana;
+    badge.className = "p2-chip " + (subclass.legacy ? "p2-legacy" : "p2-third-party");
+    badge.textContent = subclass.legacy ? "legacy, kompatibilní" : "třetí strana";
+  }
   function has(list, name) { return (list || []).some(function (f) { return (f.nazev || f) === name; }); }
   function para(t) { return esc(t).replace(/\n/g, "<br>"); }
   function sessionState(key) {
@@ -290,7 +320,11 @@
       + (portraitUrl ? '<a class="p2-portret" href="' + esc(portraitUrl) + '" target="_blank" rel="noopener"><img src="' + esc(portraitUrl) + '" alt="' + esc(c.jmeno) + '"></a>' : '<span>' + esc(initials) + '</span>')
       + '<div class="p2-lvl" title="Celková úroveň">' + ((c.tridy || []).length ? d.lvl : "—") + '</div></div></aside>';
     h += '<div class="p2-top-main"><header class="p2-hero"><div class="p2-id"><div class="p2-identity-head"><div><h2 class="p2-name">' + esc(c.jmeno) + '</h2><div class="p2-title">' + esc(c.titul || "") + '</div></div>' + toolbar + '</div><div class="p2-chips">'
-      + ((c.tridy || []).length ? (c.tridy || []).map(function (t) { return '<span class="p2-chip p2-class">' + esc(t.trida) + ' ' + t.uroven + (t.podtrida ? ' · ' + esc(t.podtrida) : '') + '</span>'; }).join("")
+      + ((c.tridy || []).length ? (c.tridy || []).map(function (t) {
+        var subclass = R.podtridy[t.podtrida] || {};
+        var badge = subclass.legacy ? '<span class="p2-chip p2-legacy">legacy, kompatibilní</span>' : subclass.treti_strana ? '<span class="p2-chip p2-third-party">třetí strana</span>' : "";
+        return '<span class="p2-chip p2-class">' + esc(t.trida) + ' ' + t.uroven + (t.podtrida ? ' · ' + esc(t.podtrida) : '') + '</span>' + badge;
+      }).join("")
         : '<span class="p2-chip p2-class">' + esc(c.statblok ? "Bez povolání · " + c.statblok : "Bez povolání") + '</span>')
       + '<button type="button" class="p2-chip" data-species="' + esc(c.druh || "") + '">' + esc(c.druh || "—") + '</button>' + (sp.legacy ? '<span class="p2-chip p2-legacy">legacy, kompatibilní</span>' : sp.treti_strana ? '<span class="p2-chip p2-third-party">třetí strana</span>' : '') + '<span class="p2-chip">' + esc(c.pozadi || "—") + '</span><span class="p2-chip">' + esc(c.zarovnani || "—") + '</span><span class="p2-chip">' + esc(c.velikost || "Medium") + '</span></div>'
       + (d.exhaustion ? '<span class="p2-exhaust-warning">Exhaustion ' + d.exhaustion + ' · −' + d.exhaustPenalty + ' D20 · −' + (d.exhaustion * 5) + ' ft Speed' + (d.exhaustion === 6 ? ' · Death' : '') + '</span>' : '') + '</div>'
@@ -477,12 +511,18 @@
         obj[key].forEach(function (it, idx) {
           var tr = el("tr");
           cols.forEach(function (cdef) {
-            var td = el("td"), k = cdef[0], i;
+            var td = el("td"), k = cdef[0], i, badge;
             if (cdef[2] === "check") { i = el("input", { type: "checkbox" }); i.checked = !!it[k]; }
+            else if (cdef[2] === "podtrida") { i = el("select"); appendSubclassOptions(i, Object.keys(R.podtridy), it[k], it.trida, el); }
             else if (Array.isArray(cdef[2])) { i = el("select"); [""].concat(cdef[2]).forEach(function (o) { var op = el("option", { value: o }, o || "—"); if (o === it[k]) op.selected = true; i.appendChild(op); }); }
             else { i = el("input", { type: cdef[2] === "number" ? "number" : "text" }); i.value = it[k] != null ? it[k] : ""; }
-            i.addEventListener("change", function () { it[k] = cdef[2] === "check" ? i.checked : cdef[2] === "number" ? Number(i.value) : i.value; });
-            td.appendChild(i); tr.appendChild(td);
+            if (k === "podtrida") { badge = el("span", { class: "p2-chip" }); updateSubclassBadge(badge, it[k]); }
+            i.addEventListener("change", function () {
+              it[k] = cdef[2] === "check" ? i.checked : cdef[2] === "number" ? Number(i.value) : i.value;
+              if (k === "podtrida") updateSubclassBadge(badge, it[k]);
+              if (k === "trida") { var subclass = R.podtridy[it.podtrida]; if (subclass && subclass.trida !== it.trida) delete it.podtrida; draw(); }
+            });
+            td.appendChild(i); if (badge) td.appendChild(badge); tr.appendChild(td);
           });
           var td = el("td"); td.appendChild(el("button", { class: "ed-btn ed-danger", on: { click: function () { obj[key].splice(idx, 1); draw(); } } }, "×")); tr.appendChild(td);
           tbl.appendChild(tr);
@@ -514,7 +554,7 @@
       });
       l.appendChild(select); p.appendChild(l);
     }
-    var classes = Object.keys(R.tridy), subs = Object.keys(R.podtridy).sort(), species = Object.keys(R.druhy).sort(speciesSort), bgs = Object.keys(R.pozadi).sort(), feats = Object.keys(R.featy).sort();
+    var classes = Object.keys(R.tridy), species = Object.keys(R.druhy).sort(speciesSort), bgs = Object.keys(R.pozadi).sort(), feats = Object.keys(R.featy).sort();
     tab("Základ", function (p) {
       field(p, data, "jmeno", "Jméno"); field(p, data, "titul", "Titul / role");
       var ds = field(p, data, "druh", "Druh (Species) – 2024, třetí strana nebo legacy"); ds.setAttribute("list", "pf-species");
@@ -533,7 +573,7 @@
       field(p, data, "vzhled", "Vzhled", "area"); field(p, data, "prevod_2024", "Převod na 2024", "area");
     });
     tab("Povolání a atributy", function (p) {
-      list(p, data, "tridy", "Povolání", [["trida", "Třída", classes], ["uroven", "Úroveň", "number"], ["podtrida", "Subclass", subs]]);
+      list(p, data, "tridy", "Povolání", [["trida", "Třída", classes], ["uroven", "Úroveň", "number"], ["podtrida", "Subclass", "podtrida"]]);
       data.atributy = data.atributy || {}; var g = el("div", { class: "pf-abil" });
       AB.forEach(function (a) { field(g, data.atributy, a, AB_CZ[a] + " (" + a + ")", "number"); }); p.appendChild(g);
       field(p, data, "puvod_atributu", "Původ atributů (array/point buy, pozadí, ASI)", "area");
@@ -648,7 +688,14 @@
       st.volby.forEach(function (v) {
         var row = el("label", { class: "lu-choice" }, v.typ === "podtrida" ? "Subclass" : v.typ === "dovednost" ? "Dovednost (multiclass)" : "Feat – " + esc(v.klic));
         if (v.typ === "feat") row.appendChild(featPicker(E, v, store));
-        else { var s = el("select"); s.appendChild(el("option", { value: "" }, "— vyber —")); v.moznosti.forEach(function (o) { s.appendChild(el("option", { value: o }, o)); }); s.addEventListener("change", function () { store[v.klic] = s.value; }); row.appendChild(s); }
+        else {
+          var s = el("select");
+          if (v.typ === "podtrida") appendSubclassOptions(s, v.moznosti, store[v.klic], null, el);
+          else { s.appendChild(el("option", { value: "" }, "— vyber —")); v.moznosti.forEach(function (o) { s.appendChild(el("option", { value: o }, o)); }); }
+          var badge = v.typ === "podtrida" ? el("span", { class: "p2-chip" }) : null;
+          if (badge) { updateSubclassBadge(badge, store[v.klic]); s.addEventListener("change", function () { updateSubclassBadge(badge, s.value); }); }
+          s.addEventListener("change", function () { store[v.klic] = s.value; }); row.appendChild(s); if (badge) row.appendChild(badge);
+        }
         box.appendChild(row);
       });
       holder.appendChild(box);

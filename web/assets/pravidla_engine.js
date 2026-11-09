@@ -31,6 +31,12 @@
   function feats(r) { return String(r.Features || r["Class Features"] || ""); }
   function totalLevel(c) { return (c.tridy || []).reduce(function (a, t) { return a + (Number(t.uroven) || 0); }, 0); }
   function lvlOf(c, n) { return (c.tridy || []).filter(function (t) { return t.trida === n; }).reduce(function (a, t) { return a + Number(t.uroven); }, 0); }
+  function subclassRank(name) { var s = R.podtridy[name] || {}; return s.legacy ? 2 : s.treti_strana ? 1 : 0; }
+  function subclassOptions(trida) {
+    return Object.keys(R.podtridy).filter(function (name) { return R.podtridy[name].trida === trida && !(R.volby_trid || {})[name]; }).sort(function (a, b) {
+      return subclassRank(a) - subclassRank(b) || a.localeCompare(b);
+    });
+  }
   function pb(lvl) { return 2 + Math.floor((Math.max(1, lvl) - 1) / 4); }
   function featName(n) { return String(n || "").replace(/\s*\(.*\)$/, "").replace("Two Weapon Fighting", "Two-Weapon Fighting"); }
   function featInfo(n) { return R.featy[featName(n)] || null; }
@@ -181,7 +187,13 @@
       if (lv < 1 || lv > 20) err(t.trida + ": úroveň " + lv + " mimo 1–20.");
       if (lv >= 3 && !t.podtrida) err(t.trida + " " + lv + ": chybí subclass (volí se na 3. úrovni).");
       if (lv < 3 && t.podtrida) warn(t.trida + " " + lv + ": subclass " + t.podtrida + " se získává až na 3. úrovni.");
-      if (t.podtrida) { var s = R.podtridy[t.podtrida]; if (!s) warn("Subclass " + t.podtrida + " není v pravidlech 2024+."); else if (s.trida !== t.trida) err("Subclass " + t.podtrida + " patří povolání " + s.trida + ", ne " + t.trida + "."); }
+      if (t.podtrida) {
+        var s = R.podtridy[t.podtrida];
+        if (!s) warn("Subclass " + t.podtrida + " není v pravidlech 2024+.");
+        else if (s.trida !== t.trida) err("Subclass " + t.podtrida + " patří povolání " + s.trida + ", ne " + t.trida + ".");
+        else if (s.legacy) info("Subclass " + t.podtrida + " je legacy, kompatibilní; alternativa 2024: " + (s.alternativa_2024 || "není určena") + ".");
+        else if (s.treti_strana) info("Subclass " + t.podtrida + " pochází z publikace třetí strany; ověř její mechaniky v původním zdroji.");
+      }
     });
     if ((c.tridy || []).length > 1) {
       var mc = [], probe = { atributy: ab, tridy: [] };
@@ -257,7 +269,7 @@
       var lv = t.uroven, k = cls(trida), r = row(trida, lv), m = classMilestones(trida), first = tmp.tridy[0] === t && totalLevel(tmp) === 1;
       var st = { celkova: totalLevel(tmp), trida: trida, uroven: lv, hp: first ? k.hit_die : k.hit_die / 2 + 1, rysy: feats(r).split(/,\s*(?![^()]*\))/).filter(function (x) { return x && x !== "-"; }), volby: [], info: {} };
       if (nova && tmp.tridy.length > 1) { var mp = MULTI_PROF[trida]; st.info.multiclass = "Získáš: " + (mp.armor.length ? mp.armor.join(", ") + " training" : "žádný armor training") + (mp.skills ? ", 1 dovednost z nabídky povolání" : ""); if (mp.skills) st.volby.push({ typ: "dovednost", klic: "mc_" + trida, moznosti: classSkillRule(trida).z.filter(function (s) { return (tmp.dovednosti || []).indexOf(s) < 0; }) }); }
-      if (lv === m.subclass && !t.podtrida) st.volby.push({ typ: "podtrida", klic: "podtrida_" + trida, moznosti: Object.keys(R.podtridy).filter(function (s) { return R.podtridy[s].trida === trida; }).sort() });
+      if (lv === m.subclass && !t.podtrida) st.volby.push({ typ: "podtrida", klic: "podtrida_" + trida, moznosti: subclassOptions(trida) });
       var slot = null;
       if (m.fs === lv) slot = { typ: "fs", zdroj: "Fighting Style (" + trida + " " + lv + ")", trida: trida, uroven: lv };
       if (slot) st.volby.push({ typ: "feat", klic: slot.zdroj, slot: slot, moznosti: featOptions(tmp, slot, st.celkova) });
@@ -460,6 +472,6 @@
   var api = { init: init, AB: AB, SKILLS: SKILLS, PRIMARY: PRIMARY, MULTI_PROF: MULTI_PROF, STANDARD: STANDARD, COST: COST, totalLevel: totalLevel, pb: pb,
     classMilestones: classMilestones, featSlots: featSlots, featOptions: featOptions, checkPrereq: checkPrereq, multiclassCheck: multiclassCheck,
     derive: derive, validate: validate, planLevelUp: planLevelUp, applyLevelUp: applyLevelUp, featAbilityChoices: featAbilityChoices,
-    classSkillRule: classSkillRule, setSpells: setSpells, spellRules: spellRules, spellCounts: spellCounts, validateSpells: validateSpells, checkSpellChange: checkSpellChange, changeRulesText: changeRulesText, expectedSkills: expectedSkills, createCharacter: createCharacter, armorTraining: armorTraining };
+    classSkillRule: classSkillRule, subclassOptions: subclassOptions, setSpells: setSpells, spellRules: spellRules, spellCounts: spellCounts, validateSpells: validateSpells, checkSpellChange: checkSpellChange, changeRulesText: changeRulesText, expectedSkills: expectedSkills, createCharacter: createCharacter, armorTraining: armorTraining };
   return api;
 });

@@ -14,6 +14,9 @@ def paras():
         for f in (c.get("rysy") or {}).values(): add(f.get("text") if isinstance(f, dict) else f)
     for n, c in p["podtridy"].items():
         for f in (c.get("rysy") or {}).values(): add(f.get("text") if isinstance(f, dict) else f)
+    for option in p.get("volby_trid", {}).values():
+        feature = p["tridy"].get(option.get("trida"), {}).get("rysy", {}).get(option.get("feature"), {})
+        add(feature.get("text") if isinstance(feature, dict) else feature)
     for n, c in p["druhy"].items():
         for f in (c.get("rysy") or {}).values(): add(f if isinstance(f, str) else f.get("text"))
     seen = set(); return [x for x in out if not (x in seen or seen.add(x))]

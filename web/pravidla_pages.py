@@ -82,6 +82,12 @@ def build(docs: Path):
         for fn, fv in sorted((c.get("rysy") or {}).items(), key=lambda x: (x[1].get("uroven", 0) if isinstance(x[1], dict) else 0, x[0])):
             lv = fv.get("uroven", "") if isinstance(fv, dict) else ""
             b += f"### {fn}" + (f" <small>(Level {lv})</small>" if lv else "") + "\n\n" + para(fv.get("text", "") if isinstance(fv, dict) else fv) + "\n\n"
+        class_options = sorted((name, option) for name, option in p.get("volby_trid", {}).items() if option.get("trida") == n)
+        if class_options:
+            b += "## Volby povolání\n\n"
+            for name, option in class_options:
+                feature = c.get("rysy", {}).get(option.get("feature", ""), {})
+                b += f"### {name}\n\n" + para(feature.get("text", "") if isinstance(feature, dict) else feature) + "\n\n"
         subs = sorted((sn, sv) for sn, sv in p["podtridy"].items() if sv.get("trida") == n)
         if subs:
             b += "## Subclassy\n\n"

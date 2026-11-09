@@ -6,6 +6,25 @@ function t(cond, msg) { eq(!!cond, true, msg); }
 const num = v => parseInt(String(v || "").replace(/[^\d-]/g, ""), 10) || 0;
 const SLOTS = ["1st", "2nd", "3rd", "4th", "5th", "6th", "7th", "8th", "9th"];
 const base = { STR: 15, DEX: 14, CON: 13, INT: 12, WIS: 10, CHA: 8 };
+t(!R.podtridy.Metamagic && !R.podtridy["Eldritch Invocation"], "volby povolání nejsou subclassy");
+eq([R.volby_trid.Metamagic.trida, R.volby_trid["Eldritch Invocation"].trida], ["Sorcerer", "Warlock"], "volby povolání jsou v samostatném mapě");
+const legacySubclasses = Object.values(R.podtridy).filter(s => s.legacy);
+eq(legacySubclasses.length, 53, "úplný seznam legacy subclass");
+t(legacySubclasses.every(s => s.alternativa_2024 && s.rok && s.overeno && s.overeno.length), "každá legacy subclass má alternativu a zdroj");
+const officialSubclasses = Object.values(R.podtridy).filter(s => !s.legacy && !s.treti_strana);
+t(officialSubclasses.every(s => s.rok && s.overeno && s.overeno.length), "každá vydaná oficiální subclass má rok a ověřovací URL");
+const groupedRules = JSON.parse(JSON.stringify(R));
+groupedRules.podtridy["ZZ Test Core"] = { trida: "Rogue" };
+groupedRules.podtridy["ZZ Test Third Party"] = { trida: "Rogue", treti_strana: true };
+groupedRules.podtridy["ZZ Test Legacy"] = { trida: "Rogue", legacy: true, alternativa_2024: "Thief" };
+E.init(groupedRules);
+const subclassOptions = E.subclassOptions("Rogue");
+t(subclassOptions.indexOf("ZZ Test Core") < subclassOptions.indexOf("ZZ Test Third Party") && subclassOptions.indexOf("ZZ Test Third Party") < subclassOptions.indexOf("ZZ Test Legacy"), "subclassy jsou seskupené 2024, třetí strana, legacy");
+["ZZ Test Legacy", "ZZ Test Third Party"].forEach(name => {
+  const c = fresh("Rogue"); c.tridy[0].uroven = 3; c.tridy[0].podtrida = name;
+  t(E.validate(c).some(x => x.typ === "informace" && x.text.includes(name)), name + " má informační poznámku");
+});
+E.init(R);
 function pickChoices(plan, c, prefer) {
   const v = {};
   plan.kroky.forEach(st => st.volby.forEach(x => {
