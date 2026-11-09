@@ -4,7 +4,7 @@
 Vytvoří web/docs (symlinky na složky s obsahem), stránku s interaktivní mapou
 a web/mkdocs.yml s navigací podle nadpisů souborů. Spuštění: web/serve.sh
 """
-import json, os, re, shutil
+import html, json, os, re, shutil
 from pathlib import Path
 from urllib.parse import unquote
 import boje
@@ -20,6 +20,7 @@ NAMES = {
     "06_Knihy_a_Dokumenty": "Knihy a dokumenty", "07_Kampane": "Kampaně",
     "08_Questy": "Questy", "09_Hadanky": "Hádanky", "10_Sezeni": "Sezení",
     "11_Mapy": "Mapy", "12_Obchody": "Obchody", "_Sablony": "Šablony",
+    "14_Povolani": "Povolání", "15_Podtridy": "Podtřídy",
 }
 PREFIX = re.compile(r"^(Postava|Město|Mesto|Země|Quest|Hádanka|Sezení|Kampaň|Šablona)\s*:\s*", re.I)
 MD_LINK = re.compile(r"(?<!!)\[[^\]]*\]\((<[^>]+>|[^)\s]+)(?:\s+[^)]*)?\)")
@@ -403,6 +404,27 @@ def species_page_summary(path):
     plain = re.sub(r"\[([^\]]+)\]\([^)]+\)", r"\1", paragraphs[0] if paragraphs else "")
     return {"prehled": re.sub(r"[*_`]", "", plain), "delka_zivota": str(meta.get("delka_zivota", "") or "")}
 
+def rules_page_overview(path):
+    if not path.is_file():
+        return ""
+    text = path.read_text(encoding="utf-8")
+    section = re.search(r"^## Přehled\s*\n(.*?)(?=^## |\Z)", text, re.S | re.M)
+    paragraphs = [p.strip() for p in (section.group(1) if section else "").split("\n\n") if p.strip()]
+    if not paragraphs:
+        return ""
+    plain = re.sub(r"\[([^\]]+)\]\([^)]+\)", r"\1", paragraphs[0])
+    return re.sub(r"[*_`]", "", plain)
+
+
+def rules_edition(item):
+    if item.get("oznameno"):
+        return "oznámeno"
+    if item.get("treti_strana"):
+        return "třetí strana"
+    if item.get("legacy"):
+        return "legacy"
+    return "2024"
+
 
 def main():
     NAV_INDEX.clear()
@@ -422,6 +444,10 @@ def main():
     (DOCS / "bestiar.md").write_text("---\nhide:\n  - toc\n---\n# Bestiář (SRD 5.2.1)\n\nNetvoři ze SRD 5.2.1 se statbloky. Filtruj podle typu a CR, klikni pro statblok. Obsah SRD 5.2.1 je pod licencí CC-BY 4.0.\n\n<div class=\"srd-katalog\" data-typ=\"bestiar\"></div>\n", encoding="utf-8")
     (DOCS / "postavy.md").write_text("---\nhide:\n  - toc\n  - navigation\n---\n# Katalog postav\n\nPostavy, jejich vazby a štítky pro přípravu hry. Vyhledávej, filtruj nebo otevři kartu postavy.\n\n<div id=\"postavy-katalog\"></div>\n", encoding="utf-8")
     (DOCS / "druhy.md").write_text("---\nhide:\n  - toc\n  - navigation\n---\n# Katalog druhů\n\nVyhledej druh podle názvu a filtruj podle zdroje, edice, velikosti, typu či rychlosti.\n\n<div id=\"druhy-katalog\"></div>\n", encoding="utf-8")
+    (DOCS / "povolani.md").write_text("---\nhide:\n  - toc\n  - navigation\n---\n# Povolání\n\nProhlížej povolání podle pravidel, zdroje a sesílacího zaměření.\n\n<div id=\"povolani-katalog\"></div>\n", encoding="utf-8")
+    (DOCS / "podtridy.md").write_text("---\nhide:\n  - toc\n  - navigation\n---\n# Podtřídy\n\nVyhledej podtřídu podle povolání, edice, knihy nebo vydavatele.\n\n<div id=\"podtridy-katalog\"></div>\n", encoding="utf-8")
+    (DOCS / "pozadi.md").write_text("---\nhide:\n  - toc\n  - navigation\n---\n# Pozadí\n\nPřehled pozadí, jejich zvýšení vlastností, featů a dovedností.\n\n<div id=\"pozadi-katalog\"></div>\n", encoding="utf-8")
+    (DOCS / "featy.md").write_text("---\nhide:\n  - toc\n  - navigation\n---\n# Featy\n\nPřehled featů podle kategorie a předpokladů.\n\n<div id=\"featy-katalog\"></div>\n", encoding="utf-8")
     (DOCS / "obchody.md").write_text("---\nhide:\n  - toc\n  - navigation\n---\n# Obchody\n\nKatalog obchodů a jejich nabídek.\n\n<div id=\"obchody-katalog\"></div>\n", encoding="utf-8")
     (DOCS / "predmety.md").write_text("---\nhide:\n  - toc\n---\n# Předměty a výbava (SRD 5.2.1)\n\nZbraně, zbroje, výbava a kouzelné předměty. Obsah SRD 5.2.1 je pod licencí CC-BY 4.0.\n\n<div class=\"srd-katalog\" data-typ=\"predmety\"></div>\n", encoding="utf-8")
     (DOCS / "glosar.md").write_text("---\nhide:\n  - toc\n---\n# Glosář pravidel (SRD 5.2.1)\n\nDefinice pravidel 2024 (stavy, akce, pojmy). Obsah SRD 5.2.1 je pod licencí CC-BY 4.0.\n\n<div class=\"srd-katalog\" data-typ=\"glosar\"></div>\n", encoding="utf-8")
@@ -456,11 +482,104 @@ def main():
 
     import pravidla_pages
     P = pravidla_pages.build(DOCS)
-    P[0]["Příručka hráče"].insert(1, {"Katalog druhů": "druhy.md"})
+    rules = json.loads((WEB / "assets/pravidla2024.json").read_text(encoding="utf-8"))
+    caster_types = {"Artificer": "half", "Bard": "full", "Cleric": "full", "Druid": "full",
+                    "Paladin": "half", "Ranger": "half", "Sorcerer": "full", "Warlock": "pact", "Wizard": "full"}
+    class_index = []
+    for name, item in rules["tridy"].items():
+        stem = "Povolani_" + re.sub(r"[^A-Za-z0-9]+", "_", name).strip("_")
+        planned = f"14_Povolani/{stem}.md"
+        legacy_page = f"pravidla/phb/povolani/{pravidla_pages.slug(name)}.md"
+        page = ROOT / planned
+        class_index.append({
+            "name": name, "stem": stem, "page": planned,
+            "url": page_url(planned) if page.is_file() else page_url(legacy_page),
+            "source": item.get("zdroj", ""), "edition": rules_edition(item),
+            "edice": rules_edition(item), "legacy": bool(item.get("legacy")),
+            "treti_strana": bool(item.get("treti_strana")), "oznameno": bool(item.get("oznameno")),
+            "alternative_2024": item.get("alternativa_2024", ""),
+            "alternativa_2024": item.get("alternativa_2024", ""),
+            "image": (ROOT / "14_Povolani" / "obrazky" / (stem + ".webp")).is_file(),
+            "overview": rules_page_overview(page),
+            "hit_die": item.get("hit_die") or ("neověřeno" if item.get("bez_tabulky") else ""),
+            "primary_ability": (item.get("core") or {}).get("Primary Ability") or ("neověřeno" if item.get("bez_tabulky") else ""),
+            "saves": (item.get("core") or {}).get("Saving Throw Proficiencies") or ("neověřeno" if item.get("bez_tabulky") else ""),
+            "caster_type": (item.get("core") or {}).get("Caster Type")
+                           or ("neověřeno" if item.get("bez_tabulky") else caster_types.get(name, "none")),
+        })
+    subclass_index = []
+    for name, item in rules["podtridy"].items():
+        class_slug = re.sub(r"[^A-Za-z0-9]+", "_", item.get("trida", "")).strip("_")
+        stem = "Podtrida_" + class_slug + "_" + re.sub(r"[^A-Za-z0-9]+", "_", name).strip("_")
+        planned = f"15_Podtridy/{stem}.md"
+        page = ROOT / planned
+        fallback = f"pravidla/phb/povolani/{pravidla_pages.slug(item.get('trida', ''))}.md"
+        subclass_index.append({
+            "key": name, "name": item.get("nazev", name), "stem": stem, "page": planned,
+            "url": page_url(planned) if page.is_file() else page_url(fallback),
+            "source": item.get("zdroj", ""), "edition": rules_edition(item),
+            "edice": rules_edition(item), "class": item.get("trida", ""), "trida": item.get("trida", ""),
+            "legacy": bool(item.get("legacy")), "treti_strana": bool(item.get("treti_strana")),
+            "oznameno": bool(item.get("oznameno")), "alternative_2024": item.get("alternativa_2024", ""),
+            "alternativa_2024": item.get("alternativa_2024", ""),
+            "publisher": item.get("vydavatel", ""), "image": (ROOT / "15_Podtridy" / "obrazky" / (stem + ".webp")).is_file(),
+            "overview": rules_page_overview(page),
+            "features": [{"name": feature, "level": value.get("uroven", ""), "text": value.get("text", "")}
+                         for feature, value in (item.get("rysy") or {}).items() if isinstance(value, dict)],
+        })
+    background_index = [{
+        "name": name, "stem": "Pozadi_" + re.sub(r"[^A-Za-z0-9]+", "_", name).strip("_"),
+        "page": "pravidla/phb/pozadi.md", "url": "/pravidla/phb/pozadi/",
+        "source": item.get("zdroj", ""), "edition": rules_edition(item), "edice": rules_edition(item),
+        "image": False, "overview": "", "ability_scores": item.get("atributy", ""),
+        "feat": item.get("feat", ""), "skills": item.get("dovednosti", ""),
+    } for name, item in rules["pozadi"].items()]
+    feat_index = [{
+        "name": name, "stem": "Feat_" + re.sub(r"[^A-Za-z0-9]+", "_", name).strip("_"),
+        "page": "pravidla/phb/featy.md", "url": "/pravidla/phb/featy/",
+        "source": item.get("zdroj", ""), "edition": rules_edition(item), "edice": rules_edition(item),
+        "image": False, "overview": "", "category": item.get("kategorie", ""),
+        "prerequisite": item.get("predpoklad", ""), "text": item.get("text", ""),
+    } for name, item in rules["featy"].items()]
+    for filename, data in [("tridy_index.json", class_index), ("podtridy_index.json", subclass_index),
+                           ("pozadi_index.json", background_index), ("featy_index.json", feat_index)]:
+        (DOCS / filename).write_text(json.dumps(data, ensure_ascii=False), encoding="utf-8")
+    knowledge_counts = [
+        ("Druhy", len(rules["druhy"]), "druhy/", "Druhy a jejich pravidla."),
+        ("Povolání", len(class_index), "povolani/", "Základní třídy a jejich mechaniky."),
+        ("Podtřídy", len(subclass_index), "podtridy/", "Oficiální, legacy i třetistranné podtřídy."),
+        ("Pozadí", len(background_index), "pozadi/", "Zvýšení vlastností, feat a dovednosti."),
+        ("Featy", len(feat_index), "featy/", "Featy podle kategorie a předpokladů."),
+        ("Kouzla", len(json.loads((WEB / "assets/kouzla2024.json").read_text(encoding="utf-8"))), "kouzla/", "Kouzla podle povolání, úrovně a školy."),
+        ("Bestiář", len(json.loads((WEB / "assets/srd/bestiar.json").read_text(encoding="utf-8"))), "bestiar/", "Netvoři podle typu a Challenge Rating."),
+        ("Výbava a předměty", len(json.loads((WEB / "assets/srd/predmety.json").read_text(encoding="utf-8"))), "predmety/", "Výbava, zbraně, zbroje a kouzelné předměty."),
+        ("Glosář", len(json.loads((WEB / "assets/srd/glosar.json").read_text(encoding="utf-8"))), "glosar/", "Pojmy a stavy pravidel."),
+    ]
+    tiles = "".join(
+        f'<a class="kat-card znalosti-tile" href="/{href}"><div class="kat-card-body">'
+        f'<strong>{html.escape(name)}</strong><small>{count} položek</small><span>{html.escape(description)}</span></div></a>'
+        for name, count, href, description in knowledge_counts
+    )
+    (DOCS / "znalosti.md").write_text(
+        "---\nhide:\n  - toc\n  - navigation\n---\n# Znalosti\n\n"
+        "<form id=\"znalosti-search\" class=\"znalosti-search\"><label for=\"znalosti-query\">Hledat napříč pravidly</label>"
+        "<div><input id=\"znalosti-query\" type=\"search\" placeholder=\"Zadej pojem, povolání nebo kouzlo…\">"
+        "<button type=\"submit\" class=\"md-button md-button--primary\">Hledat</button></div></form>\n\n"
+        f'<div class="kat-grid znalosti-tiles">{tiles}</div>\n',
+        encoding="utf-8")
+    NAV_INDEX["/znalosti/"] = "Znalosti rozcestník pravidla katalogy"
     NAV_INDEX["/druhy/"] = "Katalog druhů species druhy"
+    NAV_INDEX["/povolani/"] = "Povolání třídy classes"
+    NAV_INDEX["/podtridy/"] = "Podtřídy subclassy"
+    NAV_INDEX["/pozadi/"] = "Pozadí backgrounds"
+    NAV_INDEX["/featy/"] = "Featy"
+    NAV_INDEX["/kouzla/"] = "Kouzla spells"
+    NAV_INDEX["/bestiar/"] = "Bestiář netvoři"
+    NAV_INDEX["/predmety/"] = "Předměty a výbava"
+    NAV_INDEX["/glosar/"] = "Glosář pravidel"
     byname = {list(x)[0]: x for x in sections}
     visible_sections = {"Svět", "Země", "Města", "Obchody", "Postavy", "Frakce", "Knihy a dokumenty",
-                        "Mapy", "Kampaně", "Questy", "Hádanky", "Sezení"}
+                        "Mapy", "Kampaně", "Questy", "Hádanky", "Sezení", "Povolání", "Podtřídy"}
     rest = [x for x in sections if list(x)[0] not in visible_sections]
     def section_items(name):
         section = byname.get(name)
@@ -495,13 +614,39 @@ def main():
     game[0]["Kampaně"].insert(0, {"Bojový modul": "boj.md"})
     NAV_INDEX["/boj/"] = "Bojový modul"
     rules = P
+    player_nav = {list(item)[0]: next(iter(item.values())) for item in rules[0]["Příručka hráče"]}
+    dm_nav = {list(item)[0]: next(iter(item.values())) for item in rules[1]["Příručka PJ"]}
+    equipment = list(player_nav["Výbava"])
+    magic_items = [item for item in rules[1]["Příručka PJ"]
+                   if next(iter(item)).startswith(("Kouzelné předměty", "Vzácnost:", "Lektvary", "Prsteny", "Hůlky", "Divotvorné"))]
+    equipment.extend([{"Kouzelné předměty": magic_items}, {"Předměty a výbava (vše)": "predmety.md"}])
+    character_nav = [
+        {"Tvorba postavy a level up": player_nav["Tvorba postavy a level up"]},
+        {"Druhy": "druhy.md"},
+        {"Povolání": [{"Katalog povolání": "povolani.md"}] + section_items("Povolání")},
+        {"Podtřídy": [{"Katalog podtříd": "podtridy.md"}] + section_items("Podtřídy")},
+        {"Pozadí": "pozadi.md"}, {"Featy": "featy.md"},
+    ]
+    rules = [
+        {"Rozcestník": "znalosti.md"},
+        {"Postava": character_nav},
+        {"Magie": [{"Kouzla": "kouzla.md"}]},
+        {"Výbava a předměty": equipment},
+        {"Netvoři": rules[2]["Bestiář"]},
+        {"Pravidla hry": list(player_nav["Pravidla hry"]) + [{"Glosář pravidel": "glosar.md"}]},
+        {"Nástroje PJ": list(dm_nav["Nástroje PJ"]) + [dm_nav["Pravidla kouzelných předmětů"]]},
+    ]
     nav = [{"Úvod": "README.md"}, {"Mapa": "mapa.md"}, {"Svět": world}, {"Hra": game},
-           {"Pravidla 2024": rules}, {"Projekt": rest + [{"Otevřené otázky": "Otevrene_otazky.md"}, {"Pravidla projektu": "AGENTS.md"}]}]
+           {"Znalosti": rules}, {"Projekt": rest + [{"Otevřené otázky": "Otevrene_otazky.md"}, {"Pravidla projektu": "AGENTS.md"}]}]
     NAV_INDEX["/"] = "Úvod Montelien"
     NAV_INDEX["/mapa/"] = "Mapa Interaktivní mapa"
     (DOCS / "nav_index.json").write_text(json.dumps(NAV_INDEX, ensure_ascii=False), encoding="utf-8")
-    watch = "\n".join(f"  - ../{d}" for d in [s for s in os.listdir(ROOT)
-                      if (ROOT / s).is_dir() and s not in SKIP and not s.startswith(".")])
+    watch_dirs = [s for s in os.listdir(ROOT)
+                  if (ROOT / s).is_dir() and s not in SKIP and not s.startswith(".")]
+    for required in ("14_Povolani", "15_Podtridy"):
+        if required not in watch_dirs:
+            watch_dirs.append(required)
+    watch = "\n".join(f"  - ../{d}" for d in sorted(watch_dirs))
     cfg = f"""# Generováno web/build.py – neupravovat ručně
 site_name: Montelien
 site_description: Lore a kampaně D&D 5e (2024)
@@ -547,6 +692,7 @@ markdown_extensions:
 extra_css:
   - assets/easymde/easymde.min.css
   - assets/extra.css
+  - assets/katalog.css
   - assets/navigation.css
   - assets/postava.css
   - assets/postavy.css
@@ -560,9 +706,12 @@ extra_javascript:
   - assets/navigation.js
   - assets/editor.js
   - assets/pravidla_engine.js
+  - assets/katalog.js
   - assets/postava.js
   - assets/postavy.js
   - assets/druhy.js
+  - assets/pravidla_katalog.js
+  - assets/znalosti.js
   - assets/heraldika.js
   - assets/kouzla.js
   - assets/srd.js
@@ -573,6 +722,10 @@ not_in_nav: |
   /postavy.md
   /kouzla.md
   /bestiar.md
+  /povolani.md
+  /podtridy.md
+  /pozadi.md
+  /featy.md
   /predmety.md
   /glosar.md
 validation:

@@ -11,6 +11,8 @@ eq([R.volby_trid.Metamagic.trida, R.volby_trid["Eldritch Invocation"].trida], ["
 const legacySubclasses = Object.values(R.podtridy).filter(s => s.legacy);
 eq(legacySubclasses.length, 53, "úplný seznam legacy subclass");
 t(legacySubclasses.every(s => s.alternativa_2024 && s.rok && s.overeno && s.overeno.length), "každá legacy subclass má alternativu a zdroj");
+const sailorSkills = R.pozadi.Sailor.dovednosti.split(/ and |, /).map(s => s.trim());
+t(sailorSkills.every(s => !E.classSkillOptions("Fighter", sailorSkills).includes(s)), "tvorba postavy nenabízí dovednost z pozadí jako class skill");
 const officialSubclasses = Object.values(R.podtridy).filter(s => !s.legacy && !s.treti_strana);
 t(officialSubclasses.every(s => s.rok && s.overeno && s.overeno.length), "každá vydaná oficiální subclass má rok a ověřovací URL");
 const groupedRules = JSON.parse(JSON.stringify(R));

@@ -95,13 +95,17 @@
     if (t === "bestiar") CUR = String(n);
     pre.then(function (d) {
       var x = d.filter(function (e) { return e.nazev.toLowerCase() === String(n).toLowerCase(); })[0];
-      var bg = document.createElement("div"); bg.className = "ed-modal-bg";
+      var bg = document.createElement("div"); bg.className = "kat-modal-backdrop ed-modal-bg";
       var add = x && t === "bestiar" && document.body.classList.contains("ed-on") ? '<button class="ed-btn ed-primary srd-add">+ Přidat do wiki jako netvora</button> ' : '';
       var cp = x ? '<button class="ed-btn srd-copy" title="Zkopíruje Markdown odkaz pro vložení do stránky">Kopírovat odkaz</button> ' : '';
-      bg.innerHTML = '<div class="ed-modal kz-modal">' + (x ? detail(t, x) : '<h2>' + esc(n) + '</h2><p>Není v SRD 5.2.1.</p>') + '<div class="ed-bar">' + add + cp + '<button class="ed-btn srd-close">Zavřít</button></div></div>';
+      bg.innerHTML = '<div class="kat-modal srd-modal ed-modal kz-modal">' + (x ? detail(t, x) : '<h2>' + esc(n) + '</h2><p>Není v SRD 5.2.1.</p>') + '<div class="ed-bar">' + add + cp + '<button class="ed-btn srd-close">Zavřít</button></div></div>';
       var ad = bg.querySelector(".srd-add"); if (ad) ad.addEventListener("click", function (e) { e.stopPropagation(); addToWiki(x); });
       var c = bg.querySelector(".srd-copy"); if (c) c.addEventListener("click", function (e) { e.stopPropagation(); navigator.clipboard && navigator.clipboard.writeText("[" + x.nazev + "](#srd-" + t + "-" + x.nazev.replace(/ /g, "_") + ")"); c.textContent = "Zkopírováno ✓"; });
-      document.body.appendChild(bg); bg.addEventListener("click", function (e) { if (e.target === bg || e.target.classList.contains("srd-close")) bg.remove(); });
+      document.body.appendChild(bg);
+      function close() { bg.remove(); document.removeEventListener("keydown", onKey); }
+      function onKey(e) { if (e.key === "Escape") close(); }
+      document.addEventListener("keydown", onKey);
+      bg.addEventListener("click", function (e) { if (e.target === bg || e.target.classList.contains("srd-close")) close(); });
     });
   }
   window.MontelienSRD = { show: show, load: load };
@@ -110,6 +114,7 @@
     if (h) { var mm = h.getAttribute("href").match(/^#srd-(bestiar|predmety|glosar|featy)-(.+)$/); if (mm) { e.preventDefault(); show(mm[1], decodeURIComponent(mm[2]).replace(/_/g, " ")); return; } }
     var a = e.target.closest && e.target.closest(".srd-link"); if (a) { e.preventDefault(); show(a.dataset.typ, a.dataset.nazev); } });
   var COLS = { bestiar: [["nazev", "Netvor"], ["cr", "CR"], ["typ", "Typ"], ["velikost", "Velikost"], ["ac", "AC"], ["hp", "HP"]], predmety: [["nazev", "Předmět"], ["kategorie", "Kategorie"], ["vzacnost", "Vzácnost"], ["druh", "Druh"]], glosar: [["nazev", "Heslo"], ["stitek", "Štítek"]] };
+  function norm(s) { return window.MontelienKatalog ? window.MontelienKatalog.norm(s) : String(s || "").toLowerCase(); }
   function catalog() {
     document.querySelectorAll(".srd-katalog").forEach(function (el) {
       if (el.dataset.ready) return; el.dataset.ready = "1"; var t = el.dataset.typ, cols = COLS[t];
@@ -117,13 +122,22 @@
         if (el.dataset.pole) { var P = el.dataset.pole.split("|"), H = el.dataset.hodnoty.split("|"); d = d.filter(function (x) { return P.every(function (p, i) { return H[i].split(",").indexOf(String(x[p])) >= 0; }); }); }
         if (el.dataset.crmin) d = d.filter(function (x) { return x.cr_num >= Number(el.dataset.crmin) && x.cr_num <= Number(el.dataset.crmax); });
         var f2 = cols[2] ? cols[2][0] : null, vals = {}; d.forEach(function (x) { if (f2 && x[f2]) vals[x[f2]] = 1; });
-        el.innerHTML = '<div class="kz-filtr"><input class="q" placeholder="Hledat…">' + (f2 ? '<select class="f"><option value="">' + cols[2][1] + ': vše</option>' + Object.keys(vals).sort().map(function (v) { return '<option>' + esc(v) + '</option>'; }).join("") + '</select>' : '') + (t === "bestiar" ? '<input class="crmin" type="number" placeholder="CR od" style="width:6em"><input class="crmax" type="number" placeholder="CR do" style="width:6em">' : '') + '<span class="n"></span></div><table class="kz-list"><thead><tr>' + cols.map(function (c) { return '<th>' + c[1] + '</th>'; }).join("") + '</tr></thead><tbody></tbody></table>';
-        var tb = el.querySelector("tbody");
+        el.innerHTML = '<div class="kat-toolbar"><input class="kat-search q" placeholder="Hledat…" aria-label="Hledat v katalogu"><div class="kat-filters">'
+          + (f2 ? '<select class="f"><option value="">' + esc(cols[2][1]) + ': vše</option>' + Object.keys(vals).sort().map(function (v) { return '<option>' + esc(v) + '</option>'; }).join("") + '</select>' : '')
+          + (t === "bestiar" ? '<input class="kat-search crmin" type="number" placeholder="CR od" aria-label="CR od"><input class="kat-search crmax" type="number" placeholder="CR do" aria-label="CR do">' : '')
+          + '</div></div><p class="kat-count n"></p><div class="kat-grid"></div>';
+        var grid = el.querySelector(".kat-grid");
         function draw() {
-          var q = el.querySelector(".q").value.toLowerCase(), f = el.querySelector(".f") ? el.querySelector(".f").value : "", lo = el.querySelector(".crmin"), hi = el.querySelector(".crmax");
-          var rows = d.filter(function (x) { return (!q || (x.nazev + " " + (x.text || "")).toLowerCase().indexOf(q) >= 0) && (!f || x[f2] === f) && (!lo || lo.value === "" || x.cr_num >= Number(lo.value)) && (!hi || hi.value === "" || x.cr_num <= Number(hi.value)); });
+          var q = norm(el.querySelector(".q").value), f = el.querySelector(".f") ? el.querySelector(".f").value : "", lo = el.querySelector(".crmin"), hi = el.querySelector(".crmax");
+          var rows = d.filter(function (x) { return (!q || norm(x.nazev + " " + (x.text || "")).indexOf(q) >= 0) && (!f || x[f2] === f) && (!lo || lo.value === "" || x.cr_num >= Number(lo.value)) && (!hi || hi.value === "" || x.cr_num <= Number(hi.value)); });
           el.querySelector(".n").textContent = rows.length + " položek";
-          tb.innerHTML = rows.slice(0, 700).map(function (x) { return '<tr>' + cols.map(function (c, i) { return '<td>' + (i ? esc(x[c[0]]) : '<a href="#" class="srd-link" data-typ="' + t + '" data-nazev="' + esc(x.nazev) + '">' + esc(x.nazev) + '</a>') + '</td>'; }).join("") + '</tr>'; }).join("");
+          grid.innerHTML = rows.slice(0, 700).map(function (x) {
+            var chips = cols.slice(1).map(function (c) { return x[c[0]] ? '<span class="kat-chip">' + esc(c[1] + ": " + x[c[0]]) + "</span>" : ""; }).join("");
+            var badge = t === "bestiar" ? '<span class="kat-badge kat-badge-2024">CR ' + esc(x.cr) + "</span>"
+              : '<span class="kat-badge kat-badge-2024">SRD 5.2.1</span>';
+            return '<article class="kat-card"><div class="kat-card-body"><button type="button" class="kat-card-title srd-link" data-typ="' + t + '" data-nazev="' + esc(x.nazev) + '">' + esc(x.nazev) + "</button>"
+              + '<div class="kat-badges">' + badge + "</div><div class=\"kat-card-chips\">" + chips + "</div></div></article>";
+          }).join("") || '<p class="kat-empty">Žádné položky neodpovídají filtrům.</p>';
         }
         el.querySelectorAll("input,select").forEach(function (i) { i.addEventListener("input", draw); }); draw();
       });

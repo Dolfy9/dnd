@@ -111,12 +111,10 @@ def build(docs: Path):
     cls_nav.insert(0, w("phb/povolani/index.md", page("Povolání", idx)))
 
     # PHB – druhy, pozadí, featy
-    b = ""
-    for n, s in sorted(p["druhy"].items()):
-        b += f"## {n}\n\n*{s.get('zdroj', '')}* · Size: {s.get('velikost', '')} · Speed: {s.get('rychlost', '')} ft\n\n"
-        for tn, tt in (s.get("rysy") or {}).items():
-            b += f"**{tn}.** " + para(tt if isinstance(tt, str) else tt.get("text", "")) + "\n\n"
-    druhy = w("phb/druhy.md", page("Druhy (Species)", b))
+    druhy = w("phb/druhy.md", page(
+        "Druhy (Species)",
+        "Katalog druhů a jejich pravidla jsou přesunuty do [Katalogu druhů](../../druhy.md)."
+    ))
     b = "| Background | Ability Scores | Origin Feat | Skills | Tool |\n|---|---|---|---|---|\n" + "".join(
         f"| **{n}** | {s.get('atributy', '')} | {s.get('feat', '')} | {s.get('dovednosti', '')} | {s.get('nastroj', '')} |\n" for n, s in sorted(p["pozadi"].items()))
     b += "\n" + "".join(f"### {n}\n\n**Equipment:** {s.get('vybava', '')}\n\n" for n, s in sorted(p["pozadi"].items()))

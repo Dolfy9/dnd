@@ -31,23 +31,25 @@ def homepage_tiles(root):
             noun = "položek"
         return f"{count} {noun}"
 
+    rules = json.loads((root / "web/assets/pravidla2024.json").read_text(encoding="utf-8"))
+    knowledge_count = sum(len(rules.get(key, {})) for key in ("druhy", "tridy", "podtridy", "pozadi", "featy"))
+    knowledge_count += sum(entries(path) for path in (
+        "web/assets/kouzla2024.json", "web/assets/srd/bestiar.json",
+        "web/assets/srd/predmety.json", "web/assets/srd/glosar.json",
+    ))
     tiles = [
         ("mapa", "Mapa", "mapa/", 1, "Prozkoumej svět a jeho vrstvy."),
         ("zeme", "Země", "zeme/", pages("02_Zeme"), "Státy, knížectví a svobodná území."),
         ("mesta", "Města", "mesta/", pages("03_Mesta"), "Sídla, přístavy a pevnosti."),
         ("obchody", "Obchody", "obchody/", pages("12_Obchody"), "Obchody, služby a jejich nabídky."),
         ("postavy", "Postavy", "postavy/", pages("04_Postavy"), "Najdi postavu podle jména a vazeb."),
-        ("druhy", "Druhy", "druhy/", len(json.loads((root / "web/assets/pravidla2024.json").read_text(encoding="utf-8"))["druhy"]), "Prohlédni druhy a jejich pravidla."),
+        ("znalosti", "Znalosti", "znalosti/", knowledge_count, "Pravidla, druhy, povolání, kouzla, výbava a bestiář."),
         ("frakce", "Frakce", "frakce/", pages("05_Frakce"), "Řády, odboj a další mocenské skupiny."),
         ("kampane", "Kampaně", "kampane/", pages("07_Kampane"), "Příběhové oblouky a jejich záznamy."),
         ("questy", "Questy", "questy/", pages("08_Questy"), "Dobrodružství a úkoly."),
         ("sezeni", "Sezení", "sezeni/", pages("10_Sezeni"), "Záznamy odehraných her."),
         ("hadanky", "Hádanky", "hadanky/", pages("09_Hadanky"), "Šifry, pasti a záhady."),
         ("knihy", "Knihy", "knihy/", pages("06_Knihy_a_Dokumenty"), "Texty, kroniky a listiny."),
-        ("bestiar", "Bestiář", "bestiar/", entries("web/assets/srd/bestiar.json"), "Netvoři ze SRD 5.2.1."),
-        ("kouzla", "Kouzla", "kouzla/", entries("web/assets/kouzla2024.json"), "Kouzla podle pravidel 2024."),
-        ("predmety", "Předměty", "predmety/", entries("web/assets/srd/predmety.json"), "Výbava a magické předměty."),
-        ("glosar", "Glosář", "glosar/", entries("web/assets/srd/glosar.json"), "Pojmy a stavy pravidel."),
         ("boj", "Bojový modul", "boj/", 1, "Mapa střetu, iniciativa a přehled boje."),
     ]
     links = []
@@ -66,11 +68,16 @@ def homepage_tiles(root):
 def on_page_markdown(markdown, page, config, files):
     src = page.file.src_path
     root = Path(__file__).resolve().parent.parent
-    if src == "README.md" and not 'class="nav-home-tiles"' in markdown:
-        heading = re.search(r"(?m)^#\s+.+$", markdown)
-        if heading:
-            pos = heading.end()
-            markdown = markdown[:pos] + "\n\n" + homepage_tiles(root) + "\n" + markdown[pos:]
+    if src == "README.md":
+        tiles = homepage_tiles(root)
+        existing = re.search(r'<section class="nav-home-tiles"[^>]*>.*?</section>', markdown, re.S)
+        if existing:
+            markdown = markdown[:existing.start()] + tiles + markdown[existing.end():]
+        else:
+            heading = re.search(r"(?m)^#\s+.+$", markdown)
+            if heading:
+                pos = heading.end()
+                markdown = markdown[:pos] + "\n\n" + tiles + "\n" + markdown[pos:]
     data = page.meta.get("postava")
     override = data.get("portret") if isinstance(data, dict) else None
     portrait_path = override_path = None

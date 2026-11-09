@@ -766,12 +766,16 @@
           [mode, a1, a2].forEach(function (x) { x.addEventListener("change", ub); }); ub();
           var lb = el("label", {}, "Bonus z pozadí"); lb.appendChild(mode); bm.appendChild(lb); bm.appendChild(a1); bm.appendChild(a2); dyn.appendChild(bm);
         }
-        if (s.druh === "Human") { var hr = el("div", { class: "lu-top" }); hr.appendChild(sel("Versatile – Origin feat", origin, "origin_feat")); hr.appendChild(sel("Skillful – dovednost", P.SKILLS, "skillful")); dyn.appendChild(hr); }
-        if (s.druh === "Elf") dyn.appendChild(sel("Keen Senses", ["Insight", "Perception", "Survival"], "keen"));
+        if (s.druh === "Human") { var hr = el("div", { class: "lu-top" }); hr.appendChild(sel("Versatile – Origin feat", origin, "origin_feat")); hr.appendChild(sel("Skillful – dovednost", P.SKILLS, "skillful", null, draw)); dyn.appendChild(hr); }
+        if (s.druh === "Elf") dyn.appendChild(sel("Keen Senses", ["Insight", "Perception", "Survival"], "keen", null, draw));
         if (s.druh) dyn.appendChild(el("label", {}, "Volby druhu (lineage, ancestry…)")).appendChild((function () { var i = el("input", { type: "text" }); i.addEventListener("change", function () { s.druh_volby = i.value; }); return i; })());
         if (s.trida) {
-          var r = P.classSkillRule(s.trida), sk = el("div", { class: "pf-checks pf-skills" }); sk.appendChild(el("h5", {}, s.trida + ": vyber " + r.pocet + " dovednosti"));
-          r.z.forEach(function (x) { var l = el("label", {}), i = el("input", { type: "checkbox" }); i.addEventListener("change", function () { if (i.checked) s.dovednosti.push(x); else s.dovednosti = s.dovednosti.filter(function (y) { return y !== x; }); if (s.dovednosti.length > r.pocet) { i.checked = false; s.dovednosti.pop(); } }); l.appendChild(i); l.appendChild(document.createTextNode(" " + x)); sk.appendChild(l); });
+          var r = P.classSkillRule(s.trida), known = bg ? String(bg.dovednosti || "").split(/ and |, /).map(function (x) { return x.trim(); }) : [];
+          if (s.druh === "Human" && s.skillful) known.push(s.skillful);
+          if (s.druh === "Elf" && s.keen) known.push(s.keen);
+          var choices = P.classSkillOptions(s.trida, known), sk = el("div", { class: "pf-checks pf-skills" });
+          sk.appendChild(el("h5", {}, s.trida + ": vyber " + r.pocet + " dovednosti"));
+          choices.forEach(function (x) { var l = el("label", {}), i = el("input", { type: "checkbox" }); i.addEventListener("change", function () { if (i.checked) s.dovednosti.push(x); else s.dovednosti = s.dovednosti.filter(function (y) { return y !== x; }); if (s.dovednosti.length > r.pocet) { i.checked = false; s.dovednosti.pop(); } }); l.appendChild(i); l.appendChild(document.createTextNode(" " + x)); sk.appendChild(l); });
           dyn.appendChild(sk);
           if (P.classMilestones(s.trida).fs === 1) dyn.appendChild(sel("Fighting Style (feat)", fs, "fighting_style"));
         }

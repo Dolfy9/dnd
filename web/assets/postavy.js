@@ -5,6 +5,7 @@
     ["mesto", "Město", "mesta"],
     ["frakce", "Frakce", "frakce"],
     ["kampan", "Kampaň", "kampane"],
+    ["trida", "Povolání", "tridy"],
     ["stitek", "Štítek", "stitky"],
     ["obchod", "Obchod", "obchody"]
   ];
@@ -25,6 +26,11 @@
   function records(person, facet) {
     if (facet === "kategorie") return person.kategorie ? [{ value: person.kategorie, name: person.kategorie }] : [];
     if (facet === "stitek") return (person.stitky || []).map(function (value) { return { value: value, name: value }; });
+    if (facet === "trida") {
+      var classNames = ["Artificer", "Barbarian", "Bard", "Cleric", "Druid", "Fighter", "Monk", "Paladin", "Ranger", "Rogue", "Sorcerer", "Warlock", "Wizard"];
+      return classNames.filter(function (name) { return norm(person.tridy).indexOf(norm(name)) >= 0; })
+        .map(function (name) { return { value: name, name: name }; });
+    }
     var field = FACETS.filter(function (x) { return x[0] === facet; })[0];
     return field ? (person[field[2]] || []).map(function (item) {
       return { value: item.cesta, name: item.nazev, odvozeno: !!item.odvozeno, url: item.url };

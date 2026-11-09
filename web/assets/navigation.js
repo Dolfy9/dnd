@@ -18,7 +18,7 @@
     search: "M10.5 3a7.5 7.5 0 1 0 4.7 13.35L20.85 22 22 20.85l-5.65-5.65A7.5 7.5 0 0 0 10.5 3m0 2a5.5 5.5 0 1 1 0 11 5.5 5.5 0 0 1 0-11"
   };
   function icon(name) {
-    name = ({ zeme: "places", mesta: "city", postavy: "people", frakce: "project", kampane: "game",
+    name = ({ zeme: "places", mesta: "city", postavy: "people", frakce: "project", kampane: "game", znalosti: "rules",
       questy: "quest", sezeni: "game", hadanky: "spell", knihy: "book", bestiar: "beast",
       kouzla: "spell", predmety: "item", glosar: "glossary", boj: "game" })[name] || name;
     var svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
@@ -65,7 +65,7 @@
     }
     var activeLabel = activeItem && activeItem.querySelector(":scope > .md-nav__link, :scope > label.md-nav__link");
     var activeTitle = activeLabel && activeLabel.textContent.replace(/\s+\d+\s*$/, "").trim();
-    var icons = { "Úvod": "home", "Mapa": "map", "Svět": "world", "Hra": "game", "Pravidla 2024": "rules", "Projekt": "project" };
+    var icons = { "Úvod": "home", "Mapa": "map", "Svět": "world", "Hra": "game", "Znalosti": "rules", "Projekt": "project" };
     Array.prototype.forEach.call(tabs, function (tab) {
       var title = tab.textContent.trim();
       var link = document.createElement("a");
@@ -164,7 +164,7 @@
     if (search) header.appendChild(search);
   }
   function setupTabs() {
-    var labels = { "Úvod": "home", "Mapa": "map", "Interaktivní mapa": "map", "Svět": "world", "Hra": "game", "Pravidla 2024": "rules", "Projekt": "project" };
+    var labels = { "Úvod": "home", "Mapa": "map", "Interaktivní mapa": "map", "Svět": "world", "Hra": "game", "Znalosti": "rules", "Projekt": "project" };
     document.querySelectorAll(".md-tabs__link").forEach(function (link) {
       if (link.querySelector(".nav-tab-icon")) return;
       var label = link.textContent.trim();

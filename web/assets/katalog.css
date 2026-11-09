@@ -1,0 +1,50 @@
+.kat-toolbar { display: grid; gap: .65rem; margin: 1rem 0; }
+.kat-search { width: 100%; padding: .7rem; border: 1px solid var(--md-default-fg-color--lightest); border-radius: .4rem; background: var(--md-default-bg-color); color: var(--md-default-fg-color); }
+.kat-filters { display: flex; flex-wrap: wrap; gap: .5rem; }
+.kat-filters select { min-width: 9rem; max-width: 100%; padding: .45rem; border: 1px solid var(--md-default-fg-color--lightest); border-radius: .35rem; background: var(--md-default-bg-color); color: var(--md-default-fg-color); }
+.kat-count { color: var(--md-default-fg-color--light); font-size: .8rem; }
+.kat-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(190px, 1fr)); gap: 1rem; align-items: stretch; }
+.kat-card { min-width: 0; overflow: hidden; border: 1px solid var(--md-default-fg-color--lightest); border-radius: .65rem; background: var(--md-default-bg-color); display: flex; flex-direction: column; }
+.kat-card-image, .kat-image-placeholder { width: 100%; aspect-ratio: 2/3; object-fit: cover; display: grid; place-items: center; background: var(--md-code-bg-color); color: var(--md-default-fg-color--light); text-align: center; }
+.kat-card-body { padding: .75rem; display: flex; flex: 1; flex-direction: column; align-items: flex-start; gap: .4rem; }
+.kat-card-title { border: 0; padding: 0; background: transparent; color: var(--md-primary-fg-color); font: inherit; font-weight: 700; text-align: left; cursor: pointer; }
+.kat-card-subtitle { margin: 0; color: var(--md-default-fg-color--light); font-size: .82rem; }
+.kat-badges, .kat-card-chips { display: flex; flex-wrap: wrap; gap: .3rem; }
+.kat-badge { display: inline-flex; align-items: center; padding: .12rem .4rem; border: 1px solid transparent; border-radius: .35rem; font-size: .7rem; line-height: 1.35; }
+.kat-badge-2024 { color: #1d5a2c; background: #d8f2dd; }
+.kat-badge-third { color: #56318a; background: #eee3ff; border-color: #cbb4ed; }
+.kat-badge-legacy { color: #7b4d00; background: #fff0c2; }
+.kat-badge-announced { color: #07566b; background: #d9f3f8; border-color: #9bd5e2; }
+.kat-chip { padding: .1rem .35rem; border-radius: .3rem; background: var(--md-code-bg-color); font-size: .72rem; }
+.kat-card-page { margin-top: auto; font-size: .8rem; }
+.kat-empty { padding: 1rem; border: 1px dashed var(--md-default-fg-color--lightest); border-radius: .5rem; }
+.kat-modal-backdrop { position: fixed; inset: 0; z-index: 10000; display: grid; place-items: center; padding: 1rem; background: #0009; }
+.kat-modal { position: relative; display: grid; grid-template-columns: minmax(12rem, 17rem) minmax(0, 1fr); gap: 1.4rem; align-items: start; width: min(64rem, 100%); max-height: 90vh; overflow: auto; padding: 1.5rem; border-radius: .8rem; background: var(--md-default-bg-color); color: var(--md-default-fg-color); box-shadow: 0 1.5rem 4rem #0008; }
+.kat-modal-no-image { grid-template-columns: minmax(0, 1fr); }
+.kat-modal-close { position: absolute; top: .5rem; right: .65rem; z-index: 1; border: 0; background: transparent; color: inherit; font-size: 1.8rem; line-height: 1; cursor: pointer; }
+.kat-modal-image { position: sticky; top: 0; width: 100%; max-height: 70vh; object-fit: contain; border-radius: .5rem; }
+.kat-modal-content { min-width: 0; }
+.kat-modal-content h2 { margin: 0 2.2rem .3rem 0; }
+.kat-modal-meta, .kat-modal-source { color: var(--md-default-fg-color--light); }
+.kat-modal-chips { display: flex; flex-wrap: wrap; gap: .45rem; margin: .8rem 0; }
+.kat-modal-chip { max-width: 100%; padding: .35rem .6rem; border: 1px solid var(--md-default-fg-color--lightest); border-radius: .45rem; background: var(--md-code-bg-color); overflow-wrap: anywhere; }
+.kat-modal-chip small { display: block; color: var(--md-default-fg-color--light); font-size: .65rem; text-transform: uppercase; }
+.kat-modal-overview { line-height: 1.55; }
+.kat-modal-features { display: grid; gap: .6rem; }
+.kat-modal-feature { padding: .3rem 0 .3rem .7rem; border-left: 3px solid var(--md-accent-fg-color, #c8962e); }
+.kat-modal-feature h4 { margin: 0 0 .2rem; }
+.kat-modal-feature p { margin: 0; line-height: 1.5; }
+.kat-modal-actions { display: flex; flex-wrap: wrap; gap: .6rem; margin-top: 1rem; }
+.srd-modal { grid-template-columns: minmax(0, 1fr); }
+.znalosti-search { display: grid; gap: .4rem; margin: 1rem 0 1.5rem; }
+.znalosti-search > div { display: flex; flex-wrap: wrap; gap: .5rem; }
+.znalosti-search input { flex: 1; min-width: 12rem; padding: .7rem; border: 1px solid var(--md-default-fg-color--lightest); border-radius: .4rem; background: var(--md-default-bg-color); color: var(--md-default-fg-color); }
+.znalosti-tile { color: inherit; text-decoration: none; }
+.znalosti-tile .kat-card-body { min-height: 7rem; }
+.znalosti-tile strong { font-size: 1.1rem; color: var(--md-primary-fg-color); }
+.znalosti-tile small { color: var(--md-default-fg-color--light); }
+.znalosti-tile:hover { border-color: var(--md-accent-fg-color); }
+@media (max-width: 700px) {
+  .kat-modal { grid-template-columns: minmax(0, 1fr); gap: .8rem; padding: 1rem; }
+  .kat-modal-image { position: static; width: min(12rem, 60%); max-height: 35vh; justify-self: center; }
+}

@@ -243,6 +243,10 @@
     var list = /any/.test(s) ? SKILLS.slice() : SKILLS.filter(function (k) { return s.indexOf(k) >= 0; });
     return { pocet: m ? Number(m[1]) : 0, z: list };
   }
+  function classSkillOptions(n, unavailable) {
+    unavailable = unavailable || [];
+    return classSkillRule(n).z.filter(function (skill) { return unavailable.indexOf(skill) < 0; });
+  }
   function expectedSkills(c) {
     var r = [], n = 0, bg = R.pozadi[c.pozadi], pov = [];
     var k = classSkillRule(c.tridy[0].trida); n += k.pocet; r.push(c.tridy[0].trida + " " + k.pocet);
@@ -474,6 +478,6 @@
   var api = { init: init, AB: AB, SKILLS: SKILLS, PRIMARY: PRIMARY, MULTI_PROF: MULTI_PROF, STANDARD: STANDARD, COST: COST, totalLevel: totalLevel, pb: pb,
     classMilestones: classMilestones, featSlots: featSlots, featOptions: featOptions, checkPrereq: checkPrereq, multiclassCheck: multiclassCheck,
     derive: derive, validate: validate, planLevelUp: planLevelUp, applyLevelUp: applyLevelUp, featAbilityChoices: featAbilityChoices,
-    classSkillRule: classSkillRule, subclassOptions: subclassOptions, setSpells: setSpells, spellRules: spellRules, spellCounts: spellCounts, validateSpells: validateSpells, checkSpellChange: checkSpellChange, changeRulesText: changeRulesText, expectedSkills: expectedSkills, createCharacter: createCharacter, armorTraining: armorTraining };
+    classSkillRule: classSkillRule, classSkillOptions: classSkillOptions, subclassOptions: subclassOptions, setSpells: setSpells, spellRules: spellRules, spellCounts: spellCounts, validateSpells: validateSpells, checkSpellChange: checkSpellChange, changeRulesText: changeRulesText, expectedSkills: expectedSkills, createCharacter: createCharacter, armorTraining: armorTraining };
   return api;
 });
