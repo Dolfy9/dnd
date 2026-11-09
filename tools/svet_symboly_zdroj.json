@@ -156,11 +156,11 @@
   "pozn": "hrad/město"
  },
  {
-  "typ": "kopar",
-  "x": 1062,
-  "y": 786,
-  "m": 1.7,
-  "pozn": "Kop Aram – město na ostrově"
+  "typ": "kop_aram",
+  "x": 1060,
+  "y": 748,
+  "m": 0.78,
+  "pozn": "Kop Aram – staré věže a obnovené obchodní město na ostrově (kresba DM)"
  },
  {
   "typ": "kostka",
@@ -312,14 +312,6 @@
   "pozn": "ledovcový jazyk k severnímu fjordu Nölienu"
  },
  {
-  "typ": "ledovcovy_jazyk",
-  "x": 1224,
-  "y": 330,
-  "m": 0.9,
-  "rot": 50,
-  "pozn": "ledovcový jazyk k východním fjordům Nölienu"
- },
- {
   "typ": "ledovy_utes",
   "x": 1381,
   "y": 369,
@@ -340,5 +332,320 @@
   "y": 201,
   "m": 0.85,
   "pozn": "ledový útes na pobřeží Fornheimu"
+ },
+ {
+  "typ": "vesnice2",
+  "x": 1005,
+  "y": 708,
+  "m": 0.45,
+  "pozn": "Kop Aram – sklady a domy na okraji ostrova (kresba DM)"
+ },
+ {
+  "typ": "vesnice",
+  "x": 1104,
+  "y": 714,
+  "m": 0.45,
+  "pozn": "Kop Aram – tržní domy na okraji ostrova (kresba DM)"
+ },
+ {
+  "typ": "pristav",
+  "x": 993,
+  "y": 682,
+  "m": 0.4,
+  "pozn": "Kop Aram – přístaviště na okraji ostrova (kresba DM)"
+ },
+ {
+  "typ": "pristav",
+  "x": 1114,
+  "y": 695,
+  "m": 0.4,
+  "pozn": "Kop Aram – přístaviště na okraji ostrova (kresba DM)"
+ },
+ {
+  "typ": "vesnice",
+  "x": 1208,
+  "y": 216,
+  "m": 0.55,
+  "pozn": "stavby v řadě na severním výběžku Khearazu (kresba DM)"
+ },
+ {
+  "typ": "vesnice2",
+  "x": 1248,
+  "y": 217,
+  "m": 0.55,
+  "pozn": "stavby v řadě na severním výběžku Khearazu (kresba DM)"
+ },
+ {
+  "typ": "tvar",
+  "x": 1267,
+  "y": 282,
+  "m": 1.25,
+  "pozn": "vyobrazená tvář na severním výběžku Khearazu (kresba DM; určení otevřené)"
+ },
+ {
+  "typ": "hora",
+  "x": 700,
+  "y": 608,
+  "m": 0.5,
+  "pozn": "horské značky na oválném hřbetu Bririe (kresba DM)"
+ },
+ {
+  "typ": "hora",
+  "x": 728,
+  "y": 618,
+  "m": 0.5,
+  "pozn": "horské značky na oválném hřbetu Bririe (kresba DM)"
+ },
+ {
+  "typ": "hora",
+  "x": 740,
+  "y": 640,
+  "m": 0.5,
+  "pozn": "horské značky na oválném hřbetu Bririe (kresba DM)"
+ },
+ {
+  "typ": "hora",
+  "x": 728,
+  "y": 662,
+  "m": 0.5,
+  "pozn": "horské značky na oválném hřbetu Bririe (kresba DM)"
+ },
+ {
+  "typ": "hora",
+  "x": 700,
+  "y": 672,
+  "m": 0.5,
+  "pozn": "horské značky na oválném hřbetu Bririe (kresba DM)"
+ },
+ {
+  "typ": "hora",
+  "x": 672,
+  "y": 662,
+  "m": 0.5,
+  "pozn": "horské značky na oválném hřbetu Bririe (kresba DM)"
+ },
+ {
+  "typ": "hora",
+  "x": 660,
+  "y": 640,
+  "m": 0.5,
+  "pozn": "horské značky na oválném hřbetu Bririe (kresba DM)"
+ },
+ {
+  "typ": "hora",
+  "x": 672,
+  "y": 618,
+  "m": 0.5,
+  "pozn": "horské značky na oválném hřbetu Bririe (kresba DM)"
+ },
+ {
+  "typ": "palma",
+  "x": 1308,
+  "y": 1055,
+  "m": 0.9,
+  "pozn": "palmy v oáze Tali (kresba DM)"
+ },
+ {
+  "typ": "strom",
+  "x": 1332,
+  "y": 1055,
+  "m": 0.85,
+  "pozn": "listnaté stromy v oáze Tali (kresba DM)"
+ },
+ {
+  "typ": "palma",
+  "x": 1356,
+  "y": 1068,
+  "m": 0.9,
+  "pozn": "palmy v oáze Tali (kresba DM)"
+ },
+ {
+  "typ": "strom",
+  "x": 1316,
+  "y": 1083,
+  "m": 0.85,
+  "pozn": "listnaté stromy v oáze Tali (kresba DM)"
+ },
+ {
+  "typ": "palma",
+  "x": 1340,
+  "y": 1091,
+  "m": 0.9,
+  "pozn": "palmy v oáze Tali (kresba DM)"
+ },
+ {
+  "typ": "strom",
+  "x": 1360,
+  "y": 1098,
+  "m": 0.85,
+  "pozn": "listnaté stromy v oáze Tali (kresba DM)"
+ },
+ {
+  "typ": "palma",
+  "x": 1307,
+  "y": 1110,
+  "m": 0.9,
+  "pozn": "palmy v oáze Tali (kresba DM)"
+ },
+ {
+  "typ": "strom",
+  "x": 1332,
+  "y": 1117,
+  "m": 0.85,
+  "pozn": "listnaté stromy v oáze Tali (kresba DM)"
+ },
+ {
+  "typ": "palma",
+  "x": 1354,
+  "y": 1127,
+  "m": 0.9,
+  "pozn": "palmy v oáze Tali (kresba DM)"
+ },
+ {
+  "typ": "strom",
+  "x": 1320,
+  "y": 1142,
+  "m": 0.85,
+  "pozn": "listnaté stromy v oáze Tali (kresba DM)"
+ },
+ {
+  "typ": "palma",
+  "x": 1302,
+  "y": 1048,
+  "m": 0.75,
+  "pozn": "hustá vegetace v oáze Tali (kresba DM)"
+ },
+ {
+  "typ": "strom",
+  "x": 1320,
+  "y": 1048,
+  "m": 0.75,
+  "pozn": "hustá vegetace v oáze Tali (kresba DM)"
+ },
+ {
+  "typ": "palma",
+  "x": 1340,
+  "y": 1048,
+  "m": 0.75,
+  "pozn": "hustá vegetace v oáze Tali (kresba DM)"
+ },
+ {
+  "typ": "strom",
+  "x": 1360,
+  "y": 1048,
+  "m": 0.75,
+  "pozn": "hustá vegetace v oáze Tali (kresba DM)"
+ },
+ {
+  "typ": "palma",
+  "x": 1302,
+  "y": 1068,
+  "m": 0.75,
+  "pozn": "hustá vegetace v oáze Tali (kresba DM)"
+ },
+ {
+  "typ": "strom",
+  "x": 1320,
+  "y": 1068,
+  "m": 0.75,
+  "pozn": "hustá vegetace v oáze Tali (kresba DM)"
+ },
+ {
+  "typ": "palma",
+  "x": 1340,
+  "y": 1068,
+  "m": 0.75,
+  "pozn": "hustá vegetace v oáze Tali (kresba DM)"
+ },
+ {
+  "typ": "strom",
+  "x": 1360,
+  "y": 1068,
+  "m": 0.75,
+  "pozn": "hustá vegetace v oáze Tali (kresba DM)"
+ },
+ {
+  "typ": "palma",
+  "x": 1302,
+  "y": 1088,
+  "m": 0.75,
+  "pozn": "hustá vegetace v oáze Tali (kresba DM)"
+ },
+ {
+  "typ": "strom",
+  "x": 1320,
+  "y": 1088,
+  "m": 0.75,
+  "pozn": "hustá vegetace v oáze Tali (kresba DM)"
+ },
+ {
+  "typ": "palma",
+  "x": 1340,
+  "y": 1088,
+  "m": 0.75,
+  "pozn": "hustá vegetace v oáze Tali (kresba DM)"
+ },
+ {
+  "typ": "strom",
+  "x": 1360,
+  "y": 1088,
+  "m": 0.75,
+  "pozn": "hustá vegetace v oáze Tali (kresba DM)"
+ },
+ {
+  "typ": "palma",
+  "x": 1302,
+  "y": 1108,
+  "m": 0.75,
+  "pozn": "hustá vegetace v oáze Tali (kresba DM)"
+ },
+ {
+  "typ": "strom",
+  "x": 1320,
+  "y": 1108,
+  "m": 0.75,
+  "pozn": "hustá vegetace v oáze Tali (kresba DM)"
+ },
+ {
+  "typ": "palma",
+  "x": 1340,
+  "y": 1108,
+  "m": 0.75,
+  "pozn": "hustá vegetace v oáze Tali (kresba DM)"
+ },
+ {
+  "typ": "strom",
+  "x": 1360,
+  "y": 1108,
+  "m": 0.75,
+  "pozn": "hustá vegetace v oáze Tali (kresba DM)"
+ },
+ {
+  "typ": "palma",
+  "x": 1302,
+  "y": 1128,
+  "m": 0.75,
+  "pozn": "hustá vegetace v oáze Tali (kresba DM)"
+ },
+ {
+  "typ": "strom",
+  "x": 1320,
+  "y": 1128,
+  "m": 0.75,
+  "pozn": "hustá vegetace v oáze Tali (kresba DM)"
+ },
+ {
+  "typ": "palma",
+  "x": 1340,
+  "y": 1128,
+  "m": 0.75,
+  "pozn": "hustá vegetace v oáze Tali (kresba DM)"
+ },
+ {
+  "typ": "strom",
+  "x": 1360,
+  "y": 1128,
+  "m": 0.75,
+  "pozn": "hustá vegetace v oáze Tali (kresba DM)"
  }
 ]

@@ -13,6 +13,7 @@ JMENA = {
     "hory": "hora_a hora_b hora_c masiv_a skala hreben snih hora_d masiv_b hora_e hora_f masiv_c",
     "stromy": "jehl_1 jehl_2 jehl_3 jehl_4 jehl_5 jehl_6 list_1 list_2 list_3 list_4 list_5 list_6 palma_1 palma_2 palmy dzung_1 dzung_2 palma_3 rakos_1 rakos_2 ker_1 ker_2 suchy_1 suchy_2",
     "sidla": "vesnice vesnice2 mesto velkomesto hrad pevnost pristav vez majak chram zricenina kolonada kopar most strazni_vez",
+    "kop_aram": "kop_aram",
     "landmarky": "pyramida obelisk torii krystal tvar kostka kupole kolo lod vrak vir had demon vlny clun",
     "hranice": "kul_1 kul_2 kul_3 hranik palisada sibenice",
     "detaily": "zel_1 zel_2 zel_3 zel_4 zel_5 zel_6 sucha_1 sucha_2 sucha_3 sucha_4 sucha_5 sucha_6 kamen_1 kamen_2 kamen_3 vres maky kvety krik_1 krik_2 podzim_1 podzim_2 utes_1 utes_2",
@@ -23,7 +24,7 @@ JMENA = {
     "utesy_svisle": "utes_s1 utes_s2 utes_s3 utes_s4",
 }
 MAXH = 600
-MRIZKA = {"hory": (3, 4), "stromy": (4, 6), "sidla": (3, 5), "landmarky": (3, 5), "teren": (4, 5), "detaily": (4, 6), "hranice": (2, 3), "opevneni": (2, 3), "ledovce": (2, 3), "utesy": (2, 3), "utesy_svisle": (1, 4)}
+MRIZKA = {"hory": (3, 4), "stromy": (4, 6), "sidla": (3, 5), "kop_aram": (1, 1), "landmarky": (3, 5), "teren": (4, 5), "detaily": (4, 6), "hranice": (2, 3), "opevneni": (2, 3), "ledovce": (2, 3), "utesy": (2, 3), "utesy_svisle": (1, 4)}
 
 
 def km1(v, k):
@@ -113,7 +114,8 @@ def rez(arch, jmena):
         rgb = img[y + y0:y + y1, x + x0:x + x1]
         al = (a[y0:y1, x0:x1] * 255).astype(np.uint8)
         rgba = np.dstack([rgb, al])
-        k = min(1.0, MAXH / rgba.shape[0], MAXH * 1.6 / rgba.shape[1])
+        maxh = 1024 if arch == "kop_aram" else MAXH
+        k = min(1.0, maxh / rgba.shape[0], maxh * 1.6 / rgba.shape[1])
         if k < 1:
             rgba = cv2.resize(rgba, None, fx=k, fy=k, interpolation=cv2.INTER_AREA)
         cv2.imwrite(str(OUT / f"{nm}.webp"), rgba, [cv2.IMWRITE_WEBP_QUALITY, 88])

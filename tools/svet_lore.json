@@ -6,9 +6,23 @@
   "oblasti": [
     {"typ": "haj", "zdroj": "01_Svet/Mista/Vychodni_hvozd.md", "pozn": "Východní hvozd – Tirentův les v Mönohenu (hranice odhadem)", "body": [[1660,480],[1760,455],[1830,520],[1820,620],[1750,665],[1670,630],[1640,550]]},
     {"typ": "dzungle", "zdroj": "01_Svet/Mista/Hinai_Mihi.md", "pozn": "Hinai Mihi – temný prales na severním břehu jezera Amir (potvrdil DM)", "tmavy": true, "hustota": 1.2, "body": [[1282,651],[1278,668],[1269,683],[1256,696],[1241,705],[1223,710],[1204,710],[1186,706],[1169,698],[1156,686],[1146,671],[1140,654],[1140,637],[1144,620],[1153,605],[1166,593],[1182,584],[1199,579],[1218,578],[1236,582],[1253,591],[1266,603],[1276,617],[1282,634]]},
-    {"typ": "ledovec", "zdroj": "01_Svet/Mista/Fornheim.md", "pozn": "ledovce Fornheimu (poloha odhadem)", "body": [[1285,160],[1435,150],[1490,214],[1472,314],[1408,350],[1320,316]]},
+    {"typ": "ledovec", "zdroj": "01_Svet/Mista/Fornheim.md", "pozn": "ledovce Fornheimu (poloha odhadem)", "body": [[1320,160],[1435,150],[1490,214],[1472,314],[1408,350],[1320,316]]},
     {"typ": "poust", "zdroj": "01_Svet/Mista/Trosky_Draaru.md", "pozn": "Dräar – ostrov písku a rozvalin", "body": [[275,1018],[558,1018],[568,1110],[555,1199],[475,1210],[344,1204],[284,1160]]},
     {"typ": "poust", "zdroj": "01_Svet/Mista/Trosky_Draaru.md", "pozn": "písčitý ostrůvek Dräaru", "body": [[168,1168],[258,1168],[258,1244],[168,1244]]}
+  ],
+  "bez_snehu": [
+    {
+      "stat": "Khearaz",
+      "pozn": "severní výběžek Khearazu bez sněhu (kresba DM)",
+      "body": [
+        [1200, 177], [1208, 158], [1223, 145], [1242, 139], [1260, 142],
+        [1276, 151], [1292, 148], [1308, 158], [1317, 176], [1315, 197],
+        [1309, 216], [1315, 235], [1305, 251], [1310, 268], [1298, 282],
+        [1301, 298], [1287, 313], [1272, 326], [1256, 335], [1240, 328],
+        [1229, 315], [1218, 304], [1211, 288], [1204, 273], [1198, 254],
+        [1195, 236], [1199, 219], [1192, 203], [1198, 188]
+      ]
+    }
   ],
   "symboly": [
     {"typ": "zricenina", "x": 300, "y": 1150, "m": 0.8, "zdroj": "01_Svet/Mista/Trosky_Draaru.md", "pozn": "pohřbené bulváry Dräaru"},

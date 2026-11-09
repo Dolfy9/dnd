@@ -158,6 +158,12 @@ def barvy(data, out):
     snow_pos = yy + snow_jitter
     snow_t = smooth((snow_pos - PALETA["land"]["snow_start"]) / (PALETA["land"]["snow_end"] - PALETA["land"]["snow_start"]))
     snow = 1 - snow_t
+    no_snow = np.zeros((h, w), np.uint8)
+    for region in data.get("bez_snehu", []):
+        cv2.fillPoly(no_snow, [np.int32(np.array(region["body"]) * k)], 255)
+    no_snow_distance = cv2.distanceTransform(no_snow, cv2.DIST_L2, 3)
+    no_snow_alpha = smooth(no_snow_distance / 12)
+    snow *= 1 - no_snow_alpha
     snow_shade = np.clip(.14 + sum_(34) * .025, .06, .23)
     snow_color = rgb(PALETA["land"]["snow"])[None, None, :] * (1 - snow_shade[..., None]) + rgb(PALETA["land"]["snow_shade"])[None, None, :] * snow_shade[..., None]
     img = img * (1 - snow[..., None]) + snow_color * snow[..., None]

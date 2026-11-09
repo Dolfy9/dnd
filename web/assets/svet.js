@@ -125,7 +125,7 @@
       for (var fy = y0 + 4; fy < y1; fy += 10) for (var fx = x0 + 4; fx < x1; fx += 13) {
         var qx = fx + (Rf() - .5) * 4, qy = fy + (Rf() - .5) * 3;
         if (Rf() < .18 || !inPoly(qx, qy, a.body)) continue;
-        o.push('<rect x="' + (qx - 5.5).toFixed(1) + '" y="' + (qy - 4).toFixed(1) + '" width="' + (9 + Rf() * 3).toFixed(1) + '" height="' + (6.5 + Rf() * 2).toFixed(1) + '" transform="rotate(' + (ang + (Rf() - .5) * 12).toFixed(1) + " " + qx.toFixed(1) + " " + qy.toFixed(1) + ')" fill="url(#sv-f' + Math.floor(Rf() * 3) + ')" stroke="' + FIELD.line + '" stroke-width=".4" stroke-opacity="' + FIELD.stroke_opacity + '" opacity="' + FIELD.opacity + '"/>');
+        o.push('<rect x="' + (qx - 5.5).toFixed(1) + '" y="' + (qy - 4).toFixed(1) + '" width="' + (9 + Rf() * 3).toFixed(1) + '" height="' + (6.5 + Rf() * 2).toFixed(1) + '" transform="rotate(' + (ang + (Rf() - .5) * 12).toFixed(1) + " " + qx.toFixed(1) + " " + qy.toFixed(1) + ')" fill="url(#sv-f' + Math.floor(Rf() * 3) + ')" stroke="' + FIELD.line + '" stroke-width=".4" stroke-opacity="' + FIELD.stroke_opacity + '" opacity="' + (a.opacity == null ? FIELD.opacity : a.opacity) + '"/>');
       }
     });
     lakes.forEach(function (s) { o.push('<path d="' + pathD(s.body, true) + '" fill="url(#sv-jp)"/>'); });

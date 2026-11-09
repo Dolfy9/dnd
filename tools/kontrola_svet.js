@@ -110,6 +110,17 @@ function boxInArea(box, body) {
     break;
   }
 });
+(D.bez_snehu || []).forEach((f, i) => {
+  if (!ok(f.body) || f.body.length < 3) return;
+  for (let j = 0; j < f.body.length; j++) {
+    const a = f.body[j], b = f.body[(j + 1) % f.body.length], length = Math.hypot(a[0] - b[0], a[1] - b[1]);
+    if (length <= 40) continue;
+    const middle = [(a[0] + b[0]) / 2, (a[1] + b[1]) / 2];
+    if ([a, middle, b].every(p => vzdalenostKeKrajiPevniny(p[0], p[1]) <= 8)) continue;
+    err.push("bez_snehu[" + i + "] má přímý ne-pobřežní úsek " + length.toFixed(1) + " px (limit 40)");
+    break;
+  }
+});
 (D.oblasti || []).forEach((f, i) => {
   if (f.typ !== "pole") return;
   (D.oblasti || []).forEach((s, j) => {
@@ -131,7 +142,13 @@ const souse = (D.pevnina || []).map((f, i) => ({ f, i })).filter(({ f }) => f.ty
   const nalez = souse.find(({ f }) => uvnitr(s.x, s.y, f.body));
   if (nalez) err.push("vodní symbol " + s.typ + "[" + i + "] (" + s.x + "," + s.y + ") uvnitř pevnina[" + nalez.i + "]");
 });
-const landmarkTypes = new Set(["ledovy_utes", "chram", "hora", "hora2", "hora_snih", "masiv", "hreben", "skala"]);
+const landmarkTypes = new Set(["ledovy_utes", "chram", "hora", "hora2", "hora_snih", "masiv", "hreben", "skala", "kop_aram"]);
+const kopAram = (D.symboly || []).find(s => s.typ === "kop_aram");
+if (kopAram && M.kop_aram) {
+  const need = P.kop_aram.w * (kopAram.m || 1) * Math.pow(2, viewportSprites.max_zoom || 2.5)
+    * (viewportSprites.min_resolution_ratio || 2);
+  if (M.kop_aram.w < need) err.push("kop_aram má " + M.kop_aram.w + " px, při dané velikosti je pro viewport třeba " + need.toFixed(1) + " px");
+}
 const landmarks = (D.symboly || []).map((s, i) => ({ s, i, box: landmarkTypes.has(s.typ) ? spriteBox(s) : null }))
   .filter(x => x.box);
 for (let i = 0; i < landmarks.length; i++) for (let j = i + 1; j < landmarks.length; j++) {

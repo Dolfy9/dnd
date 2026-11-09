@@ -275,7 +275,8 @@ def lore(svet):
         if o["typ"] not in ("poust", "ledovec"):
             clipped.append(o)
             continue
-        for b in kousky(Polygon(o["body"]).buffer(0).intersection(land)):
+        shape = Polygon(o["body"]).buffer(0)
+        for b in kousky(shape.intersection(land)):
             clipped.append(o | {"body": b})
     ob[:] = clipped
 
@@ -332,6 +333,24 @@ def lore(svet):
         if o["typ"] == "hory" and len(o["body"]) > 2 and Polygon(o["body"]).buffer(0).centroid.y < 480:
             o["typ"] = "velehory"
     st = staty(svet, land, ob, mista)
+    bez_snehu = []
+    for region in Z.get("bez_snehu", []):
+        g = Polygon(region["body"]).buffer(0).intersection(land)
+        vlastnik = None
+        if region.get("stat"):
+            vlastnik = next((z for z in st if z["nazev"] == region["stat"]), None)
+            if vlastnik:
+                g = g.intersection(unary_union(vlastnik["polys"]))
+        shaped = [
+            irregular(p, 83021 + i * 137, 10.5, spacing=10)
+            for i, p in enumerate(geoms(g)) if p.geom_type == "Polygon" and p.area > 1
+        ]
+        g = unary_union(shaped).intersection(land) if shaped else Polygon()
+        if vlastnik:
+            g = g.intersection(unary_union(vlastnik["polys"]))
+        if not g.is_empty:
+            bez_snehu.append(g)
+    bez_snehu = unary_union(bez_snehu) if bez_snehu else Polygon()
     uzemi = {}
     vychodni_uzemi = {}
     neprirazene = []
@@ -383,14 +402,20 @@ def lore(svet):
     ob[:] = ob2
     ob3 = []
     for i, o in enumerate(ob):
+        if o["typ"] == "ledovec" and "východním fjordům" in o.get("pozn", ""):
+            continue
         if o["typ"] in ("ledovec", "velehory") and len(o["body"]) >= 3:
             poly = Polygon(o["body"]).buffer(0)
             ice = o["typ"] == "ledovec"
             amp = min(9, max(2.5, math.sqrt(poly.area) * .075)) if ice else 6
             shaped = irregular(poly, 42001 + i * 271, amp, spacing=4 if ice else 2).intersection(land)
+            if not bez_snehu.is_empty:
+                shaped = shaped.difference(bez_snehu)
             parts = []
             for j, b in enumerate(kousky(shaped, 45 if ice else 100)):
                 detail = irregular(Polygon(b).buffer(0), 52001 + i * 541 + j * 137, amp * .45, spacing=3.5 if ice else 2).intersection(land)
+                if not bez_snehu.is_empty:
+                    detail = detail.difference(bez_snehu)
                 parts.extend(kousky(detail, 35 if ice else 80))
             ob3.extend(o | {"body": b} for b in parts)
             continue
@@ -470,13 +495,13 @@ def lore(svet):
     sym = svet["symboly"]
     for s in Z["symboly"]:
         sym.append({k: s[k] for k in ("typ", "x", "y", "m")} | {"pozn": s["pozn"] + " (lore)"})
-    kop = next((s for s in sym if s["typ"] == "kopar"), None)
+    kop = next((s for s in sym if s["typ"] in ("kop_aram", "kopar")), None)
     if kop:
         n = 0
-        for a in np.linspace(0, 2 * np.pi, 14)[:-1]:
-            x, y = kop["x"] + np.cos(a) * 58, kop["y"] - 12 + np.sin(a) * 40
-            if not land.buffer(4).contains(Point(x, y)) and n < 6:
-                sym.append({"typ": "zricenina", "x": int(x), "y": int(y), "m": .42, "pozn": "věže starého Kop Aramu čnějící z hladiny (lore)"}); n += 1
+        for a in np.linspace(0, 2 * np.pi, 32, endpoint=False):
+            x, y = kop["x"] + np.cos(a) * 92, kop["y"] + np.sin(a) * 72
+            if not land.buffer(5).contains(Point(x, y)) and n < 4:
+                sym.append({"typ": "zricenina", "x": int(x), "y": int(y), "m": .32, "pozn": "zlomená věž Kop Aramu čnějící z hladiny (lore)"}); n += 1
     coast = land.boundary
     vybrane = []
     for x, y in [(130, 120), (215, 300), (470, 200), (360, 420)]:
@@ -522,6 +547,12 @@ def lore(svet):
     for ut in K.get("utesy", []):
         svet.setdefault("utesy", []).append({"typ": ut.get("typ", "utes"), "pozn": ut["nazev"], "body": ut["body"]})
     svet["symboly"] += K.get("pevnosti", [])
+    if not bez_snehu.is_empty:
+        ledove_symboly = {"ledova_kra", "ledovcovy_jazyk", "ledovy_utes"}
+        svet["symboly"] = [
+            s for s in svet["symboly"]
+            if s.get("typ") not in ledove_symboly or not bez_snehu.covers(Point(s["x"], s["y"]))
+        ]
     # nic nepřetéká do moře: oblasti oříznout podle souše
     le = land.buffer(-7)
     ob2 = []
@@ -532,6 +563,7 @@ def lore(svet):
             ob2.append(o | {"body": b})
     ob[:] = ob2
     svet["oblasti"] = ob
+    svet["bez_snehu"] = [{"body": body(p)} for p in geoms(bez_snehu) if p.geom_type == "Polygon" and p.area > 1]
     # obchodní cesty
     k = 4
     w, h = W // k, H // k

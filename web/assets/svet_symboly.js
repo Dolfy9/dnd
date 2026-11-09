@@ -88,6 +88,7 @@
     mesto: { nazev: "Opevněné město", spr: ["mesto"], w: 36 }, velkomesto: { nazev: "Velkoměsto", spr: ["velkomesto"], w: 46 },
     hrad: { nazev: "Hrad", spr: ["hrad"], w: 36 }, pevnost: { nazev: "Pevnost", spr: ["pevnost"], w: 40 },
     pristav: { nazev: "Přístav", spr: ["pristav"], w: 40 }, kopar: { nazev: "Město na ostrově", spr: ["kopar"], w: 50 },
+    kop_aram: { nazev: "Kop Aram – věže na ostrově", spr: ["kop_aram"], w: 96 },
     vez: { nazev: "Věž mága", spr: ["vez"], w: 20 }, strazni_vez: { nazev: "Strážní věž", spr: ["strazni_vez"], w: 20 },
     majak: { nazev: "Maják", spr: ["majak"], w: 22 }, chram: { nazev: "Chrám", spr: ["chram"], w: 34 },
     zricenina: { nazev: "Zřícenina", spr: ["zricenina"], w: 32 }, kolonada: { nazev: "Kolonáda", spr: ["kolonada"], w: 34 },
