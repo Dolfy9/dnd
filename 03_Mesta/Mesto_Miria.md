@@ -30,6 +30,14 @@ Svobodná obchodní metropole pod vládou konzula Timopea.
 ## Pro DM (tajné)
 - Návrh: Timopeus hraje na obě strany a vede tajný seznam ordenských agentů.
 
+## Heraldika
+
+> **Stav:** návrh
+
+![Znak – Miria](obrazky/Znak_miria_mesto.webp){.heraldika-img .heraldika-znak}
+
+**Znak:** Zlatá loď a tři mince.
+
 ## Související
 - Země: [Svobodné Město Miria](../02_Zeme/Svobodne_Mesto_Miria.md)
 - Vládce: [Konzul Timopeus](../04_Postavy/Vladci/Postava_Timopeus.md)

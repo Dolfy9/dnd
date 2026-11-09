@@ -30,6 +30,14 @@ Vznešené elfské město v Nölienu, sídlo krále Veanora I.
 ## Pro DM (tajné)
 - Návrh: nejstarší elfové opravdu Temný den zažili a znají pravdu o Tirentově zmizení.
 
+## Heraldika
+
+> **Stav:** návrh
+
+![Znak – Tel Palentin](obrazky/Znak_tel_palentin.webp){.heraldika-img .heraldika-znak}
+
+**Znak:** Stříbrný strom s palácem v koruně, nahoře tři hvězdy.
+
 ## Související
 - Země: [Elfský Stát Nölien](../02_Zeme/Elfsky_Stat_Nolien.md)
 - Vládce: [Král Veanor I.](../04_Postavy/Vladci/Postava_Veanor_I.md)

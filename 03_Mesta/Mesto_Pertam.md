@@ -30,6 +30,14 @@ Přírodní metropole Zairamu, sídlo kněžky Mi-Komde.
 ## Pro DM (tajné)
 - Návrh: pod chrámem roste první strom, který Zaira zasadila – zdroj její moci.
 
+## Heraldika
+
+> **Stav:** návrh
+
+![Znak – Pertam](obrazky/Znak_pertam.webp){.heraldika-img .heraldika-znak}
+
+**Znak:** Zelený chrám pod sluncem z klasů, dole květy.
+
 ## Související
 - Země: [Země Zairam](../02_Zeme/Zeme_Zairam.md)
 - Vládce: [Kněžka Mi-Komde](../04_Postavy/Vladci/Postava_Mi_Komde.md)

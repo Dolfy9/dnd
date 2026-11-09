@@ -1,0 +1,27 @@
+.heraldika-img {
+  display: inline-block;
+  object-fit: contain;
+  vertical-align: middle;
+  margin: 0 .45rem .65rem 0;
+  padding: 5px;
+  border: 1px solid var(--md-default-fg-color--lightest);
+  border-radius: 8px;
+  background: var(--md-code-bg-color);
+  box-shadow: 0 2px 8px color-mix(in srgb, var(--md-default-fg-color) 20%, transparent);
+}
+.heraldika-znak { width: 112px; height: 128px; }
+.heraldika-vlajka { width: 160px; height: 100px; }
+.heraldika-heading { display: inline-flex; align-items: center; gap: .6rem; margin-left: .7rem; vertical-align: middle; }
+.heraldika-heading img { object-fit: contain; border: 1px solid var(--md-default-fg-color--lightest); border-radius: 6px; background: var(--md-code-bg-color); padding: 3px; }
+.heraldika-head-znak { width: 64px; height: 64px; }
+.heraldika-head-vlajka { width: 96px; height: 64px; }
+.heraldika-nav-znak { width: 20px; height: 20px; object-fit: contain; margin-right: .4rem; vertical-align: middle; }
+.mapa-heraldika { display: inline-flex; align-items: center; gap: .45rem; }
+.mapa-heraldika > span { display: inline-flex; align-items: center; gap: .25rem; }
+.mapa-heraldika img { flex: 0 0 36px; width: 36px; height: 30px; max-width: none; object-fit: contain; background: var(--md-code-bg-color); border-radius: 3px; }
+.mapa-heraldika-mesto img { display: block; width: 64px; height: 72px; max-width: 100%; object-fit: contain; }
+@media (max-width: 600px) {
+  .heraldika-heading { gap: .25rem; margin-left: .25rem; }
+  .heraldika-head-znak { width: 44px; height: 44px; }
+  .heraldika-head-vlajka { width: 66px; height: 44px; }
+}

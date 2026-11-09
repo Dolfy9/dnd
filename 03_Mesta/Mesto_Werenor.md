@@ -31,6 +31,14 @@ Svobodné město ležící u hranic staré zkázy pod správou primase Perthama.
 ## Pro DM (tajné)
 - Kletba z Dräaru Werenoru nehrozí (DM). Návrh: Pertham ví proč – a mlčí o tom.
 
+## Heraldika
+
+> **Stav:** návrh
+
+![Znak – Werenor](obrazky/Znak_werenor_mesto.webp){.heraldika-img .heraldika-znak}
+
+**Znak:** Stříbrný most a pod ním zavřená kniha archivů.
+
 ## Související
 - Země: [Svobodné Město Werenor](../02_Zeme/Svobodne_Mesto_Werenor.md)
 - Vládce: [Primas Pertham](../04_Postavy/Vladci/Postava_Pertham.md)

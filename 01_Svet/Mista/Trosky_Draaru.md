@@ -26,3 +26,15 @@ Na mapě ostrov s pyramidami a troskami. Písečné duny pohřbily císařské b
 
 ## Pro DM (tajné)
 - Návrh: hlubiny Draaru jsou dílnou Irtis, kde kuje zbraň proti Ferienu. Démoni nejsou její – jsou to stvůry Antemia, které ji tam drží v obležení (nebo naopak hlídají její tajemství).
+
+## Heraldika
+
+> **Stav:** návrh
+
+![Znak – Dräar (stará říše)](obrazky/Znak_draar.webp){.heraldika-img .heraldika-znak} ![Vlajka – Dräar (stará říše)](obrazky/Vlajka_draar.webp){.heraldika-img .heraldika-vlajka}
+
+**Znak:** Historický znak císařství: v zeleném štítu zlatá císařská koruna; dnes zachovaný jen jako ohořelý, popraskaný štít.
+
+**Vlajka:** Roztrhaná, ohořelá zelená císařská zástava se zlatou korunou.
+
+**Proč:** Draar byl hlavní město říše v zeleném Draarském údolí. Po Temném dni z něj zbyl ostrov písku a rozvalin, proto je znak jen relikvie.

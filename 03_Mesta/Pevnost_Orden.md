@@ -32,6 +32,14 @@ Nedobytná centrála Ordenského řádu a Otce Samuela.
 ## Pro DM (tajné)
 - Návrh: v nejhlubším patře archivu jsou ferienské svitky, které Orden studuje – viz [Kosmologie](../01_Svet/Kosmologie_Ferien.md).
 
+## Heraldika
+
+> **Stav:** návrh
+
+![Znak – Pevnost Orden](obrazky/Znak_pevnost_orden.webp){.heraldika-img .heraldika-znak}
+
+**Znak:** Stříbrná pevnost vytesaná do černé hory, nad ní bezvýrazný ovál.
+
 ## Související
 - Země: [Teokracie Orden](../02_Zeme/Teokracie_Orden.md)
 - Vládce: [Otec Samuel (Hlava Ordenu)](../04_Postavy/Vladci/Postava_Otec_Samuel.md)

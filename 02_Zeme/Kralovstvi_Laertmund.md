@@ -8,6 +8,18 @@
 ## Historie a Současnost
 Laertmund je tradiční země zemědělců a stoických hraničářů. Král Iridin III. se snaží udržet mír a podrobit se příkazům Ordenu, aby uchránil svůj lid před dalšími krvavými čistkami.
 
+## Heraldika
+
+> **Stav:** návrh
+
+![Znak – Království Laertmund](obrazky/Znak_laertmund.webp){.heraldika-img .heraldika-znak} ![Vlajka – Království Laertmund](obrazky/Vlajka_laertmund.webp){.heraldika-img .heraldika-vlajka}
+
+**Znak:** V zeleném štítu zlatý pluh pod napjatým stříbrným lukem.
+
+**Vlajka:** Vodorovně zelená a obilně žlutá, uprostřed stříbrný luk.
+
+**Proč:** Země zemědělců a stoických hraničářů, skromný královský dvůr.
+
 ## Související
 - Sousedé (mapa): [Tali](../01_Svet/Mista/Tali.md), [Teokracie Orden](Teokracie_Orden.md)
 - Hlavní město: [Město Owappa](../03_Mesta/Mesto_Owappa.md)

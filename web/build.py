@@ -239,9 +239,16 @@ def postavy_index():
     (DOCS / "postavy_index.json").write_text(json.dumps(out, ensure_ascii=False, default=str), encoding="utf-8")
 
 
+def heraldika_index():
+    source = ROOT / "tools" / "heraldika.json"
+    if source.is_file():
+        shutil.copyfile(source, DOCS / "heraldika_index.json")
+
+
 def map_page():
     data = json.loads((ROOT / "11_Mapy" / "mista.json").read_text(encoding="utf-8"))
     palette = json.loads((WEB / "assets" / "svet" / "paleta.json").read_text(encoding="utf-8"))
+    heraldika = json.loads((ROOT / "tools" / "heraldika.json").read_text(encoding="utf-8"))
     for m in data["mista"]:
         m["url"] = "../" + re.sub(r"(README)?\.md$", "", m["odkaz"]) + ("" if m["odkaz"].endswith("README.md") else "/")
     bm = json.loads((ROOT / "11_Mapy" / "bojove_mapy.json").read_text(encoding="utf-8"))
@@ -273,6 +280,7 @@ Polohy „odhad“ čekají na potvrzení – viz <a href="../11_Mapy/Geografie/
 <script src="../assets/leaflet/leaflet.js"></script>
 <script>window.MONTELIEN_MISTA = {json.dumps(data, ensure_ascii=False)};</script>
 <script>window.SVET_PALETA = {json.dumps(palette, ensure_ascii=False)};</script>
+<script>window.MONTELIEN_HERALDIKA = {json.dumps(heraldika, ensure_ascii=False)};</script>
 <script src="../assets/leaflet/leaflet-geoman.min.js"></script>
 <script src="../assets/svet_symboly.js"></script>
 <script src="../assets/svet/sprity.js"></script>
@@ -302,6 +310,7 @@ def main():
     (DOCS / "boj.md").write_text("---\nhide:\n  - toc\n  - navigation\n---\n# Bojový modul\n\nBojové mapy s mřížkou (1 pole = 5 ft), žetony postav a netvorů, iniciativa a bojový pomocník podle pravidel 2024.\n\n<div id=\"boj-app\"></div>\n", encoding="utf-8")
     boj_index()
     postavy_index()
+    heraldika_index()
     boje.write_index(DOCS)
     (DOCS / "boje.md").write_text("---\nhide:\n  - toc\n  - navigation\n---\n# Správa bojů\n\nUložené boje podle kampaní a questů: stav, účastníci, kola a deník. Boj otevřeš v bojovém modulu, kde ho můžeš dál hrát, přiřadit nebo uložit jako nový.\n\n<div id=\"boje-app\"></div>\n", encoding="utf-8")
     (DOCS / "kouzla.md").write_text("---\nhide:\n  - toc\n---\n# Katalog kouzel (D&D 2024)\n\nVšechna kouzla z pravidel 2024+. Klikni na název pro celý popis.\n\n<div id=\"katalog-kouzel\"></div>\n", encoding="utf-8")
@@ -365,6 +374,7 @@ extra_css:
   - assets/extra.css
   - assets/postava.css
   - assets/postavy.css
+  - assets/heraldika.css
   - assets/boj.css
 extra_javascript:
   - assets/easymde/easymde.min.js
@@ -373,6 +383,7 @@ extra_javascript:
   - assets/pravidla_engine.js
   - assets/postava.js
   - assets/postavy.js
+  - assets/heraldika.js
   - assets/kouzla.js
   - assets/srd.js
   - assets/boj.js

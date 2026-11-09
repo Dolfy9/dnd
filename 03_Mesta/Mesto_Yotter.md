@@ -30,6 +30,14 @@ Bojové město klanů Mönohenu pod vládou Aettara Szkunziho.
 ## Pro DM (tajné)
 - Návrh: Orden chystá na Szkunziho atentát.
 
+## Heraldika
+
+> **Stav:** návrh
+
+![Znak – Yotter](obrazky/Znak_yotter.webp){.heraldika-img .heraldika-znak}
+
+**Znak:** Kamenný kruh a v něm dvě zkřížené sekery.
+
 ## Související
 - Země: [Klanové Země Mönohen](../02_Zeme/Klanove_Zeme_Monohen.md)
 - Vládce: [Aettar Szkunzi](../04_Postavy/Vladci/Postava_Szkunzi.md)

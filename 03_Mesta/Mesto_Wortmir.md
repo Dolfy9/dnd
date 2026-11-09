@@ -30,6 +30,14 @@ Trpasličí podzemní i povrchové město v Khärghae Zia v čele s vévodou Wor
 ## Pro DM (tajné)
 - Návrh: vévoda kuje zbraně pro nějakou armádu – Orden si myslí, že pro něj.
 
+## Heraldika
+
+> **Stav:** návrh
+
+![Znak – Wortmir](obrazky/Znak_wortmir.webp){.heraldika-img .heraldika-znak}
+
+**Znak:** Zlatá horská brána, dva zkřížené krumpáče, v bráně malý plamen.
+
 ## Související
 - Země: [Knížectví Khärghae Zia](../02_Zeme/Kralovstvi_Kharghae_Zia.md)
 - Vládce: [Vévoda Wort XXIV.](../04_Postavy/Vladci/Postava_Wort_XXIV.md)

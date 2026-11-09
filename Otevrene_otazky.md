@@ -39,6 +39,10 @@ Seznam věcí k rozhodnutí DM. Po rozhodnutí položku přesuň do sekce *Vyře
 - **Zia / Zhia:** obě podoby jsou správné.
 - **Východní hvozd:** leží v Mönohenu, stvořil ho Tirent (vztah k Nölienu otevřený – bod 1).
 
+## Heraldika
+- **Návrhy znaků a vlajek:** schvaluje DM navrženou heraldiku zemí, regionů a měst?
+- **Tali a Divoký Sever:** mají mít státní symboly, nebo regionální či kmenové symboly?
+
 ## Atlas mapy – prvky z loru (návrh, potvrď polohy)
 - Polohy odvozené z textů, ne z kresby: Východní hvozd (východ Mönohenu), ledovce Fornheimu (SV poloostrov), písek Dräaru, hranice mrtvé Knärghe Zhie, opuštěné císařské věže na pobřeží Divokého Severu, věže starého Kop Aramu čnějící z jezera. Zdroj: `tools/svet_lore.json`.
 - **Hinai Mihi (≈1210,645):** temný prales na severním břehu východní části jezera Amir. *(vyřešeno – potvrdil DM)*

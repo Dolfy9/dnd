@@ -8,6 +8,18 @@
 ## Vznešený Západ
 Starobylá elfská říše na západě Montelienu. Král Veanor I. rázně odmítá ordenské vyslance a chrání hranice hvozdu prastarou magií z dob Stavitele Tirenta.
 
+## Heraldika
+
+> **Stav:** návrh
+
+![Znak – Elfský Stát Nölien](obrazky/Znak_nolien.webp){.heraldika-img .heraldika-znak} ![Vlajka – Elfský Stát Nölien](obrazky/Vlajka_nolien.webp){.heraldika-img .heraldika-vlajka}
+
+**Znak:** V zeleném štítu stříbrná lucerna s hvězdným plamenem, obtočená věncem stříbrných listů.
+
+**Vlajka:** Tmavě zelená vlaštovčí vlajka se stříbrnou lucernou.
+
+**Proč:** Tirentova lucerna v listí: světlo v temnotách, starobylá magie hvozdu a elfské vědění.
+
 ## Související
 - Hlavní město: [Město Tel Palentin](../03_Mesta/Mesto_Tel_Palentin.md)
 - Hlava státu: [Král Veanor I.](../04_Postavy/Vladci/Postava_Veanor_I.md)

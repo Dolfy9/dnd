@@ -15,3 +15,15 @@ Jehličnaté hvozdy, ledové fjordy a pohoří, kde slunce v zimě vůbec nevych
 ## Háčky
 - Lovec kožešin přinese do civilizace zmrzlé tělo tvora, který „nemá být stvořen k obrazu stvořitelovu“.
 - Stará císařská věž na pobřeží skrývá mapu cesty k Fornheimu.
+
+## Heraldika
+
+> **Stav:** návrh
+
+![Znak – Divoký Sever](obrazky/Znak_divoky_sever.webp){.heraldika-img .heraldika-znak} ![Vlajka – Divoký Sever](obrazky/Vlajka_divoky_sever.webp){.heraldika-img .heraldika-vlajka}
+
+**Znak:** Kmenové znamení: v tmavě modrém štítu bílá vlčí hlava pod třemi stříbrnými hvězdami.
+
+**Vlajka:** Tmavě modrá kmenová korouhev s bílou vlčí hlavou.
+
+**Proč:** Region bez státu, s kočovnými kmeny a dlouhou nocí. Jde o znamení kmenů, ne o státní znak.

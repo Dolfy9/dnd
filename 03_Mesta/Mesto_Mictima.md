@@ -32,6 +32,14 @@ Hlavní město Nöetu, sídlo arcimága Breffana plné magických věží a knih
 ## Pro DM (tajné)
 - Návrh: Breffan tajně studuje ferienské runy, aby se vymanil z dohody s Ordenem.
 
+## Heraldika
+
+> **Stav:** návrh
+
+![Znak – Mictima](obrazky/Znak_mictima.webp){.heraldika-img .heraldika-znak}
+
+**Znak:** Tři stříbrné věže (prostřední nejvyšší), dole zlatý had.
+
 ## Související
 - Země: [Provincie Nöet](../02_Zeme/Provincie_Noet.md)
 - Vládce: [Arcimág Breffan](../04_Postavy/Vladci/Postava_Breffan.md)

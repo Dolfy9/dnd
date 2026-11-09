@@ -11,3 +11,15 @@ Na mapě DM je popisek **TALI**. Další informace zatím nejsou.
 
 ## Otevřené
 - Je Tali samostatná země, provincie, nebo poušť bez vlády? Kdo ji ovládá a jak se k ní staví Orden?
+
+## Heraldika
+
+> **Stav:** návrh
+
+![Znak – Tali](obrazky/Znak_tali.webp){.heraldika-img .heraldika-znak} ![Vlajka – Tali](obrazky/Vlajka_tali.webp){.heraldika-img .heraldika-vlajka}
+
+**Znak:** Ve zlatém štítu zelená palma nad modrou studnou (oázou).
+
+**Vlajka:** Písková vlajka se zelenou palmou a modrým pruhem vody.
+
+**Proč:** Poušť s oázou. Návrh, protože DM zatím neurčil, jestli je Tali stát.

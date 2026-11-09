@@ -30,5 +30,13 @@ Uzavřené horské pevnostní město v Knärghae Zia.
 ## Pro DM (tajné)
 - Viz [Dvě sestry Zhie](../06_Knihy_a_Dokumenty/Kniha_09_Dve_sestry_Zhie.md). **Kánon:** Knärghae Zia ovládají chodící mrtví a démoni – „neznámí vládci“ za zavřenými branami jsou právě oni. (Návrh: propast je místo, odkud vyšli.)
 
+## Heraldika
+
+> **Stav:** návrh
+
+![Znak – Dar Kemmar](obrazky/Znak_dar_kemmar.webp){.heraldika-img .heraldika-znak}
+
+**Znak:** Vysoká stříbrná věž se zavřenou branou nad rozsedlinou.
+
 ## Související
 - Země: [Nezávislá Država Knärghae Zia](../02_Zeme/Drzava_Knarghae_Zia.md)

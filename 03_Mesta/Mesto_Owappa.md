@@ -30,6 +30,14 @@ Zemědělské a obchodní centrum Laertmundu pod dohledem krále Iridina III.
 ## Pro DM (tajné)
 - Návrh: Iridin III. tajně posílá jídlo odboji.
 
+## Heraldika
+
+> **Stav:** návrh
+
+![Znak – Owappa](obrazky/Znak_owappa.webp){.heraldika-img .heraldika-znak}
+
+**Znak:** Zlatý snop obilí a stříbrný lovecký roh.
+
 ## Související
 - Země: [Království Laertmund](../02_Zeme/Kralovstvi_Laertmund.md)
 - Vládce: [Král Iridin III.](../04_Postavy/Vladci/Postava_Iridin_III.md)

@@ -30,6 +30,14 @@ Drsné hraniční město v Khaerazu spravované náčelníkem Oltarem.
 ## Pro DM (tajné)
 - Návrh: Oltar jedná s odbojem o zbraních.
 
+## Heraldika
+
+> **Stav:** návrh
+
+![Znak – Kaer](obrazky/Znak_kaer.webp){.heraldika-img .heraldika-znak}
+
+**Znak:** Stříbrný medvěd před zlatou dřevěnou síní.
+
 ## Související
 - Země: [Khaeraz](../02_Zeme/Khaeraz.md)
 - Vládce: [Náčelník Oltar](../04_Postavy/Vladci/Postava_Oltar.md)

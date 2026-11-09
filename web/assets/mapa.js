@@ -12,6 +12,26 @@
   var SV = { map: map, el: el, svg: svgEl, base: "../", D: null, M: D };
   var stateData = [], stateHighlight = L.layerGroup().addTo(map), stateTip = null, activeState = null, activeLabel = null;
   var LABELS = (window.SVET_PALETA || {}).labels || {};
+  var HER = window.MONTELIEN_HERALDIKA || {};
+  var HER_IDS = {
+    "Nölien": "nolien", "Briria": "briria", "Nöet": "noet", "Khearaz": "khearaz",
+    "Khärghe Zhia": "kharghe", "Knärghe Zhia": "knarghe", "Mönohen": "monohen",
+    "Orden": "orden", "Laertmund": "laertmund", "Tali": "tali", "Zairam": "zairam",
+    "Svobodné Jižní ostrovy": "ostrovy", "Dräar": "draar", "Divoký Sever": "divoky_sever"
+  };
+  function herPath(item, kind) {
+    if (!item) return "";
+    var dir = item.soubor.substring(0, item.soubor.lastIndexOf("/") + 1) + "obrazky/";
+    return "../" + dir + (kind === "vlajka" ? "Vlajka_" : "Znak_") + item.id + ".webp";
+  }
+  function herState(name) {
+    var id = HER_IDS[name];
+    var item = (HER.zeme || []).find(function (record) { return record.id === id || record.nazev === name; });
+    if (!item && name) item = (HER.zeme || []).find(function (record) { return record.nazev.toLocaleLowerCase() === name.toLocaleLowerCase(); });
+    if (!item) return esc(name);
+    return '<span class="mapa-heraldika"><span><img src="' + herPath(item, "znak") + '" alt="" onerror="this.remove()">'
+      + '<img src="' + herPath(item, "vlajka") + '" alt="" onerror="this.remove()"></span><b>' + esc(name) + "</b></span>";
+  }
   function refreshLabels() {
     var scale = map.getZoomScale(map.getZoom(), 0), fitZoom = map.getBoundsZoom(bounds, false),
       showDashedBorders = map.getZoom() >= fitZoom + .5,
@@ -75,7 +95,7 @@
     stateTip = L.tooltip({ permanent: true, direction: place ? "bottom" : "top",
       offset: place ? [0, 12] : [0, 0], className: "mapa-stav-stitek" })
       .setLatLng(place ? [H - place.y, place.x] : ll)
-      .setContent(esc(unassigned ? "Samostatné území (bez jména)" : z.nazev)).addTo(map);
+      .setContent(unassigned ? "Samostatné území (bez jména)" : herState(z.nazev)).addTo(map);
   }
   map.on("mousemove", function (e) {
     if (crop || SV.open || !stateData.length) return;
@@ -143,7 +163,9 @@
     });
     c.bindTooltip(m.nazev, { className: "mapa-stitek", direction: "top", offset: [0, -6] });
     c.bindPopup(function () {
-      return "<h4>" + esc(m.nazev) + "</h4><p>" + esc(m.pozn || "") + "</p>" + bojHtml(m) + "<p><small>" + jistotaText[m.jistota] + "</small></p><a href='" + m.url + "'>Otevřít stránku →</a>";
+      var city = (HER.mesta || []).find(function (entry) { return entry.soubor === m.odkaz; });
+      var coat = city ? '<p class="mapa-heraldika-mesto"><img src="' + herPath(city, "znak") + '" alt="" onerror="this.remove()"></p>' : "";
+      return "<h4>" + esc(m.nazev) + "</h4>" + coat + "<p>" + esc(m.pozn || "") + "</p>" + bojHtml(m) + "<p><small>" + jistotaText[m.jistota] + "</small></p><a href='" + m.url + "'>Otevřít stránku →</a>";
     });
     if (m.typ === "sidlo") { c.setRadius(MP.radius || 4); sidla.addLayer(c); } else body.addLayer(c);
     byName[m.nazev.toLowerCase()] = { m: m, c: c };

@@ -11,6 +11,18 @@ Nöet je země opředená tajemstvím a arcánními vědami. Spravuje ji chladno
 ## Vztah k Ordenu
 Ordenský řád zde udržuje vojenské i duchovní posádky, avšak vůči Breffanovým magickým experimentům zavírá oči, dokud neohrožují doktrínu Pořádku. V Mictimě kvituje odboj přítomnost zakázaných svazků.
 
+## Heraldika
+
+> **Stav:** návrh
+
+![Znak – Provincie Nöet](obrazky/Znak_noet.webp){.heraldika-img .heraldika-znak} ![Vlajka – Provincie Nöet](obrazky/Vlajka_noet.webp){.heraldika-img .heraldika-vlajka}
+
+**Znak:** V purpurovém štítu stříbrná věž obtočená zlatým hadem, v patě otevřená stříbrná kniha.
+
+**Vlajka:** Svisle zelená a purpurová, přes střed zlatý had stočený do kruhu.
+
+**Proč:** Breffanovy magické věže a hadí knihovny yuan-ti, zelená za džungle Nöetu.
+
 ## Související
 - Hlavní město: [Město Mictima](../03_Mesta/Mesto_Mictima.md)
 - Hlava státu: [Arcimág Breffan](../04_Postavy/Vladci/Postava_Breffan.md)

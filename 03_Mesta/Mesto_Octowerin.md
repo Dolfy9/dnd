@@ -35,6 +35,14 @@ Královské město Bririe, sídlo krále Forpy VII. a centrum ordenské inkvizic
 ## Pro DM (tajné)
 - Návrh: Vaelen má v odboji informátora; Corvin o tom ví a nechává ho žít, aby mu podstrkoval lži.
 
+## Heraldika
+
+> **Stav:** návrh
+
+![Znak – Octowerin](obrazky/Znak_octowerin.webp){.heraldika-img .heraldika-znak}
+
+**Znak:** Zlatý palác na zeleném vrchu nad stříbrnou řekou, šedá hlava štítu.
+
 ## Související
 - Země: [Království Briria](../02_Zeme/Kralovstvi_Briria.md)
 - Vládce: [Král Forpa VII.](../04_Postavy/Vladci/Postava_Forpa_VII.md)

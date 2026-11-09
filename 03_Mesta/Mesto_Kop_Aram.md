@@ -38,6 +38,14 @@ Kop Aram býval největším městem světa, dokud ho za Temného dne nesmetl je
 ## Pro DM (tajné)
 - Návrh: v nejhlubším chrámu starého Kop Aramu je knihovna Stavitelů ve vzduchové bublině – proto Orden jezero hlídá. Viz [Jezero Amir a Kop Aram](../01_Svet/Mista/Jezero_Amir_a_Kop_Aram.md).
 
+## Heraldika
+
+> **Stav:** návrh
+
+![Znak – Kop Aram](obrazky/Znak_kop_aram.webp){.heraldika-img .heraldika-znak}
+
+**Znak:** Tři zlomené věže z vln, prostřední obnovená se zlatou střechou.
+
 ## Související
 - Místo: [Jezero Amir a Kop Aram](../01_Svet/Mista/Jezero_Amir_a_Kop_Aram.md)
 - Sousední město: [Werenor](Mesto_Werenor.md)
