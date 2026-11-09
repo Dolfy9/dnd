@@ -8,6 +8,7 @@ const { SVET_SYMBOLY: S, SVET_OBLASTI: O, SVET_SPRITY: P, SVET_SPRITY_META: M } 
 const PAL = JSON.parse(fs.readFileSync(path.join(R, "web/assets/svet/paleta.json"), "utf8"));
 const D = JSON.parse(fs.readFileSync(path.join(R, "11_Mapy/svet.json"), "utf8")), err = [];
 const K = JSON.parse(fs.readFileSync(path.join(R, "tools/svet_kresba.json"), "utf8"));
+const Z = JSON.parse(fs.readFileSync(path.join(R, "tools/svet_lore.json"), "utf8"));
 if (D.sirka !== 2048 || D.vyska !== 1440) err.push("rozměry svet.json");
 const used = new Set();
 Object.values(O).forEach(o => o.spr.forEach(n => used.add(n)));
@@ -38,6 +39,48 @@ function uvnitr(x, y, body) {
     if ((yi > y) !== (yj > y) && x < (xj - xi) * (y - yi) / (yj - yi) + xi) inside = !inside;
   }
   return inside;
+}
+function pevninaAt(x, y) {
+  return (D.pevnina || []).some(f => (f.typ === "pevnina" || f.typ === "ostrov") && uvnitr(x, y, f.body));
+}
+function ownersAt(x, y) {
+  return (D.zeme || []).filter(z => (z.body || []).some(ring => uvnitr(x, y, ring))).map(z => z.nazev);
+}
+[[1, 1], [1150, 300]].forEach(([x, y]) => {
+  if (pevninaAt(x, y)) err.push("(" + x + "," + y + ") musí být moře");
+});
+[
+  [[594, 1292], "Nöet"],
+  [[1300, 1230], "Tali"],
+  [[1060, 1327], "Svobodné Jižní ostrovy"],
+].forEach(([[x, y], expected]) => {
+  const owners = ownersAt(x, y);
+  if (owners.length !== 1 || owners[0] !== expected) {
+    err.push("(" + x + "," + y + ") má vlastníka " + (owners.join(", ") || "žádného") + ", očekává se " + expected);
+  }
+});
+if (ownersAt(720, 1292).length) err.push("(720,1292) má zůstat bez vlastníka");
+const islandCheck = spawnSync("python3", ["-c", [
+  "import json, sys",
+  "from shapely.geometry import Point, Polygon",
+  "from shapely.ops import unary_union",
+  "data = json.load(sys.stdin)",
+  "land = unary_union([Polygon(f['body']).buffer(0) for f in data if f.get('typ') in ('pevnina', 'ostrov') and len(f.get('body', [])) >= 3])",
+  "parts = list(getattr(land, 'geoms', [land]))",
+  "island, capital = Point(1060, 1327), Point(1142, 1131)",
+  "a = next((i for i, part in enumerate(parts) if part.covers(island)), None)",
+  "b = next((i for i, part in enumerate(parts) if part.covers(capital)), None)",
+  "print(json.dumps({'island': a is not None, 'capital': b is not None, 'same': a is not None and a == b}))",
+].join("\n")], { input: JSON.stringify(D.pevnina || []), encoding: "utf8" });
+if (islandCheck.error || islandCheck.status !== 0) {
+  err.push("nelze ověřit oddělení Menkantu: " + (islandCheck.error || islandCheck.stderr.trim()));
+} else {
+  try {
+    const result = JSON.parse(islandCheck.stdout);
+    if (!result.island || !result.capital || result.same) err.push("Menkant není oddělený od pevniny Laertmundu");
+  } catch (e) {
+    err.push("neplatný výsledek kontroly ostrova Menkant");
+  }
 }
 function orient(a, b, c) { return (b[0] - a[0]) * (c[1] - a[1]) - (b[1] - a[1]) * (c[0] - a[0]); }
 function oblastiSePrekryvaji(a, b) {
@@ -211,6 +254,7 @@ function addReference(points, closed) {
 (K.hranice || []).filter(h => !h.carkovana).forEach(h => addReference(h.body, false));
 (K.uzemi || []).filter(u => !u.pozn || (!u.pozn.startsWith("východní hranice DM:") && !u.pozn.startsWith("jižní hranice DM:")))
   .forEach(u => addReference(u.body, true));
+(Z.vlastnictvi || []).forEach(u => addReference(u.body, true));
 function liesOnReference(a, b) {
   const length = Math.hypot(b[0] - a[0], b[1] - a[1]);
   const candidates = refs.filter(s => s.x1 >= Math.min(a[0], b[0]) - 2.5 && s.x0 <= Math.max(a[0], b[0]) + 2.5 &&

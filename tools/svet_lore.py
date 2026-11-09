@@ -383,6 +383,27 @@ def lore(svet):
             g = unary_union([unary_union(z["polys"]), vychodni_uzemi[z["nazev"]]])
             z["polys"] = [p for p in geoms(g) if p.geom_type == "Polygon" and p.area > 1]
     rozdel_uzemi(st, neprirazene, K.get("uzemi", []), land, mista)
+    vlastnictvi = Z.get("vlastnictvi", [])
+    nahrazene_statni = {u["stat"] for u in vlastnictvi if u.get("nahradit")}
+    for z in st:
+        if z["nazev"] in nahrazene_statni:
+            z["polys"] = []
+    for u in vlastnictvi:
+        target = next((z for z in st if z["nazev"] == u["stat"]), None)
+        if target is None:
+            continue
+        g = Polygon(u["body"]).buffer(0).intersection(land)
+        if g.is_empty:
+            continue
+        for z in st:
+            if z is target or not z["polys"]:
+                continue
+            rest = unary_union(z["polys"]).difference(g)
+            z["polys"] = [p for p in geoms(rest) if p.geom_type == "Polygon" and p.area > 1]
+        for unowned in neprirazene:
+            unowned["geom"] = unowned["geom"].difference(g)
+        merged = unary_union([*target["polys"], g])
+        target["polys"] = [p for p in geoms(merged) if p.geom_type == "Polygon" and p.area > 1]
     kn = next((z for z in st if z["nazev"].startswith("Knärghe")), None)
     kn_region = unary_union([
         Polygon(body(p.simplify(1.5))).buffer(0) for p in kn["polys"] if p.area > 3000

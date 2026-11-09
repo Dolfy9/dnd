@@ -55,6 +55,8 @@ Seznam věcí k rozhodnutí DM. Po rozhodnutí položku přesuň do sekce *Vyře
 - **Čárkované úseky v horní části mapy hranic:** význam nejasný; zachovány jako čárkovaná hranice, nepoužity k uzavírání území. *(čeká na DM)*
 - **Mönohen – řeka a pobřeží:** Dvojité čáry jsou nyní obkreslené jako jedna řeka ústící do východního moře; pobřeží Mönohenu je ručně obkreslené jako návrh. Odpovídá to kresbě?
 - **Černá skvrna v moři jižně od Tali (≈1357,1326):** chyba kresby, potvrdil DM; do atlasu se nic nepřidává.
-- **Sever Nölienu (≈1040–1400, 110–430):** pohoří s malými chrámy. *(vyřešeno – potvrdil DM)*
+- **Sever Nölienu (≈1040–1400, 110–430):** pohoří s malými chrámy. *(vyřešeno – potvrdil DM)* Pohoří s chrámy je východní poloostrov (≈1240–1400); blok západně od něj (≈1040–1240) není podle DM pevnina Nölienu a je v atlasu moře.
+- Severně od Nölienu: dlouhé tahy v moři jsem vykreslil jako ledové kry – jsou to kry, útesy, nebo něco jiného? *(návrh – čeká na DM)*
+- Území jihovýchodně od jižního Nöetu (okolí 720,1292) je v kresbě samostatná smyčka bez vlastníka – komu patří? *(návrh – čeká na DM)*
 - **Tvor s holí u Khearazu (≈1338,568):** není jasné, zda jde o bytost, sochu, nebo jiný symbol; zatím bez samostatné značky. *(návrh – čeká na DM)*
 - **Velký jihovýchodní ostrov s loděmi (≈1870,1135):** kresba mu nedává čitelné jméno. Má mít vlastní název, nebo je součástí Svobodných Jižních ostrovů? *(návrh – čeká na DM)*

@@ -3,6 +3,49 @@
   "mrtva_zeme": {"zdroj": "02_Zeme/Drzava_Knarghae_Zia.md", "pozn": "Knärghe Zhia – temná polovina Zhie, vládnou mrtví a démoni", "body": [[1340,738],[1600,722],[1655,800],[1640,935],[1500,958],[1365,930],[1330,840]]},
   "uzavrena_zeme_cena": 6,
   "pole_zeme": ["Briria", "Laertmund", "Zairam", "Khärghe Zhia", "Nöet", "Mönohen", "Khearaz", "Orden"],
+  "vlastnictvi": [
+    {
+      "stat": "Nöet",
+      "pozn": "jižní pole přiřazená Nöetu podle kresby DM (návrh)",
+      "body": [[510, 1215], [625, 1215], [680, 1220], [585, 1330], [515, 1345], [510, 1310]]
+    },
+    {
+      "stat": "Tali",
+      "pozn": "jižní pevninský pruh východně od hranice Tali–Laertmund (návrh podle kresby DM)",
+      "body": [[1300, 1165], [1455, 1165], [1455, 1315], [1225, 1315], [1225, 1238], [1235, 1215], [1265, 1190]]
+    },
+    {
+      "stat": "Laertmund",
+      "pozn": "jižní pevninský pruh západně od hranice Tali–Laertmund (návrh podle kresby DM)",
+      "body": [[1200, 1165], [1300, 1165], [1265, 1190], [1235, 1215], [1225, 1238], [1200, 1238]]
+    },
+    {
+      "stat": "Svobodné Jižní ostrovy",
+      "pozn": "Menkant a přilehlý jižní ostrov (návrh podle kresby DM)",
+      "nahradit": true,
+      "body": [[990, 1288], [1155, 1288], [1155, 1390], [990, 1390]]
+    },
+    {
+      "stat": "Svobodné Jižní ostrovy",
+      "pozn": "ostrůvky pevnina #8 a #11 (návrh podle kresby DM)",
+      "body": [[1155, 1235], [1192, 1235], [1192, 1300], [1155, 1300]]
+    },
+    {
+      "stat": "Svobodné Jižní ostrovy",
+      "pozn": "malé jižní ostrovy (návrh podle kresby DM)",
+      "body": [[1175, 1335], [1228, 1335], [1228, 1400], [1175, 1400]]
+    },
+    {
+      "stat": "Svobodné Jižní ostrovy",
+      "pozn": "dlouhý jižní ostrov pevnina #4 (návrh podle kresby DM)",
+      "body": [[1235, 1355], [1322, 1355], [1322, 1405], [1235, 1405]]
+    },
+    {
+      "stat": "Svobodné Jižní ostrovy",
+      "pozn": "malý jižní ostrov u pevniny #4 (návrh podle kresby DM)",
+      "body": [[1318, 1362], [1348, 1362], [1348, 1405], [1318, 1405]]
+    }
+  ],
   "oblasti": [
     {"typ": "haj", "zdroj": "01_Svet/Mista/Vychodni_hvozd.md", "pozn": "Východní hvozd – Tirentův les v Mönohenu (hranice odhadem)", "body": [[1660,480],[1760,455],[1830,520],[1820,620],[1750,665],[1670,630],[1640,550]]},
     {"typ": "dzungle", "zdroj": "01_Svet/Mista/Hinai_Mihi.md", "pozn": "Hinai Mihi – temný prales na severním břehu jezera Amir (potvrdil DM)", "tmavy": true, "hustota": 1.2, "body": [[1282,651],[1278,668],[1269,683],[1256,696],[1241,705],[1223,710],[1204,710],[1186,706],[1169,698],[1156,686],[1146,671],[1140,654],[1140,637],[1144,620],[1153,605],[1166,593],[1182,584],[1199,579],[1218,578],[1236,582],[1253,591],[1266,603],[1276,617],[1282,634]]},
