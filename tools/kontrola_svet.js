@@ -10,7 +10,23 @@ if (D.sirka !== 2048 || D.vyska !== 1440) err.push("rozměry svet.json");
 const used = new Set();
 Object.values(O).forEach(o => o.spr.forEach(n => used.add(n)));
 Object.values(P).forEach(o => o.spr.forEach(n => used.add(n)));
+const cliffSprites = ["utes_d", "utes_e", "utes_f", "hreben_b", "utes_roh", "utes_konec"];
+const cliffStripSprites = ["utes_s1", "utes_s2", "utes_s3", "utes_s4"];
+cliffSprites.forEach(n => used.add(n));
+cliffStripSprites.forEach(n => used.add(n));
 used.forEach(n => { if (!M[n]) err.push("sprite bez metadat: " + n); else if (!fs.existsSync(path.join(R, "web/assets/svet", n + ".webp"))) err.push("chybí soubor: " + n); });
+const viewportSprites = PAL.viewport_sprites || {}, cliffStyle = PAL.terrain_vectors || {};
+const cliffScaleJitter = cliffStyle.cliff_scale_variation == null ? .1 : cliffStyle.cliff_scale_variation;
+const cliffRequiredWidth = (cliffStyle.cliff_segment_width_px || 36) * (1 + cliffScaleJitter)
+  * Math.pow(2, viewportSprites.max_zoom || 2.5) * (viewportSprites.min_resolution_ratio || 2);
+const cliffStripRequiredWidth = (cliffStyle.cliff_steep_strip_width_px || 25)
+  * Math.pow(2, viewportSprites.max_zoom || 2.5) * (viewportSprites.min_resolution_ratio || 2);
+cliffSprites.forEach(n => {
+  if (M[n] && M[n].w < cliffRequiredWidth) err.push(n + " má " + M[n].w + " px, pro 2× rozlišení útesové čáry je třeba " + cliffRequiredWidth.toFixed(1) + " px");
+});
+cliffStripSprites.forEach(n => {
+  if (M[n] && M[n].w < cliffStripRequiredWidth) err.push(n + " má " + M[n].w + " px, pro 2× rozlišení svislého útesu je třeba " + cliffStripRequiredWidth.toFixed(1) + " px");
+});
 ["papir.jpg", "more.jpg"].forEach(f => { if (!fs.existsSync(path.join(R, "web/assets/svet", f))) err.push("chybí textura " + f); });
 const ok = (b) => Array.isArray(b) && b.every(p => p.length === 2 && p[0] >= -50 && p[0] <= 2100 && p[1] >= -50 && p[1] <= 1500);
 function uvnitr(x, y, body) {

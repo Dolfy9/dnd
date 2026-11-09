@@ -72,7 +72,7 @@
   // jednotlivé symboly: typ -> sprity (malované, web/assets/svet/*.webp) a šířka v px mapy
   var SPRITY = {
     hora: { nazev: "Hora", spr: ["hora_a", "hora_d", "hora_e"], w: 46 }, hora2: { nazev: "Dvojhora", spr: ["hora_b"], w: 50 },
-    hora_snih: { nazev: "Zasněžená hora", spr: ["snih"], w: 52 }, hreben: { nazev: "Horský hřeben", spr: ["hreben"], w: 80 },
+    hora_snih: { nazev: "Zasněžená hora", spr: ["snih"], w: 52 }, hreben: { nazev: "Horský hřeben", spr: ["hreben_b"], w: 80 },
     masiv: { nazev: "Masiv", spr: ["masiv_a", "masiv_b", "masiv_c"], w: 52 }, skala: { nazev: "Skalisko", spr: ["skala"], w: 40 },
     kopec: { nazev: "Kopec", spr: ["kopec_1", "kopec_2", "kopec_4"], w: 26 }, jehlican: { nazev: "Jehličnan", spr: ["jehl_1", "jehl_5"], w: 14 },
     strom: { nazev: "Listnatý strom", spr: ["list_1", "list_4"], w: 16 }, palma: { nazev: "Palma", spr: ["palma_1", "palma_2"], w: 15 },

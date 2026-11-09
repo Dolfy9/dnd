@@ -19,9 +19,11 @@ JMENA = {
     "teren": "kopec_1 kopec_2 kopec_3 kopec_4 kopec_5 duna_1 duna_2 duna_3 duna_4 duna_5 kaktus_1 kaktus_2 balvan_1 balvan_2 oaza pole_1 pole_2 bazina_1 bazina_2 vinice",
     "opevneni": "utes_a utes_b utes_c hradba_a hradba_b vytah",
     "ledovce": "ledova_pole seraky ledovy_utes ledova_kra ledovcovy_jazyk ledova_kra2",
+    "utesy": "utes_d utes_e utes_f hreben_b utes_roh utes_konec",
+    "utesy_svisle": "utes_s1 utes_s2 utes_s3 utes_s4",
 }
 MAXH = 600
-MRIZKA = {"hory": (3, 4), "stromy": (4, 6), "sidla": (3, 5), "landmarky": (3, 5), "teren": (4, 5), "detaily": (4, 6), "hranice": (2, 3), "opevneni": (2, 3), "ledovce": (2, 3)}
+MRIZKA = {"hory": (3, 4), "stromy": (4, 6), "sidla": (3, 5), "landmarky": (3, 5), "teren": (4, 5), "detaily": (4, 6), "hranice": (2, 3), "opevneni": (2, 3), "ledovce": (2, 3), "utesy": (2, 3), "utesy_svisle": (1, 4)}
 
 
 def km1(v, k):
@@ -32,8 +34,30 @@ def km1(v, k):
     return np.argmin(np.abs(v[:, None] - c[None, :]), axis=1), c
 
 
+def rez_svisle(raw, jmena):
+    h, w = raw.shape[:2]
+    if raw.shape[2] != 4:
+        raise ValueError("utesy_svisle musí obsahovat kanál alfa")
+    meta = {}
+    for i, nm in enumerate(jmena):
+        x0, x1 = round(i * w / 4), round((i + 1) * w / 4)
+        cell = raw[:, x0:x1]
+        alpha = cell[:, :, 3].astype(np.float32) / 255
+        ys, xs = np.nonzero(alpha > 0)
+        y0, y1, cx0, cx1 = ys.min(), ys.max() + 1, xs.min(), xs.max() + 1
+        rgba = cell[y0:y1, cx0:cx1].copy()
+        scale = min(1.0, 900 / rgba.shape[0], 900 * 1.6 / rgba.shape[1])
+        if scale < 1:
+            rgba = cv2.resize(rgba, None, fx=scale, fy=scale, interpolation=cv2.INTER_AREA)
+        cv2.imwrite(str(OUT / f"{nm}.webp"), rgba, [cv2.IMWRITE_WEBP_QUALITY, 88])
+        meta[nm] = {"w": rgba.shape[1], "h": rgba.shape[0]}
+    return meta
+
+
 def rez(arch, jmena):
     raw = cv2.imread(str(ARCHY / f"{arch}.png"), cv2.IMREAD_UNCHANGED)
+    if arch == "utesy_svisle":
+        return rez_svisle(raw, jmena)
     h, w = raw.shape[:2]
     if raw.shape[2] == 4:
         alpha0 = raw[:, :, 3].astype(np.float32) / 255
@@ -73,12 +97,17 @@ def rez(arch, jmena):
     soft = np.clip(bg_dist.astype(np.float32) / (255 if raw.shape[2] == 4 else 40), 0, 1)
     for i, nm in zip(order, jmena):
         x, y, ww, hh = st[i]
-        sel = (lab[y:y + hh, x:x + ww] == i) & (solid[y:y + hh, x:x + ww] > 0)
+        component = lab[y:y + hh, x:x + ww] == i
+        if arch == "utesy" and raw.shape[2] == 4:
+            sel = component & (alpha0[y:y + hh, x:x + ww] > 0)
+        else:
+            sel = component & (solid[y:y + hh, x:x + ww] > 0)
         a = np.where(sel, np.maximum(soft[y:y + hh, x:x + ww], 0), 0)
         if raw.shape[2] == 3:
             core = cv2.erode(sel.astype(np.uint8), np.ones((5, 5), np.uint8)) > 0
             a = np.where(core, 1.0, a)
-        a = cv2.GaussianBlur(a.astype(np.float32), (0, 0), .7)
+        if arch != "utesy":
+            a = cv2.GaussianBlur(a.astype(np.float32), (0, 0), .7)
         ys, xs = np.nonzero(a > .05)
         y0, y1, x0, x1 = ys.min(), ys.max() + 1, xs.min(), xs.max() + 1
         rgb = img[y + y0:y + y1, x + x0:x + x1]

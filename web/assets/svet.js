@@ -143,7 +143,10 @@
       else o.push('<path d="' + d + '" fill="none" stroke="#5a3f24" stroke-width="4.4" stroke-linecap="round" stroke-linejoin="round" opacity=".75"/><path d="' + d + '" fill="none" stroke="#d8bf8a" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"/><path d="' + d + '" fill="none" stroke="#a88a5a" stroke-width=".6" stroke-dasharray="3 2" stroke-linecap="round" stroke-linejoin="round" opacity=".6"/>');
     });
     (D.hradby || []).forEach(function (r) { o.push('<path d="' + pathD(r.body, false) + '" fill="none" stroke="#2e241a" stroke-width="2.2" opacity=".5"/>'); });
-    (D.utesy || []).forEach(function (r) { o.push('<path d="' + pathD(r.body, false) + '" fill="none" stroke="#3a2e22" stroke-width="3" opacity=".3"/>'); });
+    (D.utesy || []).forEach(function (r) {
+      if (r.typ === "hreben") return;
+      o.push('<path d="' + pathD(r.body, false) + '" fill="none" stroke="#3a2e22" stroke-width="2" opacity=".05"/>');
+    });
     (D.hranice || []).forEach(function (r) {
       var d = pathD(r.body, false);
       if (r.carkovana) o.push('<path d="' + d + '" fill="none" stroke="#3a2412" stroke-width="1.2" stroke-dasharray="6 4" vector-effect="non-scaling-stroke" data-map-dashed-border="1" opacity=".9"/>');
@@ -159,6 +162,171 @@
       w = Math.min(w, META[name].w / (maxScale * (res.min_resolution_ratio || 2)));
       return { n: name, x: x, y: y, w: w, f: flip, r: rot || 0, tmavy: !!tmavy };
     }
+    var cliffStyle = PAL.terrain_vectors || {}, coastEdges = [];
+    landPolys.forEach(function (poly) {
+      var b = poly.body, area = 0;
+      for (var i = 0, j = b.length - 1; i < b.length; j = i++) area += b[j][0] * b[i][1] - b[i][0] * b[j][1];
+      var insideLeft = area > 0;
+      for (var k = 0, prev = b.length - 1; k < b.length; prev = k++) {
+        var ax = b[prev][0], ay = b[prev][1], dx = b[k][0] - ax, dy = b[k][1] - ay, length = Math.hypot(dx, dy);
+        if (!length) continue;
+        coastEdges.push({
+          x: ax, y: ay, dx: dx, dy: dy, length: length,
+          nx: insideLeft ? dy / length : -dy / length,
+          ny: insideLeft ? -dx / length : dx / length
+        });
+      }
+    });
+    function nearestCoast(x, y) {
+      var best = { d: Infinity, nx: 0, ny: 1 };
+      coastEdges.forEach(function (edge) {
+        var t = Math.max(0, Math.min(1, ((x - edge.x) * edge.dx + (y - edge.y) * edge.dy) / (edge.length * edge.length)));
+        var qx = edge.x + t * edge.dx, qy = edge.y + t * edge.dy, d = Math.hypot(x - qx, y - qy);
+        if (d < best.d) best = { d: d, nx: edge.nx, ny: edge.ny };
+      });
+      return best;
+    }
+    function pointOnLine(body, cumulative, distance) {
+      distance = Math.max(0, Math.min(cumulative[cumulative.length - 1], distance));
+      for (var i = 0; i < body.length - 1; i++) {
+        var a = body[i], b = body[i + 1], span = cumulative[i + 1] - cumulative[i];
+        if (distance > cumulative[i + 1] && i < body.length - 2) continue;
+        var t = span ? (distance - cumulative[i]) / span : 0;
+        return { x: a[0] + (b[0] - a[0]) * t, y: a[1] + (b[1] - a[1]) * t };
+      }
+      return { x: body[body.length - 1][0], y: body[body.length - 1][1] };
+    }
+    function distanceToLine(x, y, body) {
+      var d = Infinity;
+      for (var i = 0; i < body.length - 1; i++) {
+        var a = body[i], b = body[i + 1], dx = b[0] - a[0], dy = b[1] - a[1];
+        var t = Math.max(0, Math.min(1, ((x - a[0]) * dx + (y - a[1]) * dy) / (dx * dx + dy * dy || 1)));
+        d = Math.min(d, Math.hypot(x - a[0] - t * dx, y - a[1] - t * dy));
+      }
+      return d;
+    }
+    function tangentAt(body, cumulative, distance) {
+      var before = pointOnLine(body, cumulative, distance - 5), after = pointOnLine(body, cumulative, distance + 5);
+      var dx = after.x - before.x, dy = after.y - before.y, length = Math.hypot(dx, dy) || 1;
+      return { x: dx / length, y: dy / length };
+    }
+    function cliffFacing(x, y, tangent, coast) {
+      if (coast.d <= 80) return { x: coast.nx, y: coast.ny };
+      var nx = -tangent.y, ny = tangent.x;
+      for (var i = 0; i < ridgeAreas.length; i++) {
+        var body = ridgeAreas[i].body;
+        if (boundaryDistance(x, y, body) > 80) continue;
+        for (var distance = 8; distance <= 32; distance += 8) {
+          var plus = inPoly(x + nx * distance, y + ny * distance, body);
+          var minus = inPoly(x - nx * distance, y - ny * distance, body);
+          if (plus !== minus) return plus ? { x: -nx, y: -ny } : { x: nx, y: ny };
+        }
+      }
+      return { x: 0, y: 1 };
+    }
+    function uprightAngle(tangent, limit) {
+      var angle = Math.atan2(tangent.y, tangent.x), quarter = Math.PI / 2;
+      var axis = Math.round(angle / quarter) * quarter, delta = angle - axis;
+      while (delta > quarter / 2) delta -= Math.PI;
+      while (delta < -quarter / 2) delta += Math.PI;
+      delta = Math.max(-limit, Math.min(limit, delta));
+      return axis + delta;
+    }
+    function addLineSprites(line, lineIndex) {
+      var body = line.body;
+      if (!body || body.length < 2) return;
+      var cumulative = [0], total = 0, bends = [], width = cliffStyle.cliff_segment_width_px || 36;
+      for (var i = 0; i < body.length - 1; i++) {
+        total += Math.hypot(body[i + 1][0] - body[i][0], body[i + 1][1] - body[i][1]);
+        cumulative.push(total);
+      }
+      if (!total) return;
+      var bendLimit = (cliffStyle.cliff_bend_angle_deg || 35) * Math.PI / 180;
+      for (var j = 1; j < body.length - 1; j++) {
+        var p0 = body[j - 1], p1 = body[j], p2 = body[j + 1];
+        var ax = p1[0] - p0[0], ay = p1[1] - p0[1], bx = p2[0] - p1[0], by = p2[1] - p1[1];
+        var al = Math.hypot(ax, ay), bl = Math.hypot(bx, by);
+        if (!al || !bl) continue;
+        var turn = Math.acos(Math.max(-1, Math.min(1, (ax * bx + ay * by) / (al * bl))));
+        if (turn > bendLimit) bends.push(cumulative[j]);
+      }
+      var overlap = Math.max(0, Math.min(.6, cliffStyle.cliff_segment_overlap == null ? .28 : cliffStyle.cliff_segment_overlap));
+      var steepLimit = (cliffStyle.cliff_steep_angle_deg || 50) * Math.PI / 180;
+      var stripOverlap = Math.max(0, Math.min(.5, cliffStyle.cliff_steep_strip_overlap == null ? .15 : cliffStyle.cliff_steep_strip_overlap));
+      var stripWidth = Math.max(22, Math.min(28, cliffStyle.cliff_steep_strip_width_px || 25));
+      function isSteep(tangent) { return Math.atan2(Math.abs(tangent.y), Math.abs(tangent.x)) > steepLimit; }
+      function stripFor(distance, index, coast) {
+        if (coast.d <= (cliffStyle.cliff_coast_distance_px || 15)) return "utes_s3";
+        var variants = ["utes_s1", "utes_s2", "utes_s4"];
+        var choice = rng(8107 + lineIndex * 7919 + index * 104729 + Math.round(distance * 31))();
+        return variants[Math.floor(choice * variants.length)];
+      }
+      function stripLength(name) {
+        var meta = META[name];
+        return stripWidth * (meta ? meta.h / meta.w : 3);
+      }
+      var ridge = line.typ === "hreben" || line.typ === "ridge";
+      var positions = [], d = 0, guard = 0, ordinal = 0, previousSteep = null;
+      while (d < total && guard++ < 10000) {
+        var sampleTangent = tangentAt(body, cumulative, d);
+        var steep = !ridge && isSteep(sampleTangent);
+        var point = pointOnLine(body, cumulative, d), coast = nearestCoast(point.x, point.y);
+        var strip = steep ? stripFor(d, ordinal, coast) : null;
+        if (previousSteep !== null && steep !== previousSteep) positions.push({ d: d, kind: "transition" });
+        positions.push({ d: d, kind: d === 0 ? "end" : "segment", steep: steep, strip: strip });
+        var spacing = steep ? stripLength(strip) * (1 - stripOverlap) : width * (1 - overlap);
+        previousSteep = steep;
+        d += Math.max(1, spacing);
+        ordinal++;
+      }
+      var endTangent = tangentAt(body, cumulative, total), endSteep = !ridge && isSteep(endTangent);
+      var endPoint = pointOnLine(body, cumulative, total), endCoast = nearestCoast(endPoint.x, endPoint.y);
+      positions.push({ d: total, kind: "end", steep: endSteep, strip: endSteep ? stripFor(total, ordinal, endCoast) : null });
+      bends.forEach(function (d) { positions.push({ d: d, kind: "bend" }); });
+      positions.sort(function (a, b) { return a.d - b.d; });
+      var ranked = [];
+      var mergeDistance = width * (1 - overlap) * .35;
+      positions.forEach(function (p) {
+        var last = ranked[ranked.length - 1], priority = p.kind === "end" ? 5 : p.kind === "transition" ? 4 : p.kind === "bend" ? 3 : 1;
+        if (last && p.d - last.d < mergeDistance) {
+          var lastPriority = last.kind === "end" ? 5 : last.kind === "transition" ? 4 : last.kind === "bend" ? 3 : 1;
+          if (priority > lastPriority) ranked[ranked.length - 1] = p;
+        } else ranked.push(p);
+      });
+      ranked.forEach(function (place, index) {
+        var point = pointOnLine(body, cumulative, place.d), tangent = tangentAt(body, cumulative, place.d);
+        var steep = !ridge && place.kind !== "transition" && (place.steep == null ? isSteep(tangent) : place.steep);
+        var coast = nearestCoast(point.x, point.y), sprite;
+        if (ridge) sprite = "hreben_b";
+        else if (place.kind === "transition") sprite = "utes_roh";
+        else if (steep) sprite = place.strip || stripFor(place.d, index, coast);
+        else if (place.kind === "end") sprite = "utes_konec";
+        else if (place.kind === "bend") sprite = "utes_roh";
+        else if (coast.d <= (cliffStyle.cliff_coast_distance_px || 15)) sprite = "utes_f";
+        else if (line.typ === "utes_schod" || line.typ === "schodovity" || line.schodovity) sprite = "utes_e";
+        else sprite = "utes_d";
+        var rotation;
+        if (steep) {
+          rotation = Math.atan2(tangent.y, tangent.x) - Math.PI / 2;
+          while (rotation > Math.PI / 2) rotation -= Math.PI;
+          while (rotation < -Math.PI / 2) rotation += Math.PI;
+          var stripLimit = (cliffStyle.cliff_steep_rotation_limit_deg || 20) * Math.PI / 180;
+          rotation = Math.max(-stripLimit, Math.min(stripLimit, rotation));
+        } else rotation = uprightAngle(tangent, (cliffStyle.cliff_rotation_limit_deg || 25) * Math.PI / 180);
+        var normal = steep ? { x: -Math.cos(rotation), y: -Math.sin(rotation) } : { x: -Math.sin(rotation), y: Math.cos(rotation) };
+        var facing = cliffFacing(point.x, point.y, tangent, coast);
+        if (!steep && normal.x * facing.x + normal.y * facing.y < 0) rotation += Math.PI;
+        var face = steep ? normal : { x: -Math.sin(rotation), y: Math.cos(rotation) };
+        var axis = { x: Math.cos(rotation), y: Math.sin(rotation) };
+        var target = place.kind === "end" && place.d < total / 2 ? { x: -tangent.x, y: -tangent.y } : tangent;
+        var flip = steep ? face.x * facing.x + face.y * facing.y < 0 : axis.x * target.x + axis.y * target.y < 0;
+        var seed = 6131 + lineIndex * 7919 + Math.round(place.d * 97) + index * 31;
+        var scaleRng = rng(seed), variation = Math.max(0, Math.min(.2, cliffStyle.cliff_scale_variation == null ? .1 : cliffStyle.cliff_scale_variation));
+        var size = steep ? stripWidth : width * (1 - variation + scaleRng() * variation * 2);
+        items.push([point.y, spr(sprite, point.x, point.y, size, flip, rotation * 180 / Math.PI)]);
+      });
+    }
+    (D.utesy || []).forEach(addLineSprites);
     (D.oblasti || []).forEach(function (a, ai) {
       var t = OBL[a.typ]; if (!t || !t.spr || !t.spr.length) return;
       var bb = bbox(a.body), R = rng(ai * 7919 + 13 + Math.round(bb[0] + bb[1])), forest = a.typ === "les" || a.typ === "haj" || a.typ === "dzungle",
@@ -225,6 +393,7 @@
       }
     }
     (D.symboly || []).forEach(function (s, si) {
+      if (s.typ === "utes_velky" && (D.utesy || []).some(function (line) { return distanceToLine(s.x, s.y, line.body) < 8; })) return;
       var sp = SPR[s.typ];
       if (sp) items.push([s.y, spr(sp.spr[(Math.abs(s.x * 7 + s.y * 13)) % sp.spr.length], s.x, s.y, sp.w * (s.m || 1), !!s.zrcadlo, s.typ === "ledovy_utes" ? 0 : (s.rot || 0))]);
       else if (SYM[s.typ]) items.push([s.y, '<use href="#sv-' + s.typ + '" transform="translate(' + s.x + "," + s.y + ") rotate(" + (s.rot || 0) + ") scale(" + (s.m || 1) + ')"/>']);
@@ -333,6 +502,7 @@
     if (!GRADED[key]) GRADED[key] = nacti(key + ".webp").then(function (img) {
       if (!img) return null;
       var filters = (window.SVET_PALETA || {}).sprite_filters || {}, f = null, grade = null;
+      if (/^(?:utes_(?:d|e|f|roh|konec|s[1-4])|hreben_b)$/.test(name)) return upravObraz(img, filters.cliff_sprite_saturation == null ? .85 : filters.cliff_sprite_saturation, 1);
       if (/^(hora_|masiv_|snih$|velehory(?:_|$))/.test(name)) return upravHorskyObraz(img, filters);
       if (/^(hora|masiv|skala|hreben|utes)/.test(name)) { f = [filters.mountain_saturation, filters.mountain_brightness]; grade = { tint: filters.mountain_tint, tint_opacity: filters.mountain_tint_opacity, preserve_highlights: true, highlight_luminance: filters.snow_highlight_luminance }; }
       else if (/^kopec/.test(name)) { f = [filters.hill_saturation, filters.hill_brightness]; grade = { tint: filters.hill_tint, tint_opacity: filters.hill_tint_opacity }; }
