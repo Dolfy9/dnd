@@ -26,6 +26,57 @@
     var path = document.createElementNS("http://www.w3.org/2000/svg", "path");
     path.setAttribute("d", ICONS[name] || ICONS.world); svg.appendChild(path); return svg;
   }
+  function expandCurrentSection(nav) {
+    var list = nav && nav.querySelector(":scope > .md-nav__list");
+    var active = nav && nav.querySelector(".md-nav__link--active");
+    var item = active && active.closest(".md-nav__item");
+    if (!list || !item) return;
+    while (item.parentElement !== list) {
+      var parent = item.parentElement && item.parentElement.closest(".md-nav__item");
+      if (!parent) return;
+      item = parent;
+    }
+    var toggle = item.querySelector(":scope > input.md-nav__toggle");
+    if (toggle) toggle.checked = true;
+  }
+  function resetDrawerPosition() {
+    var nav = document.querySelector(".md-nav--primary");
+    var list = nav && nav.querySelector(":scope > .md-nav__list");
+    if (list) list.scrollTop = 0;
+    expandCurrentSection(nav);
+  }
+  function drawerSections(inner) {
+    var tabs = document.querySelectorAll(".md-tabs__link");
+    if (!tabs.length) return;
+    var sections = inner.querySelector(".nav-drawer-sections");
+    if (!sections) {
+      sections = document.createElement("nav");
+      sections.className = "nav-drawer-sections";
+      sections.setAttribute("aria-label", "Hlavní sekce");
+      inner.insertBefore(sections, inner.querySelector(".md-nav--primary"));
+    }
+    sections.replaceChildren();
+    var nav = document.querySelector(".md-nav--primary");
+    var list = nav && nav.querySelector(":scope > .md-nav__list");
+    var activeLink = nav && nav.querySelector(".md-nav__link--active");
+    var activeItem = activeLink && activeLink.closest(".md-nav__item");
+    while (activeItem && activeItem.parentElement !== list) {
+      activeItem = activeItem.parentElement && activeItem.parentElement.closest(".md-nav__item");
+    }
+    var activeLabel = activeItem && activeItem.querySelector(":scope > .md-nav__link, :scope > label.md-nav__link");
+    var activeTitle = activeLabel && activeLabel.textContent.replace(/\s+\d+\s*$/, "").trim();
+    var icons = { "Úvod": "home", "Mapa": "map", "Svět": "world", "Hra": "game", "Pravidla 2024": "rules", "Projekt": "project" };
+    Array.prototype.forEach.call(tabs, function (tab) {
+      var title = tab.textContent.trim();
+      var link = document.createElement("a");
+      link.className = "nav-drawer-section";
+      link.href = tab.href;
+      if (title === activeTitle || tab.classList.contains("md-tabs__link--active")) link.setAttribute("aria-current", "page");
+      link.appendChild(icon(icons[title] || "world"));
+      var label = document.createElement("span"); label.textContent = title; link.appendChild(label);
+      sections.appendChild(link);
+    });
+  }
   function openSearch() {
     var input = document.querySelector("#nav-mobile-search input") || document.querySelector(".md-search__input");
     if (!input) return;
@@ -34,7 +85,16 @@
   }
   function setupDrawer() {
     var inner = document.querySelector(".md-sidebar--primary .md-sidebar__inner");
-    if (!inner || inner.querySelector(".nav-drawer-header")) return;
+    if (!inner) return;
+    var drawer = document.getElementById("__drawer");
+    if (drawer && !drawer.dataset.navDrawerReady) {
+      drawer.dataset.navDrawerReady = "1";
+      drawer.addEventListener("change", function () {
+        if (drawer.checked) resetDrawerPosition();
+      });
+    }
+    drawerSections(inner);
+    if (inner.querySelector(".nav-drawer-header")) return;
     var header = document.createElement("div"); header.className = "nav-drawer-header";
     var title = document.createElement("strong"); title.textContent = "Menu";
     var close = document.createElement("button"); close.type = "button"; close.className = "nav-drawer-close";
@@ -121,7 +181,7 @@
         var input = document.createElement("input"); input.type = "search"; input.placeholder = "Filtrovat menu…"; input.setAttribute("aria-label", "Filtrovat menu");
         label.appendChild(input);
       }
-      if (label.parentNode !== inner) inner.insertBefore(label, nav);
+      if (label.parentNode !== inner) inner.insertBefore(label, inner.querySelector(":scope > .nav-drawer-sections") || nav);
       var field = label.querySelector("input");
       if (field && !field.dataset.navFilter) {
         field.dataset.navFilter = "1";
@@ -184,6 +244,7 @@
       if (saved !== null) toggle.checked = saved === "1";
       toggle.addEventListener("change", function () { localStorage.setItem(key, toggle.checked ? "1" : "0"); });
     });
+    expandCurrentSection(nav);
   }
   function breadcrumbs(data) {
     var src = document.getElementById("zdroj-stranky"), inner = document.querySelector(".md-content__inner");

@@ -1,7 +1,7 @@
 ---
 postava:
   jmeno: Ondra Sumec
-  titul: Harpunář Piráti z Amiru
+  titul: Harpunář pirátů z Amiru
   druh: Human
   pozadi: Sailor
   zarovnani: Neutral

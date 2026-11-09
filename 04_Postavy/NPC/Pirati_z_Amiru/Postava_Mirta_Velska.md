@@ -1,7 +1,7 @@
 ---
 postava:
   jmeno: Mirta „Rákos“ Velská
-  titul: Kapitánka Piráti z Amiru
+  titul: Kapitánka pirátů z Amiru
   druh: Human
   pozadi: Sailor
   zarovnani: Chaotic Neutral

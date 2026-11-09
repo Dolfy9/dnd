@@ -1,7 +1,7 @@
 ---
 postava:
   jmeno: Vorek Hald
-  titul: Branný strážce Dar Kemmaru
+  titul: Strážmistr brány Dar Kemmaru
   druh: Dwarf
   pozadi: Guard
   zarovnani: Lawful Neutral

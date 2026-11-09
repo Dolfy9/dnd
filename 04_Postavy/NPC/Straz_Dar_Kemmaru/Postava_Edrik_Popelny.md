@@ -1,7 +1,7 @@
 ---
 postava:
   jmeno: Edrik Popelný
-  titul: Popelavý čepelník
+  titul: Strážný Dar Kemmaru
   druh: Human
   pozadi: Soldier
   zarovnani: Lawful Evil

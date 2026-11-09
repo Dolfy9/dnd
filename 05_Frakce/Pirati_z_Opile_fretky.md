@@ -28,7 +28,9 @@ Hlučná pašerácká posádka ukrývá zboží v jeskyních, jejichž vchody se
 
 **Družina:** 4 postavy 3. úrovně.  
 **Rozpočet aplikace:** Low 600 XP · Moderate 900 XP · High 1 600 XP.  
-**Součet z listů:** 1 000 XP · **verdikt: High**.
+**Součet z listů:** 1 000 XP · **verdikt: Moderate** (těsně nad; blíž k Moderate než k High).
+
+**Spojené posádky:** Opilá fretka a piráti ze Zairamu dohromady představují 1 950 XP, tedy více než rozpočet High 1 600 XP.
 
 **Terén a mapa:** Kluzké skály, přílivové tůně, sudy, lucerny a několik úzkých průchodů. Bojová mapa: `ordenska-zatoka-tune`; alternativně `menkant-pristav`.
 

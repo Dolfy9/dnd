@@ -1,7 +1,7 @@
 ---
 postava:
   jmeno: Kharr
-  titul: Strážce levoboku Hořkého granátu
+  titul: Bosman pirátů ze Zairamu
   druh: Dragonborn
   druh_volby: Bronze Dragonborn (Lightning)
   pozadi: Soldier

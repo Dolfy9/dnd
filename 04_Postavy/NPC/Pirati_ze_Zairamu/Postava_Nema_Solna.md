@@ -1,7 +1,7 @@
 ---
 postava:
   jmeno: Nema Solná
-  titul: Bouřná čarodějka Hořkého granátu
+  titul: Bouřná čarodějka pirátů ze Zairamu
   druh: Human
   druh_volby: Draconic blue lineage (Lightning)
   pozadi: Sailor

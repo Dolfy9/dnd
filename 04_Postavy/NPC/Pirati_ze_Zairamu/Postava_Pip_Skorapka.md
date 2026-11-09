@@ -1,7 +1,7 @@
 ---
 postava:
   jmeno: Pip Skořápka
-  titul: Dělostřelecký zvěd Hořkého granátu
+  titul: Dělostřelecký zvěd pirátů ze Zairamu
   druh: Halfling
   pozadi: Criminal
   zarovnani: Chaotic Neutral

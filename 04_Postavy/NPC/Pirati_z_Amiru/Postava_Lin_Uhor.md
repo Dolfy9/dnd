@@ -1,7 +1,7 @@
 ---
 postava:
   jmeno: Lin „Úhoř“
-  titul: Potápěčka a zlodějka Piráti z Amiru
+  titul: Potápěčka a zlodějka pirátů z Amiru
   druh: Halfling
   pozadi: Criminal
   zarovnani: Chaotic Neutral

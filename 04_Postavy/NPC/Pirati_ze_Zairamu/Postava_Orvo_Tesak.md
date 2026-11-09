@@ -1,7 +1,7 @@
 ---
 postava:
   jmeno: Orvo Tesák
-  titul: Hromová pěst Hořkého granátu
+  titul: První důstojník pirátů ze Zairamu
   druh: Orc
   pozadi: Soldier
   zarovnani: Chaotic Neutral

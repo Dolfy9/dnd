@@ -28,7 +28,9 @@ Posádka pašuje léčivé rostliny a přepadává lodě s obilím mířící do
 
 **Družina:** 4 postavy 3. úrovně.  
 **Rozpočet aplikace:** Low 600 XP · Moderate 900 XP · High 1 600 XP.  
-**Součet z listů:** 950 XP · **verdikt: High**.
+**Součet z listů:** 950 XP · **verdikt: Moderate** (těsně nad; blíž k Moderate než k High).
+
+**Spojené posádky:** Piráti ze Zairamu a Opilé fretky dohromady představují 1 950 XP, tedy více než rozpočet High 1 600 XP.
 
 **Terén a mapa:** Přechod mezi dvěma palubami, lanové žebříky, zábradlí, sudy s rostlinami a voda jako nebezpečný prostor. Bojová mapa: `more-abordaz`; alternativně `zairam-rokle`.
 

@@ -1,7 +1,7 @@
 ---
 postava:
   jmeno: Hrouda
-  titul: Bosman Piráti z Amiru
+  titul: Bosman pirátů z Amiru
   druh: Dwarf
   pozadi: Sailor
   zarovnani: Neutral

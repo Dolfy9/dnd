@@ -1,7 +1,7 @@
 ---
 postava:
   jmeno: Babka Mlžena
-  titul: Rákosová čarodějka Piráti z Amiru
+  titul: Rákosová čarodějka pirátů z Amiru
   druh: Human
   pozadi: Hermit
   zarovnani: Neutral

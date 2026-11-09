@@ -1,7 +1,7 @@
 ---
 postava:
   jmeno: Morn
-  titul: Tichý strážný
+  titul: Zvěd a strážný Dar Kemmaru
   druh: Human
   pozadi: Guard
   zarovnani: Lawful Neutral

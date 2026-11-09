@@ -1,7 +1,7 @@
 ---
 postava:
   jmeno: Saffi Ambrová
-  titul: Kapitánka Hořkého granátu
+  titul: Kapitánka pirátů ze Zairamu
   druh: Tiefling
   druh_volby: Infernal legacy
   pozadi: Sailor
