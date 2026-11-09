@@ -1,14 +1,14 @@
 ---
 postava:
   jmeno: Edrik Popelný
-  titul: Strážný Dar Kemmaru
+  titul: Strážný Wortmiru
   druh: Human
   pozadi: Soldier
   zarovnani: Lawful Evil
-  frakce: [05_Frakce/Straz_Dar_Kemmaru.md]
-  mesta: [03_Mesta/Mesto_Dar_Kemmar.md]
-  zeme: [02_Zeme/Drzava_Knarghae_Zia.md]
-  stitky: [stráž, boj, pro úroveň 3, Dar Kemmar, kouzelník]
+  frakce: [05_Frakce/Straz_Wortmiru.md]
+  mesta: [03_Mesta/Mesto_Wortmir.md]
+  zeme: [02_Zeme/Kralovstvi_Kharghae_Zia.md]
+  stitky: [stráž, boj, pro úroveň 3, Wortmir, kouzelník]
   tridy:
   - {trida: Warlock, uroven: 3, podtrida: Fiend}
   atributy: {STR: 13, DEX: 14, CON: 15, INT: 8, WIS: 10, CHA: 15}
@@ -28,14 +28,14 @@ postava:
   - {nazev: Hellish Rebuke, trida: Warlock, uroven: 1}
   - {nazev: Armor of Agathys, trida: Warlock, uroven: 1}
   - {nazev: Misty Step, trida: Warlock, uroven: 2}
-  vybava: [Chain Shirt, Pact Longsword, černý tabard se stříbrnou věží, spálená listina]
+  vybava: [Chain Shirt, Pact Longsword, černý tabard se zlatou horskou bránou a zkříženými krumpáči, spálená listina]
   penize: {GP: 13}
   jazyky: [Common, Infernal]
   nastroje: [Gaming Set]
   osobnost:
     rysy: Před odpovědí na otázku se usměje, jako by už znal její konec.
     idealy: Smlouva je silnější než krev.
-    pouta: Dar Kemmar nesmí padnout, dokud je dohoda platná.
+    pouta: Wortmir nesmí padnout, dokud je dohoda platná.
     vady: Považuje vlastní bolest za důkaz, že vše funguje správně.
   prevod_2024: Fiend získává subclass na 3. úrovni; Pact of the Blade je eldritch invocation podle 2024.
   boj:
@@ -55,13 +55,13 @@ postava:
 > **Stav:** návrh
 
 ## Role a historie
-Městský strážný čepelník, jehož síla pochází z paktu s bytostí z Pekel. Střeží brány po boku Vorka Halda.
+Strážný Wortmiru, který se vyzná v bezpečnostních postupech Brány Wortmiru a rychle si získává důvěru služebních čet. V boji se opírá o paktovou čepel a magii.
 
 ## Vzhled
-Bledý, vyzáblý lidský strážný kolem třiceti let má popelavou kůži, propadlé oči, v nichž slabě žhne uhlově červené světlo, a krátké černé vlasy. Nosí kroužkovou košili a černý tabard se stříbrnou věží. V ruce drží dlouhý meč obalený tmavým kouřem a jiskrami. Za ním se zvedají temné hradby horského pevnostního města a pod nimi rudě září hluboká propast.
+Bledý, vyzáblý lidský strážný kolem třiceti let má popelavou kůži, propadlé oči, v nichž slabě žhne uhlově červené světlo, a krátké černé vlasy. Nosí kroužkovou košili a černý tabard se zlatou horskou bránou a zkříženými krumpáči. V ruce drží dlouhý meč obalený tmavým kouřem a jiskrami. Za ním se otevírá kamenná brána Wortmiru a v dálce září teplé světlo kovárny.
 
 ## Povaha a motivace
-Věří, že dohoda s jeho patronem udržuje brány zavřené a město v bezpečí. O sobě mluví, jako by už jednou zemřel.
+O sobě mluví jako o člověku, který ví, kolik stojí jedna nevyřčená pravda. Před ostatními působí jako spolehlivý strážný a dává přednost přesným rozkazům.
 
 ## Taktika v boji
 Kolo 1 aktivuje Hex a útočí Pact Longswordem; dál drží průchod, využívá Hellish Rebuke a Misty Step na změnu pozice. Při třetině ztrát ustoupí za Vorka, pokud mu velitel nepřikáže opak.
@@ -73,9 +73,9 @@ Kolo 1 aktivuje Hex a útočí Pact Longswordem; dál drží průchod, využív�
 - Edrik nabízí průchod městem výměnou za odpověď na otázku, kterou družina ještě neslyšela.
 
 ## Pro DM (tajné)
-- Návrh: Pakt se vztahuje na všechny strážné. Po smrti se mohou vrátit jako Wight nebo Shadow; volba i podmínky zůstávají otevřené.
+- Edrik je tajně vázán na démony z Knärghae Zia a slouží jako jejich infiltrátor ve Stráži Wortmiru. Pakt zatajuje i před Vorkem; na jeho rozkazy poslouchá jen do chvíle, kdy by ohrozily jeho spojení s patrony.
 
 ## Související
-- Frakce: [Stráž Dar Kemmaru](../../../05_Frakce/Straz_Dar_Kemmaru.md)
-- Místa: [Dar Kemmar](../../../03_Mesta/Mesto_Dar_Kemmar.md), [Knärghae Zia](../../../02_Zeme/Drzava_Knarghae_Zia.md)
-- Bojová mapa: Ruiny Dar Kemmaru (`dar-kemmar-ruiny`)
+- Frakce: [Stráž Wortmiru](../../../05_Frakce/Straz_Wortmiru.md)
+- Místa: [Wortmir](../../../03_Mesta/Mesto_Wortmir.md), [Khärghae Zia](../../../02_Zeme/Kralovstvi_Kharghae_Zia.md)
+- Bojová mapa: Horský průsmyk pod Ordenem (`orden-prusmyk`)

@@ -1,14 +1,14 @@
 ---
 postava:
   jmeno: Morn
-  titul: Zvěd a strážný Dar Kemmaru
+  titul: Zvěd městské stráže
   druh: Human
   pozadi: Guard
   zarovnani: Lawful Neutral
-  frakce: [05_Frakce/Straz_Dar_Kemmaru.md]
-  mesta: [03_Mesta/Mesto_Dar_Kemmar.md]
-  zeme: [02_Zeme/Drzava_Knarghae_Zia.md]
-  stitky: [stráž, boj, pro úroveň 3, Dar Kemmar, zvěd]
+  frakce: [05_Frakce/Straz_Wortmiru.md]
+  mesta: [03_Mesta/Mesto_Wortmir.md]
+  zeme: [02_Zeme/Kralovstvi_Kharghae_Zia.md]
+  stitky: [stráž, boj, pro úroveň 3, Wortmir, zvěd]
   tridy:
   - {trida: Rogue, uroven: 3, podtrida: Assassin}
   atributy: {STR: 8, DEX: 15, CON: 14, INT: 11, WIS: 14, CHA: 10}
@@ -21,10 +21,10 @@ postava:
   - {nazev: Heavy Crossbow, atribut: DEX, kostka: 1d10, typ: Piercing, mastery: Slow, dosah: 100/400 ft}
   - {nazev: Shortsword, atribut: DEX, kostka: 1d6, typ: Piercing, mastery: Vex}
   mastery: [Heavy Crossbow (Slow), Shortsword (Vex)]
-  vybava: [Studded Leather, Heavy Crossbow, 20 bolts, Shortsword, hladká černá železná maska]
+  vybava: [Studded Leather, Heavy Crossbow, 20 bolts, Shortsword, hladká černá železná maska, černý tabard se zlatou horskou bránou a zkříženými krumpáči]
   penize: {GP: 10}
   jazyky: [Common]
-  nastroje: [Thieves’ Tools]
+  nastroje: ["Thieves' Tools"]
   osobnost:
     rysy: Nikdy nemluví, pokud to není nutné k splnění rozkazu.
     idealy: Nepozorovaná práce je správně odvedená práce.
@@ -46,10 +46,10 @@ postava:
 > **Stav:** návrh
 
 ## Role a historie
-Mlčenlivý strážný a nájemný zabiják uzavřeného města. Sleduje přístupové cesty a odstraňuje ty, kteří se dostanou příliš blízko k bráně.
+Mlčenlivý zvěd Stráže Wortmiru. Sleduje přístupové cesty, kontroluje chodby mezi Horním městem a Hlubinami a umí se nenápadně pohybovat i mezi hlučnými havíři.
 
 ## Vzhled
-Mlčenlivý lidský strážný má tvář skrytou hladkou černou železnou maskou bez rysů, pouze s úzkými průzory pro oči. Přes prošívanou koženou zbroj nosí černý plášť s kapucí a černý tabard se stříbrnou věží. V rukou drží těžkou kuši, u pasu má krátký meč. Stojí na mlhavé horní hradbě zavřeného horského města za noci.
+Mlčenlivý lidský strážný má tvář skrytou hladkou černou železnou maskou bez rysů, pouze s úzkými průzory pro oči. Přes prošívanou koženou zbroj nosí černý plášť s kapucí a černý tabard se zlatou horskou bránou a zkříženými krumpáči. V rukou drží těžkou kuši, u pasu má krátký meč. Stojí v kamenné bráně Wortmiru, jejíž stěny ozařují světla blízkých výhní.
 
 ## Povaha a motivace
 Plní rozkazy přesně a nevyhledává osobní slávu. Jeho mlčení působí hrozivěji než výhrůžka.
@@ -64,9 +64,9 @@ Kolo 1 zaútočí z hradby těžkou kuší na vůdce; pak se přesouvá mezi st�
 - Morn může družinu sledovat, aniž by zanechal stopy.
 
 ## Pro DM (tajné)
-- Návrh: Morn pod maskou skrývá tvář, kterou některý obyvatel Dar Kemmaru zná z dávno uzavřeného portrétu.
+- Morn pod maskou skrývá tvář; nikomu ze stráže ji nikdy neukázal. Věří, že maska chrání jeho soukromí, ne že z něj dělá někoho jiného.
 
 ## Související
-- Frakce: [Stráž Dar Kemmaru](../../../05_Frakce/Straz_Dar_Kemmaru.md)
-- Místa: [Dar Kemmar](../../../03_Mesta/Mesto_Dar_Kemmar.md), [Knärghae Zia](../../../02_Zeme/Drzava_Knarghae_Zia.md)
-- Bojová mapa: Ruiny Dar Kemmaru (`dar-kemmar-ruiny`)
+- Frakce: [Stráž Wortmiru](../../../05_Frakce/Straz_Wortmiru.md)
+- Místa: [Wortmir](../../../03_Mesta/Mesto_Wortmir.md), [Khärghae Zia](../../../02_Zeme/Kralovstvi_Kharghae_Zia.md)
+- Bojová mapa: Horský průsmyk pod Ordenem (`orden-prusmyk`)

@@ -193,6 +193,25 @@ class Handler(SimpleHTTPRequestHandler):
                 p.write_text(updated, encoding="utf-8")
                 rebuild()
                 return self.send_json({"ok": True, "cesta": d["cesta"]})
+            if u.path == "/api/obchod/pole" and method == "POST":
+                d = self.body()
+                p = safe_path(d["cesta"])
+                if p.relative_to(ROOT).parts[0] != "12_Obchody" or not p.is_file():
+                    raise ValueError("cesta musí vést do 12_Obchody")
+                text = p.read_text(encoding="utf-8")
+                match = re.match(r"\A---\r?\n(?P<front>.*?)(?P<closing>\r?\n---\r?\n)", text, re.S)
+                if not match:
+                    raise ValueError("soubor nemá YAML hlavičku")
+                lines = match.group("front").splitlines()
+                start = next((i for i, line in enumerate(lines) if line == "obchod:"), None)
+                if start is None:
+                    raise ValueError("chybí blok obchod")
+                end = next((i for i in range(start + 1, len(lines)) if lines[i] and not lines[i][0].isspace()), len(lines))
+                block = yaml.safe_dump({"obchod": d["obchod"]}, allow_unicode=True, sort_keys=False, width=120).strip().splitlines()
+                lines[start:end] = block
+                p.write_text(text[:match.start("front")] + "\n".join(lines) + text[match.end("front"):], encoding="utf-8")
+                rebuild()
+                return self.send_json({"ok": True, "cesta": d["cesta"]})
             if u.path == "/api/boje" and method == "GET":
                 return self.send_json(boje.index_data())
             if u.path == "/api/boj" and method == "GET":

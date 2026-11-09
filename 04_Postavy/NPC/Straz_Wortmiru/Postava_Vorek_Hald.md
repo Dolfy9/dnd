@@ -1,14 +1,14 @@
 ---
 postava:
   jmeno: Vorek Hald
-  titul: Strážmistr brány Dar Kemmaru
+  titul: Strážmistr Brány Wortmiru
   druh: Dwarf
   pozadi: Guard
   zarovnani: Lawful Neutral
-  frakce: [05_Frakce/Straz_Dar_Kemmaru.md]
-  mesta: [03_Mesta/Mesto_Dar_Kemmar.md]
-  zeme: [02_Zeme/Drzava_Knarghae_Zia.md]
-  stitky: [stráž, boj, pro úroveň 3, Dar Kemmar, velitel]
+  frakce: [05_Frakce/Straz_Wortmiru.md]
+  mesta: [03_Mesta/Mesto_Wortmir.md]
+  zeme: [02_Zeme/Kralovstvi_Kharghae_Zia.md]
+  stitky: [stráž, boj, pro úroveň 3, Wortmir, velitel]
   tridy:
   - {trida: Fighter, uroven: 4, podtrida: Champion}
   atributy: {STR: 17, DEX: 10, CON: 16, INT: 8, WIS: 13, CHA: 13}
@@ -23,10 +23,10 @@ postava:
   - {nazev: Warhammer, atribut: STR, kostka: 1d8, typ: Bludgeoning, mastery: Push}
   - {nazev: Heavy Crossbow, atribut: DEX, kostka: 1d10, typ: Piercing, mastery: Slow, dosah: 100/400 ft}
   mastery: [Warhammer (Push)]
-  vybava: [Splint Armor, Shield, Warhammer, Heavy Crossbow, 20 bolts, černý tabard se stříbrnou věží a zavřenou branou, klíče od vnější brány]
+  vybava: [Splint Armor, Shield, Warhammer, Heavy Crossbow, 20 bolts, černý tabard se zlatou horskou bránou a zkříženými krumpáči, klíče od Brány Wortmiru]
   penize: {GP: 20}
   jazyky: [Common, Dwarvish]
-  nastroje: [Smith’s Tools]
+  nastroje: ["Smith's Tools"]
   osobnost:
     rysy: Vždy stojí čelem k bráně a zády ke zdi.
     idealy: Brána musí zůstat zavřená, dokud velitel nerozhodne jinak.
@@ -49,13 +49,13 @@ postava:
 > **Stav:** návrh
 
 ## Role a historie
-Velitel branné stráže Dar Kemmaru. Dohlíží na zavřené brány a odmítá vysvětlovat, proč město po setmění nepropouští ani posly.
+Strážmistr Brány Wortmiru. Zná každou směnu, cechovní značku i cestu mezi Horním městem a Hlubinami; při ordenské kontrole dbá na pravidla, ale nenechá celnici zdržovat havíře v nebezpečí.
 
 ## Vzhled
-Starý, zachmuřený trpasličí strážce má železošedý vous spletený do těžkých copů, unavené hluboko posazené oči a zjizvenou tvář. Nosí těžkou splintovou zbroj a černý tabard se stříbrnou věží a zavřenou bránou; v rukou drží velký štít a válečné kladivo. Za ním se zvedají mohutné zavřené železné brány temného horského pevnostního města. Na hradbách se v soumraku pohybují stíny.
+Starý, zachmuřený trpasličí strážce má železošedý vous spletený do těžkých copů, unavené hluboko posazené oči a zjizvenou tvář. Nosí těžkou splintovou zbroj a černý tabard se zlatou horskou bránou a zkříženými krumpáči; v rukou drží velký štít a válečné kladivo. Za ním se zvedá brána Wortmiru zasazená do hory, z otevřené kovárny dopadá teplé světlo.
 
 ## Povaha a motivace
-Věří, že zavřené brány udržují město i jeho obyvatele v bezpečí. Rozkazy plní bez okázalosti, ale otázky o původu stráže ho rozčílí.
+Věří, že dobrá stráž má chránit obyvatele i jejich práci. Rozkazy plní bez okázalosti, ale zbytečné průtahy ordenské celnice ho rozčílí.
 
 ## Taktika v boji
 Kolo 1 zaujme místo před branou; pak Push útoky odtlačuje vetřelce od průchodu. Action Surge použije, až někdo prolomí obrannou linii. Při třetině ztrát ustoupí k vnitřní bráně, nikdy ji však neotevře bez rozkazu.
@@ -68,9 +68,9 @@ Kolo 1 zaujme místo před branou; pak Push útoky odtlačuje vetřelce od průc
 - Na hradbách se po setmění objevují pohyblivé stíny, které neodpovídají strážným.
 
 ## Pro DM (tajné)
-- Návrh podle zadání: Strážní jsou živí lidé vázaní dohodou se skrytými vládci; co se s nimi stane po smrti, zůstává otevřené.
+- Návrh: Vorek tuší, že někdo z jeho lidí vynáší informace přes hranici, ale zatím podezřívá hlavně celnici.
 
 ## Související
-- Frakce: [Stráž Dar Kemmaru](../../../05_Frakce/Straz_Dar_Kemmaru.md)
-- Místa: [Dar Kemmar](../../../03_Mesta/Mesto_Dar_Kemmar.md), [Knärghae Zia](../../../02_Zeme/Drzava_Knarghae_Zia.md)
-- Bojová mapa: Ruiny Dar Kemmaru (`dar-kemmar-ruiny`)
+- Frakce: [Stráž Wortmiru](../../../05_Frakce/Straz_Wortmiru.md)
+- Místa: [Wortmir](../../../03_Mesta/Mesto_Wortmir.md), [Khärghae Zia](../../../02_Zeme/Kralovstvi_Kharghae_Zia.md)
+- Bojová mapa: Horský průsmyk pod Ordenem (`orden-prusmyk`)

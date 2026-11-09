@@ -19,7 +19,7 @@ NAMES = {
     "Vladci": "Vládci", "NPC": "NPC", "05_Frakce": "Frakce",
     "06_Knihy_a_Dokumenty": "Knihy a dokumenty", "07_Kampane": "Kampaně",
     "08_Questy": "Questy", "09_Hadanky": "Hádanky", "10_Sezeni": "Sezení",
-    "11_Mapy": "Mapy", "_Sablony": "Šablony",
+    "11_Mapy": "Mapy", "12_Obchody": "Obchody", "_Sablony": "Šablony",
 }
 PREFIX = re.compile(r"^(Postava|Město|Mesto|Země|Quest|Hádanka|Sezení|Kampaň|Šablona)\s*:\s*", re.I)
 MD_LINK = re.compile(r"(?<!!)\[[^\]]*\]\((<[^>]+>|[^)\s]+)(?:\s+[^)]*)?\)")
@@ -229,7 +229,7 @@ def postavy_index():
             "perex": plain_excerpt(page["body"]),
             "stitky": [],
             "data": data,
-            "_vazby": {key: {} for key in ("zeme", "mesta", "frakce", "kampane", "questy", "sezeni")},
+            "_vazby": {key: {} for key in ("zeme", "mesta", "frakce", "kampane", "questy", "sezeni", "obchody")},
         }
         seen_tags = set()
         for label in data.get("stitky") or []:
@@ -265,6 +265,56 @@ def postavy_index():
         del character["_vazby"]
         out.append(character)
     (DOCS / "postavy_index.json").write_text(json.dumps(out, ensure_ascii=False, default=str), encoding="utf-8")
+
+
+def obchody_index():
+    source = WEB / "assets" / "srd" / "predmety.json"
+    srd_names = {item.get("nazev") for item in json.loads(source.read_text(encoding="utf-8"))}
+    pages = {p.relative_to(ROOT).as_posix(): title(p) for p in ROOT.rglob("*.md")
+             if p.relative_to(ROOT).parts[0] not in SKIP}
+    people_path = DOCS / "postavy_index.json"
+    people = json.loads(people_path.read_text(encoding="utf-8"))
+    by_path = {person["cesta"]: person for person in people}
+    shops = []
+    for path in sorted((ROOT / "12_Obchody").glob("*.md")):
+        rel = path.relative_to(ROOT).as_posix()
+        meta, _ = frontmatter(path.read_text(encoding="utf-8"))
+        shop = meta.get("obchod")
+        if not isinstance(shop, dict):
+            raise ValueError(f"{rel}: chybí blok obchod")
+        def resolve(target, prefix):
+            target = str(target or "").replace("\\", "/")
+            if target not in pages or not target.startswith(prefix):
+                raise ValueError(f"{rel}: neplatná cesta {target}")
+            return {"cesta": target, "nazev": pages[target], "url": page_url(target)}
+        def staff(paths):
+            result = []
+            for target in paths or []:
+                person = by_path.get(str(target))
+                if not person:
+                    raise ValueError(f"{rel}: neplatná postava {target}")
+                result.append({"cesta": person["cesta"], "jmeno": person["jmeno"], "url": person["url"],
+                               "portret": person["portret"]})
+            return result
+        offers = shop.get("nabidka") or []
+        for row in offers:
+            if row.get("srd") and row["srd"] not in srd_names:
+                raise ValueError(f"{rel}: neznámá SRD položka {row['srd']}")
+        owners = staff(shop.get("majitel") if isinstance(shop.get("majitel"), list) else [shop.get("majitel")])
+        personnel = staff(shop.get("personal"))
+        shops.append({"cesta": rel, "url": page_url(rel), "nazev": shop.get("nazev") or pages[rel],
+                      "typ": shop.get("typ", ""), "majitel": owners, "personal": personnel,
+                      "mesto": resolve(shop.get("mesto"), "03_Mesta/"), "zeme": resolve(shop.get("zeme"), "02_Zeme/"),
+                      "ctvrt": shop.get("ctvrt", ""), "oteviraci_doba": shop.get("oteviraci_doba", ""),
+                      "stitky": shop.get("stitky") or [], "nabidka": offers, "sluzby": shop.get("sluzby") or [],
+                      "zdroj": shop})
+        for person in owners + personnel:
+            by_path[person["cesta"]].setdefault("obchody", []).append(
+                {"cesta": rel, "nazev": shop.get("nazev") or pages[rel], "url": page_url(rel), "odvozeno": False})
+    for person in people:
+        person.setdefault("obchody", [])
+    people_path.write_text(json.dumps(people, ensure_ascii=False, default=str), encoding="utf-8")
+    (DOCS / "obchody_index.json").write_text(json.dumps(shops, ensure_ascii=False, default=str), encoding="utf-8")
 
 
 def heraldika_index():
@@ -353,11 +403,13 @@ def main():
     (DOCS / "mapa.md").write_text(map_page(), encoding="utf-8")
     (DOCS / "bestiar.md").write_text("---\nhide:\n  - toc\n---\n# Bestiář (SRD 5.2.1)\n\nNetvoři ze SRD 5.2.1 se statbloky. Filtruj podle typu a CR, klikni pro statblok. Obsah SRD 5.2.1 je pod licencí CC-BY 4.0.\n\n<div class=\"srd-katalog\" data-typ=\"bestiar\"></div>\n", encoding="utf-8")
     (DOCS / "postavy.md").write_text("---\nhide:\n  - toc\n  - navigation\n---\n# Katalog postav\n\nPostavy, jejich vazby a štítky pro přípravu hry. Vyhledávej, filtruj nebo otevři kartu postavy.\n\n<div id=\"postavy-katalog\"></div>\n", encoding="utf-8")
+    (DOCS / "obchody.md").write_text("---\nhide:\n  - toc\n  - navigation\n---\n# Obchody\n\nKatalog obchodů a jejich nabídek.\n\n<div id=\"obchody-katalog\"></div>\n", encoding="utf-8")
     (DOCS / "predmety.md").write_text("---\nhide:\n  - toc\n---\n# Předměty a výbava (SRD 5.2.1)\n\nZbraně, zbroje, výbava a kouzelné předměty. Obsah SRD 5.2.1 je pod licencí CC-BY 4.0.\n\n<div class=\"srd-katalog\" data-typ=\"predmety\"></div>\n", encoding="utf-8")
     (DOCS / "glosar.md").write_text("---\nhide:\n  - toc\n---\n# Glosář pravidel (SRD 5.2.1)\n\nDefinice pravidel 2024 (stavy, akce, pojmy). Obsah SRD 5.2.1 je pod licencí CC-BY 4.0.\n\n<div class=\"srd-katalog\" data-typ=\"glosar\"></div>\n", encoding="utf-8")
     (DOCS / "boj.md").write_text("---\nhide:\n  - toc\n  - navigation\n---\n# Bojový modul\n\nBojové mapy s mřížkou (1 pole = 5 ft), žetony postav a netvorů, iniciativa a bojový pomocník podle pravidel 2024.\n\n<div id=\"boj-app\"></div>\n", encoding="utf-8")
     boj_index()
     postavy_index()
+    obchody_index()
     heraldika_index()
     boje.write_index(DOCS)
     (DOCS / "boje.md").write_text("---\nhide:\n  - toc\n  - navigation\n---\n# Správa bojů\n\nUložené boje podle kampaní a questů: stav, účastníci, kola a deník. Boj otevřeš v bojovém modulu, kde ho můžeš dál hrát, přiřadit nebo uložit jako nový.\n\n<div id=\"boje-app\"></div>\n", encoding="utf-8")
@@ -373,7 +425,7 @@ def main():
     import pravidla_pages
     P = pravidla_pages.build(DOCS)
     byname = {list(x)[0]: x for x in sections}
-    visible_sections = {"Svět", "Země", "Města", "Postavy", "Frakce", "Knihy a dokumenty",
+    visible_sections = {"Svět", "Země", "Města", "Obchody", "Postavy", "Frakce", "Knihy a dokumenty",
                         "Mapy", "Kampaně", "Questy", "Hádanky", "Sezení"}
     rest = [x for x in sections if list(x)[0] not in visible_sections]
     def section_items(name):
@@ -385,6 +437,10 @@ def main():
         {"Země": section_items("Země")},
         {"Města": section_items("Města")},
     ])
+    shops = list(section_items("Obchody"))
+    shops.insert(0, {"Katalog obchodů": "obchody.md"})
+    NAV_INDEX["/obchody/"] = "Obchody katalog obchody prodejny"
+    world.append({"Obchody": shops})
     characters = list(section_items("Postavy"))
     characters.insert(0, {"Katalog postav": "postavy.md"})
     NAV_INDEX["/postavy/"] = "Katalog postav postavy katalog NPC"
@@ -462,6 +518,7 @@ extra_css:
   - assets/postavy.css
   - assets/heraldika.css
   - assets/boj.css
+  - assets/obchody.css
 extra_javascript:
   - assets/easymde/easymde.min.js
   - assets/extra.js
@@ -474,6 +531,7 @@ extra_javascript:
   - assets/kouzla.js
   - assets/srd.js
   - assets/boj.js
+  - assets/obchody.js
 not_in_nav: |
   /mapa.md
   /postavy.md

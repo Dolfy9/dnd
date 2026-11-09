@@ -3,6 +3,7 @@
 import re
 import sys
 from pathlib import Path
+import yaml
 
 ROOT = Path(__file__).resolve().parent.parent
 START, END = "<!-- INDEX -->", "<!-- /INDEX -->"
@@ -59,15 +60,36 @@ def regenerate():
 
 def check():
     broken = []
-    for p in md_files():
-        for target in LINK.findall(p.read_text(encoding="utf-8")):
+    files = md_files()
+    for p in files:
+        text = p.read_text(encoding="utf-8")
+        if text.startswith("---\n"):
+            end = text.find("\n---\n", 4)
+            if end < 0:
+                broken.append(f"{p.relative_to(ROOT)}: neuzavřený YAML front matter")
+            else:
+                try:
+                    yaml.safe_load(text[4:end])
+                except yaml.YAMLError as exc:
+                    broken.append(f"{p.relative_to(ROOT)}: neplatný YAML front matter: {exc}")
+        for target in LINK.findall(text):
             if re.match(r"^[a-z]+:", target):
                 continue
-            if not (p.parent / target).resolve().exists():
+            path = target.split("?", 1)[0]
+            local = (ROOT / path.lstrip("/")) if path.startswith("/") else (p.parent / path)
+            resolved = local.resolve()
+            if resolved.exists():
+                continue
+            try:
+                route = resolved.relative_to(ROOT).as_posix().rstrip("/")
+            except ValueError:
+                route = ""
+            generated = ROOT / "web" / "docs" / (route + ".md") if route else None
+            if not generated or not generated.is_file():
                 broken.append(f"{p.relative_to(ROOT)} -> {target}")
     for b in broken:
         print("ROZBITÝ ODKAZ:", b)
-    print(f"Zkontrolováno {len(md_files())} souborů, rozbitých odkazů: {len(broken)}")
+    print(f"Zkontrolováno {len(files)} souborů, chyby: {len(broken)}")
     return not broken
 
 

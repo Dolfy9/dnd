@@ -35,6 +35,7 @@ def homepage_tiles(root):
         ("mapa", "Mapa", "mapa/", 1, "Prozkoumej svět a jeho vrstvy."),
         ("zeme", "Země", "zeme/", pages("02_Zeme"), "Státy, knížectví a svobodná území."),
         ("mesta", "Města", "mesta/", pages("03_Mesta"), "Sídla, přístavy a pevnosti."),
+        ("obchody", "Obchody", "obchody/", pages("12_Obchody"), "Obchody, služby a jejich nabídky."),
         ("postavy", "Postavy", "postavy/", pages("04_Postavy"), "Najdi postavu podle jména a vazeb."),
         ("frakce", "Frakce", "frakce/", pages("05_Frakce"), "Řády, odboj a další mocenské skupiny."),
         ("kampane", "Kampaně", "kampane/", pages("07_Kampane"), "Příběhové oblouky a jejich záznamy."),
@@ -50,10 +51,13 @@ def homepage_tiles(root):
     ]
     links = []
     for icon, name, href, count, description in tiles:
+        label = count_label(count)
+        if icon == "obchody":
+            label = f"{count} " + ("obchod" if count == 1 else "obchody" if 2 <= count <= 4 else "obchodů")
         links.append(
             f'<a class="nav-home-tile nav-tile-{icon}" href="{href}" data-icon="{icon}">'
             f'<span class="nav-home-icon" aria-hidden="true"></span><span class="nav-home-copy">'
-            f'<strong>{name}</strong><small>{count_label(count)}</small><span>{description}</span></span></a>'
+            f'<strong>{name}</strong><small>{label}</small><span>{description}</span></span></a>'
         )
     return '<section class="nav-home-tiles" aria-label="Rychlý rozcestník">' + "".join(links) + "</section>"
 

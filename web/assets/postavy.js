@@ -5,7 +5,8 @@
     ["mesto", "Město", "mesta"],
     ["frakce", "Frakce", "frakce"],
     ["kampan", "Kampaň", "kampane"],
-    ["stitek", "Štítek", "stitky"]
+    ["stitek", "Štítek", "stitky"],
+    ["obchod", "Obchod", "obchody"]
   ];
   var PARAMS = FACETS.map(function (x) { return x[0]; }).concat("q");
 
@@ -31,7 +32,9 @@
   }
   function relatedChips(person) {
     var out = [];
-    FACETS.slice(1, 5).forEach(function (facet) {
+    ["zeme", "mesto", "frakce", "kampan", "obchod"].forEach(function (key) {
+      var facet = FACETS.filter(function (x) { return x[0] === key; })[0];
+      if (!facet) return;
       records(person, facet[0]).forEach(function (item) {
         out.push('<a class="postavy-chip' + (item.odvozeno ? " odvozeno" : "") + '" href="' + esc(item.url) + '"' +
           (item.odvozeno ? ' title="odvozeno z odkazů"' : "") + '>' + esc(item.name) + "</a>");
@@ -259,7 +262,7 @@
     }).join("");
   }
   function relationLinks(person) {
-    return ["zeme", "mesta", "frakce", "kampane", "questy", "sezeni"].map(function (field) {
+    return ["zeme", "mesta", "frakce", "kampane", "questy", "sezeni", "obchody"].map(function (field) {
       return (person[field] || []).map(function (item) {
         return '<a class="postavy-rel-link' + (item.odvozeno ? " odvozeno" : "") + '" href="' + esc(item.url) + '"'
           + (item.odvozeno ? ' title="odvozeno z odkazů"' : "") + ">" + esc(item.nazev) + "</a>";
@@ -441,7 +444,7 @@
     enrichSheet();
     if (!document.body.dataset.postavyLinks) {
       document.body.dataset.postavyLinks = "1";
-      document.addEventListener("click", interceptLinks);
+      document.addEventListener("click", interceptLinks, true);
     }
   }
   window.MontelienPostavy = { load: loadIndex, open: open };

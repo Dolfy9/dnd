@@ -1,0 +1,17 @@
+#obchody-katalog { display: grid; gap: .8rem; }
+.obchody-controls { display: grid; grid-template-columns: 2fr repeat(4,minmax(8rem,1fr)); gap: .4rem; }
+.obchody-controls input, .obchody-controls select { min-width: 0; padding: .5rem; background: var(--md-default-bg-color); color: var(--md-default-fg-color); border: 1px solid color-mix(in srgb,var(--md-default-fg-color) 30%,transparent); border-radius: .35rem; }
+.obchody-count { margin: 0; font-size: .8rem; }
+.obchody-list { display: grid; grid-template-columns: repeat(auto-fill,minmax(250px,1fr)); gap: .75rem; }
+.obchod-card { display: flex; align-items: flex-start; gap: .65rem; padding: .65rem; border: 1px solid color-mix(in srgb,var(--md-default-fg-color) 24%,transparent); border-radius: .5rem; }
+.obchod-card > img { width: 64px; aspect-ratio: 2/3; object-fit: contain; }
+.obchod-card h2 { margin: 0; font-size: 1rem; }
+.obchod-card p { margin: .25rem 0; font-size: .75rem; }
+.obchod-card small { font-size: .65rem; opacity: .75; }
+.obchod-table-wrap { overflow-x: auto; }
+.obchod-page table { display: table; width: 100%; }
+.obchod-editor { margin-top: 1rem; padding: .8rem; border: 1px solid var(--md-accent-fg-color); border-radius: .5rem; }
+.obchod-edit-row { display: grid; grid-template-columns: 1.4fr 1.2fr .7fr .7fr 1fr 1.5fr auto; gap: .3rem; margin: .35rem 0; }
+.obchod-edit-row input { min-width: 0; padding: .3rem; }
+.obchod-editor button { margin: .25rem; }
+@media(max-width:800px) { .obchody-controls { grid-template-columns: 1fr 1fr; } .obchody-controls input { grid-column: 1/-1; } .obchod-edit-row { grid-template-columns: 1fr 1fr; } }

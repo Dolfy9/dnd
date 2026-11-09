@@ -10,6 +10,10 @@ const D = JSON.parse(fs.readFileSync(path.join(R, "11_Mapy/svet.json"), "utf8"))
 const K = JSON.parse(fs.readFileSync(path.join(R, "tools/svet_kresba.json"), "utf8"));
 const Z = JSON.parse(fs.readFileSync(path.join(R, "tools/svet_lore.json"), "utf8"));
 if (D.sirka !== 2048 || D.vyska !== 1440) err.push("rozměry svet.json");
+const oldNorthFloes = (D.symboly || []).filter(s => s.typ === "ledova_kra" && s.pozn === "ledová kra v severním moři Nölienu (návrh)");
+if (oldNorthFloes.length) err.push("v severním moři Nölienu zůstaly návrhové ledové kry");
+const northWaves = (D.symboly || []).filter(s => s.typ === "vlny" && s.pozn === "vlny severně od Nölienu (kresba DM)");
+if (northWaves.length < 5) err.push("severně od Nölienu chybí vlny");
 const used = new Set();
 Object.values(O).forEach(o => o.spr.forEach(n => used.add(n)));
 Object.values(P).forEach(o => o.spr.forEach(n => used.add(n)));
@@ -43,6 +47,7 @@ function uvnitr(x, y, body) {
 function pevninaAt(x, y) {
   return (D.pevnina || []).some(f => (f.typ === "pevnina" || f.typ === "ostrov") && uvnitr(x, y, f.body));
 }
+if (northWaves.some(s => pevninaAt(s.x, s.y))) err.push("symbol vln severně od Nölienu leží na pevnině");
 function ownersAt(x, y) {
   return (D.zeme || []).filter(z => (z.body || []).some(ring => uvnitr(x, y, ring))).map(z => z.nazev);
 }

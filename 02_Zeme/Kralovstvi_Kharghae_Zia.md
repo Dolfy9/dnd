@@ -27,3 +27,15 @@ Khärghae a Knärghae byly původně sesterská města jedné země – **Zia** 
 - Hlavní město: [Město Wortmir](../03_Mesta/Mesto_Wortmir.md)
 - Hlava státu: [Vévoda Wort XXIV.](../04_Postavy/Vladci/Postava_Wort_XXIV.md)
 - Frakce: [Ordenský řád](../05_Frakce/Ordensky_Rad.md)
+- [Stráž Wortmiru](../05_Frakce/Straz_Wortmiru.md)
+
+## Obchody hlavního města
+- [Prohlédnout katalog obchodů v Khärghae Zia](../obchody/?zeme=Knížectví%20Khärghae%20Zia)
+- [Brannokova výheň](../12_Obchody/Obchod_Brannokova_vyhen.md)
+- [Orrmakova zbrojnice](../12_Obchody/Obchod_Orrmakova_zbrojnice.md)
+- [Kladivo a výheň](../12_Obchody/Obchod_Kladivo_a_vyhen.md)
+- [Arkánum Al Benar](../12_Obchody/Obchod_Arkanum_Al_Benar.md)
+- [Runová dílna](../12_Obchody/Obchod_Runova_dilna.md)
+- [Bharrinův sklad](../12_Obchody/Obchod_Bharrinuv_sklad.md)
+- [Léčivna a alchymie v Hlubinách](../12_Obchody/Obchod_Lecivna_Hlubiny.md)
+- Frakce: [Stráž Wortmiru](../05_Frakce/Straz_Wortmiru.md)
