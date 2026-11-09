@@ -246,6 +246,25 @@
     });
     expandCurrentSection(nav);
   }
+  function pageToc() {
+    var source = document.getElementById("zdroj-stranky");
+    var home = source && source.dataset.cesta === "README.md";
+    var nav = document.querySelector(".md-nav--primary");
+    var tocs = home ? document.querySelectorAll(".md-nav--secondary") : nav ? nav.querySelectorAll(".md-nav--secondary") : [];
+    tocs.forEach(function (toc) {
+      if (home) {
+        toc.remove();
+      } else if (!toc.closest(".nav-page-toc")) {
+        var details = document.createElement("details");
+        details.className = "nav-page-toc";
+        var summary = document.createElement("summary");
+        summary.textContent = "Na této stránce";
+        toc.parentNode.insertBefore(details, toc);
+        details.appendChild(summary);
+        details.appendChild(toc);
+      }
+    });
+  }
   function breadcrumbs(data) {
     var src = document.getElementById("zdroj-stranky"), inner = document.querySelector(".md-content__inner");
     var h1 = inner && inner.querySelector("h1");
@@ -355,7 +374,7 @@
     document.body.appendChild(bar);
   }
   function init() {
-    setupHeader(); setupDrawer(); setupTabs(); menuState(); mapButton(); homepage(); mobileNav();
+    setupHeader(); setupDrawer(); setupTabs(); pageToc(); menuState(); mapButton(); homepage(); mobileNav();
     index().then(function (data) { decorateMenu(data); breadcrumbs(data); });
     toolbar();
   }
