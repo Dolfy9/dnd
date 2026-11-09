@@ -102,14 +102,12 @@
     "tmavy": 0.58
   },
   "fields": {
-    "patterns": [
-      ["#a8a879", "#92976a"],
-      ["#a6ab79", "#8d9568"],
-      ["#b1a77d", "#978c68"]
-    ],
-    "line": "#696849",
-    "opacity": 0.27,
-    "stroke_opacity": 0.3
+    "colors": ["#9fad66", "#a6b36d", "#a9a978"],
+    "line": "#625f3e",
+    "opacity": 0.96,
+    "cell": 12,
+    "line_width": 0.55,
+    "line_opacity": 0.7
   },
   "state_tint_opacity": 0.12,
   "labels": {

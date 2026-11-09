@@ -91,7 +91,6 @@
     o.push('<pattern id="sv-pp" patternUnits="userSpaceOnUse" width="512" height="512"><rect width="512" height="512" fill="#efdfb4"/><image href="' + A + 'papir.jpg" width="512" height="512" opacity=".75"/></pattern>');
     o.push('<pattern id="sv-mp" patternUnits="userSpaceOnUse" width="420" height="420"><image href="' + A + 'more.jpg" width="420" height="420"/></pattern>');
     o.push('<pattern id="sv-jp" patternUnits="userSpaceOnUse" width="420" height="420"><rect width="420" height="420" fill="' + SEA.lake + '"/><image href="' + A + 'more.jpg" width="420" height="420" opacity="' + SEA.lake_wave_opacity + '"/></pattern>');
-    (FIELD.patterns || []).forEach(function (f, i) { o.push('<pattern id="sv-f' + i + '" patternUnits="userSpaceOnUse" width="9" height="9" patternTransform="rotate(' + [25, -35, 70][i] + ')"><rect width="9" height="9" fill="' + f[0] + '"/><rect width="9" height="4" fill="' + f[1] + '"/><path d="M0,4.5 h9" stroke="' + FIELD.line + '" stroke-width=".45" opacity="' + FIELD.stroke_opacity + '"/></pattern>'); });
     var lakes = (D.pevnina || []).filter(function (s) { return s.typ === "jezero"; });
     var landD = (D.pevnina || []).filter(function (s) { return s.typ === "pevnina" || s.typ === "ostrov"; }).map(function (s) { return pathD(s.body, true); }).join(" ");
     svg._svShore = (D.pevnina || []).filter(function (s) { return s.typ === "pevnina" || s.typ === "ostrov"; }).map(function (s) { return s.body; });
@@ -120,13 +119,21 @@
     });
     (D.oblasti || []).forEach(function (a, i) {
       if (a.typ !== "pole") return;
-      var Rf = rng(977 + i * 31), xs = a.body.map(function (p) { return p[0]; }), ys = a.body.map(function (p) { return p[1]; }),
-        x0 = Math.min.apply(null, xs), x1 = Math.max.apply(null, xs), y0 = Math.min.apply(null, ys), y1 = Math.max.apply(null, ys), ang = (Rf() - .5) * 50;
-      for (var fy = y0 + 4; fy < y1; fy += 10) for (var fx = x0 + 4; fx < x1; fx += 13) {
-        var qx = fx + (Rf() - .5) * 4, qy = fy + (Rf() - .5) * 3;
-        if (Rf() < .18 || !inPoly(qx, qy, a.body)) continue;
-        o.push('<rect x="' + (qx - 5.5).toFixed(1) + '" y="' + (qy - 4).toFixed(1) + '" width="' + (9 + Rf() * 3).toFixed(1) + '" height="' + (6.5 + Rf() * 2).toFixed(1) + '" transform="rotate(' + (ang + (Rf() - .5) * 12).toFixed(1) + " " + qx.toFixed(1) + " " + qy.toFixed(1) + ')" fill="url(#sv-f' + Math.floor(Rf() * 3) + ')" stroke="' + FIELD.line + '" stroke-width=".4" stroke-opacity="' + FIELD.stroke_opacity + '" opacity="' + (a.opacity == null ? FIELD.opacity : a.opacity) + '"/>');
-      }
+      var cell = Math.max(10, Math.min(14, FIELD.cell || 12)), size = cell * 3, colors = FIELD.colors || ["#9fad66", "#a6b36d", "#a9a978"],
+        grid = [[0, 1, 0], [2, 0, 2], [0, 1, 0]], angle = a.angle == null ? 25 : a.angle, id = "sv-f" + i, d = "";
+      o.push('<defs><pattern id="' + id + '" patternUnits="userSpaceOnUse" width="' + size + '" height="' + size + '" patternTransform="rotate(' + angle + ')">');
+      for (var row = 0; row < 3; row++) for (var col = 0; col < 3; col++)
+        o.push('<rect x="' + (col * cell) + '" y="' + (row * cell) + '" width="' + cell + '" height="' + cell + '" fill="' + colors[grid[row][col] % colors.length] + '"/>');
+      d = "M" + cell + ",0 C" + (cell + 3) + "," + (cell * .6) + " " + (cell - 3) + "," + (cell * 1.3) + " " + (cell + 1) + "," + (cell * 2)
+        + " C" + (cell + 4) + "," + (cell * 2.5) + " " + (cell - 2) + "," + (cell * 2.8) + " " + cell + "," + size
+        + " M" + (cell * 2) + ",0 C" + (cell * 2 - 3) + "," + (cell * .6) + " " + (cell * 2 + 3) + "," + (cell * 1.3) + " " + (cell * 2 - 1) + "," + (cell * 2)
+        + " C" + (cell * 2 - 4) + "," + (cell * 2.5) + " " + (cell * 2 + 2) + "," + (cell * 2.8) + " " + (cell * 2) + "," + size
+        + " M0," + cell + " C" + (cell * .6) + "," + (cell + 3) + " " + (cell * 1.3) + "," + (cell - 3) + " " + (cell * 2) + "," + (cell + 1)
+        + " C" + (cell * 2.5) + "," + (cell + 4) + " " + (cell * 2.8) + "," + (cell - 2) + " " + size + "," + cell
+        + " M0," + (cell * 2) + " C" + (cell * .6) + "," + (cell * 2 - 3) + " " + (cell * 1.3) + "," + (cell * 2 + 3) + " " + (cell * 2) + "," + (cell * 2 - 1)
+        + " C" + (cell * 2.5) + "," + (cell * 2 - 4) + " " + (cell * 2.8) + "," + (cell * 2 + 2) + " " + size + "," + (cell * 2);
+      o.push('<path d="' + d + '" fill="none" stroke="' + FIELD.line + '" stroke-width="' + (FIELD.line_width || .55) + '" opacity="' + (FIELD.line_opacity || .7) + '"/></pattern></defs>');
+      o.push('<path d="' + pathD(a.body, true) + '" fill="url(#' + id + ')" opacity="' + (FIELD.opacity == null ? .96 : FIELD.opacity) + '"/>');
     });
     lakes.forEach(function (s) { o.push('<path d="' + pathD(s.body, true) + '" fill="url(#sv-jp)"/>'); });
     o.push("</g>");
@@ -328,6 +335,7 @@
     }
     (D.utesy || []).forEach(addLineSprites);
     (D.oblasti || []).forEach(function (a, ai) {
+      if (a.typ === "pole") return;
       var t = OBL[a.typ]; if (!t || !t.spr || !t.spr.length) return;
       var bb = bbox(a.body), R = rng(ai * 7919 + 13 + Math.round(bb[0] + bb[1])), forest = a.typ === "les" || a.typ === "haj" || a.typ === "dzungle",
         deadArea = a.typ === "mrtva_zeme" || a.typ === "mrtvy",
@@ -377,6 +385,7 @@
         if (R2() > .62) continue;
         var qx = gx + (R2() - .5) * 20, qy = gy + (R2() - .5) * 16;
         if (!land.some(function (p) { return inPoly(qx, qy, p.body); }) || lakes.some(function (l) { return inPoly(qx, qy, l.body); })) continue;
+        if ((D.oblasti || []).some(function (o2) { return o2.typ === "pole" && inPoly(qx, qy, o2.body); })) continue;
         var vO = null; (D.oblasti || []).some(function (o2) { if (o2.typ !== "pole" && inPoly(qx, qy, o2.body)) { vO = o2.typ; return true; } return false; });
         if (vO && vO !== "louky" && vO !== "poust") continue;
         if (qy < 400 && R2() < .6) { items.push([qy, spr(["kamen_3", "zel_4", "utes_1", "kamen_1", "zel_6"][Math.floor(R2() * 5)], qx, qy, 8 * (.8 + R2() * .4), R2() < .5)]); continue; }

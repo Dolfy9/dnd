@@ -286,6 +286,7 @@
     {
       "typ": "pole",
       "pozn": "kostkovaná pole Ordenu (kresba DM)",
+      "angle": -4,
       "body": [
         [
           1035,
@@ -562,6 +563,7 @@
     {
       "typ": "pole",
       "pozn": "šrafovaná pole jižního Tali (kresba DM)",
+      "angle": -10,
       "body": [
         [
           1300,
@@ -584,7 +586,7 @@
     {
       "typ": "pole",
       "pozn": "kostkovaná pole jižního Nöetu (kresba DM)",
-      "opacity": 0.48,
+      "angle": -35,
       "body": [
         [595, 1185], [613, 1178], [632, 1175], [650, 1181],
         [669, 1192], [682, 1208], [695, 1228], [700, 1240],
