@@ -155,11 +155,15 @@
 .p2-hp-utility input.p2-hp-delta { width: 2rem; flex-basis: 2rem; }
 .p2-hp-utility button { flex: 0 0 auto; padding: 0 2px; border: 1px solid var(--line); border-radius: 4px; background: var(--paper2); color: var(--ink); cursor: pointer; }
 .p2-abil { display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 6px; }
-.p2-ab { min-width: 0; min-height: 112px; display: grid; grid-template-rows: auto auto auto auto; justify-items: center; align-content: center; gap: 5px; padding: 8px 3px; border: 1px solid var(--line); border-radius: 10px; background: var(--card); color: var(--ink); text-align: center; }
+.p2-ab { min-width: 0; display: grid; grid-template-columns: auto auto minmax(0, 1fr); grid-template-areas: "mod n n" "mod s save"; align-items: center; justify-items: start; gap: 1px 6px; padding: 5px 8px; border: 1px solid var(--line); border-radius: 10px; background: var(--card); color: var(--ink); text-align: left; }
+.p2-ab-n { grid-area: n; }
+.ps2 a.p2-ab-mod { grid-area: mod; }
+.p2-ab-s { grid-area: s; }
+.ps2 a.p2-ab-save { grid-area: save; white-space: nowrap; }
 .p2-ab-n { color: var(--ink); font: 700 .65rem "Cinzel", serif; text-transform: uppercase; letter-spacing: .03em; }
-.p2-ab-name-short { display: none; }
-.ps2 a.p2-ab-mod { display: block; color: var(--ink); background: transparent; font: 700 1.7rem/1.05 "Cinzel", serif; text-decoration: none; }
-.p2-ab-s { min-width: 32px; padding: 1px 6px; border: 1px solid var(--line); border-radius: 999px; background: var(--paper2); color: var(--ink); font-weight: 700; font-size: .72rem; }
+.p2-ab-name-wide { display: none; }
+.ps2 a.p2-ab-mod { display: block; color: var(--ink); background: transparent; font: 700 1.45rem/1 "Cinzel", serif; text-decoration: none; }
+.p2-ab-s { min-width: 0; padding: 0 5px; border: 1px solid var(--line); border-radius: 999px; background: var(--paper2); color: var(--ink); font-weight: 700; font-size: .72rem; }
 .ps2 a.p2-ab-save { color: var(--ink); font-size: .64rem; text-decoration: none; }
 .ps2 a.p2-ab-save.p { font-weight: 700; }
 .ps2 a.p2-ab-save.p::before { content: "● "; color: var(--gold); }
@@ -332,9 +336,10 @@
   .p2-hp-row { gap: 5px; }
   .p2-hp input.ps-hpcur { width: 3.4rem; }
   .p2-abil { grid-area: abilities; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 5px; }
-  .p2-ab { min-height: 96px; padding: 5px 3px; }
-  .p2-ab-name-wide { display: none; }
-  .p2-ab-name-short { display: inline; }
+  .p2-ab { grid-template-columns: auto minmax(0, 1fr); grid-template-areas: "n s" "mod save"; padding: 4px 6px; gap: 2px 4px; }
+  .ps2 a.p2-ab-mod { font-size: 1.2rem; }
+  .ps2 a.p2-ab-save { font-size: .6rem; justify-self: end; }
+  .p2-ab-s { justify-self: end; }
   .p2-trackers { grid-area: status; }
   .p2-tr-card, .p2-condition-list { flex: 1 1 100%; }
   .p2-rest { justify-content: flex-start; margin-left: 0; }
