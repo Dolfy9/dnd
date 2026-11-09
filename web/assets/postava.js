@@ -45,10 +45,17 @@
   function sg(n) { return (n >= 0 ? "+" : "") + n; }
   function esc(s) { return String(s == null ? "" : s).replace(/[&<>"]/g, function (c) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]; }); }
   function speciesSort(a, b) {
-    var al = !!(R.druhy[a] && R.druhy[a].legacy), bl = !!(R.druhy[b] && R.druhy[b].legacy);
-    return al === bl ? a.localeCompare(b) : al ? 1 : -1;
+    function group(name) {
+      var species = R.druhy[name] || {};
+      return species.legacy ? 2 : species.treti_strana ? 1 : 0;
+    }
+    var ag = group(a), bg = group(b);
+    return ag === bg ? a.localeCompare(b) : ag - bg;
   }
-  function speciesLabel(name) { return name + ((R.druhy[name] || {}).legacy ? " — legacy, kompatibilní" : ""); }
+  function speciesLabel(name) {
+    var species = R.druhy[name] || {};
+    return name + (species.legacy ? " — legacy, kompatibilní" : species.treti_strana ? " — třetí strana" : "");
+  }
   function has(list, name) { return (list || []).some(function (f) { return (f.nazev || f) === name; }); }
   function para(t) { return esc(t).replace(/\n/g, "<br>"); }
   function sessionState(key) {
@@ -285,7 +292,7 @@
     h += '<div class="p2-top-main"><header class="p2-hero"><div class="p2-id"><div class="p2-identity-head"><div><h2 class="p2-name">' + esc(c.jmeno) + '</h2><div class="p2-title">' + esc(c.titul || "") + '</div></div>' + toolbar + '</div><div class="p2-chips">'
       + ((c.tridy || []).length ? (c.tridy || []).map(function (t) { return '<span class="p2-chip p2-class">' + esc(t.trida) + ' ' + t.uroven + (t.podtrida ? ' · ' + esc(t.podtrida) : '') + '</span>'; }).join("")
         : '<span class="p2-chip p2-class">' + esc(c.statblok ? "Bez povolání · " + c.statblok : "Bez povolání") + '</span>')
-      + '<button type="button" class="p2-chip" data-species="' + esc(c.druh || "") + '">' + esc(c.druh || "—") + '</button>' + (sp.legacy ? '<span class="p2-chip p2-legacy">legacy, kompatibilní</span>' : '') + '<span class="p2-chip">' + esc(c.pozadi || "—") + '</span><span class="p2-chip">' + esc(c.zarovnani || "—") + '</span><span class="p2-chip">' + esc(c.velikost || "Medium") + '</span></div>'
+      + '<button type="button" class="p2-chip" data-species="' + esc(c.druh || "") + '">' + esc(c.druh || "—") + '</button>' + (sp.legacy ? '<span class="p2-chip p2-legacy">legacy, kompatibilní</span>' : sp.treti_strana ? '<span class="p2-chip p2-third-party">třetí strana</span>' : '') + '<span class="p2-chip">' + esc(c.pozadi || "—") + '</span><span class="p2-chip">' + esc(c.zarovnani || "—") + '</span><span class="p2-chip">' + esc(c.velikost || "Medium") + '</span></div>'
       + (d.exhaustion ? '<span class="p2-exhaust-warning">Exhaustion ' + d.exhaustion + ' · −' + d.exhaustPenalty + ' D20 · −' + (d.exhaustion * 5) + ' ft Speed' + (d.exhaustion === 6 ? ' · Death' : '') + '</span>' : '') + '</div>'
       + '<div class="p2-badges"><div class="p2-cr"><strong class="p2-cr-v" title="obrana CR ' + d.cr.def + ' · útok CR ' + d.cr.off + '">' + d.cr.cr + '</strong><span class="p2-cr-l">CR</span><small class="p2-cr-x">' + d.cr.xp + ' XP' + (bj.cr_rucne ? '<br>' + esc(bj.cr_rucne) : '') + '</small></div>' + inspirationHtml(key) + badgeXp + '</div></header>';
     // ---- životní hodnoty ----
@@ -510,11 +517,16 @@
     var classes = Object.keys(R.tridy), subs = Object.keys(R.podtridy).sort(), species = Object.keys(R.druhy).sort(speciesSort), bgs = Object.keys(R.pozadi).sort(), feats = Object.keys(R.featy).sort();
     tab("Základ", function (p) {
       field(p, data, "jmeno", "Jméno"); field(p, data, "titul", "Titul / role");
-      var ds = field(p, data, "druh", "Druh (Species) – 2024 nebo legacy, kompatibilní"); ds.setAttribute("list", "pf-species");
+      var ds = field(p, data, "druh", "Druh (Species) – 2024, třetí strana nebo legacy"); ds.setAttribute("list", "pf-species");
       var dl = el("datalist", { id: "pf-species" }); species.forEach(function (s) { dl.appendChild(el("option", { value: s, label: speciesLabel(s) })); }); p.appendChild(dl);
-      var legacyNote = el("small", { class: "pf-legacy-note" }, "legacy, kompatibilní");
-      function updateLegacyNote() { legacyNote.hidden = !(R.druhy[ds.value] || {}).legacy; }
-      ds.addEventListener("input", updateLegacyNote); ds.addEventListener("change", updateLegacyNote); updateLegacyNote(); p.appendChild(legacyNote);
+      var speciesNote = el("small", { class: "pf-species-note" });
+      function updateSpeciesNote() {
+        var selected = R.druhy[ds.value] || {};
+        speciesNote.hidden = !selected.legacy && !selected.treti_strana;
+        speciesNote.className = selected.legacy ? "pf-species-note pf-legacy-note" : "pf-species-note pf-third-party-note";
+        speciesNote.textContent = selected.legacy ? "legacy, kompatibilní" : "třetí strana";
+      }
+      ds.addEventListener("input", updateSpeciesNote); ds.addEventListener("change", updateSpeciesNote); updateSpeciesNote(); p.appendChild(speciesNote);
       field(p, data, "druh_volby", "Volby druhu (lineage, ancestry…)"); field(p, data, "pozadi", "Pozadí (Background)", null, bgs);
       field(p, data, "zarovnani", "Přesvědčení (alignment)"); field(p, data, "velikost", "Velikost", null, ["Small", "Medium", "Large"]);
       field(p, data, "xp", "Experience Points (XP)", "number"); strList(p, data, "smysly", "Senses");
@@ -692,6 +704,7 @@
       function draw() {
         dyn.innerHTML = ""; s.dovednosti = []; s.bonus = {};
         if ((R.druhy[s.druh] || {}).legacy) dyn.appendChild(el("p", { class: "pf-legacy-note" }, "legacy, kompatibilní · alternativa 2024: " + (R.druhy[s.druh].alternativa_2024 || "žádná přímá")));
+        else if ((R.druhy[s.druh] || {}).treti_strana) dyn.appendChild(el("p", { class: "pf-third-party-note" }, "Druh třetí strany; přesné podrobnosti ověř v původní publikaci."));
         var bg = R.pozadi[s.pozadi];
         var ab = el("div", { class: "pf-abil" });
         P.AB.forEach(function (a) { var l = el("label", {}, a + (s.metoda === "standard" ? " (15/14/13/12/10/8)" : s.metoda === "pointbuy" ? " (8–15, 27 bodů)" : "")), i = el("input", { type: "number", min: 3, max: 20, value: s.zaklad[a] || "" }); i.addEventListener("change", function () { s.zaklad[a] = Number(i.value); cost(); }); l.appendChild(i); ab.appendChild(l); });

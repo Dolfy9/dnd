@@ -102,6 +102,10 @@ const legacyValidation = E.validate(Object.assign({}, classless, { druh: "Kenku"
 t(!legacyValidation.some(x => x.typ === "chyba"), "legacy druh nezpůsobuje chybu validace");
 t(!legacyValidation.some(x => x.typ === "varovani" && /není v pravidlech 2024/.test(x.text)), "známý legacy druh není označen jako neznámý");
 t(legacyValidation.some(x => x.typ === "informace" && /legacy, kompatibilní/.test(x.text)), "legacy druh má informační poznámku");
+const thirdPartyValidation = E.validate(Object.assign({}, classless, { druh: "Geppettin" }));
+t(!thirdPartyValidation.some(x => x.typ === "chyba"), "druh třetí strany nezpůsobuje chybu validace");
+t(!thirdPartyValidation.some(x => x.typ === "varovani" && /není v pravidlech 2024/.test(x.text)), "známý druh třetí strany není označen jako neznámý");
+t(thirdPartyValidation.some(x => x.typ === "informace" && /třetí strany/.test(x.text)), "druh třetí strany má informační poznámku");
 
 
 // 7) kouzla

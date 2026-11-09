@@ -193,6 +193,7 @@
     if (!god) {
       if (!species) warn("Druh " + c.druh + " není v pravidlech 2024+.");
       else if (species.legacy) info("Druh " + c.druh + " je legacy, kompatibilní; alternativa 2024: " + (species.alternativa_2024 || "žádná přímá") + ".");
+      else if (species.treti_strana) info("Druh " + c.druh + " pochází z publikace třetí strany; ověř použité podrobnosti v původním zdroji.");
       if (c.pozadi && !R.pozadi[c.pozadi]) warn("Pozadí " + c.pozadi + " není v pravidlech 2024+.");
       if (!c.pozadi) err("Chybí pozadí (Background).");
     }

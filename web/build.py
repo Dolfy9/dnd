@@ -433,7 +433,8 @@ def main():
     for name, value in species.items():
         stem = "Druh_" + re.sub(r"[^A-Za-z0-9]+", "_", name).strip("_")
         species_index.append({"nazev": name, "stem": stem, "stranka": f"13_Druhy/{stem}.md",
-                              "legacy": bool(value.get("legacy")), "alternativa_2024": value.get("alternativa_2024", "—"),
+                              "legacy": bool(value.get("legacy")), "treti_strana": bool(value.get("treti_strana")),
+                              "alternativa_2024": value.get("alternativa_2024", "—"),
                               "zdroj": value.get("zdroj", "neověřeno"), "velikost": value.get("velikost", "neověřeno"),
                               "rychlost": value.get("rychlost", "neověřeno"), "typ": value.get("typ", "neověřeno"),
                               "rysy": value.get("rysy", {}), "overeno": value.get("overeno", []),

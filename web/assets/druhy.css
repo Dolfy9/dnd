@@ -8,6 +8,7 @@
 .druh-card img { width: 100%; aspect-ratio: 2/3; object-fit: cover; border-radius: .3rem; }
 .druh-card-image-placeholder { display: grid; place-items: center; aspect-ratio: 2/3; border-radius: .3rem; background: var(--md-code-bg-color); color: var(--md-default-fg-color--light); font-size: .85rem; text-align: center; }
 .druh-legacy { display: inline-block; color: #7b4d00; background: #fff0c2; border-radius: .3rem; padding: .1rem .35rem; }
+.druh-third-party { display: inline-block; color: #56318a; background: #eee3ff; border: 1px solid #cbb4ed; border-radius: .3rem; padding: .1rem .35rem; }
 .druh-dialog { position: fixed; inset: 0; z-index: 10000; background: #0009; display: grid; place-items: center; padding: 1rem; }
 .druh-hero img { display: block; max-height: 32rem; max-width: 100%; margin: 1rem auto; object-fit: contain; }
 .druh-hero[hidden] { display: none; }
@@ -24,6 +25,7 @@
 .druh-modal-source { margin: 0 0 .8rem; color: var(--md-default-fg-color--light); }
 .druh-2024 { display: inline-block; color: #1d5a2c; background: #d8f2dd; border-radius: .3rem; padding: .1rem .35rem; font-size: .7rem; }
 .druh-legacy { font-size: .7rem; }
+.druh-third-party { font-size: .7rem; }
 .druh-chips { display: flex; flex-wrap: wrap; gap: .5rem; margin-bottom: 1rem; }
 .druh-chip { border: 1px solid var(--md-default-fg-color--lightest); border-radius: .5rem; padding: .35rem .6rem; background: var(--md-code-bg-color); max-width: 100%; }
 .druh-chip span { display: block; font-size: .62rem; text-transform: uppercase; letter-spacing: .04em; color: var(--md-default-fg-color--light); }

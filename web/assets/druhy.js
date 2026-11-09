@@ -13,6 +13,12 @@
   }
   function traitText(v) { return typeof v === "string" ? v : (v && (v.text || v.popis)) || ""; }
   function chip(label, value) { return value ? '<div class="druh-chip"><span>' + esc(label) + '</span><b>' + esc(value) + '</b></div>' : ""; }
+  function edition(d) { return d.treti_strana ? "třetí strana" : d.legacy ? "legacy" : "2024+"; }
+  function badge(d) {
+    return d.treti_strana ? '<strong class="druh-third-party">třetí strana</strong>'
+      : d.legacy ? '<strong class="druh-legacy">legacy, kompatibilní</strong>'
+        : '<strong class="druh-2024">2024+</strong>';
+  }
   function open(name) {
     load().then(function (items) {
       var d = items.find(function (x) { return norm(x.nazev) === norm(name); });
@@ -24,8 +30,8 @@
         + '<button class="druh-close" aria-label="Zavřít">×</button>'
         + (d.obrazek ? '<img class="druh-modal-image" src="' + base() + '13_Druhy/obrazky/' + encodeURIComponent(d.stem) + '.webp" alt="Ilustrace druhu ' + esc(d.nazev) + '">' : '<div class="druh-modal-image druh-card-image-placeholder">Ilustrace chybí</div>')
         + '<div class="druh-modal-body"><header><h2>' + esc(d.nazev) + '</h2>'
-        + '<p class="druh-modal-source">' + esc(d.zdroj) + (d.legacy ? ' <strong class="druh-legacy">legacy, kompatibilní</strong>' : ' <strong class="druh-2024">2024+</strong>') + '</p></header>'
-        + '<div class="druh-chips">' + chip("Velikost", d.velikost) + chip("Speed", d.rychlost + " ft") + chip("Creature Type", d.typ) + chip("Délka života", d.delka_zivota) + (d.legacy ? chip("Alternativa 2024", d.alternativa_2024) : "") + '</div>'
+        + '<p class="druh-modal-source">' + esc(d.zdroj) + ' ' + badge(d) + '</p></header>'
+        + '<div class="druh-chips">' + chip("Kategorie", edition(d)) + chip("Velikost", d.velikost) + chip("Speed", typeof d.rychlost === "number" ? d.rychlost + " ft" : d.rychlost) + chip("Creature Type", d.typ) + chip("Délka života", d.delka_zivota) + (d.legacy ? chip("Alternativa 2024", d.alternativa_2024) : "") + '</div>'
         + (d.prehled ? '<p class="druh-modal-lead">' + esc(d.prehled) + '</p>' : '')
         + '<h3>Traits</h3><div class="druh-modal-traits">' + Object.keys(d.rysy || {}).map(function (key) { return '<article><h4>' + esc(key) + '</h4><p>' + esc(traitText(d.rysy[key])) + '</p></article>'; }).join("") + '</div>'
         + '<p class="druh-modal-actions"><a class="md-button md-button--primary" href="' + esc(href) + '">Otevřít úplný popis</a></p></div></section>';
@@ -47,7 +53,7 @@
     root.innerHTML = '<input class="druhy-search" type="search" placeholder="Hledat druh…" aria-label="Hledat druh"><div class="druhy-filters"></div><div class="druhy-grid"></div>';
     var filterRoot = root.querySelector(".druhy-filters");
     filters.forEach(function (pair) {
-      var vals = pair[0] === "edice" ? ["2024+","legacy"] : Array.from(new Set(items.map(function (x) { return String(pair[0] === "edice" ? (x.legacy ? "legacy" : "2024+") : x[pair[0]]); }))).sort();
+      var vals = pair[0] === "edice" ? ["2024+","třetí strana","legacy"] : Array.from(new Set(items.map(function (x) { return String(x[pair[0]]); }))).sort();
       var s = document.createElement("select"); s.dataset.field = pair[0]; s.innerHTML = '<option value="">' + pair[1] + ' – vše</option>' + vals.map(function (v) { return '<option>' + esc(v) + '</option>'; }).join(""); filterRoot.appendChild(s);
     });
     function draw() {
@@ -55,13 +61,13 @@
       root.querySelectorAll("select").forEach(function (s) { selected[s.dataset.field] = s.value; });
       var found = items.filter(function (x) {
         return (!q || norm(x.nazev + " " + x.zdroj).includes(q)) && Object.keys(selected).every(function (k) {
-          var value = k === "edice" ? (x.legacy ? "legacy" : "2024+") : String(x[k]);
+          var value = k === "edice" ? edition(x) : String(x[k]);
           return !selected[k] || selected[k] === value;
         });
       });
       root.querySelector(".druhy-grid").innerHTML = found.map(function (x) {
         var img = '../13_Druhy/obrazky/' + encodeURIComponent(x.stem) + '.webp';
-        return '<article class="druh-card"><button class="druh-card-open" data-species="' + esc(x.nazev) + '">' + (x.obrazek ? '<img src="' + img + '" alt="" loading="lazy">' : '<span class="druh-card-image-placeholder">Ilustrace bude doplněna</span>') + '<strong>' + esc(x.nazev) + '</strong></button><small>' + esc(x.zdroj) + '</small><small>' + esc(x.velikost) + ' · ' + esc(x.rychlost) + ' · ' + esc(x.typ) + '</small>' + (x.legacy ? '<b class="druh-legacy">legacy, kompatibilní</b>' : '') + '<a href="../' + esc(x.stranka.replace(/\.md$/, "/")) + '">Popis</a></article>';
+        return '<article class="druh-card"><button class="druh-card-open" data-species="' + esc(x.nazev) + '">' + (x.obrazek ? '<img src="' + img + '" alt="" loading="lazy">' : '<span class="druh-card-image-placeholder">Ilustrace bude doplněna</span>') + '<strong>' + esc(x.nazev) + '</strong></button><small>' + esc(x.zdroj) + '</small><small>' + esc(x.velikost) + ' · ' + esc(x.rychlost) + ' · ' + esc(x.typ) + '</small>' + (x.treti_strana ? '<b class="druh-third-party">třetí strana</b>' : x.legacy ? '<b class="druh-legacy">legacy, kompatibilní</b>' : '') + '<a href="../' + esc(x.stranka.replace(/\.md$/, "/")) + '">Popis</a></article>';
       }).join("") || "<p>Žádné druhy neodpovídají filtrům.</p>";
     }
     root.addEventListener("input", draw); root.addEventListener("change", draw); draw();

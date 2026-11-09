@@ -5252,6 +5252,838 @@
     }
   },
   "druhy": {
+    "Cervan": {
+      "zdroj": "Humblewood Campaign Setting (2024 update)",
+      "rok": 2024,
+      "edice": "třetí strana",
+      "treti_strana": true,
+      "vydavatel": "Hit Point Press",
+      "legacy": false,
+      "velikost": "neověřeno",
+      "rychlost": "neověřeno",
+      "typ": "neověřeno",
+      "delka_zivota": "dlouhověcí; přesný věk zdroj neuvádí",
+      "rysy": {
+        "Practical": "Praktická dovednost; přesný účinek aktualizované verze je neověřeno.",
+        "Surge of Vigor": "Umožňuje zotavení po těžkém zranění; úplné podmínky jsou neověřeno."
+      },
+      "overeno": [
+        "https://hitpointpress.com/blogs/hot-off-the-press/good-news-friday-humblewood-updates",
+        "https://www.dndbeyond.com/posts/1663-exploring-the-player-options-of-the-humblewood",
+        "https://www.dndbeyond.com/species/1592465-cervan"
+      ],
+      "verdikt_url": "https://hitpointpress.com/blogs/hot-off-the-press/good-news-friday-humblewood-updates"
+    },
+    "Corvum": {
+      "zdroj": "Humblewood Campaign Setting (2024 update)",
+      "rok": 2024,
+      "edice": "třetí strana",
+      "treti_strana": true,
+      "vydavatel": "Hit Point Press",
+      "legacy": false,
+      "velikost": "neověřeno",
+      "rychlost": "neověřeno",
+      "typ": "neověřeno",
+      "delka_zivota": "zdroj neuvádí",
+      "rysy": {
+        "Glide": "Zpomalíš pád a klouzavě se sneseš; omezení aktualizované verze jsou neověřeno.",
+        "Talons": "Přirozené drápy použitelné k útoku; poškození je neověřeno.",
+        "Learned": "Podporuje znalosti či učení; přesná dovednost je neověřeno.",
+        "Appraising Eye": "Odhaduje hodnotu nebo vlastnosti předmětu; účinek je neověřeno."
+      },
+      "overeno": [
+        "https://hitpointpress.com/blogs/hot-off-the-press/good-news-friday-humblewood-updates",
+        "https://www.dndbeyond.com/posts/1663-exploring-the-player-options-of-the-humblewood",
+        "https://www.dndbeyond.com/species/1592466-corvum"
+      ],
+      "verdikt_url": "https://hitpointpress.com/blogs/hot-off-the-press/good-news-friday-humblewood-updates"
+    },
+    "Gallus": {
+      "zdroj": "Humblewood Campaign Setting (2024 update)",
+      "rok": 2024,
+      "edice": "třetí strana",
+      "treti_strana": true,
+      "vydavatel": "Hit Point Press",
+      "legacy": false,
+      "velikost": "neověřeno",
+      "rychlost": "neověřeno",
+      "typ": "neověřeno",
+      "delka_zivota": "zdroj neuvádí",
+      "rysy": {
+        "Glide": "Zpomalíš pád a klouzavě se sneseš; omezení aktualizované verze jsou neověřeno.",
+        "Wing Flap": "Krátkodobě využiješ křídla k pohybu; úplné podmínky jsou neověřeno.",
+        "Communal": "Rys spojený se společenskými vazbami; přesný účinek je neověřeno.",
+        "Militia Training": "Vojenský výcvik; zbraně či proficiency jsou neověřeno.",
+        "Of the People": "Vlastnost spojená s podporou komunity; mechanika je neověřeno."
+      },
+      "overeno": [
+        "https://hitpointpress.com/blogs/hot-off-the-press/good-news-friday-humblewood-updates",
+        "https://www.dndbeyond.com/posts/1663-exploring-the-player-options-of-the-humblewood",
+        "https://www.dndbeyond.com/species/1592467-gallus"
+      ],
+      "verdikt_url": "https://hitpointpress.com/blogs/hot-off-the-press/good-news-friday-humblewood-updates"
+    },
+    "Hedge": {
+      "zdroj": "Humblewood Campaign Setting (2024 update)",
+      "rok": 2024,
+      "edice": "třetí strana",
+      "treti_strana": true,
+      "vydavatel": "Hit Point Press",
+      "legacy": false,
+      "velikost": "neověřeno",
+      "rychlost": "neověřeno",
+      "typ": "neověřeno",
+      "delka_zivota": "zdroj neuvádí",
+      "rysy": {
+        "Natural Burrowers": "Pohyb či schopnost spojená s norováním; rychlost je neověřeno.",
+        "Spiny Quills": "Ochranné ostny; přesné použití a omezení zbroje jsou neověřeno.",
+        "Curl Up": "Schoulíš se do chráněné koule; úplné účinky jsou neověřeno.",
+        "Forest Magic": "Přístup k přírodní magii; kouzla a sesílání jsou neověřeno.",
+        "Speak With Bugs": "Komunikace s hmyzem; dosah a podmínky jsou neověřeno."
+      },
+      "overeno": [
+        "https://hitpointpress.com/blogs/hot-off-the-press/good-news-friday-humblewood-updates",
+        "https://www.dndbeyond.com/posts/1663-exploring-the-player-options-of-the-humblewood",
+        "https://www.dndbeyond.com/species/1592468-hedge"
+      ],
+      "verdikt_url": "https://hitpointpress.com/blogs/hot-off-the-press/good-news-friday-humblewood-updates"
+    },
+    "Jerbeen": {
+      "zdroj": "Humblewood Campaign Setting (2024 update)",
+      "rok": 2024,
+      "edice": "třetí strana",
+      "treti_strana": true,
+      "vydavatel": "Hit Point Press",
+      "legacy": false,
+      "velikost": "neověřeno",
+      "rychlost": "neověřeno",
+      "typ": "neověřeno",
+      "delka_zivota": "zdroj neuvádí",
+      "rysy": {
+        "Standing Leap": "Umíš vyskočit do výšky či dálky; přesná vzdálenost je neověřeno.",
+        "Nimbleness": "Pohybuješ se prostorem většího tvora; úplné omezení je neověřeno.",
+        "Take Heart": "Odvaha podporuje saving throws proti strachu; přesná pravidla jsou neověřeno.",
+        "Team Tactics": "Podporuje týmovou spolupráci; akční typ a účinek jsou neověřeno."
+      },
+      "overeno": [
+        "https://hitpointpress.com/blogs/hot-off-the-press/good-news-friday-humblewood-updates",
+        "https://www.dndbeyond.com/posts/1663-exploring-the-player-options-of-the-humblewood",
+        "https://www.dndbeyond.com/species/1592469-jerbeen"
+      ],
+      "verdikt_url": "https://hitpointpress.com/blogs/hot-off-the-press/good-news-friday-humblewood-updates"
+    },
+    "Luma": {
+      "zdroj": "Humblewood Campaign Setting (2024 update)",
+      "rok": 2024,
+      "edice": "třetí strana",
+      "treti_strana": true,
+      "vydavatel": "Hit Point Press",
+      "legacy": false,
+      "velikost": "neověřeno",
+      "rychlost": "neověřeno",
+      "typ": "neověřeno",
+      "delka_zivota": "zdroj neuvádí",
+      "rysy": {
+        "Glide": "Zpomalíš pád a klouzavě se sneseš; omezení aktualizované verze jsou neověřeno.",
+        "Wing Flap": "Krátkodobě využiješ křídla k pohybu; úplné podmínky jsou neověřeno.",
+        "Touched": "Magická či osudová zvláštnost; přesný účinek je neověřeno.",
+        "Fated": "Ovlivňuje náhodu či osud; použití a obnova jsou neověřeno."
+      },
+      "overeno": [
+        "https://hitpointpress.com/blogs/hot-off-the-press/good-news-friday-humblewood-updates",
+        "https://www.dndbeyond.com/posts/1663-exploring-the-player-options-of-the-humblewood",
+        "https://www.dndbeyond.com/species/1592470-luma"
+      ],
+      "verdikt_url": "https://hitpointpress.com/blogs/hot-off-the-press/good-news-friday-humblewood-updates"
+    },
+    "Mapach": {
+      "zdroj": "Humblewood Campaign Setting (2024 update)",
+      "rok": 2024,
+      "edice": "třetí strana",
+      "treti_strana": true,
+      "vydavatel": "Hit Point Press",
+      "legacy": false,
+      "velikost": "neověřeno",
+      "rychlost": "neověřeno",
+      "typ": "neověřeno",
+      "delka_zivota": "zdroj neuvádí",
+      "rysy": {
+        "Darkvision": "Darkvision; dosah je neověřeno.",
+        "Expert Climbers": "Zlepšené lezení; rychlost a omezení jsou neověřeno.",
+        "Resilience": "Odolnost; typy damage či hodů jsou neověřeno.",
+        "Scroungecraft": "Z dostupného materiálu vyrábíš provizorní výbavu; přesné podmínky jsou neověřeno.",
+        "Skulker": "Schopnost skrývání; přesný účinek je neověřeno."
+      },
+      "overeno": [
+        "https://hitpointpress.com/blogs/hot-off-the-press/good-news-friday-humblewood-updates",
+        "https://www.dndbeyond.com/posts/1663-exploring-the-player-options-of-the-humblewood",
+        "https://www.dndbeyond.com/species/1592471-mapach"
+      ],
+      "verdikt_url": "https://hitpointpress.com/blogs/hot-off-the-press/good-news-friday-humblewood-updates"
+    },
+    "Raptor": {
+      "zdroj": "Humblewood Campaign Setting (2024 update)",
+      "rok": 2024,
+      "edice": "třetí strana",
+      "treti_strana": true,
+      "vydavatel": "Hit Point Press",
+      "legacy": false,
+      "velikost": "neověřeno",
+      "rychlost": "neověřeno",
+      "typ": "neověřeno",
+      "delka_zivota": "zdroj neuvádí",
+      "rysy": {
+        "Glide": "Zpomalíš pád a klouzavě se sneseš; omezení aktualizované verze jsou neověřeno.",
+        "Talons": "Přirozené drápy použitelné k útoku; poškození je neověřeno.",
+        "Keen Senses": "Zlepšuje vnímání; konkrétní dovednost je neověřeno.",
+        "Woodland Hunter": "Pomáhá při lovu v lesním prostředí; účinek je neověřeno.",
+        "Hunter's Training": "Lovecký výcvik; proficiency a volby jsou neověřeno."
+      },
+      "overeno": [
+        "https://hitpointpress.com/blogs/hot-off-the-press/good-news-friday-humblewood-updates",
+        "https://www.dndbeyond.com/posts/1663-exploring-the-player-options-of-the-humblewood",
+        "https://www.dndbeyond.com/species/1592472-raptor"
+      ],
+      "verdikt_url": "https://hitpointpress.com/blogs/hot-off-the-press/good-news-friday-humblewood-updates"
+    },
+    "Strig": {
+      "zdroj": "Humblewood Campaign Setting (2024 update)",
+      "rok": 2024,
+      "edice": "třetí strana",
+      "treti_strana": true,
+      "vydavatel": "Hit Point Press",
+      "legacy": false,
+      "velikost": "neověřeno",
+      "rychlost": "neověřeno",
+      "typ": "neověřeno",
+      "delka_zivota": "zdroj neuvádí",
+      "rysy": {
+        "Glide": "Zpomalíš pád a klouzavě se sneseš; omezení aktualizované verze jsou neověřeno.",
+        "Talons": "Přirozené drápy použitelné k útoku; poškození je neověřeno.",
+        "Darkvision": "Darkvision; dosah je neověřeno.",
+        "Patterned Feathers": "Vzor peří je rys druhu; další mechanický účinek je neověřeno."
+      },
+      "overeno": [
+        "https://hitpointpress.com/blogs/hot-off-the-press/good-news-friday-humblewood-updates",
+        "https://www.dndbeyond.com/posts/1663-exploring-the-player-options-of-the-humblewood",
+        "https://www.dndbeyond.com/species/1592473-strig"
+      ],
+      "verdikt_url": "https://hitpointpress.com/blogs/hot-off-the-press/good-news-friday-humblewood-updates"
+    },
+    "Vulpin": {
+      "zdroj": "Humblewood Campaign Setting (2024 update)",
+      "rok": 2024,
+      "edice": "třetí strana",
+      "treti_strana": true,
+      "vydavatel": "Hit Point Press",
+      "legacy": false,
+      "velikost": "neověřeno",
+      "rychlost": "neověřeno",
+      "typ": "neověřeno",
+      "delka_zivota": "zdroj neuvádí",
+      "rysy": {
+        "Darkvision": "Darkvision; dosah je neověřeno.",
+        "Bite": "Přirozený kousavý útok; poškození a přesné použití jsou neověřeno.",
+        "Evasive": "Zlepšuje vyhýbání či saving throws; přesný účinek je neověřeno.",
+        "Bewitching Guile": "Magie či důvtip ovlivňující druhé; úplné kouzlo a sesílání jsou neověřeno."
+      },
+      "overeno": [
+        "https://hitpointpress.com/blogs/hot-off-the-press/good-news-friday-humblewood-updates",
+        "https://www.dndbeyond.com/posts/1663-exploring-the-player-options-of-the-humblewood",
+        "https://www.dndbeyond.com/species/1592474-vulpin"
+      ],
+      "verdikt_url": "https://hitpointpress.com/blogs/hot-off-the-press/good-news-friday-humblewood-updates"
+    },
+    "Accursed": {
+      "zdroj": "Grim Hollow: Player’s Guide",
+      "rok": 2025,
+      "edice": "třetí strana",
+      "treti_strana": true,
+      "vydavatel": "Ghostfire Gaming",
+      "legacy": false,
+      "velikost": "neověřeno",
+      "rychlost": "neověřeno",
+      "typ": "neověřeno",
+      "delka_zivota": "zdroj neuvádí",
+      "rysy": {
+        "Unique Nature": "Každý Accursed má individuální původ a s ním spojené rysy; přesné možnosti jsou neověřeno."
+      },
+      "overeno": [
+        "https://www.dndbeyond.com/species/1987210-accursed",
+        "https://dungeonsanddragonsfan.com/grim-hollow-players-guide-campaign-guide-dnd-beyond/"
+      ],
+      "verdikt_url": "https://dungeonsanddragonsfan.com/grim-hollow-players-guide-campaign-guide-dnd-beyond/"
+    },
+    "Arisen": {
+      "zdroj": "Grim Hollow: Player’s Guide",
+      "rok": 2025,
+      "edice": "třetí strana",
+      "treti_strana": true,
+      "vydavatel": "Ghostfire Gaming",
+      "legacy": false,
+      "velikost": "neověřeno",
+      "rychlost": "neověřeno",
+      "typ": "neověřeno",
+      "delka_zivota": "zdroj neuvádí",
+      "rysy": {
+        "Magical Fortification": "Magická obrana umělého těla; přesné účinky jsou neověřeno.",
+        "Tenacious": "Vytrvalostní ochrana; úplná mechanika je neověřeno.",
+        "Toughness": "Zvyšuje odolnost; přesná hodnota je neověřeno.",
+        "Artificial Form": "Tělo je uměle vytvořené; přesné důsledky jsou neověřeno.",
+        "Inured to the Elements": "Ochrana vůči živlům; konkrétní damage a stavy jsou neověřeno.",
+        "Embrace the Past": "Vlastnost spojená se vzpomínkami na předchozí život; přesný účinek je neověřeno.",
+        "Magical Insight": "Magické poznání; přesný bonus je neověřeno.",
+        "Unnatural Healer": "Zvláštní způsob léčení; úplné podmínky jsou neověřeno."
+      },
+      "overeno": [
+        "https://www.dndbeyond.com/species/1987211-arisen",
+        "https://dungeonsanddragonsfan.com/grim-hollow-players-guide-campaign-guide-dnd-beyond/"
+      ],
+      "verdikt_url": "https://dungeonsanddragonsfan.com/grim-hollow-players-guide-campaign-guide-dnd-beyond/"
+    },
+    "Disembodied": {
+      "zdroj": "Grim Hollow: Player’s Guide",
+      "rok": 2025,
+      "edice": "třetí strana",
+      "treti_strana": true,
+      "vydavatel": "Ghostfire Gaming",
+      "legacy": false,
+      "velikost": "neověřeno",
+      "rychlost": "neověřeno",
+      "typ": "neověřeno",
+      "delka_zivota": "zdroj neuvádí",
+      "rysy": {
+        "Magical Fortification": "Magická ochrana bytosti mezi světy; přesný účinek je neověřeno.",
+        "Master of Distraction": "Schopnost rozptylovat; dosah a podmínky jsou neověřeno.",
+        "Out of Phase": "Částečné vychýlení z běžné roviny; úplné pravidlo je neověřeno.",
+        "Ethereal Fade": "Zmizení či přechod spojený s Ethereal Plane; použití je neověřeno.",
+        "Inured to the Elements": "Elementální ochrana; chráněné účinky jsou neověřeno.",
+        "Magical Insight": "Magické poznání; přesný bonus je neověřeno.",
+        "Magical Savant (Feather Fall)": "Získáš Feather Fall; podmínky sesílání jsou neověřeno.",
+        "Magical Savvy (Dancing Lights)": "Získáš Dancing Lights; podmínky sesílání jsou neověřeno."
+      },
+      "overeno": [
+        "https://www.dndbeyond.com/species/1987213-disembodied",
+        "https://dungeonsanddragonsfan.com/grim-hollow-players-guide-campaign-guide-dnd-beyond/"
+      ],
+      "verdikt_url": "https://dungeonsanddragonsfan.com/grim-hollow-players-guide-campaign-guide-dnd-beyond/"
+    },
+    "Downcast": {
+      "zdroj": "Grim Hollow: Player’s Guide",
+      "rok": 2025,
+      "edice": "třetí strana",
+      "treti_strana": true,
+      "vydavatel": "Ghostfire Gaming",
+      "legacy": false,
+      "velikost": "neověřeno",
+      "rychlost": "neověřeno",
+      "typ": "neověřeno",
+      "delka_zivota": "zdroj neuvádí",
+      "rysy": {
+        "Divine Sangromancy": "Božská magie pracující s krví; úplný účinek je neověřeno.",
+        "Touch of Life": "Životní dotek; dosah, léčení a použití jsou neověřeno.",
+        "Inured to the Elements": "Ochrana vůči živlům; konkrétní účinky jsou neověřeno.",
+        "Meditative Rest": "Zvláštní forma odpočinku; pravidlové podmínky jsou neověřeno.",
+        "Tireless": "Vytrvalostní schopnost; přesný účinek je neověřeno.",
+        "Magical Savant": "Přístup ke kouzlům ze seznamu Cleric; úrovně a sesílání jsou neověřeno.",
+        "Magical Savvy (Thaumaturgy)": "Získáš Thaumaturgy; podmínky sesílání jsou neověřeno.",
+        "Moved by Faith": "Vlastnost spojená s vírou; přesné spuštění je neověřeno."
+      },
+      "overeno": [
+        "https://www.dndbeyond.com/species/1987214-downcast",
+        "https://dungeonsanddragonsfan.com/grim-hollow-players-guide-campaign-guide-dnd-beyond/"
+      ],
+      "verdikt_url": "https://dungeonsanddragonsfan.com/grim-hollow-players-guide-campaign-guide-dnd-beyond/"
+    },
+    "Dreamer": {
+      "zdroj": "Grim Hollow: Player’s Guide",
+      "rok": 2025,
+      "edice": "třetí strana",
+      "treti_strana": true,
+      "vydavatel": "Ghostfire Gaming",
+      "legacy": false,
+      "velikost": "neověřeno",
+      "rychlost": "neověřeno",
+      "typ": "neověřeno",
+      "delka_zivota": "zdroj neuvádí",
+      "rysy": {
+        "Quick Initiative": "Zlepšuje iniciativu; přesný bonus je neověřeno.",
+        "Stalwart Reserves": "Zvláštní odolnost či rezerva; účinek je neověřeno.",
+        "Darkvision": "Darkvision; dosah je neověřeno.",
+        "Helping Hand": "Pomoc spojenci; podmínky jsou neověřeno.",
+        "Power Nap": "Schopnost spojená s krátkým spánkem; úplné pravidlo je neověřeno.",
+        "Dreamwalking": "Vstup do snů či pohyb v nich; dosah a použití jsou neověřeno.",
+        "Improviser": "Zlepšuje improvizované řešení; mechanika je neověřeno.",
+        "Inborn Perception": "Vrozené vnímání; přesný bonus je neověřeno."
+      },
+      "overeno": [
+        "https://www.dndbeyond.com/species/1987216-dreamer",
+        "https://dungeonsanddragonsfan.com/grim-hollow-players-guide-campaign-guide-dnd-beyond/"
+      ],
+      "verdikt_url": "https://dungeonsanddragonsfan.com/grim-hollow-players-guide-campaign-guide-dnd-beyond/"
+    },
+    "Grudgel": {
+      "zdroj": "Grim Hollow: Player’s Guide",
+      "rok": 2025,
+      "edice": "třetí strana",
+      "treti_strana": true,
+      "vydavatel": "Ghostfire Gaming",
+      "legacy": false,
+      "velikost": "neověřeno",
+      "rychlost": "neověřeno",
+      "typ": "neověřeno",
+      "delka_zivota": "zdroj neuvádí",
+      "rysy": {
+        "Battlefield Control": "Ovlivňuje prostor bojiště; úplná pravidla jsou neověřeno.",
+        "Centered": "Udržení soustředění či rovnováhy; přesný účinek je neověřeno.",
+        "Darkvision": "Darkvision; dosah je neověřeno.",
+        "Powerful Build": "Počítáš se jako o jednu velikost větší při určení nosnosti; potvrzení aktualizovaného textu je neověřeno.",
+        "Tireless": "Vytrvalostní schopnost; přesné účinky jsou neověřeno.",
+        "Artisanal Focus": "Zaměření na řemeslnou práci; bonus je neověřeno.",
+        "Impromptu Artisan": "Improvizované řemeslné řešení; podmínky jsou neověřeno.",
+        "Magical Savvy": "Přístup k libovolnému cantripu; ability a omezení jsou neověřeno."
+      },
+      "overeno": [
+        "https://www.dndbeyond.com/species/1987220-grudgel",
+        "https://dungeonsanddragonsfan.com/grim-hollow-players-guide-campaign-guide-dnd-beyond/"
+      ],
+      "verdikt_url": "https://dungeonsanddragonsfan.com/grim-hollow-players-guide-campaign-guide-dnd-beyond/"
+    },
+    "Laneshi": {
+      "zdroj": "Grim Hollow: Player’s Guide",
+      "rok": 2025,
+      "edice": "třetí strana",
+      "treti_strana": true,
+      "vydavatel": "Ghostfire Gaming",
+      "legacy": false,
+      "velikost": "neověřeno",
+      "rychlost": "neověřeno",
+      "typ": "neověřeno",
+      "delka_zivota": "zdroj neuvádí",
+      "rysy": {
+        "Awakened Mind": "Mimosmyslové spojení mysli; rozsah a použití jsou neověřeno.",
+        "Psychic Spirit": "Psychická schopnost; přesné účinky jsou neověřeno.",
+        "Amphibious": "Můžeš dýchat vzduch i vodu.",
+        "Darkvision": "Darkvision; dosah je neověřeno.",
+        "Swimmer": "Zlepšený pohyb ve vodě; rychlost je neověřeno.",
+        "Animal Friend": "Vztah ke zvířatům; pravidlový účinek je neověřeno.",
+        "Magical Savvy": "Přístup k magickému účinku; přesná volba je neověřeno.",
+        "Nature's Voice": "Komunikace se světem přírody; rozsah je neověřeno."
+      },
+      "overeno": [
+        "https://www.dndbeyond.com/species/1987223-laneshi",
+        "https://dungeonsanddragonsfan.com/grim-hollow-players-guide-campaign-guide-dnd-beyond/"
+      ],
+      "verdikt_url": "https://dungeonsanddragonsfan.com/grim-hollow-players-guide-campaign-guide-dnd-beyond/"
+    },
+    "Ogresh": {
+      "zdroj": "Grim Hollow: Player’s Guide",
+      "rok": 2025,
+      "edice": "třetí strana",
+      "treti_strana": true,
+      "vydavatel": "Ghostfire Gaming",
+      "legacy": false,
+      "velikost": "neověřeno",
+      "rychlost": "neověřeno",
+      "typ": "neověřeno",
+      "delka_zivota": "zdroj neuvádí",
+      "rysy": {
+        "Enemy in Motion": "Reakce na pohyb nepřítele; přesný spouštěč je neověřeno.",
+        "Focused Mind": "Zlepšuje soustředění; úplný účinek je neověřeno.",
+        "Environmental Awareness": "Všímavost vůči okolnímu prostředí; bonusy jsou neověřeno.",
+        "Natural Movement": "Pohybová schopnost; přesné podmínky jsou neověřeno.",
+        "Powerful Build": "Počítáš se jako o jednu velikost větší při určení nosnosti; úplný text je neověřeno.",
+        "Calculating Listener": "Vlastnost spojená s nasloucháním; mechanika je neověřeno.",
+        "Commanding Insight": "Vhled použitelný pro vedení; konkrétní bonus je neověřeno.",
+        "Persuasive Knack": "Zlepšuje přesvědčování; přesný účinek je neověřeno."
+      },
+      "overeno": [
+        "https://www.dndbeyond.com/species/1987224-ogresh",
+        "https://dungeonsanddragonsfan.com/grim-hollow-players-guide-campaign-guide-dnd-beyond/"
+      ],
+      "verdikt_url": "https://dungeonsanddragonsfan.com/grim-hollow-players-guide-campaign-guide-dnd-beyond/"
+    },
+    "Wechselkind": {
+      "zdroj": "Grim Hollow: Player’s Guide",
+      "rok": 2025,
+      "edice": "třetí strana",
+      "treti_strana": true,
+      "vydavatel": "Ghostfire Gaming",
+      "legacy": false,
+      "velikost": "neověřeno",
+      "rychlost": "neověřeno",
+      "typ": "neověřeno",
+      "delka_zivota": "zdroj neuvádí",
+      "rysy": {
+        "Creature Cover": "Využívá blízkého tvora jako kryt; přesné podmínky jsou neověřeno.",
+        "Magical Fortification": "Magická obrana umělého těla; účinek je neověřeno.",
+        "Artificial Form": "Tělo je umělé a připomíná dítě; přesné důsledky jsou neověřeno.",
+        "Helping Hand": "Pomoc spojenci; úplné podmínky jsou neověřeno.",
+        "Pass Through": "Schopnost projít úzkým prostorem či kolem tvora; rozsah je neověřeno.",
+        "Magical Savant (Disguise Self)": "Získáš Disguise Self; úrovně a sesílání jsou neověřeno.",
+        "Magical Savvy (Minor Illusion)": "Získáš Minor Illusion; podmínky sesílání jsou neověřeno.",
+        "Intuitive Acrobat": "Akrobatická schopnost; přesný bonus je neověřeno."
+      },
+      "overeno": [
+        "https://www.dndbeyond.com/species/1987225-wechselkind",
+        "https://dungeonsanddragonsfan.com/grim-hollow-players-guide-campaign-guide-dnd-beyond/"
+      ],
+      "verdikt_url": "https://dungeonsanddragonsfan.com/grim-hollow-players-guide-campaign-guide-dnd-beyond/"
+    },
+    "Wulven": {
+      "zdroj": "Grim Hollow: Player’s Guide",
+      "rok": 2025,
+      "edice": "třetí strana",
+      "treti_strana": true,
+      "vydavatel": "Ghostfire Gaming",
+      "legacy": false,
+      "velikost": "neověřeno",
+      "rychlost": "neověřeno",
+      "typ": "neověřeno",
+      "delka_zivota": "zdroj neuvádí",
+      "rysy": {
+        "Hunter's Instinct": "Lovecká schopnost; přesný bonus je neověřeno.",
+        "Natural Attack (Claws)": "Přirozený útok drápy; poškození je neověřeno.",
+        "Pack Hunter": "Spolupráce při lovu; podmínky jsou neověřeno.",
+        "Burst of Speed": "Krátkodobé zrychlení; délka a obnova jsou neověřeno.",
+        "Climber": "Zlepšené lezení; rychlost a omezení jsou neověřeno.",
+        "Athlete's Spirit": "Sportovní či tělesná zdatnost; účinek je neověřeno.",
+        "Inborn Perception": "Vrozené vnímání; bonus je neověřeno.",
+        "Nature's Voice": "Vztah či komunikace se světem přírody; přesné účinky jsou neověřeno."
+      },
+      "overeno": [
+        "https://www.dndbeyond.com/species/1987226-wulven",
+        "https://dungeonsanddragonsfan.com/grim-hollow-players-guide-campaign-guide-dnd-beyond/"
+      ],
+      "verdikt_url": "https://dungeonsanddragonsfan.com/grim-hollow-players-guide-campaign-guide-dnd-beyond/"
+    },
+    "Gargoyle": {
+      "zdroj": "Frontiers of Eberron: Quickstone",
+      "rok": 2024,
+      "edice": "třetí strana",
+      "treti_strana": true,
+      "vydavatel": "Visionary Production and Design / Keith Baker",
+      "legacy": false,
+      "velikost": "Medium",
+      "rychlost": 30,
+      "typ": "Elemental",
+      "delka_zivota": "zdroj neuvádí",
+      "rysy": {
+        "Darkvision": "Darkvision; přesný dosah v dostupném přehledu není potvrzen.",
+        "Elemental Resilience": "Odolnost kamenné, elementální bytosti; přesné účinky jsou neověřeno.",
+        "False Appearance": "Když se nehýbeš, působíš jako kamenná socha.",
+        "Immutable Form": "Tvoje podoba odolává magickým účinkům, které by ji změnily; přesné výjimky jsou neověřeno.",
+        "Sentry's Rest": "Odpočíváš bez běžného spánku; míra bdělosti během odpočinku je neověřeno.",
+        "Stoneskin": "Kámen poskytuje přirozenou obranu, včetně AC 13 + Dexterity modifier; přesné interakce jsou neověřeno.",
+        "Tireless": "Nepotřebuješ jíst, pít, dýchat ani spát; přesné pravidlové podmínky jsou neověřeno."
+      },
+      "overeno": [
+        "https://www.dndbeyond.com/species/2188036-gargoyle",
+        "https://keith-baker.com/foe-species/",
+        "https://dungeonmister.com/guides/races-in-dungeons-dragons/gargoyle-dnd-2024/",
+        "https://www.tabletopgamingnews.com/frontiers-of-eberron-quickstone-review-giddy-up-for-an-adventure-in-the-wild-frontier/"
+      ],
+      "verdikt_url": "https://www.tabletopgamingnews.com/frontiers-of-eberron-quickstone-review-giddy-up-for-an-adventure-in-the-wild-frontier/"
+    },
+    "Gnoll": {
+      "zdroj": "Frontiers of Eberron: Quickstone",
+      "rok": 2024,
+      "edice": "třetí strana",
+      "treti_strana": true,
+      "vydavatel": "Visionary Production and Design / Keith Baker",
+      "legacy": false,
+      "velikost": "Medium",
+      "rychlost": 30,
+      "typ": "Humanoid",
+      "delka_zivota": "zdroj neuvádí",
+      "rysy": {
+        "Darkvision": "Darkvision; přesný dosah není v otevřeném souhrnu potvrzen.",
+        "Bite": "Přirozený kousavý útok; přesné poškození a akční parametry jsou neověřeno.",
+        "Hunter's Senses": "Zlepšuje smyslové schopnosti lovce; přesné dovednosti a účinky jsou neověřeno.",
+        "Rampage": "Umožňuje navázat na poražení protivníka dalším pohybem či útokem; podmínky a použití jsou neověřeno."
+      },
+      "overeno": [
+        "https://www.dndbeyond.com/species/2088741-gnoll",
+        "https://keith-baker.com/foe-species/",
+        "https://www.dndbeyond.com/forums/d-d-beyond-general/news-announcements/235551-exploring-eberron-2024-issues-and-support-thread",
+        "https://www.tabletopgamingnews.com/frontiers-of-eberron-quickstone-review-giddy-up-for-an-adventure-in-the-wild-frontier/"
+      ],
+      "verdikt_url": "https://www.tabletopgamingnews.com/frontiers-of-eberron-quickstone-review-giddy-up-for-an-adventure-in-the-wild-frontier/"
+    },
+    "Harpy": {
+      "zdroj": "Frontiers of Eberron: Quickstone",
+      "rok": 2024,
+      "edice": "třetí strana",
+      "treti_strana": true,
+      "vydavatel": "Visionary Production and Design / Keith Baker",
+      "legacy": false,
+      "velikost": "Medium",
+      "rychlost": 30,
+      "typ": "Humanoid",
+      "delka_zivota": "zdroj neuvádí",
+      "rysy": {
+        "Flight": "Má letovou rychlost; přesná hodnota a omezení jsou neověřeno.",
+        "Songbird": "Získáš proficiency v Performance a hlasový trik podobný Friends; úplná pravidla jsou neověřeno.",
+        "Harpy's Charms": "Hlas může okouzlit posluchače; dosah, záchranný hod a obnova jsou neověřeno.",
+        "Shadow's Magic": "Přístup k magickému účinku spojenému se stínem; kouzla a jejich podmínky jsou neověřeno."
+      },
+      "overeno": [
+        "https://www.dndbeyond.com/species/2188037-harpy",
+        "https://keith-baker.com/foe-species/",
+        "https://www.dndbeyond.com/forums/d-d-beyond-general/news-announcements/235551-exploring-eberron-2024-issues-and-support-thread",
+        "https://www.tabletopgamingnews.com/frontiers-of-eberron-quickstone-review-giddy-up-for-an-adventure-in-the-wild-frontier/"
+      ],
+      "verdikt_url": "https://www.tabletopgamingnews.com/frontiers-of-eberron-quickstone-review-giddy-up-for-an-adventure-in-the-wild-frontier/"
+    },
+    "Medusa": {
+      "zdroj": "Frontiers of Eberron: Quickstone",
+      "rok": 2024,
+      "edice": "třetí strana",
+      "treti_strana": true,
+      "vydavatel": "Visionary Production and Design / Keith Baker",
+      "legacy": false,
+      "velikost": "Medium",
+      "rychlost": 30,
+      "typ": "Humanoid",
+      "delka_zivota": "zdroj neuvádí",
+      "rysy": {
+        "Darkvision": "Darkvision; přesný dosah v otevřeném přehledu není potvrzen.",
+        "Fearsome Presence": "Vzbuzuje obavy; přesný dosah, záchranný hod a trvání jsou neověřeno.",
+        "Serpentine": "Hadovité vlasy tvoří výrazný tělesný znak; případné další účinky jsou neověřeno.",
+        "Petrifying Gaze": "Bonus Action umožní slabší pohled, který škodí či zpomaluje a může po opakovaných zásazích zkamenět cíl; čísla a podmínky jsou neověřeno.",
+        "Medusa's Gift": "Zvláštní dar spojený s pohledem; úplný účinek je neověřeno."
+      },
+      "overeno": [
+        "https://www.dndbeyond.com/species/2188038-medusa",
+        "https://keith-baker.com/foe-species/",
+        "https://www.dndbeyond.com/forums/d-d-beyond-general/news-announcements/235551-exploring-eberron-2024-issues-and-support-thread",
+        "https://www.tabletopgamingnews.com/frontiers-of-eberron-quickstone-review-giddy-up-for-an-adventure-in-the-wild-frontier/"
+      ],
+      "verdikt_url": "https://www.tabletopgamingnews.com/frontiers-of-eberron-quickstone-review-giddy-up-for-an-adventure-in-the-wild-frontier/"
+    },
+    "Worg": {
+      "zdroj": "Frontiers of Eberron: Quickstone",
+      "rok": 2024,
+      "edice": "třetí strana",
+      "treti_strana": true,
+      "vydavatel": "Visionary Production and Design / Keith Baker",
+      "legacy": false,
+      "velikost": "Medium",
+      "rychlost": 40,
+      "typ": "Monstrosity",
+      "delka_zivota": "zdroj neuvádí",
+      "rysy": {
+        "Darkvision": "Darkvision; přesný dosah v dostupném souhrnu není potvrzen.",
+        "Keen Senses": "Získáš proficiency v Perception.",
+        "Bite": "Přirozený útok kousnutím; přesné poškození je neověřeno.",
+        "For the Pack": "Pomáháš spojenci akcí Help jako Bonus Action; podmínky použití jsou neověřeno.",
+        "Natural Armor": "Přirozené brnění nahrazuje běžné určení AC bez zbroje; přesný výpočet je neověřeno.",
+        "Quadruped": "Čtyřnohá stavba umožňuje nést jako jezdec tvora velikosti Medium nebo menšího; podrobnosti jsou neověřeno."
+      },
+      "overeno": [
+        "https://www.dndbeyond.com/species/2188040-worg",
+        "https://keith-baker.com/foe-species/",
+        "https://dungeonmister.com/guides/races-in-dungeons-dragons/worg-dnd-2024-species/",
+        "https://www.tabletopgamingnews.com/frontiers-of-eberron-quickstone-review-giddy-up-for-an-adventure-in-the-wild-frontier/"
+      ],
+      "verdikt_url": "https://www.tabletopgamingnews.com/frontiers-of-eberron-quickstone-review-giddy-up-for-an-adventure-in-the-wild-frontier/"
+    },
+    "Floral Dragonborn": {
+      "zdroj": "The Field Guide to Floral Dragons",
+      "rok": 2026,
+      "edice": "třetí strana",
+      "treti_strana": true,
+      "vydavatel": "Hit Point Press",
+      "legacy": false,
+      "velikost": "neověřeno",
+      "rychlost": "neověřeno",
+      "typ": "neověřeno",
+      "delka_zivota": "zdroj neuvádí",
+      "rysy": {
+        "Floral Legacy": "Volíš jednu ze šesti legacií. Veřejné materiály potvrzují, že volba poskytuje dovednostní zdatnost, odolnost vůči jednomu stavu a zvláštní účinek spojený s Breath Weapon; názvy a přesné účinky jednotlivých legacií jsou neověřeno.",
+        "Floral Breath Weapon": "Součástí rysu je dechový útok a jeho účinek závisí na zvolené Floral Legacy. Veřejné materiály neuvádějí úplný postup, zranění, tvar, dosah, DC ani obnovu použití; tyto údaje jsou neověřeno.",
+        "Floral Fortitude": "Jméno rysu je uvedeno v katalogu D&D Beyond; jeho úplný popis není ve veřejném náhledu dostupný, a proto je jeho mechanický účinek neověřeno.",
+        "Draconic Blossoming": "Od 5. úrovně můžeš Bonus Action aktivovat rozkvět, který po dobu až 1 minuty na začátku každého svého tahu obnovuje 1d4 Hit Points. Tvor, který tě během účinku napadne, musí uspět na Charisma save, jinak je nucen zvolit jiný cíl; DC, omezení cíle a počet použití jsou neověřeno."
+      },
+      "overeno": [
+        "https://hitpointpress.com/products/the-field-guide-to-floral-dragons-dragonborn-pdf",
+        "https://www.dndbeyond.com/posts/2233-floral-dragons-blossoming-with-botanical-beauty",
+        "https://www.dndbeyond.com/species/2203112-floral-dragonborn",
+        "https://www.wargamer.com/dnd/floral-dragons-character-options"
+      ],
+      "verdikt_url": "https://hitpointpress.com/products/the-field-guide-to-floral-dragons-dragonborn-pdf"
+    },
+    "Dhakaani Ghaal’dar": {
+      "zdroj": "Exploring Eberron (2024)",
+      "rok": 2026,
+      "edice": "třetí strana",
+      "treti_strana": true,
+      "vydavatel": "Keith Baker / Visionary Production and Design",
+      "legacy": false,
+      "velikost": "neověřeno",
+      "rychlost": "neověřeno",
+      "typ": "Humanoid",
+      "delka_zivota": "zdroj neuvádí",
+      "rysy": {
+        "Darkvision": "Ve tmě rozeznáváš obrysy do vzdálenosti uvedené v úplném znění rysu; přesný dosah je neověřeno.",
+        "Discipline": "Máš Advantage na záchranné hody, kterými se vyhýbáš stavu Charmed nebo jej ukončuješ.",
+        "Strength in Unity": "Když neuspěješ v D20 Testu, přičti k hodu bonus podle počtu spojenců, které vidíš; započíst lze nejvýše pět. Dosah, četnost použití a obnova jsou neověřeno.",
+        "War and Peace": "Získáš proficiency ve dvou dovednostech vybraných z Athletics, History, Intimidation a Performance."
+      },
+      "overeno": [
+        "https://www.dndbeyond.com/forums/d-d-beyond-general/news-announcements/235551-exploring-eberron-2024-issues-and-support-thread",
+        "https://www.thegamer.com/dungeons-dragons-dnd-exploring-eberron-all-new-species/",
+        "https://www.dndbeyond.com/species/2088738-dhakaani-ghaaldar-hobgoblin"
+      ],
+      "verdikt_url": "https://www.dndbeyond.com/forums/d-d-beyond-general/news-announcements/235551-exploring-eberron-2024-issues-and-support-thread"
+    },
+    "Dhakaani Golin’dar": {
+      "zdroj": "Exploring Eberron (2024)",
+      "rok": 2026,
+      "edice": "třetí strana",
+      "treti_strana": true,
+      "vydavatel": "Keith Baker / Visionary Production and Design",
+      "legacy": false,
+      "velikost": "Small",
+      "rychlost": "neověřeno",
+      "typ": "Humanoid",
+      "delka_zivota": "zdroj neuvádí",
+      "rysy": {
+        "Darkvision": "Ve tmě rozeznáváš obrysy do vzdálenosti uvedené v úplném znění rysu; přesný dosah je neověřeno.",
+        "Discipline": "Máš Advantage na záchranné hody, kterými se vyhýbáš stavu Charmed nebo jej ukončuješ.",
+        "Naturally Stealthy": "Můžeš se pokusit o Hide, i když jsi skrytý pouze za tvorem, který je alespoň o jednu velikostní kategorii větší než ty.",
+        "Nimbleness": "Můžeš projít prostorem většího tvora, ale nemůžeš v něm ukončit svůj pohyb."
+      },
+      "overeno": [
+        "https://www.dndbeyond.com/forums/d-d-beyond-general/news-announcements/235551-exploring-eberron-2024-issues-and-support-thread",
+        "https://www.thegamer.com/dungeons-dragons-dnd-exploring-eberron-all-new-species/",
+        "https://www.dndbeyond.com/species/2088739-dhakaani-golindar-goblin"
+      ],
+      "verdikt_url": "https://www.dndbeyond.com/forums/d-d-beyond-general/news-announcements/235551-exploring-eberron-2024-issues-and-support-thread"
+    },
+    "Dhakaani Guul’dar": {
+      "zdroj": "Exploring Eberron (2024)",
+      "rok": 2026,
+      "edice": "třetí strana",
+      "treti_strana": true,
+      "vydavatel": "Keith Baker / Visionary Production and Design",
+      "legacy": false,
+      "velikost": "neověřeno",
+      "rychlost": "neověřeno",
+      "typ": "Humanoid",
+      "delka_zivota": "zdroj neuvádí",
+      "rysy": {
+        "Darkvision": "Ve tmě rozeznáváš obrysy do vzdálenosti uvedené v úplném znění rysu; přesný dosah je neověřeno.",
+        "Brave": "Máš Advantage na záchranné hody, kterými se vyhýbáš stavu Frightened nebo jej ukončuješ.",
+        "Long-Limbed": "Při melee útoku máš dosah prodloužený o 5 stop.",
+        "Powerful Build": "Při určování nosnosti se počítáš jako tvor o kategorii větší; přesné podmínky dalších účinků jsou neověřeno.",
+        "Stand by the Strong": "Název rysu je uveden v katalogu D&D Beyond; úplný popis účinku je neověřeno."
+      },
+      "overeno": [
+        "https://www.dndbeyond.com/forums/d-d-beyond-general/news-announcements/235551-exploring-eberron-2024-issues-and-support-thread",
+        "https://www.thegamer.com/dungeons-dragons-dnd-exploring-eberron-all-new-species/",
+        "https://www.dndbeyond.com/species/2088740-dhakaani-guuldar-bugbear"
+      ],
+      "verdikt_url": "https://www.dndbeyond.com/forums/d-d-beyond-general/news-announcements/235551-exploring-eberron-2024-issues-and-support-thread"
+    },
+    "Jhorgun'taal": {
+      "zdroj": "Exploring Eberron (2024)",
+      "rok": 2026,
+      "edice": "třetí strana",
+      "treti_strana": true,
+      "vydavatel": "Keith Baker / Visionary Production and Design",
+      "legacy": false,
+      "velikost": "neověřeno",
+      "rychlost": "neověřeno",
+      "typ": "neověřeno",
+      "delka_zivota": "zdroj neuvádí",
+      "rysy": {
+        "Darkvision": "Úplný dosah je neověřeno.",
+        "Relentless Endurance": "Když bys klesl na 0 Hit Points, ale nezemřel, můžeš místo toho zůstat na 1 Hit Point; přesná obnova podle této varianty je neověřeno.",
+        "Versatile": "Záznam uvádí přístup k volbě Origin feat; přesné podmínky a omezení jsou neověřeno."
+      },
+      "overeno": [
+        "https://www.dndbeyond.com/forums/d-d-beyond-general/news-announcements/235551-exploring-eberron-2024-issues-and-support-thread",
+        "https://www.thegamer.com/dungeons-dragons-dnd-exploring-eberron-all-new-species/",
+        "https://www.dndbeyond.com/species/2088742-jhorguntaal-half-orc"
+      ],
+      "verdikt_url": "https://www.dndbeyond.com/forums/d-d-beyond-general/news-announcements/235551-exploring-eberron-2024-issues-and-support-thread"
+    },
+    "Kalamer Landwalker": {
+      "zdroj": "Exploring Eberron (2024)",
+      "rok": 2026,
+      "edice": "třetí strana",
+      "treti_strana": true,
+      "vydavatel": "Keith Baker / Visionary Production and Design",
+      "legacy": false,
+      "velikost": "neověřeno",
+      "rychlost": 30,
+      "typ": "Elemental",
+      "delka_zivota": "zdroj neuvádí",
+      "rysy": {
+        "Darkvision": "Úplný dosah je neověřeno.",
+        "Amphibious": "Můžeš dýchat vzduch i vodu.",
+        "Blessing of the Sea": "Akcí přecházíš mezi merfolk formou a landwalker formou; v druhé máš Speed 30 stop a Swim Speed 0. Forma trvá, dokud akcí nepřepneš zpět.",
+        "Karakala Lore": "Získáš proficiency v Nature, Performance a Survival.",
+        "Swift Swimmer": "Tvůj Swim Speed odpovídá tvému Speed."
+      },
+      "overeno": [
+        "https://www.dndbeyond.com/forums/d-d-beyond-general/news-announcements/235551-exploring-eberron-2024-issues-and-support-thread",
+        "https://www.thegamer.com/dungeons-dragons-dnd-exploring-eberron-all-new-species/",
+        "https://www.dndbeyond.com/species/2088743-kalamer-landwalker-merfolk"
+      ],
+      "verdikt_url": "https://www.dndbeyond.com/forums/d-d-beyond-general/news-announcements/235551-exploring-eberron-2024-issues-and-support-thread"
+    },
+    "Ruinbound": {
+      "zdroj": "Exploring Eberron (2024)",
+      "rok": 2026,
+      "edice": "třetí strana",
+      "treti_strana": true,
+      "vydavatel": "Keith Baker / Visionary Production and Design",
+      "legacy": false,
+      "velikost": "Small or Medium (choice)",
+      "rychlost": 30,
+      "typ": "neověřeno",
+      "delka_zivota": "zdroj neuvádí",
+      "rysy": {
+        "Darkvision": "Máš Darkvision s dosahem 120 stop.",
+        "Personal Symbiont": "Jsi spojen s neodstranitelným mimozemským symbiontem. Zvolíš mu cantrip z uvedeného seznamu a po Long Rest můžeš volbu změnit; spellcasting ability volíš mezi Intelligence, Wisdom a Charisma.",
+        "Symbiont Mastery": "Můžeš attune k jednomu předmětu se Symbiotic Nature navíc k běžnému limitu; po Long Rest můžeš ukončit attunement bez obvyklé podmínky Remove Curse.",
+        "Unnatural Resilience": "Máš Resistance vůči Poison damage a Advantage na záchranné hody proti stavu Poisoned nebo k jeho ukončení."
+      },
+      "overeno": [
+        "https://www.dndbeyond.com/forums/d-d-beyond-general/news-announcements/235551-exploring-eberron-2024-issues-and-support-thread",
+        "https://www.thegamer.com/dungeons-dragons-dnd-exploring-eberron-all-new-species/",
+        "https://runerollers.com/apps/platform/library/species/ruinbound-exploringeberron24",
+        "https://www.dndbeyond.com/species/2088744-ruinbound"
+      ],
+      "verdikt_url": "https://www.dndbeyond.com/forums/d-d-beyond-general/news-announcements/235551-exploring-eberron-2024-issues-and-support-thread"
+    },
+    "Sahuagin": {
+      "zdroj": "Exploring Eberron (2024)",
+      "rok": 2026,
+      "edice": "třetí strana",
+      "treti_strana": true,
+      "vydavatel": "Keith Baker / Visionary Production and Design",
+      "legacy": false,
+      "velikost": "neověřeno",
+      "rychlost": "neověřeno",
+      "typ": "neověřeno",
+      "delka_zivota": "zdroj neuvádí",
+      "rysy": {
+        "Darkvision": "Úplný dosah je neověřeno.",
+        "Swift Swimmer": "Tvůj Swim Speed odpovídá tvému Speed.",
+        "Blood Frenzy": "Bonus Action spustí na 1 minutu bojový stav; máš Advantage na attack rolls proti tvorům, kteří nemají všechny Hit Points. Počet použití a obnova jsou neověřeno.",
+        "Natural Armor": "Když nenosíš armor, tvoje AC je 12 + Dexterity modifier; můžeš používat shield.",
+        "Limited Amphibiousness": "Dýcháš vzduch i vodu, ale musíš se alespoň jednou za 4 hodiny ponořit, jinak začneš trpět suffocation."
+      },
+      "overeno": [
+        "https://www.dndbeyond.com/forums/d-d-beyond-general/news-announcements/235551-exploring-eberron-2024-issues-and-support-thread",
+        "https://www.thegamer.com/dungeons-dragons-dnd-exploring-eberron-all-new-species/",
+        "https://www.dndbeyond.com/species/2088745-sahuagin"
+      ],
+      "verdikt_url": "https://www.dndbeyond.com/forums/d-d-beyond-general/news-announcements/235551-exploring-eberron-2024-issues-and-support-thread"
+    },
     "Dwarf": {
       "zdroj": "Player's Handbook",
       "velikost": "Medium (about 4-5 feet tall)",
@@ -5294,6 +6126,692 @@
       "delka_zivota": "dospívá kolem 15 let a dožívá se přibližně 80 let",
       "alternativa_2024": "—",
       "legacy": false
+    },
+    "Geppettin": {
+      "zdroj": "Valda’s Spire of Secrets: Player Pack",
+      "rok": 2025,
+      "edice": "třetí strana",
+      "treti_strana": true,
+      "vydavatel": "Mage Hand Press",
+      "legacy": false,
+      "velikost": "Small nebo Medium podle konstrukce",
+      "rychlost": 30,
+      "typ": "Construct",
+      "delka_zivota": "zdroj neuvádí",
+      "rysy": {
+        "Darkvision": "Darkvision 60 ft.",
+        "Construct Nature": "Nepotřebuješ jídlo, pití ani vzduch; nespíš a Long Rest dokončíš za 4 hodiny nehybně a při vědomí.",
+        "Handcrafted Quality": "Získáš proficiency v Intimidation, Performance nebo Persuasion.",
+        "Geppettin Construction": "Vyber Bisque, Marionette nebo Plushie; každá konstrukce mění vzhled a poskytuje zvláštní schopnost."
+      },
+      "overeno": [
+        "https://magehandpress.com/2025/04/dnd-beyond-launch/",
+        "https://www.dndbeyond.com/posts/1939-whats-inside-valdas-spire-of-secrets-player-pack",
+        "https://www.dndbeyond.com/species/1901111-geppettin",
+        "https://runerollers.com/apps/platform/library/species/geppettin-valdaplayerpack"
+      ],
+      "verdikt_url": "https://magehandpress.com/2025/04/dnd-beyond-launch/"
+    },
+    "Mandrake": {
+      "zdroj": "Valda’s Spire of Secrets: Player Pack",
+      "rok": 2025,
+      "edice": "třetí strana",
+      "treti_strana": true,
+      "vydavatel": "Mage Hand Press",
+      "legacy": false,
+      "velikost": "Medium (starší popis; aktualizovaná kategorie neověřena)",
+      "rychlost": "30 ft (starší popis; aktualizovaná hodnota neověřena)",
+      "typ": "Humanoid; působí na něj i efekty mířící na Plants",
+      "delka_zivota": "dospívá přibližně za 10 let; může žít staletí",
+      "rysy": {
+        "Plant Nature": "Přírodní rysy rostliny; přesný 2024 rozsah potřeb a účinků je neověřeno.",
+        "Natural Connection": "Komunikuješ s rostlinami a získáváš od nich informace; přesné 2024 podmínky jsou neověřeno.",
+        "Root Magic": "Získáš přírodní kouzla podle úrovně; přesný seznam a sesílání aktualizované verze jsou neověřeno.",
+        "Entangling Vines": "Využíváš sezónně proměnlivé liány k omezení pohybu; dosah a podmínky jsou neověřeno."
+      },
+      "overeno": [
+        "https://magehandpress.com/2025/04/dnd-beyond-launch/",
+        "https://www.dndbeyond.com/posts/1939-whats-inside-valdas-spire-of-secrets-player-pack",
+        "https://www.dndbeyond.com/species/1901112-mandrake",
+        "https://www.worldanvil.com/block/1139864"
+      ],
+      "verdikt_url": "https://magehandpress.com/2025/04/dnd-beyond-launch/"
+    },
+    "Dracthyr": {
+      "zdroj": "D&D: World of Warcraft Gameplay Expansion (preview/DDB listing)",
+      "rok": 2026,
+      "edice": "třetí strana",
+      "treti_strana": true,
+      "vydavatel": "Wizards of the Coast / Blizzard Entertainment",
+      "legacy": false,
+      "velikost": "neověřeno",
+      "rychlost": "neověřeno",
+      "typ": "neověřeno",
+      "delka_zivota": "zdroj neuvádí",
+      "rysy": {
+        "Darkvision": "Trait is listed; range and complete effect are neověřeno.",
+        "Gliding Wings": "Trait is listed; falling, speed, and movement rules are neověřeno.",
+        "Natural Weaponry": "Trait is listed; weapon forms and damage are neověřeno.",
+        "Visage": "Trait is listed; transformation rules are neověřeno.",
+        "Draconic Flight": "Trait is listed; flight speed, duration, and uses are neověřeno."
+      },
+      "overeno": [
+        "https://www.dndbeyond.com/posts/2205-everything-you-need-to-know-about-d-d-world-of",
+        "https://www.dndbeyond.com/species/2237442-dracthyr",
+        "https://warcraft.wiki.gg/wiki/Dracthyr"
+      ],
+      "verdikt_url": "https://www.dndbeyond.com/posts/2205-everything-you-need-to-know-about-d-d-world-of"
+    },
+    "Draenei": {
+      "zdroj": "D&D: World of Warcraft Gameplay Expansion (preview/DDB listing)",
+      "rok": 2026,
+      "edice": "třetí strana",
+      "treti_strana": true,
+      "vydavatel": "Wizards of the Coast / Blizzard Entertainment",
+      "legacy": false,
+      "velikost": "neověřeno",
+      "rychlost": "neověřeno",
+      "typ": "neověřeno",
+      "delka_zivota": "zdroj neuvádí",
+      "rysy": {
+        "Darkvision": "Trait is listed; range and complete effect are neověřeno.",
+        "Eredar Lineage": "Trait is listed; lineage choices and their benefits are neověřeno.",
+        "Heroic Presence": "Trait is listed; trigger and effect are neověřeno."
+      },
+      "overeno": [
+        "https://www.dndbeyond.com/posts/2205-everything-you-need-to-know-about-d-d-world-of",
+        "https://www.dndbeyond.com/species/2237443-draenei",
+        "https://warcraft.wiki.gg/wiki/Draenei",
+        "https://worldofwarcraft.blizzard.com/en-gb/game/races/draenei"
+      ],
+      "verdikt_url": "https://www.dndbeyond.com/posts/2205-everything-you-need-to-know-about-d-d-world-of"
+    },
+    "Earthen": {
+      "zdroj": "D&D: World of Warcraft Gameplay Expansion (preview/DDB listing)",
+      "rok": 2026,
+      "edice": "třetí strana",
+      "treti_strana": true,
+      "vydavatel": "Wizards of the Coast / Blizzard Entertainment",
+      "legacy": false,
+      "velikost": "neověřeno",
+      "rychlost": "neověřeno",
+      "typ": "neověřeno",
+      "delka_zivota": "zdroj neuvádí",
+      "rysy": {
+        "Azerite Surge": "Trait is listed; action, area, damage, and scaling are neověřeno.",
+        "Darkvision": "Trait is listed; range and complete effect are neověřeno.",
+        "Earthen Resilience": "Trait is listed; resistances and saving-throw benefits are neověřeno.",
+        "Ingest Minerals": "Trait is listed; eligible minerals and effects are neověřeno.",
+        "Quiet Contemplation": "Trait is listed; rest benefit and conditions are neověřeno."
+      },
+      "overeno": [
+        "https://www.dndbeyond.com/posts/2205-everything-you-need-to-know-about-d-d-world-of",
+        "https://www.dndbeyond.com/species/2237445-earthen",
+        "https://warcraft.wiki.gg/wiki/Earthen"
+      ],
+      "verdikt_url": "https://www.dndbeyond.com/posts/2205-everything-you-need-to-know-about-d-d-world-of"
+    },
+    "Forsaken": {
+      "zdroj": "D&D: World of Warcraft Gameplay Expansion (preview/DDB listing)",
+      "rok": 2026,
+      "edice": "třetí strana",
+      "treti_strana": true,
+      "vydavatel": "Wizards of the Coast / Blizzard Entertainment",
+      "legacy": false,
+      "velikost": "neověřeno",
+      "rychlost": "neověřeno",
+      "typ": "neověřeno",
+      "delka_zivota": "zdroj neuvádí (undead; přesná životnost není doložena)",
+      "rysy": {
+        "Darkvision": "Trait is listed; range and complete effect are neověřeno.",
+        "Deathly Endurance": "Trait is listed; trigger and effect are neověřeno.",
+        "Everlasting": "Trait is listed; limits and complete effect are neověřeno.",
+        "Touch of the Grave": "Trait is listed; action, range, damage, and healing are neověřeno.",
+        "Will of the Forsaken": "Trait is listed; conditions and uses are neověřeno."
+      },
+      "overeno": [
+        "https://www.dndbeyond.com/posts/2205-everything-you-need-to-know-about-d-d-world-of",
+        "https://www.dndbeyond.com/species/2237447-forsaken",
+        "https://warcraft.wiki.gg/wiki/Forsaken"
+      ],
+      "verdikt_url": "https://www.dndbeyond.com/posts/2205-everything-you-need-to-know-about-d-d-world-of"
+    },
+    "Haranir": {
+      "zdroj": "D&D: World of Warcraft Gameplay Expansion (preview/DDB listing)",
+      "rok": 2026,
+      "edice": "třetí strana",
+      "treti_strana": true,
+      "vydavatel": "Wizards of the Coast / Blizzard Entertainment",
+      "legacy": false,
+      "velikost": "neověřeno",
+      "rychlost": "neověřeno",
+      "typ": "neověřeno",
+      "delka_zivota": "zdroj neuvádí",
+      "rysy": {
+        "Darkvision": "Trait is listed; range and complete effect are neověřeno.",
+        "Gift of the World Trees": "Trait is listed; choices and benefits are neověřeno.",
+        "Haranir Magic": "Trait is listed; spell list, levels, and casting rules are neověřeno."
+      },
+      "overeno": [
+        "https://www.dndbeyond.com/posts/2205-everything-you-need-to-know-about-d-d-world-of",
+        "https://www.dndbeyond.com/species/2237450-haranir",
+        "https://warcraft.wiki.gg/wiki/Haranir"
+      ],
+      "verdikt_url": "https://www.dndbeyond.com/posts/2205-everything-you-need-to-know-about-d-d-world-of"
+    },
+    "Mechagnome": {
+      "zdroj": "D&D: World of Warcraft Gameplay Expansion (preview/DDB listing)",
+      "rok": 2026,
+      "edice": "třetí strana",
+      "treti_strana": true,
+      "vydavatel": "Wizards of the Coast / Blizzard Entertainment",
+      "legacy": false,
+      "velikost": "neověřeno",
+      "rychlost": "neověřeno",
+      "typ": "neověřeno",
+      "delka_zivota": "zdroj neuvádí",
+      "rysy": {
+        "Built for Success": "Trait is listed; check, effect, and uses are neověřeno.",
+        "Emergency Fail-Safe": "Trait is listed; trigger and effect are neověřeno.",
+        "Mechanical Nature": "Trait is listed; needs and immunities are neověřeno.",
+        "Sentry's Rest": "Trait is listed; resting rules are neověřeno.",
+        "Specialized Design": "Trait is listed; skill or tool choices are neověřeno."
+      },
+      "overeno": [
+        "https://www.dndbeyond.com/posts/2205-everything-you-need-to-know-about-d-d-world-of",
+        "https://www.dndbeyond.com/species/2237452-mechagnome",
+        "https://warcraft.wiki.gg/wiki/Mechagnome",
+        "https://worldofwarcraft.blizzard.com/en-us/news/23177594/new-allied-races-preview-vulpera-and-mechagnomes"
+      ],
+      "verdikt_url": "https://www.dndbeyond.com/posts/2205-everything-you-need-to-know-about-d-d-world-of"
+    },
+    "Pandaren": {
+      "zdroj": "D&D: World of Warcraft Gameplay Expansion (preview/DDB listing)",
+      "rok": 2026,
+      "edice": "třetí strana",
+      "treti_strana": true,
+      "vydavatel": "Wizards of the Coast / Blizzard Entertainment",
+      "legacy": false,
+      "velikost": "neověřeno",
+      "rychlost": "neověřeno",
+      "typ": "neověřeno",
+      "delka_zivota": "zdroj neuvádí",
+      "rysy": {
+        "Bouncy": "Trait is listed; effect and conditions are neověřeno.",
+        "Darkvision": "Trait is listed; range and complete effect are neověřeno.",
+        "Inner Peace": "Trait is listed; rest or social benefits are neověřeno.",
+        "Quaking Palm": "Trait is listed; action, saving throw, and effect are neověřeno."
+      },
+      "overeno": [
+        "https://www.dndbeyond.com/posts/2205-everything-you-need-to-know-about-d-d-world-of",
+        "https://www.dndbeyond.com/species/2237454-pandaren",
+        "https://warcraft.wiki.gg/wiki/Pandaren"
+      ],
+      "verdikt_url": "https://www.dndbeyond.com/posts/2205-everything-you-need-to-know-about-d-d-world-of"
+    },
+    "Tauren": {
+      "zdroj": "D&D: World of Warcraft Gameplay Expansion (preview/DDB listing)",
+      "rok": 2026,
+      "edice": "třetí strana",
+      "treti_strana": true,
+      "vydavatel": "Wizards of the Coast / Blizzard Entertainment",
+      "legacy": false,
+      "velikost": "neověřeno",
+      "rychlost": "neověřeno",
+      "typ": "neověřeno",
+      "delka_zivota": "zdroj neuvádí",
+      "rysy": {
+        "Horns": "Trait is listed; weapon damage and use rules are neověřeno.",
+        "Goring Rush": "Trait is listed; movement, action, and damage are neověřeno.",
+        "Hammering Horns": "Trait is listed; action and effect are neověřeno.",
+        "Tauren Lineage": "Trait is listed; lineage options and benefits are neověřeno."
+      },
+      "overeno": [
+        "https://www.dndbeyond.com/posts/2205-everything-you-need-to-know-about-d-d-world-of",
+        "https://www.dndbeyond.com/species/2237455-tauren",
+        "https://warcraft.wiki.gg/wiki/Tauren",
+        "https://worldofwarcraft.blizzard.com/en-gb/game/races/tauren"
+      ],
+      "verdikt_url": "https://www.dndbeyond.com/posts/2205-everything-you-need-to-know-about-d-d-world-of"
+    },
+    "Troll": {
+      "zdroj": "D&D: World of Warcraft Gameplay Expansion (preview/DDB listing)",
+      "rok": 2026,
+      "edice": "třetí strana",
+      "treti_strana": true,
+      "vydavatel": "Wizards of the Coast / Blizzard Entertainment",
+      "legacy": false,
+      "velikost": "neověřeno",
+      "rychlost": "neověřeno",
+      "typ": "neověřeno",
+      "delka_zivota": "zdroj neuvádí",
+      "rysy": {
+        "Bloodied Frenzy": "Trait is listed; trigger, damage, and uses are neověřeno.",
+        "Darkvision": "Trait is listed; range and complete effect are neověřeno.",
+        "Troll Healing": "Trait is listed; healing, conditions, and recovery are neověřeno.",
+        "Troll Lineage": "Trait is listed; lineage options and benefits are neověřeno."
+      },
+      "overeno": [
+        "https://www.dndbeyond.com/posts/2205-everything-you-need-to-know-about-d-d-world-of",
+        "https://www.dndbeyond.com/species/2237456-troll",
+        "https://warcraft.wiki.gg/wiki/Troll"
+      ],
+      "verdikt_url": "https://www.dndbeyond.com/posts/2205-everything-you-need-to-know-about-d-d-world-of"
+    },
+    "Vulpera": {
+      "zdroj": "D&D: World of Warcraft Gameplay Expansion (preview/DDB listing)",
+      "rok": 2026,
+      "edice": "třetí strana",
+      "treti_strana": true,
+      "vydavatel": "Wizards of the Coast / Blizzard Entertainment",
+      "legacy": false,
+      "velikost": "neověřeno",
+      "rychlost": "neověřeno",
+      "typ": "neověřeno",
+      "delka_zivota": "zdroj neuvádí",
+      "rysy": {
+        "Darkvision": "Trait is listed; range and complete effect are neověřeno.",
+        "Fire Resistance": "Trait is listed; exact resistance rules are neověřeno.",
+        "Nose for Trouble": "Trait is listed; trigger and damage reduction are neověřeno.",
+        "Vulpera Nimbleness": "Trait is listed; movement and size rules are neověřeno."
+      },
+      "overeno": [
+        "https://www.dndbeyond.com/posts/2205-everything-you-need-to-know-about-d-d-world-of",
+        "https://www.dndbeyond.com/species/2237457-vulpera",
+        "https://warcraft.wiki.gg/wiki/Vulpera",
+        "https://worldofwarcraft.blizzard.com/en-us/news/23177594/new-allied-races-preview-vulpera-and-mechagnomes"
+      ],
+      "verdikt_url": "https://www.dndbeyond.com/posts/2205-everything-you-need-to-know-about-d-d-world-of"
+    },
+    "Worgen": {
+      "zdroj": "D&D: World of Warcraft Gameplay Expansion (preview/DDB listing)",
+      "rok": 2026,
+      "edice": "třetí strana",
+      "treti_strana": true,
+      "vydavatel": "Wizards of the Coast / Blizzard Entertainment",
+      "legacy": false,
+      "velikost": "neověřeno",
+      "rychlost": "neověřeno",
+      "typ": "neověřeno",
+      "delka_zivota": "zdroj neuvádí",
+      "rysy": {
+        "Darkflight": "Trait is listed; movement and uses are neověřeno.",
+        "Darkvision": "Trait is listed; range and complete effect are neověřeno.",
+        "Instinctual Shift": "Trait is listed; trigger and effect are neověřeno."
+      },
+      "overeno": [
+        "https://www.dndbeyond.com/posts/2205-everything-you-need-to-know-about-d-d-world-of",
+        "https://www.dndbeyond.com/species/2237458-worgen",
+        "https://warcraft.wiki.gg/wiki/Worgen"
+      ],
+      "verdikt_url": "https://www.dndbeyond.com/posts/2205-everything-you-need-to-know-about-d-d-world-of"
+    },
+    "Dara": {
+      "zdroj": "Obojima: Tales from the Tall Grass",
+      "rok": 2025,
+      "edice": "třetí strana",
+      "treti_strana": true,
+      "vydavatel": "1985 Games",
+      "legacy": false,
+      "velikost": "Small (červená) nebo Medium (modrá)",
+      "rychlost": "25 ft (Small) nebo 30 ft (Medium)",
+      "typ": "neověřeno",
+      "delka_zivota": "průměrně přibližně 100 let; přesná délka života neznámá",
+      "rysy": {
+        "Awakened Skills": "Získáš proficiency ve třech dovednostech dle volby; potvrzeno ve veřejném přepisu pravidel.",
+        "Create Talisman": "Vytvoříš talisman pro Dash/Disengage, návrat na 1 HP po zásahu nebo radiant damage dle typu; detaily aktualizace jsou neověřeno.",
+        "Sacred Revelation": "Dotykem absorbuješ informace uložené v dara glyfu; další limity jsou neověřeno.",
+        "Impart Knowledge": "Od 10. úrovně vytvoříš glyf s mluvenou zprávou, kterou může přečíst jiný Dara.",
+        "Color Choice": "Červená a modrá varianta mají odlišný vzhled, velikost a zvláštní talisman; přesné 2024 znění je neověřeno."
+      },
+      "overeno": [
+        "https://marketplace.dndbeyond.com/rulebooks/DBRVOJLXV",
+        "https://www.worldanvil.com/w/obojima3A-tales-from-the-tall-grass-kikilove/a/playing-as-a-dara-article",
+        "https://obojima.com/blogs/news/the-obojima-podcast-the-blog-episode-3-creating-a-new-d-d-race-the-races-of-obojima",
+        "https://www.dndbeyond.com/species/1891766-dara"
+      ],
+      "verdikt_url": "https://marketplace.dndbeyond.com/rulebooks/DBRVOJLXV"
+    },
+    "Ashborn": {
+      "zdroj": "The Crooked Moon Part One: Player Options & Campaign Setting (2024 rules)",
+      "rok": 2025,
+      "edice": "třetí strana",
+      "treti_strana": true,
+      "vydavatel": "Legends of Avantris / Avantris Entertainment",
+      "legacy": false,
+      "velikost": "neověřeno",
+      "rychlost": "neověřeno",
+      "typ": "neověřeno",
+      "delka_zivota": "zdroj neuvádí",
+      "rysy": {
+        "Ashen Legacy": "Magický odkaz spojený s ohněm; přesné kouzlo, úroveň a sesílání jsou neověřeno.",
+        "Darkvision": "Darkvision; dosah je neověřeno.",
+        "Fiendish Fortune": "Převrací nepříznivý výsledek útoku; přesná reakce, dosah a účinek jsou neověřeno.",
+        "Scorpion Sting": "Štíří ocas umožňuje bodnutí; damage dice a další účinek jsou neověřeno."
+      },
+      "overeno": [
+        "https://avantris.com/products/the-crooked-moon-standard-edition",
+        "https://www.dndbeyond.com/sources/dnd/tcmp1",
+        "https://www.dndbeyond.com/species/1949069-ashborn"
+      ],
+      "verdikt_url": "https://avantris.com/products/the-crooked-moon-standard-edition"
+    },
+    "Azureborn": {
+      "zdroj": "The Crooked Moon Part One: Player Options & Campaign Setting (2024 rules)",
+      "rok": 2025,
+      "edice": "třetí strana",
+      "treti_strana": true,
+      "vydavatel": "Legends of Avantris / Avantris Entertainment",
+      "legacy": false,
+      "velikost": "neověřeno",
+      "rychlost": "neověřeno",
+      "typ": "neověřeno",
+      "delka_zivota": "zdroj neuvádí",
+      "rysy": {
+        "Azure Legacy": "Zvláštní magický původ; přesná kouzla a úroveň použití jsou neověřeno.",
+        "Darkvision": "Darkvision; dosah je neověřeno.",
+        "Glimpse Fate": "Schopnost zahlédnout či ovlivnit osud; použití a obnova jsou neověřeno.",
+        "Winds of Magic": "Magie větru a vzdušný pohyb; přesná rychlost a podmínky jsou neověřeno."
+      },
+      "overeno": [
+        "https://avantris.com/products/the-crooked-moon-standard-edition",
+        "https://www.dndbeyond.com/sources/dnd/tcmp1",
+        "https://www.dndbeyond.com/species/1949070-azureborn"
+      ],
+      "verdikt_url": "https://avantris.com/products/the-crooked-moon-standard-edition"
+    },
+    "Bogborn": {
+      "zdroj": "The Crooked Moon Part One: Player Options & Campaign Setting (2024 rules)",
+      "rok": 2025,
+      "edice": "třetí strana",
+      "treti_strana": true,
+      "vydavatel": "Legends of Avantris / Avantris Entertainment",
+      "legacy": false,
+      "velikost": "neověřeno",
+      "rychlost": "neověřeno",
+      "typ": "neověřeno",
+      "delka_zivota": "zdroj neuvádí",
+      "rysy": {
+        "Bog Bulk": "Vlastnost související s mohutnou stavbou; mechanický účinek je neověřeno.",
+        "Darkvision": "Darkvision; dosah je neověřeno.",
+        "Guiding Bond": "Vazba označuje či sleduje cíl; pravidla použití jsou neověřeno.",
+        "Keen Senses": "Zlepšené vnímání; přesná proficiency či bonus je neověřeno.",
+        "Regeneration": "Regenerace a obnova; použití, kostky a podmínky jsou neověřeno."
+      },
+      "overeno": [
+        "https://avantris.com/products/the-crooked-moon-standard-edition",
+        "https://www.dndbeyond.com/sources/dnd/tcmp1",
+        "https://www.dndbeyond.com/species/1949071-bogborn"
+      ],
+      "verdikt_url": "https://avantris.com/products/the-crooked-moon-standard-edition"
+    },
+    "Curseborn": {
+      "zdroj": "The Crooked Moon Part One: Player Options & Campaign Setting (2024 rules)",
+      "rok": 2025,
+      "edice": "třetí strana",
+      "treti_strana": true,
+      "vydavatel": "Legends of Avantris / Avantris Entertainment",
+      "legacy": false,
+      "velikost": "neověřeno",
+      "rychlost": "neověřeno",
+      "typ": "neověřeno",
+      "delka_zivota": "zdroj neuvádí",
+      "rysy": {
+        "Cursed Claws": "Drápy a kletba; damage dice a přesné podmínky jsou neověřeno.",
+        "Darkvision": "Darkvision; dosah je neověřeno.",
+        "Grey Balance": "Vyvažuje štěstí a smůlu; účinek a cena použití jsou neověřeno.",
+        "Lupine Sense": "Vnímání spojené s vlčí povahou; dosah a proficiency jsou neověřeno."
+      },
+      "overeno": [
+        "https://avantris.com/products/the-crooked-moon-standard-edition",
+        "https://www.dndbeyond.com/sources/dnd/tcmp1",
+        "https://www.dndbeyond.com/species/1949072-curseborn"
+      ],
+      "verdikt_url": "https://avantris.com/products/the-crooked-moon-standard-edition"
+    },
+    "Deepborn": {
+      "zdroj": "The Crooked Moon Part One: Player Options & Campaign Setting (2024 rules)",
+      "rok": 2025,
+      "edice": "třetí strana",
+      "treti_strana": true,
+      "vydavatel": "Legends of Avantris / Avantris Entertainment",
+      "legacy": false,
+      "velikost": "neověřeno",
+      "rychlost": "neověřeno",
+      "typ": "neověřeno",
+      "delka_zivota": "zdroj neuvádí",
+      "rysy": {
+        "Amphibious": "Schopnost pohybovat se a dýchat ve vodě; přesné pravidlo je neověřeno.",
+        "Darkvision": "Darkvision; dosah je neověřeno.",
+        "Eldritch Gibbering": "Nadpřirozený hlas či zvuk; dosah a účinek jsou neověřeno.",
+        "Endless Hunger": "Neutišitelný hlad; mechanické následky a podmínky jsou neověřeno."
+      },
+      "overeno": [
+        "https://avantris.com/products/the-crooked-moon-standard-edition",
+        "https://www.dndbeyond.com/sources/dnd/tcmp1",
+        "https://www.dndbeyond.com/species/1949073-deepborn"
+      ],
+      "verdikt_url": "https://avantris.com/products/the-crooked-moon-standard-edition"
+    },
+    "Gnarlborn": {
+      "zdroj": "The Crooked Moon Part One: Player Options & Campaign Setting (2024 rules)",
+      "rok": 2025,
+      "edice": "třetí strana",
+      "treti_strana": true,
+      "vydavatel": "Legends of Avantris / Avantris Entertainment",
+      "legacy": false,
+      "velikost": "neověřeno",
+      "rychlost": "neověřeno",
+      "typ": "neověřeno",
+      "delka_zivota": "zdroj neuvádí",
+      "rysy": {
+        "Deep Roots": "Kořeny zajišťují stabilitu; přesné podmínky a účinek jsou neověřeno.",
+        "Elderwood Whispers": "Komunikuješ či získáváš vědění od prastarých stromů; pravidla jsou neověřeno.",
+        "Grasping Branches": "Větve zachytí či omezí cíl; dosah a save DC jsou neověřeno.",
+        "Root Sense": "Smysly spojené s půdou a kořeny; dosah a informace jsou neověřeno.",
+        "Towering Size": "Výrazná výška či velikost; přesná kategorie je neověřeno."
+      },
+      "overeno": [
+        "https://avantris.com/products/the-crooked-moon-standard-edition",
+        "https://www.dndbeyond.com/sources/dnd/tcmp1",
+        "https://www.dndbeyond.com/species/1949074-gnarlborn"
+      ],
+      "verdikt_url": "https://avantris.com/products/the-crooked-moon-standard-edition"
+    },
+    "Graveborn": {
+      "zdroj": "The Crooked Moon Part One: Player Options & Campaign Setting (2024 rules)",
+      "rok": 2025,
+      "edice": "třetí strana",
+      "treti_strana": true,
+      "vydavatel": "Legends of Avantris / Avantris Entertainment",
+      "legacy": false,
+      "velikost": "neověřeno",
+      "rychlost": "neověřeno",
+      "typ": "neověřeno",
+      "delka_zivota": "zdroj neuvádí",
+      "rysy": {
+        "Darkvision": "Darkvision; dosah je neověřeno.",
+        "Devour Corpse": "Pojídání mrtvého těla; účinky a omezení jsou neověřeno.",
+        "Frozen Waste": "Vlastnost spojená s mrazivým prostředím; odolnost či pohyb jsou neověřeno.",
+        "Infused Drakkonite": "Zesílení drakonitovým kovem; přesný účinek je neověřeno."
+      },
+      "overeno": [
+        "https://avantris.com/products/the-crooked-moon-standard-edition",
+        "https://www.dndbeyond.com/sources/dnd/tcmp1",
+        "https://www.dndbeyond.com/species/1949075-graveborn"
+      ],
+      "verdikt_url": "https://avantris.com/products/the-crooked-moon-standard-edition"
+    },
+    "Harvestborn": {
+      "zdroj": "The Crooked Moon Part One: Player Options & Campaign Setting (2024 rules)",
+      "rok": 2025,
+      "edice": "třetí strana",
+      "treti_strana": true,
+      "vydavatel": "Legends of Avantris / Avantris Entertainment",
+      "legacy": false,
+      "velikost": "neověřeno",
+      "rychlost": "neověřeno",
+      "typ": "neověřeno",
+      "delka_zivota": "zdroj neuvádí",
+      "rysy": {
+        "Culling": "Účinek vůči oslabenému cíli; damage dice a podmínky jsou neověřeno.",
+        "Gift of the Green": "Přírodní magie pomáhá spojenci; dosah a obnova jsou neověřeno.",
+        "Jack-O-Lantern": "Magie či schopnost dýňové hlavy; přesné pravidlo je neověřeno.",
+        "Scarecrow Nature": "Vlastnost strašáka; imunitní či obranný účinek je neověřeno.",
+        "Watchful Rest": "Odpočinek spojený s hlídáním; podmínky jsou neověřeno."
+      },
+      "overeno": [
+        "https://avantris.com/products/the-crooked-moon-standard-edition",
+        "https://www.dndbeyond.com/sources/dnd/tcmp1",
+        "https://www.dndbeyond.com/species/1949076-harvestborn"
+      ],
+      "verdikt_url": "https://avantris.com/products/the-crooked-moon-standard-edition"
+    },
+    "Plagueborn": {
+      "zdroj": "The Crooked Moon Part One: Player Options & Campaign Setting (2024 rules)",
+      "rok": 2025,
+      "edice": "třetí strana",
+      "treti_strana": true,
+      "vydavatel": "Legends of Avantris / Avantris Entertainment",
+      "legacy": false,
+      "velikost": "neověřeno",
+      "rychlost": "neověřeno",
+      "typ": "neověřeno",
+      "delka_zivota": "zdroj neuvádí",
+      "rysy": {
+        "Born in Filth": "Vlastnost spojená s prostředím a odolností; přesný účinek je neověřeno.",
+        "Darkvision": "Darkvision; dosah je neověřeno.",
+        "Infected Cunning": "Důvtip a odolnost vůči nákaze; pravidlové podmínky jsou neověřeno.",
+        "Plague Bearer": "Přenáší či vyvolává nákazu; dosah a záchranný hod jsou neověřeno."
+      },
+      "overeno": [
+        "https://avantris.com/products/the-crooked-moon-standard-edition",
+        "https://www.dndbeyond.com/sources/dnd/tcmp1",
+        "https://www.dndbeyond.com/species/1949077-plagueborn"
+      ],
+      "verdikt_url": "https://avantris.com/products/the-crooked-moon-standard-edition"
+    },
+    "Relicborn": {
+      "zdroj": "The Crooked Moon Part One: Player Options & Campaign Setting (2024 rules)",
+      "rok": 2025,
+      "edice": "třetí strana",
+      "treti_strana": true,
+      "vydavatel": "Legends of Avantris / Avantris Entertainment",
+      "legacy": false,
+      "velikost": "neověřeno",
+      "rychlost": "neověřeno",
+      "typ": "neověřeno",
+      "delka_zivota": "zdroj neuvádí",
+      "rysy": {
+        "Dance of Death": "Tanec ovlivňuje boj či přítomné tvory; podmínky jsou neověřeno.",
+        "Eternal Party": "Vlastnost spojená s oslavou a neúnavností; přesný účinek je neověřeno.",
+        "Moment of Remembrance": "Připomínka mění či obnovuje hod; mechanika je neověřeno.",
+        "Soul of Revelry": "Duch oslavy; bonusy či rozsah jsou neověřeno."
+      },
+      "overeno": [
+        "https://avantris.com/products/the-crooked-moon-standard-edition",
+        "https://www.dndbeyond.com/sources/dnd/tcmp1",
+        "https://www.dndbeyond.com/species/1949078-relicborn"
+      ],
+      "verdikt_url": "https://avantris.com/products/the-crooked-moon-standard-edition"
+    },
+    "Silkborn": {
+      "zdroj": "The Crooked Moon Part One: Player Options & Campaign Setting (2024 rules)",
+      "rok": 2025,
+      "edice": "třetí strana",
+      "treti_strana": true,
+      "vydavatel": "Legends of Avantris / Avantris Entertainment",
+      "legacy": false,
+      "velikost": "neověřeno",
+      "rychlost": "neověřeno",
+      "typ": "neověřeno",
+      "delka_zivota": "zdroj neuvádí",
+      "rysy": {
+        "Bejeweled Carapace": "Krunýř či drahokamy poskytují obranu; AC a použití jsou neověřeno.",
+        "Darkvision": "Darkvision; dosah je neověřeno.",
+        "Silken Legacy": "Původ spojený s hedvábím a pavouky; účinek je neověřeno.",
+        "Spider Climb": "Pohyb po stěnách či stropech; rychlost a podmínky jsou neověřeno."
+      },
+      "overeno": [
+        "https://avantris.com/products/the-crooked-moon-standard-edition",
+        "https://www.dndbeyond.com/sources/dnd/tcmp1",
+        "https://www.dndbeyond.com/species/1949079-silkborn"
+      ],
+      "verdikt_url": "https://avantris.com/products/the-crooked-moon-standard-edition"
+    },
+    "Stoneborn": {
+      "zdroj": "The Crooked Moon Part One: Player Options & Campaign Setting (2024 rules)",
+      "rok": 2025,
+      "edice": "třetí strana",
+      "treti_strana": true,
+      "vydavatel": "Legends of Avantris / Avantris Entertainment",
+      "legacy": false,
+      "velikost": "neověřeno",
+      "rychlost": "neověřeno",
+      "typ": "neověřeno",
+      "delka_zivota": "zdroj neuvádí",
+      "rysy": {
+        "Argent Gleam": "Zářivá síla spojená se Silver Path; přesná mechanika je neověřeno.",
+        "Silver Bulwark": "Stříbrná ochrana; bonusy a použití jsou neověřeno.",
+        "Watchful Senses": "Zlepšené vnímání; skill či rozsah je neověřeno."
+      },
+      "overeno": [
+        "https://avantris.com/products/the-crooked-moon-standard-edition",
+        "https://www.dndbeyond.com/sources/dnd/tcmp1",
+        "https://www.dndbeyond.com/species/1949080-stoneborn"
+      ],
+      "verdikt_url": "https://avantris.com/products/the-crooked-moon-standard-edition"
+    },
+    "Threadborn": {
+      "zdroj": "The Crooked Moon Part One: Player Options & Campaign Setting (2024 rules)",
+      "rok": 2025,
+      "edice": "třetí strana",
+      "treti_strana": true,
+      "vydavatel": "Legends of Avantris / Avantris Entertainment",
+      "legacy": false,
+      "velikost": "neověřeno",
+      "rychlost": "neověřeno",
+      "typ": "neověřeno",
+      "delka_zivota": "zdroj neuvádí",
+      "rysy": {
+        "Ball-jointed": "Kloubová konstrukce umožňuje nezvyklý pohyb; pravidlový účinek je neověřeno.",
+        "Innocent Mind": "Ochrana mysli či odolnost vůči psychic účinku; přesná hodnota je neověřeno.",
+        "Sewn Nature": "Šitá konstrukce; odolnost a opravy jsou neověřeno.",
+        "Soothing Heart": "Uklidňuje spojence; dosah a účinek jsou neověřeno.",
+        "You've Got a Friend": "Pomáhá spojenci; použití a akční typ jsou neověřeno."
+      },
+      "overeno": [
+        "https://avantris.com/products/the-crooked-moon-standard-edition",
+        "https://www.dndbeyond.com/sources/dnd/tcmp1",
+        "https://www.dndbeyond.com/species/1949081-threadborn"
+      ],
+      "verdikt_url": "https://avantris.com/products/the-crooked-moon-standard-edition"
+    },
+    "Nakudama": {
+      "zdroj": "Obojima: Tales from the Tall Grass",
+      "rok": 2025,
+      "edice": "třetí strana",
+      "treti_strana": true,
+      "vydavatel": "1985 Games",
+      "legacy": false,
+      "velikost": "Small",
+      "rychlost": "25 ft; swim 30 ft",
+      "typ": "neověřeno",
+      "delka_zivota": "dospívá v 10 letech; průměrně 45 let",
+      "rysy": {
+        "Swim Speed": "Swim Speed 30 ft.",
+        "Amphibious": "Dýcháš vzduch i vodu.",
+        "Standing Leap": "Long jump 20 ft a high jump 15 ft s rozběhem i bez něj.",
+        "Grasping Tongue": "Bonus Action; přitáhne viditelný předmět do 5 lb ze vzdálenosti 15 ft; pokud jej drží tvor, následuje contested Strength check.",
+        "Latching Tongue": "Bonus Action; přitáhneš se jazykem k povrchu či tvorovi alespoň o jednu velikost většímu do vzdálenosti 15 ft."
+      },
+      "overeno": [
+        "https://marketplace.dndbeyond.com/rulebooks/DBRVOJLXV",
+        "https://www.worldanvil.com/w/obojima3A-tales-from-the-tall-grass-kikilove/a/playing-as-a-nakudama-article",
+        "https://runerollers.com/apps/platform/library/species/nakudama-obojimatallgrass",
+        "https://www.dndbeyond.com/species/1891768-nakudama"
+      ],
+      "verdikt_url": "https://marketplace.dndbeyond.com/rulebooks/DBRVOJLXV"
     },
     "Elf": {
       "zdroj": "Player's Handbook",
