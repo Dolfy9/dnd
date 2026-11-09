@@ -1,11 +1,13 @@
 // Kontrola atlasu: svet.json, symboly, oblasti a sprity (web/assets/svet/*.webp).
 const fs = require("fs"), path = require("path"), R = path.join(__dirname, "..");
+const { spawnSync } = require("child_process");
 global.window = {};
 new Function(fs.readFileSync(path.join(R, "web/assets/svet_symboly.js"), "utf8"))();
 new Function(fs.readFileSync(path.join(R, "web/assets/svet/sprity.js"), "utf8"))();
 const { SVET_SYMBOLY: S, SVET_OBLASTI: O, SVET_SPRITY: P, SVET_SPRITY_META: M } = window;
 const PAL = JSON.parse(fs.readFileSync(path.join(R, "web/assets/svet/paleta.json"), "utf8"));
 const D = JSON.parse(fs.readFileSync(path.join(R, "11_Mapy/svet.json"), "utf8")), err = [];
+const K = JSON.parse(fs.readFileSync(path.join(R, "tools/svet_kresba.json"), "utf8"));
 if (D.sirka !== 2048 || D.vyska !== 1440) err.push("rozměry svet.json");
 const used = new Set();
 Object.values(O).forEach(o => o.spr.forEach(n => used.add(n)));
@@ -145,5 +147,75 @@ for (let i = 0; i < landmarks.length; i++) for (let j = i + 1; j < landmarks.len
     if (overlap > .15) err.push("ledový útes[" + i + "] překrývá horský terén oblasti[" + j + "] " + Math.round(overlap * 100) + "% (limit 15%)");
   });
 });
+const overlapCheck = spawnSync("python3", ["-c", [
+  "import json, sys",
+  "from shapely.geometry import Polygon",
+  "from shapely.ops import unary_union",
+  "z = json.load(sys.stdin)",
+  "g = []",
+  "for item in z:",
+  "    parts = [Polygon(r).buffer(0) for r in item.get('body', []) if len(r) >= 3]",
+  "    g.append(unary_union(parts) if parts else Polygon())",
+  "hits = []",
+  "for i in range(len(g)):",
+  "    for j in range(i + 1, len(g)):",
+  "        area = g[i].intersection(g[j]).area",
+  "        if area >= 2:",
+  "            hits.append({'i': i, 'j': j, 'area': area, 'bounds': list(g[i].intersection(g[j]).bounds)})",
+  "print(json.dumps(hits))",
+].join("\n")], { input: JSON.stringify(D.zeme || []), encoding: "utf8" });
+if (overlapCheck.error || overlapCheck.status !== 0) {
+  err.push("nelze ověřit průniky zeme: " + (overlapCheck.error || overlapCheck.stderr.trim()));
+} else {
+  try {
+    JSON.parse(overlapCheck.stdout).forEach(hit => {
+      const a = D.zeme[hit.i], b = D.zeme[hit.j];
+      err.push("průnik zeme " + a.nazev + "[" + hit.i + "] / " + b.nazev + "[" + hit.j + "] " +
+        hit.area.toFixed(2) + " px² (limit <2)");
+    });
+  } catch (e) {
+    err.push("neplatný výsledek kontroly průniků zeme");
+  }
+}
+const refs = [];
+function addReference(points, closed) {
+  if (!Array.isArray(points) || points.length < 2) return;
+  const count = closed ? points.length : points.length - 1;
+  for (let i = 0; i < count; i++) {
+    const a = points[i], b = points[(i + 1) % points.length];
+    refs.push({
+      a, b,
+      x0: Math.min(a[0], b[0]) - 2.5, x1: Math.max(a[0], b[0]) + 2.5,
+      y0: Math.min(a[1], b[1]) - 2.5, y1: Math.max(a[1], b[1]) + 2.5,
+    });
+  }
+}
+(D.pevnina || []).filter(f => f.typ === "pevnina" || f.typ === "ostrov").forEach(f => addReference(f.body, true));
+(K.hranice || []).filter(h => !h.carkovana).forEach(h => addReference(h.body, false));
+(K.uzemi || []).filter(u => !u.pozn || (!u.pozn.startsWith("východní hranice DM:") && !u.pozn.startsWith("jižní hranice DM:")))
+  .forEach(u => addReference(u.body, true));
+function liesOnReference(a, b) {
+  const length = Math.hypot(b[0] - a[0], b[1] - a[1]);
+  const candidates = refs.filter(s => s.x1 >= Math.min(a[0], b[0]) - 2.5 && s.x0 <= Math.max(a[0], b[0]) + 2.5 &&
+    s.y1 >= Math.min(a[1], b[1]) - 2.5 && s.y0 <= Math.max(a[1], b[1]) + 2.5);
+  if (!candidates.length) return false;
+  const steps = Math.max(2, Math.ceil(length / 12));
+  for (let i = 0; i <= steps; i++) {
+    const t = i / steps, x = a[0] + (b[0] - a[0]) * t, y = a[1] + (b[1] - a[1]) * t;
+    if (candidates.reduce((min, s) => Math.min(min, vzdalenostKUseku(x, y, s.a, s.b)), Infinity) > 2.5) return false;
+  }
+  return true;
+}
+let straightEdges = 0;
+(D.zeme || []).forEach((z, i) => (z.body || []).forEach((ring, r) => {
+  if (ring.length < 3) return;
+  for (let j = 0; j < ring.length; j++) {
+    const a = ring[j], b = ring[(j + 1) % ring.length], length = Math.hypot(a[0] - b[0], a[1] - b[1]);
+    if (length <= 60 || liesOnReference(a, b)) continue;
+    straightEdges++;
+    if (straightEdges <= 50) err.push("zeme " + z.nazev + "[" + i + "] má přímou hranu " + length.toFixed(1) + " px mimo pobřeží/DM vektor");
+  }
+}));
+if (straightEdges > 50) err.push("dalších " + (straightEdges - 50) + " dlouhých přímých hran zeme");
 if (err.length) { console.error(err.join("\n")); process.exit(1); }
 console.log("atlas OK:", D.pevnina.length, "tvarů,", D.oblasti.length, "oblastí,", D.symboly.length, "symbolů,", used.size, "spritů");

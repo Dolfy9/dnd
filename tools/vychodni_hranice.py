@@ -321,19 +321,17 @@ def southern_sheet(image, data, source, land):
 
     coast = land.boundary
     lines, snapped = snap_endpoints(lines, dangling, coast)
-    old_borders = [
-        Polygon(u["body"]).buffer(0).boundary for u in source.get("uzemi", [])
-        if len(u.get("body", [])) >= 3
-    ]
-    old_borders.extend(
-        Polygon(body).buffer(0).boundary
-        for z in data.get("zeme", []) for body in z.get("body", []) if len(body) >= 3
-    )
-    faces = list(polygonize(unary_union([coast] + old_borders + lines)))
     corners = cv2.perspectiveTransform(
         np.array([[[0, 25]], [[image.shape[1], 25]], [[image.shape[1], image.shape[0]]], [[0, image.shape[0]]]], dtype=np.float32),
         H_SOUTH,
     ).reshape(-1, 2)
+    frame = LineString([*map(tuple, corners), tuple(corners[0])])
+    frame_band = frame.buffer(2.5)
+    old_borders = [
+        Polygon(u["body"]).buffer(0).boundary.difference(frame_band) for u in source.get("uzemi", [])
+        if len(u.get("body", [])) >= 3 and not u.get("pozn", "").startswith(SOUTH_TAG)
+    ]
+    faces = list(polygonize(unary_union([coast] + old_borders + lines)))
     coverage = Polygon(corners).intersection(Polygon([(0, 0), (data["sirka"], 0),
                                                         (data["sirka"], data["vyska"]), (0, data["vyska"])]))
     blocked = unary_union([
@@ -351,7 +349,11 @@ def southern_sheet(image, data, source, land):
     assigned = {name: [] for name in targets}
     merges = 0
     face_count = 0
+    crop_faces = 0
     for face in faces:
+        if face.intersection(frame).length > 1:
+            crop_faces += 1
+            continue
         geom = face.intersection(land).intersection(coverage).difference(blocked)
         if geom.area < 800:
             continue
@@ -408,7 +410,7 @@ def southern_sheet(image, data, source, land):
         conflicts = sum(old_shared.interpolate(t, normalized=True).distance(new_linework) > 12
                         for t in np.linspace(0, 1, 25))
     return (retained + generated, solid_borders + dashed, face_count,
-            assigned_counts, snapped, len(dashed), merges, conflicts)
+            assigned_counts, snapped, len(dashed), merges, conflicts, crop_faces)
 
 
 def main():
@@ -533,6 +535,7 @@ def main():
     retained_areas = [
         u for u in source.get("uzemi", [])
         if not u.get("pozn", "").startswith(TAG)
+        and not u.get("pozn", "").startswith(SOUTH_TAG)
         and not (u.get("stat", "stat") is None
                  and u.get("pozn", "").startswith("nepřiřazeno – čeká na DM"))
     ]
@@ -540,7 +543,7 @@ def main():
     source["uzemi"] = retained_areas + generated
     source["hranice"] = retained_borders + dashed
     (source["uzemi"], south_borders, south_faces, south_assignments, south_snapped,
-     south_dashed, south_merges, south_conflicts) = southern_sheet(
+     south_dashed, south_merges, south_conflicts, south_crop_faces) = southern_sheet(
         cv2.imread(str(SOUTH_IMG_PATH)), data, source, land
     )
     source["hranice"] = (
@@ -559,6 +562,7 @@ def main():
     print("Nesloučené neoznačené plochy:", unmerged)
     print(f"Připojené volné konce: {snapped}; čárkované úseky: {len(dashed)}")
     print(f"Jižní polygonizované plochy v pokryté oblasti: {south_faces}")
+    print(f"Jižní plochy u okraje ořezu ponechané sousedním zdrojům: {south_crop_faces}")
     print("Jižní přiřazení:", ", ".join(f"{name}={count}" for name, count in south_assignments.items()))
     print(f"Jižní připojené volné konce: {south_snapped}; sloučené pobřežní plochy: {south_merges}")
     print(f"Jižní čárkované úseky: {south_dashed}; vzorky konfliktu s Divokým Severem: {south_conflicts}/25")

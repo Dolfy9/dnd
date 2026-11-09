@@ -9,7 +9,7 @@ from scipy.sparse import csr_matrix
 from scipy.sparse.csgraph import minimum_spanning_tree
 from scipy.spatial import Delaunay
 from shapely.geometry import LineString, Point, Polygon
-from shapely.ops import linemerge, nearest_points, unary_union
+from shapely.ops import linemerge, nearest_points, polygonize, unary_union
 from skimage.graph import MCP_Geometric
 
 T = Path(__file__).resolve().parent
@@ -19,6 +19,10 @@ VELKA = {"mesto", "hrad", "pevnost", "pristav", "kopar"}
 
 def body(p):
     return [[int(round(x)), int(round(y))] for x, y in list(p.exterior.coords)[:-1]]
+
+
+def body_presne(p):
+    return [[round(float(x), 3), round(float(y), 3)] for x, y in list(p.exterior.coords)[:-1]]
 
 
 def kousky(g, min_a=150):
@@ -177,6 +181,84 @@ def hydro(svet, land, ob, seeds, rng, k=2):
     return out
 
 
+def rozdel_uzemi(staty, samostatna, kresba, land, mista):
+    jmena = {z["nazev"] for z in staty}
+    oblasti = {z["nazev"]: unary_union(z["polys"]).intersection(land) for z in staty}
+    zdroje = {"west": [], "east": [], "south": []}
+    for u in kresba:
+        if u.get("stat", "stat") is None or u.get("nazev") not in jmena or len(u.get("body", [])) < 3:
+            continue
+        g = Polygon(u["body"]).buffer(0).intersection(land)
+        if g.is_empty or g.area <= .01:
+            continue
+        poznamka = u.get("pozn", "")
+        listina = "south" if poznamka.startswith("jižní hranice DM:") else (
+            "east" if poznamka.startswith("východní hranice DM:") else "west"
+        )
+        zdroje[listina].append((u["nazev"], g))
+        oblasti[u["nazev"]] = unary_union([oblasti[u["nazev"]], g])
+
+    popisky = {
+        m["nazev"]: Point(m["x"], m["y"])
+        for m in mista
+        if m.get("typ") == "zeme" or m.get("nazev") in ("Divoký Sever", "Dräar")
+    }
+
+    def nejblizsi(nazvy, bod):
+        return min(
+            nazvy,
+            key=lambda n: bod.distance(popisky[n]) if n in popisky
+            else bod.distance(oblasti[n].representative_point()),
+        )
+
+    def vlastnik_zdroje(bod, naroky):
+        shody = {
+            listina: {nazev for nazev, g in polygony if g.covers(bod)}
+            for listina, polygony in zdroje.items()
+        }
+        vse = set().union(*shody.values())
+        if "Divoký Sever" in vse and "Nöet" in vse:
+            return "Divoký Sever"
+        if "Khearaz" in shody["east"] and "Nölien" in shody["east"]:
+            return "Khearaz"
+        for listina in ("south", "east", "west"):
+            kandidati = shody[listina]
+            if kandidati:
+                kandidati = kandidati & naroky or kandidati
+                return nejblizsi(kandidati, bod)
+        return None
+
+    samostatne_casti = [[] for _ in samostatna]
+    rozdeleno = {jmeno: [] for jmeno in jmena}
+    hranice = [land.boundary]
+    hranice.extend(g.boundary for g in oblasti.values() if not g.is_empty)
+    hranice.extend(u["geom"].boundary for u in samostatna if not u["geom"].is_empty)
+    hranice.extend(g.boundary for polygony in zdroje.values() for _, g in polygony)
+    bunky = polygonize(unary_union(hranice))
+    for bunka in bunky:
+        for cast in (g for g in geoms(bunka.intersection(land))
+                     if g.geom_type == "Polygon" and g.area > .01):
+            bod = cast.representative_point()
+            nepojmenovane = [i for i, u in enumerate(samostatna) if u["geom"].covers(bod)]
+            if nepojmenovane:
+                samostatne_casti[nepojmenovane[0]].append(cast)
+                continue
+            naroky = {jmeno for jmeno, g in oblasti.items() if g.covers(bod)}
+            if not naroky:
+                continue
+            vlastnik = vlastnik_zdroje(bod, naroky)
+            if vlastnik not in oblasti:
+                vlastnik = nejblizsi(naroky, bod)
+            rozdeleno[vlastnik].append(cast)
+
+    for z in staty:
+        g = unary_union(rozdeleno[z["nazev"]]) if rozdeleno[z["nazev"]] else Polygon()
+        z["polys"] = [p for p in getattr(g, "geoms", [g]) if p.geom_type == "Polygon" and p.area > 1]
+    for i, u in enumerate(samostatna):
+        g = unary_union(samostatne_casti[i]) if samostatne_casti[i] else Polygon()
+        u["geom"] = g
+
+
 def lore(svet):
     K = json.loads((Path(__file__).with_name("svet_kresba.json")).read_text(encoding="utf-8"))
     Z = json.loads((T / "svet_lore.json").read_text(encoding="utf-8"))
@@ -255,7 +337,7 @@ def lore(svet):
     neprirazene = []
     for u in K.get("uzemi", []):
         if u.get("stat", "stat") is None:
-            g = Polygon(u["body"]).buffer(0)
+            g = Polygon(u["body"]).buffer(0).intersection(land)
             if g.area > 0:
                 neprirazene.append({
                     "id": u.get("id"),
@@ -281,6 +363,7 @@ def lore(svet):
         if z["nazev"] in vychodni_uzemi:
             g = unary_union([unary_union(z["polys"]), vychodni_uzemi[z["nazev"]]])
             z["polys"] = [p for p in geoms(g) if p.geom_type == "Polygon" and p.area > 1]
+    rozdel_uzemi(st, neprirazene, K.get("uzemi", []), land, mista)
     kn = next((z for z in st if z["nazev"].startswith("Knärghe")), None)
     kn_region = unary_union([
         Polygon(body(p.simplify(1.5))).buffer(0) for p in kn["polys"] if p.area > 3000
@@ -319,17 +402,17 @@ def lore(svet):
         for b in kousky(p, 45):
             ob3.append(o | {"body": b})
     ob[:] = ob3
-    svet["zeme"] = [{"nazev": z["nazev"], "body": [body(p.simplify(1.5)) for p in z["polys"] if p.area > 3000], "pozn": "území státu vypočtené z popisků a terénu (návrh)"}
+    svet["zeme"] = [{"nazev": z["nazev"], "body": [body_presne(p) for p in z["polys"] if p.area > 1], "pozn": "území státu vypočtené z popisků a terénu (návrh)"}
                     | ({"barva": "#1e1614"} if z is kn else {"barva": "#6b6b6b"} if z["divoke"] else {}) for z in st]
     for u in neprirazene:
-        for p in geoms(u["geom"]):
-            if p.geom_type == "Polygon" and p.area > 1000:
-                svet["zeme"].append({
-                    "id": u["id"],
-                    "nazev": "Samostatné území (bez jména)", "stat": None,
-                    "barva": u["barva"], "pozn": u["pozn"],
-                    "body": [body(p.simplify(1.5))],
-                })
+        parts = [body_presne(p) for p in geoms(u["geom"]) if p.geom_type == "Polygon" and p.area > 1]
+        if parts:
+            svet["zeme"].append({
+                "id": u["id"],
+                "nazev": "Samostatné území (bez jména)", "stat": None,
+                "barva": u["barva"], "pozn": u["pozn"],
+                "body": parts,
+            })
     cb = land.boundary.buffer(7)
     for z, zz in zip(st, svet["zeme"]):
         U = unary_union(z["polys"])
