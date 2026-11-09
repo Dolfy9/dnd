@@ -1,6 +1,6 @@
 ---
 postava:
-  jmeno: Matka Kotlina
+  jmeno: Mattrun Kolgha
   titul: Kuchařka a lodní léčitelka Opilé fretky
   druh: Dwarf
   pozadi: Acolyte
@@ -53,7 +53,7 @@ postava:
     - {nazev: Warding Flare, text: Zábleskem znevýhodní útok proti sobě nebo spojenci.}
     taktika: Kolo 1 požehná posádce nebo vyšle Guiding Bolt; pak zůstává u zraněných a bojuje palicí. Při třetině ztrát odmítne opustit raněné, dokud je někdo neodnese k člunu.
 ---
-# Postava: Matka Kotlina
+# Postava: Mattrun Kolgha
 
 > **Stav:** návrh
 
@@ -73,11 +73,11 @@ Kolo 1 posílí spojence Bless nebo Guiding Boltem; pak drží palubu u raněný
 18 GP, kuchařský nůž, anvilový přívěsek, svazek receptů a několik obvazů.
 
 ## Háčky pro družinu
-- Kotlina vymění jídlo a léčení za pomoc při záchraně člověka uvězněného v přílivové jeskyni.
+- Mattrun Kolgha vymění jídlo a léčení za pomoc při záchraně člověka uvězněného v přílivové jeskyni.
 
 ## Pro DM (tajné)
 - Návrh: Přívěsek vydává světlo pouze tehdy, když se loď přiblíží ke starému kamennému oblouku.
-- Matka se tajně modlí k Irtis, bohyni ohně a mořské pěny; Orden starou víru zakazuje.
+- Mattrun se tajně modlí k Irtis, bohyni ohně a mořské pěny; Orden starou víru zakazuje.
 
 ## Související
 - Frakce: [Piráti z Opilé fretky](../../../05_Frakce/Pirati_z_Opile_fretky.md)

@@ -1,6 +1,6 @@
 ---
 postava:
-  jmeno: Orvo Tesák
+  jmeno: Orgvak Thruzh
   titul: První důstojník pirátů ze Zairamu
   druh: Orc
   pozadi: Soldier
@@ -27,7 +27,7 @@ postava:
   osobnost:
     rysy: Směje se při bouři a mlčí po bitvě.
     idealy: Síla má smysl, jen když chrání slabší.
-    pouta: Saffi mu kdysi zachránila život; její rozkaz neodmítne.
+    pouta: Zaffrai mu kdysi zachránila život; její rozkaz neodmítne.
     vady: Považuje každou provokaci za výzvu.
   prevod_2024: Berserker získává subclass na 3. úrovni; Rage a Weapon Mastery používají pravidla 2024.
   boj:
@@ -37,29 +37,29 @@ postava:
     bonusove_akce:
     - {nazev: Rage, text: Aktivuje Rage a získá odolnost vůči běžnému fyzickému zranění.}
     reakce: []
-    taktika: Kolo 1 aktivuje Rage a prorazí nejkratší cestu k nepříteli; pak používá Reckless Attack a Frenzy. Při třetině ztrát přikryje ústup Saffi; sám ustoupí, až když mu rozkáže.
+    taktika: Kolo 1 aktivuje Rage a prorazí nejkratší cestu k nepříteli; pak používá Reckless Attack a Frenzy. Při třetině ztrát přikryje ústup Zaffrai; sám ustoupí, až když mu rozkáže.
 ---
-# Postava: Orvo Tesák
+# Postava: Orgvak Thruzh
 
 > **Stav:** návrh
 
 ## Role a historie
-Goliášský rváč a nárazník posádky. Saffi ho posílá na palubu napadené lodi jako první, aby odvedl pozornost obránců.
+Goliášský rváč a nárazník posádky. Zaffrai ho posílá na palubu napadené lodi jako první, aby odvedl pozornost obránců.
 
 ## Vzhled
 Obrovský zbrojnoš-orc má šedozelenou kůži, výrazné tesáky, z nichž jeden má mosaznou krytku, vyholenou hlavu s uzlem vlasů, bojové jizvy a divoký úsměv. Holou hruď mu pokrývají hrubé námořnické tetování; přes ni má kožený postroj. V rukou drží obrovskou greataxe. Za ním se na palubě lodi v bouři napínají lana a plachty.
 
 ## Povaha a motivace
-Rád bojuje, ale chrání lidi, které považuje za svou četu. Jeho loajalita k Saffi má přednost před ziskem i rozkazem k ústupu.
+Rád bojuje, ale chrání lidi, které považuje za svou četu. Jeho loajalita k Zaffrai má přednost před ziskem i rozkazem k ústupu.
 
 ## Taktika v boji
-Kolo 1 vstoupí do Rage a zaútočí Reckless Attack; Frenzy přidá zranění prvnímu zasaženému cíli. Další kola proráží k důstojníkům a využívá Cleave proti skupinám. Při ztrátě třetiny posádky kryje ústup; sám se stáhne až na přímý rozkaz Saffi.
+Kolo 1 vstoupí do Rage a zaútočí Reckless Attack; Frenzy přidá zranění prvnímu zasaženému cíli. Další kola proráží k důstojníkům a využívá Cleave proti skupinám. Při ztrátě třetiny posádky kryje ústup; sám se stáhne až na přímý rozkaz Zaffrai.
 
 ## Kořist
 9 GP, vojenské odznaky, železné manžety a sekera s vyrytým jménem starého pluku.
 
 ## Háčky pro družinu
-- Orvo odmítá bojovat proti komukoli, kdo během přepadu chrání civilisty.
+- Orgvak odmítá bojovat proti komukoli, kdo během přepadu chrání civilisty.
 
 ## Pro DM (tajné)
 - Návrh: Jeden z odznaků odpovídá jednotce, která podle úředních záznamů nikdy nebyla v Zairamu.

@@ -1,6 +1,6 @@
 ---
 postava:
-  jmeno: Edrik Popelný
+  jmeno: Ederhan Vossk
   titul: Strážný Wortmiru
   druh: Human
   pozadi: Soldier
@@ -50,7 +50,7 @@ postava:
     - {nazev: Hellish Rebuke, text: Odpoví ohněm na zásah.}
     taktika: Kolo 1 sesílá Hex a útočí Pact Longswordem; pak drží úzký průchod a využívá Hellish Rebuke. Při třetině ztrát se stáhne za Vorka; bez rozkazu bránu neopustí.
 ---
-# Postava: Edrik Popelný
+# Postava: Ederhan Vossk
 
 > **Stav:** návrh
 
@@ -70,10 +70,10 @@ Kolo 1 aktivuje Hex a útočí Pact Longswordem; dál drží průchod, využív�
 13 GP, pact longsword, černý tabard a spálená listina s jedním čitelným slovem: „dlužník“.
 
 ## Háčky pro družinu
-- Edrik nabízí průchod městem výměnou za odpověď na otázku, kterou družina ještě neslyšela.
+- Ederhan nabízí průchod městem výměnou za odpověď na otázku, kterou družina ještě neslyšela.
 
 ## Pro DM (tajné)
-- Edrik je tajně vázán na démony z Knärghae Zia a slouží jako jejich infiltrátor ve Stráži Wortmiru. Pakt zatajuje i před Vorkem; na jeho rozkazy poslouchá jen do chvíle, kdy by ohrozily jeho spojení s patrony.
+- Ederhan je tajně vázán na démony z Knärghae Zia a slouží jako jejich infiltrátor ve Stráži Wortmiru. Pakt zatajuje i před Vorkem; na jeho rozkazy poslouchá jen do chvíle, kdy by ohrozily jeho spojení s patrony.
 
 ## Související
 - Frakce: [Stráž Wortmiru](../../../05_Frakce/Straz_Wortmiru.md)

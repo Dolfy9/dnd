@@ -1,6 +1,6 @@
 ---
 postava:
-  jmeno: Lin „Úhoř“
+  jmeno: Lunno Fennwick
   titul: Potápěčka a zlodějka pirátů z Amiru
   druh: Halfling
   pozadi: Criminal
@@ -41,7 +41,7 @@ postava:
     reakce: []
     taktika: Kolo 1 se skryje pod rákosím a zaútočí na osamělý cíl; další kola střídá Nick a Hide. Při polovině ztrát se potopí a prchá pod hladinou; vzdá se jen tehdy, když ji zajmou bez možnosti úniku.
 ---
-# Postava: Lin „Úhoř“
+# Postava: Lunno Fennwick
 
 > **Stav:** návrh
 
@@ -61,10 +61,10 @@ Kolo 1 se skryje pod hladinou nebo v rákosí a udeří na odloučený cíl s Sn
 7 GP, tři ukradené prsteny, Thieves’ Tools a skleněná ampule s vodou z nejhlubší věže.
 
 ## Háčky pro družinu
-- Lin nabízí cestu do zatopené věže, ale chce si ponechat první nalezený předmět.
+- Lunno nabízí cestu do zatopené věže, ale chce si ponechat první nalezený předmět.
 
 ## Pro DM (tajné)
-- Návrh: Jeden prsten, který Lin nosí, patřil člověku, jenž podle městských záznamů nikdy neexistoval.
+- Návrh: Jeden prsten, který Lunno nosí, patřil člověku, jenž podle městských záznamů nikdy neexistoval.
 
 ## Související
 - Frakce: [Piráti z Amiru](../../../05_Frakce/Pirati_z_Amiru.md)

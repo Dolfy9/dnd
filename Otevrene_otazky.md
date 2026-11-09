@@ -16,6 +16,7 @@ Seznam věcí k rozhodnutí DM. Po rozhodnutí položku přesuň do sekce *Vyře
 ## Chybějící / nedopsané
 
 - Kde kotví Opilá fretka?
+- **Wortmir:** Je odhadnutý mapový bod (1145,832), velký kruh západně od popisku KHÄRGHE ZHIA, správně?
 - **Kop Aram:** komu patří a kdo ho spravuje (Briria, Werenor, samospráva kupců)?
 - **Tali:** co je to za zemi/kraj, kdo vládne? ([Tali](01_Svet/Mista/Tali.md))
 - **Severovýchodní poloostrov** (ledové věže, tvář ve skále, maják) nemá jméno – co tam je? Fornheim?
@@ -50,7 +51,6 @@ Seznam věcí k rozhodnutí DM. Po rozhodnutí položku přesuň do sekce *Vyře
 - **Hinai Mihi (≈1210,645):** temný prales na severním břehu východní části jezera Amir. *(vyřešeno – potvrdil DM)*
 - Obchodní cesty mezi sídly jsou vypočtené (terén, mosty, uzavřená Knärghe Zhia), ne z kresby. Které z nich platí?
 - Hranice států mimo pokrytí mapou DM jsou vypočtené (od popisku země po terénu, hory jako přirozená hranice); v pokrytém území jsou převzaté z mapy hranic DM. Kůly s lebkami stojí na hranici Knärghe Zhie. Sedí průběh hranic mimo mapu DM?
-- **Východní hranice států (DM):** Pohoří s chrámy severně od Nölienu patří podle DM k Nölienu. Tři samostatná území zůstávají beze jména – jména doplní DM.
 - **Čárkované úseky v horní části mapy hranic:** význam nejasný; zachovány jako čárkovaná hranice, nepoužity k uzavírání území. *(čeká na DM)*
 - **Mönohen – řeka a pobřeží:** Dvojité čáry jsou nyní obkreslené jako jedna řeka ústící do východního moře; pobřeží Mönohenu je ručně obkreslené jako návrh. Odpovídá to kresbě?
 - **Černá skvrna v moři jižně od Tali (≈1357,1326):** chyba kresby, potvrdil DM; do atlasu se nic nepřidává.

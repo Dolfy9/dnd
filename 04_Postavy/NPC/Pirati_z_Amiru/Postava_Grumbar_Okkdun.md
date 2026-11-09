@@ -1,6 +1,6 @@
 ---
 postava:
-  jmeno: Hrouda
+  jmeno: Grumbar Okkdun
   titul: Bosman pirátů z Amiru
   druh: Dwarf
   pozadi: Sailor
@@ -43,7 +43,7 @@ postava:
     - {nazev: Protection, text: Se štítem znevýhodní útok proti sousednímu spojenci.}
     taktika: Kolo 1 drží úzký průchod mezi čluny; pak zpomaluje útočníky bičem a chrání Mirtu. Při polovině ztrát ustoupí k voru; vzdá se, pokud je posádka obklíčena.
 ---
-# Postava: Hrouda
+# Postava: Grumbar Okkdun
 
 > **Stav:** návrh
 
@@ -63,10 +63,10 @@ Kolo 1 přehradí úzké místo a se štítem chrání nejbližšího spojence. 
 5 GP, síť s olověnými závažími, měděná píšťalka bosmana a svazek provazových uzlů s kódem posádky.
 
 ## Háčky pro družinu
-- Hrouda pozná podle uzlů, kdo se v posledních dnech pohyboval kolem rákosového ostrova.
+- Grumbar Okkdun pozná podle uzlů, kdo se v posledních dnech pohyboval kolem rákosového ostrova.
 
 ## Pro DM (tajné)
-- Návrh: Hrouda už jednou zachránil z trosek věže někoho, koho ostatní považují za mrtvého.
+- Návrh: Grumbar Okkdun už jednou zachránil z trosek věže někoho, koho ostatní považují za mrtvého.
 
 ## Související
 - Frakce: [Piráti z Amiru](../../../05_Frakce/Pirati_z_Amiru.md)

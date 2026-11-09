@@ -26,6 +26,8 @@ MD_LINK = re.compile(r"(?<!!)\[[^\]]*\]\((<[^>]+>|[^)\s]+)(?:\s+[^)]*)?\)")
 COUNTRY_MENU = {
     "02_Zeme/Drzava_Knarghae_Zia.md": ("Knärghae Zia", "Nezávislá država"),
     "02_Zeme/Elfsky_Stat_Nolien.md": ("Nölien", "Elfský stát"),
+    "02_Zeme/Banerbo.md": ("Banerbo", "Nezávislý národ"),
+    "02_Zeme/Imatoma.md": ("Imatoma", "Nezávislý stát"),
     "02_Zeme/Khaeraz.md": ("Khaeraz", "Země"),
     "02_Zeme/Klanove_Zeme_Monohen.md": ("Mönohen", "Klanové země"),
     "02_Zeme/Kralovstvi_Briria.md": ("Briria", "Království"),

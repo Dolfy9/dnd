@@ -1,6 +1,6 @@
 ---
 postava:
-  jmeno: Ondra Sumec
+  jmeno: Odrion Tessamar
   titul: Harpunář pirátů z Amiru
   druh: Human
   pozadi: Sailor
@@ -41,7 +41,7 @@ postava:
     reakce: []
     taktika: Kolo 1 hází oštěp z člunu na nejbližšího nepřítele; pak míří na ty, kdo se brodí k voru. Při polovině ztrát odplouvá s Mirtou; vzdá se, pokud ho obklíčí na souši.
 ---
-# Postava: Ondra Sumec
+# Postava: Odrion Tessamar
 
 > **Stav:** návrh
 
@@ -61,10 +61,10 @@ Kolo 1 hodí harpunové kopí na protivníka na břehu; další kola používá 
 3 GP, pět oštěpů, rybářský hák s vyrytým jménem a svazek sušených návnad.
 
 ## Háčky pro družinu
-- Ondra tvrdí, že v hlubinách pod starou věží uvízla harpuna z černého kovu.
+- Odrion tvrdí, že v hlubinách pod starou věží uvízla harpuna z černého kovu.
 
 ## Pro DM (tajné)
-- Návrh: Sumec potají prodává část úlovku rybářům z Werenoru výměnou za informace o hlídkách.
+- Návrh: Tessamar potají prodává část úlovku rybářům z Werenoru výměnou za informace o hlídkách.
 
 ## Související
 - Frakce: [Piráti z Amiru](../../../05_Frakce/Pirati_z_Amiru.md)

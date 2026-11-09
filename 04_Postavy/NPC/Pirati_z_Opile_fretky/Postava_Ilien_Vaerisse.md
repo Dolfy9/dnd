@@ -1,6 +1,6 @@
 ---
 postava:
-  jmeno: Ilien Vřesová
+  jmeno: Ilien Vaerisse
   titul: Střelkyně Opilé fretky
   druh: Elf
   druh_volby: Wood Elf
@@ -43,7 +43,7 @@ postava:
     reakce: []
     taktika: Kolo 1 zasáhne z výšky Longbowem a využije Dread Ambusher; pak mění pozici po každém výstřelu. Při třetině ztrát kryje ústup z útesu do jeskyně.
 ---
-# Postava: Ilien Vřesová
+# Postava: Ilien Vaerisse
 
 > **Stav:** návrh
 

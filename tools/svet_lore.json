@@ -44,6 +44,53 @@
       "stat": "Svobodné Jižní ostrovy",
       "pozn": "malý jižní ostrov u pevniny #4 (návrh podle kresby DM)",
       "body": [[1318, 1362], [1348, 1362], [1348, 1405], [1318, 1405]]
+    },
+    {
+      "stat": "Imonir",
+      "pozn": "okolní severní ostrůvky bez jiného vlastníka (kresba DM)",
+      "body": [[1032, 212], [1063, 212], [1063, 235], [1032, 235]]
+    },
+    {
+      "stat": "Imonir",
+      "pozn": "okolní severní ostrůvky bez jiného vlastníka (kresba DM)",
+      "body": [[1003, 260], [1023, 260], [1023, 281], [1003, 281]]
+    },
+    {
+      "stat": "Imonir",
+      "pozn": "okolní severní ostrůvky bez jiného vlastníka (kresba DM)",
+      "body": [[958, 284], [986, 284], [986, 309], [958, 309]]
+    },
+    {
+      "stat": "Imonir",
+      "pozn": "okolní severní ostrůvky bez jiného vlastníka (kresba DM)",
+      "body": [[801, 305], [821, 305], [821, 339], [801, 339]]
+    },
+    {
+      "stat": "Imonir",
+      "pozn": "okolní severní ostrůvky bez jiného vlastníka (kresba DM)",
+      "body": [[862, 347], [880, 347], [880, 367], [862, 367]]
+    },
+    {
+      "stat": "Imonir",
+      "pozn": "okolní severní ostrůvky bez jiného vlastníka (kresba DM)",
+      "body": [[788, 440], [814, 440], [814, 461], [788, 461]]
+    },
+    {
+      "stat": "Nölien",
+      "pozn": "severní ostrůvek Nölienu vedle Imoniru (kresba DM)",
+      "nahradit": true,
+      "body": [[998, 232], [1049, 232], [1049, 259], [998, 259]]
+    },
+    {
+      "stat": "Nölien",
+      "pozn": "severní ostrůvek Nölienu vedle Imoniru (kresba DM)",
+      "nahradit": true,
+      "body": [[817, 350], [856, 350], [856, 395], [817, 395]]
+    },
+    {
+      "stat": "Banerbo",
+      "pozn": "ostrůvek Banerba v severním souostroví (kresba DM)",
+      "body": [[1537, 259], [1563, 259], [1563, 281], [1537, 281]]
     }
   ],
   "oblasti": [

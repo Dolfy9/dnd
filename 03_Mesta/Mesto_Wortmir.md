@@ -32,7 +32,7 @@ Trpasličí podzemní i povrchové město v Khärghae Zia v čele s vévodou Wor
 - [Haldrak Wennk](../04_Postavy/NPC/Wortmir/Postava_Haldrak_Wennk.md), průvodce Hlubinami
 - [Urvik Stalgar](../04_Postavy/NPC/Wortmir/Postava_Urvik_Stalgar.md), žoldnéř
 - [Agnis Wogot](../04_Postavy/NPC/Wortmir/Postava_Agnis_Wogot.md), písařka
-- Stráž Wortmiru: [Vorek Hald](../04_Postavy/NPC/Straz_Wortmiru/Postava_Vorek_Hald.md), [Edrik Popelný](../04_Postavy/NPC/Straz_Wortmiru/Postava_Edrik_Popelny.md) a [Morn](../04_Postavy/NPC/Straz_Wortmiru/Postava_Morn.md)
+- Stráž Wortmiru: [Vorek Hald](../04_Postavy/NPC/Straz_Wortmiru/Postava_Vorek_Hald.md), [Ederhan Vossk](../04_Postavy/NPC/Straz_Wortmiru/Postava_Ederhan_Vossk.md) a [Morn](../04_Postavy/NPC/Straz_Wortmiru/Postava_Morn.md)
 
 ## Obchody
 - [Prohlédnout katalog obchodů ve Wortmiru](../obchody/?mesto=M%C4%9Bsto%20Wortmir)

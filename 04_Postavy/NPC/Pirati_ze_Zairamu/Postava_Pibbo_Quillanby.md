@@ -1,6 +1,6 @@
 ---
 postava:
-  jmeno: Pip Skořápka
+  jmeno: Pibbo Quillanby
   titul: Dělostřelecký zvěd pirátů ze Zairamu
   druh: Halfling
   pozadi: Criminal
@@ -40,12 +40,12 @@ postava:
     reakce: []
     taktika: Kolo 1 vystřelí z krytu na cíl ohrožující kormidelníka; další kola kombinuje Vex a Hide. Při třetině ztrát kryje ústup z vyvýšeného místa, pak seskočí k člunu.
 ---
-# Postava: Pip Skořápka
+# Postava: Pibbo Quillanby
 
 > **Stav:** návrh
 
 ## Role a historie
-Drobný zvěd a střelec z přídě. Značí lodě s obilím pro Saffi a kontroluje, zda je paluba vhodná k rychlému přepadu.
+Drobný zvěd a střelec z přídě. Značí lodě s obilím pro Zaffrai a kontroluje, zda je paluba vhodná k rychlému přepadu.
 
 ## Vzhled
 Malý půlčík má pihovatou tvář, kudrnaté pískové vlasy, pohotovou nervózní grimasu a na rameni nárameník z želvího krunýře. Přes čelo má uvázaný šátek; v rukou drží nabitou ruční kuši, u boku má krátký meč a na šňůře zavěšený dalekohled. Stojí ve strážním koši vysoko nad palubou, pod nímž se rozprostírá sluncem zalité tyrkysové moře a zelené pobřeží.
@@ -60,7 +60,7 @@ Kolo 1 zahájí palbu z krytu; pak využívá Vex a bonusovou akci Hide, aby zů
 8 GP, ruční kuše, dvě dýky a brašna s barevnými šipkami na označování cílů.
 
 ## Háčky pro družinu
-- Pip nabídne sázku o první zásah; vítěz získá mapu plavebních cest.
+- Pibbo nabídne sázku o první zásah; vítěz získá mapu plavebních cest.
 
 ## Pro DM (tajné)
 - Návrh: Značky, jimiž označuje cíle, jsou totožné se značkami nalezenými na starém kameni v Pertamu.

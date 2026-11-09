@@ -8,20 +8,20 @@
 |---|---|
 | Symbol | Bílá fretka stočená kolem prázdného poháru |
 | Loď / základna | Loď „Opilá fretka“ a skrýš u přílivových tůní Ordenské zátoky |
-| Vůdce | [Bartoloměj Kroupa](../04_Postavy/NPC/Pirati_z_Opile_fretky/Postava_Bartolomej_Kroupa.md) |
+| Vůdce | [Varthel Varthel Krosk](../04_Postavy/NPC/Pirati_z_Opile_fretky/Postava_Varthel_Varthel Krosk.md) |
 | Působiště | [Menkant](../03_Mesta/Mesto_Menkant.md), pobřeží Svobodných Jižních ostrovů |
 
-Hlučná pašerácká posádka ukrývá zboží v jeskyních, jejichž vchody se při přílivu ztrácejí pod hladinou. Bartoloměj dává přednost dohodě a oslavě, ale posádka umí během jediné minuty proměnit přístavní krčmu v bitevní pole.
+Hlučná pašerácká posádka ukrývá zboží v jeskyních, jejichž vchody se při přílivu ztrácejí pod hladinou. Varthel dává přednost dohodě a oslavě, ale posádka umí během jediné minuty proměnit přístavní krčmu v bitevní pole.
 
 ## Posádka
 
 | Postava | Role | Cíl CR | XP z aplikace |
 |---|---|---:|---:|
-| [Bartoloměj Kroupa](../04_Postavy/NPC/Pirati_z_Opile_fretky/Postava_Bartolomej_Kroupa.md) | kapitán a bard, Bard 4 | 1 | 200 |
-| [Pálenka Šroubková](../04_Postavy/NPC/Pirati_z_Opile_fretky/Postava_Palenka_Sroubkova.md) | bombardýrka, Wizard 3 | 1 | 200 |
-| [Hromotluk](../04_Postavy/NPC/Pirati_z_Opile_fretky/Postava_Hromotluk.md) | rváč, Monk 3 | 1 | 200 |
-| [Ilien Vřesová](../04_Postavy/NPC/Pirati_z_Opile_fretky/Postava_Ilien_Vresova.md) | střelkyně, Ranger 3 | 1 | 200 |
-| [Matka Kotlina](../04_Postavy/NPC/Pirati_z_Opile_fretky/Postava_Matka_Kotlina.md) | lodní léčitelka, Cleric 3 | 1 | 200 |
+| [Varthel Varthel Krosk](../04_Postavy/NPC/Pirati_z_Opile_fretky/Postava_Varthel_Varthel Krosk.md) | kapitán a bard, Bard 4 | 1 | 200 |
+| [Pallis Zirrwick](../04_Postavy/NPC/Pirati_z_Opile_fretky/Postava_Pallis_Zirrwick.md) | bombardýrka, Wizard 3 | 1 | 200 |
+| [Kurrath Ozgunzi](../04_Postavy/NPC/Pirati_z_Opile_fretky/Postava_Kurrath Ozgunzi.md) | rváč, Monk 3 | 1 | 200 |
+| [Ilien Vaerisse](../04_Postavy/NPC/Pirati_z_Opile_fretky/Postava_Ilien_Vaerisse.md) | střelkyně, Ranger 3 | 1 | 200 |
+| [Mattrun Kolgha](../04_Postavy/NPC/Pirati_z_Opile_fretky/Postava_Mattrun_Kolgha.md) | lodní léčitelka, Cleric 3 | 1 | 200 |
 | **Celkem** |  |  | **1 000 XP** |
 
 ## Střetnutí (D&D 2024)
@@ -34,11 +34,11 @@ Hlučná pašerácká posádka ukrývá zboží v jeskyních, jejichž vchody se
 
 **Terén a mapa:** Kluzké skály, přílivové tůně, sudy, lucerny a několik úzkých průchodů. Bojová mapa: `ordenska-zatoka-tune`; alternativně `menkant-pristav`.
 
-**Rozmístění:** Ilien hlídá z okraje útesu, Pálenka zůstává za sudy s prachem. Hromotluk blokuje úzký průchod; Kroupa a Kotlina drží střed skrýše.
+**Rozmístění:** Ilien hlídá z okraje útesu, Pallis zůstává za sudy s prachem. Kurrath Ozgunzi blokuje úzký průchod; Varthel Krosk a Mattrun Kolgha drží střed skrýše.
 
-**Průběh:** 1. kolo posádka nejprve varuje družinu a Kroupa nabízí dohodu; při odmítnutí Hromotluk odstrčí protivníky od tůní. 2. kolo Pálenka a Ilien útočí z krytu, Kotlina léčí. 3. kolo se piráti snaží odnést zásoby k člunu a uzavřít jeskyni.
+**Průběh:** 1. kolo posádka nejprve varuje družinu a Varthel Krosk nabízí dohodu; při odmítnutí Kurrath Ozgunzi odstrčí protivníky od tůní. 2. kolo Pallis a Ilien útočí z krytu, Mattrun Kolgha léčí. 3. kolo se piráti snaží odnést zásoby k člunu a uzavřít jeskyni.
 
-**Morálka:** Při třetině ztrát Kroupa nabídne část nákladu a ústup. Hromotluk kryje ostatní; Matka Kotlina se pokusí zachránit každého raněného, i protivníka.
+**Morálka:** Při třetině ztrát Varthel Krosk nabídne část nákladu a ústup. Kurrath Ozgunzi kryje ostatní; Mattrun Kolgha se pokusí zachránit každého raněného, i protivníka.
 
 **Kořist:** Pašované zboží, 40–80 GP, mapka přílivu a několik kvalitních lahví; v kuchyni se může skrývat předmět, který nepatří žádnému členu posádky.
 

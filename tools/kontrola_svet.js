@@ -12,8 +12,14 @@ const Z = JSON.parse(fs.readFileSync(path.join(R, "tools/svet_lore.json"), "utf8
 if (D.sirka !== 2048 || D.vyska !== 1440) err.push("rozměry svet.json");
 const oldNorthFloes = (D.symboly || []).filter(s => s.typ === "ledova_kra" && s.pozn === "ledová kra v severním moři Nölienu (návrh)");
 if (oldNorthFloes.length) err.push("v severním moři Nölienu zůstaly návrhové ledové kry");
+const northVolcanoes = (D.symboly || []).filter(s => s.typ === "sopka" && s.pozn === "sopka v moři severně od Nölienu (kresba DM)");
+if (northVolcanoes.length !== 2 || !northVolcanoes.some(s => s.x === 1085 && s.y === 275) || !northVolcanoes.some(s => s.x === 1170 && s.y === 280)) {
+  err.push("severně od Nölienu mají být dvě sopky na kreslených kráterech");
+}
+if (!P.sopka || P.sopka.w !== 60 || P.sopka.kotva[0] !== .5 || P.sopka.kotva[1] !== .62) err.push("nesprávná velikost nebo kotva sopky");
 const northWaves = (D.symboly || []).filter(s => s.typ === "vlny" && s.pozn === "vlny severně od Nölienu (kresba DM)");
 if (northWaves.length < 5) err.push("severně od Nölienu chybí vlny");
+if (!pevninaAt(1065, 765) || pevninaAt(1065, 738)) err.push("Kop Aram má být malý ostrov oddělený od severního břehu");
 const used = new Set();
 Object.values(O).forEach(o => o.spr.forEach(n => used.add(n)));
 Object.values(P).forEach(o => o.spr.forEach(n => used.add(n)));
@@ -55,6 +61,19 @@ function ownersAt(x, y) {
   if (pevninaAt(x, y)) err.push("(" + x + "," + y + ") musí být moře");
 });
 [
+  [[926, 298], "Imonir"],
+  [[1047, 225], "Imonir"],
+  [[1013, 270], "Imonir"],
+  [[972, 296], "Imonir"],
+  [[811, 320], "Imonir"],
+  [[871, 357], "Imonir"],
+  [[801, 450], "Imonir"],
+  [[1023, 245], "Nölien"],
+  [[836, 372], "Nölien"],
+  [[1485, 388], "Banerbo"],
+  [[1549, 268], "Banerbo"],
+  [[1733, 823], "Imatoma"],
+  [[1214, 838], "Khärghe Zhia"],
   [[594, 1292], "Nöet"],
   [[1300, 1230], "Tali"],
   [[1060, 1327], "Svobodné Jižní ostrovy"],

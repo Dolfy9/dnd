@@ -29,7 +29,7 @@ postava:
   osobnost:
     rysy: Každý rozkaz zopakuje přesně, než jej splní.
     idealy: Zajatci jsou cennější než mrtví nepřátelé.
-    pouta: Saffi ho přijala, když zůstal bez jednotky.
+    pouta: Zaffrai ho přijala, když zůstal bez jednotky.
     vady: Nedokáže ignorovat výzvu na souboj.
   prevod_2024: Fighter 2 používá Action Surge a Weapon Mastery podle pravidel 2024; species breath weapon používá pravidla 2024.
   boj:
@@ -48,13 +48,13 @@ postava:
 > **Stav:** návrh
 
 ## Role a historie
-Pěšák a osobní stráž Saffi na levoboku. Jeho úkolem je zadržet obránce, dokud zbytek posádky přebírá loď.
+Pěšák a osobní stráž Zaffrai na levoboku. Jeho úkolem je zadržet obránce, dokud zbytek posádky přebírá loď.
 
 ## Vzhled
 Bosman s bronzovými kovovými šupinami má na hlavě hřebínek, klidné přísné zlaté oči a u nozder mu slabě jiskří blesk. Pod mořem ošlehanou tabardovou tunikou nosí kroužkovou košili; v ruce drží kopí a kulatý štít lemovaný železem. Za ním se na palubě lodi vinou svinutá lana a nad mořem zapadá zlaté slunce.
 
 ## Povaha a motivace
-Věří v pořádek a ochranu posádky. Saffi slouží z vděčnosti, ale nehodlá bez rozkazu riskovat její život.
+Věří v pořádek a ochranu posádky. Zaffrai slouží z vděčnosti, ale nehodlá bez rozkazu riskovat její život.
 
 ## Taktika v boji
 Kolo 1 zaujme místo u kormidla nebo vedle Nemy; pak Sap útoky oslabuje obránce a Protection používá proti zásahům spojenců. Breath Weapon šetří na skupinu u zábradlí. Při třetině ztrát kryje ústup k lodi.

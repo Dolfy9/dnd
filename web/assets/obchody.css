@@ -12,6 +12,7 @@
 .obchod-page table { display: table; width: 100%; }
 .obchod-editor { margin-top: 1rem; padding: .8rem; border: 1px solid var(--md-accent-fg-color); border-radius: .5rem; }
 .obchod-edit-row { display: grid; grid-template-columns: 1.4fr 1.2fr .7fr .7fr 1fr 1.5fr auto; gap: .3rem; margin: .35rem 0; }
+.obchod-edit-row-service { grid-template-columns: 2fr 1fr 1fr 2fr auto; }
 .obchod-edit-row input { min-width: 0; padding: .3rem; }
 .obchod-editor button { margin: .25rem; }
 @media(max-width:800px) { .obchody-controls { grid-template-columns: 1fr 1fr; } .obchody-controls input { grid-column: 1/-1; } .obchod-edit-row { grid-template-columns: 1fr 1fr; } }

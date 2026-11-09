@@ -128,6 +128,11 @@ if __name__ == "__main__":
     meta = {}
     for arch, jm in JMENA.items():
         meta.update(rez(arch, jm.split()))
+    for name in ("sopka",):
+        image = cv2.imread(str(OUT / f"{name}.webp"), cv2.IMREAD_UNCHANGED)
+        if image is None:
+            raise FileNotFoundError(OUT / f"{name}.webp")
+        meta[name] = {"w": image.shape[1], "h": image.shape[0]}
     (OUT / "sprity.json").write_text(json.dumps(meta, ensure_ascii=False, separators=(",", ":")), encoding="utf-8")
     (OUT / "sprity.js").write_text("window.SVET_SPRITY_META=" + json.dumps(meta, separators=(",", ":")) + ";\n", encoding="utf-8")
     print(len(meta), "spritů")

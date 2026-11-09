@@ -42,7 +42,7 @@ postava:
     - {nazev: Second Wind, text: Obnoví si 1d10 + 4 HP jednou za Short Rest.}
     reakce:
     - {nazev: Protection, text: Se štítem znevýhodní útok na sousedního strážného.}
-    taktika: Kolo 1 drží bránu a nutí útočníky zpět; pak chrání Edrika a využije Action Surge proti tomu, kdo prolomí formaci. Při třetině ztrát ustoupí do vnitřní brány, ale nikdy ji nenechá bez stráže.
+    taktika: Kolo 1 drží bránu a nutí útočníky zpět; pak chrání Ederhana a využije Action Surge proti tomu, kdo prolomí formaci. Při třetině ztrát ustoupí do vnitřní brány, ale nikdy ji nenechá bez stráže.
 ---
 # Postava: Vorek Hald
 

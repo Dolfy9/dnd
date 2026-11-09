@@ -1,7 +1,7 @@
 ---
 postava:
-  jmeno: Babka Mlžena
-  titul: Rákosová čarodějka pirátů z Amiru
+  jmeno: Velmora Ishtane
+  titul: čarodějka pirátů z Amiru pirátů z Amiru
   druh: Human
   pozadi: Hermit
   zarovnani: Neutral
@@ -47,7 +47,7 @@ postava:
     reakce: []
     taktika: Kolo 1 sesílá Entangle na úzký přístup; poté kryje posádku plamenem nebo Fog Cloud. Léčení šetří na kapitánku. Při polovině ztrát se stáhne do mlhy; vzdá se, pokud posádka složí zbraně.
 ---
-# Postava: Babka Mlžena
+# Postava: Velmora Ishtane
 
 > **Stav:** návrh
 
@@ -67,11 +67,11 @@ Kolo 1 sesílá Entangle na cestu přes most či vor; pak podle situace přivol�
 2 GP, svazek sušených bylin, Herbalism Kit a hůl s drobnými kostmi navlečenými na provázku.
 
 ## Háčky pro družinu
-- Mlžena nabízí bezpečné provedení rákosinami výměnou za jednu noc strávenou na ostrově.
+- Ishtane nabízí bezpečné provedení rákosinami výměnou za jednu noc strávenou na ostrově.
 - Tvrdí, že z hlubin přichází hlas, který zná jména živých.
 
 ## Pro DM (tajné)
-- Návrh: Babka sbírá úlomky hlasů z potopené věže a některé z nich patří lidem, kteří stále žijí.
+- Návrh: Velmora sbírá úlomky hlasů z potopené věže a některé z nich patří lidem, kteří stále žijí.
 
 ## Související
 - Frakce: [Piráti z Amiru](../../../05_Frakce/Pirati_z_Amiru.md)

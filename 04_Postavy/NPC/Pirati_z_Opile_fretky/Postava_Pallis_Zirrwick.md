@@ -1,6 +1,6 @@
 ---
 postava:
-  jmeno: Pálenka Šroubková
+  jmeno: Pallis Zirrwick
   titul: Bombardýrka Opilé fretky
   druh: Gnome
   druh_volby: Rock Gnome
@@ -48,7 +48,7 @@ postava:
     - {nazev: Shield, text: Zvedne magickou ochranu proti zásahu.}
     taktika: Kolo 1 vypálí Shatter jen tehdy, když neohrozí vlastní posádku; pak přechází na Fire Bolt. Shield šetří na zásah, který by ji vyřadil. Při třetině ztrát prchá s knihou a baňkami.
 ---
-# Postava: Pálenka Šroubková
+# Postava: Pallis Zirrwick
 
 > **Stav:** návrh
 
@@ -68,10 +68,10 @@ Kolo 1 použije Shatter proti skupině nebo Fire Bolt na jednotlivce. Shield dr�
 14 GP, spellbook, tři baňky alchemist’s fire, mosazné brýle a hrst měděných součástek.
 
 ## Háčky pro družinu
-- Pálenka nabídne opravu předmětu, pokud ji družina doprovodí do dílny v Menkantu.
+- Pallis nabídne opravu předmětu, pokud ji družina doprovodí do dílny v Menkantu.
 
 ## Pro DM (tajné)
-- Návrh: Jedna z baněk syčí i bez plamene; Pálenka netuší, odkud pochází její obsah.
+- Návrh: Jedna z baněk syčí i bez plamene; Pallis netuší, odkud pochází její obsah.
 
 ## Související
 - Frakce: [Piráti z Opilé fretky](../../../05_Frakce/Pirati_z_Opile_fretky.md)

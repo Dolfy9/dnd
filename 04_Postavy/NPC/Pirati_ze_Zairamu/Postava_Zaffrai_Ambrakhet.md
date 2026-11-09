@@ -1,6 +1,6 @@
 ---
 postava:
-  jmeno: Saffi Ambrová
+  jmeno: Zaffrai Ambrakhet
   titul: Kapitánka pirátů ze Zairamu
   druh: Tiefling
   druh_volby: Infernal legacy
@@ -44,7 +44,7 @@ postava:
     - {nazev: Riposte, text: Po minutém útoku odpoví útokem, pokud má Superiority Die.}
     taktika: Kolo 1 uzavírá vzdálenost a rozdává dva útoky s Vex; další kola používá maneuvers a kryt posádky. Když padne třetina pirátů, stáhne se k lodi; její loajalita končí, když je Hořký granát v bezpečí.
 ---
-# Postava: Saffi Ambrová
+# Postava: Zaffrai Ambrakhet
 
 > **Stav:** návrh
 
@@ -64,10 +64,10 @@ Kolo 1 vstoupí do dosahu nejsilnějšího protivníka a rozdá dva rapírové �
 35 GP, kapitánská šerpa, mapa obilných tras a uzamčený balíček pašovaných léčivých rostlin.
 
 ## Háčky pro družinu
-- Saffi nabízí odměnu za bezpečný doprovod jedné zásilky, ale tají jejího příjemce.
+- Zaffrai nabízí odměnu za bezpečný doprovod jedné zásilky, ale tají jejího příjemce.
 
 ## Pro DM (tajné)
-- Návrh: Zásilka obsahuje sazenici, která podle Saffi reaguje na zvuk staré věže.
+- Návrh: Zásilka obsahuje sazenici, která podle Zaffrai reaguje na zvuk staré věže.
 
 ## Související
 - Frakce: [Piráti ze Zairamu](../../../05_Frakce/Pirati_ze_Zairamu.md)

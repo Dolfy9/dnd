@@ -143,9 +143,9 @@
  },
  {
   "typ": "kop_aram",
-  "x": 1060,
-  "y": 748,
-  "m": 0.78,
+  "x": 1065,
+  "y": 765,
+  "m": 0.52,
   "pozn": "Kop Aram – staré věže a obnovené obchodní město na ostrově (kresba DM)"
  },
  {
@@ -659,5 +659,20 @@
   "m": 0.7,
   "rot": 6,
   "pozn": "vlny severně od Nölienu (kresba DM)"
- }
+ },
+
+  {
+   "typ": "sopka",
+   "x": 1085,
+   "y": 275,
+   "m": 1,
+   "pozn": "sopka v moři severně od Nölienu (kresba DM)"
+  },
+  {
+   "typ": "sopka",
+   "x": 1170,
+   "y": 280,
+   "m": 1,
+   "pozn": "sopka v moři severně od Nölienu (kresba DM)"
+  }
 ]

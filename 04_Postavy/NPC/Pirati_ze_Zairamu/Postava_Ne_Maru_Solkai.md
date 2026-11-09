@@ -1,6 +1,6 @@
 ---
 postava:
-  jmeno: Nema Solná
+  jmeno: Ne-Maru Solkai
   titul: Bouřná čarodějka pirátů ze Zairamu
   druh: Human
   druh_volby: Draconic blue lineage (Lightning)
@@ -47,9 +47,9 @@ postava:
     bonusove_akce:
     - {nazev: Misty Step, text: Přeskočí přes palubu nebo mezi překážky.}
     reakce: []
-    taktika: Kolo 1 použije Shatter jen proti sevřené skupině, jinak Shocking Grasp; pak brání Saffi a šetří Sorcery Points. Při třetině ztrát se teleportuje na bezpečnou stranu lodi a kryje ústup.
+    taktika: Kolo 1 použije Shatter jen proti sevřené skupině, jinak Shocking Grasp; pak brání Zaffrai a šetří Sorcery Points. Při třetině ztrát se teleportuje na bezpečnou stranu lodi a kryje ústup.
 ---
-# Postava: Nema Solná
+# Postava: Ne-Maru Solkai
 
 > **Stav:** návrh
 
@@ -63,16 +63,16 @@ Mladá lidská čarodějka má bledou pleť s jemnými modrými šupinami na lí
 Chce zjistit, odkud pochází hlas, který se ozývá v bouřkách nad Zairamem. Posádku vnímá jako ochranu i jako pozorovací stanoviště.
 
 ## Taktika v boji
-Kolo 1 použije Shatter jen na skupinu, jinak se přiblíží Shocking Graspem a stáhne se za Orva. Misty Step šetří na nebezpečný okraj paluby. Při třetině ztrát opouští první loď a kryje Saffiin ústup.
+Kolo 1 použije Shatter jen na skupinu, jinak se přiblíží Shocking Graspem a stáhne se za Orgvaka. Misty Step šetří na nebezpečný okraj paluby. Při třetině ztrát opouští první loď a kryje ústup Zaffrai.
 
 ## Kořist
 16 GP, stříbrné prsteny, modrý skleněný amulet a hrst krystalické soli.
 
 ## Háčky pro družinu
-- Nema zaplatí za úlomek, který při bouři zůstává studený.
+- Ne-Maru zaplatí za úlomek, který při bouři zůstává studený.
 
 ## Pro DM (tajné)
-- Návrh: Nema neví, zda je její dračí původ rodový, nebo zda jej v ní probudila jedna z pašovaných rostlin.
+- Návrh: Ne-Maru neví, zda je její dračí původ rodový, nebo zda jej v ní probudila jedna z pašovaných rostlin.
 
 ## Související
 - Frakce: [Piráti ze Zairamu](../../../05_Frakce/Pirati_ze_Zairamu.md)

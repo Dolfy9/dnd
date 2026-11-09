@@ -248,18 +248,49 @@
    }
   },
   {
+   "nazev": "Imonir",
+   "x": 926,
+   "y": 298,
+   "typ": "zeme",
+   "jistota": "kanon",
+   "odkaz": "02_Zeme/Kralovstvi_Imonir.md",
+   "pozn": "Celý hlavní ostrov severně od Nölienu a okolní neobsazené ostrůvky.",
+   "popisek": {"rot": 0, "styl": "zeme"}
+  },
+  {
+   "nazev": "Banerbo",
+   "x": 1485,
+   "y": 388,
+   "typ": "zeme",
+   "jistota": "kanon",
+   "odkaz": "02_Zeme/Banerbo.md",
+   "pozn": "Souostroví Synů vln severně od Khearazu a Mönohenu.",
+   "popisek": {"rot": 0, "styl": "zeme"}
+  },
+  {
+   "nazev": "Imatoma",
+   "x": 1733,
+   "y": 823,
+   "typ": "zeme",
+   "jistota": "kanon",
+   "odkaz": "02_Zeme/Imatoma.md",
+   "pozn": "Ostrovní země východně od Knärghe Zhie.",
+   "popisek": {"rot": 0, "styl": "zeme"}
+  },
+  {
    "nazev": "Werenor",
    "x": 894,
    "y": 770,
    "typ": "mesto",
+   "hlavni_mesto": true,
    "jistota": "kanon",
    "odkaz": "03_Mesta/Mesto_Werenor.md",
    "pozn": "Svobodné město na západním břehu jezera Amir v Bririi, u mostu do Kop Aramu (DM)."
   },
   {
    "nazev": "Kop Aram",
-   "x": 1060,
-   "y": 730,
+   "x": 1065,
+   "y": 765,
    "typ": "mesto",
    "jistota": "kanon",
    "odkaz": "03_Mesta/Mesto_Kop_Aram.md",
@@ -267,8 +298,8 @@
   },
   {
    "nazev": "Most Kop Aramu",
-   "x": 950,
-   "y": 808,
+   "x": 975,
+   "y": 792,
    "typ": "misto",
    "jistota": "kanon",
    "odkaz": "01_Svet/Mista/Jezero_Amir_a_Kop_Aram.md",
@@ -311,6 +342,7 @@
    "x": 920,
    "y": 485,
    "typ": "mesto",
+   "hlavni_mesto": true,
    "jistota": "odhad",
    "odkaz": "03_Mesta/Mesto_Tel_Palentin.md",
    "pozn": "Město s budovami a přístavem (kotva) na severu – hlavní město Nölienu?"
@@ -338,6 +370,7 @@
    "x": 1652,
    "y": 733,
    "typ": "mesto",
+   "hlavni_mesto": true,
    "jistota": "odhad",
    "odkaz": "03_Mesta/Mesto_Miria.md",
    "pozn": "Přístav s domy u ústí průlivu."
@@ -347,6 +380,7 @@
    "x": 1075,
    "y": 975,
    "typ": "mesto",
+   "hlavni_mesto": true,
    "jistota": "odhad",
    "odkaz": "03_Mesta/Pevnost_Orden.md",
    "pozn": "Budovy pevnosti nad hradbou."
@@ -356,6 +390,7 @@
    "x": 1535,
    "y": 1103,
    "typ": "mesto",
+   "hlavni_mesto": true,
    "jistota": "odhad",
    "odkaz": "03_Mesta/Mesto_Pertam.md",
    "pozn": "Hlavní sídlo Zairamu."
@@ -365,6 +400,7 @@
    "x": 1060,
    "y": 1327,
    "typ": "mesto",
+   "hlavni_mesto": true,
    "jistota": "odhad",
    "odkaz": "03_Mesta/Mesto_Menkant.md",
    "pozn": "Sídlo na největším z Jižních ostrovů."
@@ -374,6 +410,7 @@
    "x": 523,
    "y": 846,
    "typ": "mesto",
+   "hlavni_mesto": true,
    "jistota": "odhad",
    "odkaz": "03_Mesta/Mesto_Mictima.md",
    "pozn": "Velké sídlo na hranici Divokého Severu a Nöetu."
@@ -383,6 +420,7 @@
    "x": 1720,
    "y": 380,
    "typ": "mesto",
+   "hlavni_mesto": true,
    "jistota": "odhad",
    "odkaz": "03_Mesta/Mesto_Yotter.md",
    "pozn": "Velké sídlo s domy na severním pobřeží Mönohenu."
@@ -712,13 +750,14 @@
    "pozn": "Kroužek na mapě DM – jméno zatím nepřiřazeno."
   },
   {
-   "nazev": "Sídlo (bez jména)",
+   "nazev": "Wortmir",
    "x": 1145,
    "y": 832,
-   "typ": "sidlo",
-   "jistota": "mapa",
-   "odkaz": "11_Mapy/Analyza_mapy.md",
-   "pozn": "Kroužek na mapě DM – jméno zatím nepřiřazeno."
+   "typ": "mesto",
+   "hlavni_mesto": true,
+   "jistota": "odhad",
+   "odkaz": "03_Mesta/Mesto_Wortmir.md",
+   "pozn": "Velký kruh západně od popisku KHÄRGHE ZHIA; poloha odhadem."
   },
   {
    "nazev": "Sídlo (bez jména)",

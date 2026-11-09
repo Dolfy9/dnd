@@ -1,6 +1,6 @@
 ---
 postava:
-  jmeno: Bartoloměj Kroupa
+  jmeno: Varthel Krosk
   titul: Kapitán Opilé fretky
   druh: Human
   pozadi: Entertainer
@@ -50,7 +50,7 @@ postava:
     - {nazev: Combat Inspiration, text: Udělí spojenci inspiraci pro útok nebo obranu.}
     taktika: Kolo 1 zahraje krátký akord a použije Shatter jen na skupinu; jinak vede abordáž rapírem. Další kola podporuje posádku bardickou inspirací a léčbou. Když padne třetina posádky, vyjednává a hledá cestu ke člunu.
 ---
-# Postava: Bartoloměj Kroupa
+# Postava: Varthel Krosk
 
 > **Stav:** návrh
 
@@ -70,7 +70,7 @@ Kolo 1 podporuje abordáž Shatterem nebo rapírem; pak inspiruje spojence a lé
 24 GP, otlučená mandolína, vinný prsten a několik neoznačených lahví.
 
 ## Háčky pro družinu
-- Kroupa zná tajný vchod do jeskyní, ale chce za něj uspořádat společnou oslavu.
+- Krosk zná tajný vchod do jeskyní, ale chce za něj uspořádat společnou oslavu.
 
 ## Pro DM (tajné)
 - Návrh: Bílá fretka se vždy vrací k místu, kde je ukrytá pašovaná zásilka.

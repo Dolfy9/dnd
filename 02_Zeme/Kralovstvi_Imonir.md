@@ -7,6 +7,7 @@
 
 ## Popis
 Lesní království firbolgů a přírodních bytostí. Pod vedením krále Istuviona žije v plném splynutí s přírodou a hvozdem.
+Imoniru náleží celý hlavní ostrov severně od Nölienu, na němž leží území u démona, i okolní malé ostrovy v severním moři západně od sopečné oblasti.
 
 ## Heraldika
 

@@ -1,6 +1,6 @@
 ---
 postava:
-  jmeno: Hromotluk
+  jmeno: Kurrath Ozgunzi
   titul: Pěst Opilé fretky
   druh: Goliath
   druh_volby: Stone Giant ancestry
@@ -41,7 +41,7 @@ postava:
     - {nazev: Deflect Attacks, text: Zmenší zranění zasažením na blízko nebo z dálky.}
     taktika: Kolo 1 pronikne do středu rvačky a Flurry použije na vůdce; pak shazuje protivníky z lávek a odrazuje je od Pálenky. Když padne třetina posádky, odvádí pronásledovatele na sebe a ustupuje poslední.
 ---
-# Postava: Hromotluk
+# Postava: Kurrath Ozgunzi
 
 > **Stav:** návrh
 
@@ -61,7 +61,7 @@ Kolo 1 se přiblíží a použije Flurry of Blows s Open Hand Technique; pak odr
 4 GP, omotané rukavice, námořnická šerpa a dlužní úpis za několik převrácených stolů.
 
 ## Háčky pro družinu
-- Hromotluk může být ochotný odklonit se od boje, pokud družina ochrání přístavní krčmu.
+- Kurrath Ozgunzi může být ochotný odklonit se od boje, pokud družina ochrání přístavní krčmu.
 
 ## Pro DM (tajné)
 - Návrh: Když se přestane usmívat, slyší z útrob přístavu rytmus starého kamene.

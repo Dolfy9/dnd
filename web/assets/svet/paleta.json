@@ -118,13 +118,18 @@
     "state_size_max": 18,
     "state_zoom_gain": 1.5,
     "state_tracking": 1.1,
-    "city_min_zoom": 0.25
+    "city_min_zoom": -1.5
   },
   "state_tints": [
     "#87945f", "#7f9468", "#929b68", "#82966d", "#9ba473",
     "#7c926b", "#929663", "#849a72", "#99a16b", "#819468",
     "#96a06e", "#7e9475", "#9aa36b", "#86986f", "#909b63"
   ],
+  "state_colors": {
+    "Imonir": "#4f8359",
+    "Banerbo": "#4d7b9a",
+    "Imatoma": "#a76e49"
+  },
   "grade": {
     "parchment": "#efe0bd",
     "multiply_opacity": 0.17,

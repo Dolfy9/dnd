@@ -1,6 +1,6 @@
 ---
 postava:
-  jmeno: Mirta „Rákos“ Velská
+  jmeno: Myrtaia Velossa
   titul: Kapitánka pirátů z Amiru
   druh: Human
   pozadi: Sailor
@@ -43,7 +43,7 @@ postava:
     reakce: []
     taktika: Kolo 1 hledá nejsilnějšího protivníka a váže ho rapírem; další kola využívá Vex a kryt posádky. Při polovině padlých pirátů nabízí ústup výměnou za kořist, jinak mizí v mlze.
 ---
-# Postava: Mirta „Rákos“ Velská
+# Postava: Myrtaia Velossa
 
 > **Stav:** návrh
 
@@ -63,11 +63,11 @@ V prvním kole vybere největší hrozbu a zaútočí rapírem; Vex využije k v
 12 GP, stříbrný prsten s rákosovým motivem, dvě šarže ručních šipek a vodou nasáklý útržek mapy.
 
 ## Háčky pro družinu
-- Mirta nabízí výměnu ukradené mapy za bezpečnou cestu přes rákosiny.
+- Myrtaia nabízí výměnu ukradené mapy za bezpečnou cestu přes rákosiny.
 - Tvrdí, že z potopené věže slyšela odpovídat zvon.
 
 ## Pro DM (tajné)
-- Návrh: Mirta tají, že jeden z člunů posádky převáží nalezenou destičku Stavitelů.
+- Návrh: Myrtaia tají, že jeden z člunů posádky převáží nalezenou destičku Stavitelů.
 
 ## Související
 - Frakce: [Piráti z Amiru](../../../05_Frakce/Pirati_z_Amiru.md)
