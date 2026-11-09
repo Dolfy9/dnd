@@ -55,7 +55,7 @@
       + (person.titul ? "<small>" + esc(person.titul) + "</small>" : "")
       + '<small class="postavy-meta">' + esc(person.kategorie) + (person.druh ? " · " + esc(person.druh) : "")
       + (person.tridy ? " · " + esc(person.tridy) : "") + (person.uroven ? " · úroveň " + esc(person.uroven) : "") + "</small></span></a>"
-      + '<div class="postavy-card-chips">' + relatedChips(person) + "</div>"
+      + '<div class="postavy-card-chips">' + (person.druh ? '<button type="button" class="postavy-chip" data-species="' + esc(person.druh) + '">' + esc(person.druh) + '</button>' : "") + relatedChips(person) + "</div>"
       + (person.perex ? '<p class="postavy-perex">' + esc(person.perex) + "</p>" : "")
       + "</article>";
   }
@@ -286,7 +286,7 @@
         : '<div class="postavy-modal-initial">' + esc((person.jmeno || "?").slice(0, 1)) + "</div>")
       + '<div><p class="postavy-modal-category">' + esc(person.kategorie) + "</p><h2>" + esc(person.jmeno) + "</h2>"
       + (person.titul ? "<p>" + esc(person.titul) + "</p>" : "")
-      + (person.druh || person.tridy ? '<p class="postavy-modal-class">' + (person.druh ? esc(person.druh) + " · " : "") + esc(person.tridy || "Bez povolání") + "</p>" : "")
+      + (person.druh || person.tridy ? '<p class="postavy-modal-class">' + (person.druh ? '<button type="button" data-species="' + esc(person.druh) + '">' + esc(person.druh) + '</button> · ' : "") + esc(person.tridy || "Bez povolání") + "</p>" : "")
       + '<div class="postavy-modal-vitals"><span>AC <b data-stat="ac">—</b></span><span>HP <b data-stat="hp">—</b></span>'
       + '<span>Speed <b data-stat="speed">—</b></span><span>Úroveň / CR <b data-stat="level">—</b></span></div></div></div>'
       + '<div class="postavy-modal-attrs">' + attributes.map(function (key) {

@@ -1,0 +1,25 @@
+#druhy-katalog { margin: 1rem 0 2rem; }
+.druhy-search { width: 100%; padding: .7rem; margin-bottom: .7rem; }
+.druhy-filters { display: flex; gap: .5rem; flex-wrap: wrap; margin-bottom: 1rem; }
+.druhy-filters select { min-width: 9rem; padding: .45rem; }
+.druhy-grid { display: grid; grid-template-columns: repeat(auto-fill,minmax(190px,1fr)); gap: 1rem; }
+.druh-card { border: 1px solid var(--md-default-fg-color--lightest); border-radius: .5rem; padding: .7rem; display: grid; gap: .35rem; }
+.druh-card-open { border: 0; background: transparent; text-align: left; cursor: pointer; padding: 0; color: inherit; font: inherit; }
+.druh-card img { width: 100%; aspect-ratio: 2/3; object-fit: cover; border-radius: .3rem; }
+.druh-card-image-placeholder { display: grid; place-items: center; aspect-ratio: 2/3; border-radius: .3rem; background: var(--md-code-bg-color); color: var(--md-default-fg-color--light); font-size: .85rem; text-align: center; }
+.druh-legacy { display: inline-block; color: #7b4d00; background: #fff0c2; border-radius: .3rem; padding: .1rem .35rem; }
+.druh-dialog { position: fixed; inset: 0; z-index: 10000; background: #0009; display: grid; place-items: center; padding: 1rem; }
+.druh-dialog section { background: var(--md-default-bg-color); color: var(--md-default-fg-color); width: min(48rem,100%); max-height: 90vh; overflow: auto; padding: 1.2rem; border-radius: .5rem; position: relative; }
+.druh-modal-overview { display: grid; grid-template-columns: 9rem minmax(0, 1fr); gap: 1rem; align-items: start; }
+.druh-modal-image { display: block; width: 100%; aspect-ratio: 2/3; object-fit: cover; border-radius: .3rem; }
+.druh-modal-overview h2 { margin-top: 0; }
+.druh-close { float: right; font-size: 1.5rem; border: 0; background: transparent; cursor: pointer; }
+.druh-modal-traits { max-height: 45vh; overflow: auto; margin: 1rem 0; }
+.druh-hero img { display: block; max-height: 32rem; max-width: 100%; margin: 1rem auto; object-fit: contain; }
+.druh-hero[hidden] { display: none; }
+.druhy-related { margin-top: 2rem; }
+[data-species] { cursor: pointer; }
+@media (max-width: 600px) {
+  .druh-modal-overview { grid-template-columns: minmax(0, 1fr); }
+  .druh-modal-image { width: min(11rem, 100%); }
+}

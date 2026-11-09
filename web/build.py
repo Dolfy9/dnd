@@ -400,7 +400,7 @@ def main():
     for d in sorted(p for p in ROOT.iterdir() if p.is_dir() and p.name not in SKIP and not p.name.startswith(".")):
         os.symlink(os.path.relpath(d, DOCS), DOCS / d.name)
         items = nav_for(d, d.name)
-        if items:
+        if items and d.name != "13_Druhy":
             sections.append({NAMES.get(d.name, d.name): items})
     for f in ["README.md", "Otevrene_otazky.md", "AGENTS.md"]:
         os.symlink(os.path.relpath(ROOT / f, DOCS), DOCS / f)
@@ -408,12 +408,24 @@ def main():
     (DOCS / "mapa.md").write_text(map_page(), encoding="utf-8")
     (DOCS / "bestiar.md").write_text("---\nhide:\n  - toc\n---\n# Bestiář (SRD 5.2.1)\n\nNetvoři ze SRD 5.2.1 se statbloky. Filtruj podle typu a CR, klikni pro statblok. Obsah SRD 5.2.1 je pod licencí CC-BY 4.0.\n\n<div class=\"srd-katalog\" data-typ=\"bestiar\"></div>\n", encoding="utf-8")
     (DOCS / "postavy.md").write_text("---\nhide:\n  - toc\n  - navigation\n---\n# Katalog postav\n\nPostavy, jejich vazby a štítky pro přípravu hry. Vyhledávej, filtruj nebo otevři kartu postavy.\n\n<div id=\"postavy-katalog\"></div>\n", encoding="utf-8")
+    (DOCS / "druhy.md").write_text("---\nhide:\n  - toc\n  - navigation\n---\n# Katalog druhů\n\nVyhledej druh podle názvu a filtruj podle zdroje, edice, velikosti, typu či rychlosti.\n\n<div id=\"druhy-katalog\"></div>\n", encoding="utf-8")
     (DOCS / "obchody.md").write_text("---\nhide:\n  - toc\n  - navigation\n---\n# Obchody\n\nKatalog obchodů a jejich nabídek.\n\n<div id=\"obchody-katalog\"></div>\n", encoding="utf-8")
     (DOCS / "predmety.md").write_text("---\nhide:\n  - toc\n---\n# Předměty a výbava (SRD 5.2.1)\n\nZbraně, zbroje, výbava a kouzelné předměty. Obsah SRD 5.2.1 je pod licencí CC-BY 4.0.\n\n<div class=\"srd-katalog\" data-typ=\"predmety\"></div>\n", encoding="utf-8")
     (DOCS / "glosar.md").write_text("---\nhide:\n  - toc\n---\n# Glosář pravidel (SRD 5.2.1)\n\nDefinice pravidel 2024 (stavy, akce, pojmy). Obsah SRD 5.2.1 je pod licencí CC-BY 4.0.\n\n<div class=\"srd-katalog\" data-typ=\"glosar\"></div>\n", encoding="utf-8")
     (DOCS / "boj.md").write_text("---\nhide:\n  - toc\n  - navigation\n---\n# Bojový modul\n\nBojové mapy s mřížkou (1 pole = 5 ft), žetony postav a netvorů, iniciativa a bojový pomocník podle pravidel 2024.\n\n<div id=\"boj-app\"></div>\n", encoding="utf-8")
     boj_index()
     postavy_index()
+    species = json.loads((WEB / "assets/pravidla2024.json").read_text(encoding="utf-8"))["druhy"]
+    species_index = []
+    for name, value in species.items():
+        stem = "Druh_" + re.sub(r"[^A-Za-z0-9]+", "_", name).strip("_")
+        species_index.append({"nazev": name, "stem": stem, "stranka": f"13_Druhy/{stem}.md",
+                              "legacy": bool(value.get("legacy")), "alternativa_2024": value.get("alternativa_2024", "—"),
+                              "zdroj": value.get("zdroj", "neověřeno"), "velikost": value.get("velikost", "neověřeno"),
+                              "rychlost": value.get("rychlost", "neověřeno"), "typ": value.get("typ", "neověřeno"),
+                              "rysy": value.get("rysy", {}), "overeno": value.get("overeno", []),
+                              "obrazek": (ROOT / "13_Druhy" / "obrazky" / (stem + ".webp")).is_file()})
+    (DOCS / "druhy_index.json").write_text(json.dumps(species_index, ensure_ascii=False), encoding="utf-8")
     obchody_index()
     heraldika_index()
     boje.write_index(DOCS)
@@ -429,6 +441,8 @@ def main():
 
     import pravidla_pages
     P = pravidla_pages.build(DOCS)
+    P[0]["Příručka hráče"].insert(1, {"Katalog druhů": "druhy.md"})
+    NAV_INDEX["/druhy/"] = "Katalog druhů species druhy"
     byname = {list(x)[0]: x for x in sections}
     visible_sections = {"Svět", "Země", "Města", "Obchody", "Postavy", "Frakce", "Knihy a dokumenty",
                         "Mapy", "Kampaně", "Questy", "Hádanky", "Sezení"}
@@ -521,6 +535,7 @@ extra_css:
   - assets/navigation.css
   - assets/postava.css
   - assets/postavy.css
+  - assets/druhy.css
   - assets/heraldika.css
   - assets/boj.css
   - assets/obchody.css
@@ -532,6 +547,7 @@ extra_javascript:
   - assets/pravidla_engine.js
   - assets/postava.js
   - assets/postavy.js
+  - assets/druhy.js
   - assets/heraldika.js
   - assets/kouzla.js
   - assets/srd.js

@@ -37,6 +37,7 @@ def homepage_tiles(root):
         ("mesta", "Města", "mesta/", pages("03_Mesta"), "Sídla, přístavy a pevnosti."),
         ("obchody", "Obchody", "obchody/", pages("12_Obchody"), "Obchody, služby a jejich nabídky."),
         ("postavy", "Postavy", "postavy/", pages("04_Postavy"), "Najdi postavu podle jména a vazeb."),
+        ("druhy", "Druhy", "druhy/", len(json.loads((root / "web/assets/pravidla2024.json").read_text(encoding="utf-8"))["druhy"]), "Prohlédni druhy a jejich pravidla."),
         ("frakce", "Frakce", "frakce/", pages("05_Frakce"), "Řády, odboj a další mocenské skupiny."),
         ("kampane", "Kampaně", "kampane/", pages("07_Kampane"), "Příběhové oblouky a jejich záznamy."),
         ("questy", "Questy", "questy/", pages("08_Questy"), "Dobrodružství a úkoly."),

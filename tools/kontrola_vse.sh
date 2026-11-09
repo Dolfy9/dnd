@@ -12,6 +12,7 @@ for p in list(pathlib.Path('web/assets').rglob('*.json')) + list(pathlib.Path('1
     try: json.loads(p.read_text(encoding='utf-8'))
     except Exception as e: bad.append(f'{p}: {e}')
 print('\n'.join(bad)); sys.exit(1 if bad else 0)"
+krok "pokrytí stránek druhů" python3 tools/kontrola_druhy.py
 krok "bojové mapy (rozměry, obrázky)" python3 -c "
 import json, pathlib, sys
 d = json.loads(pathlib.Path('11_Mapy/bojove_mapy.json').read_text(encoding='utf-8')); err = []

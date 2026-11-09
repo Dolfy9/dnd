@@ -29,6 +29,7 @@ Seznam věcí k rozhodnutí DM. Po rozhodnutí položku přesuň do sekce *Vyře
 
 ## Mechanika (D&D 2024)
 - Bohové: hratelné avatary CR 30, nebo jen orientační popis?
+- **Bariaur – nová pravidla:** Zdroje uvádějí vydání *D&D Beyond Drops* v listopadu 2026, tedy po aktuálním datu 11. září 2026. Mají být Bariaur a jeho 2024+ mechaniky v katalogu již nyní, nebo počkat na oficiální vydání? Životnost zatím vychází ze staršího *Planar Handbook*.
 
 ## Vyřešeno
 - **Pravidla (DM):** vše jen na systému 2024+, žádný legacy obsah. Všechny postavy převedeny (řádek *Převod na 2024*), species/subclassy/featy/kouzla ověřeny proti pravidlům 2024.
