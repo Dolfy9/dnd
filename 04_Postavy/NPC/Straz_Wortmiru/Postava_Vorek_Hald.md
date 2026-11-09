@@ -16,7 +16,7 @@ postava:
   dovednosti: [Athletics, Intimidation, Perception, Survival]
   featy:
   - {nazev: Defense, zdroj: Fighting Style (Fighter 1)}
-  - {nazev: Alert, zdroj: Background (Guard)}
+  - {nazev: Alert, zdroj: Pozadí (Guard)}
   - {nazev: Ability Score Improvement, zdroj: Fighter 4}
   zbroj: {nazev: Splint Armor, typ: heavy, zakladni_ac: 17, stit: true}
   utoky:

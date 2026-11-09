@@ -10,13 +10,14 @@ postava:
   zeme: [02_Zeme/Kralovstvi_Kharghae_Zia.md]
   stitky: [stráž, boj, pro úroveň 3, Wortmir, kouzelník]
   tridy:
-  - {trida: Warlock, uroven: 3, podtrida: Fiend}
+  - {trida: Warlock, uroven: 3, podtrida: Fiend Patron}
   atributy: {STR: 13, DEX: 14, CON: 15, INT: 8, WIS: 10, CHA: 15}
   puvod_atributu: Standard Array; Soldier +2 CON, +1 STR.
-  dovednosti: [Arcana, Deception, Intimidation, Perception]
+  dovednosti: [Arcana, Deception, Intimidation, Perception, Athletics, Nature, Investigation, Religion, Persuasion]
   featy:
-  - {nazev: Pact of the Blade, zdroj: Eldritch Invocation}
-  - {nazev: Savage Attacker, zdroj: Background (Soldier)}
+  - {nazev: Savage Attacker, zdroj: Pozadí (Soldier)}
+  - {nazev: Skilled, zdroj: Human – Versatile}
+  invokace: [Pact of the Blade]
   zbroj: {nazev: Chain Shirt, typ: medium, zakladni_ac: 13}
   utoky:
   - {nazev: Pact Longsword, atribut: CHA, kostka: 1d8, typ: Slashing, mastery: Sap}
@@ -37,7 +38,7 @@ postava:
     idealy: Smlouva je silnější než krev.
     pouta: Wortmir nesmí padnout, dokud je dohoda platná.
     vady: Považuje vlastní bolest za důkaz, že vše funguje správně.
-  prevod_2024: Fiend získává subclass na 3. úrovni; Pact of the Blade je eldritch invocation podle 2024.
+  prevod_2024: Fiend Patron získává subclass na 3. úrovni; Pact of the Blade je eldritch invocation, ne feat.
   boj:
     dpr: 15.5
     akce:

@@ -116,6 +116,7 @@ html[data-mont-theme] .md-typeset h1, html[data-mont-theme] .md-typeset h2 { col
 .ps-spell-bar { margin-bottom: 6px; } .sp-head { display: flex; flex-wrap: wrap; gap: 14px; font-size: .74rem; margin: 6px 0; } .sp-over { color: color-mix(in srgb, var(--red) 45%, var(--ink)); } .sp-full { color: color-mix(in srgb, var(--gold) 35%, var(--ink)); }
 .sp-rules { font-size: .68rem; color: var(--ink); margin: 2px 0 6px; } .sp-mode { font-size: .74rem; font-style: italic; color: var(--ink); } .sp-vzdy { font-size: .7rem; color: var(--ink); }
 .sp-tab td, .sp-tab th { padding: 2px 6px; font-size: .72rem; color: var(--ink); } .sp-tab tr.sp-on td { background: color-mix(in srgb, var(--gold) 15%, transparent); }
+.pv-informace { color: color-mix(in srgb, var(--blue, #3975a6) 65%, var(--ink)); } .p2-legacy { background: color-mix(in srgb, var(--gold) 22%, var(--card)); border: 1px solid color-mix(in srgb, var(--gold) 55%, var(--line)); } .pf-legacy-note { display: block; margin: 3px 0 8px; color: color-mix(in srgb, var(--red) 55%, var(--ink)); font-size: .75rem; }
 /* ===== Statblok v duchu Monster Manualu 2024 ===== */
 .kz-modal:has(.sb2) { max-width: 780px; padding: 0; background: transparent; border: 0; box-shadow: none; }
 .sb2 { --sbr: #8b1e14; --sbbg: #fbf1dc; --sbink: #2a1a0c; background: var(--sbbg) radial-gradient(ellipse at top, #fffaf0, #f3e3bf); color: var(--sbink);

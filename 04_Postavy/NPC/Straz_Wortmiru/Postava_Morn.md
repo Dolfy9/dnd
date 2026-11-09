@@ -13,9 +13,10 @@ postava:
   - {trida: Rogue, uroven: 3, podtrida: Assassin}
   atributy: {STR: 8, DEX: 15, CON: 14, INT: 11, WIS: 14, CHA: 10}
   puvod_atributu: Point Buy (base STR 8, DEX 15, CON 14, INT 10, WIS 12, CHA 10); Guard +2 WIS, +1 INT.
-  dovednosti: [Acrobatics, Investigation, Perception, Sleight of Hand, Stealth]
+  dovednosti: [Acrobatics, Investigation, Perception, Sleight of Hand, Stealth, Athletics, Deception, Insight, Intimidation, Survival]
   featy:
-  - {nazev: Alert, zdroj: Background (Guard)}
+  - {nazev: Alert, zdroj: Pozadí (Guard)}
+  - {nazev: Skilled, zdroj: Human – Versatile}
   zbroj: {nazev: Studded Leather, typ: light, zakladni_ac: 12}
   utoky:
   - {nazev: Heavy Crossbow, atribut: DEX, kostka: 1d10, typ: Piercing, mastery: Slow, dosah: 100/400 ft}

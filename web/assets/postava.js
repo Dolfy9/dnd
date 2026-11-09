@@ -44,6 +44,11 @@
   function mod(s) { return Math.floor((Number(s) || 10) - 10) >> 1; }
   function sg(n) { return (n >= 0 ? "+" : "") + n; }
   function esc(s) { return String(s == null ? "" : s).replace(/[&<>"]/g, function (c) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]; }); }
+  function speciesSort(a, b) {
+    var al = !!(R.druhy[a] && R.druhy[a].legacy), bl = !!(R.druhy[b] && R.druhy[b].legacy);
+    return al === bl ? a.localeCompare(b) : al ? 1 : -1;
+  }
+  function speciesLabel(name) { return name + ((R.druhy[name] || {}).legacy ? " — legacy, kompatibilní" : ""); }
   function has(list, name) { return (list || []).some(function (f) { return (f.nazev || f) === name; }); }
   function para(t) { return esc(t).replace(/\n/g, "<br>"); }
   function sessionState(key) {
@@ -280,7 +285,7 @@
     h += '<div class="p2-top-main"><header class="p2-hero"><div class="p2-id"><div class="p2-identity-head"><div><h2 class="p2-name">' + esc(c.jmeno) + '</h2><div class="p2-title">' + esc(c.titul || "") + '</div></div>' + toolbar + '</div><div class="p2-chips">'
       + ((c.tridy || []).length ? (c.tridy || []).map(function (t) { return '<span class="p2-chip p2-class">' + esc(t.trida) + ' ' + t.uroven + (t.podtrida ? ' · ' + esc(t.podtrida) : '') + '</span>'; }).join("")
         : '<span class="p2-chip p2-class">' + esc(c.statblok ? "Bez povolání · " + c.statblok : "Bez povolání") + '</span>')
-      + '<span class="p2-chip">' + esc(c.druh || "—") + '</span><span class="p2-chip">' + esc(c.pozadi || "—") + '</span><span class="p2-chip">' + esc(c.zarovnani || "—") + '</span><span class="p2-chip">' + esc(c.velikost || "Medium") + '</span></div>'
+      + '<span class="p2-chip">' + esc(c.druh || "—") + '</span>' + (sp.legacy ? '<span class="p2-chip p2-legacy">legacy, kompatibilní</span>' : '') + '<span class="p2-chip">' + esc(c.pozadi || "—") + '</span><span class="p2-chip">' + esc(c.zarovnani || "—") + '</span><span class="p2-chip">' + esc(c.velikost || "Medium") + '</span></div>'
       + (d.exhaustion ? '<span class="p2-exhaust-warning">Exhaustion ' + d.exhaustion + ' · −' + d.exhaustPenalty + ' D20 · −' + (d.exhaustion * 5) + ' ft Speed' + (d.exhaustion === 6 ? ' · Death' : '') + '</span>' : '') + '</div>'
       + '<div class="p2-badges"><div class="p2-cr"><strong class="p2-cr-v" title="obrana CR ' + d.cr.def + ' · útok CR ' + d.cr.off + '">' + d.cr.cr + '</strong><span class="p2-cr-l">CR</span><small class="p2-cr-x">' + d.cr.xp + ' XP' + (bj.cr_rucne ? '<br>' + esc(bj.cr_rucne) : '') + '</small></div>' + inspirationHtml(key) + badgeXp + '</div></header>';
     // ---- životní hodnoty ----
@@ -339,7 +344,7 @@
       + card("Pozadí: " + esc(c.pozadi || "—"), bg.feat ? '<dl class="p2-dl"><dt>Atributy</dt><dd>' + esc(bg.atributy) + '</dd><dt>Origin feat</dt><dd>' + esc(bg.feat) + '</dd><dt>Dovednosti</dt><dd>' + esc(bg.dovednosti) + '</dd><dt>Nástroj</dt><dd>' + esc(bg.nastroj) + '</dd></dl>' : '<p>—</p>')
       + (c.puvod_atributu || c.prevod_2024 || c.poznamky ? card("Poznámky", (c.puvod_atributu ? '<p><b>Atributy:</b> ' + para(c.puvod_atributu) + '</p>' : '') + (c.prevod_2024 ? '<p><b>Převod na 2024:</b> ' + para(c.prevod_2024) + '</p>' : '') + (c.poznamky ? '<p>' + para(c.poznamky) + '</p>' : '')) : '') + '</div></div>']);
     var PV = window.MontelienPravidla ? window.MontelienPravidla.init(R).validate(c) : [];
-    tabs.push(["Kontrola" + (PV.some(function (x) { return x.typ === "chyba"; }) ? " ⚠" : PV.length ? " ·" : " ✓"), card("Kontrola pravidel 2024", PV.length ? '<ul class="pv-list">' + PV.map(function (x) { return '<li class="pv-' + x.typ + '">' + (x.typ === "chyba" ? "Chyba: " : "Upozornění: ") + esc(x.text) + '</li>'; }).join("") + '</ul>' : '<p class="pv-ok">Vše odpovídá pravidlům 2024: povolání, subclass, featy a jejich předpoklady, sloty ASI / Fighting Style / Epic Boon, atributy, dovednosti.</p>')
+    tabs.push(["Kontrola" + (PV.some(function (x) { return x.typ === "chyba"; }) ? " ⚠" : PV.length ? " ·" : " ✓"), card("Kontrola pravidel 2024", PV.length ? '<ul class="pv-list">' + PV.map(function (x) { return '<li class="pv-' + x.typ + '">' + (x.typ === "chyba" ? "Chyba: " : x.typ === "informace" ? "Informace: " : "Upozornění: ") + esc(x.text) + '</li>'; }).join("") + '</ul>' : '<p class="pv-ok">Vše odpovídá pravidlům 2024: povolání, subclass, featy a jejich předpoklady, sloty ASI / Fighting Style / Epic Boon, atributy, dovednosti.</p>')
       + card("Featy podle úrovní", window.MontelienPravidla ? '<ul>' + window.MontelienPravidla.featSlots(c).map(function (sl) { var f = (c.featy || []).filter(function (x) { return x.zdroj === sl.zdroj; })[0]; return '<li><b>' + esc(sl.zdroj) + ':</b> ' + (f ? esc(f.nazev) + (f.poznamka ? ' <small>(' + esc(f.poznamka) + ')</small>' : '') : '<i>nevybráno</i>') + '</li>'; }).join("") + '</ul>' : '')]);
     var ICO = { "Boj": "⚔", "Dovednosti": "◎", "Kouzla": "✦", "Rysy": "❖", "Výbava": "⚒", "Příběh": "❡" }, CNT = { "Kouzla": (c.kouzla || []).length, "Rysy": feats.length + (c.featy || []).length, "Výbava": (c.vybava || []).length };
     h += '<nav class="p2-tabs" role="tablist">' + tabs.map(function (x, i) { var nm = x[0].replace(/ .*/, ""); return '<button class="p2-tabbtn' + (i ? '' : ' on') + '" role="tab" data-tab="' + i + '" data-name="' + esc(nm) + '"><span class="p2-ti">' + (ICO[nm] || (/Kontrola/.test(nm) ? "✔" : "•")) + '</span><span class="p2-tl">' + x[0] + '</span>' + (CNT[nm] ? '<span class="p2-tc">' + CNT[nm] + '</span>' : '') + '</button>'; }).join("") + '<button class="p2-tabbtn p2-taball" data-tab="all" title="Zobrazit vše (i pro tisk)"><span class="p2-ti">☰</span><span class="p2-tl">Vše</span></button></nav>';
@@ -502,11 +507,14 @@
       });
       l.appendChild(select); p.appendChild(l);
     }
-    var classes = Object.keys(R.tridy), subs = Object.keys(R.podtridy).sort(), species = Object.keys(R.druhy).sort(), bgs = Object.keys(R.pozadi).sort(), feats = Object.keys(R.featy).sort();
+    var classes = Object.keys(R.tridy), subs = Object.keys(R.podtridy).sort(), species = Object.keys(R.druhy).sort(speciesSort), bgs = Object.keys(R.pozadi).sort(), feats = Object.keys(R.featy).sort();
     tab("Základ", function (p) {
       field(p, data, "jmeno", "Jméno"); field(p, data, "titul", "Titul / role");
-      var ds = field(p, data, "druh", "Druh (Species) – PHB 2024 nebo vlastní"); ds.setAttribute("list", "pf-species");
-      var dl = el("datalist", { id: "pf-species" }); species.forEach(function (s) { dl.appendChild(el("option", { value: s })); }); p.appendChild(dl);
+      var ds = field(p, data, "druh", "Druh (Species) – 2024 nebo legacy, kompatibilní"); ds.setAttribute("list", "pf-species");
+      var dl = el("datalist", { id: "pf-species" }); species.forEach(function (s) { dl.appendChild(el("option", { value: s, label: speciesLabel(s) })); }); p.appendChild(dl);
+      var legacyNote = el("small", { class: "pf-legacy-note" }, "legacy, kompatibilní");
+      function updateLegacyNote() { legacyNote.hidden = !(R.druhy[ds.value] || {}).legacy; }
+      ds.addEventListener("input", updateLegacyNote); ds.addEventListener("change", updateLegacyNote); updateLegacyNote(); p.appendChild(legacyNote);
       field(p, data, "druh_volby", "Volby druhu (lineage, ancestry…)"); field(p, data, "pozadi", "Pozadí (Background)", null, bgs);
       field(p, data, "zarovnani", "Přesvědčení (alignment)"); field(p, data, "velikost", "Velikost", null, ["Small", "Medium", "Large"]);
       field(p, data, "xp", "Experience Points (XP)", "number"); strList(p, data, "smysly", "Senses");
@@ -666,7 +674,7 @@
   function newCharUi() {
     var E = window.MontelienEditor, P = window.MontelienPravidla; if (!E || !P) return; rules().then(function () {
       P.init(R); var el = E.el, b = el("div", { class: "lu nc" }), s = { metoda: "standard", zaklad: {}, bonus: {}, dovednosti: [] };
-      function sel(label, opts, key, obj, onch) { var l = el("label", {}, label), x = el("select"); x.appendChild(el("option", { value: "" }, "—")); opts.forEach(function (o) { x.appendChild(el("option", { value: o }, o)); }); x.addEventListener("change", function () { (obj || s)[key] = x.value; if (onch) onch(); }); l.appendChild(x); return l; }
+      function sel(label, opts, key, obj, onch) { var l = el("label", {}, label), x = el("select"); x.appendChild(el("option", { value: "" }, "—")); opts.forEach(function (o) { var value = typeof o === "string" ? o : o.value, text = typeof o === "string" ? o : o.label; x.appendChild(el("option", { value: value }, text)); }); x.addEventListener("change", function () { (obj || s)[key] = x.value; if (onch) onch(); }); l.appendChild(x); return l; }
       var g1 = el("div", { class: "lu-top" });
       var jm = el("label", {}, "Jméno"), ji = el("input", { type: "text" }); ji.addEventListener("change", function () { s.jmeno = ji.value; }); jm.appendChild(ji); g1.appendChild(jm);
       g1.appendChild(sel("Složka", ["04_Postavy/NPC", "04_Postavy/Vladci", "04_Postavy/Stavitele_a_Bohove"], "slozka"));
@@ -675,7 +683,7 @@
       var origin = Object.keys(R.featy).filter(function (k) { return R.featy[k].kategorie === "Origin"; }).sort();
       var fs = Object.keys(R.featy).filter(function (k) { return R.featy[k].kategorie === "Fighting Style"; }).sort();
       var g2 = el("div", { class: "lu-top" }), dyn = el("div", { class: "lu-dyn" });
-      g2.appendChild(sel("Druh (Species)", Object.keys(R.druhy).sort(), "druh", null, draw));
+      g2.appendChild(sel("Druh (Species)", Object.keys(R.druhy).sort(speciesSort).map(function (name) { return { value: name, label: speciesLabel(name) }; }), "druh", null, draw));
       g2.appendChild(sel("Pozadí (Background)", Object.keys(R.pozadi).sort(), "pozadi", null, draw));
       g2.appendChild(sel("Povolání", Object.keys(R.tridy), "trida", null, draw));
       g2.appendChild(sel("Atributy", ["standard", "pointbuy", "rucne"], "metoda", null, draw));
@@ -683,6 +691,7 @@
       var errEl = el("div", { class: "lu-err" }); b.appendChild(errEl);
       function draw() {
         dyn.innerHTML = ""; s.dovednosti = []; s.bonus = {};
+        if ((R.druhy[s.druh] || {}).legacy) dyn.appendChild(el("p", { class: "pf-legacy-note" }, "legacy, kompatibilní · alternativa 2024: " + (R.druhy[s.druh].alternativa_2024 || "žádná přímá")));
         var bg = R.pozadi[s.pozadi];
         var ab = el("div", { class: "pf-abil" });
         P.AB.forEach(function (a) { var l = el("label", {}, a + (s.metoda === "standard" ? " (15/14/13/12/10/8)" : s.metoda === "pointbuy" ? " (8–15, 27 bodů)" : "")), i = el("input", { type: "number", min: 3, max: 20, value: s.zaklad[a] || "" }); i.addEventListener("change", function () { s.zaklad[a] = Number(i.value); cost(); }); l.appendChild(i); ab.appendChild(l); });

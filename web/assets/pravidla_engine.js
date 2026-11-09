@@ -167,7 +167,7 @@
     var out = [], lvl = totalLevel(c), ab = c.atributy || {}, speciesKey = c.druh || "";
     var species = R.druhy[speciesKey] || R.druhy[speciesKey.split(" ")[0]];
     var god = !!c.bozska_vyjimka || !species;
-    function err(t) { out.push({ typ: "chyba", text: t }); } function warn(t) { out.push({ typ: "varovani", text: t }); }
+    function err(t) { out.push({ typ: "chyba", text: t }); } function warn(t) { out.push({ typ: "varovani", text: t }); } function info(t) { out.push({ typ: "informace", text: t }); }
     if (!(c.tridy || []).length) {
       if (!c.statblok) err("Postava bez povolání musí uvádět statblok.");
       else if (!c.hp_rucne || !c.ac_rucne || !c.rychlost_rucne) warn("U statbloku chybí ručně zadané HP, AC nebo rychlost.");
@@ -192,6 +192,7 @@
     AB.forEach(function (a) { var v = Number(ab[a]); if (v > 20 && !(god || (hasBoon && v <= 30))) err(a + " " + v + " je nad maximem 20."); if (v > 30) err(a + " " + v + " je nad absolutním maximem 30."); });
     if (!god) {
       if (!species) warn("Druh " + c.druh + " není v pravidlech 2024+.");
+      else if (species.legacy) info("Druh " + c.druh + " je legacy, kompatibilní; alternativa 2024: " + (species.alternativa_2024 || "žádná přímá") + ".");
       if (c.pozadi && !R.pozadi[c.pozadi]) warn("Pozadí " + c.pozadi + " není v pravidlech 2024+.");
       if (!c.pozadi) err("Chybí pozadí (Background).");
     }

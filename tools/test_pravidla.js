@@ -98,6 +98,10 @@ const classless = { jmeno: "Test classless", druh: "Lorwyn Changeling", pozadi: 
 const classlessValidation = E.validate(classless);
 t(!classlessValidation.some(x => x.typ === "chyba" && /povolání/.test(x.text)), "classless NPC se statblokem je povolen");
 t(!classlessValidation.some(x => /Druh Lorwyn Changeling/.test(x.text)), "víceslovný druh se vyhledává jako celý klíč");
+const legacyValidation = E.validate(Object.assign({}, classless, { druh: "Kenku" }));
+t(!legacyValidation.some(x => x.typ === "chyba"), "legacy druh nezpůsobuje chybu validace");
+t(!legacyValidation.some(x => x.typ === "varovani" && /není v pravidlech 2024/.test(x.text)), "známý legacy druh není označen jako neznámý");
+t(legacyValidation.some(x => x.typ === "informace" && /legacy, kompatibilní/.test(x.text)), "legacy druh má informační poznámku");
 
 
 // 7) kouzla
