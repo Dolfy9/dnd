@@ -68,6 +68,11 @@ eq(E.derive({ tridy: [{ trida: "Fighter", uroven: 9, podtrida: "Eldritch Knight"
 eq(E.derive({ tridy: [{ trida: "Fighter", uroven: 7, podtrida: "Eldritch Knight" }], atributy: base }).slots, [4, 2], "EK 7 sám = 4/2");
 const wl = E.derive({ tridy: [{ trida: "Warlock", uroven: 5 }, { trida: "Sorcerer", uroven: 2 }], atributy: base });
 eq([wl.slots, wl.pact], [[3], { pocet: 2, uroven: 3 }], "Warlock 5 / Sorcerer 2: Pact zvlášť + sloty Sorcerer 2");
+eq([1, 2, 5].map(lv => E.derive({ tridy: [{ trida: "Artificer", uroven: lv }] }).slots), [[2], [2], [4, 2]], "Artificer 1/2/5 slots");
+eq(E.derive({ tridy: [{ trida: "Artificer", uroven: 3 }, { trida: "Wizard", uroven: 2 }] }).slots, [4, 3], "Artificer 3 / Wizard 2 multiclass slots");
+let artReq = fresh("Wizard"); artReq = lvlUp(artReq, "Wizard", 2).postava;
+artReq.atributy.INT = 12; t(E.planLevelUp(artReq, "Artificer", 1).chyby.length > 0, "multiclass Artificer s INT 12 odmítnut");
+artReq.atributy.INT = 13; t(E.planLevelUp(artReq, "Artificer", 1).chyby.length === 0, "multiclass Artificer s INT 13 povolen");
 const rog = lvlUp(lvlUp(fresh("Fighter"), "Fighter", 1).postava, "Rogue", 1); t(!rog.chyby.length && rog.postava.dovednosti.length === fresh("Fighter").dovednosti.length + 1, "multiclass Rogue přidá 1 dovednost");
 // 4) featy
 let w = lvlUp(fresh("Wizard"), "Wizard", 3).postava; const slot4 = { typ: "asi", zdroj: "Wizard 4" };

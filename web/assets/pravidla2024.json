@@ -1,6 +1,337 @@
 {
   "tridy": {
+    "Artificer": {
+      "zdroj": "Eberron: Forge of the Artificer (2025)",
+      "hit_die": 8,
+      "core": {
+        "Primary Ability": "Intelligence",
+        "Hit Point Die": "D8 per Artificer level",
+        "Saving Throw Proficiencies": "Constitution and Intelligence",
+        "Skill Proficiencies": "Choose 2: Arcana, History, Investigation, Medicine, Nature, Perception, or Sleight of Hand",
+        "Weapon Proficiencies": "Simple weapons",
+        "Tool Proficiencies": "Thieves’ Tools, Tinker’s Tools, and one type of Artisan’s Tools of your choice",
+        "Armor Training": "Light and Medium armor and Shields",
+        "Starting Equipment": "Choose A or B: (A) Studded Leather Armor, Dagger, Thieves’ Tools, Tinker’s Tools, Dungeoneer’s Pack, and 16 GP; or (B) 150 GP"
+      },
+      "tabulka": {
+        "1": {
+          "Proficiency Bonus": "+2",
+          "Class Features": "Spellcasting, Tinker’s Magic",
+          "Plans Known": "-",
+          "Magic Items": "-",
+          "Cantrips": "2",
+          "Prepared Spells": "2",
+          "1st": "2",
+          "2nd": "-",
+          "3rd": "-",
+          "4th": "-",
+          "5th": "-"
+        },
+        "2": {
+          "Proficiency Bonus": "+2",
+          "Class Features": "Replicate Magic Item",
+          "Plans Known": "4",
+          "Magic Items": "2",
+          "Cantrips": "2",
+          "Prepared Spells": "3",
+          "1st": "2",
+          "2nd": "-",
+          "3rd": "-",
+          "4th": "-",
+          "5th": "-"
+        },
+        "3": {
+          "Proficiency Bonus": "+2",
+          "Class Features": "Artificer Subclass",
+          "Plans Known": "4",
+          "Magic Items": "2",
+          "Cantrips": "2",
+          "Prepared Spells": "4",
+          "1st": "3",
+          "2nd": "-",
+          "3rd": "-",
+          "4th": "-",
+          "5th": "-"
+        },
+        "4": {
+          "Proficiency Bonus": "+2",
+          "Class Features": "Ability Score Improvement",
+          "Plans Known": "4",
+          "Magic Items": "2",
+          "Cantrips": "2",
+          "Prepared Spells": "5",
+          "1st": "3",
+          "2nd": "-",
+          "3rd": "-",
+          "4th": "-",
+          "5th": "-"
+        },
+        "5": {
+          "Proficiency Bonus": "+3",
+          "Class Features": "Subclass feature",
+          "Plans Known": "4",
+          "Magic Items": "2",
+          "Cantrips": "2",
+          "Prepared Spells": "6",
+          "1st": "4",
+          "2nd": "2",
+          "3rd": "-",
+          "4th": "-",
+          "5th": "-"
+        },
+        "6": {
+          "Proficiency Bonus": "+3",
+          "Class Features": "Magic Item Tinker",
+          "Plans Known": "5",
+          "Magic Items": "3",
+          "Cantrips": "2",
+          "Prepared Spells": "6",
+          "1st": "4",
+          "2nd": "2",
+          "3rd": "-",
+          "4th": "-",
+          "5th": "-"
+        },
+        "7": {
+          "Proficiency Bonus": "+3",
+          "Class Features": "Flash of Genius",
+          "Plans Known": "5",
+          "Magic Items": "3",
+          "Cantrips": "2",
+          "Prepared Spells": "7",
+          "1st": "4",
+          "2nd": "3",
+          "3rd": "-",
+          "4th": "-",
+          "5th": "-"
+        },
+        "8": {
+          "Proficiency Bonus": "+3",
+          "Class Features": "Ability Score Improvement",
+          "Plans Known": "5",
+          "Magic Items": "3",
+          "Cantrips": "2",
+          "Prepared Spells": "7",
+          "1st": "4",
+          "2nd": "3",
+          "3rd": "-",
+          "4th": "-",
+          "5th": "-"
+        },
+        "9": {
+          "Proficiency Bonus": "+4",
+          "Class Features": "Subclass feature",
+          "Plans Known": "5",
+          "Magic Items": "3",
+          "Cantrips": "2",
+          "Prepared Spells": "9",
+          "1st": "4",
+          "2nd": "3",
+          "3rd": "2",
+          "4th": "-",
+          "5th": "-"
+        },
+        "10": {
+          "Proficiency Bonus": "+4",
+          "Class Features": "Magic Item Adept",
+          "Plans Known": "6",
+          "Magic Items": "4",
+          "Cantrips": "3",
+          "Prepared Spells": "9",
+          "1st": "4",
+          "2nd": "3",
+          "3rd": "2",
+          "4th": "-",
+          "5th": "-"
+        },
+        "11": {
+          "Proficiency Bonus": "+4",
+          "Class Features": "Spell-Storing Item",
+          "Plans Known": "6",
+          "Magic Items": "4",
+          "Cantrips": "3",
+          "Prepared Spells": "10",
+          "1st": "4",
+          "2nd": "3",
+          "3rd": "3",
+          "4th": "-",
+          "5th": "-"
+        },
+        "12": {
+          "Proficiency Bonus": "+4",
+          "Class Features": "Ability Score Improvement",
+          "Plans Known": "6",
+          "Magic Items": "4",
+          "Cantrips": "3",
+          "Prepared Spells": "10",
+          "1st": "4",
+          "2nd": "3",
+          "3rd": "3",
+          "4th": "-",
+          "5th": "-"
+        },
+        "13": {
+          "Proficiency Bonus": "+5",
+          "Class Features": "-",
+          "Plans Known": "6",
+          "Magic Items": "4",
+          "Cantrips": "3",
+          "Prepared Spells": "11",
+          "1st": "4",
+          "2nd": "3",
+          "3rd": "3",
+          "4th": "1",
+          "5th": "-"
+        },
+        "14": {
+          "Proficiency Bonus": "+5",
+          "Class Features": "Advanced Artifice",
+          "Plans Known": "7",
+          "Magic Items": "5",
+          "Cantrips": "4",
+          "Prepared Spells": "11",
+          "1st": "4",
+          "2nd": "3",
+          "3rd": "3",
+          "4th": "1",
+          "5th": "-"
+        },
+        "15": {
+          "Proficiency Bonus": "+5",
+          "Class Features": "Subclass feature",
+          "Plans Known": "7",
+          "Magic Items": "5",
+          "Cantrips": "4",
+          "Prepared Spells": "12",
+          "1st": "4",
+          "2nd": "3",
+          "3rd": "3",
+          "4th": "2",
+          "5th": "-"
+        },
+        "16": {
+          "Proficiency Bonus": "+5",
+          "Class Features": "Ability Score Improvement",
+          "Plans Known": "7",
+          "Magic Items": "5",
+          "Cantrips": "4",
+          "Prepared Spells": "12",
+          "1st": "4",
+          "2nd": "3",
+          "3rd": "3",
+          "4th": "2",
+          "5th": "-"
+        },
+        "17": {
+          "Proficiency Bonus": "+6",
+          "Class Features": "-",
+          "Plans Known": "7",
+          "Magic Items": "5",
+          "Cantrips": "4",
+          "Prepared Spells": "14",
+          "1st": "4",
+          "2nd": "3",
+          "3rd": "3",
+          "4th": "3",
+          "5th": "1"
+        },
+        "18": {
+          "Proficiency Bonus": "+6",
+          "Class Features": "Magic Item Master",
+          "Plans Known": "8",
+          "Magic Items": "6",
+          "Cantrips": "4",
+          "Prepared Spells": "14",
+          "1st": "4",
+          "2nd": "3",
+          "3rd": "3",
+          "4th": "3",
+          "5th": "1"
+        },
+        "19": {
+          "Proficiency Bonus": "+6",
+          "Class Features": "Epic Boon",
+          "Plans Known": "8",
+          "Magic Items": "6",
+          "Cantrips": "4",
+          "Prepared Spells": "15",
+          "1st": "4",
+          "2nd": "3",
+          "3rd": "3",
+          "4th": "3",
+          "5th": "2"
+        },
+        "20": {
+          "Proficiency Bonus": "+6",
+          "Class Features": "Soul of Artifice",
+          "Plans Known": "8",
+          "Magic Items": "6",
+          "Cantrips": "4",
+          "Prepared Spells": "15",
+          "1st": "4",
+          "2nd": "3",
+          "3rd": "3",
+          "4th": "3",
+          "5th": "2"
+        }
+      },
+      "rysy": {
+        "Tinker’s Magic": {
+          "uroven": 1,
+          "text": "You know the Mending cantrip. While holding Tinker’s Tools, you can take a Magic action to create one of these items in an unoccupied space within 5 feet: Ball Bearings, Basket, Bedroll, Bell, Blanket, Block and Tackle, Bottle (Glass), Bucket, Caltrops, Candle, Crowbar, Flask, Grappling Hook, Hunting Trap, Jug, Lamp, Manacles, Net, Oil, Paper, Parchment, Pole, Pouch, Rope, Sack, Shovel, Spikes (Iron), String, Tinderbox, Torch, or Vial. It lasts until you finish a Long Rest. You can use this feature a number of times equal to your Intelligence modifier (minimum once), regaining all uses when you finish a Long Rest."
+        },
+        "Spellcasting": {
+          "uroven": 1,
+          "text": "Intelligence is your spellcasting ability. You must hold Thieves’ Tools, Tinker’s Tools, or another kind of Artisan’s Tools with which you are proficient as a Spellcasting Focus when casting an Artificer spell. You know two Artificer cantrips and can replace one after a Long Rest; you learn additional cantrips at Artificer levels 10 and 14. Prepare the number of level 1+ Artificer spells shown in the class table, choosing only spells for which you have spell slots. You can replace your prepared spells after a Long Rest. The table gives your spell slots, recovered after a Long Rest; subclass spells that are always prepared don’t count against the prepared-spell total."
+        },
+        "Replicate Magic Item": {
+          "uroven": 2,
+          "text": "At Artificer level 2, learn four plans from the Artificer Level 2+ Magic Item Plans table. You can replace one known plan whenever you gain an Artificer level, and learn additional plans at the levels shown in Plans Known. After a Long Rest with Tinker’s Tools in hand, create the number of magic items shown in Magic Items, each from a different plan you know; an item requiring attunement can be attuned to immediately. You can’t exceed the table’s item limit; the oldest replicated item vanishes if you exceed it. Replicated items otherwise function as their normal magic item, but their magic ends 1d4 days after your death or immediately if you replace their plan. A replicated Wand or Weapon can be your Spellcasting Focus."
+        },
+        "Artificer Subclass": {
+          "uroven": 3,
+          "text": "Choose an Artificer subclass; its features are gained at Artificer levels 3, 5, 9, and 15."
+        },
+        "Magic Item Tinker": {
+          "uroven": 6,
+          "text": "Your Replicate Magic Item feature gains three options. Charge Magic Item: as a Bonus Action, touch within 5 feet a replicated item that uses charges, expend a level 1+ spell slot, and restore charges equal to the slot’s level. Drain Magic Item: as a Bonus Action, make one replicated item vanish and gain a level 1 spell slot if it is Common or level 2 if it is Uncommon or Rare; you can do this once per Long Rest, and the slot vanishes at your next Long Rest. Transmute Magic Item: as a Magic action, touch a replicated item within 5 feet and transform it into another item based on a plan you know; once per Long Rest."
+        },
+        "Flash of Genius": {
+          "uroven": 7,
+          "text": "When you or a creature you can see within 30 feet fails an ability check or saving throw, you can take a Reaction to add your Intelligence modifier (minimum +1) to the roll, possibly turning the failure into a success. You can use this Reaction a number of times equal to your Intelligence modifier (minimum once), regaining all expended uses when you finish a Long Rest."
+        },
+        "Magic Item Adept": {
+          "uroven": 10,
+          "text": "You can attune to up to four magic items at once."
+        },
+        "Spell-Storing Item": {
+          "uroven": 11,
+          "text": "When you finish a Long Rest, store one level 1–3 Artificer spell with an Action casting time and no consumed Material component in a Simple or Martial weapon or an item usable as a Spellcasting Focus; you needn’t have it prepared. A creature holding the item can take a Magic action to produce the spell’s effect using your spellcasting ability. The item can be used again at the start of each user’s next turn; the stored spell ends after a number of uses equal to twice your Intelligence modifier (minimum twice) or when you store another spell with this feature."
+        },
+        "Advanced Artifice": {
+          "uroven": 14,
+          "text": "You can attune to up to five magic items at once. When you finish a Short Rest, you regain one expended use of Flash of Genius."
+        },
+        "Magic Item Master": {
+          "uroven": 18,
+          "text": "You can attune to up to six magic items at once."
+        },
+        "Epic Boon": {
+          "uroven": 19,
+          "text": "You gain an Epic Boon feat or another feat of your choice for which you qualify."
+        },
+        "Soul of Artifice": {
+          "uroven": 20,
+          "text": "If reduced to 0 Hit Points but not killed outright, you can destroy any number of Uncommon or Rare items made with Replicate Magic Item; your Hit Points instead become 20 times the number destroyed. When you finish a Short Rest, you regain all expended Flash of Genius uses if you are attuned to at least one magic item."
+        },
+        "Ability Score Improvement": {
+          "uroven": 4,
+          "text": "You gain the Ability Score Improvement feat or another feat of your choice for which you qualify. You gain this feature again at Artificer levels 8, 12, and 16."
+        }
+      }
+    },
     "Barbarian": {
+      "zdroj": "Player's Handbook (2024)",
       "hit_die": 12,
       "core": {
         "Primary Ability": "Strength",
@@ -233,6 +564,7 @@
       }
     },
     "Bard": {
+      "zdroj": "Player's Handbook (2024)",
       "hit_die": 8,
       "core": {
         "Primary Ability": "Charisma",
@@ -618,6 +950,7 @@
       }
     },
     "Cleric": {
+      "zdroj": "Player's Handbook (2024)",
       "hit_die": 8,
       "core": {
         "Primary Ability": "Wisdom",
@@ -998,6 +1331,7 @@
       }
     },
     "Druid": {
+      "zdroj": "Player's Handbook (2024)",
       "hit_die": 8,
       "core": {
         "Primary Ability": "Wisdom",
@@ -1387,6 +1721,7 @@
       }
     },
     "Fighter": {
+      "zdroj": "Player's Handbook (2024)",
       "hit_die": 10,
       "core": {
         "Primary Ability": "Strength or Dexterity",
@@ -1583,6 +1918,7 @@
       }
     },
     "Monk": {
+      "zdroj": "Player's Handbook (2024)",
       "hit_die": 8,
       "core": {
         "Primary Ability": "Dexterity and Wisdom",
@@ -1828,6 +2164,7 @@
       }
     },
     "Paladin": {
+      "zdroj": "Player's Handbook (2024)",
       "hit_die": 10,
       "core": {
         "Primary Ability": "Strength and Charisma",
@@ -2132,6 +2469,7 @@
       }
     },
     "Ranger": {
+      "zdroj": "Player's Handbook (2024)",
       "hit_die": 10,
       "core": {
         "Primary Ability": "Dexterity and Wisdom",
@@ -2436,6 +2774,7 @@
       }
     },
     "Rogue": {
+      "zdroj": "Player's Handbook (2024)",
       "hit_die": 8,
       "core": {
         "Primary Ability": "Dexterity",
@@ -2625,6 +2964,7 @@
       }
     },
     "Sorcerer": {
+      "zdroj": "Player's Handbook (2024)",
       "hit_die": 6,
       "core": {
         "Primary Ability": "Charisma",
@@ -3001,6 +3341,7 @@
       }
     },
     "Warlock": {
+      "zdroj": "Player's Handbook (2024)",
       "hit_die": 8,
       "core": {
         "Primary Ability": "Charisma",
@@ -3233,6 +3574,7 @@
       }
     },
     "Wizard": {
+      "zdroj": "Player's Handbook (2024)",
       "hit_die": 6,
       "core": {
         "Primary Ability": "Intelligence",
@@ -3811,6 +4153,8 @@
     "Path of the Zealot": {
       "trida": "Barbarian",
       "zdroj": "Player's Handbook",
+      "rok": 2024,
+      "overeno": ["https://dnd2024.wikidot.com/barbarian:path-of-the-zealot"],
       "rysy": {
         "Divine Fury": {
           "uroven": 3,
@@ -4114,6 +4458,8 @@
     "Path of the Berserker": {
       "trida": "Barbarian",
       "zdroj": "Player's Handbook",
+      "rok": 2024,
+      "overeno": ["https://dnd2024.wikidot.com/barbarian:path-of-the-berserker"],
       "rysy": {
         "Frenzy": {
           "uroven": 3,
@@ -4789,6 +5135,8 @@
     "Path of the Wild Heart": {
       "trida": "Barbarian",
       "zdroj": "Player's Handbook",
+      "rok": 2024,
+      "overeno": ["https://dnd2024.wikidot.com/barbarian:path-of-the-wild-heart"],
       "rysy": {
         "Animal Speaker": {
           "uroven": 3,
@@ -4863,6 +5211,8 @@
     "Path of the World Tree": {
       "trida": "Barbarian",
       "zdroj": "Player's Handbook",
+      "rok": 2024,
+      "overeno": ["https://dnd2024.wikidot.com/barbarian:path-of-the-world-tree"],
       "rysy": {
         "Vitality of the Tree": {
           "uroven": 3,
@@ -5247,6 +5597,1410 @@
         "Peerless Skill": {
           "uroven": 14,
           "text": "When you make an ability check or attack roll and fail, you can expend one use of Bardic Inspiration; roll the Bardic Inspiration die, and add the number rolled to the d20, potentially turning a failure into a success. On a failure, the Bardic Inspiration isn’t expended."
+        }
+      }
+    },
+    "Alchemist": {
+      "trida": "Artificer",
+      "zdroj": "Eberron: Forge of the Artificer",
+      "rok": 2025,
+      "overeno": ["http://dnd2024.wikidot.com/artificer:alchemist"],
+      "rysy": {
+        "Tools of the Trade": {
+          "uroven": 3,
+          "text": "You gain proficiency with Alchemist’s Supplies and the Herbalism Kit, replacing either proficiency you already have with another Artisan’s Tools proficiency. Crafting a potion takes half the normal time."
+        },
+        "Alchemist Spells": {
+          "uroven": 3,
+          "text": "You always have these spells prepared at the listed Artificer levels: 3 Healing Word, Ray of Sickness; 5 Flaming Sphere, Melf’s Acid Arrow; 9 Gaseous Form, Mass Healing Word; 13 Death Ward, Vitriolic Sphere; 17 Cloudkill, Raise Dead."
+        },
+        "Experimental Elixir": {
+          "uroven": 3,
+          "text": "After a Long Rest while holding Alchemist’s Supplies, create two elixirs, rolling for each effect on the feature table; they disappear if not used by your next Long Rest. A creature can drink or administer one as a Bonus Action. As a Magic action, expend a spell slot while holding the supplies to create one more elixir and choose its effect. The Long Rest total rises to three at Artificer 5, four at 9, and five at 15."
+        },
+        "Alchemical Savant": {
+          "uroven": 5,
+          "text": "When you cast a spell using Alchemist’s Supplies as its Spellcasting Focus, add your Intelligence modifier (minimum +1) to one roll that restores Hit Points or deals Acid, Fire, or Poison damage."
+        },
+        "Restorative Reagents": {
+          "uroven": 9,
+          "text": "While using Alchemist’s Supplies as your Spellcasting Focus, cast Lesser Restoration without preparing it or spending a spell slot a number of times equal to your Intelligence modifier (minimum once), recovering all uses on a Long Rest."
+        },
+        "Chemical Mastery": {
+          "uroven": 15,
+          "text": "Once on each of your turns, an Artificer spell that deals Acid, Fire, or Poison damage can also deal 2d8 Force damage to a target. You gain Resistance to Acid and Poison damage and Immunity to the Poisoned condition. You can cast Tasha’s Bubbling Cauldron without preparing it, a slot, or Material components while using Alchemist’s Supplies; regain this use after a Long Rest."
+        }
+      }
+    },
+    "Armorer": {
+      "trida": "Artificer",
+      "zdroj": "Eberron: Forge of the Artificer",
+      "rok": 2025,
+      "overeno": ["http://dnd2024.wikidot.com/artificer:armorer"],
+      "rysy": {
+        "Tools of the Trade": {
+          "uroven": 3,
+          "text": "You gain Heavy armor training and Smith’s Tools proficiency, replacing the latter with another Artisan’s Tools proficiency if you already have it. Crafting armor takes half the normal time."
+        },
+        "Armorer Spells": {
+          "uroven": 3,
+          "text": "You always have these spells prepared at the listed Artificer levels: 3 Magic Missile, Thunderwave; 5 Mirror Image, Shatter; 9 Hypnotic Pattern, Lightning Bolt; 13 Fire Shield, Greater Invisibility; 17 Passwall, Wall of Force."
+        },
+        "Arcane Armor": {
+          "uroven": 3,
+          "text": "With Smith’s Tools in hand, use a Magic action to make worn armor your Arcane Armor until you don another suit or die. It ignores its Strength requirement for you, can be donned or doffed as a Utilize action and cannot be removed against your will; you can use it as an Artificer Spellcasting Focus."
+        },
+        "Armor Model": {
+          "uroven": 3,
+          "text": "Choose Dreadnaught, Guardian, or Infiltrator as your armor model; each grants a special weapon whose attack and damage rolls can use Intelligence instead of Strength or Dexterity. With Smith’s Tools, you can change the model after a Short or Long Rest."
+        },
+        "Extra Attack": {
+          "uroven": 5,
+          "text": "You can attack twice, instead of once, whenever you take the Attack action on your turn."
+        },
+        "Improved Armorer": {
+          "uroven": 9,
+          "text": "Learn an additional Armor plan for Replicate Magic Item and create an additional replicated item, which must also use an Armor plan. Your model’s special weapon gains +1 to attack and damage rolls."
+        },
+        "Perfected Armor": {
+          "uroven": 15,
+          "text": "Your model improves: Dreadnaught increases Force Demolisher’s damage die and enhances Giant Stature; Guardian increases Thunder Pulse damage; Infiltrator gains improved Powered Steps and Dampening Field benefits."
+        }
+      }
+    },
+    "Artillerist": {
+      "trida": "Artificer",
+      "zdroj": "Eberron: Forge of the Artificer",
+      "rok": 2025,
+      "overeno": ["http://dnd2024.wikidot.com/artificer:artillerist"],
+      "rysy": {
+        "Tools of the Trade": {
+          "uroven": 3,
+          "text": "You gain proficiency with Martial Ranged weapons and Woodcarver’s Tools, replacing the tool proficiency with another Artisan’s Tools proficiency if already proficient. Crafting a magic Wand takes half the normal time."
+        },
+        "Artillerist Spells": {
+          "uroven": 3,
+          "text": "You always have these spells prepared at the listed Artificer levels: 3 Shield, Thunderwave; 5 Scorching Ray, Shatter; 9 Fireball, Wind Wall; 13 Ice Storm, Wall of Fire; 17 Cone of Cold, Wall of Force."
+        },
+        "Eldritch Cannon": {
+          "uroven": 3,
+          "text": "Using Smith’s or Woodcarver’s Tools, create a Small or Tiny cannon in an unoccupied space within 5 feet. It lasts up to 1 hour, until destroyed, or until dismissed. Create one per Long Rest, or spend a spell slot to create another; you can activate it with a Bonus Action and choose Flamethrower, Force Ballista, or Protector."
+        },
+        "Arcane Firearm": {
+          "uroven": 5,
+          "text": "After a Long Rest, use Woodcarver’s Tools to inscribe a Rod, Staff, Wand, or Martial Ranged weapon as your Arcane Firearm. It can be your Artificer Spellcasting Focus; when you cast a spell through it, add 1d8 to one damage roll."
+        },
+        "Explosive Cannon": {
+          "uroven": 9,
+          "text": "When your cannon takes damage, use a Reaction within 60 feet to destroy it and force creatures within 20 feet to make a Dexterity save against your spell DC, taking 3d10 Force damage on a failure or half on a success. Cannon damage and Protector Temporary Hit Points each increase by 1d8."
+        },
+        "Fortified Position": {
+          "uroven": 15,
+          "text": "You can have two Eldritch Cannons and create both with one Magic action, spending a slot for each if needed; one Bonus Action can activate both. You and allies gain Half Cover while within 10 feet of a cannon."
+        }
+      }
+    },
+    "Battle Smith": {
+      "trida": "Artificer",
+      "zdroj": "Eberron: Forge of the Artificer",
+      "rok": 2025,
+      "overeno": ["http://dnd2024.wikidot.com/artificer:battle-smith"],
+      "rysy": {
+        "Tools of the Trade": {
+          "uroven": 3,
+          "text": "You gain Smith’s Tools proficiency, replacing it with another Artisan’s Tools proficiency if already proficient. Crafting a nonmagical or magic weapon takes half the normal time."
+        },
+        "Battle Smith Spells": {
+          "uroven": 3,
+          "text": "You always have these spells prepared at the listed Artificer levels: 3 Heroism, Shield; 5 Shining Smite, Warding Bond; 9 Aura of Vitality, Conjure Barrage; 13 Aura of Purity, Fire Shield; 17 Banishing Smite, Mass Cure Wounds."
+        },
+        "Battle Ready": {
+          "uroven": 3,
+          "text": "Use Intelligence instead of Strength or Dexterity for attack and damage rolls with a Magic weapon. You gain Martial weapon proficiency and can use a proficient weapon as an Artificer Spellcasting Focus."
+        },
+        "Steel Defender": {
+          "uroven": 3,
+          "text": "You create a friendly Steel Defender that acts on your turn; it Dodges unless you use a Bonus Action to command another action. If destroyed, you can restore it within an hour using a Magic action and a spell slot, or create a replacement during a Long Rest with Smith’s Tools."
+        },
+        "Extra Attack": {
+          "uroven": 5,
+          "text": "You can attack twice when you take the Attack action. You can forgo one attack to command your Steel Defender to use Force-Empowered Rend."
+        },
+        "Arcane Jolt": {
+          "uroven": 9,
+          "text": "Once per turn when you or your Steel Defender hits with a Magic weapon, expend one of a number of uses equal to your Intelligence modifier (minimum once) to deal 2d6 extra Force damage or restore 2d6 Hit Points to a creature or object you can see within 30 feet of the target. Uses return after a Long Rest."
+        },
+        "Improved Defender": {
+          "uroven": 15,
+          "text": "Arcane Jolt’s damage and healing increase to 4d6. When the Steel Defender uses Deflect Attack, the attacker takes 1d4 plus your Intelligence modifier Force damage."
+        }
+      }
+    },
+    "Cartographer": {
+      "trida": "Artificer",
+      "zdroj": "Eberron: Forge of the Artificer",
+      "rok": 2025,
+      "overeno": ["http://dnd2024.wikidot.com/artificer:cartographer"],
+      "rysy": {
+        "Tools of the Trade": {
+          "uroven": 3,
+          "text": "You gain proficiency with Calligrapher’s Supplies and Cartographer’s Tools, replacing proficiencies you already have with other Artisan’s Tools. Scribing a Spell Scroll takes half the normal time."
+        },
+        "Cartographer Spells": {
+          "uroven": 3,
+          "text": "You always have these spells prepared at the listed Artificer levels: 3 Faerie Fire, Guiding Bolt, Healing Word; 5 Locate Object, Mind Spike; 9 Call Lightning, Clairvoyance; 13 Banishment, Locate Creature; 17 Scrying, Teleportation Circle."
+        },
+        "Adventurer’s Atlas": {
+          "uroven": 3,
+          "text": "After a Long Rest while holding Cartographer’s Tools, make a linked map for at least two creatures, up to one plus your Intelligence modifier (minimum two). Carriers add 1d4 to Initiative, track one another on the same plane, and can target another carrier with effects that require sight if it is in range. Maps end when you die or remake them."
+        },
+        "Mapping Magic": {
+          "uroven": 3,
+          "text": "Cast Faerie Fire without a slot a number of times equal to your Intelligence modifier (minimum once), recovering uses after a Long Rest. On your turn, spend half your Speed to teleport to a space within 10 feet or to a space within 5 feet of a map carrier you can see within 30 feet."
+        },
+        "Guided Precision": {
+          "uroven": 5,
+          "text": "Once per turn, add your Intelligence modifier to one damage roll when casting a Cartographer spell or hitting a creature affected by your Faerie Fire. Damage cannot break your Concentration on Faerie Fire."
+        },
+        "Ingenious Movement": {
+          "uroven": 9,
+          "text": "When you use Flash of Genius, you or a willing creature you can see within 30 feet can also teleport up to 30 feet to an unoccupied space you can see."
+        },
+        "Superior Atlas": {
+          "uroven": 15,
+          "text": "A map carrier reduced to 0 Hit Points can destroy its map to instead have Hit Points equal to twice your Artificer level and teleport next to you or another map carrier. While carrying a map, you can cast Find the Path without a slot, preparation, or components once per Long Rest."
+        }
+      }
+    },
+    "Battlerager": {
+      "trida": "Barbarian",
+      "zdroj": "Sword Coast Adventurer's Guide",
+      "rok": 2015,
+      "legacy": true,
+      "alternativa_2024": "Path of the Berserker",
+      "overeno": ["http://dnd5e.wikidot.com/barbarian:battlerager"],
+      "rysy": {
+        "Battlerager Armor": {
+          "uroven": 3,
+          "text": "While raging in spiked armor, make one melee attack with the spikes as a Bonus Action against a creature within 5 feet; a hit deals 1d4 piercing damage using Strength. A successful grapple made with the Attack action also deals 3 piercing damage to the target."
+        },
+        "Reckless Abandon": {
+          "uroven": 6,
+          "text": "When you use Reckless Attack during Rage, gain temporary Hit Points equal to your Constitution modifier (minimum 1); remaining temporary Hit Points disappear when Rage ends."
+        },
+        "Battlerager Charge": {
+          "uroven": 10,
+          "text": "While raging, you can take the Dash action as a Bonus Action."
+        },
+        "Spiked Retribution": {
+          "uroven": 14,
+          "text": "While raging, wearing spiked armor, and not incapacitated, a creature within 5 feet that hits you with a melee attack takes 3 piercing damage."
+        }
+      }
+    },
+    "Path of the Ancestral Guardian": {
+      "trida": "Barbarian",
+      "zdroj": "Xanathar's Guide to Everything",
+      "rok": 2017,
+      "legacy": true,
+      "alternativa_2024": "Path of the World Tree",
+      "revize": "Ohlášená varianta Path of the Spiritual Guardian vyjde v D&D: World of Warcraft 17. 11. 2026; do vydání nenahrazuje tuto legacy podtřídu.",
+      "overeno": ["http://dnd5e.wikidot.com/barbarian:ancestral-guardian"],
+      "rysy": {
+        "Ancestral Protectors": {
+          "uroven": 3,
+          "text": "While raging, the first creature you hit on your turn is hindered by spirits until the start of your next turn or the end of your Rage: it has Disadvantage on attacks against anyone but you, and creatures other than you have Resistance to damage from its attacks."
+        },
+        "Spirit Shield": {
+          "uroven": 6,
+          "text": "While raging, use your Reaction when a creature you can see within 30 feet takes damage to reduce it by 2d6; this reduction becomes 3d6 at Barbarian level 10 and 4d6 at level 14."
+        },
+        "Consult the Spirits": {
+          "uroven": 10,
+          "text": "Cast Augury or Clairvoyance without a spell slot or Material components, using Wisdom; Clairvoyance instead sends an ancestral spirit to the location rather than creating a spherical sensor. After either spell, you must finish a Short or Long Rest before using this feature again."
+        },
+        "Vengeful Ancestors": {
+          "uroven": 14,
+          "text": "Whenever Spirit Shield reduces damage from an attack, the attacker takes Force damage equal to the amount prevented."
+        }
+      }
+    },
+    "Path of the Beast": {
+      "trida": "Barbarian",
+      "zdroj": "Tasha's Cauldron of Everything",
+      "rok": 2020,
+      "legacy": true,
+      "alternativa_2024": "Path of the Wild Heart",
+      "overeno": ["http://dnd5e.wikidot.com/barbarian:beast"],
+      "rysy": {
+        "Form of the Beast": {
+          "uroven": 3,
+          "text": "When Rage begins, manifest a simple melee natural weapon and use Strength for its attacks and damage: Bite deals 1d8 piercing and once per turn restores Hit Points equal to your Proficiency Bonus if you are below half your Hit Points; Claws deal 1d6 slashing and let you make one extra claw attack per turn as part of the Attack action; Tail deals 1d8 piercing with Reach, and a Reaction against a hit from a creature within 10 feet lets you roll a d8 and add it to AC against that attack."
+        },
+        "Bestial Soul": {
+          "uroven": 6,
+          "text": "Your Form of the Beast weapons count as magical to overcome Resistance and Immunity to nonmagical attacks and damage. After a Short or Long Rest, choose until your next Short or Long Rest a swim speed equal to your walking speed and the ability to breathe underwater, a climbing speed equal to your walking speed plus climbing difficult surfaces and ceilings without a check, or a once-per-turn Strength (Athletics) check that adds its total in feet to a jump."
+        },
+        "Infectious Fury": {
+          "uroven": 10,
+          "text": "When a natural-weapon hit lands during Rage, the target makes a Wisdom save (DC 8 + Constitution modifier + Proficiency Bonus) or, at your choice, uses its Reaction to make a melee attack against a creature you can see or takes 2d12 Psychic damage. You can use this feature a number of times equal to your Proficiency Bonus, regaining all uses after a Long Rest."
+        },
+        "Call the Hunt": {
+          "uroven": 14,
+          "text": "When you enter Rage, choose willing creatures you can see within 30 feet, up to your Constitution modifier (minimum one); you gain 5 temporary Hit Points for each creature that accepts. Until Rage ends, each chosen creature can once per turn add 1d6 damage to a hit, and you can use this feature a number of times equal to your Proficiency Bonus, recovering all uses after a Long Rest."
+        }
+      }
+    },
+    "Path of the Giant": {
+      "trida": "Barbarian",
+      "zdroj": "Bigby Presents: Glory of the Giants",
+      "rok": 2023,
+      "legacy": true,
+      "alternativa_2024": "Path of the World Tree",
+      "overeno": ["https://dnd5e.wikidot.com/barbarian:giant"],
+      "rysy": {
+        "Giant's Power": {
+          "uroven": 3,
+          "text": "Learn to speak, read, and write Giant, or another language if you already know Giant; you also learn Druidcraft or Thaumaturgy, using Wisdom as the spellcasting ability."
+        },
+        "Giant's Havoc": {
+          "uroven": 3,
+          "text": "While raging, add your Rage Damage bonus to Strength-based thrown-weapon ranged damage, and gain 5 feet of Reach; if you are smaller than Large and have room, you become Large along with your gear."
+        },
+        "Elemental Cleaver": {
+          "uroven": 6,
+          "text": "When Rage begins, infuse one held weapon with acid, cold, fire, thunder, or lightning: its damage changes to that type, it deals an extra 1d6 of that type, and it gains thrown range 20/60 feet; it returns to your hand just after a thrown attack hits or misses, and another creature wielding it suppresses these benefits. While raging and holding it, you can use a Bonus Action to change the damage type to another listed option."
+        },
+        "Mighty Impel": {
+          "uroven": 10,
+          "text": "As a Bonus Action while raging, move one Medium or smaller creature within your Reach to an unoccupied space you can see within 30 feet; an unwilling target avoids this with a Strength save (DC 8 + Proficiency Bonus + Strength modifier). If the landing place cannot support it, it falls and lands prone."
+        },
+        "Demiurgic Colossus": {
+          "uroven": 14,
+          "text": "When you Rage, gain 10 feet of Reach, become Large or Huge (your choice), and use Mighty Impel on Large or smaller creatures; Elemental Cleaver's extra damage increases to 2d6."
+        }
+      }
+    },
+    "Path of the Storm Herald": {
+      "trida": "Barbarian",
+      "zdroj": "Xanathar's Guide to Everything",
+      "rok": 2017,
+      "legacy": true,
+      "alternativa_2024": "Path of the World Tree",
+      "overeno": ["http://dnd5e.wikidot.com/barbarian:storm-herald"],
+      "rysy": {
+        "Storm Aura": {
+          "uroven": 3,
+          "text": "While raging, your chosen desert, sea, or tundra aura extends 10 feet (not through total cover), activates when Rage starts and again as a Bonus Action on your turns, and its environment can change whenever you gain a Barbarian level; save DC is 8 + Proficiency Bonus + Constitution modifier. Desert deals 2 Fire damage to other creatures in the aura, rising to 3 at level 5, 4 at 10, 5 at 15, and 6 at 20; sea targets one visible creature in the aura for a Dexterity save against 1d6 Lightning damage (half on success), rising to 2d6 at level 10, 3d6 at 15, and 4d6 at 20; tundra grants chosen creatures in the aura 2 temporary Hit Points, rising to 3 at level 5, 4 at 10, 5 at 15, and 6 at 20."
+        },
+        "Storm Soul": {
+          "uroven": 6,
+          "text": "Desert grants Fire Resistance, protection from extreme heat, and an action to ignite an unattended flammable object; sea grants Lightning Resistance, underwater breathing, and a 30-foot swim speed; tundra grants Cold Resistance, protection from extreme cold, and an action to freeze a 5-foot cube of water into ice that melts after 1 minute (it fails if a creature is in the cube)."
+        },
+        "Shielding Storm": {
+          "uroven": 10,
+          "text": "While a creature of your choice is in your Storm Aura, it gains the damage Resistance you received from Storm Soul."
+        },
+        "Raging Storm": {
+          "uroven": 14,
+          "text": "The aura's environment adds a response: in desert, use your Reaction after a creature in the aura hits you to force a Dexterity save or deal Fire damage equal to half your Barbarian level; at sea, use your Reaction after hitting a creature in the aura to force a Strength save or knock it prone; in tundra, when Storm Aura activates, choose a visible creature in it to make a Strength save or have Speed 0 until your next turn."
+        }
+      }
+    },
+    "Path of Wild Magic": {
+      "trida": "Barbarian",
+      "zdroj": "Tasha's Cauldron of Everything",
+      "rok": 2020,
+      "legacy": true,
+      "alternativa_2024": "Path of the World Tree",
+      "overeno": ["http://dnd5e.wikidot.com/barbarian:wild-magic"],
+      "rysy": {
+        "Magic Awareness": {
+          "uroven": 3,
+          "text": "As an action, sense the locations of spells and magic items within 60 feet until the end of your next turn, except those behind total cover; sensing a spell reveals its school. Uses equal your Proficiency Bonus return after a Long Rest."
+        },
+        "Wild Surge": {
+          "uroven": 3,
+          "text": "When Rage begins, roll a d8; the save DC for effects is 8 + Proficiency Bonus + Constitution modifier. Results: 1, chosen creatures you see within 30 feet make a Constitution save or take 1d12 Necrotic damage while you gain 1d12 temporary Hit Points; 2, teleport up to 30 feet to a visible empty space and repeat the teleport as a Bonus Action on later turns until Rage ends; 3, summon a spirit within 5 feet of a chosen creature you see within 30 feet, then at turn's end creatures within 5 feet of it make a Dexterity save or take 1d6 Force damage, with repeat summons as a Bonus Action until Rage ends; 4, a held weapon deals Force damage and gains Light and Thrown (range 20/60 feet) until Rage ends, returning to your hand at turn's end if it leaves it; 5, a creature that hits you before Rage ends takes 1d6 Force damage; 6, you and allies within 10 feet gain +1 AC until Rage ends; 7, enemies find ground within 15 feet of you difficult terrain until Rage ends; 8, one creature you see within 30 feet makes a Constitution save or takes 1d6 Radiant damage and is Blinded until your next turn, with repeat uses as a Bonus Action until Rage ends."
+        },
+        "Bolstering Magic": {
+          "uroven": 6,
+          "text": "As an action, touch one creature (including yourself) and grant either 1d3 to its attack rolls and ability checks for 10 minutes, or restore one expended spell slot of a level equal to the d3 roll or lower (chosen by that creature). A recipient cannot benefit again until after a Long Rest; you can use this action a number of times equal to your Proficiency Bonus, recovering all uses after a Long Rest."
+        },
+        "Unstable Backlash": {
+          "uroven": 10,
+          "text": "Immediately after taking damage or failing a saving throw during Rage, use your Reaction to roll on the Wild Magic table and produce that effect, replacing the current one."
+        },
+        "Controlled Surge": {
+          "uroven": 14,
+          "text": "Whenever you roll on the Wild Magic table, roll twice and choose an effect; if both results match, choose any result from the table instead."
+        }
+      }
+    },
+    "College of Creation": {
+      "trida": "Bard",
+      "zdroj": "Tasha's Cauldron of Everything",
+      "rok": 2020,
+      "legacy": true,
+      "alternativa_2024": "College of Lore",
+      "overeno": ["https://dnd5e.wikidot.com/bard:creation"],
+      "rysy": {
+        "Mote of Potential": {
+          "uroven": 3,
+          "text": "Whenever you grant Bardic Inspiration, create an invulnerable Tiny mote that orbits the recipient within 5 feet until the die is lost; an ability-check use lets it roll the die twice and choose, an attack use forces the target and creatures you choose within 5 feet to make a Constitution save or take Thunder damage equal to the die roll, and a save use grants temporary Hit Points equal to the roll plus your Charisma modifier (minimum 1)."
+        },
+        "Performance of Creation": {
+          "uroven": 3,
+          "text": "As an action, create one nonmagical item in a supported unoccupied space within 10 feet; it must be Medium or smaller and worth no more than 20 times your Bard level in gp, and vanishes after hours equal to your Proficiency Bonus. You can create another after a Long Rest or by spending a spell slot of level 2 or higher; only one item can exist at once, and its maximum size becomes Large at level 6 and Huge at level 14."
+        },
+        "Animating Performance": {
+          "uroven": 6,
+          "text": "As an action, animate an unworn, uncarried nonmagical item of Large or smaller size within 30 feet; it lasts 1 hour, until reduced to 0 Hit Points, or until you die, and only one can be active at once. The friendly construct acts after you in initiative, obeys commands, Dodges unless you use a Bonus Action to give it another action, and can act freely if you are incapacitated; you can reanimate after a Long Rest or by spending a spell slot of level 3 or higher. It has AC 16, 10 + 5 times your Bard level Hit Points, Speed 30 feet and Fly Speed 30 feet (hover), scores STR 18, DEX 14, CON 16, INT 4, WIS 10, CHA 6, Darkvision 60 feet, and passive Perception 10; it understands your languages and is immune to Poison and Psychic damage and Charmed, Exhaustion, Poisoned, and Frightened. It can shift a creature's Speed by 10 feet up or down when it starts within 10 feet, and its Force slam has 5-foot reach and deals 1d10 + your Proficiency Bonus damage."
+        },
+        "Creative Crescendo": {
+          "uroven": 14,
+          "text": "Performance of Creation can make a number of items equal to your Charisma modifier (minimum 2) without a gp-value limit; only one may be the maximum size and all others must be Small or Tiny. If the number would be exceeded, choose which existing item disappears."
+        }
+      }
+    },
+    "College of Eloquence": {
+      "trida": "Bard",
+      "zdroj": "Mythic Odysseys of Theros",
+      "rok": 2020,
+      "legacy": true,
+      "alternativa_2024": "College of Glamour",
+      "overeno": ["https://dnd5e.wikidot.com/bard:eloquence"],
+      "rysy": {
+        "Silver Tongue": {
+          "uroven": 3,
+          "text": "On Charisma (Persuasion) and Charisma (Deception) checks, treat a d20 roll of 9 or lower as 10."
+        },
+        "Unsettling Words": {
+          "uroven": 3,
+          "text": "As a Bonus Action, expend a Bardic Inspiration use, choose a creature you can see within 60 feet, and roll the Inspiration die; the target subtracts that result from its next saving throw before your next turn starts."
+        },
+        "Unfailing Inspiration": {
+          "uroven": 6,
+          "text": "When a creature adds your Bardic Inspiration die to an ability check, attack roll, or saving throw and still fails, it retains the die."
+        },
+        "Universal Speech": {
+          "uroven": 6,
+          "text": "As an action, choose creatures within 60 feet up to your Charisma modifier (minimum 1); they understand your speech in any language for 1 hour. After using this feature, you need a Long Rest before using it again unless you expend a spell slot."
+        },
+        "Infectious Inspiration": {
+          "uroven": 14,
+          "text": "When a creature within 60 feet succeeds after adding your Bardic Inspiration die, use your Reaction to give a different creature (not yourself) that can hear you within 60 feet a Bardic Inspiration die without spending a use. You can do this a number of times equal to your Charisma modifier (minimum 1), recovering all uses after a Long Rest."
+        }
+      }
+    },
+    "College of Swords": {
+      "trida": "Bard",
+      "zdroj": "Xanathar's Guide to Everything",
+      "rok": 2017,
+      "legacy": true,
+      "alternativa_2024": "College of Dance / College of Valor",
+      "overeno": ["https://dnd5e.wikidot.com/bard:swords"],
+      "rysy": {
+        "Bonus Proficiencies": {
+          "uroven": 3,
+          "text": "Gain proficiency with medium armor and the scimitar; a melee simple or martial weapon you are proficient with can serve as a focus for your Bard spells."
+        },
+        "Fighting Style": {
+          "uroven": 3,
+          "text": "Choose Dueling, which grants +2 damage when wielding one melee weapon in one hand and no other weapons, or Two-Weapon Fighting, which lets you add your ability modifier to the damage of the second attack; you cannot select a style more than once."
+        },
+        "Blade Flourish": {
+          "uroven": 3,
+          "text": "When you take the Attack action, your Speed increases by 10 feet until the turn ends; after a weapon hit, choose at most one Flourish that turn and spend a Bardic Inspiration use. Defensive adds the die roll to damage and your AC until your next turn; Slashing adds the same damage to the target and a creature you choose within 5 feet of you; Mobile adds the damage, pushes the target up to 5 feet plus the die roll, then lets you use your Reaction to move up to your Speed to an unoccupied space within 5 feet of it."
+        },
+        "Extra Attack": {
+          "uroven": 6,
+          "text": "Take two attacks instead of one whenever you take the Attack action on your turn."
+        },
+        "Master's Flourish": {
+          "uroven": 14,
+          "text": "When using a Blade Flourish, roll a d6 instead of expending a Bardic Inspiration die."
+        }
+      }
+    },
+    "College of Whispers": {
+      "trida": "Bard",
+      "zdroj": "Xanathar's Guide to Everything",
+      "rok": 2017,
+      "legacy": true,
+      "alternativa_2024": "College of Glamour",
+      "overeno": ["https://dnd5e.wikidot.com/bard:whispers"],
+      "rysy": {
+        "Psychic Blades": {
+          "uroven": 3,
+          "text": "After hitting with a weapon attack, expend a Bardic Inspiration use to deal 2d6 extra Psychic damage, once per round on your turn; it rises to 3d6 at Bard level 5, 5d6 at 10, and 8d6 at 15."
+        },
+        "Words of Terror": {
+          "uroven": 3,
+          "text": "After speaking alone with a Humanoid for at least 1 minute, force a Wisdom save against your spell DC or frighten it for 1 hour; the effect ends if it or its allies are attacked or damaged, and a successful save reveals no attempt. Use again after a Short or Long Rest."
+        },
+        "Mantle of Whispers": {
+          "uroven": 6,
+          "text": "When a Humanoid dies within 30 feet, use your Reaction to capture its shadow until used or your next Long Rest; an action turns it into a healthy-looking disguise lasting 1 hour or until ended as a Bonus Action. You learn information it would freely share, not secrets, and gain +5 on Charisma (Deception) opposed by a viewer's Wisdom (Insight); capture another shadow after a Short or Long Rest."
+        },
+        "Shadow Lore": {
+          "uroven": 14,
+          "text": "As an action, whisper to a creature you choose within 30 feet; it makes a Wisdom save against your spell DC, automatically succeeding if it cannot hear you or share a language with you. On a failure it is Charmed for 8 hours or until you or an ally attacks or damages it, believes you know its most mortifying secret, obeys your commands but will not risk its life or fight unless already inclined, and gains no insight into why the fear ends; use again after a Long Rest."
+        }
+      }
+    },
+    "Arcana Domain": {
+      "trida": "Cleric",
+      "zdroj": "Arcana Unleashed",
+      "rok": 2026,
+      "overeno": ["https://dnd2024.wikidot.com/cleric:arcana-domain"],
+      "rysy": {
+        "Arcana Domain Spells": {
+          "uroven": 3,
+          "text": "These spells are always prepared at their listed Cleric levels: 3—Detect Magic, Magic Missile, Magic Weapon, Nystul's Magic Aura; 5—Counterspell, Dispel Magic; 7—Arcane Eye, Leomund's Secret Chest; 9—Bigby's Hand, Teleportation Circle."
+        },
+        "Modify Magic": {
+          "uroven": 3,
+          "text": "When casting a spell, expend Channel Divinity without an action to alter it: Fortifying Spell grants one target temporary Hit Points equal to 2d8 + your Cleric level, while Tenacious Spell lets you roll 1d6 and subtract it from the first save of a creature you see that succeeded on a save against the spell."
+        },
+        "Student of Arcana": {
+          "uroven": 3,
+          "text": "Gain Arcana proficiency or proficiency in another skill available to Clerics at level 1, and learn two Wizard cantrips; whenever you gain a Cleric level, you can replace one with another Wizard cantrip."
+        },
+        "Dispelling Recovery": {
+          "uroven": 6,
+          "text": "Immediately after using a spell slot to cast a spell that restores Hit Points or ends a condition, cast Dispel Magic as part of that action, Bonus Action, or Reaction without a slot; regain the use after a Short or Long Rest or by expending Channel Divinity."
+        },
+        "Magical Mastery": {
+          "uroven": 17,
+          "text": "Learn and always prepare four Wizard spells, one each of levels 6, 7, 8, and 9; whenever you gain a Cleric level, you may replace one with a Wizard spell of the same level."
+        }
+      }
+    },
+    "Death Domain": {
+      "trida": "Cleric",
+      "zdroj": "Dungeon Master's Guide",
+      "rok": 2014,
+      "legacy": true,
+      "alternativa_2024": "Grave Domain",
+      "overeno": ["http://dnd5e.wikidot.com/cleric:death"],
+      "rysy": {
+        "Bonus Proficiency": {
+          "uroven": 1,
+          "text": "Gain proficiency with martial weapons."
+        },
+        "Reaper": {
+          "uroven": 1,
+          "text": "Learn one Necromancy cantrip from any spell list; a Necromancy cantrip that normally targets one creature can instead target two within range and within 5 feet of each other."
+        },
+        "Channel Divinity: Touch of Death": {
+          "uroven": 2,
+          "text": "After hitting a creature with a melee attack, expend Channel Divinity to deal extra Necrotic damage equal to 5 + twice your Cleric level."
+        },
+        "Inescapable Destruction": {
+          "uroven": 6,
+          "text": "Necrotic damage from your Cleric spells and Channel Divinity options ignores Resistance to Necrotic damage."
+        },
+        "Divine Strike": {
+          "uroven": 8,
+          "text": "Once on each of your turns when a weapon attack hits, add 1d8 Necrotic damage; this becomes 2d8 at Cleric level 14."
+        },
+        "Improved Reaper": {
+          "uroven": 17,
+          "text": "A Necromancy spell of levels 1–5 that targets only one creature can instead target two creatures within range and within 5 feet of each other; provide material components separately for each target if the spell consumes them."
+        }
+      }
+    },
+    "Forge Domain": {
+      "trida": "Cleric",
+      "zdroj": "Xanathar's Guide to Everything",
+      "rok": 2017,
+      "legacy": true,
+      "alternativa_2024": "War Domain",
+      "overeno": ["http://dnd5e.wikidot.com/cleric:forge"],
+      "rysy": {
+        "Bonus Proficiencies": {
+          "uroven": 1,
+          "text": "Gain proficiency with heavy armor and Smith's Tools."
+        },
+        "Blessing of the Forge": {
+          "uroven": 1,
+          "text": "At the end of a Long Rest, touch one nonmagical suit of armor or simple or martial weapon; it becomes magical until your next Long Rest or your death, granting armor +1 AC or a weapon +1 to attack and damage rolls. Once used, recover this benefit after a Long Rest."
+        },
+        "Channel Divinity: Artisan's Blessing": {
+          "uroven": 2,
+          "text": "Perform a 1-hour Channel Divinity ritual to make a nonmagical item containing metal worth no more than 100 gp, such as a weapon, armor, 10 pieces of ammunition, tools, or another metal object; supply metal (including coins) worth the item's value, and the finished object appears on a surface in an unoccupied space within 5 feet. You can copy a metal-containing nonmagical item if you possess the original during the ritual."
+        },
+        "Soul of the Forge": {
+          "uroven": 6,
+          "text": "Gain Resistance to Fire damage and, while wearing heavy armor, a +1 bonus to AC."
+        },
+        "Divine Strike": {
+          "uroven": 8,
+          "text": "Once on each of your turns when a weapon attack hits, add 1d8 Fire damage; the extra damage becomes 2d8 at Cleric level 14."
+        },
+        "Saint of Forge and Fire": {
+          "uroven": 17,
+          "text": "Become immune to Fire damage and, while wearing heavy armor, gain Resistance to Bludgeoning, Piercing, and Slashing damage from nonmagical attacks."
+        }
+      }
+    },
+    "Order Domain": {
+      "trida": "Cleric",
+      "zdroj": "Tasha's Cauldron of Everything",
+      "rok": 2020,
+      "legacy": true,
+      "alternativa_2024": "War Domain",
+      "overeno": ["http://dnd5e.wikidot.com/cleric:order"],
+      "rysy": {
+        "Bonus Proficiencies": {
+          "uroven": 1,
+          "text": "Gain heavy-armor proficiency and proficiency in either Intimidation or Persuasion."
+        },
+        "Voice of Authority": {
+          "uroven": 1,
+          "text": "When a spell slot of level 1 or higher is used to cast a spell targeting an ally, that ally can immediately use its Reaction to make one weapon attack against a creature you can see; if several allies are targeted, choose which one may attack."
+        },
+        "Channel Divinity: Order's Demand": {
+          "uroven": 2,
+          "text": "As an action, present your holy symbol and force chosen creatures that can see or hear you within 30 feet to make a Wisdom save or become Charmed until your next turn ends or they take damage; a creature that fails can also be made to drop what it holds."
+        },
+        "Embodiment of the Law": {
+          "uroven": 6,
+          "text": "When casting an Enchantment spell with a slot of level 1 or higher whose normal casting time is 1 action, you can cast it as a Bonus Action instead; uses equal your Wisdom modifier (minimum 1) return after a Long Rest."
+        },
+        "Divine Strike": {
+          "uroven": 8,
+          "text": "Once on each of your turns when a weapon attack hits, add 1d8 Psychic damage; this increases to 2d8 at Cleric level 14."
+        },
+        "Order's Wrath": {
+          "uroven": 17,
+          "text": "When your Divine Strike damages a creature on your turn, curse it until your next turn begins; the next ally to hit it deals 2d8 extra Psychic damage and ends the curse. You can curse only one creature per turn."
+        }
+      }
+    },
+    "Peace Domain": {
+      "trida": "Cleric",
+      "zdroj": "Tasha's Cauldron of Everything",
+      "rok": 2020,
+      "legacy": true,
+      "alternativa_2024": "Life Domain",
+      "overeno": ["http://dnd5e.wikidot.com/cleric:peace"],
+      "rysy": {
+        "Implement of Peace": {
+          "uroven": 1,
+          "text": "Gain proficiency in Insight, Performance, or Persuasion."
+        },
+        "Emboldening Bond": {
+          "uroven": 1,
+          "text": "As an action, bond willing creatures within 30 feet, up to your Proficiency Bonus and including yourself, for 10 minutes or until you use this feature again; while bonded creatures are within 30 feet of one another, each can add 1d4 to an attack roll, ability check, or save once per turn. Uses equal your Proficiency Bonus return after a Long Rest."
+        },
+        "Channel Divinity: Balm of Peace": {
+          "uroven": 2,
+          "text": "As an action, move up to your Speed without provoking Opportunity Attacks and heal each creature you pass within 5 feet for 2d6 + your Wisdom modifier (minimum 1 Hit Point); each creature can be healed only once per use."
+        },
+        "Protective Bond": {
+          "uroven": 6,
+          "text": "When an Emboldening Bond creature is about to take damage, another bonded creature within 30 feet can use its Reaction to teleport to an unoccupied space within 5 feet of it and take all that damage instead."
+        },
+        "Potent Spellcasting": {
+          "uroven": 8,
+          "text": "Add your Wisdom modifier to damage you deal with any Cleric cantrip."
+        },
+        "Expansive Bond": {
+          "uroven": 17,
+          "text": "Emboldening Bond and Protective Bond work between creatures within 60 feet of each other; a creature taking another's damage through Protective Bond has Resistance to that damage."
+        }
+      }
+    },
+    "Twilight Domain": {
+      "trida": "Cleric",
+      "zdroj": "Tasha's Cauldron of Everything",
+      "rok": 2020,
+      "legacy": true,
+      "alternativa_2024": "Light Domain",
+      "overeno": ["http://dnd5e.wikidot.com/cleric:twilight"],
+      "rysy": {
+        "Bonus Proficiencies": {
+          "uroven": 1,
+          "text": "Gain proficiency with martial weapons and heavy armor."
+        },
+        "Eyes of Night": {
+          "uroven": 1,
+          "text": "Gain Darkvision to 300 feet, seeing dim light as bright and darkness as dim within that range; as an action, share it for 1 hour with willing creatures you can see within 10 feet, up to your Wisdom modifier (minimum 1). After sharing, do so again after a Long Rest or by expending a spell slot of any level."
+        },
+        "Vigilant Blessing": {
+          "uroven": 1,
+          "text": "As an action, touch one creature, possibly yourself, to grant Advantage on its next Initiative roll; the effect ends after that roll or when you use this feature again."
+        },
+        "Channel Divinity: Twilight Sanctuary": {
+          "uroven": 2,
+          "text": "As an action, create a mobile sphere of dim twilight centered on you with a 30-foot radius that lasts 1 minute or until you are incapacitated or die; whenever a creature ends its turn inside, grant it 1d6 + your Cleric level temporary Hit Points or end one effect Charmed or Frightened on it."
+        },
+        "Steps of Night": {
+          "uroven": 6,
+          "text": "As a Bonus Action in dim light or darkness, gain a Fly Speed equal to your walking Speed for 1 minute; uses equal your Proficiency Bonus return after a Long Rest."
+        },
+        "Divine Strike": {
+          "uroven": 8,
+          "text": "Once on each of your turns when a weapon attack hits, add 1d8 Radiant damage; it increases to 2d8 at Cleric level 14."
+        },
+        "Twilight Shroud": {
+          "uroven": 17,
+          "text": "You and your allies have Half Cover while inside the sphere created by Twilight Sanctuary."
+        }
+      }
+    },
+    "Circle of Dreams": {
+      "trida": "Druid",
+      "zdroj": "Xanathar's Guide to Everything",
+      "rok": 2017,
+      "legacy": true,
+      "alternativa_2024": "Circle of the Stars",
+      "overeno": ["https://dnd5e.wikidot.com/druid:dreams"],
+      "rysy": {
+        "Balm of the Summer Court": {
+          "uroven": 2,
+          "text": "Your healing pool contains d6s equal to your Druid level; as a Bonus Action, spend up to half your level in dice to heal a visible ally within 120 feet by their total and grant 1 temporary Hit Point per die. Recover all dice after a Long Rest."
+        },
+        "Hearth of Moonlight and Shadow": {
+          "uroven": 6,
+          "text": "At the beginning of a Short or Long Rest, touch a point to create an invisible 30-foot-radius sphere blocked by total cover; while inside, you and allies gain +5 to Dexterity (Stealth) and Wisdom (Perception), and open-flame light cannot be seen outside. It ends when the rest ends or you leave the sphere."
+        },
+        "Hidden Paths": {
+          "uroven": 10,
+          "text": "As a Bonus Action, teleport up to 60 feet to a visible unoccupied space, or use an action to teleport a willing creature you touch up to 30 feet to such a space; uses equal your Wisdom modifier (minimum 1) return after a Long Rest."
+        },
+        "Walker in Dreams": {
+          "uroven": 14,
+          "text": "After a Short Rest, cast Dream (with yourself as messenger), Scrying, or Teleportation Circle without a slot or Material components; the circle leads to the last place you finished a Long Rest on your current plane, and if there is none the spell fails without expending this use. Use this feature again after a Long Rest."
+        }
+      }
+    },
+    "Circle of Spores": {
+      "trida": "Druid",
+      "zdroj": "Guildmasters' Guide to Ravnica",
+      "rok": 2018,
+      "legacy": true,
+      "alternativa_2024": "Circle of the Land",
+      "revize": "Existuje pouze UA aktualizace; k 7. 11. 2026 nebyla vydána jako náhrada 2024.",
+      "overeno": ["https://dnd5e.wikidot.com/druid:spores"],
+      "rysy": {
+        "Circle Spells": {
+          "uroven": 2,
+          "text": "Learn Chill Touch at level 2 and always prepare these circle spells at the listed Druid levels: 3—Blindness/Deafness, Gentle Repose; 5—Animate Dead, Gaseous Form; 7—Blight, Confusion; 9—Cloudkill, Contagion."
+        },
+        "Halo of Spores": {
+          "uroven": 2,
+          "text": "When a visible creature moves within 10 feet or starts its turn there, use your Reaction to deal 1d4 Necrotic damage unless it succeeds on a Constitution save against your spell DC; the die becomes d6 at Druid level 6, d8 at 10, and d10 at 14."
+        },
+        "Symbiotic Entity": {
+          "uroven": 2,
+          "text": "As an action, expend Wild Shape to awaken the spores and gain 4 temporary Hit Points per Druid level; for 10 minutes, until those Hit Points are gone, or until you use Wild Shape again, roll Halo of Spores damage twice and add it, and add 1d6 Necrotic damage to melee weapon hits."
+        },
+        "Fungal Infestation": {
+          "uroven": 6,
+          "text": "When a Small or Medium Beast or Humanoid dies within 10 feet, use your Reaction to raise it immediately as a Zombie with 1 Hit Point; it lasts 1 hour, acts after you, obeys mental commands, and can only take the Attack action for one melee attack. Uses equal your Wisdom modifier (minimum 1) return after a Long Rest."
+        },
+        "Spreading Spores": {
+          "uroven": 10,
+          "text": "As a Bonus Action while Symbiotic Entity is active, place spores within 30 feet in a 10-foot cube for 1 minute; they end early if dismissed as a Bonus Action, placed again, or Symbiotic Entity ends. A creature entering or starting its turn in the cube makes a Constitution save or takes Halo of Spores damage, at most once per turn; while the cube remains, you cannot use the Halo Reaction."
+        },
+        "Fungal Body": {
+          "uroven": 14,
+          "text": "You cannot be Blinded, Deafened, Frightened, or Poisoned, and a critical hit against you counts as a normal hit unless you are incapacitated."
+        }
+      }
+    },
+    "Circle of the Shepherd": {
+      "trida": "Druid",
+      "zdroj": "Xanathar's Guide to Everything",
+      "rok": 2017,
+      "legacy": true,
+      "alternativa_2024": "Circle of the Land",
+      "overeno": ["https://dnd5e.wikidot.com/druid:shepherd"],
+      "rysy": {
+        "Speech of the Woods": {
+          "uroven": 2,
+          "text": "Learn to speak, read, and write Sylvan; Beasts understand your speech, and you can interpret their sounds and movements, but this grants no special friendship or ability to convey sophisticated ideas."
+        },
+        "Spirit Totem": {
+          "uroven": 2,
+          "text": "As a Bonus Action, summon an incorporeal spirit at a point you see within 60 feet; its aura has a 30-foot radius, it lasts 1 minute, and you can move it up to 60 feet as a Bonus Action. Use again after a Short or Long Rest. Bear: chosen creatures in the aura when it appears gain 5 + your Druid level temporary Hit Points and you and allies have Advantage on Strength checks and saves; Hawk: use your Reaction to grant Advantage to an attack against a target in the aura, and you and allies have Advantage on Wisdom (Perception); Unicorn: you and allies have Advantage on ability checks to detect creatures, and when a spell slot heals a creature, chosen creatures in the aura regain Hit Points equal to your Druid level."
+        },
+        "Mighty Summoner": {
+          "uroven": 6,
+          "text": "Beasts and Fey you summon or create with a spell gain 2 extra Hit Points per Hit Die, and their natural-weapon damage counts as magical to overcome Resistance and Immunity to nonmagical attacks and damage."
+        },
+        "Guardian Spirit": {
+          "uroven": 10,
+          "text": "A Beast or Fey summoned or created by your spell regains Hit Points equal to half your Druid level when it ends its turn in your Spirit Totem aura."
+        },
+        "Faithful Summons": {
+          "uroven": 14,
+          "text": "When reduced to 0 Hit Points or unwillingly incapacitated, immediately gain Conjure Animals as if cast with a level 9 slot, summoning four chosen Beasts of CR 2 or lower within 20 feet; they protect and attack if not commanded. It lasts 1 hour without Concentration or until dismissed, and you regain this use after a Long Rest."
+        }
+      }
+    },
+    "Circle of Wildfire": {
+      "trida": "Druid",
+      "zdroj": "Tasha's Cauldron of Everything",
+      "rok": 2020,
+      "legacy": true,
+      "alternativa_2024": "Circle of the Stars",
+      "overeno": ["https://dnd5e.wikidot.com/druid:wildfire"],
+      "rysy": {
+        "Circle Spells": {
+          "uroven": 2,
+          "text": "Always prepare these spells at the listed Druid levels: 2—Burning Hands, Cure Wounds; 3—Flaming Sphere, Scorching Ray; 5—Plant Growth, Revivify; 7—Aura of Life, Fire Shield; 9—Flame Strike, Mass Cure Wounds."
+        },
+        "Summon Wildfire Spirit": {
+          "uroven": 2,
+          "text": "As an action, expend Wild Shape to summon the spirit in a visible unoccupied space within 30 feet; other creatures within 10 feet make a Dexterity save or take 2d6 Fire damage. It acts after you in initiative, obeys you, Dodges unless you command another action with a Bonus Action, and can act freely if you are incapacitated; it lasts 1 hour, until it reaches 0 Hit Points, you summon it again, or you die. The Small elemental has AC 13, 5 + 5 times your Druid level Hit Points, Speed 30 feet and Fly Speed 30 feet (hover), scores STR 10, DEX 14, CON 14, INT 13, WIS 15, CHA 11, Darkvision 60 feet, passive Perception 12, Fire immunity, and immunity to Charmed, Frightened, Grappled, Prone, and Restrained; it understands your languages and uses your Proficiency Bonus. Flame Seed has range 60 feet and deals 1d6 + Proficiency Bonus Fire damage, while Fiery Teleportation moves the spirit and willing creatures within 5 feet up to 15 feet, then forces creatures within 5 feet of its former space to save or take 1d6 + Proficiency Bonus Fire damage."
+        },
+        "Enhanced Bond": {
+          "uroven": 6,
+          "text": "While your Wildfire Spirit is summoned, when you cast a spell that deals Fire damage or restores Hit Points, roll a d8 and add it to one damage or healing roll; a spell with range other than Self can originate from you or the spirit."
+        },
+        "Cauterizing Flames": {
+          "uroven": 10,
+          "text": "When a Small or larger creature dies within 30 feet of you or your spirit, a harmless flame remains in its space for 1 minute; when a creature you see enters that space, use your Reaction to end the flame and either heal it or deal Fire damage equal to 2d10 + your Wisdom modifier. Uses equal your Proficiency Bonus return after a Long Rest."
+        },
+        "Blazing Revival": {
+          "uroven": 14,
+          "text": "If your spirit is within 120 feet when you are reduced to 0 Hit Points and fall unconscious, it drops to 0 Hit Points and you regain half your Hit Points and stand immediately; recover the use after a Long Rest."
+        }
+      }
+    },
+    "Arcane Archer": {
+      "trida": "Fighter",
+      "zdroj": "Arcana Unleashed",
+      "rok": 2026,
+      "overeno": ["https://dnd2024.wikidot.com/fighter:arcane-archer"],
+      "rysy": {
+        "Arcane Archer Lore": {
+          "uroven": 3,
+          "text": "Learn Druidcraft or Prestidigitation, using Intelligence, and gain Arcana and Nature proficiency; replace any proficiency you already have with another Fighter skill, or choose two Fighter skills if you already have both."
+        },
+        "Arcane Shot": {
+          "uroven": 3,
+          "text": "Learn two Arcane Shot options at level 3 and one more at Fighter levels 7, 10, 15, and 18; whenever you learn one, you may replace a known option. Once per turn on a hit with a ranged weapon attack using Ammunition, apply one option; uses equal your Intelligence modifier (minimum 1) return after a Short or Long Rest. The Arcane Shot die is d6, becoming d8 at level 10, d10 at 15, and d12 at 18; option save DC is 8 + Intelligence modifier + Proficiency Bonus."
+        },
+        "Curving Shot": {
+          "uroven": 7,
+          "text": "After missing with a ranged attack using Ammunition, use a Bonus Action to redirect it at a creature you see within the weapon's range and within 60 feet of the original target, making a new attack roll."
+        },
+        "Magical Ammunition": {
+          "uroven": 7,
+          "text": "As a Magic action, enchant nonmagical ammunition and fire it at a visible solid surface within weapon range; it attaches there until removed with a Magic action or the effect ends, then is destroyed. Recover this use after a Short or Long Rest or by expending Second Wind. Darkening creates a 15-foot Emanation for 1 minute that extinguishes nonmagical flames and gives creatures −5 to Wisdom (Perception) and Passive Perception; Unlocking affects a 15-foot Emanation, unlocks/unsticks/unbars one lock on each affected object, and makes a knock audible 300 feet away; Vine grows a climbable 120-foot vine that withers after 10 minutes."
+        },
+        "Ever-Ready Shot": {
+          "uroven": 10,
+          "text": "When you roll Initiative, regain one expended use of Arcane Shot."
+        },
+        "Indomitable Teleport": {
+          "uroven": 15,
+          "text": "When you use Indomitable and succeed on the saving throw, teleport up to 60 feet to a visible unoccupied space."
+        },
+        "Masterful Shots": {
+          "uroven": 18,
+          "text": "When a creature you see misses you, use your Reaction to move up to half your Speed away without provoking Opportunity Attacks, then make a ranged attack against it if it is within weapon range. Banishing deals Psychic damage equal to one Arcane Shot die and Charisma-save failure banishes the target (Incapacitated, Speed 0) until the end of its next turn; Beguiling deals two dice Psychic and a failed Wisdom save Charms it until your next turn, with you or an ally within 30 feet as charmer; Bursting deals two dice Force to the target and creatures within a 10-foot Emanation; Enfeebling deals two dice Necrotic and a failed Constitution save Poisons it until your next turn, subtracting one die from damage of its attacks. Grasping deals one die Slashing and a failed Strength save Restrains for 1 minute or until reused, removable with an action and Strength (Athletics) check against your save DC; Piercing sends a 30-foot by 1-foot line through cover without an attack roll, with a Dexterity save for each creature, failed saves taking a hit plus two dice Piercing and successful saves half. Seeking targets a creature seen within the last minute, travels around corners and ignores Half and Three-Quarters Cover; within long range it forces a Dexterity save, dealing a hit plus two dice Force and revealing location on failure or half damage on success, while beyond range it disappears; Shadow deals one die Psychic and a failed Wisdom save Blinds until the target's next turn."
+        }
+      }
+    },
+    "Cavalier": {
+      "trida": "Fighter",
+      "zdroj": "Xanathar's Guide to Everything",
+      "rok": 2017,
+      "legacy": true,
+      "alternativa_2024": "Battle Master",
+      "overeno": ["http://dnd5e.wikidot.com/fighter:cavalier"],
+      "rysy": {
+        "Bonus Proficiency": {
+          "uroven": 3,
+          "text": "Choose Animal Handling, History, Insight, Performance, or Persuasion proficiency, or learn one language."
+        },
+        "Born to the Saddle": {
+          "uroven": 3,
+          "text": "Gain Advantage on saves to avoid falling from a mount; if you fall no more than 10 feet and are not incapacitated, land on your feet. Mounting or dismounting costs 5 feet of movement instead of half your Speed."
+        },
+        "Unwavering Mark": {
+          "uroven": 3,
+          "text": "A melee weapon hit marks a creature until your next turn ends, unless you die, become incapacitated, or another marks it; while within 5 feet, it has Disadvantage on attacks not targeting you. If it damages someone else, on your next turn make a Bonus Action melee attack against it with Advantage and, on a hit, add damage equal to half your Fighter level; uses equal your Strength modifier (minimum 1) return after a Long Rest."
+        },
+        "Warding Maneuver": {
+          "uroven": 7,
+          "text": "When you or a creature you see within 5 feet is hit, if wielding a melee weapon or shield, use your Reaction to roll 1d8 and add it to the target's AC against that attack; if it still hits, the target has Resistance to its damage. Uses equal your Constitution modifier (minimum 1) return after a Long Rest."
+        },
+        "Hold the Line": {
+          "uroven": 10,
+          "text": "A creature within your Reach provokes an Opportunity Attack when it moves at least 5 feet; a hit with that attack reduces its Speed to 0 for the turn."
+        },
+        "Ferocious Charger": {
+          "uroven": 15,
+          "text": "Once per turn, if you move at least 10 feet straight toward a creature before hitting it with an attack, it must succeed on a Strength save (DC 8 + Proficiency Bonus + Strength modifier) or fall Prone."
+        },
+        "Vigilant Defender": {
+          "uroven": 18,
+          "text": "In combat, take one special Reaction on each other creature's turn, usable only for an Opportunity Attack; it cannot be used on the same turn as your normal Reaction."
+        }
+      }
+    },
+    "Echo Knight": {
+      "trida": "Fighter",
+      "zdroj": "Explorer's Guide to Wildemount",
+      "rok": 2020,
+      "legacy": true,
+      "alternativa_2024": "Eldritch Knight / Psi Warrior",
+      "overeno": ["http://dnd5e.wikidot.com/fighter:echo-knight"],
+      "rysy": {
+        "Manifest Echo": {
+          "uroven": 3,
+          "text": "As a Bonus Action, create an echo in a visible unoccupied space within 15 feet; it has AC 14 + Proficiency Bonus, 1 Hit Point, your size, and immunity to all conditions, moves up to 30 feet mentally each turn, and is destroyed if over 30 feet away at turn's end. You can dismiss it as a Bonus Action, and teleport by swapping places with it for 15 feet of movement; your Attack-action attacks can originate from either space, and a Reaction lets you make an Opportunity Attack as if in its space when a visible creature within 5 feet moves at least 5 feet away."
+        },
+        "Unleash Incarnation": {
+          "uroven": 3,
+          "text": "Whenever you take the Attack action, make one additional melee attack from the echo's position; uses equal your Constitution modifier (minimum 1) return after a Long Rest."
+        },
+        "Echo Avatar": {
+          "uroven": 7,
+          "text": "As an action, see and hear through the echo for up to 10 minutes while Blinded and Deafened yourself; it can be up to 1,000 feet away without being destroyed."
+        },
+        "Shadow Martyr": {
+          "uroven": 10,
+          "text": "Before an attack roll against a creature you see, use your Reaction to teleport the echo to an unoccupied space within 5 feet of that creature and make the attack target the echo; recover this use after a Short or Long Rest."
+        },
+        "Reclaim Potential": {
+          "uroven": 15,
+          "text": "When damage destroys your echo, gain 2d6 + your Constitution modifier temporary Hit Points if you have none; uses equal your Constitution modifier (minimum 1) return after a Long Rest."
+        },
+        "Legion of One": {
+          "uroven": 18,
+          "text": "As a Bonus Action, create two Manifest Echoes at once; creating a third destroys the previous two, and abilities can originate from either. If Initiative is rolled while you have no Unleash Incarnation uses, regain one."
+        }
+      }
+    },
+    "Rune Knight": {
+      "trida": "Fighter",
+      "zdroj": "Tasha's Cauldron of Everything",
+      "rok": 2020,
+      "legacy": true,
+      "alternativa_2024": "Psi Warrior",
+      "overeno": ["http://dnd5e.wikidot.com/fighter:rune-knight"],
+      "rysy": {
+        "Bonus Proficiencies": {
+          "uroven": 3,
+          "text": "Gain proficiency with Smith's Tools and learn to speak, read, and write Giant."
+        },
+        "Rune Carver": {
+          "uroven": 3,
+          "text": "Learn two runes, replacing one when gaining a Fighter level; know 3 at level 7, 4 at 10, and 5 at 15. After each Long Rest, inscribe a different rune on that many held/worn objects (weapon, armor, shield, jewelry, or another object), with one rune per object; save DC is 8 + Proficiency Bonus + Constitution modifier. Cloud: Advantage on Dexterity (Sleight of Hand) and Charisma (Deception); when you or a creature you see within 30 feet is hit, use a Reaction to redirect the same attack roll to a different creature within 30 feet (not attacker), regardless of range. Fire: double Proficiency Bonus on proficient tool checks; on a weapon hit add 2d6 Fire and force a Strength save or Restrain for 1 minute, dealing 2d6 Fire at each turn's start, with a save at each turn's end; a Short or Long Rest restores the rune. Frost: Advantage on Wisdom (Animal Handling) and Charisma (Intimidation), or as a Bonus Action gain +2 to Strength and Constitution checks and saves for 10 minutes. Stone: Advantage on Wisdom (Insight), Darkvision 120 feet, and a Reaction when a creature you see ends within 30 feet to force a Wisdom save or Charm, Speed 0, and Incapacitate it for 1 minute (repeat save at each turn's end). Hill, level 7+: Advantage against Poisoned saves and Poison Resistance, or a Bonus Action for Bludgeoning, Piercing, and Slashing Resistance for 1 minute. Storm, level 7+: Advantage on Intelligence (Arcana), cannot be Surprised unless incapacitated, or a Bonus Action prophetic state for 1 minute (or until incapacitated) that lets a Reaction give Advantage or Disadvantage to a visible creature's attack, save, or check within 60 feet; a rune's use returns after a Short or Long Rest."
+        },
+        "Giant's Might": {
+          "uroven": 3,
+          "text": "As a Bonus Action, gain Giant's Might for 1 minute: if smaller than Large and with room, become Large; gain Advantage on Strength checks and saves; once each turn add 1d6 damage to a weapon or Unarmed Strike hit. Uses equal your Proficiency Bonus return after a Long Rest."
+        },
+        "Runic Shield": {
+          "uroven": 7,
+          "text": "When a creature you see within 60 feet is hit by an attack, use your Reaction to make the attacker reroll the d20 and use the new result; uses equal your Proficiency Bonus return after a Long Rest."
+        },
+        "Great Stature": {
+          "uroven": 10,
+          "text": "Roll 3d4 and grow by that many inches; Giant's Might's extra damage increases to 1d8."
+        },
+        "Master of Runes": {
+          "uroven": 15,
+          "text": "Invoke each Rune Carver rune twice instead of once, regaining all uses after a Short or Long Rest."
+        },
+        "Runic Juggernaut": {
+          "uroven": 18,
+          "text": "Giant's Might's bonus damage rises to 1d10; when you use it, you can become Huge and gain 5 feet of Reach while Huge."
+        }
+      }
+    },
+    "Samurai": {
+      "trida": "Fighter",
+      "zdroj": "Xanathar's Guide to Everything",
+      "rok": 2017,
+      "legacy": true,
+      "alternativa_2024": "Champion",
+      "overeno": ["http://dnd5e.wikidot.com/fighter:samurai"],
+      "rysy": {
+        "Bonus Proficiency": {
+          "uroven": 3,
+          "text": "Gain proficiency in History, Insight, Performance, or Persuasion, or learn one language."
+        },
+        "Fighting Spirit": {
+          "uroven": 3,
+          "text": "As a Bonus Action, gain Advantage on all weapon attacks until the turn ends and 5 temporary Hit Points; the latter becomes 10 at Fighter level 10 and 15 at 15. You have three uses, restored after a Long Rest."
+        },
+        "Elegant Courtier": {
+          "uroven": 7,
+          "text": "Add your Wisdom modifier to Charisma (Persuasion) checks and gain Wisdom-save proficiency; if already proficient, choose Intelligence or Charisma saves instead."
+        },
+        "Tireless Spirit": {
+          "uroven": 10,
+          "text": "When you roll Initiative with no Fighting Spirit uses left, regain one use."
+        },
+        "Rapid Strike": {
+          "uroven": 15,
+          "text": "Once per turn during the Attack action, if you have Advantage on an attack against a target, forgo it to make one additional weapon attack against that target."
+        },
+        "Strength Before Death": {
+          "uroven": 18,
+          "text": "When damage reduces you to 0 Hit Points, use your Reaction to delay falling unconscious and take an extra turn; at 0 Hit Points, damage still causes Death Save failures and three failures kill you. You fall unconscious at the turn's end if still at 0, and regain this use after a Long Rest."
+        }
+      }
+    },
+    "Warrior of the Mystic Arts": {
+      "trida": "Monk",
+      "zdroj": "Arcana Unleashed",
+      "rok": 2026,
+      "overeno": ["https://dnd2024.wikidot.com/monk:warrior-of-the-mystic-arts"],
+      "rysy": {
+        "Spellcasting": {
+          "uroven": 3,
+          "text": "Know two Sorcerer cantrips at Monk level 3, replace one when gaining a Monk level, and learn a third at level 10; prepare three level-1 Sorcerer spells initially, replace one per Monk level, use Wisdom and an Arcane Focus, and recover slots after a Long Rest. Prepared spells / slots (1st/2nd/3rd/4th): level 3: 3/2/0/0/0; 4–6: 4/3/0/0/0; 7: 5/4/2/0/0; 8–9: 6/4/2/0/0; 10: 7/4/3/0/0; 11–12: 8/4/3/0/0; 13: 9/4/3/2/0; 14–15: 10/4/3/2/0; 16–18: 11/4/3/3/0; 19: 12/4/3/3/1; 20: 13/4/3/3/1. When multiclassed with another Spellcasting class, add one third of your Monk levels, rounded down, to slot calculation."
+        },
+        "Mystic Fighting Style": {
+          "uroven": 6,
+          "text": "When you take the Attack action, replace one Unarmed Strike with a Sorcerer cantrip that has a casting time of 1 action."
+        },
+        "Mystic Focus": {
+          "uroven": 6,
+          "text": "Spend a spell slot without an action to regain Focus Points equal to its level; after a Short Rest or Uncanny Metabolism, spend unexpended Focus Points to recover one expended slot, at most level 4. Slot recovery costs 2 Focus Points at Monk level 6 for a level-1 slot, 3 at level 7 for level 2, 5 at level 13 for level 3, and 6 at level 19 for level 4."
+        },
+        "Focused Strike": {
+          "uroven": 11,
+          "text": "After using Stunning Strike, its target has Disadvantage on saves against your spells until your next turn begins, whether it succeeded or failed its Stunning Strike save."
+        },
+        "Improved Mystic Fighting Style": {
+          "uroven": 17,
+          "text": "When activating Flurry of Blows, replace two Unarmed Strikes with a Sorcerer spell of level 1 or 2 that normally takes an action, casting it as part of the same Bonus Action."
+        }
+      }
+    },
+    "Way of the Ascendant Dragon": {
+      "trida": "Monk",
+      "zdroj": "Fizban's Treasury of Dragons",
+      "rok": 2021,
+      "legacy": true,
+      "alternativa_2024": "Warrior of the Elements",
+      "overeno": ["http://dnd5e.wikidot.com/monk:ascendant-dragon"],
+      "rysy": {
+        "Draconic Disciple": {
+          "uroven": 3,
+          "text": "When you fail Charisma (Intimidation) or (Persuasion), use your Reaction to reroll; after turning a failure into success, recover this use after a Long Rest. Your Unarmed Strike damage can be Acid, Cold, Fire, Lightning, or Poison, and you learn Draconic or another language."
+        },
+        "Breath of the Dragon": {
+          "uroven": 3,
+          "text": "Replace one Attack-action attack with a 20-foot cone or 30-foot-long, 5-foot-wide line of Acid, Cold, Fire, Lightning, or Poison; creatures make a Dexterity save against your Ki DC, taking two Martial Arts dice on a failure or half on success, increasing to three dice at level 11. Uses equal your Proficiency Bonus return after a Long Rest; when empty, spend 2 Ki Points to use it again."
+        },
+        "Wings Unfurled": {
+          "uroven": 6,
+          "text": "When using Step of the Wind, manifest spectral wings until your turn ends and gain a Fly Speed equal to your walking Speed; uses equal your Proficiency Bonus return after a Long Rest."
+        },
+        "Aspect of the Wyrm": {
+          "uroven": 11,
+          "text": "As a Bonus Action, create a 10-foot aura for 1 minute and choose Frightful Presence or Resistance: when created and on later Bonus Actions, force a creature in the aura to make a Wisdom save or be Frightened for 1 minute (repeat save at each turn's end), or grant yourself and allies in the aura Resistance to Acid, Cold, Fire, Lightning, or Poison. Use again after a Long Rest or by spending 3 Ki Points."
+        },
+        "Ascendant Aspect": {
+          "uroven": 17,
+          "text": "Spend 1 Ki Point when using Breath of the Dragon to make it a 60-foot cone or 90-foot-long, 5-foot-wide line dealing four Martial Arts dice on a failed save or half on success; gain 10-foot Blindsight, including seeing invisible creatures unless hidden. When you activate Aspect of the Wyrm, creatures you choose in the aura make a Dexterity save or take 3d10 damage of your choice: Acid, Cold, Fire, Lightning, or Poison."
+        }
+      }
+    },
+    "Way of the Astral Self": {
+      "trida": "Monk",
+      "zdroj": "Tasha's Cauldron of Everything",
+      "rok": 2020,
+      "legacy": true,
+      "alternativa_2024": "Warrior of Shadow",
+      "overeno": ["http://dnd5e.wikidot.com/monk:astral-self"],
+      "rysy": {
+        "Arms of the Astral Self": {
+          "uroven": 3,
+          "text": "As a Bonus Action, spend 1 Ki Point to summon arms for 10 minutes (ending early if incapacitated or dead); creatures you choose within 10 feet make a Dexterity save or take two Martial Arts dice Force damage. Use Wisdom for Strength checks and saves, and for the arms' Unarmed Strike attacks and damage; those strikes deal Force and have 5 feet more Reach."
+        },
+        "Visage of the Astral Self": {
+          "uroven": 6,
+          "text": "As a Bonus Action, or with the arms' Bonus Action, spend 1 Ki Point to manifest a visage for 10 minutes (ending early if incapacitated or dead); see normally through magical and nonmagical darkness to 120 feet, gain Advantage on Wisdom (Insight) and Charisma (Intimidation), and direct speech to one creature you see within 60 feet or amplify it for creatures within 600 feet."
+        },
+        "Body of the Astral Self": {
+          "uroven": 11,
+          "text": "While both arms and visage are present, manifest the body without an action; use your Reaction against Acid, Cold, Fire, Force, Lightning, or Thunder damage to reduce it by 1d10 + Wisdom modifier (minimum 1). Once per turn, an Arms of the Astral Self hit deals extra damage equal to your Martial Arts die."
+        },
+        "Awakened Astral Self": {
+          "uroven": 17,
+          "text": "As a Bonus Action, spend 5 Ki Points to summon arms, visage, and body for 10 minutes (ending early if incapacitated or dead); gain +2 AC, and when Extra Attack lets you attack twice, you can make three attacks if all use your astral arms."
+        }
+      }
+    },
+    "Way of the Drunken Master": {
+      "trida": "Monk",
+      "zdroj": "Xanathar's Guide to Everything",
+      "rok": 2017,
+      "legacy": true,
+      "alternativa_2024": "Warrior of the Open Hand",
+      "revize": "Warrior of Mystic Brews byl ohlášen pro D&D: World of Warcraft na 17. 11. 2026; do vydání nenahrazuje legacy variantu.",
+      "overeno": ["http://dnd5e.wikidot.com/monk:drunken-master"],
+      "rysy": {
+        "Bonus Proficiencies": {
+          "uroven": 3,
+          "text": "Gain Performance and Brewer's Supplies proficiency if you do not already have them."
+        },
+        "Drunken Technique": {
+          "uroven": 3,
+          "text": "When using Flurry of Blows, also gain Disengage and increase walking Speed by 10 feet until the turn ends."
+        },
+        "Tipsy Sway": {
+          "uroven": 6,
+          "text": "Stand from Prone using 5 feet of movement instead of half your Speed; when a melee attack misses you, spend 1 Ki Point as a Reaction to redirect it to another creature you see within 5 feet, not the attacker."
+        },
+        "Drunkard's Luck": {
+          "uroven": 11,
+          "text": "When an ability check, attack roll, or save has Disadvantage, spend 2 Ki Points to cancel it for that roll."
+        },
+        "Intoxicated Frenzy": {
+          "uroven": 17,
+          "text": "When using Flurry of Blows, make up to three additional attacks, for up to five total, each against a different creature that turn."
+        }
+      }
+    },
+    "Way of the Kensei": {
+      "trida": "Monk",
+      "zdroj": "Xanathar's Guide to Everything",
+      "rok": 2017,
+      "legacy": true,
+      "alternativa_2024": "Warrior of the Elements",
+      "revize": "Warrior of Mystic Brews byl ohlášen pro D&D: World of Warcraft na 17. 11. 2026; do vydání nenahrazuje legacy variantu.",
+      "overeno": ["http://dnd5e.wikidot.com/monk:kensei"],
+      "rysy": {
+        "Path of the Kensei": {
+          "uroven": 3,
+          "text": "Choose 2 weapon types, one melee and one ranged, from simple or martial weapons without Heavy or Special (Longbow is allowed); gain proficiency if needed, and they count as Monk weapons. Add another type at Monk levels 6, 11, and 17. An unarmed attack as part of the Attack action while holding a melee Kensei weapon grants +2 AC until your next turn while it remains held and you are not incapacitated; as a Bonus Action, add 1d4 damage to ranged Kensei weapon hits until turn end. Gain Calligrapher's or Painter's Supplies proficiency."
+        },
+        "One with the Blade": {
+          "uroven": 6,
+          "text": "Kensei weapon attacks count as magical to overcome Resistance and Immunity to nonmagical attacks and damage; once per turn after a Kensei weapon hit, spend 1 Ki Point to add damage equal to your Martial Arts die."
+        },
+        "Sharpen the Blade": {
+          "uroven": 11,
+          "text": "As a Bonus Action, spend up to 3 Ki Points to grant one touched Kensei weapon the same bonus to attack and damage rolls for 1 minute or until used again; it has no effect on a magic weapon that already grants such a bonus."
+        },
+        "Unerring Accuracy": {
+          "uroven": 17,
+          "text": "Once on each of your turns, reroll a missed attack roll with a Monk weapon."
+        }
+      }
+    },
+    "Way of the Long Death": {
+      "trida": "Monk",
+      "zdroj": "Sword Coast Adventurer's Guide",
+      "rok": 2015,
+      "legacy": true,
+      "alternativa_2024": "Warrior of Shadow",
+      "overeno": ["http://dnd5e.wikidot.com/monk:long-death"],
+      "rysy": {
+        "Touch of Death": {
+          "uroven": 3,
+          "text": "When you reduce a creature within 5 feet to 0 Hit Points, gain temporary Hit Points equal to Wisdom modifier + Monk level (minimum 1)."
+        },
+        "Hour of Reaping": {
+          "uroven": 6,
+          "text": "As an action, creatures you can see within 30 feet make a Wisdom save or become Frightened of you until your next turn ends."
+        },
+        "Mastery of Death": {
+          "uroven": 11,
+          "text": "When reduced to 0 Hit Points, spend 1 Ki Point without an action to have 1 Hit Point instead."
+        },
+        "Touch of the Long Death": {
+          "uroven": 17,
+          "text": "As an action, touch a creature within 5 feet and spend 1–10 Ki Points; it makes a Constitution save, taking 2d10 Necrotic damage per point on a failure or half on success."
+        }
+      }
+    },
+    "Way of the Sun Soul": {
+      "trida": "Monk",
+      "zdroj": "Sword Coast Adventurer's Guide",
+      "rok": 2015,
+      "legacy": true,
+      "alternativa_2024": "Warrior of the Elements",
+      "overeno": ["http://dnd5e.wikidot.com/monk:sun-soul"],
+      "rysy": {
+        "Radiant Sun Bolt": {
+          "uroven": 3,
+          "text": "Make a proficient ranged spell attack with 30-foot range using Dexterity for attack and damage, dealing Radiant damage with a d4 that scales with the Monk's Martial Arts die. When used during the Attack action, spend 1 Ki Point to make two attacks with it as a Bonus Action; with Extra Attack, it can replace any attack in that action."
+        },
+        "Searing Arc Strike": {
+          "uroven": 6,
+          "text": "Immediately after the Attack action, spend 2 Ki Points to cast Burning Hands as a Bonus Action; each additional Ki Point raises its spell level by 1, up to a total Ki cost equal to half your Monk level."
+        },
+        "Searing Sunburst": {
+          "uroven": 11,
+          "text": "As an action, send an orb to a point within 150 feet; creatures in its 20-foot-radius sphere make a Constitution save or take 2d6 Radiant damage (opaque total cover avoids the save). Spend up to 3 Ki Points to add 2d6 damage per point."
+        },
+        "Sun Shield": {
+          "uroven": 17,
+          "text": "Shed bright light for 30 feet and dim light for another 30 feet, toggled as a Bonus Action; when a creature hits you with a melee attack while the light shines, use your Reaction to deal Radiant damage equal to 5 + your Wisdom modifier."
+        }
+      }
+    },
+    "Oath of Conquest": {
+      "trida": "Paladin",
+      "zdroj": "Xanathar's Guide to Everything",
+      "rok": 2017,
+      "legacy": true,
+      "alternativa_2024": "Oath of Vengeance",
+      "overeno": ["https://dnd5e.wikidot.com/paladin:conquest"],
+      "rysy": {
+        "Channel Divinity": {
+          "uroven": 3,
+          "text": "Conquering Presence is an action forcing chosen creatures you see within 30 feet to make a Wisdom save or be Frightened for 1 minute, repeating the save at each turn's end; Guided Strike adds +10 to an attack roll after you see it but before its outcome."
+        },
+        "Aura of Conquest": {
+          "uroven": 7,
+          "text": "While not incapacitated, emanate a 10-foot aura that does not pass total cover; a creature Frightened of you has Speed 0 inside it and takes Psychic damage equal to half your Paladin level when starting its turn there. The aura expands to 30 feet at level 18."
+        },
+        "Scornful Rebuke": {
+          "uroven": 15,
+          "text": "When a creature hits you with an attack, it takes Psychic damage equal to your Charisma modifier (minimum 1) if you are not incapacitated."
+        },
+        "Invincible Conqueror": {
+          "uroven": 20,
+          "text": "As an action, become an avatar for 1 minute, gaining Resistance to all damage, one extra attack in each Attack action, and melee weapon critical hits on d20 rolls of 19 or 20; recover this use after a Long Rest."
+        }
+      }
+    },
+    "Oath of Redemption": {
+      "trida": "Paladin",
+      "zdroj": "Xanathar's Guide to Everything",
+      "rok": 2017,
+      "legacy": true,
+      "alternativa_2024": "Oath of Devotion",
+      "overeno": ["https://dnd5e.wikidot.com/paladin:redemption"],
+      "rysy": {
+        "Channel Divinity": {
+          "uroven": 3,
+          "text": "Emissary of Peace grants +5 to Charisma (Persuasion) for 10 minutes as a Bonus Action; Rebuke the Violent is a Reaction after an attacker within 30 feet damages someone else, forcing a Wisdom save or dealing Radiant damage equal to the damage inflicted (half on success)."
+        },
+        "Aura of the Guardian": {
+          "uroven": 7,
+          "text": "When a creature within 10 feet takes damage, use your Reaction to take it instead; it cannot be transferred with other effects or reduced. The aura's range becomes 30 feet at level 18."
+        },
+        "Protective Spirit": {
+          "uroven": 15,
+          "text": "At the end of your turn in combat, if you are not incapacitated and have fewer than half your Hit Points, regain 1d6 + half your Paladin level Hit Points."
+        },
+        "Emissary of Redemption": {
+          "uroven": 20,
+          "text": "Gain Resistance to all damage dealt by other creatures; when one hits you, it takes Radiant damage equal to half the damage you took. If you attack, cast a spell on, or otherwise damage a creature, these benefits no longer protect you from it until a Long Rest."
+        }
+      }
+    },
+    "Oath of the Crown": {
+      "trida": "Paladin",
+      "zdroj": "Sword Coast Adventurer's Guide",
+      "rok": 2015,
+      "legacy": true,
+      "alternativa_2024": "Oath of Devotion",
+      "overeno": ["https://dnd5e.wikidot.com/paladin:crown"],
+      "rysy": {
+        "Channel Divinity": {
+          "uroven": 3,
+          "text": "As a Bonus Action, Champion Challenge forces chosen creatures you see within 30 feet to make a Wisdom save or be unable to willingly move more than 30 feet away; it ends if you are incapacitated, die, or they leave 30 feet. Turn the Tide is a Bonus Action that heals chosen creatures who hear you within 30 feet for 1d6 + Charisma modifier (minimum 1) if they have no more than half their Hit Points."
+        },
+        "Divine Allegiance": {
+          "uroven": 7,
+          "text": "When a creature within 5 feet takes damage, use your Reaction to take that damage in its place; it cannot be reduced or prevented."
+        },
+        "Unyielding Saint": {
+          "uroven": 15,
+          "text": "Gain Advantage on saves to avoid the Paralyzed and Stunned conditions."
+        },
+        "Exalted Champion": {
+          "uroven": 20,
+          "text": "As an action, gain benefits for 1 hour: Resistance to Bludgeoning, Piercing, and Slashing damage from nonmagical weapons; allies within 30 feet have Advantage on Death Saves; you and allies within 30 feet have Advantage on Wisdom saves. The effect ends if you are incapacitated or die; recover it after a Long Rest."
+        }
+      }
+    },
+    "Oath of the Watchers": {
+      "trida": "Paladin",
+      "zdroj": "Tasha's Cauldron of Everything",
+      "rok": 2020,
+      "legacy": true,
+      "alternativa_2024": "Oath of the Ancients",
+      "overeno": ["https://dnd5e.wikidot.com/paladin:watchers"],
+      "rysy": {
+        "Channel Divinity": {
+          "uroven": 3,
+          "text": "As an action, Watcher's Will grants you and chosen creatures you see within 30 feet (up to your Charisma modifier, minimum 1) Advantage on Intelligence, Wisdom, and Charisma saves for 1 minute. Abjure the Extraplanar forces Aberrations, Celestials, Elementals, Fey, and Fiends that hear you within 30 feet to make a Wisdom save or be Turned for 1 minute or until damaged; they move away, cannot willingly end within 30 feet, and can Dash, escape a movement-blocking effect, or Dodge if unable to move."
+        },
+        "Aura of the Sentinel": {
+          "uroven": 7,
+          "text": "While not incapacitated, you and chosen creatures within 10 feet add your Proficiency Bonus to Initiative; the aura reaches 30 feet at Paladin level 18."
+        },
+        "Vigilant Rebuke": {
+          "uroven": 15,
+          "text": "When you or a creature you see within 30 feet succeeds on an Intelligence, Wisdom, or Charisma save, use your Reaction to deal 2d8 + Charisma modifier Force damage to the creature that forced it."
+        },
+        "Mortal Bulwark": {
+          "uroven": 20,
+          "text": "As a Bonus Action, gain Truesight 120 feet and Advantage on attacks against Aberrations, Celestials, Elementals, Fey, and Fiends for 1 minute; after hitting one with an attack that deals damage, force a Charisma save or banish it to its native plane, while success prevents this feature banishing it for 24 hours. Use again after a Long Rest or by expending a level-5 spell slot."
+        }
+      }
+    },
+    "Oathbreaker": {
+      "trida": "Paladin",
+      "zdroj": "Dungeon Master's Guide",
+      "rok": 2014,
+      "legacy": true,
+      "alternativa_2024": "Oath of Vengeance",
+      "overeno": ["https://dnd5e.wikidot.com/paladin:oathbreaker"],
+      "rysy": {
+        "Channel Divinity": {
+          "uroven": 3,
+          "text": "Control Undead is an action targeting an Undead you see within 30 feet; a failed Wisdom save makes it obey for 24 hours or until you reuse the option, but a creature with CR equal to or above your Paladin level is immune. Dreadful Aspect forces creatures you choose within 30 feet that see you to make a Wisdom save or be Frightened for 1 minute; a creature ending its turn farther than 30 feet can repeat the save."
+        },
+        "Aura of Hate": {
+          "uroven": 7,
+          "text": "You and Fiends and Undead within 10 feet add your Charisma modifier (minimum +1) to melee weapon damage; a creature benefits from only one Paladin's aura, and its range becomes 30 feet at level 18."
+        },
+        "Supernatural Resistance": {
+          "uroven": 15,
+          "text": "Gain Resistance to Bludgeoning, Piercing, and Slashing damage from nonmagical weapons."
+        },
+        "Dread Lord": {
+          "uroven": 20,
+          "text": "As an action, create a 30-foot gloom aura for 1 minute that turns bright light to dim; a Frightened enemy starting there takes 4d10 Psychic damage. You and chosen creatures are shadowed, imposing Disadvantage on attacks from sight-reliant creatures; as a Bonus Action, make a melee spell attack against one creature, dealing 3d10 + Charisma modifier Necrotic damage on a hit. Use again after a Long Rest."
+        }
+      }
+    },
+    "Drakewarden": {
+      "trida": "Ranger",
+      "zdroj": "Fizban's Treasury of Dragons",
+      "rok": 2021,
+      "legacy": true,
+      "alternativa_2024": "Beast Master",
+      "overeno": ["https://dnd5e.wikidot.com/ranger:drakewarden"],
+      "rysy": {
+        "Draconic Gift": {
+          "uroven": 3,
+          "text": "Learn Thaumaturgy as a Ranger spell and learn to speak, read, and write Draconic or another language."
+        },
+        "Drake Companion": {
+          "uroven": 3,
+          "text": "As an action, summon a friendly Small dragon in an unoccupied space within 30 feet; it follows commands, acts after you in Initiative, Dodges unless commanded as a Bonus Action, and can act freely if you are incapacitated. It remains until it reaches 0 Hit Points, is resummoned, or you die; recover this use after a Long Rest or by spending a level-1+ spell slot. It has AC 14 + Proficiency Bonus, 5 + 5 times your Ranger level Hit Points, one d10 Hit Die per Ranger level, Speed 40 feet, ability scores STR 16/DEX 12/CON 15/INT 8/WIS 14/CHA 8, Dexterity and Wisdom saves +1/+2 plus Proficiency Bonus, Darkvision 60 feet, passive Perception 12, and Draconic; choose Acid, Cold, Fire, Lightning, or Poison for its immunity and damage type. Its Bite is +3 + Proficiency Bonus to hit, reach 5 feet, and deals 1d6 + Proficiency Bonus Piercing; its Reaction adds 1d6 of the chosen type when a creature it sees within 30 feet hits with a weapon attack."
+        },
+        "Bond of Fang and Scale": {
+          "uroven": 7,
+          "text": "When summoned, your drake gains a Fly Speed equal to its walking Speed; it becomes Medium and can carry you if you are Medium or smaller, but cannot fly while you ride it. You gain Resistance to its chosen Draconic Essence damage type, and its Bite deals an additional 1d6 of that type."
+        },
+        "Drake's Breath": {
+          "uroven": 11,
+          "text": "As an action, you or your drake exhales a 30-foot cone of Acid, Cold, Fire, Lightning, or Poison (independent of its Essence); creatures make a Dexterity save against your spell DC, taking 8d6 damage or half on success, increasing to 10d6 at Ranger level 15. Use again after a Long Rest or by spending a level-3+ spell slot."
+        },
+        "Perfected Bond": {
+          "uroven": 15,
+          "text": "Your drake grows Large, may fly while carrying you, and its Bite deals another 1d6 Essence damage (2d6 extra total); when you or it takes damage while within 30 feet of one another, use your Reaction to grant Resistance to that instance. Uses equal your Proficiency Bonus return after a Long Rest."
+        }
+      }
+    },
+    "Horizon Walker": {
+      "trida": "Ranger",
+      "zdroj": "Xanathar's Guide to Everything",
+      "rok": 2017,
+      "legacy": true,
+      "alternativa_2024": "Fey Wanderer",
+      "overeno": ["https://dnd5e.wikidot.com/ranger:horizon-walker"],
+      "rysy": {
+        "Horizon Walker Magic": {
+          "uroven": 3,
+          "text": "Learn these additional Ranger spells at the listed levels: 3—Protection from Evil and Good; 5—Misty Step; 9—Haste; 13—Banishment; 17—Teleportation Circle."
+        },
+        "Detect Portal": {
+          "uroven": 3,
+          "text": "As an action, sense the distance and direction of the nearest planar portal within 1 mile; use again after a Short or Long Rest."
+        },
+        "Planar Warrior": {
+          "uroven": 3,
+          "text": "As a Bonus Action, choose a creature you see within 30 feet; your next weapon hit against it this turn deals all damage as Force plus 1d8 extra Force, rising to 2d8 at Ranger level 11."
+        },
+        "Ethereal Step": {
+          "uroven": 7,
+          "text": "As a Bonus Action, cast Etherealness without a spell slot, ending it at the end of the current turn; use again after a Short or Long Rest."
+        },
+        "Distant Strike": {
+          "uroven": 11,
+          "text": "When taking the Attack action, teleport up to 10 feet to a visible unoccupied space before each attack; if you attack at least two different creatures, make one extra attack against a third."
+        },
+        "Spectral Defense": {
+          "uroven": 15,
+          "text": "When an attack damages you, use your Reaction to gain Resistance to all damage from that attack for the turn."
+        }
+      }
+    },
+    "Monster Slayer": {
+      "trida": "Ranger",
+      "zdroj": "Xanathar's Guide to Everything",
+      "rok": 2017,
+      "legacy": true,
+      "alternativa_2024": "Hunter",
+      "overeno": ["https://dnd5e.wikidot.com/ranger:monster-slayer"],
+      "rysy": {
+        "Monster Slayer Magic": {
+          "uroven": 3,
+          "text": "Learn these additional Ranger spells at the listed levels: 3—Protection from Evil and Good; 5—Zone of Truth; 9—Magic Circle; 13—Banishment; 17—Hold Monster."
+        },
+        "Hunter's Sense": {
+          "uroven": 3,
+          "text": "As an action, choose a creature you see within 60 feet and learn its damage Immunities, Resistances, and Vulnerabilities; if divination cannot reveal it, you sense none. Uses equal your Wisdom modifier (minimum 1) return after a Long Rest."
+        },
+        "Slayer's Prey": {
+          "uroven": 3,
+          "text": "As a Bonus Action, designate a creature you see within 60 feet; the first time each turn you hit it with a weapon, deal 1d6 extra damage. The effect lasts until a Short or Long Rest, or until you choose another target."
+        },
+        "Supernatural Defense": {
+          "uroven": 7,
+          "text": "Add 1d6 to saves forced by your Slayer's Prey target and to checks to escape its grapple."
+        },
+        "Magic-User's Nemesis": {
+          "uroven": 11,
+          "text": "When you see a creature within 60 feet cast a spell or teleport, use your Reaction to force a Wisdom save against your spell DC; on failure, the spell or teleport fails and is wasted. Use again after a Short or Long Rest."
+        },
+        "Slayer's Counter": {
+          "uroven": 15,
+          "text": "When your Slayer's Prey target forces a save, use your Reaction immediately before rolling to attack it; on a hit, the save automatically succeeds in addition to the attack's normal effects."
+        }
+      }
+    },
+    "Swarmkeeper": {
+      "trida": "Ranger",
+      "zdroj": "Tasha's Cauldron of Everything",
+      "rok": 2020,
+      "legacy": true,
+      "alternativa_2024": "Fey Wanderer",
+      "overeno": ["https://dnd5e.wikidot.com/ranger:swarmkeeper"],
+      "rysy": {
+        "Gathered Swarm": {
+          "uroven": 3,
+          "text": "Once per turn after a hit, the spirits can deal 1d6 Piercing damage, force a Strength save or move the target up to 15 feet horizontally, or move you 5 feet horizontally; the swarm's appearance is one of four options on a d4."
+        },
+        "Swarmkeeper Magic": {
+          "uroven": 3,
+          "text": "Learn Mage Hand if unknown and these additional Ranger spells at the listed levels: 3—Faerie Fire; 5—Web; 9—Gaseous Form; 13—Arcane Eye; 17—Insect Plague."
+        },
+        "Writhing Tide": {
+          "uroven": 7,
+          "text": "As a Bonus Action, gain a Fly Speed of 10 feet and hover for 1 minute or until incapacitated; uses equal your Proficiency Bonus return after a Long Rest."
+        },
+        "Mighty Swarm": {
+          "uroven": 11,
+          "text": "Gathered Swarm damage becomes 1d8; on a failed save against its movement, the target can also be knocked Prone, and when the swarm moves you, you gain Half Cover until your next turn."
+        },
+        "Swarming Dispersal": {
+          "uroven": 15,
+          "text": "When damaged, use your Reaction to gain Resistance to that damage, vanish into the swarm, and reappear in a visible unoccupied space within 30 feet; uses equal your Proficiency Bonus return after a Long Rest."
         }
       }
     }

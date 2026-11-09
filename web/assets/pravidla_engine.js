@@ -7,15 +7,15 @@
   var SKILLS = ["Acrobatics", "Animal Handling", "Arcana", "Athletics", "Deception", "History", "Insight", "Intimidation", "Investigation",
     "Medicine", "Nature", "Perception", "Performance", "Persuasion", "Religion", "Sleight of Hand", "Stealth", "Survival"];
   // primární atributy (pro multiclass): seznam alternativ, každá alternativa = atributy, které musí mít 13+
-  var PRIMARY = { Barbarian: [["STR"]], Bard: [["CHA"]], Cleric: [["WIS"]], Druid: [["WIS"]], Fighter: [["STR"], ["DEX"]], Monk: [["DEX", "WIS"]],
+  var PRIMARY = { Artificer: [["INT"]], Barbarian: [["STR"]], Bard: [["CHA"]], Cleric: [["WIS"]], Druid: [["WIS"]], Fighter: [["STR"], ["DEX"]], Monk: [["DEX", "WIS"]],
     Paladin: [["STR", "CHA"]], Ranger: [["DEX", "WIS"]], Rogue: [["DEX"]], Sorcerer: [["CHA"]], Warlock: [["CHA"]], Wizard: [["INT"]] };
   // co získáš, když do třídy vstoupíš multiclassem (PHB 2024)
   var MULTI_PROF = { Barbarian: { armor: ["Shields"], skills: 0 }, Bard: { armor: ["Light"], skills: 1 }, Cleric: { armor: ["Light", "Medium", "Shields"], skills: 0 },
-    Druid: { armor: ["Light", "Shields"], skills: 0 }, Fighter: { armor: ["Light", "Medium", "Shields"], skills: 0 }, Monk: { armor: [], skills: 0 },
+    Artificer: { armor: ["Light", "Medium", "Shields"], skills: 1 }, Druid: { armor: ["Light", "Shields"], skills: 0 }, Fighter: { armor: ["Light", "Medium", "Shields"], skills: 0 }, Monk: { armor: [], skills: 0 },
     Paladin: { armor: ["Light", "Medium", "Shields"], skills: 0 }, Ranger: { armor: ["Light", "Medium", "Shields"], skills: 1 },
     Rogue: { armor: ["Light"], skills: 1 }, Sorcerer: { armor: [], skills: 0 }, Warlock: { armor: ["Light"], skills: 0 }, Wizard: { armor: [], skills: 0 } };
-  var FULL = { Bard: 1, Cleric: 1, Druid: 1, Sorcerer: 1, Wizard: 1 }, HALF = { Paladin: 1, Ranger: 1 }, THIRD = { "Eldritch Knight": "INT", "Arcane Trickster": "INT" };
-  var CAST_AB = { Bard: "CHA", Cleric: "WIS", Druid: "WIS", Sorcerer: "CHA", Wizard: "INT", Paladin: "CHA", Ranger: "WIS", Warlock: "CHA" };
+  var FULL = { Bard: 1, Cleric: 1, Druid: 1, Sorcerer: 1, Wizard: 1 }, HALF = { Artificer: 1, Paladin: 1, Ranger: 1 }, THIRD = { "Eldritch Knight": "INT", "Arcane Trickster": "INT" };
+  var CAST_AB = { Artificer: "INT", Bard: "CHA", Cleric: "WIS", Druid: "WIS", Sorcerer: "CHA", Wizard: "INT", Paladin: "CHA", Ranger: "WIS", Warlock: "CHA" };
   var MULTI = [[], [2], [3], [4, 2], [4, 3], [4, 3, 2], [4, 3, 3], [4, 3, 3, 1], [4, 3, 3, 2], [4, 3, 3, 3, 1], [4, 3, 3, 3, 2],
     [4, 3, 3, 3, 2, 1], [4, 3, 3, 3, 2, 1], [4, 3, 3, 3, 2, 1, 1], [4, 3, 3, 3, 2, 1, 1], [4, 3, 3, 3, 2, 1, 1, 1], [4, 3, 3, 3, 2, 1, 1, 1],
     [4, 3, 3, 3, 2, 1, 1, 1, 1], [4, 3, 3, 3, 3, 1, 1, 1, 1], [4, 3, 3, 3, 3, 2, 1, 1, 1], [4, 3, 3, 3, 3, 2, 2, 1, 1]];

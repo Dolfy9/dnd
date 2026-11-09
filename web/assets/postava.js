@@ -8,7 +8,7 @@
     "Performance": "CHA", "Persuasion": "CHA", "Religion": "INT", "Sleight of Hand": "DEX", "Stealth": "DEX", "Survival": "WIS" };
   var CONDITIONS = ["Blinded", "Charmed", "Deafened", "Frightened", "Grappled", "Incapacitated", "Invisible", "Paralyzed", "Petrified", "Poisoned", "Prone", "Restrained", "Stunned", "Unconscious"];
   var XP_LEVELS = [0, 300, 900, 2700, 6500, 14000, 23000, 34000, 48000, 64000, 85000, 100000, 120000, 140000, 165000, 195000, 225000, 265000, 305000, 355000];
-  var CASTER = { Bard: [1, "CHA"], Cleric: [1, "WIS"], Druid: [1, "WIS"], Sorcerer: [1, "CHA"], Wizard: [1, "INT"], Paladin: [2, "CHA"], Ranger: [2, "WIS"] };
+  var CASTER = { Artificer: [2, "INT"], Bard: [1, "CHA"], Cleric: [1, "WIS"], Druid: [1, "WIS"], Sorcerer: [1, "CHA"], Wizard: [1, "INT"], Paladin: [2, "CHA"], Ranger: [2, "WIS"] };
   var THIRD = { "Eldritch Knight": "INT", "Arcane Trickster": "INT" };
   var MULTI = [[], [2], [3], [4, 2], [4, 3], [4, 3, 2], [4, 3, 3], [4, 3, 3, 1], [4, 3, 3, 2], [4, 3, 3, 3, 1], [4, 3, 3, 3, 2],
     [4, 3, 3, 3, 2, 1], [4, 3, 3, 3, 2, 1], [4, 3, 3, 3, 2, 1, 1], [4, 3, 3, 3, 2, 1, 1], [4, 3, 3, 3, 2, 1, 1, 1], [4, 3, 3, 3, 2, 1, 1, 1],
