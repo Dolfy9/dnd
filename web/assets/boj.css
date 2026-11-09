@@ -70,6 +70,9 @@
 .bj-row input[type=number] { width: 4.5em; }
 .bj-res { display: flex; flex-wrap: wrap; gap: 3px; margin-top: 4px; max-height: 160px; overflow: auto; }
 .bj-res button { font-size: .64rem !important; }
+.bj-res button[data-act="addpc"] { display: inline-flex; align-items: center; gap: 5px; text-align: left; }
+.bj-res button[data-act="addpc"] img { flex: 0 0 26px; width: 26px; height: 34px; object-fit: cover; border-radius: 3px; }
+.bj-res button[data-act="addpc"] small { display: block; }
 .bj-legend { display: flex; flex-wrap: wrap; gap: 4px; margin: 6px 0; }
 .bj-pal { display: inline-flex; align-items: center; gap: 3px; font-size: .62rem; border: 1px solid var(--bj-line); border-radius: 4px; padding: 1px 4px; }
 .bj-pal.on { outline: 2px solid var(--bj-acc); }

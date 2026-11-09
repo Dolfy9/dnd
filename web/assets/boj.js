@@ -702,9 +702,12 @@
         && (!f.zeme || !f.zeme.size || (ix && ix.zeme || []).some(x => f.zeme.has(x.cesta)))
         && (!f.stitek || !f.stitek.size || (ix && ix.stitky || []).some(x => f.stitek.has(x)));
     }).slice(0, 30).map(e => {
+      const ix = (A.PI || []).find(x => x.cesta === e.cesta);
       const classes = (e.postava.tridy || []).map(t => t.trida + " " + t.uroven).join(" / ");
       const label = classes || (e.postava.statblok ? "Bez povolání · " + e.postava.statblok : "Bez povolání");
-      return '<button data-act="addpc" data-i="' + A.P.indexOf(e) + '">' + esc(e.postava.jmeno) + " <small>" + esc(label) + "</small></button>";
+      return '<button data-act="addpc" data-i="' + A.P.indexOf(e) + '">'
+        + (ix && ix.portret ? '<img src="' + esc(ix.portret) + '" alt="" loading="lazy">' : "")
+        + '<span>' + esc(e.postava.jmeno) + " <small>" + esc(label) + "</small></span></button>";
     }).join("");
     else { const cr = host.querySelector("[data-cr]").value; res.innerHTML = A.B.filter(m => (!ql || m.nazev.toLowerCase().indexOf(ql) >= 0) && (!cr || m.cr === cr)).slice(0, 40).map(m => '<button data-act="addmon" data-n="' + esc(m.nazev) + '">' + esc(m.nazev) + " <small>CR " + esc(m.cr) + " · " + esc(m.typ) + "</small></button>").join(""); }
   }
