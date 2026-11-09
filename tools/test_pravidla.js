@@ -93,6 +93,11 @@ t(E.createCharacter({ druh: "Elf", pozadi: "Sage", trida: "Wizard", metoda: "poi
 const okc = E.createCharacter({ druh: "Elf", pozadi: "Sage", trida: "Wizard", metoda: "standard", zaklad: { STR: 8, DEX: 14, CON: 13, INT: 15, WIS: 12, CHA: 10 }, bonus: { INT: 2, CON: 1 }, dovednosti: ["Investigation", "Medicine"], keen: "Perception" });
 eq(okc.chyby, [], "platný Elf Sage Wizard"); eq(okc.postava.featy[0].nazev, "Magic Initiate", "Sage dává Magic Initiate");
 eq(E.validate(okc.postava).filter(x => x.typ === "chyba"), [], "validace nové postavy");
+const classless = { jmeno: "Test classless", druh: "Lorwyn Changeling", pozadi: "Farmer", tridy: [],
+  statblok: "Commoner (MM 2025)", hp_rucne: 4, ac_rucne: 10, rychlost_rucne: 30, atributy: base };
+const classlessValidation = E.validate(classless);
+t(!classlessValidation.some(x => x.typ === "chyba" && /povolání/.test(x.text)), "classless NPC se statblokem je povolen");
+t(!classlessValidation.some(x => /Druh Lorwyn Changeling/.test(x.text)), "víceslovný druh se vyhledává jako celý klíč");
 
 
 // 7) kouzla

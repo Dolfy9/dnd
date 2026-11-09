@@ -218,6 +218,8 @@ def postavy_index():
             + ((" (" + str(t.get("podtrida")) + ")") if t.get("podtrida") else "")
             for t in (data.get("tridy") or []) if isinstance(t, dict)
         ]
+        statblock = str(data.get("statblok") or "")
+        class_label = " / ".join(classes) or ("Bez povolání · " + statblock if statblock else "")
         character = {
             "cesta": rel,
             "url": page_url(rel),
@@ -225,8 +227,9 @@ def postavy_index():
             "titul": str(data.get("titul") or ""),
             "kategorie": category,
             "druh": str(data.get("druh") or ""),
-            "tridy": " / ".join(classes),
+            "tridy": class_label,
             "uroven": sum(int(t.get("uroven") or 0) for t in (data.get("tridy") or []) if isinstance(t, dict)),
+            "statblok": statblock,
             "portret": character_portrait(rel, data),
             "perex": plain_excerpt(page["body"]),
             "stitky": [],

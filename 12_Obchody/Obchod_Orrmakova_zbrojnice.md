@@ -2,7 +2,7 @@
 obchod:
   nazev: Orrmakova zbrojnice
   typ: Zbrojíř
-  majitel: [04_Postavy/NPC/Wortmir/Postava_Gwyrna_Orrmak.md]
+  majitel: [04_Postavy/NPC/Wortmir/Postava_Gorrum_Orrmak.md]
   personal: []
   mesto: 03_Mesta/Mesto_Wortmir.md
   zeme: 02_Zeme/Kralovstvi_Kharghae_Zia.md
@@ -30,7 +30,7 @@ Rodinná dílna rodu Orrmaků prodává zbroje, štíty a náhradní přezky. V�
 Vysoké stojany jsou seřazené podle velikosti a druhu zbroje. Na stěně visí rozpracované kroužkové košile a tabulka s termíny oprav.
 
 ## Majitel a personál
-Zbrojnici vlastní [Gwyrna Orrmak](../04_Postavy/NPC/Wortmir/Postava_Gwyrna_Orrmak.md).
+Zbrojnici vlastní [Gorrum Orrmak](../04_Postavy/NPC/Wortmir/Postava_Gorrum_Orrmak.md).
 
 ## Nabídka a služby
 Sklad a ceny jsou vedené v hlavičce obchodu.
@@ -39,12 +39,12 @@ Sklad a ceny jsou vedené v hlavičce obchodu.
 
 ## Háčky
 - Cech si objednal několik zbrojí, ale nikdo se nepřihlásil k jejich převzetí.
-- Gwyrna hledá původce padělané značky, která se objevila na cizí přilbě.
+- Gorrum hledá původce padělané značky, která se objevila na cizí přilbě.
 
 ## Pro DM (tajné)
-- Gwyrna si schovává jednu nedokončenou zbroj, v jejíž vnitřní výztuži našla cizí runový nápis.
+- Gorrum si schovává jednu nedokončenou zbroj, v jejíž vnitřní výztuži našel cizí runový nápis.
 
 ## Související
 - [Wortmir](../03_Mesta/Mesto_Wortmir.md)
 - [Khärghae Zia](../02_Zeme/Kralovstvi_Kharghae_Zia.md)
-- [Gwyrna Orrmak](../04_Postavy/NPC/Wortmir/Postava_Gwyrna_Orrmak.md)
+- [Gorrum Orrmak](../04_Postavy/NPC/Wortmir/Postava_Gorrum_Orrmak.md)

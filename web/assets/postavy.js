@@ -286,6 +286,7 @@
         : '<div class="postavy-modal-initial">' + esc((person.jmeno || "?").slice(0, 1)) + "</div>")
       + '<div><p class="postavy-modal-category">' + esc(person.kategorie) + "</p><h2>" + esc(person.jmeno) + "</h2>"
       + (person.titul ? "<p>" + esc(person.titul) + "</p>" : "")
+      + (person.druh || person.tridy ? '<p class="postavy-modal-class">' + (person.druh ? esc(person.druh) + " · " : "") + esc(person.tridy || "Bez povolání") + "</p>" : "")
       + '<div class="postavy-modal-vitals"><span>AC <b data-stat="ac">—</b></span><span>HP <b data-stat="hp">—</b></span>'
       + '<span>Speed <b data-stat="speed">—</b></span><span>Úroveň / CR <b data-stat="level">—</b></span></div></div></div>'
       + '<div class="postavy-modal-attrs">' + attributes.map(function (key) {

@@ -276,9 +276,10 @@
     var h = '<div class="ps ps2"><div class="p2-top">';
     h += '<aside class="p2-portrait"><div class="p2-crest' + (portraitUrl ? ' p2-crest-portret' : ' p2-crest-initial') + '">'
       + (portraitUrl ? '<a class="p2-portret" href="' + esc(portraitUrl) + '" target="_blank" rel="noopener"><img src="' + esc(portraitUrl) + '" alt="' + esc(c.jmeno) + '"></a>' : '<span>' + esc(initials) + '</span>')
-      + '<div class="p2-lvl" title="Celková úroveň">' + d.lvl + '</div></div></aside>';
+      + '<div class="p2-lvl" title="Celková úroveň">' + ((c.tridy || []).length ? d.lvl : "—") + '</div></div></aside>';
     h += '<div class="p2-top-main"><header class="p2-hero"><div class="p2-id"><div class="p2-identity-head"><div><h2 class="p2-name">' + esc(c.jmeno) + '</h2><div class="p2-title">' + esc(c.titul || "") + '</div></div>' + toolbar + '</div><div class="p2-chips">'
-      + (c.tridy || []).map(function (t) { return '<span class="p2-chip p2-class">' + esc(t.trida) + ' ' + t.uroven + (t.podtrida ? ' · ' + esc(t.podtrida) : '') + '</span>'; }).join("")
+      + ((c.tridy || []).length ? (c.tridy || []).map(function (t) { return '<span class="p2-chip p2-class">' + esc(t.trida) + ' ' + t.uroven + (t.podtrida ? ' · ' + esc(t.podtrida) : '') + '</span>'; }).join("")
+        : '<span class="p2-chip p2-class">' + esc(c.statblok ? "Bez povolání · " + c.statblok : "Bez povolání") + '</span>')
       + '<span class="p2-chip">' + esc(c.druh || "—") + '</span><span class="p2-chip">' + esc(c.pozadi || "—") + '</span><span class="p2-chip">' + esc(c.zarovnani || "—") + '</span><span class="p2-chip">' + esc(c.velikost || "Medium") + '</span></div>'
       + (d.exhaustion ? '<span class="p2-exhaust-warning">Exhaustion ' + d.exhaustion + ' · −' + d.exhaustPenalty + ' D20 · −' + (d.exhaustion * 5) + ' ft Speed' + (d.exhaustion === 6 ? ' · Death' : '') + '</span>' : '') + '</div>'
       + '<div class="p2-badges"><div class="p2-cr"><strong class="p2-cr-v" title="obrana CR ' + d.cr.def + ' · útok CR ' + d.cr.off + '">' + d.cr.cr + '</strong><span class="p2-cr-l">CR</span><small class="p2-cr-x">' + d.cr.xp + ' XP' + (bj.cr_rucne ? '<br>' + esc(bj.cr_rucne) : '') + '</small></div>' + inspirationHtml(key) + badgeXp + '</div></header>';
@@ -287,7 +288,7 @@
       + '<div class="p2-hp ps-hptrack" data-key="' + esc(key) + '" data-max="' + d.hp + '"><div class="p2-l">Hit Points</div><div class="p2-hp-row"><button data-hp="-1" aria-label="Snížit HP">−</button><input class="ps-hpcur" type="number"><span class="p2-hp-max">/ ' + d.hp + '</span><button data-hp="1" aria-label="Zvýšit HP">+</button></div><div class="p2-hpbar"><i></i></div><div class="p2-hp-utility"><label>Temp <input class="ps-hptmp" type="number"></label><label>Δ <input class="p2-hp-delta" type="number" placeholder="±" aria-label="Změnit HP o zadanou hodnotu; Enter"></label><button data-hp="reset" title="Plné HP">↺</button></div></div>'
       + stat('<span class="p2-l-long">Iniciativa</span><span class="p2-l-short">Init.</span>', '<a class="ps-roll" data-roll="1d20' + sg(d.init) + '" data-label="Iniciativa">' + sg(d.init) + '</a>', "p2-initiative") + stat('<span class="p2-l-long">Rychlost</span><span class="p2-l-short">Rych.</span>', d.speed + ' ft', "p2-speed")
       + stat('<span class="p2-l-long">Prof. Bonus</span><span class="p2-l-short">PB</span>', sg(d.pb)) + stat('<span class="p2-l-long" title="Passive Perception">Passive Perc.</span><span class="p2-l-short" title="Passive Perception">PP</span>', d.passive)
-      + stat("Hit Dice", '<span class="p2-hd-left ps-hdleft" data-key="' + esc(key) + '" data-total="' + d.lvl + '"></span>/' + d.lvl + '<small class="p2-hd-dice">' + esc(diceCompact) + '</small>', "p2-hd-stat")
+      + stat("Hit Dice", (c.tridy || []).length ? '<span class="p2-hd-left ps-hdleft" data-key="' + esc(key) + '" data-total="' + d.lvl + '"></span>/' + d.lvl + '<small class="p2-hd-dice">' + esc(diceCompact) + '</small>' : "—", "p2-hd-stat")
       + stat("DPR", bj.dpr ? esc(bj.dpr) : '<span title="Automatický odhad: ' + esc(d.dprPopis || "") + ' (ručně: Upravit postavu → Připravenost na boj)">~' + d.dprAuto + '</span>') + '</div>'
       + '<div class="p2-abil">' + AB.map(function (a) { return '<div class="p2-ab" title="' + AB_CZ[a] + '"><div class="p2-ab-n"><span class="p2-ab-name-wide">' + AB_CZ[a] + '</span><span class="p2-ab-name-short">' + a + '</span></div><a class="p2-ab-mod ps-roll" data-roll="1d20' + sg(d.checkMods[a]) + '" data-label="' + AB_CZ[a] + '">' + sg(d.checkMods[a]) + '</a><div class="p2-ab-s">' + esc((c.atributy || {})[a]) + '</div><a class="p2-ab-save ps-roll' + (d.saveProf.indexOf(a) >= 0 ? ' p' : '') + '" data-roll="1d20' + sg(d.saves[a]) + '" data-label="Záchrana ' + a + '">save ' + sg(d.saves[a]) + '</a></div>'; }).join("") + '</div>';
     h += trackerHtml(c, key) + overview + '</div></div>';
@@ -535,6 +536,7 @@
     });
     tab("Boj", function (p) {
       data.zbroj = data.zbroj || { typ: "none" };
+      field(p, data, "statblok", "Statblock (Monster Manual 2025)");
       field(p, data.zbroj, "nazev", "Zbroj"); field(p, data.zbroj, "typ", "Typ zbroje", null, ["none", "light", "medium", "heavy"]);
       field(p, data.zbroj, "zakladni_ac", "Základní AC zbroje", "number"); field(p, data.zbroj, "stit", "Štít (+2)", "check"); field(p, data.zbroj, "bonus", "Bonus k AC (magie…)", "number");
       strList(p, data, "odolnosti", "Resistances"); strList(p, data, "imunity", "Immunities"); strList(p, data, "zranitelnosti", "Vulnerabilities");

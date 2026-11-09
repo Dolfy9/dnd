@@ -1,7 +1,9 @@
 ---
 postava:
-  jmeno: Merith Al Benar
-  titul: Arkanistka
+  jmeno: Meruth Al Benar
+  titul: Arkanista
+  vek: 41
+  pohlavi: muž
   druh: Human
   druh_volby: "Skillful: získává navíc proficiency v Persuasion."
   pozadi: Sage
@@ -40,7 +42,7 @@ postava:
   osobnost:
     rysy: Před zodpovězením otázky hledá, zda ji lze nejprve změřit.
     idealy: Vědění má chránit lidi před tím, co nechápou.
-    pouta: Její knihovna je přístupná každému, kdo s ní zachází opatrně.
+    pouta: Jeho knihovna je přístupná každému, kdo s ní zachází opatrně.
     vady: Nebezpečí považuje za přijatelnou cenu za přesný výsledek.
   prevod_2024: Abjurer získává subclass na 3. úrovni; seznam kouzel a Abjuration Savant odpovídají PHB 2024.
   boj:
@@ -54,31 +56,31 @@ postava:
     - {nazev: Shield, text: Zvýší si AC proti útoku a může útok odvrátit.}
     taktika: Nejprve aktivuje ochranná kouzla, pak drží odstup a pálí Fire Bolt. Kouzla s koncentrací sesílá jen tehdy, může-li zůstat v krytu.
 ---
-# Postava: Merith Al Benar
+# Postava: Meruth Al Benar
 
 > **Stav:** návrh
 
 ## Role a příběh
-Merith provozuje malé Arkánum nad cechovní ulicí. Překládá ochranné runy, opravuje magické foci a učí zájemce, jak správně zacházet s kouzelným zápisem.
+Meruth provozuje malé Arkánum nad cechovní ulicí. Překládá ochranné runy, opravuje magické foci a učí zájemce, jak správně zacházet s kouzelným zápisem.
 
 ## Vzhled
-Lidská žena s tmavě blond vlasy sepnutými bez ozdob, přesným pohledem a prsty zbarvenými inkoustem nosí modrý pracovní plášť s nenápadnými ochrannými znaky. Na jednom zápěstí jí při práci poblikává průsvitná magická bariéra.
+Lidský muž s tmavě blond vlasy sepnutými bez ozdob, přesným pohledem a prsty zbarvenými inkoustem nosí modrý pracovní plášť s nenápadnými ochrannými znaky. Na jednom zápěstí mu při práci poblikává průsvitná magická bariéra.
 
 ## Povaha a motivace
 Je zdvořilá, soustředěná a nerada plýtvá slovy. Chce zpřístupnit užitečnou magii cechům, aniž by ji Orden mohl snadno zneužít.
 
 ## Pozvání do družiny
-Merith cestuje, pokud družina potřebuje ochranná kouzla nebo ji doprovodí při hledání vzácného zápisu. Je schopná sesílat obranná a průzkumná kouzla, ale její zásoby kouzelných materiálů jsou omezené. Zkušená námezdní pracovnice: 2 GP za den a cestovní výdaje.
+Meruth cestuje, pokud družina potřebuje ochranná kouzla nebo ji doprovodí ho při hledání vzácného zápisu. Je schopný sesílat obranná a průzkumná kouzla, ale jeho zásoby kouzelných materiálů jsou omezené. Zkušený námezdní pracovník: 2 GP za den a cestovní výdaje.
 
 ## Taktika v boji
 Před střetem připraví Mage Armor, a pokud je napadena, použije Shield. Následně udržuje odstup, tvoří Arcane Ward a útočí Fire Boltem.
 
 ## Háčky
 - Z jedné staré runové desky se po překladu objeví druhý, neznámý rukopis.
-- Celnice chce zkontrolovat knihy, které Merith odmítá vydat bez svědků.
+- Celnice chce zkontrolovat knihy, které Meruth odmítá vydat bez svědků.
 
 ## Pro DM (tajné)
-- Merith ukryla ve sklepě neúplnou mapu k dávno zavřené štole. Neví, že některé značky odpovídají starému řádu Irtis.
+- Meruth ukryla ve sklepě neúplnou mapu k dávno zavřené štole. Neví, že některé značky odpovídají starému řádu Irtis.
 
 ## Související
 - [Město Wortmir](../../../03_Mesta/Mesto_Wortmir.md)

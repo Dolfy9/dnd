@@ -3,7 +3,7 @@ obchod:
   nazev: Kladivo a výheň
   typ: Hostinec
   majitel: [04_Postavy/NPC/Wortmir/Postava_Torva_Kier.md]
-  personal: [04_Postavy/NPC/Wortmir/Postava_Lisal_Mjorgen.md, 04_Postavy/NPC/Wortmir/Postava_Urvik_Stalgar.md]
+  personal: [04_Postavy/NPC/Wortmir/Postava_Lisvar_Mjorgen.md, 04_Postavy/NPC/Wortmir/Postava_Urvik_Stalgar.md]
   mesto: 03_Mesta/Mesto_Wortmir.md
   zeme: 02_Zeme/Kralovstvi_Kharghae_Zia.md
   ctvrt: Horní město, u schodiště do Hlubin
@@ -27,10 +27,10 @@ obchod:
 Pivnice v Horním městě slouží jako jídelna pro havíře i místo, kde se hledají průvodci, stráž a krátkodobá práce. Nabídka noclehu se mění podle směn v dolech.
 
 ## Atmosféra
-Pod nízkými trámy stojí dlouhé stoly, u jedné stěny hoří široký krb a vedle dveří je nástěnka s nabídkami. Když zpívá Lisal, i nejhlučnější směna na chvíli ztichne.
+Pod nízkými trámy stojí dlouhé stoly, u jedné stěny hoří široký krb a vedle dveří je nástěnka s nabídkami. Když zpívá Lisvar, i nejhlučnější směna na chvíli ztichne.
 
 ## Majitel a personál
-Majitelkou je [Torva Kier](../04_Postavy/NPC/Wortmir/Postava_Torva_Kier.md). Zpívá zde [Lisal Mjörgen](../04_Postavy/NPC/Wortmir/Postava_Lisal_Mjorgen.md); [Urvik Stalgar](../04_Postavy/NPC/Wortmir/Postava_Urvik_Stalgar.md) bývá pravidelným hostem a bere zde zakázky.
+Majitelkou je [Torva Kier](../04_Postavy/NPC/Wortmir/Postava_Torva_Kier.md). Zpívá zde [Lisvar Mjörgen](../04_Postavy/NPC/Wortmir/Postava_Lisvar_Mjorgen.md); [Urvik Stalgar](../04_Postavy/NPC/Wortmir/Postava_Urvik_Stalgar.md) bývá pravidelným hostem a bere zde zakázky.
 
 ## Nabídka a služby
 Ceny jídla, pití, noclehu a služeb jsou vedené v hlavičce obchodu.
@@ -48,5 +48,5 @@ Ceny jídla, pití, noclehu a služeb jsou vedené v hlavičce obchodu.
 - [Wortmir](../03_Mesta/Mesto_Wortmir.md)
 - [Khärghae Zia](../02_Zeme/Kralovstvi_Kharghae_Zia.md)
 - [Torva Kier](../04_Postavy/NPC/Wortmir/Postava_Torva_Kier.md)
-- [Lisal Mjörgen](../04_Postavy/NPC/Wortmir/Postava_Lisal_Mjorgen.md)
+- [Lisvar Mjörgen](../04_Postavy/NPC/Wortmir/Postava_Lisvar_Mjorgen.md)
 - [Urvik Stalgar](../04_Postavy/NPC/Wortmir/Postava_Urvik_Stalgar.md)

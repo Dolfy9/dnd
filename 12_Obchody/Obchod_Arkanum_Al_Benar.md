@@ -2,7 +2,7 @@
 obchod:
   nazev: Arkánum Al Benar
   typ: Arkanista
-  majitel: [04_Postavy/NPC/Wortmir/Postava_Merith_Al_Benar.md]
+  majitel: [04_Postavy/NPC/Wortmir/Postava_Meruth_Al_Benar.md]
   personal: []
   mesto: 03_Mesta/Mesto_Wortmir.md
   zeme: 02_Zeme/Kralovstvi_Kharghae_Zia.md
@@ -23,13 +23,13 @@ obchod:
 > **Stav:** návrh
 
 ## Popis
-Malé arkanum nad cechovní ulicí nabízí kouzelnické pomůcky, svitky a ověřování magických zápisů. Merith přijímá omezený počet zákazníků a s knihami zachází pod dohledem.
+Malé arkanum nad cechovní ulicí nabízí kouzelnické pomůcky, svitky a ověřování magických zápisů. Meruth přijímá omezený počet zákazníků a s knihami zachází pod dohledem.
 
 ## Atmosféra
 V místnosti je ticho, jen občasné cvaknutí ochranného mechanismu a vůně vosku. Na stole leží rozložené ochranné obrazce; žádná kniha se nevydává bez zápisu do výpůjčního listu.
 
 ## Majitel a personál
-Arkanum vlastní [Merith Al Benar](../04_Postavy/NPC/Wortmir/Postava_Merith_Al_Benar.md).
+Arkanum vlastní [Meruth Al Benar](../04_Postavy/NPC/Wortmir/Postava_Meruth_Al_Benar.md).
 
 ## Nabídka a služby
 Aktuální zboží, kopírování kouzel a konzultace jsou vedené v hlavičce obchodu.
@@ -38,12 +38,12 @@ Aktuální zboží, kopírování kouzel a konzultace jsou vedené v hlavičce o
 
 ## Háčky
 - Zákazník přinese svitek, jehož inkoust mizí pokaždé, když se ho někdo pokusí přečíst.
-- Merith hledá doprovod k nalezenému zápisu v zatopeném skladu.
+- Meruth hledá doprovod k nalezenému zápisu v zatopeném skladu.
 
 ## Pro DM (tajné)
-- Jeden z ochranných obrazců ve sklepě Merith chrání starší knihu, jejíž jméno nechce vyslovit.
+- Jeden z ochranných obrazců ve sklepě Meruth chrání starší knihu, jejíž jméno nechce vyslovit.
 
 ## Související
 - [Wortmir](../03_Mesta/Mesto_Wortmir.md)
 - [Khärghae Zia](../02_Zeme/Kralovstvi_Kharghae_Zia.md)
-- [Merith Al Benar](../04_Postavy/NPC/Wortmir/Postava_Merith_Al_Benar.md)
+- [Meruth Al Benar](../04_Postavy/NPC/Wortmir/Postava_Meruth_Al_Benar.md)

@@ -164,9 +164,14 @@
 
   // ---------- kontrola postavy ----------
   function validate(c) {
-    var out = [], lvl = totalLevel(c), ab = c.atributy || {}, god = !!c.bozska_vyjimka || !R.druhy[(c.druh || "").split(" ")[0]];
+    var out = [], lvl = totalLevel(c), ab = c.atributy || {}, speciesKey = c.druh || "";
+    var species = R.druhy[speciesKey] || R.druhy[speciesKey.split(" ")[0]];
+    var god = !!c.bozska_vyjimka || !species;
     function err(t) { out.push({ typ: "chyba", text: t }); } function warn(t) { out.push({ typ: "varovani", text: t }); }
-    if (!(c.tridy || []).length) err("Postava nemá žádné povolání.");
+    if (!(c.tridy || []).length) {
+      if (!c.statblok) err("Postava bez povolání musí uvádět statblok.");
+      else if (!c.hp_rucne || !c.ac_rucne || !c.rychlost_rucne) warn("U statbloku chybí ručně zadané HP, AC nebo rychlost.");
+    }
     if (lvl > 20) err("Celková úroveň " + lvl + " je nad 20.");
     var seen = {};
     (c.tridy || []).forEach(function (t) {
@@ -186,7 +191,7 @@
     var hasBoon = (c.featy || []).some(function (f) { return /^Boon of/.test(f.nazev); });
     AB.forEach(function (a) { var v = Number(ab[a]); if (v > 20 && !(god || (hasBoon && v <= 30))) err(a + " " + v + " je nad maximem 20."); if (v > 30) err(a + " " + v + " je nad absolutním maximem 30."); });
     if (!god) {
-      if (!R.druhy[(c.druh || "").split(" ")[0]]) warn("Druh " + c.druh + " není v pravidlech 2024+.");
+      if (!species) warn("Druh " + c.druh + " není v pravidlech 2024+.");
       if (c.pozadi && !R.pozadi[c.pozadi]) warn("Pozadí " + c.pozadi + " není v pravidlech 2024+.");
       if (!c.pozadi) err("Chybí pozadí (Background).");
     }

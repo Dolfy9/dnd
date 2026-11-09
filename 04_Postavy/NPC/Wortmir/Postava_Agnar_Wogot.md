@@ -1,7 +1,9 @@
 ---
 postava:
-  jmeno: Agnis Wogot
-  titul: Písařka
+  jmeno: Agnar Wogot
+  titul: Písař
+  vek: 29
+  pohlavi: muž
   druh: Human
   druh_volby: "Skillful: získává navíc proficiency v Persuasion."
   pozadi: Scribe
@@ -41,33 +43,33 @@ postava:
     - {nazev: Sneak Attack, text: Jednou za tah přidá 1d6 za splněných podmínek.}
     bonusove_akce: []
     reakce: []
-    taktika: Agnis se drží za krytem, snaží se uniknout nebo upozornit stráž. Pokud musí bojovat, útočí z dálky a míří na nejbližší hrozbu.
+    taktika: Agnar se drží za krytem, snaží se uniknout nebo upozornit stráž. Pokud musí bojovat, útočí z dálky a míří na nejbližší hrozbu.
 ---
-# Postava: Agnis Wogot
+# Postava: Agnar Wogot
 
 > **Stav:** návrh
 
 ## Role a příběh
-Agnis přepisuje objednávky a přepravní listy pro Bharrinův sklad. Často pomáhá vyplnit povolení horníkům, kteří se nevyznají v ordenských formulářích, a zná postupy, podle nichž se dá zásilka zdržet nebo uvolnit.
+Agnar přepisuje objednávky a přepravní listy pro Bharrinův sklad. Často pomáhá vyplnit povolení horníkům, kteří se nevyznají v ordenských formulářích, a zná postupy, podle nichž se dá zásilka zdržet nebo uvolnit.
 
 ## Vzhled
-Lidská písařka s tmavými vlasy staženými do pevného uzlu a pozornýma očima nosí čisté inkoustově modré šaty, kožené pouzdro na listiny a měděný přívěsek s pečetí. Na prstech má drobné skvrny od vosku a inkoustu.
+Lidský písař s tmavými vlasy staženými do pevného uzlu a pozornýma očima nosí čisté inkoustově modré šaty, kožené pouzdro na listiny a měděný přívěsek s pečetí. Na prstech má drobné skvrny od vosku a inkoustu.
 
 ## Povaha a motivace
-Pohotová, trpělivá a trochu příliš zvědavá. Chce mít jistý příjem a možnost sama rozhodovat, které papíry se dostanou na celnici.
+Pohotový, trpělivý a trochu příliš zvědavá. Chce mít jistý příjem a možnost sám rozhodovat, které papíry se dostanou na celnici.
 
 ## Pozvání do družiny
-Agnis může doprovodit družinu, pokud potřebuje vyřídit povolení nebo zjistit původ listiny. Umí číst rukopisy, vyjednávat s úředníky a najít nesrovnalosti; v boji je zranitelná. Zkušená námezdní pracovnice: 2 GP za den a cestovní výdaje.
+Agnar může doprovodit družinu, pokud potřebuje vyřídit povolení nebo zjistit původ listiny. Umí číst rukopisy, vyjednávat s úředníky a najít nesrovnalosti; v boji je zranitelný. Zkušený námezdní pracovník: 2 GP za den a cestovní výdaje.
 
 ## Taktika v boji
 Pokusí se dostat za kryt nebo z boje uniknout. Pokud je zahnána, střílí z kuše na nejbližšího útočníka a čeká na pomoc.
 
 ## Háčky
 - Na celnici se objeví povolení s pečetí, která patří člověku, jenž už rok nežije.
-- Agnis nabízí odměnu za nalezení ztracené matrice, která by mohla usvědčit několik úředníků.
+- Agnar nabízí odměnu za nalezení ztracené matrice, která by mohla usvědčit několik úředníků.
 
 ## Pro DM (tajné)
-- Agnis za úplatu prodává povolení a padělané dokumenty. Své zákazníky vybírá opatrně a schovává si kopie každého papíru jako pojistku.
+- Agnar za úplatu prodává povolení a padělané dokumenty. Své zákazníky vybírá opatrně a schovává si kopie každého papíru jako pojistku.
 
 ## Související
 - [Město Wortmir](../../../03_Mesta/Mesto_Wortmir.md)
