@@ -484,6 +484,23 @@
       t.value = (obj[key] || []).join("\n"); t.addEventListener("change", function () { obj[key] = t.value.split("\n").map(function (s) { return s.trim(); }).filter(Boolean); });
       l.appendChild(t); p.appendChild(l);
     }
+    var strom = E.api("GET", "strom");
+    function relationSelect(p, key, label, prefix) {
+      var l = el("label", {}, label + " <small>(Ctrl/Cmd pro více výběrů)</small>"), select = el("select", { multiple: "multiple", size: 6 });
+      select.setAttribute("aria-label", label);
+      strom.then(function (tree) {
+        (tree.soubory || []).filter(function (path) { return path.indexOf(prefix) === 0; }).forEach(function (path) {
+          var name = path.split("/").pop().replace(/\.md$/, "").replace(/_/g, " ");
+          var option = el("option", { value: path }, name);
+          option.selected = (data[key] || []).indexOf(path) >= 0;
+          select.appendChild(option);
+        });
+      }).catch(function () { select.disabled = true; });
+      select.addEventListener("change", function () {
+        data[key] = Array.from(select.selectedOptions).map(function (option) { return option.value; });
+      });
+      l.appendChild(select); p.appendChild(l);
+    }
     var classes = Object.keys(R.tridy), subs = Object.keys(R.podtridy).sort(), species = Object.keys(R.druhy).sort(), bgs = Object.keys(R.pozadi).sort(), feats = Object.keys(R.featy).sort();
     tab("Základ", function (p) {
       field(p, data, "jmeno", "Jméno"); field(p, data, "titul", "Titul / role");
@@ -543,6 +560,13 @@
       field(p, data, "poznamky", "Poznámky", "area");
     });
     tab("Vlastní rysy", function (p) { list(p, data, "vlastni_rysy", "Zvláštní / božské rysy", [["nazev", "Název"], ["text", "Popis"]]); });
+    tab("Vazby a štítky", function (p) {
+      relationSelect(p, "zeme", "Země", "02_Zeme/");
+      relationSelect(p, "mesta", "Města", "03_Mesta/");
+      relationSelect(p, "frakce", "Frakce", "05_Frakce/");
+      relationSelect(p, "kampane", "Kampaně", "07_Kampane/");
+      strList(p, data, "stitky", "Štítky");
+    });
     var raw;
     tab("Vše (JSON)", function (p) {
       p.appendChild(el("p", { class: "ed-pozn" }, "Úplná data postavy. Úprava tady má přednost před ostatními záložkami."));

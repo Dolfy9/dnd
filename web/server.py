@@ -4,7 +4,7 @@
 Servíruje web postavený MkDocs (web/site) a API pro úpravy souborů v repu.
 Po každé změně se web přestaví (~2 s). Spuštění: web/serve.sh
 """
-import json, os, subprocess, sys, threading
+import json, os, re, subprocess, sys, threading
 from http.server import ThreadingHTTPServer, SimpleHTTPRequestHandler
 from pathlib import Path
 from urllib.parse import urlparse, parse_qs
@@ -56,6 +56,69 @@ def join_front(meta, body):
     if not meta:
         return body
     return "---\n" + yaml.safe_dump(meta, allow_unicode=True, sort_keys=False, width=120) + "---\n" + body
+
+
+def update_postava_fields(path, fields):
+    allowed = {"zeme", "mesta", "frakce", "kampane", "stitky"}
+    if not isinstance(fields, dict) or not fields or set(fields) - allowed:
+        raise ValueError("povolená pole: zeme, mesta, frakce, kampane, stitky")
+    normalized = {}
+    for key, values in fields.items():
+        if not isinstance(values, list) or any(not isinstance(value, str) for value in values):
+            raise ValueError(f"{key} musí být seznam řetězců")
+        values = [value for value in values if value.strip()]
+        if key == "stitky":
+            seen = set()
+            values = [value for value in values if not (value.casefold() in seen or seen.add(value.casefold()))]
+        normalized[key] = values
+
+    text = path.read_text(encoding="utf-8")
+    match = re.match(r"\A---\r?\n(?P<front>.*?)(?P<closing>\r?\n---\r?\n)", text, re.S)
+    if not match:
+        raise ValueError("soubor nemá YAML hlavičku")
+    front = match.group("front")
+    meta = yaml.safe_load(front) or {}
+    if not isinstance(meta.get("postava"), dict):
+        raise ValueError("soubor nemá postava v YAML hlavičce")
+
+    lines = front.splitlines()
+    newline = "\r\n" if "\r\n" in text else "\n"
+
+    def postava_bounds():
+        start = next((i for i, line in enumerate(lines) if re.match(r"^(\s*)postava\s*:", line)), None)
+        if start is None:
+            raise ValueError("v YAML hlavičce chybí postava")
+        base_indent = len(lines[start]) - len(lines[start].lstrip())
+        end = len(lines)
+        for i in range(start + 1, len(lines)):
+            line = lines[i]
+            if line.strip() and not line.lstrip().startswith("#") and len(line) - len(line.lstrip()) <= base_indent:
+                end = i
+                break
+        child_indent = base_indent + 2
+        return start, end, child_indent
+
+    for key, values in normalized.items():
+        start, end, indent = postava_bounds()
+        sibling = re.compile(r"^ {" + str(indent) + r"}([A-Za-z0-9_-]+)\s*:")
+        keys = [(i, sibling.match(lines[i]).group(1)) for i in range(start + 1, end) if sibling.match(lines[i])]
+        found = next(((i, name) for i, name in keys if name == key), None)
+        if found:
+            first = found[0]
+            stop = next((i for i, _ in keys if i > first), end)
+            if values:
+                encoded = yaml.safe_dump(values, allow_unicode=True, default_flow_style=True, width=120).strip()
+                lines[first:stop] = [" " * indent + key + ": " + encoded]
+            else:
+                del lines[first:stop]
+        elif values:
+            encoded = yaml.safe_dump(values, allow_unicode=True, default_flow_style=True, width=120).strip()
+            insert = end
+            while insert > start + 1 and not lines[insert - 1].strip():
+                insert -= 1
+            lines.insert(insert, " " * indent + key + ": " + encoded)
+
+    return text[:match.start("front")] + newline.join(lines) + match.group("closing") + text[match.end("closing"):]
 
 
 class Handler(SimpleHTTPRequestHandler):
@@ -119,6 +182,17 @@ class Handler(SimpleHTTPRequestHandler):
                 p.write_text(join_front(meta, body), encoding="utf-8")
                 rebuild()
                 return self.send_json({"ok": True})
+            if u.path == "/api/postava/pole" and method == "POST":
+                d = self.body()
+                p = safe_path(d["cesta"])
+                if p.relative_to(ROOT).parts[0] != "04_Postavy":
+                    raise ValueError("cesta musí vést do 04_Postavy")
+                if not p.is_file():
+                    raise FileNotFoundError(d["cesta"])
+                updated = update_postava_fields(p, d.get("pole"))
+                p.write_text(updated, encoding="utf-8")
+                rebuild()
+                return self.send_json({"ok": True, "cesta": d["cesta"]})
             if u.path == "/api/boje" and method == "GET":
                 return self.send_json(boje.index_data())
             if u.path == "/api/boj" and method == "GET":

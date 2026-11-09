@@ -1,0 +1,112 @@
+#postavy-katalog { color: var(--md-default-fg-color); }
+.postavy-layout { display: grid; gap: .8rem; }
+.postavy-search { display: flex; align-items: center; gap: .45rem; flex-wrap: wrap; }
+.postavy-search input { flex: 1 1 18rem; min-width: 12rem; }
+.postavy-search input, .postavy-search select, .postavy-bulk input {
+  border: 1px solid color-mix(in srgb, var(--md-default-fg-color) 30%, transparent);
+  border-radius: 5px; padding: .45rem .6rem; background: var(--md-default-bg-color); color: var(--md-default-fg-color);
+}
+.postavy-view, .postavy-bulk button {
+  border: 1px solid color-mix(in srgb, var(--md-default-fg-color) 30%, transparent);
+  border-radius: 5px; padding: .45rem .65rem; background: var(--md-default-bg-color); color: var(--md-default-fg-color); cursor: pointer;
+}
+.postavy-view.on { background: var(--md-accent-fg-color); color: var(--md-default-bg-color); }
+.postavy-bulk { display: flex; align-items: center; gap: .45rem; flex-wrap: wrap; }
+.postavy-bulk[hidden] { display: none; }
+.postavy-bulk label { font-size: .75rem; }
+.postavy-bulk input { flex: 1 1 12rem; }
+.postavy-facets { display: grid; gap: .55rem; }
+.postavy-facet { border-bottom: 1px solid color-mix(in srgb, var(--md-default-fg-color) 18%, transparent); padding-bottom: .45rem; }
+.md-typeset .postavy-facet h2 { margin: 0 0 .25rem; border: 0; font: 700 .8rem "Cinzel", serif; }
+.postavy-facet > div, .postavy-card-chips { display: flex; flex-wrap: wrap; gap: .3rem; }
+.postavy-chip {
+  display: inline-flex; align-items: center; gap: .25rem; max-width: 100%; border: 1px solid color-mix(in srgb, var(--md-default-fg-color) 25%, transparent);
+  border-radius: 999px; padding: .12rem .55rem; background: color-mix(in srgb, var(--md-default-bg-color) 92%, var(--md-default-fg-color));
+  color: var(--md-default-fg-color); font-size: .68rem; line-height: 1.5; text-decoration: none;
+}
+button.postavy-chip { cursor: pointer; font: inherit; }
+.postavy-chip small { opacity: .7; font-size: .9em; }
+.postavy-chip.on { border-color: var(--md-accent-fg-color); background: var(--md-accent-fg-color); color: var(--md-default-bg-color); }
+.postavy-chip.odvozeno { opacity: .68; }
+.postavy-chip.stitek { background: color-mix(in srgb, var(--md-primary-fg-color) 15%, var(--md-default-bg-color)); }
+.postavy-count { margin: 0; font-size: .75rem; opacity: .78; }
+.postavy-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: .75rem; }
+.postavy-card {
+  position: relative; min-width: 0; overflow: hidden; border: 1px solid color-mix(in srgb, var(--md-default-fg-color) 22%, transparent);
+  border-radius: 9px; background: color-mix(in srgb, var(--md-default-bg-color) 96%, var(--md-default-fg-color));
+}
+.postavy-card-main { display: block; color: inherit; text-decoration: none; }
+.postavy-card-main:hover { color: var(--md-accent-fg-color); }
+.postavy-card-portrait {
+  display: grid; place-items: center; width: 100%; aspect-ratio: 2 / 3; overflow: hidden;
+  background: color-mix(in srgb, var(--md-default-bg-color) 88%, var(--md-default-fg-color));
+}
+.postavy-card-portrait img { display: block; width: 100%; height: 100%; object-fit: contain; }
+.postavy-initial { font: 700 3rem "Cinzel", serif; color: var(--md-primary-fg-color); }
+.postavy-card-copy { display: grid; gap: .18rem; padding: .55rem .65rem .4rem; }
+.postavy-card-copy strong { font: 700 .95rem/1.2 "Cinzel", serif; }
+.postavy-card-copy > small { font-size: .72rem; opacity: .82; }
+.postavy-card-copy .postavy-meta { font-size: .66rem; }
+.postavy-card-chips { padding: 0 .55rem .5rem; }
+.postavy-card-chips .postavy-chip { font-size: .62rem; }
+.postavy-perex { margin: 0 !important; padding: 0 .65rem .65rem; font-size: .72rem; line-height: 1.45; opacity: .85; }
+.postavy-select { position: absolute; z-index: 1; top: .4rem; left: .4rem; display: grid; place-items: center; width: 1.6rem; height: 1.6rem;
+  border: 1px solid color-mix(in srgb, var(--md-default-fg-color) 45%, transparent); border-radius: 4px; background: var(--md-default-bg-color); }
+.postavy-select input { margin: 0; }
+.postavy-table-wrap { width: 100%; overflow-x: auto; }
+.postavy-table { width: 100%; border-collapse: collapse; font-size: .72rem; }
+.postavy-table th, .postavy-table td { padding: .35rem .45rem; border-bottom: 1px solid color-mix(in srgb, var(--md-default-fg-color) 18%, transparent); text-align: left; vertical-align: top; }
+.postavy-table th { font-family: "Cinzel", serif; }
+.postavy-table td small { display: block; font-size: .66rem; opacity: .78; }
+.postavy-empty { padding: 1rem; border: 1px dashed color-mix(in srgb, var(--md-default-fg-color) 30%, transparent); border-radius: 8px; }
+.postavy-modal-bg { z-index: 1100; align-items: center; }
+.postavy-modal { position: relative; width: min(780px, 100%); max-height: 94vh; overflow-y: auto; }
+.postavy-modal-close { position: sticky; float: right; top: 0; z-index: 2; border: 0; background: var(--md-default-bg-color); color: var(--md-default-fg-color); font-size: 1.5rem; cursor: pointer; }
+.postavy-modal-head { display: grid; grid-template-columns: minmax(130px, 210px) minmax(0, 1fr); gap: 1rem; align-items: center; clear: both; }
+.postavy-modal-head > img, .postavy-modal-initial { display: block; width: 100%; aspect-ratio: 2 / 3; object-fit: contain; border: 1px solid var(--md-accent-fg-color); border-radius: 8px; background: color-mix(in srgb, var(--md-default-bg-color) 88%, var(--md-default-fg-color)); }
+.postavy-modal-initial { display: grid; place-items: center; font: 700 3rem "Cinzel", serif; color: var(--md-primary-fg-color); }
+.postavy-modal-category { margin: 0; font-size: .72rem; opacity: .75; }
+.md-typeset .postavy-modal h2 { margin: .15rem 0; border: 0; font: 700 1.5rem "Cinzel", serif; }
+.postavy-modal-vitals { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: .35rem; margin-top: .6rem; }
+.postavy-modal-vitals span, .postavy-modal-attrs span { border: 1px solid color-mix(in srgb, var(--md-default-fg-color) 22%, transparent); border-radius: 5px; padding: .3rem; text-align: center; font-size: .7rem; }
+.postavy-modal-vitals b { display: block; font-size: .9rem; }
+.postavy-modal-attrs { display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: .35rem; margin: .75rem 0; }
+.postavy-modal-excerpt { font-size: .8rem; }
+.md-typeset .postavy-modal h3 { margin: .65rem 0 .3rem; font: 700 .85rem "Cinzel", serif; }
+.postavy-modal-rel > div, .postavy-modal-tag-list { display: flex; flex-wrap: wrap; gap: .3rem; }
+.postavy-rel-link { display: inline-block; border-bottom: 1px dotted currentColor; margin: .1rem .35rem .1rem 0; font-size: .72rem; }
+.postavy-rel-link.odvozeno { opacity: .62; }
+.postavy-tag-editor { display: flex; align-items: center; gap: .35rem; flex-wrap: wrap; margin-top: .45rem; }
+.postavy-tag-editor input { flex: 1 1 10rem; }
+.postavy-modal-tag-list .postavy-chip button { border: 0; padding: 0 0 0 .2rem; background: transparent; color: inherit; cursor: pointer; }
+.postavy-related { margin-top: 2rem; padding-top: .8rem; border-top: 1px solid color-mix(in srgb, var(--md-default-fg-color) 24%, transparent); }
+.postavy-related > header { display: flex; align-items: center; justify-content: space-between; gap: .5rem; flex-wrap: wrap; }
+.md-typeset .postavy-related h2 { margin: 0; }
+.postavy-related-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: .5rem; margin-top: .6rem; }
+.postavy-related-card { display: flex; align-items: center; gap: .5rem; min-width: 0; padding: .35rem; border: 1px solid color-mix(in srgb, var(--md-default-fg-color) 20%, transparent); border-radius: 7px; color: inherit; text-decoration: none; }
+.postavy-related-card img { width: 42px; height: 63px; object-fit: contain; }
+.postavy-related-card span { display: grid; font-size: .72rem; }
+.postavy-related-card small { opacity: .75; }
+.postavy-sheet-rel { display: flex; align-items: center; gap: .35rem .65rem; flex-wrap: wrap; margin-top: .35rem; font-size: .68rem; }
+.postavy-sheet-rel .postavy-chip { padding: 0 .4rem; font-size: .62rem; }
+.pf-pane select[multiple] { min-height: 7rem; }
+.bj-pc-facets { display: grid; gap: .3rem; margin: .35rem 0; }
+.bj-pc-facets > div { display: flex; flex-wrap: wrap; align-items: center; gap: .25rem; font-size: .68rem; }
+.bj-pc-facets button { border: 1px solid color-mix(in srgb, var(--md-default-fg-color) 25%, transparent); border-radius: 999px; padding: .1rem .45rem; background: var(--md-default-bg-color); color: var(--md-default-fg-color); cursor: pointer; font-size: .65rem; }
+.bj-pc-facets button.on { border-color: var(--md-accent-fg-color); background: var(--md-accent-fg-color); color: var(--md-default-bg-color); }
+
+@media (max-width: 600px) {
+  .postavy-search { align-items: stretch; }
+  .postavy-search input { flex-basis: 100%; }
+  .postavy-search select { flex: 1 1 100%; }
+  .postavy-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: .45rem; }
+  .postavy-card-copy { padding: .4rem; }
+  .postavy-card-chips { padding: 0 .35rem .4rem; gap: .2rem; }
+  .postavy-card-chips .postavy-chip { padding-inline: .35rem; }
+  .postavy-modal-bg { padding: 0; align-items: stretch; }
+  .postavy-modal { width: 100%; max-height: 100dvh; height: 100%; border-radius: 0; padding: .8rem; }
+  .postavy-modal-head { grid-template-columns: minmax(90px, 34vw) minmax(0, 1fr); gap: .6rem; }
+  .postavy-modal-vitals { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .postavy-modal-attrs { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .postavy-modal .ed-bar { flex-wrap: wrap; justify-content: center; }
+}

@@ -664,7 +664,7 @@
   function addHtml() {
     const ms = map().stretnuti || [];
     return '<div class="bj-add"><h4>Navržené střetnutí mapy</h4><p>' + ms.map(x => x.pocet + "× " + esc(x.nazev)).join(", ") + ' <button data-act="enc">Přidat</button> <button data-act="place">Rozestavit na startovní pozice</button></p>'
-      + '<h4>Postavy z wiki</h4><div class="bj-row"><input data-q="pc" placeholder="Hledat postavu…"><select data-side="pc"><option value="druzina">Družina</option><option value="nepratele">Nepřátelé</option><option value="neutral">Neutrální</option></select></div><div class="bj-res" data-res="pc"></div>'
+      + '<h4>Postavy z wiki</h4><div class="bj-row"><input data-q="pc" placeholder="Hledat postavu…"><select data-side="pc"><option value="druzina">Družina</option><option value="nepratele">Nepřátelé</option><option value="neutral">Neutrální</option></select></div><div class="bj-pc-facets" data-pc-facets></div><div class="bj-res" data-res="pc"></div>'
       + '<h4>Netvoři (SRD 5.2.1)</h4><div class="bj-row"><input data-q="mon" placeholder="Hledat netvora… (např. Zombie)"><select data-cr><option value="">CR vše</option>' + ["0", "1/8", "1/4", "1/2"].concat(Array.from({ length: 30 }, (_, i) => String(i + 1))).map(c => "<option>" + c + "</option>").join("") + '</select><input type="number" data-n value="1" min="1" max="20" title="Počet"><select data-side="mon"><option value="nepratele">Nepřátelé</option><option value="druzina">Spojenci</option><option value="neutral">Neutrální</option></select></div><div class="bj-res" data-res="mon"></div>'
       + '<h4>Vyvolání kouzlem</h4><div class="bj-row"><select data-c="sum">' + summonList().map(n => "<option>" + esc(n) + "</option>").join("") + '</select><button data-act="summonx">Seslat</button></div><p class="bj-tip">Sesilatel je vybraný žeton, jinak postava na tahu. Tvor sdílí jeho iniciativu, jedná hned po něm, HP, AC a útoky se spočítají z úrovně slotu a zmizí při ztrátě Concentration. Find Familiar a další kouzla bez vlastního statbloku přidej jako netvora z bestiáře.</p>'
       + '<h4>Vlastní žeton</h4><div class="bj-row"><input data-c="n" placeholder="Jméno"><input data-c="hp" type="number" placeholder="HP"><input data-c="ac" type="number" placeholder="AC"><input data-c="i" type="number" placeholder="Init +"><button data-act="custom">Přidat</button></div></div>';
@@ -689,14 +689,29 @@
       + '<div class="bj-right"><h3>Iniciativa</h3>' + initList() + '<nav class="bj-tabs">' + tabs.map(t => '<button data-tab="' + t[0] + '" class="' + (S.tab === t[0] ? "on" : "") + '">' + t[1] + "</button>").join("") + '</nav><div class="bj-pane">'
       + (S.tab === "pridat" ? addHtml() : S.tab === "mapa" ? mapHtml() : S.tab === "log" ? logPane() : S.tab === "boje" ? bojeHtml() : helperHtml()) + "</div></div></div>";
     if (keep) { const b = host.querySelector(".bj-board"); b.scrollLeft = keep[0]; b.scrollTop = keep[1]; }
-    if (S.tab === "pridat") { search("pc"); search("mon"); }
+    if (S.tab === "pridat") { drawPcFilters(); search("pc"); search("mon"); }
   }
   function centerOn(t) { const b = A.host.querySelector(".bj-board"); if (!b || t.x == null) return; const C = 34 * (S.zoom || 1); b.scrollTo({ left: (t.x + .7) * C - b.clientWidth / 2, top: (t.y + .7) * C - b.clientHeight / 2, behavior: "smooth" }); }
   function search(kind) {
     const host = A.host, q = (host.querySelector('[data-q="' + kind + '"]') || {}).value || "", res = host.querySelector('[data-res="' + kind + '"]'); if (!res) return;
     const ql = q.toLowerCase();
-    if (kind === "pc") res.innerHTML = A.P.filter(e => !ql || String(e.postava.jmeno).toLowerCase().indexOf(ql) >= 0).slice(0, 30).map((e, i) => '<button data-act="addpc" data-i="' + A.P.indexOf(e) + '">' + esc(e.postava.jmeno) + " <small>" + esc((e.postava.tridy || []).map(t => t.trida + " " + t.uroven).join(" / ")) + "</small></button>").join("");
+    if (kind === "pc") res.innerHTML = A.P.filter(e => {
+      const ix = (A.PI || []).find(x => x.cesta === e.cesta), f = A.pcf || {};
+      return (!ql || String(e.postava.jmeno).toLowerCase().indexOf(ql) >= 0)
+        && (!f.kategorie || !f.kategorie.size || f.kategorie.has(ix && ix.kategorie))
+        && (!f.zeme || !f.zeme.size || (ix && ix.zeme || []).some(x => f.zeme.has(x.cesta)))
+        && (!f.stitek || !f.stitek.size || (ix && ix.stitky || []).some(x => f.stitek.has(x)));
+    }).slice(0, 30).map(e => '<button data-act="addpc" data-i="' + A.P.indexOf(e) + '">' + esc(e.postava.jmeno) + " <small>" + esc((e.postava.tridy || []).map(t => t.trida + " " + t.uroven).join(" / ")) + "</small></button>").join("");
     else { const cr = host.querySelector("[data-cr]").value; res.innerHTML = A.B.filter(m => (!ql || m.nazev.toLowerCase().indexOf(ql) >= 0) && (!cr || m.cr === cr)).slice(0, 40).map(m => '<button data-act="addmon" data-n="' + esc(m.nazev) + '">' + esc(m.nazev) + " <small>CR " + esc(m.cr) + " · " + esc(m.typ) + "</small></button>").join(""); }
+  }
+  function drawPcFilters() {
+    const host = A.host.querySelector("[data-pc-facets]"); if (!host) return;
+    A.pcf = A.pcf || { kategorie: new Set(), zeme: new Set(), stitek: new Set() };
+    const facets = [["kategorie", "Kategorie", [...new Set((A.PI || []).map(x => x.kategorie))].filter(Boolean).map(x => [x, x])],
+      ["zeme", "Země", [...new Map((A.PI || []).flatMap(x => x.zeme || []).map(x => [x.cesta, x.nazev])).entries()]],
+      ["stitek", "Štítek", [...new Set((A.PI || []).flatMap(x => x.stitky || []))].map(x => [x, x])]];
+    host.innerHTML = facets.map(([key, label, options]) => '<div><b>' + label + '</b> ' + options.map(([value, name]) =>
+      '<button type="button" data-pc-filter="' + key + '" data-value="' + esc(value) + '" class="' + (A.pcf[key].has(value) ? "on" : "") + '">' + esc(name) + '</button>').join("") + "</div>").join("");
   }
 
   // ---------- interakce ----------
@@ -743,6 +758,8 @@
       moveTo(t, x, y, d0.dj);
     });
     host.addEventListener("click", e => {
+      const pcFilter = e.target.closest("[data-pc-filter]");
+      if (pcFilter) { const set = A.pcf[pcFilter.dataset.pcFilter], value = pcFilter.dataset.value; set.has(value) ? set.delete(value) : set.add(value); draw(); return; }
       const tb = e.target.closest("[data-tab]"); if (tb) { S.tab = tb.dataset.tab; save(); draw(); return; }
       const pal = e.target.closest("[data-paint]"); if (pal && document.body.classList.contains("ed-on")) { S.paint = pal.dataset.paint; draw(); return; }
       const b = e.target.closest("[data-act]"); if (!b) return; e.preventDefault();
@@ -906,6 +923,12 @@
   function urlStart() {
     const q = new URLSearchParams(location.search);
     if (q.get("boj")) return openBoj(q.get("boj"));
+    if (q.get("postava")) {
+      const e = A.P.find(x => x.cesta === q.get("postava"));
+      if (e) { S.tab = "pridat"; addTok(pcToken(e), startPos("druzina")); save(); log(esc(e.postava.jmeno) + " přidán do boje z odkazu."); }
+      history.replaceState(null, "", location.pathname);
+      return Promise.resolve();
+    }
     if (q.get("mapa") || q.get("novy") || q.get("quest") || q.get("kampan")) {
       const mi = q.get("mapa") ? mapById(q.get("mapa")) : S.map;
       if (S.meta.id && S.meta.auto) storePut(false);
@@ -997,8 +1020,9 @@
     wait().then(() => Promise.all([
       fetch(base() + "11_Mapy/bojove_mapy.json").then(r => r.json()),
       fetch(base() + "boj_postavy.json").then(r => r.ok ? r.json() : []).catch(() => []),
+      fetch(base() + "postavy_index.json").then(r => r.ok ? r.json() : []).catch(() => []),
       window.MontelienSRD.load("bestiar"), window.MontelienPostava.rules(), window.MontelienKouzla.load()
-    ])).then(([M, P, B, R, K]) => { A = { host, M, P, B, R, K, hist: [] }; load(); load2(); bind(); urlStart().then(() => { draw(); refreshList(); }); })
+    ])).then(([M, P, PI, B, R, K]) => { A = { host, M, P, PI, B, R, K, hist: [] }; load(); load2(); bind(); urlStart().then(() => { draw(); refreshList(); }); })
       .catch(e => { host.innerHTML = '<p class="bj-warn">Bojový modul se nenačetl: ' + esc(e.message) + "</p>"; });
   }
   window.MontelienBoj = { _test: () => ({ A, S, evalAtk, coverOf, bestPlan, dijkstra, monAttacks, checkAttack, attack, undo, logMd, moveTo, summonMon, summonVariants, summonList, castSummon, endConc }) };
