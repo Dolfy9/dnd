@@ -8,7 +8,7 @@
     if ((!catalog || catalog.dataset.ready) && (!detail || detail.dataset.ready)) return;
     if (catalog) catalog.dataset.ready = "1";
     if (detail) detail.dataset.ready = "1";
-    Promise.all([fetch(base() + "obchody_index.json").then(function (r) { return r.json(); }),
+    Promise.all([fetch(base() + "obchody_index.json", { cache: "no-store" }).then(function (r) { return r.json(); }),
       fetch(base() + "assets/srd/predmety.json").then(function (r) { return r.json(); })])
       .then(function (data) {
         var shops = data[0], items = data[1], params = new URLSearchParams(location.search);
