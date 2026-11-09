@@ -163,12 +163,12 @@
     var items = [], landPolys = (D.pevnina || []).filter(function (p) { return p.typ === "pevnina" || p.typ === "ostrov"; }),
       ridgeAreas = (D.oblasti || []).filter(function (a) { return a.typ === "hory" || a.typ === "velehory"; });
     var REL = { kaktus: .3, balvan: .45, rakos: .55, ker: .5, suchy: .8, kopec: .65, utes: .55 };
-    function spr(name, x, y, w, flip, rot, tmavy, kotva) {
+    function spr(name, x, y, w, flip, rot, tmavy, kotva, minScreen) {
       if (!META[name]) return "";
       var res = PAL.viewport_sprites || {}, maxScale = Math.pow(2, res.max_zoom || 2.5);
       w = Math.min(w, META[name].w / (maxScale * (res.min_resolution_ratio || 2)));
       return { n: name, x: x, y: y, w: w, f: flip, r: rot || 0, tmavy: !!tmavy,
-        ax: kotva ? kotva[0] : .5, ay: kotva ? kotva[1] : 1 };
+        ax: kotva ? kotva[0] : .5, ay: kotva ? kotva[1] : 1, minScreen: minScreen || 0 };
     }
     var cliffStyle = PAL.terrain_vectors || {}, coastEdges = [];
     landPolys.forEach(function (poly) {
@@ -405,10 +405,13 @@
     (D.symboly || []).forEach(function (s, si) {
       if (s.typ === "utes_velky" && (D.utesy || []).some(function (line) { return distanceToLine(s.x, s.y, line.body) < 8; })) return;
       var sp = SPR[s.typ];
-      if (sp) items.push([s.y, spr(sp.spr[(Math.abs(s.x * 7 + s.y * 13)) % sp.spr.length], s.x, s.y, sp.w * (s.m || 1), !!s.zrcadlo, s.typ === "ledovy_utes" ? 0 : (s.rot || 0), false, sp.kotva)]);
+      if (sp) {
+        var city = (M.mista || []).find(function (m) { return m.typ === "mesto" && Math.abs(m.x - s.x) < 2 && Math.abs(m.y - s.y) < 2; });
+        items.push([s.y, spr(sp.spr[(Math.abs(s.x * 7 + s.y * 13)) % sp.spr.length], s.x, s.y, sp.w * (s.m || 1), !!s.zrcadlo, s.typ === "ledovy_utes" ? 0 : (s.rot || 0), false, sp.kotva, city ? (city.hlavni_mesto ? 32 : 24) : 0)]);
+      }
       else if (SYM[s.typ]) items.push([s.y, '<use href="#sv-' + s.typ + '" transform="translate(' + s.x + "," + s.y + ") rotate(" + (s.rot || 0) + ") scale(" + (s.m || 1) + ')"/>']);
     });
-    (M.mista || []).forEach(function (m) { if ((m.typ === "sidlo" || m.typ === "mesto") && !(D.symboly || []).some(function (q) { return SPR[q.typ] && Math.abs(q.x - m.x) < 45 && Math.abs(q.y - m.y) < 90; })) items.push([m.y + 6, spr(m.typ === "mesto" ? (m.hlavni_mesto ? "velkomesto" : "mesto") : (Math.round(m.x + m.y) % 2 ? "vesnice" : "vesnice2"), m.x, m.y + 6, m.typ === "mesto" ? (m.hlavni_mesto ? 64 : 52) : 16, Math.round(m.x) % 2 === 0)]); });
+    (M.mista || []).forEach(function (m) { if ((m.typ === "sidlo" || m.typ === "mesto") && !(D.symboly || []).some(function (q) { return SPR[q.typ] && Math.abs(q.x - m.x) < 45 && Math.abs(q.y - m.y) < 90; })) items.push([m.y + 6, spr(m.typ === "mesto" ? (m.hlavni_mesto ? "velkomesto" : "mesto") : (Math.round(m.x + m.y) % 2 ? "vesnice" : "vesnice2"), m.x, m.y + 6, m.typ === "mesto" ? (m.hlavni_mesto ? 64 : 52) : 16, Math.round(m.x) % 2 === 0, 0, false, null, m.typ === "mesto" ? (m.hlavni_mesto ? 32 : 24) : 0)]); });
     var sprites = [];
     o.push('<foreignObject id="sv-spr" x="0" y="0" width="1" height="1"><canvas xmlns="http://www.w3.org/1999/xhtml" style="display:block;width:100%;height:100%"></canvas></foreignObject>');
     items.sort(function (a, b) { return a[0] - b[0]; }).forEach(function (i) { if (typeof i[1] === "string") o.push(i[1]); else sprites.push(i[1]); });
@@ -423,7 +426,7 @@
     var cityLabelBoxes = [];
     (M.mista || []).forEach(function (m) {
       if (m.typ !== "mesto" || m.popisek || !m.nazev || /^(Hrad na|Opevněné|Sídlo|Nové místo)/.test(m.nazev)) return;
-      var w = Math.max(48, m.nazev.length * 12), h = 28, choices = [[m.x, m.y + 42], [m.x, m.y - 14], [m.x + w * .55, m.y + 8], [m.x - w * .55, m.y + 8]];
+      var w = Math.max(48, m.nazev.length * 36), h = 72, choices = [[m.x, m.y + 42], [m.x, m.y - 14], [m.x + w * .55, m.y + 8], [m.x - w * .55, m.y + 8]];
       var pos = choices.find(function (p) {
         var box = [p[0] - w / 2, p[1] - h, p[0] + w / 2, p[1]];
         return cityLabelBoxes.every(function (b) { return box[2] < b[0] || box[0] > b[2] || box[3] < b[1] || box[1] > b[3]; });
@@ -741,11 +744,15 @@
     visible.sort(function (a, b) { return a - b; });
     visible.forEach(function (i) {
       var s = state.sprites[i], img = state.images[s.n + (s.tmavy ? "#tmavy" : "")], m = state.meta[s.n];
-      var h = m ? m.h * s.w / m.w : 0, ax = s.ax == null ? .5 : s.ax, ay = s.ay == null ? 1 : s.ay;
-      if (!img || !m || s.x + s.w * (1 - ax) < left || s.x - s.w * ax > right
+      var ax = s.ax == null ? .5 : s.ax, ay = s.ay == null ? 1 : s.ay;
+      if (!img || !m) return;
+      var drawWidth = s.minScreen && scale ? Math.max(s.w, s.minScreen / scale) : s.w;
+      var h = m.h * drawWidth / m.w;
+      if (s.x + drawWidth * (1 - ax) < left || s.x - drawWidth * ax > right
         || s.y + h * (1 - ay) < top || s.y - h * ay > bottom) return;
-      var k = s.w / m.w;
+      var k = drawWidth / m.w;
       ctx.save(); ctx.translate(s.x, s.y); if (s.r) ctx.rotate(s.r * Math.PI / 180); ctx.scale(s.f ? -k : k, k);
+      if (s.minScreen) { ctx.shadowColor = "rgba(255,247,220,.85)"; ctx.shadowBlur = Math.max(1, 2 * (window.devicePixelRatio || 1)); }
       ctx.drawImage(img, -m.w * ax, -m.h * ay + 2, m.w, m.h); ctx.restore();
     });
   }

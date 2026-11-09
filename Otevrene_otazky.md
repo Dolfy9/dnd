@@ -17,6 +17,8 @@ Seznam věcí k rozhodnutí DM. Po rozhodnutí položku přesuň do sekce *Vyře
 
 - Kde kotví Opilá fretka?
 - **Wortmir:** Je odhadnutý mapový bod (1145,832), velký kruh západně od popisku KHÄRGHE ZHIA, správně?
+- **Imonir:** Je odhadnutý mapový bod města (926,298) na hlavním ostrově Imoniru správně?
+- **Miria a Yotter:** Body „Miria?“ (1652,733) a „Yotter?“ (1720,380) leží podle atlasu uvnitř Imatomy a Banerba. Kde města skutečně leží a komu náležejí? Stránka Mirie je nyní propojená se Svobodným Městem Miria, stránka Yotteru s Klanovými Zeměmi Mönohen.
 - **Kop Aram:** komu patří a kdo ho spravuje (Briria, Werenor, samospráva kupců)?
 - **Tali:** co je to za zemi/kraj, kdo vládne? ([Tali](01_Svet/Mista/Tali.md))
 - **Severovýchodní poloostrov** (ledové věže, tvář ve skále, maják) nemá jméno – co tam je? Fornheim?

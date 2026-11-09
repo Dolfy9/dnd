@@ -43,8 +43,13 @@
       label.setAttribute("letter-spacing", tracking);
     });
     var showCities = map.getZoom() >= (LABELS.city_min_zoom == null ? .25 : LABELS.city_min_zoom);
+    var cityFont = Math.min((LABELS.city_size_max || 20) / scale,
+      Math.max(LABELS.city_size_base || 20, (LABELS.city_size_min || 13) / scale));
+    var cityHalo = Math.max(LABELS.city_halo_min || .5, (LABELS.city_halo_min_screen || 2) / scale);
     svgEl.querySelectorAll("[data-city-label]").forEach(function (label) {
       label.style.display = showCities ? "" : "none";
+      label.setAttribute("font-size", cityFont);
+      label.style.strokeWidth = cityHalo + "px";
     });
     svgEl.querySelectorAll("[data-map-dashed-border]").forEach(function (line) {
       line.style.display = showDashedBorders ? "" : "none";

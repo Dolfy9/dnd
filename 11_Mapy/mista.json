@@ -760,6 +760,16 @@
    "pozn": "Velký kruh západně od popisku KHÄRGHE ZHIA; poloha odhadem."
   },
   {
+   "nazev": "Město Imonir",
+   "x": 926,
+   "y": 298,
+   "typ": "mesto",
+   "hlavni_mesto": true,
+   "jistota": "odhad",
+   "odkaz": "03_Mesta/Mesto_Imonir.md",
+   "pozn": "Poloha města na hlavním ostrově Imoniru je odhad."
+  },
+  {
    "nazev": "Sídlo (bez jména)",
    "x": 1263,
    "y": 851,
