@@ -24,12 +24,22 @@
 .kat-modal-close { position: absolute; top: .5rem; right: .65rem; z-index: 1; border: 0; background: transparent; color: inherit; font-size: 1.8rem; line-height: 1; cursor: pointer; }
 .kat-modal-image { position: sticky; top: 0; width: 100%; max-height: 70vh; object-fit: contain; border-radius: .5rem; }
 .kat-modal-content { min-width: 0; }
-.kat-modal-content h2 { margin: 0 2.2rem .3rem 0; }
+.kat-modal-content.md-typeset { font-size: .9rem; line-height: 1.6; }
+.kat-modal-content h2 { margin: 0 2.2rem .3rem 0; font-size: 1.65rem; line-height: 1.25; }
+.kat-modal-content h3 { margin: 1rem 0 .45rem; font-size: 1.15rem; }
 .kat-modal-meta, .kat-modal-source { color: var(--md-default-fg-color--light); }
 .kat-modal-chips { display: flex; flex-wrap: wrap; gap: .45rem; margin: .8rem 0; }
 .kat-modal-chip { max-width: 100%; padding: .35rem .6rem; border: 1px solid var(--md-default-fg-color--lightest); border-radius: .45rem; background: var(--md-code-bg-color); overflow-wrap: anywhere; }
 .kat-modal-chip small { display: block; color: var(--md-default-fg-color--light); font-size: .65rem; text-transform: uppercase; }
 .kat-modal-overview { line-height: 1.55; }
+.kat-modal-proficiencies dl { display: grid; grid-template-columns: minmax(8rem, .35fr) minmax(0, 1fr); gap: .3rem .75rem; }
+.kat-modal-proficiencies dt { font-weight: 700; }
+.kat-modal-proficiencies dd { margin: 0; }
+.kat-modal-subclass-group ul { margin: 0; }
+.kat-modal-subclass-group li { margin: .2rem 0; }
+.kat-modal-subclass-group small { color: var(--md-default-fg-color--light); }
+.kat-modal-level-group + .kat-modal-level-group { margin-top: .8rem; padding-top: .4rem; border-top: 1px solid var(--md-default-fg-color--lightest); }
+.kat-modal-notice { padding: .65rem .8rem; border-left: 3px solid var(--md-accent-fg-color); background: var(--md-code-bg-color); }
 .kat-modal-features { display: grid; gap: .6rem; }
 .kat-modal-feature { padding: .3rem 0 .3rem .7rem; border-left: 3px solid var(--md-accent-fg-color, #c8962e); }
 .kat-modal-feature h4 { margin: 0 0 .2rem; }

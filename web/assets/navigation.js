@@ -15,6 +15,7 @@
     spell: "M12 2 9 9l-7 3 7 3 3 7 3-7 7-3-7-3z",
     item: "M12 2 3 7v10l9 5 9-5V7zm0 2.3 6.5 3.6L12 11.5 5.5 7.9zM5 9.5l6 3.3v6.7l-6-3.3zm8 10v-6.7l6-3.3v6.7z",
     glossary: "M5 3h14v18H5zm3 4h8m-8 4h8m-8 4h8",
+    tools: "M21 7a5 5 0 0 1-6.7 4.7l-7 7a2 2 0 0 1-2.8-2.8l7-7A5 5 0 0 1 17 2l-2.2 2.2 2 2L19 4a5 5 0 0 1 2 3",
     search: "M10.5 3a7.5 7.5 0 1 0 4.7 13.35L20.85 22 22 20.85l-5.65-5.65A7.5 7.5 0 0 0 10.5 3m0 2a5.5 5.5 0 1 1 0 11 5.5 5.5 0 0 1 0-11"
   };
   function icon(name) {
@@ -220,16 +221,29 @@
       var path = new URL(link.href, location.href).pathname;
       if (data[path]) link.dataset.fullTitle = data[path];
     });
-    nav.querySelectorAll(".md-nav__item--nested > .md-nav__link, .md-nav__item--nested > label.md-nav__link").forEach(function (label) {
+    nav.querySelectorAll(".md-nav__item > .md-nav__link, .md-nav__item > label.md-nav__link").forEach(function (label) {
       var ellipsis = label.querySelector(".md-ellipsis");
-      if (!ellipsis || ellipsis.querySelector(".nav-section-icon")) return;
-      var text = ellipsis.textContent.trim(), key = /země/i.test(text) ? "places" : /měst/i.test(text) ? "city" :
+      if (!ellipsis) return;
+      var text = ellipsis.textContent.trim(), iconByTitle = {
+        "Postava": "people", "Povolání": "people", "Podtřídy": "people",
+        "Magie": "spell", "Výbava a předměty": "item", "Netvoři": "beast",
+        "Pravidla hry": "glossary", "Nástroje PJ": "tools"
+      }, key = iconByTitle[text] || (/země/i.test(text) ? "places" : /měst/i.test(text) ? "city" :
         /postav/i.test(text) ? "people" : /frak/i.test(text) ? "project" : /knih/i.test(text) ? "book" :
-        /kampan|quest|sezen|hádank/i.test(text) ? "quest" : /map/i.test(text) ? "map" : "world";
-      var badge = document.createElement("span"); badge.className = "nav-section-icon"; badge.appendChild(icon(key));
-      var count = label.closest(".md-nav__item").querySelectorAll(".md-nav__item > a.md-nav__link").length;
-      var number = document.createElement("span"); number.className = "nav-section-count"; number.textContent = count;
-      ellipsis.prepend(badge); ellipsis.appendChild(number);
+        /kampan|quest|sezen|hádank/i.test(text) ? "quest" : /map/i.test(text) ? "map" :
+          label.closest(".md-nav__item").classList.contains("md-nav__item--nested") ? "world" : null);
+      if (key && !ellipsis.querySelector(".nav-section-icon")) {
+        var badge = document.createElement("span"); badge.className = "nav-section-icon"; badge.appendChild(icon(key));
+        ellipsis.prepend(badge);
+      }
+      var childList = label.closest(".md-nav__item").querySelector(":scope > .md-nav > .md-nav__list");
+      if (childList && !ellipsis.querySelector(".nav-section-count")) {
+        var count = childList.querySelectorAll(":scope > .md-nav__item").length;
+        if (count > 1) {
+          var number = document.createElement("span"); number.className = "nav-section-count"; number.textContent = count;
+          ellipsis.appendChild(number);
+        }
+      }
     });
     makeSearch();
   }
@@ -265,7 +279,7 @@
       }
     });
   }
-  function breadcrumbs(data) {
+  function breadcrumbs() {
     var src = document.getElementById("zdroj-stranky"), inner = document.querySelector(".md-content__inner");
     var h1 = inner && inner.querySelector("h1");
     if (!src || !h1 || inner.querySelector(".nav-breadcrumbs")) return;
@@ -281,8 +295,9 @@
       var label = groupNames[segment];
       if (label && label !== "Svět" && !crumbs.some(function (c) { return c.label === label; })) crumbs.push({ label: label });
     });
-    var title = data["/" + path.replace(/\.md$/, "/")] || h1.textContent.trim();
-    title = title.replace(/^Město\s+/i, "").replace(/^(Království|Provincie|Teokracie|Elfský Stát|Klanové Země)\s+/i, "");
+    var heading = h1.cloneNode(true);
+    heading.querySelectorAll(".headerlink").forEach(function (link) { link.remove(); });
+    var title = heading.textContent.trim();
     if (!crumbs.some(function (c) { return c.label === title; })) crumbs.push({ label: title });
     var nav = document.createElement("nav"); nav.className = "nav-breadcrumbs"; nav.setAttribute("aria-label", "Drobečková navigace");
     crumbs.forEach(function (crumb, i) {
@@ -375,7 +390,7 @@
   }
   function init() {
     setupHeader(); setupDrawer(); setupTabs(); pageToc(); menuState(); mapButton(); homepage(); mobileNav();
-    index().then(function (data) { decorateMenu(data); breadcrumbs(data); });
+    index().then(function (data) { decorateMenu(data); breadcrumbs(); });
     toolbar();
   }
   if (window.document$) window.document$.subscribe(init); else document.addEventListener("DOMContentLoaded", init);

@@ -63,7 +63,7 @@
     backdrop.innerHTML = '<section class="kat-modal' + (modalImage ? "" : " kat-modal-no-image") + '" role="dialog" aria-modal="true" aria-label="' + esc(label(config, item)) + '">'
       + '<button type="button" class="kat-modal-close" aria-label="Zavřít">×</button>'
       + modalImage
-      + '<div class="kat-modal-content">' + config.modal(item) + "</div></section>";
+      + '<div class="kat-modal-content md-typeset">' + config.modal(item) + "</div></section>";
     document.body.appendChild(backdrop);
     var closeButton = backdrop.querySelector(".kat-modal-close"), previous = document.activeElement;
     function close() {

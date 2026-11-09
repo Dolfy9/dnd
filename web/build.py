@@ -506,6 +506,18 @@ def main():
             "saves": (item.get("core") or {}).get("Saving Throw Proficiencies") or ("neověřeno" if item.get("bez_tabulky") else ""),
             "caster_type": (item.get("core") or {}).get("Caster Type")
                            or ("neověřeno" if item.get("bez_tabulky") else caster_types.get(name, "none")),
+            "skills": (item.get("core") or {}).get("Skill Proficiencies", ""),
+            "weapons": (item.get("core") or {}).get("Weapon Proficiencies", ""),
+            "armor": (item.get("core") or {}).get("Armor Training", ""),
+            "tools": (item.get("core") or {}).get("Tool Proficiencies", ""),
+            "starting_equipment": (item.get("core") or {}).get("Starting Equipment", ""),
+            "subclasses": [{
+                "key": subclass_name, "name": subclass.get("nazev", subclass_name),
+                "edition": rules_edition(subclass), "source": subclass.get("zdroj", ""),
+                "legacy": bool(subclass.get("legacy")), "treti_strana": bool(subclass.get("treti_strana")),
+                "oznameno": bool(subclass.get("oznameno")),
+                "alternative_2024": subclass.get("alternativa_2024", ""),
+            } for subclass_name, subclass in rules["podtridy"].items() if subclass.get("trida") == name],
         })
     subclass_index = []
     for name, item in rules["podtridy"].items():
@@ -513,7 +525,7 @@ def main():
         stem = "Podtrida_" + class_slug + "_" + re.sub(r"[^A-Za-z0-9]+", "_", name).strip("_")
         planned = f"15_Podtridy/{stem}.md"
         page = ROOT / planned
-        fallback = f"pravidla/phb/povolani/{pravidla_pages.slug(item.get('trida', ''))}.md"
+        fallback = f"14_Povolani/Povolani_{class_slug}.md"
         subclass_index.append({
             "key": name, "name": item.get("nazev", name), "stem": stem, "page": planned,
             "url": page_url(planned) if page.is_file() else page_url(fallback),
@@ -522,6 +534,9 @@ def main():
             "legacy": bool(item.get("legacy")), "treti_strana": bool(item.get("treti_strana")),
             "oznameno": bool(item.get("oznameno")), "alternative_2024": item.get("alternativa_2024", ""),
             "alternativa_2024": item.get("alternativa_2024", ""),
+            "year": item.get("rok", ""), "rok": item.get("rok", ""),
+            "revision": item.get("revize", ""), "revize": item.get("revize", ""),
+            "verification": item.get("overeno", []),
             "publisher": item.get("vydavatel", ""), "image": (ROOT / "15_Podtridy" / "obrazky" / (stem + ".webp")).is_file(),
             "overview": rules_page_overview(page),
             "features": [{"name": feature, "level": value.get("uroven", ""), "text": value.get("text", "")}
@@ -624,13 +639,13 @@ def main():
         {"Tvorba postavy a level up": player_nav["Tvorba postavy a level up"]},
         {"Druhy": "druhy.md"},
         {"Povolání": [{"Katalog povolání": "povolani.md"}] + section_items("Povolání")},
-        {"Podtřídy": [{"Katalog podtříd": "podtridy.md"}] + section_items("Podtřídy")},
+        {"Podtřídy": "podtridy.md"},
         {"Pozadí": "pozadi.md"}, {"Featy": "featy.md"},
     ]
     rules = [
         {"Rozcestník": "znalosti.md"},
         {"Postava": character_nav},
-        {"Magie": [{"Kouzla": "kouzla.md"}]},
+        {"Magie": "kouzla.md"},
         {"Výbava a předměty": equipment},
         {"Netvoři": rules[2]["Bestiář"]},
         {"Pravidla hry": list(player_nav["Pravidla hry"]) + [{"Glosář pravidel": "glosar.md"}]},

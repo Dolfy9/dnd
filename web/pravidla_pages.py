@@ -75,39 +75,14 @@ def build(docs: Path):
         except (TypeError, ValueError):
             return (1, str(level), item[0])
 
-    # PHB – povolání
+    # PHB – odkazy na nové příručky povolání
     cls_nav = []
-    for n, c in sorted(p["tridy"].items()):
-        b = f"**Hit Die:** d{c.get('hit_die')}\n\n| | |\n|---|---|\n" + "".join(
-            f"| **{k}** | {str(v).replace('|', '/')} |\n" for k, v in c.get("core", {}).items())
-        tab = c.get("tabulka") or {}
-        if tab:
-            cols = list(next(iter(tab.values())).keys())
-            b += f"\n## Tabulka povolání {n}\n\n| Level | " + " | ".join(cols) + " |\n|" + "---|" * (len(cols) + 1) + "\n"
-            for lv, row in sorted(tab.items(), key=lambda x: int(x[0])):
-                b += f"| {lv} | " + " | ".join(str(row.get(k, "")).replace("|", "/") for k in cols) + " |\n"
-        b += "\n## Rysy povolání\n\n"
-        for fn, fv in sorted((c.get("rysy") or {}).items(), key=feature_sort):
-            lv = fv.get("uroven", "") if isinstance(fv, dict) else ""
-            b += f"### {fn}" + (f" <small>(Level {lv})</small>" if lv else "") + "\n\n" + para(fv.get("text", "") if isinstance(fv, dict) else fv) + "\n\n"
-        class_options = sorted((name, option) for name, option in p.get("volby_trid", {}).items() if option.get("trida") == n)
-        if class_options:
-            b += "## Volby povolání\n\n"
-            for name, option in class_options:
-                feature = c.get("rysy", {}).get(option.get("feature", ""), {})
-                b += f"### {name}\n\n" + para(feature.get("text", "") if isinstance(feature, dict) else feature) + "\n\n"
-        subs = sorted((sn, sv) for sn, sv in p["podtridy"].items() if sv.get("trida") == n)
-        if subs:
-            b += "## Subclassy\n\n"
-            for sn, sv in subs:
-                b += f'??? note "{sn} – {sv.get("zdroj", "")}"\n'
-                for fn, fv in sorted((sv.get("rysy") or {}).items(), key=feature_sort):
-                    lv = fv.get("uroven", "") if isinstance(fv, dict) else ""
-                    txt = para(fv.get("text", "") if isinstance(fv, dict) else fv).replace("\n", "\n    ")
-                    b += f"    **{fn}**" + (f" (Level {lv})" if lv else "") + f"\n\n    {txt}\n\n"
-        cls_nav.append({n: w(f"phb/povolani/{slug(n)}.md", page(n, b))})
-    idx = "Povolání podle pravidel 2024 (PHB 2024): rysy po úrovních, tabulky a subclassy.\n\n" + "".join(
-        f"- [{list(x)[0]}]({slug(list(x)[0])}.md)\n" for x in cls_nav)
+    for n in sorted(p["tridy"]):
+        target = f"../../../14_Povolani/Povolani_{slug(n)}.md"
+        body = f"Podrobný přehled pravidel se přesunul do nové [příručky povolání {n}]({target})."
+        cls_nav.append({n: w(f"phb/povolani/{slug(n)}.md", page(n, body))})
+    idx = "Příručky povolání podle pravidel 2024 jsou v novém katalogu.\n\n" + "".join(
+        f"- [{n}](../../../14_Povolani/Povolani_{slug(n)}.md)\n" for n in sorted(p["tridy"]))
     cls_nav.insert(0, w("phb/povolani/index.md", page("Povolání", idx)))
 
     # PHB – druhy, pozadí, featy
