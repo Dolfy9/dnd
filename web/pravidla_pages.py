@@ -67,6 +67,14 @@ def build(docs: Path):
         f.write_text(txt, encoding="utf-8")
         return "pravidla/" + rel
 
+    def feature_sort(item):
+        feature = item[1]
+        level = feature.get("uroven", 0) if isinstance(feature, dict) else 0
+        try:
+            return (0, float(level), item[0])
+        except (TypeError, ValueError):
+            return (1, str(level), item[0])
+
     # PHB – povolání
     cls_nav = []
     for n, c in sorted(p["tridy"].items()):
@@ -79,7 +87,7 @@ def build(docs: Path):
             for lv, row in sorted(tab.items(), key=lambda x: int(x[0])):
                 b += f"| {lv} | " + " | ".join(str(row.get(k, "")).replace("|", "/") for k in cols) + " |\n"
         b += "\n## Rysy povolání\n\n"
-        for fn, fv in sorted((c.get("rysy") or {}).items(), key=lambda x: (x[1].get("uroven", 0) if isinstance(x[1], dict) else 0, x[0])):
+        for fn, fv in sorted((c.get("rysy") or {}).items(), key=feature_sort):
             lv = fv.get("uroven", "") if isinstance(fv, dict) else ""
             b += f"### {fn}" + (f" <small>(Level {lv})</small>" if lv else "") + "\n\n" + para(fv.get("text", "") if isinstance(fv, dict) else fv) + "\n\n"
         class_options = sorted((name, option) for name, option in p.get("volby_trid", {}).items() if option.get("trida") == n)
@@ -93,7 +101,7 @@ def build(docs: Path):
             b += "## Subclassy\n\n"
             for sn, sv in subs:
                 b += f'??? note "{sn} – {sv.get("zdroj", "")}"\n'
-                for fn, fv in sorted((sv.get("rysy") or {}).items(), key=lambda x: x[1].get("uroven", 0) if isinstance(x[1], dict) else 0):
+                for fn, fv in sorted((sv.get("rysy") or {}).items(), key=feature_sort):
                     lv = fv.get("uroven", "") if isinstance(fv, dict) else ""
                     txt = para(fv.get("text", "") if isinstance(fv, dict) else fv).replace("\n", "\n    ")
                     b += f"    **{fn}**" + (f" (Level {lv})" if lv else "") + f"\n\n    {txt}\n\n"

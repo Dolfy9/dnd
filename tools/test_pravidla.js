@@ -50,7 +50,14 @@ function fresh(cls, extra) {
 
 // 1) každá třída 1→20 po jedné úrovni: PB, HP, sloty, sloty featů, subclass
 Object.keys(R.tridy).forEach(cls => {
-  let c = fresh(cls); const k = R.tridy[cls];
+  const k = R.tridy[cls];
+  if (k.bez_tabulky) {
+    const blocked = E.planLevelUp({ tridy: [], atributy: {} }, cls, 1);
+    t(blocked.chyby.some(x => /ověřenou tabulku postupu/.test(x)), cls + " odmítne level-up bez tabulky");
+    t(E.createCharacter({ trida: cls }).chyby.some(x => /automatická tvorba postavy není dostupná/.test(x)), cls + " odmítne automatickou tvorbu");
+    return;
+  }
+  let c = fresh(cls);
   t(c && c.tridy[0].uroven === 1, cls + " vytvořena na úrovni 1");
   for (let lv = 1; lv <= 20; lv++) {
     if (lv > 1) { const r = lvlUp(c, cls, 1); if (r.chyby && r.chyby.length) { console.log("FAIL lvl", cls, lv, r.chyby); fails++; break; } c = r.postava; }

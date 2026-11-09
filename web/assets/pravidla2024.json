@@ -3929,6 +3929,34 @@
           "text": "Choose two level 3 spells in your spellbook as your signature spells. You always have these spells prepared, and you can cast each of them once at level 3 without expending a spell slot. When you do so, you can't cast them in this way again until you finish a Short or Long Rest. To cast either spell at a higher level, you must expend a spell slot."
         }
       }
+    },
+    "Monster Hunter": {
+      "zdroj": "Grim Hollow: Player’s Guide (2025)",
+      "vydavatel": "Ghostfire Gaming",
+      "rok": 2025,
+      "treti_strana": true,
+      "bez_tabulky": true,
+      "hit_die": "neověřeno",
+      "core": {
+        "Primary Ability": "neověřeno",
+        "Hit Point Die": "neověřeno",
+        "Saving Throw Proficiencies": "neověřeno",
+        "Skill Proficiencies": "neověřeno",
+        "Weapon Proficiencies": "neověřeno",
+        "Armor Training": "neověřeno",
+        "Starting Equipment": "neověřeno"
+      },
+      "tabulka": {},
+      "rysy": {
+        "Class progression (neověřeno)": {
+          "uroven": "neověřeno",
+          "text": "D&D Beyond potvrzuje třídu Monster Hunter, ale volné zdroje neověřují aktuální hit die ani její úplnou tabulku postupu."
+        }
+      },
+      "overeno": [
+        "https://www.dndbeyond.com/forums/d-d-beyond-general/release-issues-support/228644-grim-hollow-players-guide-issues-and-support",
+        "https://ghostfiregaming.com/product/grim-hollow-players-guide-pdf-5-5e/"
+      ]
     }
   },
   "podtridy": {
@@ -8022,6 +8050,1589 @@
           "text": "Akcí vytvoříš gravitační pole na 1 minutu nebo do ztráty Concentration; nepřátelský tvor začínající tah do 30 feet hází Strength save proti spell DC. Při neúspěchu utrpí 2d10 Force damage a jeho Speed je 0 do začátku dalšího tahu; při úspěchu utrpí polovinu damage a každý foot pohybu stojí další 2 feet. Použití obnovíš po Long Rest nebo utracením spell slotu úrovně 3+."
         }
       }
+    },
+    "Forge Adept": {
+      "trida": "Artificer",
+      "zdroj": "Exploring Eberron (2024)",
+      "rok": 2026,
+      "treti_strana": true,
+      "vydavatel": "Visionary Productions / Keith Baker",
+      "overeno": [
+        "https://www.dndbeyond.com/sources/dnd/exeb"
+      ],
+      "rysy": {
+        "Subclass Features (názvy neověřené)": {
+          "uroven": 3,
+          "text": "Veřejný obsah potvrzuje tuto subclassu, ale neuvádí názvy ani přesná pravidla jejích rysů; ověřit v původní publikaci."
+        }
+      }
+    },
+    "Maverick": {
+      "trida": "Artificer",
+      "zdroj": "Exploring Eberron (2024)",
+      "rok": 2026,
+      "treti_strana": true,
+      "vydavatel": "Visionary Productions / Keith Baker",
+      "overeno": [
+        "https://www.dndbeyond.com/sources/dnd/exeb"
+      ],
+      "rysy": {
+        "Subclass Features (názvy neověřené)": {
+          "uroven": 3,
+          "text": "Veřejný obsah potvrzuje tuto subclassu, ale neuvádí názvy ani přesná pravidla jejích rysů; ověřit v původní publikaci."
+        }
+      }
+    },
+    "College of the Dirge Singer": {
+      "trida": "Bard",
+      "zdroj": "Exploring Eberron (2024)",
+      "rok": 2026,
+      "treti_strana": true,
+      "vydavatel": "Visionary Productions / Keith Baker",
+      "overeno": [
+        "https://www.dndbeyond.com/sources/dnd/exeb"
+      ],
+      "rysy": {
+        "Subclass Features (názvy neověřené)": {
+          "uroven": 3,
+          "text": "Veřejný obsah potvrzuje tuto subclassu, ale neuvádí názvy ani přesná pravidla jejích rysů; ověřit v původní publikaci."
+        }
+      }
+    },
+    "Mind Domain": {
+      "trida": "Cleric",
+      "zdroj": "Exploring Eberron (2024)",
+      "rok": 2026,
+      "treti_strana": true,
+      "vydavatel": "Visionary Productions / Keith Baker",
+      "overeno": [
+        "https://www.dndbeyond.com/sources/dnd/exeb"
+      ],
+      "rysy": {
+        "Subclass Features (názvy neověřené)": {
+          "uroven": 3,
+          "text": "Veřejný obsah potvrzuje tuto subclassu, ale neuvádí názvy ani přesná pravidla jejích rysů; ověřit v původní publikaci."
+        }
+      }
+    },
+    "Circle of the Forged": {
+      "trida": "Druid",
+      "zdroj": "Exploring Eberron (2024)",
+      "rok": 2026,
+      "treti_strana": true,
+      "vydavatel": "Visionary Productions / Keith Baker",
+      "overeno": [
+        "https://www.dndbeyond.com/sources/dnd/exeb"
+      ],
+      "rysy": {
+        "Subclass Features (názvy neověřené)": {
+          "uroven": 3,
+          "text": "Veřejný obsah potvrzuje tuto subclassu, ale neuvádí názvy ani přesná pravidla jejích rysů; ověřit v původní publikaci."
+        }
+      }
+    },
+    "Warrior of the Living Weapon": {
+      "trida": "Monk",
+      "zdroj": "Exploring Eberron (2024)",
+      "rok": 2026,
+      "treti_strana": true,
+      "vydavatel": "Visionary Productions / Keith Baker",
+      "overeno": [
+        "https://www.dndbeyond.com/sources/dnd/exeb"
+      ],
+      "rysy": {
+        "Subclass Features (názvy neověřené)": {
+          "uroven": 3,
+          "text": "Veřejný obsah potvrzuje tuto subclassu, ale neuvádí názvy ani přesná pravidla jejích rysů; ověřit v původní publikaci."
+        }
+      }
+    },
+    "Circle of Flowers": {
+      "trida": "Druid",
+      "zdroj": "The Field Guide to Floral Dragons",
+      "rok": 2026,
+      "treti_strana": true,
+      "vydavatel": "Hit Point Press",
+      "overeno": [
+        "https://www.dndbeyond.com/posts/2233-floral-dragons-blossoming-with-botanical-beauty"
+      ],
+      "rysy": {
+        "Rysy subclassy (název neověřen)": {
+          "uroven": 3,
+          "text": "Veřejná anotace ji popisuje jako květinově-dračí podobu propojující rostlinné, dračí a humanoidní rysy; přesný název schopnosti a její pravidla zůstávají neověřené."
+        }
+      }
+    },
+    "Field Researcher": {
+      "trida": "Ranger",
+      "zdroj": "The Field Guide to Floral Dragons",
+      "rok": 2026,
+      "treti_strana": true,
+      "vydavatel": "Hit Point Press",
+      "overeno": [
+        "https://www.dndbeyond.com/posts/2233-floral-dragons-blossoming-with-botanical-beauty"
+      ],
+      "rysy": {
+        "Rysy subclassy (název neověřen)": {
+          "uroven": 3,
+          "text": "Veřejná anotace zdůrazňuje průzkumné schopnosti a možnost přivolat zkoumané tvory jako spojence; přesná pravidla a jejich názvy nejsou v náhledu uvedeny."
+        }
+      }
+    },
+    "Fungus": {
+      "trida": "Warlock",
+      "zdroj": "The Field Guide to Floral Dragons",
+      "rok": 2026,
+      "treti_strana": true,
+      "vydavatel": "Hit Point Press",
+      "overeno": [
+        "https://www.dndbeyond.com/posts/2233-floral-dragons-blossoming-with-botanical-beauty"
+      ],
+      "rysy": {
+        "Rysy subclassy (název neověřen)": {
+          "uroven": 3,
+          "text": "Veřejná anotace popisuje propojení s houbovým patronem, šíření myceliální sítě a získávání vitality z rozkladu; přesné mechaniky zůstávají neověřené."
+        }
+      }
+    },
+    "Path of the Demonshard": {
+      "trida": "Barbarian",
+      "zdroj": "Frontiers of Eberron: Quickstone",
+      "rok": 2026,
+      "treti_strana": true,
+      "vydavatel": "Visionary Productions / Keith Baker",
+      "overeno": [
+        "https://www.dndbeyond.com/sources/dnd/foeq"
+      ],
+      "rysy": {
+        "Subclass Features (názvy neověřené)": {
+          "uroven": 3,
+          "text": "Veřejný obsah potvrzuje tuto subclassu, ale neuvádí názvy ani přesná pravidla jejích rysů; ověřit v původní publikaci."
+        }
+      }
+    },
+    "College of Wands": {
+      "trida": "Bard",
+      "zdroj": "Frontiers of Eberron: Quickstone",
+      "rok": 2026,
+      "treti_strana": true,
+      "vydavatel": "Visionary Productions / Keith Baker",
+      "overeno": [
+        "https://www.dndbeyond.com/sources/dnd/foeq"
+      ],
+      "rysy": {
+        "Subclass Features (názvy neověřené)": {
+          "uroven": 3,
+          "text": "Veřejný obsah potvrzuje tuto subclassu, ale neuvádí názvy ani přesná pravidla jejích rysů; ověřit v původní publikaci."
+        }
+      }
+    },
+    "Commerce Domain": {
+      "trida": "Cleric",
+      "zdroj": "Frontiers of Eberron: Quickstone",
+      "rok": 2026,
+      "treti_strana": true,
+      "vydavatel": "Visionary Productions / Keith Baker",
+      "overeno": [
+        "https://www.dndbeyond.com/sources/dnd/foeq"
+      ],
+      "rysy": {
+        "Subclass Features (názvy neověřené)": {
+          "uroven": 3,
+          "text": "Veřejný obsah potvrzuje tuto subclassu, ale neuvádí názvy ani přesná pravidla jejích rysů; ověřit v původní publikaci."
+        }
+      }
+    },
+    "Bloodhound": {
+      "trida": "Ranger",
+      "zdroj": "Frontiers of Eberron: Quickstone",
+      "rok": 2026,
+      "treti_strana": true,
+      "vydavatel": "Visionary Productions / Keith Baker",
+      "overeno": [
+        "https://www.dndbeyond.com/sources/dnd/foeq"
+      ],
+      "rysy": {
+        "Subclass Features (názvy neověřené)": {
+          "uroven": 3,
+          "text": "Veřejný obsah potvrzuje tuto subclassu, ale neuvádí názvy ani přesná pravidla jejích rysů; ověřit v původní publikaci."
+        }
+      }
+    },
+    "Nemesis Sorcery": {
+      "trida": "Sorcerer",
+      "zdroj": "Frontiers of Eberron: Quickstone",
+      "rok": 2026,
+      "treti_strana": true,
+      "vydavatel": "Visionary Productions / Keith Baker",
+      "overeno": [
+        "https://www.dndbeyond.com/sources/dnd/foeq"
+      ],
+      "rysy": {
+        "Subclass Features (názvy neověřené)": {
+          "uroven": 3,
+          "text": "Veřejný obsah potvrzuje tuto subclassu, ale neuvádí názvy ani přesná pravidla jejích rysů; ověřit v původní publikaci."
+        }
+      }
+    },
+    "Stone Sovereign Patron": {
+      "trida": "Warlock",
+      "zdroj": "Frontiers of Eberron: Quickstone",
+      "rok": 2026,
+      "treti_strana": true,
+      "vydavatel": "Visionary Productions / Keith Baker",
+      "overeno": [
+        "https://www.dndbeyond.com/sources/dnd/foeq"
+      ],
+      "rysy": {
+        "Subclass Features (názvy neověřené)": {
+          "uroven": 3,
+          "text": "Veřejný obsah potvrzuje tuto subclassu, ale neuvádí názvy ani přesná pravidla jejích rysů; ověřit v původní publikaci."
+        }
+      }
+    },
+    "College of the Road": {
+      "trida": "Bard",
+      "zdroj": "Humblewood Campaign Setting (2024 update)",
+      "rok": 2024,
+      "treti_strana": true,
+      "vydavatel": "Hit Point Press",
+      "overeno": [
+        "https://hitpointpress.com/blogs/hot-off-the-press/good-news-friday-humblewood-updates",
+        "https://www.dndbeyond.com/posts/1667-the-humblewood-campaign-setting-arrives-to-d-d"
+      ],
+      "rysy": {
+        "Subclass Features (názvy neověřené)": {
+          "uroven": 3,
+          "text": "Veřejný obsah potvrzuje tuto subclassu, ale neuvádí názvy ani přesná pravidla jejích rysů; ověřit v původní publikaci."
+        }
+      }
+    },
+    "Community Domain": {
+      "trida": "Cleric",
+      "zdroj": "Humblewood Campaign Setting (2024 update)",
+      "rok": 2024,
+      "treti_strana": true,
+      "vydavatel": "Hit Point Press",
+      "overeno": [
+        "https://hitpointpress.com/blogs/hot-off-the-press/good-news-friday-humblewood-updates",
+        "https://www.dndbeyond.com/posts/1667-the-humblewood-campaign-setting-arrives-to-d-d"
+      ],
+      "rysy": {
+        "Subclass Features (názvy neověřené)": {
+          "uroven": 3,
+          "text": "Veřejný obsah potvrzuje tuto subclassu, ale neuvádí názvy ani přesná pravidla jejích rysů; ověřit v původní publikaci."
+        }
+      }
+    },
+    "Night Domain": {
+      "trida": "Cleric",
+      "zdroj": "Humblewood Campaign Setting (2024 update)",
+      "rok": 2024,
+      "treti_strana": true,
+      "vydavatel": "Hit Point Press",
+      "overeno": [
+        "https://hitpointpress.com/blogs/hot-off-the-press/good-news-friday-humblewood-updates",
+        "https://www.dndbeyond.com/posts/1667-the-humblewood-campaign-setting-arrives-to-d-d"
+      ],
+      "rysy": {
+        "Subclass Features (názvy neověřené)": {
+          "uroven": 3,
+          "text": "Veřejný obsah potvrzuje tuto subclassu, ale neuvádí názvy ani přesná pravidla jejích rysů; ověřit v původní publikaci."
+        }
+      }
+    },
+    "Scofflaw": {
+      "trida": "Fighter",
+      "zdroj": "Humblewood Campaign Setting (2024 update)",
+      "rok": 2024,
+      "treti_strana": true,
+      "vydavatel": "Hit Point Press",
+      "overeno": [
+        "https://hitpointpress.com/blogs/hot-off-the-press/good-news-friday-humblewood-updates",
+        "https://www.dndbeyond.com/posts/1667-the-humblewood-campaign-setting-arrives-to-d-d"
+      ],
+      "rysy": {
+        "Subclass Features (názvy neověřené)": {
+          "uroven": 3,
+          "text": "Veřejný obsah potvrzuje tuto subclassu, ale neuvádí názvy ani přesná pravidla jejích rysů; ověřit v původní publikaci."
+        }
+      }
+    },
+    "Neko Duelist": {
+      "trida": "Fighter",
+      "zdroj": "Obojima: Tales from Yatamon (5.5e)",
+      "rok": 2026,
+      "treti_strana": true,
+      "vydavatel": "1985 Games",
+      "overeno": [
+        "https://www.dndbeyond.com/sources/dnd/otfy"
+      ],
+      "rysy": {
+        "Subclass Features (názvy neověřené)": {
+          "uroven": 3,
+          "text": "Veřejný obsah potvrzuje tuto subclassu, ale neuvádí názvy ani přesná pravidla jejích rysů; ověřit v původní publikaci."
+        }
+      }
+    },
+    "Fortune Rogue": {
+      "trida": "Rogue",
+      "zdroj": "Obojima: Tales from Yatamon (5.5e)",
+      "rok": 2026,
+      "treti_strana": true,
+      "vydavatel": "1985 Games",
+      "overeno": [
+        "https://www.dndbeyond.com/sources/dnd/otfy"
+      ],
+      "rysy": {
+        "Subclass Features (názvy neověřené)": {
+          "uroven": 3,
+          "text": "Veřejný obsah potvrzuje tuto subclassu, ale neuvádí názvy ani přesná pravidla jejích rysů; ověřit v původní publikaci."
+        }
+      }
+    },
+    "Coven Patron": {
+      "trida": "Warlock",
+      "zdroj": "Obojima: Tales from Yatamon (5.5e)",
+      "rok": 2026,
+      "treti_strana": true,
+      "vydavatel": "1985 Games",
+      "overeno": [
+        "https://www.dndbeyond.com/sources/dnd/otfy"
+      ],
+      "rysy": {
+        "Subclass Features (názvy neověřené)": {
+          "uroven": 3,
+          "text": "Veřejný obsah potvrzuje tuto subclassu, ale neuvádí názvy ani přesná pravidla jejích rysů; ověřit v původní publikaci."
+        }
+      }
+    },
+    "Path of the Experiment": {
+      "trida": "Barbarian",
+      "zdroj": "The Crooked Moon Part One (2024 classes)",
+      "rok": 2025,
+      "treti_strana": true,
+      "vydavatel": "Avantris Entertainment",
+      "overeno": [
+        "https://www.dndbeyond.com/sources/dnd/tcmp1",
+        "https://www.dndbeyond.com/forums/d-d-beyond-general/release-issues-support/225155-the-crooked-moon-part-one-player-options-campaign"
+      ],
+      "rysy": {
+        "Subclass Features (názvy neověřené)": {
+          "uroven": 3,
+          "text": "Veřejný obsah potvrzuje tuto subclassu, ale neuvádí názvy ani přesná pravidla jejích rysů; ověřit v původní publikaci."
+        }
+      }
+    },
+    "College of Whistles": {
+      "trida": "Bard",
+      "zdroj": "The Crooked Moon Part One (2024 classes)",
+      "rok": 2025,
+      "treti_strana": true,
+      "vydavatel": "Avantris Entertainment",
+      "overeno": [
+        "https://www.dndbeyond.com/sources/dnd/tcmp1",
+        "https://www.dndbeyond.com/forums/d-d-beyond-general/release-issues-support/225155-the-crooked-moon-part-one-player-options-campaign"
+      ],
+      "rysy": {
+        "Subclass Features (názvy neověřené)": {
+          "uroven": 3,
+          "text": "Veřejný obsah potvrzuje tuto subclassu, ale neuvádí názvy ani přesná pravidla jejích rysů; ověřit v původní publikaci."
+        }
+      }
+    },
+    "Harvest Domain": {
+      "trida": "Cleric",
+      "zdroj": "The Crooked Moon Part One (2024 classes)",
+      "rok": 2025,
+      "treti_strana": true,
+      "vydavatel": "Avantris Entertainment",
+      "overeno": [
+        "https://www.dndbeyond.com/sources/dnd/tcmp1",
+        "https://www.dndbeyond.com/forums/d-d-beyond-general/release-issues-support/225155-the-crooked-moon-part-one-player-options-campaign"
+      ],
+      "rysy": {
+        "Subclass Features (názvy neověřené)": {
+          "uroven": 3,
+          "text": "Veřejný obsah potvrzuje tuto subclassu, ale neuvádí názvy ani přesná pravidla jejích rysů; ověřit v původní publikaci."
+        }
+      }
+    },
+    "Circle of the Old Ways": {
+      "trida": "Druid",
+      "zdroj": "The Crooked Moon Part One (2024 classes)",
+      "rok": 2025,
+      "treti_strana": true,
+      "vydavatel": "Avantris Entertainment",
+      "overeno": [
+        "https://www.dndbeyond.com/sources/dnd/tcmp1",
+        "https://www.dndbeyond.com/forums/d-d-beyond-general/release-issues-support/225155-the-crooked-moon-part-one-player-options-campaign"
+      ],
+      "rysy": {
+        "Subclass Features (názvy neověřené)": {
+          "uroven": 3,
+          "text": "Veřejný obsah potvrzuje tuto subclassu, ale neuvádí názvy ani přesná pravidla jejích rysů; ověřit v původní publikaci."
+        }
+      }
+    },
+    "Circle of Wicker": {
+      "trida": "Druid",
+      "zdroj": "The Crooked Moon Part One (2024 classes)",
+      "rok": 2025,
+      "treti_strana": true,
+      "vydavatel": "Avantris Entertainment",
+      "overeno": [
+        "https://www.dndbeyond.com/sources/dnd/tcmp1",
+        "https://www.dndbeyond.com/forums/d-d-beyond-general/release-issues-support/225155-the-crooked-moon-part-one-player-options-campaign"
+      ],
+      "rysy": {
+        "Subclass Features (názvy neověřené)": {
+          "uroven": 3,
+          "text": "Veřejný obsah potvrzuje tuto subclassu, ale neuvádí názvy ani přesná pravidla jejích rysů; ověřit v původní publikaci."
+        }
+      }
+    },
+    "Barrow Guard": {
+      "trida": "Fighter",
+      "zdroj": "The Crooked Moon Part One (2024 classes)",
+      "rok": 2025,
+      "treti_strana": true,
+      "vydavatel": "Avantris Entertainment",
+      "overeno": [
+        "https://www.dndbeyond.com/sources/dnd/tcmp1",
+        "https://www.dndbeyond.com/forums/d-d-beyond-general/release-issues-support/225155-the-crooked-moon-part-one-player-options-campaign"
+      ],
+      "rysy": {
+        "Subclass Features (názvy neověřené)": {
+          "uroven": 3,
+          "text": "Veřejný obsah potvrzuje tuto subclassu, ale neuvádí názvy ani přesná pravidla jejích rysů; ověřit v původní publikaci."
+        }
+      }
+    },
+    "Warrior of the Pestilent Haze": {
+      "trida": "Monk",
+      "zdroj": "The Crooked Moon Part One (2024 classes)",
+      "rok": 2025,
+      "treti_strana": true,
+      "vydavatel": "Avantris Entertainment",
+      "overeno": [
+        "https://www.dndbeyond.com/sources/dnd/tcmp1",
+        "https://www.dndbeyond.com/forums/d-d-beyond-general/release-issues-support/225155-the-crooked-moon-part-one-player-options-campaign"
+      ],
+      "rysy": {
+        "Subclass Features (názvy neověřené)": {
+          "uroven": 3,
+          "text": "Veřejný obsah potvrzuje tuto subclassu, ale neuvádí názvy ani přesná pravidla jejích rysů; ověřit v původní publikaci."
+        }
+      }
+    },
+    "Oath of Castigation": {
+      "trida": "Paladin",
+      "zdroj": "The Crooked Moon Part One (2024 classes)",
+      "rok": 2025,
+      "treti_strana": true,
+      "vydavatel": "Avantris Entertainment",
+      "overeno": [
+        "https://www.dndbeyond.com/sources/dnd/tcmp1",
+        "https://www.dndbeyond.com/forums/d-d-beyond-general/release-issues-support/225155-the-crooked-moon-part-one-player-options-campaign"
+      ],
+      "rysy": {
+        "Subclass Features (názvy neověřené)": {
+          "uroven": 3,
+          "text": "Veřejný obsah potvrzuje tuto subclassu, ale neuvádí názvy ani přesná pravidla jejích rysů; ověřit v původní publikaci."
+        }
+      }
+    },
+    "Grim Harbinger": {
+      "trida": "Ranger",
+      "zdroj": "The Crooked Moon Part One (2024 classes)",
+      "rok": 2025,
+      "treti_strana": true,
+      "vydavatel": "Avantris Entertainment",
+      "overeno": [
+        "https://www.dndbeyond.com/sources/dnd/tcmp1",
+        "https://www.dndbeyond.com/forums/d-d-beyond-general/release-issues-support/225155-the-crooked-moon-part-one-player-options-campaign"
+      ],
+      "rysy": {
+        "Subclass Features (názvy neověřené)": {
+          "uroven": 3,
+          "text": "Veřejný obsah potvrzuje tuto subclassu, ale neuvádí názvy ani přesná pravidla jejích rysů; ověřit v původní publikaci."
+        }
+      }
+    },
+    "Sinner": {
+      "trida": "Rogue",
+      "zdroj": "The Crooked Moon Part One (2024 classes)",
+      "rok": 2025,
+      "treti_strana": true,
+      "vydavatel": "Avantris Entertainment",
+      "overeno": [
+        "https://www.dndbeyond.com/sources/dnd/tcmp1",
+        "https://www.dndbeyond.com/forums/d-d-beyond-general/release-issues-support/225155-the-crooked-moon-part-one-player-options-campaign"
+      ],
+      "rysy": {
+        "Subclass Features (názvy neověřené)": {
+          "uroven": 3,
+          "text": "Veřejný obsah potvrzuje tuto subclassu, ale neuvádí názvy ani přesná pravidla jejích rysů; ověřit v původní publikaci."
+        }
+      }
+    },
+    "Crimson Sorcery": {
+      "trida": "Sorcerer",
+      "zdroj": "The Crooked Moon Part One (2024 classes)",
+      "rok": 2025,
+      "treti_strana": true,
+      "vydavatel": "Avantris Entertainment",
+      "overeno": [
+        "https://www.dndbeyond.com/sources/dnd/tcmp1",
+        "https://www.dndbeyond.com/forums/d-d-beyond-general/release-issues-support/225155-the-crooked-moon-part-one-player-options-campaign"
+      ],
+      "rysy": {
+        "Subclass Features (názvy neověřené)": {
+          "uroven": 3,
+          "text": "Veřejný obsah potvrzuje tuto subclassu, ale neuvádí názvy ani přesná pravidla jejích rysů; ověřit v původní publikaci."
+        }
+      }
+    },
+    "Great Fool Patron": {
+      "trida": "Warlock",
+      "zdroj": "The Crooked Moon Part One (2024 classes)",
+      "rok": 2025,
+      "treti_strana": true,
+      "vydavatel": "Avantris Entertainment",
+      "overeno": [
+        "https://www.dndbeyond.com/sources/dnd/tcmp1",
+        "https://www.dndbeyond.com/forums/d-d-beyond-general/release-issues-support/225155-the-crooked-moon-part-one-player-options-campaign"
+      ],
+      "rysy": {
+        "Subclass Features (názvy neověřené)": {
+          "uroven": 3,
+          "text": "Veřejný obsah potvrzuje tuto subclassu, ale neuvádí názvy ani přesná pravidla jejích rysů; ověřit v původní publikaci."
+        }
+      }
+    },
+    "Horned King Patron": {
+      "trida": "Warlock",
+      "zdroj": "The Crooked Moon Part One (2024 classes)",
+      "rok": 2025,
+      "treti_strana": true,
+      "vydavatel": "Avantris Entertainment",
+      "overeno": [
+        "https://www.dndbeyond.com/sources/dnd/tcmp1",
+        "https://www.dndbeyond.com/forums/d-d-beyond-general/release-issues-support/225155-the-crooked-moon-part-one-player-options-campaign"
+      ],
+      "rysy": {
+        "Subclass Features (názvy neověřené)": {
+          "uroven": 3,
+          "text": "Veřejný obsah potvrzuje tuto subclassu, ale neuvádí názvy ani přesná pravidla jejích rysů; ověřit v původní publikaci."
+        }
+      }
+    },
+    "Occultist": {
+      "trida": "Wizard",
+      "zdroj": "The Crooked Moon Part One (2024 classes)",
+      "rok": 2025,
+      "treti_strana": true,
+      "vydavatel": "Avantris Entertainment",
+      "overeno": [
+        "https://www.dndbeyond.com/sources/dnd/tcmp1",
+        "https://www.dndbeyond.com/forums/d-d-beyond-general/release-issues-support/225155-the-crooked-moon-part-one-player-options-campaign"
+      ],
+      "rysy": {
+        "Subclass Features (názvy neověřené)": {
+          "uroven": 3,
+          "text": "Veřejný obsah potvrzuje tuto subclassu, ale neuvádí názvy ani přesná pravidla jejích rysů; ověřit v původní publikaci."
+        }
+      }
+    },
+    "Philosopher": {
+      "trida": "Wizard",
+      "zdroj": "The Crooked Moon Part One (2024 classes)",
+      "rok": 2025,
+      "treti_strana": true,
+      "vydavatel": "Avantris Entertainment",
+      "overeno": [
+        "https://www.dndbeyond.com/sources/dnd/tcmp1",
+        "https://www.dndbeyond.com/forums/d-d-beyond-general/release-issues-support/225155-the-crooked-moon-part-one-player-options-campaign"
+      ],
+      "rysy": {
+        "Subclass Features (názvy neověřené)": {
+          "uroven": 3,
+          "text": "Veřejný obsah potvrzuje tuto subclassu, ale neuvádí názvy ani přesná pravidla jejích rysů; ověřit v původní publikaci."
+        }
+      }
+    },
+    "Path of the Muscle Wizard": {
+      "trida": "Barbarian",
+      "zdroj": "Valda’s Spire of Secrets: Player Pack",
+      "rok": 2025,
+      "treti_strana": true,
+      "vydavatel": "Mage Hand Press",
+      "overeno": [
+        "https://www.dndbeyond.com/posts/1939-whats-inside-valdas-spire-of-secrets-player-pack",
+        "https://www.dndbeyond.com/sources/dnd/vsspp/valdas-spire-of-secrets-player-pack"
+      ],
+      "rysy": {
+        "Rysy subclassy (název neověřen)": {
+          "uroven": 3,
+          "text": "Veřejný článek uvádí cantripy Mage Hand, Shocking Grasp a True Strike a pozdější získávání kouzel; přesné úrovně, použití a účinky nejsou v náhledu rozepsány."
+        }
+      }
+    },
+    "Dungeoneer": {
+      "trida": "Fighter",
+      "zdroj": "Valda’s Spire of Secrets: Player Pack",
+      "rok": 2025,
+      "treti_strana": true,
+      "vydavatel": "Mage Hand Press",
+      "overeno": [
+        "https://www.dndbeyond.com/posts/1939-whats-inside-valdas-spire-of-secrets-player-pack",
+        "https://www.dndbeyond.com/sources/dnd/vsspp/valdas-spire-of-secrets-player-pack"
+      ],
+      "rysy": {
+        "Rysy subclassy (název neověřen)": {
+          "uroven": 3,
+          "text": "Veřejný článek popisuje průzkum nebezpečných podzemí a schopnosti proti pastem a dalším hrozbám; názvy a pravidla úvodních rysů nejsou v náhledu uvedeny."
+        },
+        "Dungeoneer’s Intuition": {
+          "uroven": 7,
+          "text": "Veřejný přehled uvádí Advantage při odhalování pastí, nebezpečí, magických účinků a tvorů měnících podobu."
+        }
+      }
+    },
+    "Warrior of the Street": {
+      "trida": "Monk",
+      "zdroj": "Valda’s Spire of Secrets: Player Pack",
+      "rok": 2025,
+      "treti_strana": true,
+      "vydavatel": "Mage Hand Press",
+      "overeno": [
+        "https://www.dndbeyond.com/posts/1939-whats-inside-valdas-spire-of-secrets-player-pack",
+        "https://www.dndbeyond.com/sources/dnd/vsspp/valdas-spire-of-secrets-player-pack"
+      ],
+      "rysy": {
+        "Rysy subclassy (název neověřen)": {
+          "uroven": 3,
+          "text": "Veřejný článek zdůrazňuje řetězení úderů a tvrdé pěsti; s vyššími úrovněmi přibývají výboje ki, vymrštění protivníků a možnost je jedinou ranou vyřadit."
+        }
+      }
+    },
+    "Oath of Revelry": {
+      "trida": "Paladin",
+      "zdroj": "Valda’s Spire of Secrets: Player Pack",
+      "rok": 2025,
+      "treti_strana": true,
+      "vydavatel": "Mage Hand Press",
+      "overeno": [
+        "https://www.dndbeyond.com/posts/1939-whats-inside-valdas-spire-of-secrets-player-pack",
+        "https://www.dndbeyond.com/sources/dnd/vsspp/valdas-spire-of-secrets-player-pack"
+      ],
+      "rysy": {
+        "Conjure Drink": {
+          "uroven": 3,
+          "text": "Jako možnost Channel Divinity připraví občerstvení; veřejný přehled neuvádí přesné množství ani další účinky."
+        },
+        "Song and Dance": {
+          "uroven": 3,
+          "text": "Druhá možnost Channel Divinity využívá hudbu a tanec; přesné herní účinky zůstávají v dostupném náhledu neověřené."
+        },
+        "Aura of Fraternity": {
+          "uroven": "neověřeno",
+          "text": "Veřejný přehled uvádí auru, která sbližuje paladina a spojence; její úroveň, dosah a konkrétní pravidla nejsou v náhledu potvrzeny."
+        },
+        "Merrymaker": {
+          "uroven": "neověřeno",
+          "text": "Veřejný přehled jí připisuje Advantage pro spojence při ability checks a saving throws; úroveň, dosah a použití nejsou veřejně specifikovány."
+        },
+        "Party Animal": {
+          "uroven": 20,
+          "text": "Článek potvrzuje, že na 20. úrovni se paladin promění v satyrovi podobné zosobnění slavnosti; přesná mechanika zůstává neověřená."
+        }
+      }
+    },
+    "Arachnoid Stalker": {
+      "trida": "Rogue",
+      "zdroj": "Valda’s Spire of Secrets: Player Pack",
+      "rok": 2025,
+      "treti_strana": true,
+      "vydavatel": "Mage Hand Press",
+      "overeno": [
+        "https://www.dndbeyond.com/posts/1939-whats-inside-valdas-spire-of-secrets-player-pack",
+        "https://www.dndbeyond.com/sources/dnd/vsspp/valdas-spire-of-secrets-player-pack"
+      ],
+      "rysy": {
+        "Rysy subclassy (název neověřen)": {
+          "uroven": 3,
+          "text": "Veřejný přehled popisuje lov ze stínů, pavučinová vlákna použitelná jako provizorní lano a schopnosti připomínající pavouky; přesná pravidla nejsou uvedena."
+        },
+        "Venomous Strike": {
+          "uroven": "neověřeno",
+          "text": "Podle veřejného článku tento útok mění kostku Sneak Attack na d8 a způsob zranění na Poison; úroveň a další podmínky nejsou v náhledu potvrzeny."
+        }
+      }
+    },
+    "Future You Patron": {
+      "trida": "Warlock",
+      "zdroj": "Valda’s Spire of Secrets: Player Pack",
+      "rok": 2025,
+      "treti_strana": true,
+      "vydavatel": "Mage Hand Press",
+      "overeno": [
+        "https://www.dndbeyond.com/posts/1939-whats-inside-valdas-spire-of-secrets-player-pack",
+        "https://www.dndbeyond.com/sources/dnd/vsspp/valdas-spire-of-secrets-player-pack"
+      ],
+      "rysy": {
+        "Rysy subclassy (název neověřen)": {
+          "uroven": 3,
+          "text": "Veřejný přehled popisuje patrona jako budoucí podobu warlocka, chronomantická kouzla a ovlivňování hodů; názvy, úrovně i přesná pravidla rysů zůstávají neověřené."
+        }
+      }
+    },
+    "Carver Guild": {
+      "trida": "Monster Hunter",
+      "zdroj": "Grim Hollow: Player’s Guide (2025)",
+      "rok": 2025,
+      "treti_strana": true,
+      "vydavatel": "Ghostfire Gaming",
+      "overeno": [
+        "https://www.dndbeyond.com/forums/d-d-beyond-general/release-issues-support/228644-grim-hollow-players-guide-issues-and-support",
+        "https://ghostfiregaming.com/product/grim-hollow-players-guide-pdf-5-5e/"
+      ],
+      "rysy": {
+        "Guild Features (názvy neověřené)": {
+          "uroven": "neověřeno",
+          "text": "Veřejný obsah uvádí název gildy, ale neodhaluje názvy, úrovně ani pravidla jejích rysů; ověřit v příručce."
+        }
+      }
+    },
+    "Devourer Guild": {
+      "trida": "Monster Hunter",
+      "zdroj": "Grim Hollow: Player’s Guide (2025)",
+      "rok": 2025,
+      "treti_strana": true,
+      "vydavatel": "Ghostfire Gaming",
+      "overeno": [
+        "https://www.dndbeyond.com/forums/d-d-beyond-general/release-issues-support/228644-grim-hollow-players-guide-issues-and-support",
+        "https://ghostfiregaming.com/product/grim-hollow-players-guide-pdf-5-5e/"
+      ],
+      "rysy": {
+        "Guild Features (názvy neověřené)": {
+          "uroven": "neověřeno",
+          "text": "Veřejný obsah uvádí název gildy, ale neodhaluje názvy, úrovně ani pravidla jejích rysů; ověřit v příručce."
+        }
+      }
+    },
+    "Occultist Guild": {
+      "trida": "Monster Hunter",
+      "zdroj": "Grim Hollow: Player’s Guide (2025)",
+      "rok": 2025,
+      "treti_strana": true,
+      "vydavatel": "Ghostfire Gaming",
+      "overeno": [
+        "https://www.dndbeyond.com/forums/d-d-beyond-general/release-issues-support/228644-grim-hollow-players-guide-issues-and-support",
+        "https://ghostfiregaming.com/product/grim-hollow-players-guide-pdf-5-5e/"
+      ],
+      "rysy": {
+        "Guild Features (názvy neověřené)": {
+          "uroven": "neověřeno",
+          "text": "Veřejný obsah uvádí název gildy, ale neodhaluje názvy, úrovně ani pravidla jejích rysů; ověřit v příručce."
+        }
+      }
+    },
+    "Trapper Guild": {
+      "trida": "Monster Hunter",
+      "zdroj": "Grim Hollow: Player’s Guide (2025)",
+      "rok": 2025,
+      "treti_strana": true,
+      "vydavatel": "Ghostfire Gaming",
+      "overeno": [
+        "https://www.dndbeyond.com/forums/d-d-beyond-general/release-issues-support/228644-grim-hollow-players-guide-issues-and-support",
+        "https://ghostfiregaming.com/product/grim-hollow-players-guide-pdf-5-5e/"
+      ],
+      "rysy": {
+        "Guild Features (názvy neověřené)": {
+          "uroven": "neověřeno",
+          "text": "Veřejný obsah uvádí název gildy, ale neodhaluje názvy, úrovně ani pravidla jejích rysů; ověřit v příručce."
+        }
+      }
+    },
+    "Path of the Fractured": {
+      "trida": "Barbarian",
+      "zdroj": "Grim Hollow: Player’s Guide (2025)",
+      "rok": 2025,
+      "treti_strana": true,
+      "vydavatel": "Ghostfire Gaming",
+      "overeno": [
+        "https://www.dndbeyond.com/forums/d-d-beyond-general/release-issues-support/228644-grim-hollow-players-guide-issues-and-support",
+        "https://ghostfiregaming.com/product/grim-hollow-players-guide-pdf-5-5e/"
+      ],
+      "rysy": {
+        "Subclass Features (názvy neověřené)": {
+          "uroven": 3,
+          "text": "Veřejný obsah potvrzuje tuto subclassu, ale neuvádí názvy ani přesná pravidla jejích rysů; ověřit v původní publikaci."
+        }
+      }
+    },
+    "Path of the Primal Spirit": {
+      "trida": "Barbarian",
+      "zdroj": "Grim Hollow: Player’s Guide (2025)",
+      "rok": 2025,
+      "treti_strana": true,
+      "vydavatel": "Ghostfire Gaming",
+      "overeno": [
+        "https://www.dndbeyond.com/forums/d-d-beyond-general/release-issues-support/228644-grim-hollow-players-guide-issues-and-support",
+        "https://ghostfiregaming.com/product/grim-hollow-players-guide-pdf-5-5e/"
+      ],
+      "rysy": {
+        "Subclass Features (názvy neověřené)": {
+          "uroven": 3,
+          "text": "Veřejný obsah potvrzuje tuto subclassu, ale neuvádí názvy ani přesná pravidla jejích rysů; ověřit v původní publikaci."
+        }
+      }
+    },
+    "Path of the Wrathful Dead": {
+      "trida": "Barbarian",
+      "zdroj": "Grim Hollow: Player’s Guide (2025)",
+      "rok": 2025,
+      "treti_strana": true,
+      "vydavatel": "Ghostfire Gaming",
+      "overeno": [
+        "https://www.dndbeyond.com/forums/d-d-beyond-general/release-issues-support/228644-grim-hollow-players-guide-issues-and-support",
+        "https://ghostfiregaming.com/product/grim-hollow-players-guide-pdf-5-5e/"
+      ],
+      "rysy": {
+        "Subclass Features (názvy neověřené)": {
+          "uroven": 3,
+          "text": "Veřejný obsah potvrzuje tuto subclassu, ale neuvádí názvy ani přesná pravidla jejích rysů; ověřit v původní publikaci."
+        }
+      }
+    },
+    "College of Adventurers": {
+      "trida": "Bard",
+      "zdroj": "Grim Hollow: Player’s Guide (2025)",
+      "rok": 2025,
+      "treti_strana": true,
+      "vydavatel": "Ghostfire Gaming",
+      "overeno": [
+        "https://www.dndbeyond.com/forums/d-d-beyond-general/release-issues-support/228644-grim-hollow-players-guide-issues-and-support",
+        "https://ghostfiregaming.com/product/grim-hollow-players-guide-pdf-5-5e/"
+      ],
+      "rysy": {
+        "Subclass Features (názvy neověřené)": {
+          "uroven": 3,
+          "text": "Veřejný obsah potvrzuje tuto subclassu, ale neuvádí názvy ani přesná pravidla jejích rysů; ověřit v původní publikaci."
+        }
+      }
+    },
+    "College of Fools": {
+      "trida": "Bard",
+      "zdroj": "Grim Hollow: Player’s Guide (2025)",
+      "rok": 2025,
+      "treti_strana": true,
+      "vydavatel": "Ghostfire Gaming",
+      "overeno": [
+        "https://www.dndbeyond.com/forums/d-d-beyond-general/release-issues-support/228644-grim-hollow-players-guide-issues-and-support",
+        "https://ghostfiregaming.com/product/grim-hollow-players-guide-pdf-5-5e/"
+      ],
+      "rysy": {
+        "Subclass Features (názvy neověřené)": {
+          "uroven": 3,
+          "text": "Veřejný obsah potvrzuje tuto subclassu, ale neuvádí názvy ani přesná pravidla jejích rysů; ověřit v původní publikaci."
+        }
+      }
+    },
+    "College of Requiems": {
+      "trida": "Bard",
+      "zdroj": "Grim Hollow: Player’s Guide (2025)",
+      "rok": 2025,
+      "treti_strana": true,
+      "vydavatel": "Ghostfire Gaming",
+      "overeno": [
+        "https://www.dndbeyond.com/forums/d-d-beyond-general/release-issues-support/228644-grim-hollow-players-guide-issues-and-support",
+        "https://ghostfiregaming.com/product/grim-hollow-players-guide-pdf-5-5e/"
+      ],
+      "rysy": {
+        "Subclass Features (názvy neověřené)": {
+          "uroven": 3,
+          "text": "Veřejný obsah potvrzuje tuto subclassu, ale neuvádí názvy ani přesná pravidla jejích rysů; ověřit v původní publikaci."
+        }
+      }
+    },
+    "Eldritch Domain": {
+      "trida": "Cleric",
+      "zdroj": "Grim Hollow: Player’s Guide (2025)",
+      "rok": 2025,
+      "treti_strana": true,
+      "vydavatel": "Ghostfire Gaming",
+      "overeno": [
+        "https://www.dndbeyond.com/forums/d-d-beyond-general/release-issues-support/228644-grim-hollow-players-guide-issues-and-support",
+        "https://ghostfiregaming.com/product/grim-hollow-players-guide-pdf-5-5e/"
+      ],
+      "rysy": {
+        "Subclass Features (názvy neověřené)": {
+          "uroven": 3,
+          "text": "Veřejný obsah potvrzuje tuto subclassu, ale neuvádí názvy ani přesná pravidla jejích rysů; ověřit v původní publikaci."
+        }
+      }
+    },
+    "Inquisition Domain": {
+      "trida": "Cleric",
+      "zdroj": "Grim Hollow: Player’s Guide (2025)",
+      "rok": 2025,
+      "treti_strana": true,
+      "vydavatel": "Ghostfire Gaming",
+      "overeno": [
+        "https://www.dndbeyond.com/forums/d-d-beyond-general/release-issues-support/228644-grim-hollow-players-guide-issues-and-support",
+        "https://ghostfiregaming.com/product/grim-hollow-players-guide-pdf-5-5e/"
+      ],
+      "rysy": {
+        "Subclass Features (názvy neověřené)": {
+          "uroven": 3,
+          "text": "Veřejný obsah potvrzuje tuto subclassu, ale neuvádí názvy ani přesná pravidla jejích rysů; ověřit v původní publikaci."
+        }
+      }
+    },
+    "Purification Domain": {
+      "trida": "Cleric",
+      "zdroj": "Grim Hollow: Player’s Guide (2025)",
+      "rok": 2025,
+      "treti_strana": true,
+      "vydavatel": "Ghostfire Gaming",
+      "overeno": [
+        "https://www.dndbeyond.com/forums/d-d-beyond-general/release-issues-support/228644-grim-hollow-players-guide-issues-and-support",
+        "https://ghostfiregaming.com/product/grim-hollow-players-guide-pdf-5-5e/"
+      ],
+      "rysy": {
+        "Subclass Features (názvy neověřené)": {
+          "uroven": 3,
+          "text": "Veřejný obsah potvrzuje tuto subclassu, ale neuvádí názvy ani přesná pravidla jejích rysů; ověřit v původní publikaci."
+        }
+      }
+    },
+    "Circle of Blood": {
+      "trida": "Druid",
+      "zdroj": "Grim Hollow: Player’s Guide (2025)",
+      "rok": 2025,
+      "treti_strana": true,
+      "vydavatel": "Ghostfire Gaming",
+      "overeno": [
+        "https://www.dndbeyond.com/forums/d-d-beyond-general/release-issues-support/228644-grim-hollow-players-guide-issues-and-support",
+        "https://ghostfiregaming.com/product/grim-hollow-players-guide-pdf-5-5e/"
+      ],
+      "rysy": {
+        "Subclass Features (názvy neověřené)": {
+          "uroven": 3,
+          "text": "Veřejný obsah potvrzuje tuto subclassu, ale neuvádí názvy ani přesná pravidla jejích rysů; ověřit v původní publikaci."
+        }
+      }
+    },
+    "Circle of Entropy": {
+      "trida": "Druid",
+      "zdroj": "Grim Hollow: Player’s Guide (2025)",
+      "rok": 2025,
+      "treti_strana": true,
+      "vydavatel": "Ghostfire Gaming",
+      "overeno": [
+        "https://www.dndbeyond.com/forums/d-d-beyond-general/release-issues-support/228644-grim-hollow-players-guide-issues-and-support",
+        "https://ghostfiregaming.com/product/grim-hollow-players-guide-pdf-5-5e/"
+      ],
+      "rysy": {
+        "Subclass Features (názvy neověřené)": {
+          "uroven": 3,
+          "text": "Veřejný obsah potvrzuje tuto subclassu, ale neuvádí názvy ani přesná pravidla jejích rysů; ověřit v původní publikaci."
+        }
+      }
+    },
+    "Circle of Mutation": {
+      "trida": "Druid",
+      "zdroj": "Grim Hollow: Player’s Guide (2025)",
+      "rok": 2025,
+      "treti_strana": true,
+      "vydavatel": "Ghostfire Gaming",
+      "overeno": [
+        "https://www.dndbeyond.com/forums/d-d-beyond-general/release-issues-support/228644-grim-hollow-players-guide-issues-and-support",
+        "https://ghostfiregaming.com/product/grim-hollow-players-guide-pdf-5-5e/"
+      ],
+      "rysy": {
+        "Subclass Features (názvy neověřené)": {
+          "uroven": 3,
+          "text": "Veřejný obsah potvrzuje tuto subclassu, ale neuvádí názvy ani přesná pravidla jejích rysů; ověřit v původní publikaci."
+        }
+      }
+    },
+    "Bulwark Warrior": {
+      "trida": "Fighter",
+      "zdroj": "Grim Hollow: Player’s Guide (2025)",
+      "rok": 2025,
+      "treti_strana": true,
+      "vydavatel": "Ghostfire Gaming",
+      "overeno": [
+        "https://www.dndbeyond.com/forums/d-d-beyond-general/release-issues-support/228644-grim-hollow-players-guide-issues-and-support",
+        "https://ghostfiregaming.com/product/grim-hollow-players-guide-pdf-5-5e/"
+      ],
+      "rysy": {
+        "Subclass Features (názvy neověřené)": {
+          "uroven": 3,
+          "text": "Veřejný obsah potvrzuje tuto subclassu, ale neuvádí názvy ani přesná pravidla jejích rysů; ověřit v původní publikaci."
+        }
+      }
+    },
+    "Living Crucible": {
+      "trida": "Fighter",
+      "zdroj": "Grim Hollow: Player’s Guide (2025)",
+      "rok": 2025,
+      "treti_strana": true,
+      "vydavatel": "Ghostfire Gaming",
+      "overeno": [
+        "https://www.dndbeyond.com/forums/d-d-beyond-general/release-issues-support/228644-grim-hollow-players-guide-issues-and-support",
+        "https://ghostfiregaming.com/product/grim-hollow-players-guide-pdf-5-5e/"
+      ],
+      "rysy": {
+        "Subclass Features (názvy neověřené)": {
+          "uroven": 3,
+          "text": "Veřejný obsah potvrzuje tuto subclassu, ale neuvádí názvy ani přesná pravidla jejích rysů; ověřit v původní publikaci."
+        }
+      }
+    },
+    "Nightwatcher": {
+      "trida": "Fighter",
+      "zdroj": "Grim Hollow: Player’s Guide (2025)",
+      "rok": 2025,
+      "treti_strana": true,
+      "vydavatel": "Ghostfire Gaming",
+      "overeno": [
+        "https://www.dndbeyond.com/forums/d-d-beyond-general/release-issues-support/228644-grim-hollow-players-guide-issues-and-support",
+        "https://ghostfiregaming.com/product/grim-hollow-players-guide-pdf-5-5e/"
+      ],
+      "rysy": {
+        "Subclass Features (názvy neověřené)": {
+          "uroven": 3,
+          "text": "Veřejný obsah potvrzuje tuto subclassu, ale neuvádí názvy ani přesná pravidla jejích rysů; ověřit v původní publikaci."
+        }
+      }
+    },
+    "Warrior of the Leaden Crown": {
+      "trida": "Monk",
+      "zdroj": "Grim Hollow: Player’s Guide (2025)",
+      "rok": 2025,
+      "treti_strana": true,
+      "vydavatel": "Ghostfire Gaming",
+      "overeno": [
+        "https://www.dndbeyond.com/forums/d-d-beyond-general/release-issues-support/228644-grim-hollow-players-guide-issues-and-support",
+        "https://ghostfiregaming.com/product/grim-hollow-players-guide-pdf-5-5e/"
+      ],
+      "rysy": {
+        "Subclass Features (názvy neověřené)": {
+          "uroven": 3,
+          "text": "Veřejný obsah potvrzuje tuto subclassu, ale neuvádí názvy ani přesná pravidla jejích rysů; ověřit v původní publikaci."
+        }
+      }
+    },
+    "Warrior of Pride": {
+      "trida": "Monk",
+      "zdroj": "Grim Hollow: Player’s Guide (2025)",
+      "rok": 2025,
+      "treti_strana": true,
+      "vydavatel": "Ghostfire Gaming",
+      "overeno": [
+        "https://www.dndbeyond.com/forums/d-d-beyond-general/release-issues-support/228644-grim-hollow-players-guide-issues-and-support",
+        "https://ghostfiregaming.com/product/grim-hollow-players-guide-pdf-5-5e/"
+      ],
+      "rysy": {
+        "Subclass Features (názvy neověřené)": {
+          "uroven": 3,
+          "text": "Veřejný obsah potvrzuje tuto subclassu, ale neuvádí názvy ani přesná pravidla jejích rysů; ověřit v původní publikaci."
+        }
+      }
+    },
+    "Warrior of Regret": {
+      "trida": "Monk",
+      "zdroj": "Grim Hollow: Player’s Guide (2025)",
+      "rok": 2025,
+      "treti_strana": true,
+      "vydavatel": "Ghostfire Gaming",
+      "overeno": [
+        "https://www.dndbeyond.com/forums/d-d-beyond-general/release-issues-support/228644-grim-hollow-players-guide-issues-and-support",
+        "https://ghostfiregaming.com/product/grim-hollow-players-guide-pdf-5-5e/"
+      ],
+      "rysy": {
+        "Subclass Features (názvy neověřené)": {
+          "uroven": 3,
+          "text": "Veřejný obsah potvrzuje tuto subclassu, ale neuvádí názvy ani přesná pravidla jejích rysů; ověřit v původní publikaci."
+        }
+      }
+    },
+    "Oath of Pestilence": {
+      "trida": "Paladin",
+      "zdroj": "Grim Hollow: Player’s Guide (2025)",
+      "rok": 2025,
+      "treti_strana": true,
+      "vydavatel": "Ghostfire Gaming",
+      "overeno": [
+        "https://www.dndbeyond.com/forums/d-d-beyond-general/release-issues-support/228644-grim-hollow-players-guide-issues-and-support",
+        "https://ghostfiregaming.com/product/grim-hollow-players-guide-pdf-5-5e/"
+      ],
+      "rysy": {
+        "Subclass Features (názvy neověřené)": {
+          "uroven": 3,
+          "text": "Veřejný obsah potvrzuje tuto subclassu, ale neuvádí názvy ani přesná pravidla jejích rysů; ověřit v původní publikaci."
+        }
+      }
+    },
+    "Oath of Slaughter": {
+      "trida": "Paladin",
+      "zdroj": "Grim Hollow: Player’s Guide (2025)",
+      "rok": 2025,
+      "treti_strana": true,
+      "vydavatel": "Ghostfire Gaming",
+      "overeno": [
+        "https://www.dndbeyond.com/forums/d-d-beyond-general/release-issues-support/228644-grim-hollow-players-guide-issues-and-support",
+        "https://ghostfiregaming.com/product/grim-hollow-players-guide-pdf-5-5e/"
+      ],
+      "rysy": {
+        "Subclass Features (názvy neověřené)": {
+          "uroven": 3,
+          "text": "Veřejný obsah potvrzuje tuto subclassu, ale neuvádí názvy ani přesná pravidla jejích rysů; ověřit v původní publikaci."
+        }
+      }
+    },
+    "Oath of Zeal": {
+      "trida": "Paladin",
+      "zdroj": "Grim Hollow: Player’s Guide (2025)",
+      "rok": 2025,
+      "treti_strana": true,
+      "vydavatel": "Ghostfire Gaming",
+      "overeno": [
+        "https://www.dndbeyond.com/forums/d-d-beyond-general/release-issues-support/228644-grim-hollow-players-guide-issues-and-support",
+        "https://ghostfiregaming.com/product/grim-hollow-players-guide-pdf-5-5e/"
+      ],
+      "rysy": {
+        "Subclass Features (názvy neověřené)": {
+          "uroven": 3,
+          "text": "Veřejný obsah potvrzuje tuto subclassu, ale neuvádí názvy ani přesná pravidla jejích rysů; ověřit v původní publikaci."
+        }
+      }
+    },
+    "Green Reaper": {
+      "trida": "Ranger",
+      "zdroj": "Grim Hollow: Player’s Guide (2025)",
+      "rok": 2025,
+      "treti_strana": true,
+      "vydavatel": "Ghostfire Gaming",
+      "overeno": [
+        "https://www.dndbeyond.com/forums/d-d-beyond-general/release-issues-support/228644-grim-hollow-players-guide-issues-and-support",
+        "https://ghostfiregaming.com/product/grim-hollow-players-guide-pdf-5-5e/"
+      ],
+      "rysy": {
+        "Subclass Features (názvy neověřené)": {
+          "uroven": 3,
+          "text": "Veřejný obsah potvrzuje tuto subclassu, ale neuvádí názvy ani přesná pravidla jejích rysů; ověřit v původní publikaci."
+        }
+      }
+    },
+    "Primordial Archer": {
+      "trida": "Ranger",
+      "zdroj": "Grim Hollow: Player’s Guide (2025)",
+      "rok": 2025,
+      "treti_strana": true,
+      "vydavatel": "Ghostfire Gaming",
+      "overeno": [
+        "https://www.dndbeyond.com/forums/d-d-beyond-general/release-issues-support/228644-grim-hollow-players-guide-issues-and-support",
+        "https://ghostfiregaming.com/product/grim-hollow-players-guide-pdf-5-5e/"
+      ],
+      "rysy": {
+        "Subclass Features (názvy neověřené)": {
+          "uroven": 3,
+          "text": "Veřejný obsah potvrzuje tuto subclassu, ale neuvádí názvy ani přesná pravidla jejích rysů; ověřit v původní publikaci."
+        }
+      }
+    },
+    "Vermin Lord": {
+      "trida": "Ranger",
+      "zdroj": "Grim Hollow: Player’s Guide (2025)",
+      "rok": 2025,
+      "treti_strana": true,
+      "vydavatel": "Ghostfire Gaming",
+      "overeno": [
+        "https://www.dndbeyond.com/forums/d-d-beyond-general/release-issues-support/228644-grim-hollow-players-guide-issues-and-support",
+        "https://ghostfiregaming.com/product/grim-hollow-players-guide-pdf-5-5e/"
+      ],
+      "rysy": {
+        "Subclass Features (názvy neověřené)": {
+          "uroven": 3,
+          "text": "Veřejný obsah potvrzuje tuto subclassu, ale neuvádí názvy ani přesná pravidla jejích rysů; ověřit v původní publikaci."
+        }
+      }
+    },
+    "Highway Rider": {
+      "trida": "Rogue",
+      "zdroj": "Grim Hollow: Player’s Guide (2025)",
+      "rok": 2025,
+      "treti_strana": true,
+      "vydavatel": "Ghostfire Gaming",
+      "overeno": [
+        "https://www.dndbeyond.com/forums/d-d-beyond-general/release-issues-support/228644-grim-hollow-players-guide-issues-and-support",
+        "https://ghostfiregaming.com/product/grim-hollow-players-guide-pdf-5-5e/"
+      ],
+      "rysy": {
+        "Subclass Features (názvy neověřené)": {
+          "uroven": 3,
+          "text": "Veřejný obsah potvrzuje tuto subclassu, ale neuvádí názvy ani přesná pravidla jejích rysů; ověřit v původní publikaci."
+        }
+      }
+    },
+    "Misfortune Bringer": {
+      "trida": "Rogue",
+      "zdroj": "Grim Hollow: Player’s Guide (2025)",
+      "rok": 2025,
+      "treti_strana": true,
+      "vydavatel": "Ghostfire Gaming",
+      "overeno": [
+        "https://www.dndbeyond.com/forums/d-d-beyond-general/release-issues-support/228644-grim-hollow-players-guide-issues-and-support",
+        "https://ghostfiregaming.com/product/grim-hollow-players-guide-pdf-5-5e/"
+      ],
+      "rysy": {
+        "Subclass Features (názvy neověřené)": {
+          "uroven": 3,
+          "text": "Veřejný obsah potvrzuje tuto subclassu, ale neuvádí názvy ani přesná pravidla jejích rysů; ověřit v původní publikaci."
+        }
+      }
+    },
+    "Sanguine Thief": {
+      "trida": "Rogue",
+      "zdroj": "Grim Hollow: Player’s Guide (2025)",
+      "rok": 2025,
+      "treti_strana": true,
+      "vydavatel": "Ghostfire Gaming",
+      "overeno": [
+        "https://www.dndbeyond.com/forums/d-d-beyond-general/release-issues-support/228644-grim-hollow-players-guide-issues-and-support",
+        "https://ghostfiregaming.com/product/grim-hollow-players-guide-pdf-5-5e/"
+      ],
+      "rysy": {
+        "Subclass Features (názvy neověřené)": {
+          "uroven": 3,
+          "text": "Veřejný obsah potvrzuje tuto subclassu, ale neuvádí názvy ani přesná pravidla jejích rysů; ověřit v původní publikaci."
+        }
+      }
+    },
+    "Apocalypse Sorcery": {
+      "trida": "Sorcerer",
+      "zdroj": "Grim Hollow: Player’s Guide (2025)",
+      "rok": 2025,
+      "treti_strana": true,
+      "vydavatel": "Ghostfire Gaming",
+      "overeno": [
+        "https://www.dndbeyond.com/forums/d-d-beyond-general/release-issues-support/228644-grim-hollow-players-guide-issues-and-support",
+        "https://ghostfiregaming.com/product/grim-hollow-players-guide-pdf-5-5e/"
+      ],
+      "rysy": {
+        "Subclass Features (názvy neověřené)": {
+          "uroven": 3,
+          "text": "Veřejný obsah potvrzuje tuto subclassu, ale neuvádí názvy ani přesná pravidla jejích rysů; ověřit v původní publikaci."
+        }
+      }
+    },
+    "Haunted Sorcery": {
+      "trida": "Sorcerer",
+      "zdroj": "Grim Hollow: Player’s Guide (2025)",
+      "rok": 2025,
+      "treti_strana": true,
+      "vydavatel": "Ghostfire Gaming",
+      "overeno": [
+        "https://www.dndbeyond.com/forums/d-d-beyond-general/release-issues-support/228644-grim-hollow-players-guide-issues-and-support",
+        "https://ghostfiregaming.com/product/grim-hollow-players-guide-pdf-5-5e/"
+      ],
+      "rysy": {
+        "Subclass Features (názvy neověřené)": {
+          "uroven": 3,
+          "text": "Veřejný obsah potvrzuje tuto subclassu, ale neuvádí názvy ani přesná pravidla jejích rysů; ověřit v původní publikaci."
+        }
+      }
+    },
+    "Wretched Bloodline Sorcery": {
+      "trida": "Sorcerer",
+      "zdroj": "Grim Hollow: Player’s Guide (2025)",
+      "rok": 2025,
+      "treti_strana": true,
+      "vydavatel": "Ghostfire Gaming",
+      "overeno": [
+        "https://www.dndbeyond.com/forums/d-d-beyond-general/release-issues-support/228644-grim-hollow-players-guide-issues-and-support",
+        "https://ghostfiregaming.com/product/grim-hollow-players-guide-pdf-5-5e/"
+      ],
+      "rysy": {
+        "Subclass Features (názvy neověřené)": {
+          "uroven": 3,
+          "text": "Veřejný obsah potvrzuje tuto subclassu, ale neuvádí názvy ani přesná pravidla jejích rysů; ověřit v původní publikaci."
+        }
+      }
+    },
+    "The Coven": {
+      "trida": "Warlock",
+      "zdroj": "Grim Hollow: Player’s Guide (2025)",
+      "rok": 2025,
+      "treti_strana": true,
+      "vydavatel": "Ghostfire Gaming",
+      "overeno": [
+        "https://www.dndbeyond.com/forums/d-d-beyond-general/release-issues-support/228644-grim-hollow-players-guide-issues-and-support",
+        "https://ghostfiregaming.com/product/grim-hollow-players-guide-pdf-5-5e/"
+      ],
+      "rysy": {
+        "Subclass Features (názvy neověřené)": {
+          "uroven": 3,
+          "text": "Veřejný obsah potvrzuje tuto subclassu, ale neuvádí názvy ani přesná pravidla jejích rysů; ověřit v původní publikaci."
+        }
+      }
+    },
+    "The First Vampire Patron": {
+      "trida": "Warlock",
+      "zdroj": "Grim Hollow: Player’s Guide (2025)",
+      "rok": 2025,
+      "treti_strana": true,
+      "vydavatel": "Ghostfire Gaming",
+      "overeno": [
+        "https://www.dndbeyond.com/forums/d-d-beyond-general/release-issues-support/228644-grim-hollow-players-guide-issues-and-support",
+        "https://ghostfiregaming.com/product/grim-hollow-players-guide-pdf-5-5e/"
+      ],
+      "rysy": {
+        "Subclass Features (názvy neověřené)": {
+          "uroven": 3,
+          "text": "Veřejný obsah potvrzuje tuto subclassu, ale neuvádí názvy ani přesná pravidla jejích rysů; ověřit v původní publikaci."
+        }
+      }
+    },
+    "The Parasite Patron": {
+      "trida": "Warlock",
+      "zdroj": "Grim Hollow: Player’s Guide (2025)",
+      "rok": 2025,
+      "treti_strana": true,
+      "vydavatel": "Ghostfire Gaming",
+      "overeno": [
+        "https://www.dndbeyond.com/forums/d-d-beyond-general/release-issues-support/228644-grim-hollow-players-guide-issues-and-support",
+        "https://ghostfiregaming.com/product/grim-hollow-players-guide-pdf-5-5e/"
+      ],
+      "rysy": {
+        "Subclass Features (názvy neověřené)": {
+          "uroven": 3,
+          "text": "Veřejný obsah potvrzuje tuto subclassu, ale neuvádí názvy ani přesná pravidla jejích rysů; ověřit v původní publikaci."
+        }
+      }
+    },
+    "Daemonologist": {
+      "trida": "Wizard",
+      "zdroj": "Grim Hollow: Player’s Guide (2025)",
+      "rok": 2025,
+      "treti_strana": true,
+      "vydavatel": "Ghostfire Gaming",
+      "overeno": [
+        "https://www.dndbeyond.com/forums/d-d-beyond-general/release-issues-support/228644-grim-hollow-players-guide-issues-and-support",
+        "https://ghostfiregaming.com/product/grim-hollow-players-guide-pdf-5-5e/"
+      ],
+      "rysy": {
+        "Subclass Features (názvy neověřené)": {
+          "uroven": 3,
+          "text": "Veřejný obsah potvrzuje tuto subclassu, ale neuvádí názvy ani přesná pravidla jejích rysů; ověřit v původní publikaci."
+        }
+      }
+    },
+    "Plague Doctor": {
+      "trida": "Wizard",
+      "zdroj": "Grim Hollow: Player’s Guide (2025)",
+      "rok": 2025,
+      "treti_strana": true,
+      "vydavatel": "Ghostfire Gaming",
+      "overeno": [
+        "https://www.dndbeyond.com/forums/d-d-beyond-general/release-issues-support/228644-grim-hollow-players-guide-issues-and-support",
+        "https://ghostfiregaming.com/product/grim-hollow-players-guide-pdf-5-5e/"
+      ],
+      "rysy": {
+        "Subclass Features (názvy neověřené)": {
+          "uroven": 3,
+          "text": "Veřejný obsah potvrzuje tuto subclassu, ale neuvádí názvy ani přesná pravidla jejích rysů; ověřit v původní publikaci."
+        }
+      }
+    },
+    "Sangromancer": {
+      "trida": "Wizard",
+      "zdroj": "Grim Hollow: Player’s Guide (2025)",
+      "rok": 2025,
+      "treti_strana": true,
+      "vydavatel": "Ghostfire Gaming",
+      "overeno": [
+        "https://www.dndbeyond.com/forums/d-d-beyond-general/release-issues-support/228644-grim-hollow-players-guide-issues-and-support",
+        "https://ghostfiregaming.com/product/grim-hollow-players-guide-pdf-5-5e/"
+      ],
+      "rysy": {
+        "Subclass Features (názvy neověřené)": {
+          "uroven": 3,
+          "text": "Veřejný obsah potvrzuje tuto subclassu, ale neuvádí názvy ani přesná pravidla jejích rysů; ověřit v původní publikaci."
+        }
+      }
+    },
+    "Oath of the Ebon Blade": {
+      "trida": "Paladin",
+      "zdroj": "D&D: World of Warcraft (2026; oznámené vydání 17. 11. 2026)",
+      "rok": 2026,
+      "treti_strana": true,
+      "vydavatel": "Wizards of the Coast / Blizzard Entertainment",
+      "overeno": [
+        "https://www.dndbeyond.com/posts/2205-everything-you-need-to-know-about-d-d-world-of"
+      ],
+      "rysy": {
+        "Subclass Features (názvy neověřené)": {
+          "uroven": 3,
+          "text": "Veřejný obsah potvrzuje tuto subclassu, ale neuvádí názvy ani přesná pravidla jejích rysů; ověřit v původní publikaci."
+        }
+      },
+      "oznameno": true,
+      "poznamka": "Oznámeno; plánované vydání 17. 11. 2026."
+    },
+    "Oath of the Holy": {
+      "trida": "Paladin",
+      "zdroj": "D&D: World of Warcraft (2026; oznámené vydání 17. 11. 2026)",
+      "rok": 2026,
+      "treti_strana": true,
+      "vydavatel": "Wizards of the Coast / Blizzard Entertainment",
+      "overeno": [
+        "https://www.dndbeyond.com/posts/2205-everything-you-need-to-know-about-d-d-world-of"
+      ],
+      "rysy": {
+        "Subclass Features (názvy neověřené)": {
+          "uroven": 3,
+          "text": "Veřejný obsah potvrzuje tuto subclassu, ale neuvádí názvy ani přesná pravidla jejích rysů; ověřit v původní publikaci."
+        }
+      },
+      "oznameno": true,
+      "poznamka": "Oznámeno; plánované vydání 17. 11. 2026."
+    },
+    "Demon Hunter": {
+      "trida": "Ranger",
+      "zdroj": "D&D: World of Warcraft (2026; oznámené vydání 17. 11. 2026)",
+      "rok": 2026,
+      "treti_strana": true,
+      "vydavatel": "Wizards of the Coast / Blizzard Entertainment",
+      "overeno": [
+        "https://www.dndbeyond.com/posts/2205-everything-you-need-to-know-about-d-d-world-of"
+      ],
+      "rysy": {
+        "Subclass Features (názvy neověřené)": {
+          "uroven": 3,
+          "text": "Veřejný obsah potvrzuje tuto subclassu, ale neuvádí názvy ani přesná pravidla jejích rysů; ověřit v původní publikaci."
+        }
+      },
+      "oznameno": true,
+      "poznamka": "Oznámeno; plánované vydání 17. 11. 2026."
+    },
+    "Shadow Domain": {
+      "trida": "Cleric",
+      "zdroj": "D&D: World of Warcraft (2026; oznámené vydání 17. 11. 2026)",
+      "rok": 2026,
+      "treti_strana": true,
+      "vydavatel": "Wizards of the Coast / Blizzard Entertainment",
+      "overeno": [
+        "https://www.dndbeyond.com/posts/2205-everything-you-need-to-know-about-d-d-world-of"
+      ],
+      "rysy": {
+        "Subclass Features (názvy neověřené)": {
+          "uroven": 3,
+          "text": "Veřejný obsah potvrzuje tuto subclassu, ale neuvádí názvy ani přesná pravidla jejích rysů; ověřit v původní publikaci."
+        }
+      },
+      "oznameno": true,
+      "poznamka": "Oznámeno; plánované vydání 17. 11. 2026."
+    },
+    "Discipline Domain": {
+      "trida": "Cleric",
+      "zdroj": "D&D: World of Warcraft (2026; oznámené vydání 17. 11. 2026)",
+      "rok": 2026,
+      "treti_strana": true,
+      "vydavatel": "Wizards of the Coast / Blizzard Entertainment",
+      "overeno": [
+        "https://www.dndbeyond.com/posts/2205-everything-you-need-to-know-about-d-d-world-of"
+      ],
+      "rysy": {
+        "Subclass Features (názvy neověřené)": {
+          "uroven": 3,
+          "text": "Veřejný obsah potvrzuje tuto subclassu, ale neuvádí názvy ani přesná pravidla jejích rysů; ověřit v původní publikaci."
+        }
+      },
+      "oznameno": true,
+      "poznamka": "Oznámeno; plánované vydání 17. 11. 2026."
+    },
+    "Path of the Elements": {
+      "trida": "Barbarian",
+      "zdroj": "D&D: World of Warcraft (2026; oznámené vydání 17. 11. 2026)",
+      "rok": 2026,
+      "treti_strana": true,
+      "vydavatel": "Wizards of the Coast / Blizzard Entertainment",
+      "overeno": [
+        "https://www.dndbeyond.com/posts/2205-everything-you-need-to-know-about-d-d-world-of"
+      ],
+      "rysy": {
+        "Subclass Features (názvy neověřené)": {
+          "uroven": 3,
+          "text": "Veřejný obsah potvrzuje tuto subclassu, ale neuvádí názvy ani přesná pravidla jejích rysů; ověřit v původní publikaci."
+        }
+      },
+      "oznameno": true,
+      "poznamka": "Oznámeno; plánované vydání 17. 11. 2026."
+    },
+    "Swashbuckler (WoW)": {
+      "trida": "Rogue",
+      "zdroj": "D&D: World of Warcraft (2026; oznámené vydání 17. 11. 2026)",
+      "rok": 2026,
+      "treti_strana": true,
+      "vydavatel": "Wizards of the Coast / Blizzard Entertainment",
+      "overeno": [
+        "https://www.dndbeyond.com/posts/2205-everything-you-need-to-know-about-d-d-world-of"
+      ],
+      "rysy": {
+        "Subclass Features (názvy neověřené)": {
+          "uroven": 3,
+          "text": "Veřejný obsah potvrzuje tuto subclassu, ale neuvádí názvy ani přesná pravidla jejích rysů; ověřit v původní publikaci."
+        }
+      },
+      "oznameno": true,
+      "poznamka": "Oznámeno; plánované vydání 17. 11. 2026.",
+      "revize": "Ohlášená revize legacy Swashbucklera; vydání je plánováno na 17. 11. 2026 a do té doby nenahrazuje legacy záznam.",
+      "nazev": "Swashbuckler"
+    },
+    "Warrior of Mystic Brews": {
+      "trida": "Monk",
+      "zdroj": "D&D: World of Warcraft (2026; oznámené vydání 17. 11. 2026)",
+      "rok": 2026,
+      "treti_strana": true,
+      "vydavatel": "Wizards of the Coast / Blizzard Entertainment",
+      "overeno": [
+        "https://www.dndbeyond.com/posts/2205-everything-you-need-to-know-about-d-d-world-of"
+      ],
+      "rysy": {
+        "Subclass Features (názvy neověřené)": {
+          "uroven": 3,
+          "text": "Veřejný obsah potvrzuje tuto subclassu, ale neuvádí názvy ani přesná pravidla jejích rysů; ověřit v původní publikaci."
+        }
+      },
+      "oznameno": true,
+      "poznamka": "Oznámeno; plánované vydání 17. 11. 2026.",
+      "revize": "Ohlášená aktualizace monk subclassy; vydání je plánováno na 17. 11. 2026 a do té doby nenahrazuje legacy záznam."
+    },
+    "Path of the Spiritual Guardian": {
+      "trida": "Barbarian",
+      "zdroj": "D&D: World of Warcraft (2026; oznámené vydání 17. 11. 2026)",
+      "rok": 2026,
+      "treti_strana": true,
+      "vydavatel": "Wizards of the Coast / Blizzard Entertainment",
+      "overeno": [
+        "https://www.dndbeyond.com/posts/2205-everything-you-need-to-know-about-d-d-world-of"
+      ],
+      "rysy": {
+        "Subclass Features (názvy neověřené)": {
+          "uroven": 3,
+          "text": "Veřejný obsah potvrzuje tuto subclassu, ale neuvádí názvy ani přesná pravidla jejích rysů; ověřit v původní publikaci."
+        }
+      },
+      "oznameno": true,
+      "poznamka": "Oznámeno; plánované vydání 17. 11. 2026.",
+      "revize": "Ohlášená aktualizace barbarian subclassy; vydání je plánováno na 17. 11. 2026 a do té doby nenahrazuje legacy záznam."
     }
   },
   "volby_trid": {

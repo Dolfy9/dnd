@@ -259,6 +259,7 @@
   function planLevelUp(c, trida, n) {
     var tmp = clone(c), steps = [], errs = [];
     if (!cls(trida)) return { chyby: ["Neznámé povolání " + trida + "."], kroky: [] };
+    if (cls(trida).bez_tabulky) return { chyby: [trida + " nemá ověřenou tabulku postupu; level-up nelze automaticky vypočítat."], kroky: [] };
     var mc = multiclassCheck(tmp, trida); if (mc.length) errs.push("Multiclass do " + trida + " nesplňuje: " + mc.join("; "));
     if (totalLevel(tmp) + n > 20) errs.push("Celková úroveň by přesáhla 20.");
     if (errs.length) return { chyby: errs, kroky: [] };
@@ -338,6 +339,7 @@
   function createCharacter(s) {
     var errs = [], bg = R.pozadi[s.pozadi], k = cls(s.trida), base = s.zaklad || {};
     if (!k) errs.push("Vyber povolání.");
+    if (k && k.bez_tabulky) return { postava: null, chyby: [s.trida + " nemá ověřenou tabulku postupu; automatická tvorba postavy není dostupná."] };
     if (!bg) errs.push("Vyber pozadí.");
     if (!R.druhy[s.druh]) errs.push("Vyber druh.");
     var vals = AB.map(function (a) { return Number(base[a]); });
