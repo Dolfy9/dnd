@@ -391,6 +391,19 @@ def listing_page(filename, heading, folder):
     NAV_INDEX[page_url(filename)] = heading
 
 
+def species_page_summary(path):
+    import yaml
+    if not path.is_file():
+        return {"prehled": "", "delka_zivota": ""}
+    text = path.read_text(encoding="utf-8")
+    front = re.match(r"\A---\r?\n(.*?)\r?\n---\r?\n", text, re.S)
+    meta = (yaml.safe_load(front.group(1)) or {}).get("druh", {}) if front else {}
+    section = re.search(r"^## Přehled\s*\n(.*?)(?=^## |\Z)", text, re.S | re.M)
+    paragraphs = [p.strip() for p in (section.group(1) if section else "").split("\n\n") if p.strip() and not p.lstrip().startswith(("<", ">"))]
+    plain = re.sub(r"\[([^\]]+)\]\([^)]+\)", r"\1", paragraphs[0] if paragraphs else "")
+    return {"prehled": re.sub(r"[*_`]", "", plain), "delka_zivota": str(meta.get("delka_zivota", "") or "")}
+
+
 def main():
     NAV_INDEX.clear()
     if DOCS.exists():
@@ -424,7 +437,8 @@ def main():
                               "zdroj": value.get("zdroj", "neověřeno"), "velikost": value.get("velikost", "neověřeno"),
                               "rychlost": value.get("rychlost", "neověřeno"), "typ": value.get("typ", "neověřeno"),
                               "rysy": value.get("rysy", {}), "overeno": value.get("overeno", []),
-                              "obrazek": (ROOT / "13_Druhy" / "obrazky" / (stem + ".webp")).is_file()})
+                              "obrazek": (ROOT / "13_Druhy" / "obrazky" / (stem + ".webp")).is_file(),
+                              **species_page_summary(ROOT / "13_Druhy" / f"{stem}.md")})
     (DOCS / "druhy_index.json").write_text(json.dumps(species_index, ensure_ascii=False), encoding="utf-8")
     obchody_index()
     heraldika_index()

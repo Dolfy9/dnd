@@ -5,27 +5,38 @@
   function esc(s) { return String(s == null ? "" : s).replace(/[&<>"']/g, function (c) { return ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"})[c]; }); }
   function load() {
     if (data) return Promise.resolve(data);
-    return fetch("/druhy_index.json").then(function (r) { if (!r.ok) throw Error(r.status); return r.json(); }).then(function (v) { data = v; return v; });
+    return fetch(base() + "druhy_index.json").then(function (r) { if (!r.ok) throw Error(r.status); return r.json(); }).then(function (v) { data = v; return v; });
   }
+  function base() {
+    var s = document.querySelector('script[src*="assets/druhy.js"]');
+    return s ? s.src.replace(/assets\/druhy\.js.*$/, "") : "/";
+  }
+  function traitText(v) { return typeof v === "string" ? v : (v && (v.text || v.popis)) || ""; }
+  function chip(label, value) { return value ? '<div class="druh-chip"><span>' + esc(label) + '</span><b>' + esc(value) + '</b></div>' : ""; }
   function open(name) {
     load().then(function (items) {
       var d = items.find(function (x) { return norm(x.nazev) === norm(name); });
       if (!d) return;
       var old = document.querySelector(".druh-dialog"); if (old) old.remove();
       var dialog = document.createElement("div"); dialog.className = "druh-dialog"; dialog.setAttribute("role", "presentation");
-      dialog.innerHTML = '<section role="dialog" aria-modal="true" aria-label="' + esc(d.nazev) + '"><button class="druh-close" aria-label="Zavřít">×</button><div class="druh-modal-overview">'
-        + (d.obrazek ? '<img class="druh-modal-image" src="/13_Druhy/obrazky/' + encodeURIComponent(d.stem) + '.webp" alt="Ilustrace druhu ' + esc(d.nazev) + '">' : '')
-        + '<div><h2>' + esc(d.nazev) + '</h2>'
-        + (d.legacy ? '<p><strong class="druh-legacy">legacy, kompatibilní</strong> · alternativa 2024: ' + esc(d.alternativa_2024) + '</p>' : '')
-        + '<p>' + esc(d.zdroj) + ' · ' + esc(d.velikost) + ' · ' + esc(d.rychlost) + ' · ' + esc(d.typ) + '</p>'
-        + '</div></div><div class="druh-modal-traits">' + Object.keys(d.rysy || {}).map(function (key) { return '<details><summary>' + esc(key) + '</summary><p>' + esc(typeof d.rysy[key] === "string" ? d.rysy[key] : d.rysy[key].text) + '</p></details>'; }).join("")
-        + '</div><a class="md-button" href="/' + esc(d.stranka.replace(/\.md$/, "/")) + '">Otevřít úplný popis</a></section>';
+      var href = base() + d.stranka.replace(/\.md$/, "/");
+      dialog.innerHTML = '<section class="md-typeset druh-modal" role="dialog" aria-modal="true" aria-label="' + esc(d.nazev) + '">'
+        + '<button class="druh-close" aria-label="Zavřít">×</button>'
+        + (d.obrazek ? '<img class="druh-modal-image" src="' + base() + '13_Druhy/obrazky/' + encodeURIComponent(d.stem) + '.webp" alt="Ilustrace druhu ' + esc(d.nazev) + '">' : '<div class="druh-modal-image druh-card-image-placeholder">Ilustrace chybí</div>')
+        + '<div class="druh-modal-body"><header><h2>' + esc(d.nazev) + '</h2>'
+        + '<p class="druh-modal-source">' + esc(d.zdroj) + (d.legacy ? ' <strong class="druh-legacy">legacy, kompatibilní</strong>' : ' <strong class="druh-2024">2024+</strong>') + '</p></header>'
+        + '<div class="druh-chips">' + chip("Velikost", d.velikost) + chip("Speed", d.rychlost + " ft") + chip("Creature Type", d.typ) + chip("Délka života", d.delka_zivota) + (d.legacy ? chip("Alternativa 2024", d.alternativa_2024) : "") + '</div>'
+        + (d.prehled ? '<p class="druh-modal-lead">' + esc(d.prehled) + '</p>' : '')
+        + '<h3>Traits</h3><div class="druh-modal-traits">' + Object.keys(d.rysy || {}).map(function (key) { return '<article><h4>' + esc(key) + '</h4><p>' + esc(traitText(d.rysy[key])) + '</p></article>'; }).join("") + '</div>'
+        + '<p class="druh-modal-actions"><a class="md-button md-button--primary" href="' + esc(href) + '">Otevřít úplný popis</a></p></div></section>';
       document.body.appendChild(dialog);
-      dialog.addEventListener("click", function (e) { if (e.target === dialog || e.target.closest(".druh-close")) dialog.remove(); });
+      function close() { dialog.remove(); document.removeEventListener("keydown", onKey); }
+      function onKey(e) { if (e.key === "Escape") close(); }
+      document.addEventListener("keydown", onKey);
+      dialog.addEventListener("click", function (e) { if (e.target === dialog || e.target.closest(".druh-close")) close(); });
       dialog.querySelector(".druh-close").focus();
     }).catch(function (e) { console.error(e); });
   }
-  window.MontelienDruhy = { open: open };
   document.addEventListener("click", function (event) {
     var trigger = event.target.closest("[data-species]");
     if (trigger) { event.preventDefault(); event.stopPropagation(); open(trigger.dataset.species); }

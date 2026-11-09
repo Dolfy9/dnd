@@ -9,17 +9,35 @@
 .druh-card-image-placeholder { display: grid; place-items: center; aspect-ratio: 2/3; border-radius: .3rem; background: var(--md-code-bg-color); color: var(--md-default-fg-color--light); font-size: .85rem; text-align: center; }
 .druh-legacy { display: inline-block; color: #7b4d00; background: #fff0c2; border-radius: .3rem; padding: .1rem .35rem; }
 .druh-dialog { position: fixed; inset: 0; z-index: 10000; background: #0009; display: grid; place-items: center; padding: 1rem; }
-.druh-dialog section { background: var(--md-default-bg-color); color: var(--md-default-fg-color); width: min(48rem,100%); max-height: 90vh; overflow: auto; padding: 1.2rem; border-radius: .5rem; position: relative; }
-.druh-modal-overview { display: grid; grid-template-columns: 9rem minmax(0, 1fr); gap: 1rem; align-items: start; }
-.druh-modal-image { display: block; width: 100%; aspect-ratio: 2/3; object-fit: cover; border-radius: .3rem; }
-.druh-modal-overview h2 { margin-top: 0; }
-.druh-close { float: right; font-size: 1.5rem; border: 0; background: transparent; cursor: pointer; }
-.druh-modal-traits { max-height: 45vh; overflow: auto; margin: 1rem 0; }
 .druh-hero img { display: block; max-height: 32rem; max-width: 100%; margin: 1rem auto; object-fit: contain; }
 .druh-hero[hidden] { display: none; }
 .druhy-related { margin-top: 2rem; }
 [data-species] { cursor: pointer; }
 @media (max-width: 600px) {
-  .druh-modal-overview { grid-template-columns: minmax(0, 1fr); }
-  .druh-modal-image { width: min(11rem, 100%); }
+  .druh-modal { grid-template-columns: minmax(0, 1fr); }
+  .druh-modal-image { width: min(12rem, 60%); justify-self: center; }
+}
+
+.druh-modal { background: var(--md-default-bg-color); color: var(--md-default-fg-color); width: min(64rem, 100%); max-height: 90vh; overflow: auto; padding: 1.5rem; border-radius: .8rem; position: relative; display: grid; grid-template-columns: 17rem minmax(0, 1fr); gap: 1.5rem; align-items: start; font-size: .8rem; box-shadow: 0 1.5rem 4rem #0008; }
+.druh-modal-image { display: block; width: 100%; aspect-ratio: 2/3; object-fit: cover; border-radius: .5rem; position: sticky; top: 0; box-shadow: 0 .4rem 1.2rem #0004; }
+.druh-modal-body header h2 { margin: 0 2.5rem .2rem 0; font-size: 1.7rem; }
+.druh-modal-source { margin: 0 0 .8rem; color: var(--md-default-fg-color--light); }
+.druh-2024 { display: inline-block; color: #1d5a2c; background: #d8f2dd; border-radius: .3rem; padding: .1rem .35rem; font-size: .7rem; }
+.druh-legacy { font-size: .7rem; }
+.druh-chips { display: flex; flex-wrap: wrap; gap: .5rem; margin-bottom: 1rem; }
+.druh-chip { border: 1px solid var(--md-default-fg-color--lightest); border-radius: .5rem; padding: .35rem .6rem; background: var(--md-code-bg-color); max-width: 100%; }
+.druh-chip span { display: block; font-size: .62rem; text-transform: uppercase; letter-spacing: .04em; color: var(--md-default-fg-color--light); }
+.druh-chip b { font-weight: 600; }
+.druh-modal-lead { font-size: .9rem; line-height: 1.55; }
+.druh-modal-body h3 { margin: 1rem 0 .5rem; }
+.druh-modal-traits { display: grid; gap: .6rem; }
+.druh-modal-traits article { border-left: 3px solid var(--md-accent-fg-color, #c8962e); padding: .2rem 0 .2rem .7rem; }
+.druh-modal-traits h4 { margin: 0 0 .2rem; font-size: .85rem; }
+.druh-modal-traits p { margin: 0; line-height: 1.5; }
+.druh-modal-actions { margin-top: 1.2rem; }
+.druh-close { position: absolute; top: .8rem; right: 1rem; font-size: 1.8rem; line-height: 1; border: 0; background: transparent; color: inherit; cursor: pointer; z-index: 1; }
+@media (max-width: 700px) {
+  .druh-modal { grid-template-columns: minmax(0, 1fr); padding: 1rem; gap: 1rem; }
+  .druh-modal-image { position: static; width: min(12rem, 60%); justify-self: center; }
+  .druh-modal-body header h2 { font-size: 1.4rem; }
 }
