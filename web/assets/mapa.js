@@ -10,7 +10,7 @@
   var svgEl = document.createElementNS("http://www.w3.org/2000/svg", "svg");
   var atlas = L.svgOverlay(svgEl, bounds, { interactive: false });
   var SV = { map: map, el: el, svg: svgEl, base: "../", D: null, M: D };
-  var stateData = [], stateHighlight = L.layerGroup().addTo(map), stateTip = null, activeState = null;
+  var stateData = [], stateHighlight = L.layerGroup().addTo(map), stateTip = null, activeState = null, activeLabel = null;
   var LABELS = (window.SVET_PALETA || {}).labels || {};
   function refreshLabels() {
     var scale = map.getZoomScale(map.getZoom(), 0), fitZoom = map.getBoundsZoom(bounds, false),
@@ -38,12 +38,16 @@
   }
   function clearState() {
     activeState = null;
+    if (activeLabel) activeLabel.style.visibility = "";
+    activeLabel = null;
     stateHighlight.clearLayers();
     if (stateTip) map.removeLayer(stateTip);
     stateTip = null;
   }
   function showState(z, ll) {
     if (activeState === z) return;
+    if (activeLabel) activeLabel.style.visibility = "";
+    activeLabel = null;
     activeState = z;
     stateHighlight.clearLayers();
     var unassigned = z.stat === null;
@@ -56,8 +60,22 @@
       }));
     });
     if (stateTip) map.removeLayer(stateTip);
-    stateTip = L.tooltip({ permanent: true, direction: "top", className: "mapa-stav-stitek" })
-      .setLatLng(ll).setContent(esc(unassigned ? "Samostatné území (bez jména)" : z.nazev)).addTo(map);
+    var place = !unassigned && (SV.M.mista || []).find(function (m) { return m.typ === "zeme" && m.nazev === z.nazev; });
+    if (place) {
+      var labels = Array.prototype.slice.call(svgEl.querySelectorAll('[data-map-label="state"]'));
+      activeLabel = labels.map(function (label) { return label.parentElement && label.parentElement.tagName.toLowerCase() === "g" ? label.parentElement : label; })
+        .find(function (label) {
+          var parts = label.matches && label.matches('[data-map-label="state"]') ? [label.textContent.trim()] :
+            Array.prototype.slice.call(label.querySelectorAll ? label.querySelectorAll('[data-map-label="state"]') : [])
+              .map(function (part) { return part.textContent.trim(); });
+          return parts.join(" ").toLocaleLowerCase() === z.nazev.toLocaleLowerCase();
+        }) || null;
+      if (activeLabel) activeLabel.style.visibility = "hidden";
+    }
+    stateTip = L.tooltip({ permanent: true, direction: place ? "bottom" : "top",
+      offset: place ? [0, 12] : [0, 0], className: "mapa-stav-stitek" })
+      .setLatLng(place ? [H - place.y, place.x] : ll)
+      .setContent(esc(unassigned ? "Samostatné území (bez jména)" : z.nazev)).addTo(map);
   }
   map.on("mousemove", function (e) {
     if (crop || SV.open || !stateData.length) return;

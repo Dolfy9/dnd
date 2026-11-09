@@ -3,6 +3,22 @@
   var NS = "http://www.w3.org/2000/svg";
   function esc(s) { return String(s == null ? "" : s).replace(/[&<>"]/g, function (c) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]; }); }
   function rng(seed) { var s = seed >>> 0 || 1; return function () { s ^= s << 13; s ^= s >>> 17; s ^= s << 5; return ((s >>> 0) % 100000) / 100000; }; }
+  function noiseHash(x, y, seed) {
+    var n = (Math.imul(x, 374761393) ^ Math.imul(y, 668265263) ^ seed) >>> 0;
+    n = Math.imul(n ^ (n >>> 13), 1274126177);
+    return ((n ^ (n >>> 16)) >>> 0) / 4294967295;
+  }
+  function valueNoiseAt(x, y, cell, seed) {
+    var gx = x / cell, gy = y / cell, ix = Math.floor(gx), iy = Math.floor(gy);
+    var fx = gx - ix, fy = gy - iy;
+    fx = fx * fx * (3 - 2 * fx); fy = fy * fy * (3 - 2 * fy);
+    var a = noiseHash(ix, iy, seed), b = noiseHash(ix + 1, iy, seed);
+    var c = noiseHash(ix, iy + 1, seed), d = noiseHash(ix + 1, iy + 1, seed);
+    return (a + (b - a) * fx) * (1 - fy) + (c + (d - c) * fx) * fy;
+  }
+  function glacierNoise(x, y, cell) {
+    return valueNoiseAt(x, y, cell, 8713) * .68 + valueNoiseAt(x, y, cell * .48, 8714) * .32;
+  }
   function pathD(b, closed) {
     if (!b || b.length < 2) return "";
     if (b.length < 3) return "M" + b.map(function (p) { return p[0] + "," + p[1]; }).join(" L") + (closed ? "Z" : "");
@@ -264,11 +280,60 @@
     }
     g.putImageData(px, 0, 0); return c;
   }
+  function upravHorskyObraz(img, filters) {
+    var c = document.createElement("canvas"); c.width = img.naturalWidth || img.width; c.height = img.naturalHeight || img.height;
+    var g = c.getContext("2d"); g.drawImage(img, 0, 0);
+    var px = g.getImageData(0, 0, c.width, c.height), d = px.data;
+    var saturationScale = filters.mountain_rock_saturation_scale == null ? .6 : filters.mountain_rock_saturation_scale;
+    var targetHue = filters.mountain_rock_hue_target == null ? 38 : filters.mountain_rock_hue_target;
+    var snowLuminance = filters.mountain_snow_luminance == null ? 190 : filters.mountain_snow_luminance;
+    var snowSaturation = filters.mountain_snow_saturation_max == null ? .35 : filters.mountain_snow_saturation_max;
+    function rgbForHue(h, s) {
+      var chroma = s, x = chroma * (1 - Math.abs((h / 60) % 2 - 1)), r = 0, gg = 0, b = 0;
+      if (h < 60) { r = chroma; gg = x; }
+      else if (h < 120) { r = x; gg = chroma; }
+      else if (h < 180) { gg = chroma; b = x; }
+      else if (h < 240) { gg = x; b = chroma; }
+      else if (h < 300) { r = x; b = chroma; }
+      else { r = chroma; b = x; }
+      var m = 1 - chroma;
+      return [r + m, gg + m, b + m];
+    }
+    for (var j = 0; j < d.length; j += 4) {
+      if (d[j + 3] === 0) continue;
+      var r = d[j], gg = d[j + 1], b = d[j + 2], max = Math.max(r, gg, b), min = Math.min(r, gg, b);
+      var delta = max - min, saturation = max ? delta / max : 0, luminance = .3 * r + .59 * gg + .11 * b;
+      if (!delta || (luminance >= snowLuminance && saturation <= snowSaturation)) continue;
+      var hue = 0;
+      if (max === r) hue = 60 * (((gg - b) / delta) % 6);
+      else if (max === gg) hue = 60 * ((b - r) / delta + 2);
+      else hue = 60 * ((r - gg) / delta + 4);
+      if (hue < 0) hue += 360;
+      if (hue >= 280) hue = 35 + (hue - 280) * (targetHue - 35) / 80;
+      else if (hue <= 20) hue = targetHue + hue * (40 - targetHue) / 20;
+      var gradedSaturation = saturation * saturationScale, rgb = rgbForHue(hue, gradedSaturation);
+      var gradedLuminance = .3 * rgb[0] + .59 * rgb[1] + .11 * rgb[2];
+      if (luminance / gradedLuminance > 255) {
+        var low = 0, high = gradedSaturation;
+        for (var step = 0; step < 12; step++) {
+          var middle = (low + high) / 2, sample = rgbForHue(hue, middle);
+          if (luminance / (.3 * sample[0] + .59 * sample[1] + .11 * sample[2]) > 255) high = middle;
+          else low = middle;
+        }
+        rgb = rgbForHue(hue, low);
+        gradedLuminance = .3 * rgb[0] + .59 * rgb[1] + .11 * rgb[2];
+      }
+      var value = luminance / gradedLuminance;
+      d[j] = rgb[0] * value; d[j + 1] = rgb[1] * value; d[j + 2] = rgb[2] * value;
+    }
+    g.putImageData(px, 0, 0); return c;
+  }
   function pripravenySprite(name, A, tmavy) {
     var key = A + name;
     if (!GRADED[key]) GRADED[key] = nacti(key + ".webp").then(function (img) {
       if (!img) return null;
       var filters = (window.SVET_PALETA || {}).sprite_filters || {}, f = null, grade = null;
+      if (/^(hora_|masiv_|snih$|velehory(?:_|$))/.test(name)) return upravHorskyObraz(img, filters);
       if (/^(hora|masiv|skala|hreben|utes)/.test(name)) { f = [filters.mountain_saturation, filters.mountain_brightness]; grade = { tint: filters.mountain_tint, tint_opacity: filters.mountain_tint_opacity, preserve_highlights: true, highlight_luminance: filters.snow_highlight_luminance }; }
       else if (/^kopec/.test(name)) { f = [filters.hill_saturation, filters.hill_brightness]; grade = { tint: filters.hill_tint, tint_opacity: filters.hill_tint_opacity }; }
       else if (/^duna/.test(name)) { f = [filters.dune_saturation, filters.dune_brightness]; grade = { tint: filters.dune_tint, tint_opacity: filters.dune_tint_opacity }; }
@@ -336,6 +401,27 @@
       ctx.clip();
       ctx.lineWidth = line;
       if (area.typ === "ledovec") {
+        var iceDetailStrength = Math.min(1, Math.max(.28, .16 + scaleNow * .15));
+        var shadeCell = vectors.glacier_noise_cell_size || 34;
+        var shadeAlpha = Math.min(.075, vectors.glacier_shade_alpha == null ? .075 : vectors.glacier_shade_alpha);
+        var shadeColor = vectors.glacier_shade || "#6f8f9c";
+        var shadeRgb = [1, 3, 5].map(function (i) { return parseInt(shadeColor.slice(i, i + 2), 16); });
+        var textureScale = Math.max(1, Math.min(2, pixelScale));
+        var texture = document.createElement("canvas");
+        texture.width = Math.max(1, Math.ceil((drawMaxX - drawMinX) * textureScale));
+        texture.height = Math.max(1, Math.ceil((drawMaxY - drawMinY) * textureScale));
+        var textureContext = texture.getContext("2d"), texturePixels = textureContext.createImageData(texture.width, texture.height);
+        for (var ny = 0; ny < texture.height; ny++) for (var nx = 0; nx < texture.width; nx++) {
+          var worldX = drawMinX + (nx + .5) / textureScale, worldY = drawMinY + (ny + .5) / textureScale;
+          var noise = glacierNoise(worldX, worldY, shadeCell), alpha = .005 + noise * Math.max(0, shadeAlpha - .005);
+          var pixel = (ny * texture.width + nx) * 4;
+          texturePixels.data[pixel] = shadeRgb[0]; texturePixels.data[pixel + 1] = shadeRgb[1]; texturePixels.data[pixel + 2] = shadeRgb[2];
+          texturePixels.data[pixel + 3] = Math.round(alpha * 255);
+        }
+        textureContext.putImageData(texturePixels, 0, 0);
+        ctx.globalAlpha = iceDetailStrength;
+        ctx.drawImage(texture, drawMinX, drawMinY, drawMaxX - drawMinX, drawMaxY - drawMinY);
+        ctx.globalAlpha = 1;
         var flowCenter = polygonCenter(pts), centerX = flowCenter.x, centerY = flowCenter.y;
         var coastward = nearestShore(centerX, centerY, state.shore), vx = coastward.x - centerX, vy = coastward.y - centerY;
         var directionLength = Math.hypot(vx, vy) || 1; vx /= directionLength; vy /= directionLength;
@@ -365,41 +451,84 @@
               ]);
             }
             for (var seg = 0; seg < points.length - 1; seg++) {
-              ctx.globalAlpha = Math.sin(Math.PI * (seg + .5) / (points.length - 1)) * .95;
+              ctx.globalAlpha = Math.sin(Math.PI * (seg + .5) / (points.length - 1)) * iceDetailStrength;
               ctx.beginPath(); ctx.moveTo(points[seg][0], points[seg][1]); ctx.lineTo(points[seg + 1][0], points[seg + 1][1]);
               ctx.strokeStyle = hollow; ctx.lineWidth = 6 / scaleNow; ctx.stroke();
               ctx.strokeStyle = vectors.glacier_flow || "rgba(84,117,133,.25)"; ctx.lineWidth = 2 / scaleNow; ctx.stroke();
             }
           }
-          ctx.globalAlpha = .85;
-          ctx.strokeStyle = vectors.glacier_crevasse || "rgba(57,90,106,.48)"; ctx.lineWidth = 1.2 / scaleNow;
+          ctx.globalAlpha = .9 * iceDetailStrength;
+          ctx.strokeStyle = vectors.glacier_crevasse || "rgba(111,143,156,.55)"; ctx.lineWidth = 1.1 / scaleNow;
           var crackX = anchorX + fx * flowLength * .76, crackY = anchorY + fy * flowLength * .76;
-          for (var ci = 0; ci < 3; ci++) {
+          var tongueCracks = 3 + Math.floor(crackRng() * 5);
+          for (var ci = 0; ci < tongueCracks; ci++) {
             var cx = crackX + fpx * (crackRng() - .5) * 14 / scaleNow, cy = crackY + fpy * (crackRng() - .5) * 14 / scaleNow;
             var angle = Math.atan2(fy, fx) + Math.PI / 2 + (crackRng() - .5) * .55;
             var dx = Math.cos(angle) * crackLength, dy = Math.sin(angle) * crackLength;
-            var ex = cx + dx, ey = cy + dy;
-            if (!inPoly(cx, cy, pts) || !inPoly(ex, ey, pts)) continue;
-            ctx.beginPath(); ctx.moveTo(cx, cy); ctx.lineTo(cx + dx * .55 + fpx * crackLength * .12, cy + dy * .55 + fpy * crackLength * .12); ctx.lineTo(ex, ey); ctx.stroke();
+            var ex = cx + dx, ey = cy + dy, mx = cx + dx * .5 + fpx * 1.1 / scaleNow, my = cy + dy * .5 + fpy * 1.1 / scaleNow;
+            if (!inPoly(cx, cy, pts) || !inPoly(mx, my, pts) || !inPoly(ex, ey, pts)) continue;
+            ctx.beginPath(); ctx.moveTo(cx, cy); ctx.quadraticCurveTo(mx, my, ex, ey); ctx.stroke();
           }
         }
-        var edgeCrackCount = Math.max(10, Math.min(22, Math.round((maxX - minX + maxY - minY) / 38)));
-        ctx.globalAlpha = .72;
-        ctx.strokeStyle = vectors.glacier_crevasse || "rgba(57,90,106,.42)";
-        ctx.lineWidth = .9 / scaleNow; ctx.lineCap = "round";
-        for (var ec = 0; ec < edgeCrackCount; ec++) {
-          var edgeIndex = Math.floor((ec + crackRng()) * pts.length / edgeCrackCount) % pts.length;
-          var edgeA = pts[edgeIndex], edgeB = pts[(edgeIndex + 1) % pts.length];
-          var etx = edgeB[0] - edgeA[0], ety = edgeB[1] - edgeA[1], etn = Math.hypot(etx, ety) || 1;
-          var enx = -ety / etn, eny = etx / etn, emx = (edgeA[0] + edgeB[0]) / 2, emy = (edgeA[1] + edgeB[1]) / 2;
-          if ((centerX - emx) * enx + (centerY - emy) * eny < 0) { enx = -enx; eny = -eny; }
-          var offset = 2 + crackRng() * 5, ex0 = emx + enx * offset, ey0 = emy + eny * offset;
-          var crackLen = (6 + crackRng() * 7) / scaleNow, etx2 = etx / etn, ety2 = ety / etn;
-          var ex1 = ex0 + enx * crackLen + etx2 * crackLen * .18, ey1 = ey0 + eny * crackLen + ety2 * crackLen * .18;
-          var exm = ex0 + enx * crackLen * .55 - etx2 * crackLen * .08, eym = ey0 + eny * crackLen * .55 - ety2 * crackLen * .08;
-          if (!inPoly(ex0, ey0, pts) || !inPoly(exm, eym, pts) || !inPoly(ex1, ey1, pts)) continue;
-          ctx.beginPath(); ctx.moveTo(ex0, ey0); ctx.lineTo(exm, eym); ctx.lineTo(ex1, ey1); ctx.stroke();
+        var iceEdges = [], icePerimeter = 0;
+        for (var edgeI = 0, edgeJ = pts.length - 1; edgeI < pts.length; edgeJ = edgeI++) {
+          var edgeA = pts[edgeJ], edgeB = pts[edgeI], edgeDx = edgeB[0] - edgeA[0], edgeDy = edgeB[1] - edgeA[1];
+          var edgeLength = Math.hypot(edgeDx, edgeDy);
+          if (edgeLength < 1) continue;
+          iceEdges.push({ a: edgeA, dx: edgeDx, dy: edgeDy, length: edgeLength });
+          icePerimeter += edgeLength;
         }
+        var edgeClusterCount = Math.max(2, Math.min(48, Math.round(icePerimeter * scaleNow / 75)));
+        var edgeRng = rng(50207 + index * 3919);
+        ctx.globalAlpha = .9 * iceDetailStrength;
+        ctx.strokeStyle = vectors.glacier_crevasse || "rgba(111,143,156,.55)";
+        ctx.lineWidth = 1.1 / scaleNow; ctx.lineCap = "round";
+        for (var ec = 0; ec < edgeClusterCount; ec++) {
+          var along = (ec + .25 + edgeRng() * .5) * icePerimeter / edgeClusterCount, chosen = iceEdges[iceEdges.length - 1];
+          for (var edgeAt = 0; edgeAt < iceEdges.length; edgeAt++) {
+            if (along <= iceEdges[edgeAt].length) { chosen = iceEdges[edgeAt]; break; }
+            along -= iceEdges[edgeAt].length;
+          }
+          var edgeT = along / chosen.length, borderX = chosen.a[0] + chosen.dx * edgeT, borderY = chosen.a[1] + chosen.dy * edgeT;
+          var normalX = -chosen.dy / chosen.length, normalY = chosen.dx / chosen.length, innerX = 0, innerY = 0, clusterDepth = 0, foundInner = false;
+          for (var side = 0; side < 2 && !foundInner; side++) {
+            var sign = side ? -1 : 1;
+            for (var depthTry = 2; depthTry <= 16; depthTry += 2) {
+              if (!inPoly(borderX + normalX * sign * depthTry, borderY + normalY * sign * depthTry, pts)) continue;
+              innerX = normalX * sign; innerY = normalY * sign; clusterDepth = depthTry; foundInner = true; break;
+            }
+          }
+          if (!foundInner) continue;
+          var baseDepth = clusterDepth;
+          clusterDepth += edgeRng() * 6;
+          var clusterX = borderX + innerX * clusterDepth, clusterY = borderY + innerY * clusterDepth;
+          if (!inPoly(clusterX, clusterY, pts)) { clusterDepth = baseDepth; clusterX = borderX + innerX * clusterDepth; clusterY = borderY + innerY * clusterDepth; }
+          if (!inPoly(clusterX, clusterY, pts)) continue;
+          var edgeShore = nearestShore(clusterX, clusterY, state.shore), edgeFx = edgeShore.x - clusterX, edgeFy = edgeShore.y - clusterY;
+          var edgeFlowLength = Math.hypot(edgeFx, edgeFy);
+          if (!edgeFlowLength) { edgeFx = vx; edgeFy = vy; edgeFlowLength = Math.hypot(vx, vy) || 1; }
+          edgeFx /= edgeFlowLength; edgeFy /= edgeFlowLength;
+          var edgePx = -edgeFy, edgePy = edgeFx, cracksInCluster = 3 + Math.floor(edgeRng() * 5);
+          for (var cc = 0; cc < cracksInCluster; cc++) {
+            var jitter = (edgeRng() - .5) * 12 / scaleNow, inward = edgeRng() * Math.min(2, clusterDepth * .18) / scaleNow;
+            var crackLen = (8 + edgeRng() * 5) / scaleNow, angle = (edgeRng() - .5) * .3;
+            var nx = edgePx * Math.cos(angle) + edgeFx * Math.sin(angle), ny = edgePy * Math.cos(angle) + edgeFy * Math.sin(angle);
+            var ex0 = clusterX + edgeFx * jitter + innerX * inward, ey0 = clusterY + edgeFy * jitter + innerY * inward;
+            var ex1 = ex0 + nx * crackLen, ey1 = ey0 + ny * crackLen;
+            var exm = ex0 + nx * crackLen * .5 + innerX * .7 / scaleNow, eym = ey0 + ny * crackLen * .5 + innerY * .7 / scaleNow;
+            if (!inPoly(ex0, ey0, pts) || !inPoly(exm, eym, pts) || !inPoly(ex1, ey1, pts)) continue;
+            ctx.beginPath(); ctx.moveTo(ex0, ey0); ctx.quadraticCurveTo(exm, eym, ex1, ey1); ctx.stroke();
+          }
+        }
+        ctx.save();
+        ctx.beginPath(); ctx.moveTo(pts[0][0], pts[0][1]);
+        pts.slice(1).forEach(function (p) { ctx.lineTo(p[0], p[1]); }); ctx.closePath();
+        ctx.globalAlpha = .5;
+        ctx.shadowColor = vectors.glacier_rim_shadow || "rgba(49,71,83,.20)";
+        ctx.shadowBlur = vectors.glacier_rim_blur_px || 7;
+        ctx.strokeStyle = vectors.glacier_rim || "rgba(49,71,83,.025)";
+        ctx.lineWidth = 1 / scaleNow; ctx.stroke();
+        ctx.restore();
         ctx.globalAlpha = 1;
       } else {
         ctx.strokeStyle = vectors.sand_ripple || "rgba(126,96,52,.5)";
