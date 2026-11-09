@@ -381,7 +381,7 @@
       section.innerHTML = '<header><h2>Postavy</h2><a class="md-button" href="' + esc(href) + '">Zobrazit v katalogu</a></header>'
         + (related.length ? '<div class="postavy-related-grid">' + related.map(function (person) {
           return '<a class="postava-link postavy-related-card" data-cesta="' + esc(person.cesta) + '" href="' + esc(person.url) + '">'
-            + (person.portret ? '<img src="' + esc(person.portret) + '" alt="" loading="lazy">' : "")
+            + (person.portret ? '<img src="' + esc(person.portret) + '" alt="" loading="eager">' : "")
             + "<span><b>" + esc(person.jmeno) + "</b><small>" + esc(person.kategorie) + "</small></span></a>";
         }).join("") + "</div>" : '<p class="postavy-empty">Zatím nejsou přiřazeny žádné postavy.</p>');
       content.appendChild(section);

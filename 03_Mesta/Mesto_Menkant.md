@@ -41,3 +41,4 @@ Hlavní přístavní město Svobodných jižních ostrovů pod vládou královny
 ## Související
 - Země: [Svobodné Jižní Ostrovy](../02_Zeme/Svobodne_Jizni_Ostrovy.md)
 - Vládce: [Královna Yuthika](../04_Postavy/Vladci/Postava_Yuthika.md)
+- Frakce: [Piráti z Opilé fretky](../05_Frakce/Pirati_z_Opile_fretky.md)

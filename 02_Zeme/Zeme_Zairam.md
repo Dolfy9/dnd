@@ -25,3 +25,4 @@ Zairam je požehnaný kraj plný bujné vegetace a bohaté úrody. Je považová
 - Hlavní město: [Město Pertam](../03_Mesta/Mesto_Pertam.md)
 - Hlava státu: [Kněžka Mi-Komde](../04_Postavy/Vladci/Postava_Mi_Komde.md)
 - Frakce: [Ordenský řád](../05_Frakce/Ordensky_Rad.md)
+- Frakce: [Piráti ze Zairamu](../05_Frakce/Pirati_ze_Zairamu.md)

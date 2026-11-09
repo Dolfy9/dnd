@@ -50,3 +50,4 @@ Kop Aram býval největším městem světa, dokud ho za Temného dne nesmetl je
 - Místo: [Jezero Amir a Kop Aram](../01_Svet/Mista/Jezero_Amir_a_Kop_Aram.md)
 - Sousední město: [Werenor](Mesto_Werenor.md)
 - Kniha: [Kronika Temného dne](../06_Knihy_a_Dokumenty/Kniha_06_Kronika_Temneho_dne.md)
+- Frakce: [Piráti z Amiru](../05_Frakce/Pirati_z_Amiru.md)

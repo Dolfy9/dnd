@@ -113,12 +113,20 @@
     });
   }
   function makeSearch() {
-    var nav = document.querySelector(".md-nav--primary"), list = nav && nav.querySelector(":scope > .md-nav__list");
-    if (nav && list && !nav.querySelector(".nav-menu-filter")) {
-      var label = document.createElement("label"); label.className = "nav-menu-filter";
-      var field = document.createElement("input"); field.type = "search"; field.placeholder = "Filtrovat menu…"; field.setAttribute("aria-label", "Filtrovat menu");
-      label.appendChild(field); list.parentNode.insertBefore(label, list);
-      field.addEventListener("input", function () { filterMenu(nav, field.value); });
+    var nav = document.querySelector(".md-nav--primary"), inner = nav && nav.closest(".md-sidebar__inner");
+    if (nav && inner) {
+      var label = inner.querySelector(":scope > .nav-menu-filter") || nav.querySelector(":scope > .nav-menu-filter");
+      if (!label) {
+        label = document.createElement("label"); label.className = "nav-menu-filter";
+        var input = document.createElement("input"); input.type = "search"; input.placeholder = "Filtrovat menu…"; input.setAttribute("aria-label", "Filtrovat menu");
+        label.appendChild(input);
+      }
+      if (label.parentNode !== inner) inner.insertBefore(label, nav);
+      var field = label.querySelector("input");
+      if (field && !field.dataset.navFilter) {
+        field.dataset.navFilter = "1";
+        field.addEventListener("input", function () { filterMenu(nav, field.value); });
+      }
     }
   }
   function norm(s) { return (s || "").toLocaleLowerCase("cs").normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/[^a-z0-9]+/g, " ").trim(); }

@@ -26,3 +26,4 @@ Khärghae a Knärghae byly původně sesterská města jedné země – **Zia** 
 ## Související
 - Hlavní město: [Město Dar Kemmar](../03_Mesta/Mesto_Dar_Kemmar.md)
 - Frakce: [Ordenský řád](../05_Frakce/Ordensky_Rad.md)
+- Frakce: [Stráž Dar Kemmaru](../05_Frakce/Straz_Dar_Kemmaru.md)

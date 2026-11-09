@@ -42,3 +42,4 @@ Svobodné město ležící u hranic staré zkázy pod správou primase Perthama.
 ## Související
 - Země: [Svobodné Město Werenor](../02_Zeme/Svobodne_Mesto_Werenor.md)
 - Vládce: [Primas Pertham](../04_Postavy/Vladci/Postava_Pertham.md)
+- Frakce: [Piráti z Amiru](../05_Frakce/Pirati_z_Amiru.md)

@@ -25,3 +25,4 @@ Exotické souostroví námořníků a obchodníků. Královna Yuthika udržuje z
 - Hlavní město: [Město Menkant](../03_Mesta/Mesto_Menkant.md)
 - Hlava státu: [Královna Yuthika](../04_Postavy/Vladci/Postava_Yuthika.md)
 - Frakce: [Ordenský řád](../05_Frakce/Ordensky_Rad.md)
+- Frakce: [Piráti z Opilé fretky](../05_Frakce/Pirati_z_Opile_fretky.md)

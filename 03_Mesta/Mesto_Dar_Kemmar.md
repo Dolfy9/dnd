@@ -40,3 +40,4 @@ Uzavřené horské pevnostní město v Knärghae Zia.
 
 ## Související
 - Země: [Nezávislá Država Knärghae Zia](../02_Zeme/Drzava_Knarghae_Zia.md)
+- Frakce: [Stráž Dar Kemmaru](../05_Frakce/Straz_Dar_Kemmaru.md)

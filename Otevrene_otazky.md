@@ -14,6 +14,9 @@ Seznam věcí k rozhodnutí DM. Po rozhodnutí položku přesuň do sekce *Vyře
 9. **Mictima – hranice států:** Značka Mictimy leží na straně Divokého Severu u hranice podle mapy DM, ale její stránka ji označuje za hlavní město Nöetu. Ke kterému státu město politicky patří? *(návrh – čeká na DM)*
 
 ## Chybějící / nedopsané
+
+- Jsou strážní Dar Kemmaru živí a vázaní paktem, nebo nemrtví?
+- Kde kotví Opilá fretka?
 - **Kop Aram:** komu patří a kdo ho spravuje (Briria, Werenor, samospráva kupců)?
 - **Tali:** co je to za zemi/kraj, kdo vládne? ([Tali](01_Svet/Mista/Tali.md))
 - **Severovýchodní poloostrov** (ledové věže, tvář ve skále, maják) nemá jméno – co tam je? Fornheim?
