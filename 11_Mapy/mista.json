@@ -5,8 +5,8 @@
  "mista": [
   {
    "nazev": "Nölien",
-   "x": 1071,
-   "y": 535,
+   "x": 985,
+   "y": 520,
    "typ": "zeme",
    "jistota": "mapa",
    "odkaz": "02_Zeme/Elfsky_Stat_Nolien.md",

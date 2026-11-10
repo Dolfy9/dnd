@@ -164,10 +164,12 @@
   var body = L.layerGroup(), sidla = L.layerGroup(), bojL = L.layerGroup(), byName = {}, cropHighlight = null;
   D.mista.forEach(function (m) {
     var c = L.circleMarker([H - m.y, m.x], {
-      radius: m.typ === "zeme" ? (MP.state_radius || 3) : (MP.radius || 2.5), color: MP.stroke || "#4e493f", weight: MP.stroke_width || .9, opacity: MP.stroke_opacity || .65,
-      fillColor: barvy[m.jistota] || "#777", fillOpacity: MP.fill_opacity || .9
+      radius: m.typ === "zeme" ? (MP.state_radius || 6) : (MP.radius || 5), color: MP.stroke || "#241c10", weight: MP.stroke_width || 1.6, opacity: 1,
+      fillColor: barvy[m.jistota] || "#777", fillOpacity: .95, className: "mapa-marker"
     });
-    c.bindTooltip(m.nazev, { className: "mapa-stitek", direction: "top", offset: [0, -6] });
+    c.bindTooltip(m.nazev, { className: "mapa-stitek", direction: "top", offset: [0, -8] });
+    c.on("mouseover", function () { c.setStyle({ radius: (m.typ === "zeme" ? 8 : 7) }); });
+    c.on("mouseout", function () { c.setStyle({ radius: (m.typ === "zeme" ? 6 : 5) }); });
     c.bindPopup(function () {
       var city = (HER.mesta || []).find(function (entry) { return entry.soubor === m.odkaz; });
       var coat = city ? '<p class="mapa-heraldika-mesto"><img src="' + herPath(city, "znak") + '" alt="" onerror="this.remove()"></p>' : "";
