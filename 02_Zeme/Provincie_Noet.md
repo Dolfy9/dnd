@@ -13,7 +13,7 @@ Ordenský řád zde udržuje vojenské i duchovní posádky, avšak vůči Breff
 
 ## Heraldika
 
-> **Stav:** návrh
+> **Stav:** kánon
 
 ![Znak – Provincie Nöet](obrazky/Znak_noet.webp){.heraldika-img .heraldika-znak} ![Vlajka – Provincie Nöet](obrazky/Vlajka_noet.webp){.heraldika-img .heraldika-vlajka}
 

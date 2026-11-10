@@ -6,11 +6,11 @@
 - **Podřízenost:** Nezávislý
 
 ## Vznešený Západ
-Starobylá elfská říše. Nölien býval říší sahající až na západ Montelienu – po Ertusově pádu a Temném dni však byla většina jeho území zničena a dnes zbývá jen hvozd na severu středu kontinentu, který král Veanor I. chrání prastarou magií z dob Stavitele Tirenta a před ordenskými vyslanci rázně zavírá hranice.
+Starobylá elfská říše. Elfové byli stvořeni Tirentem v dávno ztraceném městě [Sirinu](../01_Svet/Mista/Sirin.md), jež dnes leží někde v Zátoce olihní severně od Nölienu. Nölien býval říší sahající až na západ Montelienu – po Ertusově pádu a Temném dni však byla většina jeho území zničena a dnes zbývá jen hvozd na severu středu kontinentu, který král Veanor I. chrání prastarou magií z dob Stavitele Tirenta a před ordenskými vyslanci rázně zavírá hranice.
 
 ## Heraldika
 
-> **Stav:** návrh
+> **Stav:** kánon
 
 ![Znak – Elfský Stát Nölien](obrazky/Znak_nolien.webp){.heraldika-img .heraldika-znak} ![Vlajka – Elfský Stát Nölien](obrazky/Vlajka_nolien.webp){.heraldika-img .heraldika-vlajka}
 

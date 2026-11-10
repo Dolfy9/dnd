@@ -53,7 +53,7 @@ Trpasličí podzemní i povrchové město v Khärghae Zia v čele s vévodou Wor
 
 ## Heraldika
 
-> **Stav:** návrh
+> **Stav:** kánon
 
 ![Znak – Wortmir](obrazky/Znak_wortmir.webp){.heraldika-img .heraldika-znak}
 

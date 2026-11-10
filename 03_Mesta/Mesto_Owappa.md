@@ -32,7 +32,7 @@ Zemědělské a obchodní centrum Laertmundu pod dohledem krále Iridina III.
 
 ## Heraldika
 
-> **Stav:** návrh
+> **Stav:** kánon
 
 ![Znak – Owappa](obrazky/Znak_owappa.webp){.heraldika-img .heraldika-znak}
 

@@ -10,7 +10,7 @@ Centrum Ordenského řádu. Nedobytná pevnost, odkud Otec Samuel a jeho inkvizi
 
 ## Heraldika
 
-> **Stav:** návrh
+> **Stav:** kánon
 
 ![Znak – Teokracie Orden](obrazky/Znak_orden.webp){.heraldika-img .heraldika-znak} ![Vlajka – Teokracie Orden](obrazky/Vlajka_orden.webp){.heraldika-img .heraldika-vlajka}
 

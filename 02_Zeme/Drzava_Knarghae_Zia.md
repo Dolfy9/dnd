@@ -13,7 +13,7 @@ Khärghae a Knärghae byly původně sesterská města jedné země – **Zia** 
 
 ## Heraldika
 
-> **Stav:** návrh
+> **Stav:** kánon
 
 ![Znak – Nezávislá Država Knärghae Zia](obrazky/Znak_knarghe.webp){.heraldika-img .heraldika-znak} ![Vlajka – Nezávislá Država Knärghae Zia](obrazky/Vlajka_knarghe.webp){.heraldika-img .heraldika-vlajka}
 

@@ -32,7 +32,7 @@ Vznešené elfské město v Nölienu, sídlo krále Veanora I.
 
 ## Heraldika
 
-> **Stav:** návrh
+> **Stav:** kánon
 
 ![Znak – Tel Palentin](obrazky/Znak_tel_palentin.webp){.heraldika-img .heraldika-znak}
 

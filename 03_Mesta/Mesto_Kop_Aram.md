@@ -40,7 +40,7 @@ Kop Aram býval největším městem světa, dokud ho za Temného dne nesmetl je
 
 ## Heraldika
 
-> **Stav:** návrh
+> **Stav:** kánon
 
 ![Znak – Kop Aram](obrazky/Znak_kop_aram.webp){.heraldika-img .heraldika-znak}
 

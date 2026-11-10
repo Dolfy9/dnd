@@ -32,7 +32,7 @@ Lesní město v království Imonir, sídlo krále Istuviona.
 
 ## Heraldika
 
-> **Stav:** návrh
+> **Stav:** kánon
 
 ![Znak – Imonir](obrazky/Znak_imonir_mesto.webp){.heraldika-img .heraldika-znak}
 

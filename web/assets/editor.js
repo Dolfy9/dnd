@@ -57,19 +57,56 @@
     }).catch(function (e) { alert("Nelze načíst: " + e.message); });
   }
 
+  var TYPES = [
+    { id: "stranka",  label: "Volná stránka (vyber složku a šablonu)" },
+    { id: "zeme",     label: "Země / stát", dir: "02_Zeme", tpl: "_Sablony/Sablona_Zeme.md" },
+    { id: "mesto",    label: "Město", dir: "03_Mesta", tpl: "_Sablony/Sablona_Mesto.md", prefix: "Mesto_" },
+    { id: "postava",  label: "Postava / NPC", dir: "04_Postavy/NPC", tpl: "_Sablony/Sablona_Postava.md", prefix: "Postava_" },
+    { id: "frakce",   label: "Frakce", dir: "05_Frakce" },
+    { id: "kniha",    label: "Kniha / dokument", dir: "06_Knihy_a_Dokumenty", prefix: "Kniha_" },
+    { id: "kampan",   label: "Kampaň", dir: "07_Kampane", tpl: "_Sablony/Sablona_Kampan.md" },
+    { id: "quest",    label: "Quest", dir: "08_Questy", tpl: "_Sablony/Sablona_Quest.md", prefix: "Quest_" },
+    { id: "hadanka",  label: "Hádanka / past", dir: "09_Hadanky", tpl: "_Sablony/Sablona_Hadanka.md", prefix: "Hadanka_" },
+    { id: "sezeni",   label: "Sezení", dir: "10_Sezeni", tpl: "_Sablony/Sablona_Sezeni.md", prefix: "Sezeni_" },
+    { id: "misto",    label: "Místo (svět)", dir: "01_Svet/Mista" },
+    { id: "obchod",   label: "Obchod", dir: "12_Obchody", tpl: "_Sablony/Sablona_Obchod.md", prefix: "Obchod_" },
+    { id: "druh",     label: "Druh / rasa", dir: "13_Druhy", tpl: "_Sablony/Sablona_Druh.md", prefix: "Druh_" },
+    { id: "povolani", label: "Povolání / class", dir: "14_Povolani", tpl: "_Sablony/Sablona_Povolani.md", prefix: "Povolani_" },
+    { id: "podtrida", label: "Podtřída (pravidla)", json: "web/assets/pravidla2024.json", dict: "podtridy" },
+    { id: "feat",     label: "Feat (pravidla)", json: "web/assets/pravidla2024.json", dict: "featy" },
+    { id: "pozadi",   label: "Pozadí (pravidla)", json: "web/assets/pravidla2024.json", dict: "pozadi" },
+    { id: "druhjson", label: "Druh – pravidla", json: "web/assets/pravidla2024.json", dict: "druhy" },
+    { id: "kouzlo",   label: "Kouzlo (pravidla)", json: "web/assets/kouzla2024.json" },
+    { id: "netvor",   label: "Netvor (SRD)", json: "web/assets/srd/bestiar.json" },
+    { id: "predmet",  label: "Předmět (SRD)", json: "web/assets/srd/predmety.json" }
+  ];
+
   function newPage(cesta) {
     api("GET", "strom").then(function (t) {
       var here = cesta.indexOf("/") > 0 ? cesta.replace(/\/[^\/]*$/, "") : t.slozky[0];
       var body = el("div", { class: "ed-form" });
+      var typ = el("select"); TYPES.forEach(function (tp) { typ.appendChild(el("option", { value: tp.id }, tp.label)); });
       var sel = el("select"); t.slozky.forEach(function (s) { var o = el("option", { value: s }, s); if (s === here) o.selected = true; sel.appendChild(o); });
-      var name = el("input", { placeholder: "např. Město Nové Město" });
+      var name = el("input", { placeholder: "např. Nové Město, Sirin, Kazi…" });
       var tpl = el("select"); tpl.appendChild(el("option", { value: "" }, "(prázdná)"));
       t.soubory.filter(function (f) { return f.indexOf("_Sablony/") === 0; }).forEach(function (f) { tpl.appendChild(el("option", { value: f }, f.replace("_Sablony/", ""))); });
-      [["Složka", sel], ["Název stránky", name], ["Šablona", tpl]].forEach(function (r) { var l = el("label", {}, r[0]); l.appendChild(r[1]); body.appendChild(l); });
-      modal("Nová stránka", body, [{ text: "Vytvořit", primary: true, click: function () {
+      var rows = [["Typ obsahu", typ], ["Složka", sel], ["Název", name], ["Šablona", tpl]];
+      var labels = rows.map(function (r) { var l = el("label", {}, r[0]); l.appendChild(r[1]); body.appendChild(l); return l; });
+      function syncType() {
+        var tp = TYPES.find(function (x) { return x.id === typ.value; });
+        var manual = tp.id === "stranka";
+        labels[1].style.display = manual ? "" : "none";
+        labels[3].style.display = manual ? "" : "none";
+        if (!manual && !tp.json) { sel.value = tp.dir; tpl.value = tp.tpl || ""; }
+      }
+      typ.addEventListener("change", syncType); syncType();
+      modal("Nový obsah", body, [{ text: "Vytvořit", primary: true, click: function () {
         var title = name.value.trim(); if (!title) return alert("Zadej název.");
-        var file = title.normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/[^A-Za-z0-9]+/g, "_").replace(/^_|_$/g, "") + ".md";
-        var path = sel.value + "/" + file;
+        var tp = TYPES.find(function (x) { return x.id === typ.value; });
+        var file = title.normalize("NFD").replace(/[̀-ͯ]/g, "").replace(/[^A-Za-z0-9]+/g, "_").replace(/^_|_$/g, "") + ".md";
+        if (tp.json) return newJsonEntry(tp, title);
+        var dir = tp.dir || sel.value;
+        var path = dir + "/" + (tp.prefix || "") + file;
         var make = function (text) {
           busy(true);
           api("POST", "soubor", { cesta: path, obsah: text }).then(function () { location.href = pageUrl(path); })
@@ -81,6 +118,47 @@
       } }]);
     });
   }
+
+  // Přidání entity do JSON katalogu (podtřída, feat, kouzlo, netvor, předmět…)
+  function newJsonEntry(tp, title) {
+    api("GET", "soubor?cesta=" + encodeURIComponent(tp.json)).then(function (d) {
+      var data = JSON.parse(d.obsah);
+      var dict = tp.dict ? data[tp.dict] : data;
+      if (!dict || typeof dict !== "object") return alert("JSON nemá očekávanou strukturu.");
+      var keys = Object.keys(dict);
+      var sample = keys.length ? dict[keys[0]] : {};
+      var body = el("div", { class: "ed-form" });
+      body.appendChild(el("p", { class: "ed-pozn" }, "Nová položka „" + title + "“ v <code>" + tp.json + "</code>" +
+        (tp.dict ? " → <code>" + tp.dict + "</code>" : "") + ". Pole předvyplněna podle první položky katalogu – přepiš je."));
+      var fields = {};
+      Object.keys(sample).forEach(function (k) {
+        var v = sample[k], input;
+        if (typeof v === "boolean") { input = el("input", { type: "checkbox" }); input.checked = v; }
+        else if (typeof v === "number") { input = el("input", { type: "number", step: "any", value: v }); }
+        else if (v !== null && typeof v === "object") { input = el("textarea", { rows: 3 }, JSON.stringify(v, null, 1)); }
+        else input = el("input", { value: v == null ? "" : v });
+        fields[k] = { input: input, isObj: v !== null && typeof v === "object", isBool: typeof v === "boolean", isNum: typeof v === "number" };
+        var l = el("label", {}, k); l.appendChild(input); body.appendChild(l);
+      });
+      var m = modal("Nová položka: " + tp.label, body, [{ text: "Uložit", primary: true, click: function () {
+        var entry = {};
+        try {
+          Object.keys(fields).forEach(function (k) {
+            var f = fields[k];
+            entry[k] = f.isBool ? f.input.checked : f.isNum ? Number(f.input.value) : f.isObj ? JSON.parse(f.input.value || "null") : f.input.value;
+          });
+        } catch (e) { return alert("Neplatný JSON v poli: " + e.message); }
+        if (dict[title]) return alert("Položka „" + title + "“ už existuje.");
+        dict[title] = entry;
+        busy(true);
+        api("PUT", "soubor", { cesta: tp.json, obsah: JSON.stringify(data, null, 1) })
+          .then(function () { m.close(); busy(false); alert("Uloženo: " + title + " → " + tp.json); })
+          .catch(function (e) { busy(false); alert("Chyba: " + e.message); });
+      } }]);
+      m.box.classList.add("ed-wide");
+    }).catch(function (e) { alert("Nelze načíst: " + e.message); });
+  }
+
   window.MontelienEditor.newPage = function () { var src = document.getElementById("zdroj-stranky"); newPage(src ? src.dataset.cesta : "mapa.md"); };
   window.MontelienEditor.newCharacter = function () { newPage("04_Postavy/NPC/Postava_Nova.md"); };
 

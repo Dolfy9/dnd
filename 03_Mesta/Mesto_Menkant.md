@@ -32,7 +32,7 @@ Hlavní přístavní město Svobodných jižních ostrovů pod vládou královny
 
 ## Heraldika
 
-> **Stav:** návrh
+> **Stav:** kánon
 
 ![Znak – Menkant](obrazky/Znak_menkant.webp){.heraldika-img .heraldika-znak}
 

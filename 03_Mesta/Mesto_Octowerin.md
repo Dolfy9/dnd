@@ -37,7 +37,7 @@ Královské město Bririe, sídlo krále Forpy VII. a centrum ordenské inkvizic
 
 ## Heraldika
 
-> **Stav:** návrh
+> **Stav:** kánon
 
 ![Znak – Octowerin](obrazky/Znak_octowerin.webp){.heraldika-img .heraldika-znak}
 

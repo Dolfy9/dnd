@@ -33,7 +33,7 @@ Svobodné město ležící u hranic staré zkázy pod správou primase Perthama.
 
 ## Heraldika
 
-> **Stav:** návrh
+> **Stav:** kánon
 
 ![Znak – Werenor](obrazky/Znak_werenor_mesto.webp){.heraldika-img .heraldika-znak}
 

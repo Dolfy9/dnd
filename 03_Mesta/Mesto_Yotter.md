@@ -32,7 +32,7 @@ Bojové město klanů Mönohenu pod vládou Aettara Szkunziho.
 
 ## Heraldika
 
-> **Stav:** návrh
+> **Stav:** kánon
 
 ![Znak – Yotter](obrazky/Znak_yotter.webp){.heraldika-img .heraldika-znak}
 

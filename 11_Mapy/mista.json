@@ -255,7 +255,10 @@
    "jistota": "kanon",
    "odkaz": "02_Zeme/Kralovstvi_Imonir.md",
    "pozn": "Celý hlavní ostrov severně od Nölienu a okolní neobsazené ostrůvky.",
-   "popisek": {"rot": 0, "styl": "zeme"}
+   "popisek": {
+    "rot": 0,
+    "styl": "zeme"
+   }
   },
   {
    "nazev": "Banerbo",
@@ -265,7 +268,10 @@
    "jistota": "kanon",
    "odkaz": "02_Zeme/Banerbo.md",
    "pozn": "Souostroví Synů vln severně od Khearazu a Mönohenu.",
-   "popisek": {"rot": 0, "styl": "zeme"}
+   "popisek": {
+    "rot": 0,
+    "styl": "zeme"
+   }
   },
   {
    "nazev": "Imatoma",
@@ -275,7 +281,10 @@
    "jistota": "kanon",
    "odkaz": "02_Zeme/Imatoma.md",
    "pozn": "Ostrovní země východně od Knärghe Zhie.",
-   "popisek": {"rot": 0, "styl": "zeme"}
+   "popisek": {
+    "rot": 0,
+    "styl": "zeme"
+   }
   },
   {
    "nazev": "Werenor",
@@ -1056,6 +1065,16 @@
    "jistota": "mapa",
    "odkaz": "11_Mapy/Analyza_mapy.md",
    "pozn": "Velký ostrov na jihovýchodě – bez jména."
+  },
+  {
+   "nazev": "Urkal?",
+   "x": 1300,
+   "y": 805,
+   "typ": "mesto",
+   "hlavni_mesto": false,
+   "jistota": "odhad",
+   "odkaz": "01_Svet/Mista/Urkal.md",
+   "pozn": "Palácové město v Khärghe Zhii kousek od hranic s Knärghe Zhii (DM: poloha v zemi)."
   }
  ]
 }

@@ -32,7 +32,7 @@ Drsné hraniční město v Khaerazu spravované náčelníkem Oltarem.
 
 ## Heraldika
 
-> **Stav:** návrh
+> **Stav:** kánon
 
 ![Znak – Kaer](obrazky/Znak_kaer.webp){.heraldika-img .heraldika-znak}
 

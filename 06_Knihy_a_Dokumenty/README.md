@@ -32,7 +32,7 @@ Herní texty, které mohou hráči najít. Každá kniha má na konci sekci **Pr
 | Pět Stavitelů a jejich domény | 04, 05 |
 | Temný den, Kop Aram, jezero Amir, Ertinova hora | 06 (oficiální verze Ordenu: 02) |
 | Osud Irtis (Dräar) a Antemia (Fornheim) | 06, 10, 11 |
-| Éra vlády lidí, císař Draarský, koruna Bririe | 07 |
+| Éra vlády lidí, císař Dräarský, koruna Bririe | 07 |
 | Orden: vznik, Urkalský sněm, loutkoví vládci | 01, 02, 08, 16, 18 |
 | Struktura Ordenu | 18 |
 | Odboj Svobodných | 01 |

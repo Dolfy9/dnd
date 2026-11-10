@@ -11,7 +11,7 @@ Imoniru náleží celý hlavní ostrov severně od Nölienu, na němž leží ú
 
 ## Heraldika
 
-> **Stav:** návrh
+> **Stav:** kánon
 
 ![Znak – Království Imonir](obrazky/Znak_imonir.webp){.heraldika-img .heraldika-znak} ![Vlajka – Království Imonir](obrazky/Vlajka_imonir.webp){.heraldika-img .heraldika-vlajka}
 

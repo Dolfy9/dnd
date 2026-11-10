@@ -1,20 +1,22 @@
 # Tali
 
-> **Stav:** poloha = kánon (popsáno na mapě DM); popis chybí
+> **Stav:** poloha, vládce a charakter země = kánon (DM); ostatní návrh
 
-- **Typ:** kraj / země – *doplní DM*
+- **Typ:** země farmářů a horníků z pouště
+- **Vládce:** král [Quento](../../04_Postavy/Vladci/Postava_Quento.md) (Gargoyle)
 - **Poloha:** jihovýchod kontinentu, východně od [Laertmundu](../../02_Zeme/Kralovstvi_Laertmund.md), na západ od rokle oddělující [Zairam](../../02_Zeme/Zeme_Zairam.md); na severu sousedí s [Knärghe Zhiou](../../02_Zeme/Drzava_Knarghae_Zia.md)
 - **Na mapě:** poušť s kaktusy, chrámy a hájem, na jihu pobřeží ([Geografie](../../11_Mapy/Geografie.md))
 
 ## Kánon
-Na mapě DM je popisek **TALI**. Další informace zatím nejsou.
+Tali je země pouštních farmářů a horníků. Vládne jí král Quento – Gargoyle. Pouštní oázy a zlaté doly živí tvrdý, pragmatický lid, který si drží odstup od ordenských vyslanců stejně jako od intrik pobřežních měst.
 
-## Otevřené
-- Je Tali samostatná země, provincie, nebo poušť bez vlády? Kdo ji ovládá a jak se k ní staví Orden?
+## Háčky (návrh)
+- Quentovy gargoylové stráže hlídají doly i chrámy v poušti – kdo krade zlato, končí jako socha.
+- Farmáři u oáz šíří zprávy o dávných pokladech v pyl pod hladinou písku.
 
 ## Heraldika
 
-> **Stav:** návrh
+> **Stav:** kánon
 
 ![Znak – Tali](obrazky/Znak_tali.webp){.heraldika-img .heraldika-znak} ![Vlajka – Tali](obrazky/Vlajka_tali.webp){.heraldika-img .heraldika-vlajka}
 
@@ -22,4 +24,4 @@ Na mapě DM je popisek **TALI**. Další informace zatím nejsou.
 
 **Vlajka:** Písková vlajka se zelenou palmou a modrým pruhem vody.
 
-**Proč:** Poušť s oázou. Návrh, protože DM zatím neurčil, jestli je Tali stát.
+**Proč:** Poušť s oázou.

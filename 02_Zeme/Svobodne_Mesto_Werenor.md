@@ -11,7 +11,7 @@ Město postavené v blízkosti staré zkázy a ruin. Primas Pertham stráží st
 
 ## Heraldika
 
-> **Stav:** návrh
+> **Stav:** kánon
 
 ![Znak – Svobodné Město Werenor](obrazky/Znak_werenor.webp){.heraldika-img .heraldika-znak} ![Vlajka – Svobodné Město Werenor](obrazky/Vlajka_werenor.webp){.heraldika-img .heraldika-vlajka}
 

@@ -32,7 +32,7 @@ Přírodní metropole Zairamu, sídlo kněžky Mi-Komde.
 
 ## Heraldika
 
-> **Stav:** návrh
+> **Stav:** kánon
 
 ![Znak – Pertam](obrazky/Znak_pertam.webp){.heraldika-img .heraldika-znak}
 

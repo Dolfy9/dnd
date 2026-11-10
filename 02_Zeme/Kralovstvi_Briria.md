@@ -13,7 +13,7 @@ Král Forpa VII. je sice oficiálním panovníkem, jeho moc je však pouze iluzo
 
 ## Heraldika
 
-> **Stav:** návrh
+> **Stav:** kánon
 
 ![Znak – Království Briria](obrazky/Znak_briria.webp){.heraldika-img .heraldika-znak} ![Vlajka – Království Briria](obrazky/Vlajka_briria.webp){.heraldika-img .heraldika-vlajka}
 

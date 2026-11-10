@@ -10,7 +10,7 @@ Miria je křižovatkou obchodu a intrik. Konzul Timopeus obratně balancuje mezi
 
 ## Heraldika
 
-> **Stav:** návrh
+> **Stav:** kánon
 
 ![Znak – Svobodné Město Miria](obrazky/Znak_miria.webp){.heraldika-img .heraldika-znak} ![Vlajka – Svobodné Město Miria](obrazky/Vlajka_miria.webp){.heraldika-img .heraldika-vlajka}
 

@@ -25,8 +25,10 @@ def safe_path(rel, allow_json=False):
     parts = p.relative_to(ROOT).parts
     if parts[0] in BLOCKED:
         raise ValueError("do této složky nelze zapisovat")
-    if p.suffix != ".md" and not (allow_json and p.suffix == ".json" and parts[0] == "11_Mapy"):
-        raise ValueError("povolené jsou jen .md soubory (a .json v 11_Mapy)")
+    json_ok = allow_json and p.suffix == ".json" and (
+        parts[0] == "11_Mapy" or (parts[0] == "web" and parts[1] == "assets"))
+    if p.suffix != ".md" and not json_ok:
+        raise ValueError("povolené jsou jen .md soubory (a .json v 11_Mapy a web/assets)")
     return p
 
 

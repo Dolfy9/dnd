@@ -32,7 +32,7 @@ Svobodná obchodní metropole pod vládou konzula Timopea.
 
 ## Heraldika
 
-> **Stav:** návrh
+> **Stav:** kánon
 
 ![Znak – Miria](obrazky/Znak_miria_mesto.webp){.heraldika-img .heraldika-znak}
 

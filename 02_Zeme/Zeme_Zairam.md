@@ -10,7 +10,7 @@ Zairam je požehnaný kraj plný bujné vegetace a bohaté úrody. Je považová
 
 ## Heraldika
 
-> **Stav:** návrh
+> **Stav:** kánon
 
 ![Znak – Země Zairam](obrazky/Znak_zairam.webp){.heraldika-img .heraldika-znak} ![Vlajka – Země Zairam](obrazky/Vlajka_zairam.webp){.heraldika-img .heraldika-vlajka}
 

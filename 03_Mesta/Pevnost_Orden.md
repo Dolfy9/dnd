@@ -34,7 +34,7 @@ Nedobytná centrála Ordenského řádu a Otce Samuela.
 
 ## Heraldika
 
-> **Stav:** návrh
+> **Stav:** kánon
 
 ![Znak – Pevnost Orden](obrazky/Znak_pevnost_orden.webp){.heraldika-img .heraldika-znak}
 

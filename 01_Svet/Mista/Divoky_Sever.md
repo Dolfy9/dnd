@@ -18,7 +18,7 @@ Jehličnaté hvozdy, ledové fjordy a pohoří, kde slunce v zimě vůbec nevych
 
 ## Heraldika
 
-> **Stav:** návrh
+> **Stav:** kánon
 
 ![Znak – Divoký Sever](obrazky/Znak_divoky_sever.webp){.heraldika-img .heraldika-znak} ![Vlajka – Divoký Sever](obrazky/Vlajka_divoky_sever.webp){.heraldika-img .heraldika-vlajka}
 

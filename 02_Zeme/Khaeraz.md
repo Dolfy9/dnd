@@ -10,7 +10,7 @@ Drsná příhraniční oblast plná lovců a bojovníků. Náčelník Oltar se s
 
 ## Heraldika
 
-> **Stav:** návrh
+> **Stav:** kánon
 
 ![Znak – Khaeraz](obrazky/Znak_khearaz.webp){.heraldika-img .heraldika-znak} ![Vlajka – Khaeraz](obrazky/Vlajka_khearaz.webp){.heraldika-img .heraldika-vlajka}
 

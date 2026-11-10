@@ -32,7 +32,7 @@ Uzavřené horské pevnostní město v Knärghae Zia.
 
 ## Heraldika
 
-> **Stav:** návrh
+> **Stav:** kánon
 
 ![Znak – Dar Kemmar](obrazky/Znak_dar_kemmar.webp){.heraldika-img .heraldika-znak}
 

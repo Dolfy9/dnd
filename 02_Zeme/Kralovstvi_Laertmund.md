@@ -10,7 +10,7 @@ Laertmund je tradiční země zemědělců a stoických hraničářů. Král Iri
 
 ## Heraldika
 
-> **Stav:** návrh
+> **Stav:** kánon
 
 ![Znak – Království Laertmund](obrazky/Znak_laertmund.webp){.heraldika-img .heraldika-znak} ![Vlajka – Království Laertmund](obrazky/Vlajka_laertmund.webp){.heraldika-img .heraldika-vlajka}
 

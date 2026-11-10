@@ -13,7 +13,7 @@ V Mönohenu leží [Východní hvozd](../01_Svet/Mista/Vychodni_hvozd.md), kter�
 
 ## Heraldika
 
-> **Stav:** návrh
+> **Stav:** kánon
 
 ![Znak – Klanové Země Mönohen](obrazky/Znak_monohen.webp){.heraldika-img .heraldika-znak} ![Vlajka – Klanové Země Mönohen](obrazky/Vlajka_monohen.webp){.heraldika-img .heraldika-vlajka}
 

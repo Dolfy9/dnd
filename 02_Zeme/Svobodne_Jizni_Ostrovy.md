@@ -11,7 +11,7 @@ Exotické souostroví námořníků a obchodníků. Královna Yuthika udržuje z
 
 ## Heraldika
 
-> **Stav:** návrh
+> **Stav:** kánon
 
 ![Znak – Svobodné Jižní ostrovy](obrazky/Znak_ostrovy.webp){.heraldika-img .heraldika-znak} ![Vlajka – Svobodné Jižní ostrovy](obrazky/Vlajka_ostrovy.webp){.heraldika-img .heraldika-vlajka}
 

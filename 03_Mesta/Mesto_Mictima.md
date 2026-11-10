@@ -34,7 +34,7 @@ Hlavní město Nöetu, sídlo arcimága Breffana plné magických věží a knih
 
 ## Heraldika
 
-> **Stav:** návrh
+> **Stav:** kánon
 
 ![Znak – Mictima](obrazky/Znak_mictima.webp){.heraldika-img .heraldika-znak}
 
