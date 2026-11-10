@@ -426,6 +426,29 @@ def rules_edition(item):
     return "2024"
 
 
+def link(src, dst):
+    """Symlink s fallbackem na Windows junction/hardlink/copy."""
+    try:
+        os.symlink(src, dst)
+        return
+    except OSError:
+        pass
+    import subprocess
+    target = Path(dst)
+    full = (target.parent / src).resolve()
+    if full.is_dir():
+        r = subprocess.run(["cmd", "/c", "mklink", "/J", str(target), str(full)],
+                           capture_output=True)
+        if r.returncode == 0:
+            return
+        shutil.copytree(full, target)
+    else:
+        try:
+            os.link(full, target)
+        except OSError:
+            shutil.copy2(full, target)
+
+
 def main():
     NAV_INDEX.clear()
     if DOCS.exists():
@@ -433,13 +456,13 @@ def main():
     DOCS.mkdir()
     sections = []
     for d in sorted(p for p in ROOT.iterdir() if p.is_dir() and p.name not in SKIP and not p.name.startswith(".")):
-        os.symlink(os.path.relpath(d, DOCS), DOCS / d.name)
+        link(os.path.relpath(d, DOCS), DOCS / d.name)
         items = nav_for(d, d.name)
         if items and d.name != "13_Druhy":
             sections.append({NAMES.get(d.name, d.name): items})
     for f in ["README.md", "Otevrene_otazky.md", "AGENTS.md"]:
-        os.symlink(os.path.relpath(ROOT / f, DOCS), DOCS / f)
-    os.symlink(os.path.relpath(WEB / "assets", DOCS), DOCS / "assets")
+        link(os.path.relpath(ROOT / f, DOCS), DOCS / f)
+    link(os.path.relpath(WEB / "assets", DOCS), DOCS / "assets")
     (DOCS / "mapa.md").write_text(map_page(), encoding="utf-8")
     (DOCS / "bestiar.md").write_text("---\nhide:\n  - toc\n---\n# Bestiář (SRD 5.2.1)\n\nNetvoři ze SRD 5.2.1 se statbloky. Filtruj podle typu a CR, klikni pro statblok. Obsah SRD 5.2.1 je pod licencí CC-BY 4.0.\n\n<div class=\"srd-katalog\" data-typ=\"bestiar\"></div>\n", encoding="utf-8")
     (DOCS / "postavy.md").write_text("---\nhide:\n  - toc\n  - navigation\n---\n# Katalog postav\n\nPostavy, jejich vazby a štítky pro přípravu hry. Vyhledávej, filtruj nebo otevři kartu postavy.\n\n<div id=\"postavy-katalog\"></div>\n", encoding="utf-8")
@@ -687,6 +710,7 @@ theme:
     - navigation.indexes
     - navigation.top
     - navigation.tracking
+    - navigation.instant
     - search.suggest
     - search.highlight
     - toc.follow
@@ -715,6 +739,7 @@ extra_css:
   - assets/heraldika.css
   - assets/boj.css
   - assets/obchody.css
+  - assets/hudba.css
 extra_javascript:
   - assets/easymde/easymde.min.js
   - assets/extra.js
@@ -732,6 +757,7 @@ extra_javascript:
   - assets/srd.js
   - assets/boj.js
   - assets/obchody.js
+  - assets/hudba.js
 not_in_nav: |
   /mapa.md
   /postavy.md

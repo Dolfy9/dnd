@@ -23,5 +23,5 @@
 - **Autor:** kancelář Otce Samuela.
 - **Datace:** současnost (aktualizováno měsíčně).
 - **Kde najít:** sejf inkvizitora [Vaelena](../04_Postavy/NPC/Postava_Vaelen.md) v Octowerinu; Velký archiv v Pevnosti Orden. Ideální cíl questu odboje.
-- **Spolehlivost:** vysoká z pohledu Ordenu. **Pozor:** stavy u Breffana, Oltara, Szkunziho a dalších jsou návrh – potvrď, kdo je loutka (viz [otázky](../Otevrene_otazky.md)).
+- **Spolehlivost:** vysoká z pohledu Ordenu. Všichni vládci zemí pod Ordenem jsou dosazené loutky – potvrdil DM. Zdánlivá vzdorovitost (Szkunzi, Oltar) je divadlo, které Orden trpí, protože drží poddané klidné.
 - **Odhaluje:** politickou mapu světa a Urkalský převrat (všichni vládci zemí pod Ordenem jsou dosazení).

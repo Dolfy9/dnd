@@ -9,7 +9,7 @@
 Jižní država trpaslíků známá svými hlubokými doly a zpracováním kovů. Ačkoliv spadá pod Bririi, podzemní cechy udržují starou tradici uctívání Irtis "Ohnivé" daleko od zraků ordenských inkvizitorů.
 
 ## Historie
-Khärghae a Knärghae byly původně sesterská města jedné země – **Zia** (také **Zhia**, obě podoby jsou správné). Dnes je země rozdělená a polovinu **Knärghae Zia** ovládají temné síly: chodící mrtví a démoni.
+Khärghae a Knärghae byly původně sesterská města jedné země – **Zia** (také **Zhia**, obě podoby jsou správné). Dnes je země rozdělená a polovinu **Knärghae Zia** ovládají temné síly: chodící mrtví a démoni. Jižní polovina nese titul **Knížectví**, protože ji vládne vévoda pod brirskou korunou; severní polovina se po rozpadu prohlásila **Nezávislou Državou**, protože odmítá jakoukoliv nadvládu.
 
 ## Heraldika
 

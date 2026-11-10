@@ -141,6 +141,7 @@ Iridin III. (přítel), Szkunzi (rivalita a respekt), ordenští výběrčí (v�
 - Kmen na severu zmizel beze stopy; jediná stopa vede k ledovým věžím na severovýchodě.
 
 ## Pro DM (tajné)
+- Je loutkou Ordenu jako všichni vládci zemí pod jeho dohledem – jeho vzdor vůči úředníkům je divadlo, které Orden trpí, dokud Kaer střeží cestu k Fornheimu.
 - Návrh: Oltar uzavřel s Antemiovým snem dohodu: jeho lid nebude mít noční můry, dokud bude Kaer střežit cestu k Fornheimu.
 
 ## Související

@@ -6,7 +6,7 @@
 - **Podřízenost:** Nezávislý
 
 ## Vznešený Západ
-Starobylá elfská říše na západě Montelienu. Král Veanor I. rázně odmítá ordenské vyslance a chrání hranice hvozdu prastarou magií z dob Stavitele Tirenta.
+Starobylá elfská říše. Nölien býval říší sahající až na západ Montelienu – po Ertusově pádu a Temném dni však byla většina jeho území zničena a dnes zbývá jen hvozd na severu středu kontinentu, který král Veanor I. chrání prastarou magií z dob Stavitele Tirenta a před ordenskými vyslanci rázně zavírá hranice.
 
 ## Heraldika
 

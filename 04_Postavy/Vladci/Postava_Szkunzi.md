@@ -117,6 +117,7 @@ Oltar (rival), Veanor (vzájemný respekt), ordenští výběrčí (trofeje).
 - Szkunzi vyhlásil turnaj – vítěz získá jeho ochranu na cestě Mönohenem k Východnímu hvozdu.
 
 ## Pro DM (tajné)
+- Je loutkou Ordenu jako všichni vládci zemí pod jeho dohledem – nekompromisní postoj je divadlo pro klany; Orden ho trpí, protože drží Mönohen v klidu.
 - Návrh: Jeden z jeho synů tajně přijal ordenskou víru a chystá převrat.
 
 ## Související

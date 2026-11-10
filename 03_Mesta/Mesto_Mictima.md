@@ -18,11 +18,11 @@ Hlavní město Nöetu, sídlo arcimága Breffana plné magických věží a knih
 
 ## Pověsti a háčky
 - V Breffanových sklepích mizí otroci a vracejí se jako zvířata.
-- Odboj tu kvete díky zakázaným knihám.
+- Zakázané svazky tu kolují z ruky do ruky – černý trh s knihami kvete.
 
 ## Významné NPC (návrh)
 - Arcimág Breffan
-- Lékařka Vesna – vede tajnou buňku odboje
+- Lékařka Vesna – pašuje zakázané svazky pro hadí knihovny
 - Hadí stráž Breffanovy věže
 
 ## Setkání a scény (návrh)

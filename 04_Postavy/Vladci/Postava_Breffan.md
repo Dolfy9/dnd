@@ -223,12 +223,13 @@ Vyzáblý mág se šupinatou kůží na krku a zlatýma hadíma očima, v tmavoz
 Nesmrtelnost a poznání; dohoda s Ordenem je jen štít pro jeho výzkum.
 
 ## Vztahy (návrh)
-Otec Samuel (dohoda), Istuvion (nepřítel), Mictimský odboj (nevědomky ho financuje).
+Otec Samuel (dohoda), Istuvion (nepřítel), pašeráci zakázaných svazků (nevědomky ho financují).
 
 ## Háčky pro družinu (návrh)
 - V Mictimě mizí žebráci; v noci prý chodí po ulicích mrtví.
 
 ## Pro DM (tajné)
+- Je loutkou Ordenu jako všichni vládci zemí pod jeho dohledem – „dohoda“ kryjící jeho výzkum je veřejná maska jeho dosazení.
 - Návrh: Pracuje na Clone a potřebuje kousek těla Stavitele – hledá ostatky v Trosky Dräaru.
 
 ## Související

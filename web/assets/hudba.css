@@ -1,0 +1,187 @@
+/* Hudba – plovoucí přehrávač */
+#hudba-player {
+  position: fixed;
+  right: 1rem;
+  bottom: 1rem;
+  z-index: 99;
+  font-family: inherit;
+}
+
+.hudba-fab {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 3rem;
+  height: 3rem;
+  margin-left: auto;
+  border: none;
+  border-radius: 50%;
+  cursor: pointer;
+  color: #f5deb3;
+  background: linear-gradient(160deg, #4a3220, #2c1f14);
+  box-shadow: 0 2px 10px rgba(0, 0, 0, .55), inset 0 1px 0 rgba(255, 220, 160, .25);
+  transition: transform .15s ease, box-shadow .15s ease;
+}
+.hudba-fab:hover { transform: scale(1.06); }
+.hudba-fab.hudba-open { color: #ffc866; }
+
+/* pulzující ekvalizér, když hraje */
+.hudba-eq {
+  position: absolute;
+  right: .35rem;
+  bottom: .35rem;
+  display: none;
+  align-items: flex-end;
+  gap: 2px;
+  height: 10px;
+}
+.hudba-eq i {
+  width: 3px;
+  border-radius: 1px;
+  background: #ffb84d;
+  animation: hudba-eq 1s ease-in-out infinite;
+}
+.hudba-eq i:nth-child(2) { animation-delay: .2s; }
+.hudba-eq i:nth-child(3) { animation-delay: .4s; }
+.hudba-fab.hudba-on .hudba-eq { display: flex; }
+@keyframes hudba-eq {
+  0%, 100% { height: 3px; }
+  50% { height: 10px; }
+}
+
+/* nápověda k pokračování po reloadu */
+.hudba-fab.hudba-resume::after {
+  content: "";
+  position: absolute;
+  inset: -4px;
+  border: 2px solid #ffb84d;
+  border-radius: 50%;
+  animation: hudba-ring 1.4s ease-out infinite;
+}
+@keyframes hudba-ring {
+  from { transform: scale(.8); opacity: .9; }
+  to { transform: scale(1.3); opacity: 0; }
+}
+
+.hudba-panel {
+  position: absolute;
+  right: 0;
+  bottom: 3.6rem;
+  width: 19rem;
+  padding: .8rem .9rem .9rem;
+  border-radius: .7rem;
+  color: #efe4cd;
+  background: linear-gradient(170deg, rgba(38, 28, 19, .97), rgba(22, 16, 11, .97));
+  border: 1px solid rgba(255, 190, 100, .22);
+  box-shadow: 0 10px 34px rgba(0, 0, 0, .6), inset 0 1px 0 rgba(255, 220, 160, .12);
+  backdrop-filter: blur(6px);
+}
+
+.hudba-head { display: flex; align-items: center; gap: .6rem; }
+.hudba-thumb {
+  width: 3rem;
+  height: 3rem;
+  object-fit: cover;
+  border-radius: .45rem;
+  border: 1px solid rgba(255, 190, 100, .3);
+  flex: none;
+}
+.hudba-meta { flex: 1; min-width: 0; }
+.hudba-title {
+  font-size: .82rem;
+  font-weight: 700;
+  letter-spacing: .02em;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.hudba-sub {
+  margin-top: .1rem;
+  font-size: .68rem;
+  color: #c9b795;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.hudba-controls {
+  display: flex;
+  align-items: center;
+  gap: .35rem;
+  margin-top: .7rem;
+}
+.hudba-icn, .hudba-playbtn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  cursor: pointer;
+  color: #e8d5ac;
+  background: transparent;
+  border-radius: .4rem;
+  padding: .35rem;
+  transition: background .15s ease, color .15s ease;
+}
+.hudba-icn:hover { background: rgba(255, 190, 100, .12); color: #ffd28a; }
+.hudba-playbtn {
+  width: 2.5rem;
+  height: 2.5rem;
+  color: #241708;
+  background: linear-gradient(160deg, #ffc466, #d99a33);
+  border-radius: 50%;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, .4);
+}
+.hudba-playbtn:hover { filter: brightness(1.08); }
+
+.hudba-vol {
+  display: flex;
+  align-items: center;
+  gap: .4rem;
+  margin-left: auto;
+  color: #c9b795;
+}
+.hudba-vol input[type="range"] {
+  width: 5rem;
+  accent-color: #ffb84d;
+  cursor: pointer;
+}
+
+.hudba-presets {
+  display: flex;
+  flex-wrap: wrap;
+  gap: .35rem;
+  margin-top: .7rem;
+}
+.hudba-chip {
+  border: 1px solid rgba(255, 190, 100, .3);
+  border-radius: 999px;
+  padding: .22rem .65rem;
+  font-size: .68rem;
+  letter-spacing: .03em;
+  cursor: pointer;
+  color: #e8d5ac;
+  background: rgba(255, 190, 100, .07);
+  transition: background .15s ease, color .15s ease, border-color .15s ease;
+}
+.hudba-chip:hover { background: rgba(255, 190, 100, .18); }
+.hudba-chip.aktivni {
+  color: #241708;
+  background: #ffb84d;
+  border-color: #ffb84d;
+  font-weight: 700;
+}
+
+.hudba-yt {
+  position: fixed;
+  width: 1px;
+  height: 1px;
+  left: -100px;
+  bottom: 0;
+  opacity: .01;
+  pointer-events: none;
+}
+
+@media (max-width: 480px) {
+  .hudba-panel { width: calc(100vw - 2rem); right: -.2rem; }
+}

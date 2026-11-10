@@ -136,5 +136,5 @@ Veanor (služebník), Zaira (sestra).
 - Bílí koně vedou poutníky k jeho knihovně ve Východním hvozdu.
 
 ## Pro DM (tajné)
-- Návrh: Žije, ale jeho moc slábne – proto slábnou hranice Nölienu.
+- Žije a jeho moc neslábne – je tam, kde chce být. Nikdo ho však stovky let neviděl.
 

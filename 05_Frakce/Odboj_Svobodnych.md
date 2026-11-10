@@ -6,7 +6,7 @@
 - **Symbol:** přeškrtnuté oko
 - **Hlavní hnízdo:** Octowerinské podzemí ([Město Octowerin](../03_Mesta/Mesto_Octowerin.md))
 - **Vůdce / spojka hráčů:** [„Slepý“ Corvin](../04_Postavy/NPC/Postava_Corvin.md) – oslepen Ordenem
-- **Rozšíření:** hnízda ve všech větších městech říše; v [Mictimě](../03_Mesta/Mesto_Mictima.md) pracuje se zakázanými svazky
+- **Rozšíření:** hnízda ve všech větších městech říše; jen [Mictima](../03_Mesta/Mesto_Mictima.md) zůstává bez buňky – tamní pašeráci zakázaných svazků si vystačí sami
 
 ## Cíle
 - Odhalit pravou tvář Ordenu po Urkalském sněmu.

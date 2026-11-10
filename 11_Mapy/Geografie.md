@@ -6,8 +6,8 @@
 
 ## Měřítko a rozměry
 - Měřítko na mapě: dílky **150 / 300 / 450 / 600 km**; na vyrovnané mapě (2048 px šířka) je 600 km = 343 px, tj. **1 px ≈ 1,75 km**.
-- Pevnina měří zhruba **3 300 km od západu na východ** a **2 400 km od severu na jih** (velikost podobná Evropě).
-- **Cestování (pravidla 2024, PHB kap. 1 – Travel Pace):** pomalé tempo 18 mil (~29 km) za den, normální 24 mil (~39 km), rychlé 30 mil (~48 km). Přejít celý kontinent pěšky normálním tempem trvá zhruba **3 měsíce**, z Octowerinu do Pevnosti Orden cca **2–3 týdny**. Jezdecký kůň tempo nezvýší (zvýší jen sprint na kratší vzdálenost), loď po řece/moři cca 2–4× rychleji.
+- Pevnina měří zhruba **2 500 km od západu na východ** a **1 800 km od severu na jih**.
+- **Cestování (pravidla 2024, PHB kap. 1 – Travel Pace):** pomalé tempo 18 mil (~29 km) za den, normální 24 mil (~39 km), rychlé 30 mil (~48 km). Přejít celý kontinent pěšky normálním tempem trvá zhruba **2 měsíce**, z Octowerinu do Pevnosti Orden cca **1,5–2 týdny**. Jezdecký kůň tempo nezvýší (zvýší jen sprint na kratší vzdálenost), loď po řece/moři cca 2–4× rychleji.
 
 ## Jisté (popsáno na mapě nebo potvrzeno DM)
 | Popisek / místo | Poloha na mapě | Soubor |

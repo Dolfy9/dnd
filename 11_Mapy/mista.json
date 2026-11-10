@@ -367,13 +367,13 @@
   },
   {
    "nazev": "Miria?",
-   "x": 1652,
-   "y": 733,
+   "x": 1645,
+   "y": 712,
    "typ": "mesto",
    "hlavni_mesto": true,
    "jistota": "odhad",
    "odkaz": "03_Mesta/Mesto_Miria.md",
-   "pozn": "Přístav s domy u ústí průlivu."
+   "pozn": "Největší sídlo – přístav s domy u ústí přílivu; brána obchodu mezi pevninou a Jižními ostrovy."
   },
   {
    "nazev": "Pevnost Orden",
@@ -407,23 +407,23 @@
   },
   {
    "nazev": "Mictima?",
-   "x": 523,
-   "y": 846,
+   "x": 572,
+   "y": 982,
    "typ": "mesto",
    "hlavni_mesto": true,
    "jistota": "odhad",
    "odkaz": "03_Mesta/Mesto_Mictima.md",
-   "pozn": "Velké sídlo na hranici Divokého Severu a Nöetu."
+   "pozn": "Největší sídlo uvnitř Nöetu – opevněné město s věžemi v džungli (dřív marker na hranici Divokého Severu)."
   },
   {
    "nazev": "Yotter?",
-   "x": 1720,
-   "y": 380,
+   "x": 1700,
+   "y": 368,
    "typ": "mesto",
    "hlavni_mesto": true,
    "jistota": "odhad",
    "odkaz": "03_Mesta/Mesto_Yotter.md",
-   "pozn": "Velké sídlo s domy na severním pobřeží Mönohenu."
+   "pozn": "Největší sídlo na severním pobřeží Mönohenu – skupina domů s kruhem."
   },
   {
    "nazev": "Ledová věž a tvář ve skále",
@@ -757,17 +757,17 @@
    "hlavni_mesto": true,
    "jistota": "odhad",
    "odkaz": "03_Mesta/Mesto_Wortmir.md",
-   "pozn": "Velký kruh západně od popisku KHÄRGHE ZHIA; poloha odhadem."
+   "pozn": "Největší sídlo v Khärghe Zhii – velký kruh západně od popisku KHÄRGHE ZHIA."
   },
   {
    "nazev": "Město Imonir",
-   "x": 926,
-   "y": 298,
+   "x": 915,
+   "y": 270,
    "typ": "mesto",
    "hlavni_mesto": true,
    "jistota": "odhad",
    "odkaz": "03_Mesta/Mesto_Imonir.md",
-   "pozn": "Poloha města na hlavním ostrově Imoniru je odhad."
+   "pozn": "Největší sídlo na hlavním ostrově Imoniru – hrad s věžemi."
   },
   {
    "nazev": "Sídlo (bez jména)",
