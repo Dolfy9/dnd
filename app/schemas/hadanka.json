@@ -1,0 +1,57 @@
+{
+  "type": "hadanka",
+  "label": "Hádanka",
+  "sections": [
+    {
+      "title": "Základní údaje",
+      "fields": [
+        {
+          "key": "nazev",
+          "label": "Název",
+          "type": "text",
+          "required": true
+        },
+        {
+          "key": "obtiznost",
+          "label": "Obtížnost",
+          "type": "select",
+          "options": [
+            "",
+            "snadná",
+            "střední",
+            "těžká",
+            "smrtelná"
+          ]
+        },
+        {
+          "key": "kampane",
+          "label": "Kampaně",
+          "type": "links",
+          "target": "kampan"
+        },
+        {
+          "key": "quest",
+          "label": "Quest",
+          "type": "link",
+          "target": "quest"
+        },
+        {
+          "key": "lokace",
+          "label": "Lokace",
+          "type": "link",
+          "target": "misto"
+        },
+        {
+          "key": "reseni",
+          "label": "Řešení (DM)",
+          "type": "textarea"
+        },
+        {
+          "key": "stitky",
+          "label": "Štítky",
+          "type": "tags"
+        }
+      ]
+    }
+  ]
+}

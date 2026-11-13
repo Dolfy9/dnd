@@ -1,0 +1,56 @@
+{
+  "type": "kampan",
+  "label": "Kampaň",
+  "sections": [
+    {
+      "title": "Přehled",
+      "fields": [
+        {
+          "key": "nazev",
+          "label": "Název",
+          "type": "text",
+          "required": true
+        },
+        {
+          "key": "urovne",
+          "label": "Úrovně postav",
+          "type": "text"
+        },
+        {
+          "key": "region",
+          "label": "Hlavní region",
+          "type": "link",
+          "target": "zeme"
+        },
+        {
+          "key": "antagonista",
+          "label": "Hlavní antagonista",
+          "type": "link",
+          "target": "postava"
+        },
+        {
+          "key": "temata",
+          "label": "Témata a tón",
+          "type": "text"
+        },
+        {
+          "key": "stav",
+          "label": "Stav kampaně",
+          "type": "select",
+          "options": [
+            "",
+            "příprava",
+            "aktivní",
+            "pozastavená",
+            "dokončená"
+          ]
+        },
+        {
+          "key": "stitky",
+          "label": "Štítky",
+          "type": "tags"
+        }
+      ]
+    }
+  ]
+}

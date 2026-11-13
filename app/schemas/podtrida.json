@@ -1,0 +1,15 @@
+{
+  "type": "podtrida",
+  "label": "Podtřída (Subclass)",
+  "sections": [
+    {
+      "title": "Pravidlová data",
+      "fields": [
+        {"key": "nazev", "label": "Název (EN)", "type": "text", "required": true},
+        {"key": "trida", "label": "Třída", "type": "link", "target": "povolani"},
+        {"key": "zdroj", "label": "Zdroj", "type": "text"},
+        {"key": "stitky", "label": "Štítky", "type": "tags"}
+      ]
+    }
+  ]
+}

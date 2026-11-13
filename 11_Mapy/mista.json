@@ -4,15 +4,15 @@
  "vyska": 1440,
  "mista": [
   {
-   "nazev": "Nölien",
-   "x": 985,
-   "y": 520,
+   "nazev": "Banerbo",
+   "x": 1485.0,
+   "y": 388.0,
    "typ": "zeme",
-   "jistota": "mapa",
-   "odkaz": "02_Zeme/Elfsky_Stat_Nolien.md",
-   "pozn": "Elfský stát, lesy chráněné Tirentovou magií.",
+   "jistota": "kanon",
+   "odkaz": "02_Zeme/Banerbo.md",
+   "pozn": "Souostroví Synů vln severně od Khearazu a Mönohenu.",
    "popisek": {
-    "rot": 38,
+    "rot": -35,
     "box": [
      270,
      46
@@ -22,8 +22,8 @@
   },
   {
    "nazev": "Briria",
-   "x": 812,
-   "y": 784,
+   "x": 812.0,
+   "y": 784.0,
    "typ": "zeme",
    "jistota": "mapa",
    "odkaz": "02_Zeme/Kralovstvi_Briria.md",
@@ -38,26 +38,22 @@
    }
   },
   {
-   "nazev": "Nöet",
-   "x": 526,
-   "y": 940,
-   "typ": "zeme",
-   "jistota": "mapa",
-   "odkaz": "02_Zeme/Provincie_Noet.md",
-   "pozn": "Provincie na jihozápadě s pralesem a palmami.",
+   "nazev": "Divoký Sever",
+   "x": 330.0,
+   "y": 250.0,
+   "typ": "misto",
+   "jistota": "kanon",
+   "odkaz": "01_Svet/Mista/Divoky_Sever.md",
+   "pozn": "Zamrzlý a temný severozápad – hornatý poloostrov se smrky.",
    "popisek": {
-    "rot": 31,
-    "box": [
-     180,
-     46
-    ],
-    "styl": "zeme"
+    "rot": 0,
+    "styl": "misto"
    }
   },
   {
    "nazev": "Dräar",
-   "x": 400,
-   "y": 1213,
+   "x": 400.0,
+   "y": 1213.0,
    "typ": "misto",
    "jistota": "mapa",
    "odkaz": "01_Svet/Mista/Trosky_Draaru.md",
@@ -72,9 +68,85 @@
    }
   },
   {
+   "nazev": "Hinai Mihi",
+   "x": 1210.0,
+   "y": 645.0,
+   "typ": "misto",
+   "jistota": "kanon",
+   "odkaz": "01_Svet/Mista/Hinai_Mihi.md",
+   "pozn": "Temný prales na severním břehu východní části jezera Amir – polohu potvrdil DM."
+  },
+  {
+   "nazev": "Hrad na západním pobřeží",
+   "x": 340.0,
+   "y": 848.0,
+   "typ": "mesto",
+   "jistota": "odhad",
+   "odkaz": "11_Mapy/Analyza_mapy.md",
+   "pozn": "Hrad na západním pobřeží severně od Dräaru – bez jména."
+  },
+  {
+   "nazev": "Imatoma",
+   "x": 1733.0,
+   "y": 823.0,
+   "typ": "zeme",
+   "jistota": "kanon",
+   "odkaz": "02_Zeme/Imatoma.md",
+   "pozn": "Ostrovní země východně od Knärghe Zhie.",
+   "popisek": {
+    "rot": -47,
+    "box": [
+     270,
+     46
+    ],
+    "styl": "zeme"
+   }
+  },
+  {
+   "nazev": "Imonir",
+   "x": 926.0,
+   "y": 298.0,
+   "typ": "zeme",
+   "jistota": "kanon",
+   "odkaz": "02_Zeme/Kralovstvi_Imonir.md",
+   "pozn": "Celý hlavní ostrov severně od Nölienu a okolní neobsazené ostrůvky.",
+   "popisek": {
+    "rot": 72,
+    "box": [
+     230,
+     46
+    ],
+    "styl": "zeme"
+   },
+   "hlavni_mesto": true
+  },
+  {
+   "nazev": "Jezero Amir",
+   "x": 990.0,
+   "y": 865.0,
+   "typ": "more",
+   "jistota": "kanon",
+   "odkaz": "01_Svet/Mista/Jezero_Amir_a_Kop_Aram.md",
+   "pozn": "Velké vnitrozemské jezero, uprostřed Kop Aram.",
+   "popisek": {
+    "rot": 0,
+    "styl": "more",
+    "velikost": 17
+   }
+  },
+  {
+   "nazev": "Kaňon a vysoká věž",
+   "x": 1520.0,
+   "y": 830.0,
+   "typ": "misto",
+   "jistota": "odhad",
+   "odkaz": "03_Mesta/Mesto_Dar_Kemmar.md",
+   "pozn": "Kaňon od průlivu k jihu, vedle vysoká věž – Knärghe Zhia."
+  },
+  {
    "nazev": "Khearaz",
-   "x": 1410,
-   "y": 502,
+   "x": 1410.0,
+   "y": 502.0,
    "typ": "zeme",
    "jistota": "mapa",
    "odkaz": "02_Zeme/Khaeraz.md",
@@ -90,8 +162,8 @@
   },
   {
    "nazev": "Khärghe Zhia",
-   "x": 1214,
-   "y": 838,
+   "x": 1214.0,
+   "y": 838.0,
    "typ": "zeme",
    "jistota": "mapa",
    "odkaz": "02_Zeme/Kralovstvi_Kharghae_Zia.md",
@@ -107,8 +179,8 @@
   },
   {
    "nazev": "Knärghe Zhia",
-   "x": 1430,
-   "y": 840,
+   "x": 1430.0,
+   "y": 840.0,
    "typ": "zeme",
    "jistota": "mapa",
    "odkaz": "02_Zeme/Drzava_Knarghae_Zia.md",
@@ -123,43 +195,27 @@
    }
   },
   {
-   "nazev": "Mönohen",
-   "x": 1612,
-   "y": 550,
-   "typ": "zeme",
+   "nazev": "Kolonáda",
+   "x": 1520.0,
+   "y": 945.0,
+   "typ": "misto",
    "jistota": "mapa",
-   "odkaz": "02_Zeme/Klanove_Zeme_Monohen.md",
-   "pozn": "Klanové země polobrů, Yotter. Leží zde Východní hvozd (kánon).",
-   "popisek": {
-    "rot": 64,
-    "box": [
-     250,
-     46
-    ],
-    "styl": "zeme"
-   }
+   "odkaz": "11_Mapy/Analyza_mapy.md",
+   "pozn": "Řada sloupů na hranici Knärghe Zhie a Tali."
   },
   {
-   "nazev": "Orden",
-   "x": 1107,
-   "y": 1037,
-   "typ": "zeme",
-   "jistota": "mapa",
-   "odkaz": "02_Zeme/Teokracie_Orden.md",
-   "pozn": "Teokracie Ordenského řádu – pevnost s hradbou na východním břehu Ordenské zátoky.",
-   "popisek": {
-    "rot": 20,
-    "box": [
-     95,
-     46
-    ],
-    "styl": "zeme"
-   }
+   "nazev": "Kop Aram",
+   "x": 1065.0,
+   "y": 765.0,
+   "typ": "mesto",
+   "jistota": "kanon",
+   "odkaz": "03_Mesta/Mesto_Kop_Aram.md",
+   "pozn": "Město uprostřed jezera Amir – dnes částečně obnovené v menším měřítku, centrum středozemního obchodu (DM). Most vede na západ."
   },
   {
    "nazev": "Laertmund",
-   "x": 1142,
-   "y": 1131,
+   "x": 1142.0,
+   "y": 1131.0,
    "typ": "zeme",
    "jistota": "mapa",
    "odkaz": "02_Zeme/Kralovstvi_Laertmund.md",
@@ -174,9 +230,722 @@
    }
   },
   {
+   "nazev": "Ledová věž a tvář ve skále",
+   "x": 1370.0,
+   "y": 270.0,
+   "typ": "misto",
+   "jistota": "odhad",
+   "odkaz": "01_Svet/Mista/Fornheim.md",
+   "pozn": "Severovýchodní poloostrov – krystalové věže a tvář; Fornheim?"
+  },
+  {
+   "nazev": "Lodě",
+   "x": 1740.0,
+   "y": 1250.0,
+   "typ": "misto",
+   "jistota": "mapa",
+   "odkaz": "11_Mapy/Analyza_mapy.md",
+   "pozn": "Tři plachetnice u velkého jihovýchodního ostrova."
+  },
+  {
+   "nazev": "Maják",
+   "x": 1470.0,
+   "y": 310.0,
+   "typ": "misto",
+   "jistota": "odhad",
+   "odkaz": "11_Mapy/Analyza_mapy.md",
+   "pozn": "Maják na pobřeží."
+  },
+  {
+   "nazev": "Menkant?",
+   "x": 1060.0,
+   "y": 1327.0,
+   "typ": "mesto",
+   "jistota": "odhad",
+   "odkaz": "03_Mesta/Mesto_Menkant.md",
+   "pozn": "Sídlo na největším z Jižních ostrovů.",
+   "hlavni_mesto": true
+  },
+  {
+   "nazev": "Mictima?",
+   "x": 572.0,
+   "y": 982.0,
+   "typ": "mesto",
+   "jistota": "odhad",
+   "odkaz": "03_Mesta/Mesto_Mictima.md",
+   "pozn": "Největší sídlo uvnitř Nöetu – opevněné město s věžemi v džungli (dřív marker na hranici Divokého Severu).",
+   "hlavni_mesto": true
+  },
+  {
+   "nazev": "Miria?",
+   "x": 1645.0,
+   "y": 712.0,
+   "typ": "mesto",
+   "jistota": "odhad",
+   "odkaz": "03_Mesta/Mesto_Miria.md",
+   "pozn": "Největší sídlo – přístav s domy u ústí přílivu; brána obchodu mezi pevninou a Jižními ostrovy.",
+   "hlavni_mesto": true
+  },
+  {
+   "nazev": "Most Kop Aramu",
+   "x": 975.0,
+   "y": 792.0,
+   "typ": "misto",
+   "jistota": "kanon",
+   "odkaz": "01_Svet/Mista/Jezero_Amir_a_Kop_Aram.md",
+   "pozn": "Super dlouhý most z Werenoru na západním břehu do Kop Aramu (DM)."
+  },
+  {
+   "nazev": "Mořský had",
+   "x": 1555.0,
+   "y": 200.0,
+   "typ": "misto",
+   "jistota": "mapa",
+   "odkaz": "01_Svet/Mista/More_a_ostrovy.md",
+   "pozn": "Severovýchodní moře."
+  },
+  {
+   "nazev": "Mönohen",
+   "x": 1612.0,
+   "y": 550.0,
+   "typ": "zeme",
+   "jistota": "mapa",
+   "odkaz": "02_Zeme/Klanove_Zeme_Monohen.md",
+   "pozn": "Klanové země polobrů, Yotter. Leží zde Východní hvozd (kánon).",
+   "popisek": {
+    "rot": 64,
+    "box": [
+     250,
+     46
+    ],
+    "styl": "zeme"
+   }
+  },
+  {
+   "nazev": "Město Imonir",
+   "x": 915.0,
+   "y": 270.0,
+   "typ": "mesto",
+   "jistota": "odhad",
+   "odkaz": "03_Mesta/Mesto_Imonir.md",
+   "pozn": "Největší sídlo na hlavním ostrově Imoniru – hrad s věžemi.",
+   "hlavni_mesto": true
+  },
+  {
+   "nazev": "Nöet",
+   "x": 526.0,
+   "y": 940.0,
+   "typ": "zeme",
+   "jistota": "mapa",
+   "odkaz": "02_Zeme/Provincie_Noet.md",
+   "pozn": "Provincie na jihozápadě s pralesem a palmami.",
+   "popisek": {
+    "rot": 31,
+    "box": [
+     180,
+     46
+    ],
+    "styl": "zeme"
+   }
+  },
+  {
+   "nazev": "Nölien",
+   "x": 985.0,
+   "y": 520.0,
+   "typ": "zeme",
+   "jistota": "mapa",
+   "odkaz": "02_Zeme/Elfsky_Stat_Nolien.md",
+   "pozn": "Elfský stát, lesy chráněné Tirentovou magií.",
+   "popisek": {
+    "rot": 38,
+    "box": [
+     270,
+     46
+    ],
+    "styl": "zeme"
+   }
+  },
+  {
+   "nazev": "Obelisk s postavami",
+   "x": 1250.0,
+   "y": 355.0,
+   "typ": "misto",
+   "jistota": "odhad",
+   "odkaz": "11_Mapy/Analyza_mapy.md",
+   "pozn": "Obelisk / socha u severovýchodního poloostrova."
+  },
+  {
+   "nazev": "Okřídlený démon",
+   "x": 790.0,
+   "y": 250.0,
+   "typ": "misto",
+   "jistota": "mapa",
+   "odkaz": "01_Svet/Mista/More_a_ostrovy.md",
+   "pozn": "Démon nad severním mořem."
+  },
+  {
+   "nazev": "Opevněné město u polí",
+   "x": 732.0,
+   "y": 1188.0,
+   "typ": "mesto",
+   "jistota": "odhad",
+   "odkaz": "11_Mapy/Analyza_mapy.md",
+   "pozn": "Opevněné město u šrafovaných polí – jméno chybí."
+  },
+  {
+   "nazev": "Orden",
+   "x": 1107.0,
+   "y": 1037.0,
+   "typ": "zeme",
+   "jistota": "mapa",
+   "odkaz": "02_Zeme/Teokracie_Orden.md",
+   "pozn": "Teokracie Ordenského řádu – pevnost s hradbou na východním břehu Ordenské zátoky.",
+   "popisek": {
+    "rot": 20,
+    "box": [
+     95,
+     46
+    ],
+    "styl": "zeme"
+   }
+  },
+  {
+   "nazev": "Ordenská zátoka",
+   "x": 962.0,
+   "y": 1178.0,
+   "typ": "more",
+   "jistota": "kanon",
+   "odkaz": "02_Zeme/Teokracie_Orden.md",
+   "pozn": "Zátoka s lodí mezi temným pralesem (západ) a Ordenem (východ), otevřená k jihozápadu.",
+   "popisek": {
+    "rot": 0,
+    "styl": "more",
+    "velikost": 14
+   }
+  },
+  {
+   "nazev": "Ostrov na západě",
+   "x": 184.0,
+   "y": 585.0,
+   "typ": "misto",
+   "jistota": "mapa",
+   "odkaz": "11_Mapy/Analyza_mapy.md",
+   "pozn": "Ostrov u západního pobřeží – bez jména."
+  },
+  {
+   "nazev": "Pertam?",
+   "x": 1535.0,
+   "y": 1103.0,
+   "typ": "mesto",
+   "jistota": "odhad",
+   "odkaz": "03_Mesta/Mesto_Pertam.md",
+   "pozn": "Hlavní sídlo Zairamu.",
+   "hlavni_mesto": true
+  },
+  {
+   "nazev": "Pevnost Orden",
+   "x": 1075.0,
+   "y": 975.0,
+   "typ": "mesto",
+   "jistota": "odhad",
+   "odkaz": "03_Mesta/Pevnost_Orden.md",
+   "pozn": "Budovy pevnosti nad hradbou.",
+   "hlavni_mesto": true
+  },
+  {
+   "nazev": "Severní záliv",
+   "x": 755.0,
+   "y": 520.0,
+   "typ": "more",
+   "jistota": "odhad",
+   "odkaz": "11_Mapy/Analyza_mapy.md",
+   "pozn": "Záliv severního moře se třemi sídly na břehu."
+  },
+  {
+   "nazev": "Svatyně torii",
+   "x": 1632.0,
+   "y": 1017.0,
+   "typ": "misto",
+   "jistota": "odhad",
+   "odkaz": "11_Mapy/Analyza_mapy.md",
+   "pozn": "Svatyně na skále u pobřeží Zairamu."
+  },
+  {
+   "nazev": "Svobodné Jižní ostrovy",
+   "x": 1300.0,
+   "y": 1300.0,
+   "typ": "zeme",
+   "jistota": "kanon",
+   "odkaz": "02_Zeme/Svobodne_Jizni_Ostrovy.md",
+   "pozn": "Ostrovy jižně od Laertmundu (DM), Menkant.",
+   "popisek": {
+    "rot": 0,
+    "styl": "more"
+   }
+  },
+  {
+   "nazev": "Sídlo (bez jména)",
+   "x": 115.0,
+   "y": 100.0,
+   "typ": "sidlo",
+   "jistota": "mapa",
+   "odkaz": "11_Mapy/Analyza_mapy.md",
+   "pozn": "Kroužek na mapě DM – jméno zatím nepřiřazeno."
+  },
+  {
+   "nazev": "Sídlo (bez jména)",
+   "x": 245.0,
+   "y": 285.0,
+   "typ": "sidlo",
+   "jistota": "mapa",
+   "odkaz": "11_Mapy/Analyza_mapy.md",
+   "pozn": "Kroužek na mapě DM – jméno zatím nepřiřazeno."
+  },
+  {
+   "nazev": "Sídlo (bez jména)",
+   "x": 555.0,
+   "y": 275.0,
+   "typ": "sidlo",
+   "jistota": "mapa",
+   "odkaz": "11_Mapy/Analyza_mapy.md",
+   "pozn": "Kroužek na mapě DM – jméno zatím nepřiřazeno."
+  },
+  {
+   "nazev": "Sídlo (bez jména)",
+   "x": 600.0,
+   "y": 270.0,
+   "typ": "sidlo",
+   "jistota": "mapa",
+   "odkaz": "11_Mapy/Analyza_mapy.md",
+   "pozn": "Kroužek na mapě DM – jméno zatím nepřiřazeno."
+  },
+  {
+   "nazev": "Sídlo (bez jména)",
+   "x": 965.0,
+   "y": 300.0,
+   "typ": "sidlo",
+   "jistota": "mapa",
+   "odkaz": "11_Mapy/Analyza_mapy.md",
+   "pozn": "Kroužek na mapě DM – jméno zatím nepřiřazeno."
+  },
+  {
+   "nazev": "Sídlo (bez jména)",
+   "x": 1285.0,
+   "y": 385.0,
+   "typ": "sidlo",
+   "jistota": "mapa",
+   "odkaz": "11_Mapy/Analyza_mapy.md",
+   "pozn": "Kroužek na mapě DM – jméno zatím nepřiřazeno."
+  },
+  {
+   "nazev": "Sídlo (bez jména)",
+   "x": 1844.0,
+   "y": 505.0,
+   "typ": "sidlo",
+   "jistota": "mapa",
+   "odkaz": "11_Mapy/Analyza_mapy.md",
+   "pozn": "Kroužek na mapě DM – jméno zatím nepřiřazeno."
+  },
+  {
+   "nazev": "Sídlo (bez jména)",
+   "x": 1784.0,
+   "y": 445.0,
+   "typ": "sidlo",
+   "jistota": "mapa",
+   "odkaz": "11_Mapy/Analyza_mapy.md",
+   "pozn": "Kroužek na mapě DM – jméno zatím nepřiřazeno."
+  },
+  {
+   "nazev": "Sídlo (bez jména)",
+   "x": 1954.0,
+   "y": 435.0,
+   "typ": "sidlo",
+   "jistota": "mapa",
+   "odkaz": "11_Mapy/Analyza_mapy.md",
+   "pozn": "Kroužek na mapě DM – jméno zatím nepřiřazeno."
+  },
+  {
+   "nazev": "Sídlo (bez jména)",
+   "x": 1630.0,
+   "y": 495.0,
+   "typ": "sidlo",
+   "jistota": "mapa",
+   "odkaz": "11_Mapy/Analyza_mapy.md",
+   "pozn": "Kroužek na mapě DM – jméno zatím nepřiřazeno."
+  },
+  {
+   "nazev": "Sídlo (bez jména)",
+   "x": 751.0,
+   "y": 544.0,
+   "typ": "sidlo",
+   "jistota": "mapa",
+   "odkaz": "11_Mapy/Analyza_mapy.md",
+   "pozn": "Kroužek na mapě DM – jméno zatím nepřiřazeno."
+  },
+  {
+   "nazev": "Sídlo (bez jména)",
+   "x": 856.0,
+   "y": 549.0,
+   "typ": "sidlo",
+   "jistota": "mapa",
+   "odkaz": "11_Mapy/Analyza_mapy.md",
+   "pozn": "Kroužek na mapě DM – jméno zatím nepřiřazeno."
+  },
+  {
+   "nazev": "Sídlo (bez jména)",
+   "x": 798.0,
+   "y": 585.0,
+   "typ": "sidlo",
+   "jistota": "mapa",
+   "odkaz": "11_Mapy/Analyza_mapy.md",
+   "pozn": "Kroužek na mapě DM – jméno zatím nepřiřazeno."
+  },
+  {
+   "nazev": "Sídlo (bez jména)",
+   "x": 892.0,
+   "y": 774.0,
+   "typ": "sidlo",
+   "jistota": "mapa",
+   "odkaz": "11_Mapy/Analyza_mapy.md",
+   "pozn": "Kroužek na mapě DM – jméno zatím nepřiřazeno."
+  },
+  {
+   "nazev": "Sídlo (bez jména)",
+   "x": 1016.0,
+   "y": 557.0,
+   "typ": "sidlo",
+   "jistota": "mapa",
+   "odkaz": "11_Mapy/Analyza_mapy.md",
+   "pozn": "Kroužek na mapě DM – jméno zatím nepřiřazeno."
+  },
+  {
+   "nazev": "Sídlo (bez jména)",
+   "x": 1233.0,
+   "y": 717.0,
+   "typ": "sidlo",
+   "jistota": "mapa",
+   "odkaz": "11_Mapy/Analyza_mapy.md",
+   "pozn": "Kroužek na mapě DM – jméno zatím nepřiřazeno."
+  },
+  {
+   "nazev": "Sídlo (bez jména)",
+   "x": 1272.0,
+   "y": 640.0,
+   "typ": "sidlo",
+   "jistota": "mapa",
+   "odkaz": "11_Mapy/Analyza_mapy.md",
+   "pozn": "Kroužek na mapě DM – jméno zatím nepřiřazeno."
+  },
+  {
+   "nazev": "Sídlo (bez jména)",
+   "x": 1307.0,
+   "y": 717.0,
+   "typ": "sidlo",
+   "jistota": "mapa",
+   "odkaz": "11_Mapy/Analyza_mapy.md",
+   "pozn": "Kroužek na mapě DM – jméno zatím nepřiřazeno."
+  },
+  {
+   "nazev": "Sídlo (bez jména)",
+   "x": 1291.0,
+   "y": 766.0,
+   "typ": "sidlo",
+   "jistota": "mapa",
+   "odkaz": "11_Mapy/Analyza_mapy.md",
+   "pozn": "Kroužek na mapě DM – jméno zatím nepřiřazeno."
+  },
+  {
+   "nazev": "Sídlo (bez jména)",
+   "x": 1214.0,
+   "y": 791.0,
+   "typ": "sidlo",
+   "jistota": "mapa",
+   "odkaz": "11_Mapy/Analyza_mapy.md",
+   "pozn": "Kroužek na mapě DM – jméno zatím nepřiřazeno."
+  },
+  {
+   "nazev": "Sídlo (bez jména)",
+   "x": 1263.0,
+   "y": 851.0,
+   "typ": "sidlo",
+   "jistota": "mapa",
+   "odkaz": "11_Mapy/Analyza_mapy.md",
+   "pozn": "Kroužek na mapě DM – jméno zatím nepřiřazeno."
+  },
+  {
+   "nazev": "Sídlo (bez jména)",
+   "x": 1288.0,
+   "y": 813.0,
+   "typ": "sidlo",
+   "jistota": "mapa",
+   "odkaz": "11_Mapy/Analyza_mapy.md",
+   "pozn": "Kroužek na mapě DM – jméno zatím nepřiřazeno."
+  },
+  {
+   "nazev": "Sídlo (bez jména)",
+   "x": 1189.0,
+   "y": 881.0,
+   "typ": "sidlo",
+   "jistota": "mapa",
+   "odkaz": "11_Mapy/Analyza_mapy.md",
+   "pozn": "Kroužek na mapě DM – jméno zatím nepřiřazeno."
+  },
+  {
+   "nazev": "Sídlo (bez jména)",
+   "x": 1192.0,
+   "y": 939.0,
+   "typ": "sidlo",
+   "jistota": "mapa",
+   "odkaz": "11_Mapy/Analyza_mapy.md",
+   "pozn": "Kroužek na mapě DM – jméno zatím nepřiřazeno."
+  },
+  {
+   "nazev": "Sídlo (bez jména)",
+   "x": 1327.0,
+   "y": 898.0,
+   "typ": "sidlo",
+   "jistota": "mapa",
+   "odkaz": "11_Mapy/Analyza_mapy.md",
+   "pozn": "Kroužek na mapě DM – jméno zatím nepřiřazeno."
+  },
+  {
+   "nazev": "Sídlo (bez jména)",
+   "x": 1415.0,
+   "y": 906.0,
+   "typ": "sidlo",
+   "jistota": "mapa",
+   "odkaz": "11_Mapy/Analyza_mapy.md",
+   "pozn": "Kroužek na mapě DM – jméno zatím nepřiřazeno."
+  },
+  {
+   "nazev": "Sídlo (bez jména)",
+   "x": 1437.0,
+   "y": 744.0,
+   "typ": "sidlo",
+   "jistota": "mapa",
+   "odkaz": "11_Mapy/Analyza_mapy.md",
+   "pozn": "Kroužek na mapě DM – jméno zatím nepřiřazeno."
+  },
+  {
+   "nazev": "Sídlo (bez jména)",
+   "x": 1486.0,
+   "y": 483.0,
+   "typ": "sidlo",
+   "jistota": "mapa",
+   "odkaz": "11_Mapy/Analyza_mapy.md",
+   "pozn": "Kroužek na mapě DM – jméno zatím nepřiřazeno."
+  },
+  {
+   "nazev": "Sídlo (bez jména)",
+   "x": 1415.0,
+   "y": 568.0,
+   "typ": "sidlo",
+   "jistota": "mapa",
+   "odkaz": "11_Mapy/Analyza_mapy.md",
+   "pozn": "Kroužek na mapě DM – jméno zatím nepřiřazeno."
+  },
+  {
+   "nazev": "Sídlo (bez jména)",
+   "x": 1735.0,
+   "y": 646.0,
+   "typ": "sidlo",
+   "jistota": "mapa",
+   "odkaz": "11_Mapy/Analyza_mapy.md",
+   "pozn": "Kroužek na mapě DM – jméno zatím nepřiřazeno."
+  },
+  {
+   "nazev": "Sídlo (bez jména)",
+   "x": 1655.0,
+   "y": 569.0,
+   "typ": "sidlo",
+   "jistota": "mapa",
+   "odkaz": "11_Mapy/Analyza_mapy.md",
+   "pozn": "Kroužek na mapě DM – jméno zatím nepřiřazeno."
+  },
+  {
+   "nazev": "Sídlo (bez jména)",
+   "x": 1603.0,
+   "y": 487.0,
+   "typ": "sidlo",
+   "jistota": "mapa",
+   "odkaz": "11_Mapy/Analyza_mapy.md",
+   "pozn": "Kroužek na mapě DM – jméno zatím nepřiřazeno."
+  },
+  {
+   "nazev": "Sídlo (bez jména)",
+   "x": 1486.0,
+   "y": 482.0,
+   "typ": "sidlo",
+   "jistota": "mapa",
+   "odkaz": "11_Mapy/Analyza_mapy.md",
+   "pozn": "Kroužek na mapě DM – jméno zatím nepřiřazeno."
+  },
+  {
+   "nazev": "Sídlo (bez jména)",
+   "x": 1620.0,
+   "y": 942.0,
+   "typ": "sidlo",
+   "jistota": "mapa",
+   "odkaz": "11_Mapy/Analyza_mapy.md",
+   "pozn": "Kroužek na mapě DM – jméno zatím nepřiřazeno."
+  },
+  {
+   "nazev": "Sídlo (bez jména)",
+   "x": 1556.0,
+   "y": 972.0,
+   "typ": "sidlo",
+   "jistota": "mapa",
+   "odkaz": "11_Mapy/Analyza_mapy.md",
+   "pozn": "Kroužek na mapě DM – jméno zatím nepřiřazeno."
+  },
+  {
+   "nazev": "Sídlo (bez jména)",
+   "x": 443.0,
+   "y": 975.0,
+   "typ": "sidlo",
+   "jistota": "mapa",
+   "odkaz": "11_Mapy/Analyza_mapy.md",
+   "pozn": "Kroužek na mapě DM – jméno zatím nepřiřazeno."
+  },
+  {
+   "nazev": "Sídlo (bez jména)",
+   "x": 552.0,
+   "y": 1208.0,
+   "typ": "sidlo",
+   "jistota": "mapa",
+   "odkaz": "11_Mapy/Analyza_mapy.md",
+   "pozn": "Kroužek na mapě DM – jméno zatím nepřiřazeno."
+  },
+  {
+   "nazev": "Sídlo (bez jména)",
+   "x": 562.0,
+   "y": 1340.0,
+   "typ": "sidlo",
+   "jistota": "mapa",
+   "odkaz": "11_Mapy/Analyza_mapy.md",
+   "pozn": "Kroužek na mapě DM – jméno zatím nepřiřazeno."
+  },
+  {
+   "nazev": "Sídlo (bez jména)",
+   "x": 716.0,
+   "y": 1213.0,
+   "typ": "sidlo",
+   "jistota": "mapa",
+   "odkaz": "11_Mapy/Analyza_mapy.md",
+   "pozn": "Kroužek na mapě DM – jméno zatím nepřiřazeno."
+  },
+  {
+   "nazev": "Sídlo (bez jména)",
+   "x": 738.0,
+   "y": 1112.0,
+   "typ": "sidlo",
+   "jistota": "mapa",
+   "odkaz": "11_Mapy/Analyza_mapy.md",
+   "pozn": "Kroužek na mapě DM – jméno zatím nepřiřazeno."
+  },
+  {
+   "nazev": "Sídlo (bez jména)",
+   "x": 817.0,
+   "y": 1243.0,
+   "typ": "sidlo",
+   "jistota": "mapa",
+   "odkaz": "11_Mapy/Analyza_mapy.md",
+   "pozn": "Kroužek na mapě DM – jméno zatím nepřiřazeno."
+  },
+  {
+   "nazev": "Sídlo (bez jména)",
+   "x": 861.0,
+   "y": 1224.0,
+   "typ": "sidlo",
+   "jistota": "mapa",
+   "odkaz": "11_Mapy/Analyza_mapy.md",
+   "pozn": "Kroužek na mapě DM – jméno zatím nepřiřazeno."
+  },
+  {
+   "nazev": "Sídlo (bez jména)",
+   "x": 705.0,
+   "y": 977.0,
+   "typ": "sidlo",
+   "jistota": "mapa",
+   "odkaz": "11_Mapy/Analyza_mapy.md",
+   "pozn": "Kroužek na mapě DM – jméno zatím nepřiřazeno."
+  },
+  {
+   "nazev": "Sídlo (bez jména)",
+   "x": 1412.0,
+   "y": 1059.0,
+   "typ": "sidlo",
+   "jistota": "mapa",
+   "odkaz": "11_Mapy/Analyza_mapy.md",
+   "pozn": "Kroužek na mapě DM – jméno zatím nepřiřazeno."
+  },
+  {
+   "nazev": "Sídlo (bez jména)",
+   "x": 1412.0,
+   "y": 1186.0,
+   "typ": "sidlo",
+   "jistota": "mapa",
+   "odkaz": "11_Mapy/Analyza_mapy.md",
+   "pozn": "Kroužek na mapě DM – jméno zatím nepřiřazeno."
+  },
+  {
+   "nazev": "Sídlo (bez jména)",
+   "x": 1250.0,
+   "y": 1054.0,
+   "typ": "sidlo",
+   "jistota": "mapa",
+   "odkaz": "11_Mapy/Analyza_mapy.md",
+   "pozn": "Kroužek na mapě DM – jméno zatím nepřiřazeno."
+  },
+  {
+   "nazev": "Sídlo (bez jména)",
+   "x": 1568.0,
+   "y": 1048.0,
+   "typ": "sidlo",
+   "jistota": "mapa",
+   "odkaz": "11_Mapy/Analyza_mapy.md",
+   "pozn": "Kroužek na mapě DM – jméno zatím nepřiřazeno."
+  },
+  {
+   "nazev": "Sídlo (bez jména)",
+   "x": 1494.0,
+   "y": 1153.0,
+   "typ": "sidlo",
+   "jistota": "mapa",
+   "odkaz": "11_Mapy/Analyza_mapy.md",
+   "pozn": "Kroužek na mapě DM – jméno zatím nepřiřazeno."
+  },
+  {
+   "nazev": "Sídlo (bez jména)",
+   "x": 1060.0,
+   "y": 1326.0,
+   "typ": "sidlo",
+   "jistota": "mapa",
+   "odkaz": "11_Mapy/Analyza_mapy.md",
+   "pozn": "Kroužek na mapě DM – jméno zatím nepřiřazeno."
+  },
+  {
+   "nazev": "Sídlo (bez jména)",
+   "x": 1574.0,
+   "y": 1265.0,
+   "typ": "sidlo",
+   "jistota": "mapa",
+   "odkaz": "11_Mapy/Analyza_mapy.md",
+   "pozn": "Kroužek na mapě DM – jméno zatím nepřiřazeno."
+  },
+  {
+   "nazev": "Sídlo (bez jména)",
+   "x": 1914.0,
+   "y": 1109.0,
+   "typ": "sidlo",
+   "jistota": "mapa",
+   "odkaz": "11_Mapy/Analyza_mapy.md",
+   "pozn": "Kroužek na mapě DM – jméno zatím nepřiřazeno."
+  },
+  {
    "nazev": "Tali",
-   "x": 1332,
-   "y": 1124,
+   "x": 1332.0,
+   "y": 1124.0,
    "typ": "zeme",
    "jistota": "mapa",
    "odkaz": "01_Svet/Mista/Tali.md",
@@ -191,9 +960,113 @@
    }
   },
   {
+   "nazev": "Tel Palentin?",
+   "x": 920.0,
+   "y": 485.0,
+   "typ": "mesto",
+   "jistota": "odhad",
+   "odkaz": "03_Mesta/Mesto_Tel_Palentin.md",
+   "pozn": "Město s budovami a přístavem (kotva) na severu – hlavní město Nölienu?",
+   "hlavni_mesto": true
+  },
+  {
+   "nazev": "Urkal?",
+   "x": 1300.0,
+   "y": 805.0,
+   "typ": "mesto",
+   "jistota": "odhad",
+   "odkaz": "01_Svet/Mista/Urkal.md",
+   "pozn": "Palácové město v Khärghe Zhii kousek od hranic s Knärghe Zhii (DM: poloha v zemi).",
+   "hlavni_mesto": false
+  },
+  {
+   "nazev": "Velký ostrov na jihozápadě",
+   "x": 215.0,
+   "y": 1350.0,
+   "typ": "misto",
+   "jistota": "mapa",
+   "odkaz": "11_Mapy/Analyza_mapy.md",
+   "pozn": "Velký ostrov jižně od Dräaru – na mapě bez jména."
+  },
+  {
+   "nazev": "Velký ostrov s loděmi",
+   "x": 1870.0,
+   "y": 1135.0,
+   "typ": "misto",
+   "jistota": "mapa",
+   "odkaz": "11_Mapy/Analyza_mapy.md",
+   "pozn": "Velký ostrov na jihovýchodě – bez jména."
+  },
+  {
+   "nazev": "Velký vír",
+   "x": 1870.0,
+   "y": 630.0,
+   "typ": "misto",
+   "jistota": "mapa",
+   "odkaz": "01_Svet/Mista/More_a_ostrovy.md",
+   "pozn": "Vír ve východním oceánu."
+  },
+  {
+   "nazev": "Vrak",
+   "x": 90.0,
+   "y": 950.0,
+   "typ": "misto",
+   "jistota": "mapa",
+   "odkaz": "01_Svet/Mista/More_a_ostrovy.md",
+   "pozn": "Vrak lodi v západním oceánu."
+  },
+  {
+   "nazev": "Východní hvozd",
+   "x": 1720.0,
+   "y": 560.0,
+   "typ": "misto",
+   "jistota": "kanon",
+   "odkaz": "01_Svet/Mista/Vychodni_hvozd.md",
+   "pozn": "Leží v Mönohenu, stvořil ho Tirent (kánon). Poloha bodu = odhad."
+  },
+  {
+   "nazev": "Východní ostrov s útesy",
+   "x": 1767.0,
+   "y": 840.0,
+   "typ": "misto",
+   "jistota": "mapa",
+   "odkaz": "11_Mapy/Analyza_mapy.md",
+   "pozn": "Ostrov/poloostrov s útesy jižně od víru, nečitelný popisek „Dö…“."
+  },
+  {
+   "nazev": "Werenor",
+   "x": 894.0,
+   "y": 770.0,
+   "typ": "mesto",
+   "jistota": "kanon",
+   "odkaz": "03_Mesta/Mesto_Werenor.md",
+   "pozn": "Svobodné město na západním břehu jezera Amir v Bririi, u mostu do Kop Aramu (DM).",
+   "hlavni_mesto": true
+  },
+  {
+   "nazev": "Wortmir",
+   "x": 1145.0,
+   "y": 832.0,
+   "typ": "mesto",
+   "jistota": "odhad",
+   "odkaz": "03_Mesta/Mesto_Wortmir.md",
+   "pozn": "Největší sídlo v Khärghe Zhii – velký kruh západně od popisku KHÄRGHE ZHIA.",
+   "hlavni_mesto": true
+  },
+  {
+   "nazev": "Yotter?",
+   "x": 1700.0,
+   "y": 368.0,
+   "typ": "mesto",
+   "jistota": "odhad",
+   "odkaz": "03_Mesta/Mesto_Yotter.md",
+   "pozn": "Největší sídlo na severním pobřeží Mönohenu – skupina domů s kruhem.",
+   "hlavni_mesto": true
+  },
+  {
    "nazev": "Zairam",
-   "x": 1516,
-   "y": 1074,
+   "x": 1516.0,
+   "y": 1074.0,
    "typ": "zeme",
    "jistota": "mapa",
    "odkaz": "02_Zeme/Zeme_Zairam.md",
@@ -208,873 +1081,13 @@
    }
   },
   {
-   "nazev": "Divoký Sever",
-   "x": 330,
-   "y": 250,
-   "typ": "misto",
-   "jistota": "kanon",
-   "odkaz": "01_Svet/Mista/Divoky_Sever.md",
-   "pozn": "Zamrzlý a temný severozápad – hornatý poloostrov se smrky.",
-   "popisek": {
-    "rot": 0,
-    "styl": "misto"
-   }
-  },
-  {
-   "nazev": "Ordenská zátoka",
-   "x": 962,
-   "y": 1178,
-   "typ": "more",
-   "jistota": "kanon",
-   "odkaz": "02_Zeme/Teokracie_Orden.md",
-   "pozn": "Zátoka s lodí mezi temným pralesem (západ) a Ordenem (východ), otevřená k jihozápadu.",
-   "popisek": {
-    "rot": 0,
-    "styl": "more",
-    "velikost": 14
-   }
-  },
-  {
-   "nazev": "Svobodné Jižní ostrovy",
-   "x": 1300,
-   "y": 1300,
-   "typ": "zeme",
-   "jistota": "kanon",
-   "odkaz": "02_Zeme/Svobodne_Jizni_Ostrovy.md",
-   "pozn": "Ostrovy jižně od Laertmundu (DM), Menkant.",
-   "popisek": {
-    "rot": 0,
-    "styl": "more"
-   }
-  },
-  {
-   "nazev": "Imonir",
-   "x": 926,
-   "y": 298,
-   "typ": "zeme",
-   "jistota": "kanon",
-   "odkaz": "02_Zeme/Kralovstvi_Imonir.md",
-   "pozn": "Celý hlavní ostrov severně od Nölienu a okolní neobsazené ostrůvky.",
-   "popisek": {
-    "rot": 0,
-    "styl": "zeme"
-   }
-  },
-  {
-   "nazev": "Banerbo",
-   "x": 1485,
-   "y": 388,
-   "typ": "zeme",
-   "jistota": "kanon",
-   "odkaz": "02_Zeme/Banerbo.md",
-   "pozn": "Souostroví Synů vln severně od Khearazu a Mönohenu.",
-   "popisek": {
-    "rot": 0,
-    "styl": "zeme"
-   }
-  },
-  {
-   "nazev": "Imatoma",
-   "x": 1733,
-   "y": 823,
-   "typ": "zeme",
-   "jistota": "kanon",
-   "odkaz": "02_Zeme/Imatoma.md",
-   "pozn": "Ostrovní země východně od Knärghe Zhie.",
-   "popisek": {
-    "rot": 0,
-    "styl": "zeme"
-   }
-  },
-  {
-   "nazev": "Werenor",
-   "x": 894,
-   "y": 770,
-   "typ": "mesto",
-   "hlavni_mesto": true,
-   "jistota": "kanon",
-   "odkaz": "03_Mesta/Mesto_Werenor.md",
-   "pozn": "Svobodné město na západním břehu jezera Amir v Bririi, u mostu do Kop Aramu (DM)."
-  },
-  {
-   "nazev": "Kop Aram",
-   "x": 1065,
-   "y": 765,
-   "typ": "mesto",
-   "jistota": "kanon",
-   "odkaz": "03_Mesta/Mesto_Kop_Aram.md",
-   "pozn": "Město uprostřed jezera Amir – dnes částečně obnovené v menším měřítku, centrum středozemního obchodu (DM). Most vede na západ."
-  },
-  {
-   "nazev": "Most Kop Aramu",
-   "x": 975,
-   "y": 792,
-   "typ": "misto",
-   "jistota": "kanon",
-   "odkaz": "01_Svet/Mista/Jezero_Amir_a_Kop_Aram.md",
-   "pozn": "Super dlouhý most z Werenoru na západním břehu do Kop Aramu (DM)."
-  },
-  {
-   "nazev": "Jezero Amir",
-   "x": 990,
-   "y": 865,
-   "typ": "more",
-   "jistota": "kanon",
-   "odkaz": "01_Svet/Mista/Jezero_Amir_a_Kop_Aram.md",
-   "pozn": "Velké vnitrozemské jezero, uprostřed Kop Aram.",
-   "popisek": {
-    "rot": 0,
-    "styl": "more",
-    "velikost": 17
-   }
-  },
-  {
-   "nazev": "Východní hvozd",
-   "x": 1720,
-   "y": 560,
-   "typ": "misto",
-   "jistota": "kanon",
-   "odkaz": "01_Svet/Mista/Vychodni_hvozd.md",
-   "pozn": "Leží v Mönohenu, stvořil ho Tirent (kánon). Poloha bodu = odhad."
-  },
-  {
-   "nazev": "Kaňon a vysoká věž",
-   "x": 1520,
-   "y": 830,
-   "typ": "misto",
-   "jistota": "odhad",
-   "odkaz": "03_Mesta/Mesto_Dar_Kemmar.md",
-   "pozn": "Kaňon od průlivu k jihu, vedle vysoká věž – Knärghe Zhia."
-  },
-  {
-   "nazev": "Tel Palentin?",
-   "x": 920,
-   "y": 485,
-   "typ": "mesto",
-   "hlavni_mesto": true,
-   "jistota": "odhad",
-   "odkaz": "03_Mesta/Mesto_Tel_Palentin.md",
-   "pozn": "Město s budovami a přístavem (kotva) na severu – hlavní město Nölienu?"
-  },
-  {
-   "nazev": "Hrad na západním pobřeží",
-   "x": 340,
-   "y": 848,
-   "typ": "mesto",
-   "jistota": "odhad",
-   "odkaz": "11_Mapy/Analyza_mapy.md",
-   "pozn": "Hrad na západním pobřeží severně od Dräaru – bez jména."
-  },
-  {
-   "nazev": "Opevněné město u polí",
-   "x": 732,
-   "y": 1188,
-   "typ": "mesto",
-   "jistota": "odhad",
-   "odkaz": "11_Mapy/Analyza_mapy.md",
-   "pozn": "Opevněné město u šrafovaných polí – jméno chybí."
-  },
-  {
-   "nazev": "Miria?",
-   "x": 1645,
-   "y": 712,
-   "typ": "mesto",
-   "hlavni_mesto": true,
-   "jistota": "odhad",
-   "odkaz": "03_Mesta/Mesto_Miria.md",
-   "pozn": "Největší sídlo – přístav s domy u ústí přílivu; brána obchodu mezi pevninou a Jižními ostrovy."
-  },
-  {
-   "nazev": "Pevnost Orden",
-   "x": 1075,
-   "y": 975,
-   "typ": "mesto",
-   "hlavni_mesto": true,
-   "jistota": "odhad",
-   "odkaz": "03_Mesta/Pevnost_Orden.md",
-   "pozn": "Budovy pevnosti nad hradbou."
-  },
-  {
-   "nazev": "Pertam?",
-   "x": 1535,
-   "y": 1103,
-   "typ": "mesto",
-   "hlavni_mesto": true,
-   "jistota": "odhad",
-   "odkaz": "03_Mesta/Mesto_Pertam.md",
-   "pozn": "Hlavní sídlo Zairamu."
-  },
-  {
-   "nazev": "Menkant?",
-   "x": 1060,
-   "y": 1327,
-   "typ": "mesto",
-   "hlavni_mesto": true,
-   "jistota": "odhad",
-   "odkaz": "03_Mesta/Mesto_Menkant.md",
-   "pozn": "Sídlo na největším z Jižních ostrovů."
-  },
-  {
-   "nazev": "Mictima?",
-   "x": 572,
-   "y": 982,
-   "typ": "mesto",
-   "hlavni_mesto": true,
-   "jistota": "odhad",
-   "odkaz": "03_Mesta/Mesto_Mictima.md",
-   "pozn": "Největší sídlo uvnitř Nöetu – opevněné město s věžemi v džungli (dřív marker na hranici Divokého Severu)."
-  },
-  {
-   "nazev": "Yotter?",
-   "x": 1700,
-   "y": 368,
-   "typ": "mesto",
-   "hlavni_mesto": true,
-   "jistota": "odhad",
-   "odkaz": "03_Mesta/Mesto_Yotter.md",
-   "pozn": "Největší sídlo na severním pobřeží Mönohenu – skupina domů s kruhem."
-  },
-  {
-   "nazev": "Ledová věž a tvář ve skále",
-   "x": 1370,
-   "y": 270,
-   "typ": "misto",
-   "jistota": "odhad",
-   "odkaz": "01_Svet/Mista/Fornheim.md",
-   "pozn": "Severovýchodní poloostrov – krystalové věže a tvář; Fornheim?"
-  },
-  {
-   "nazev": "Maják",
-   "x": 1470,
-   "y": 310,
-   "typ": "misto",
-   "jistota": "odhad",
-   "odkaz": "11_Mapy/Analyza_mapy.md",
-   "pozn": "Maják na pobřeží."
-  },
-  {
-   "nazev": "Obelisk s postavami",
-   "x": 1250,
-   "y": 355,
-   "typ": "misto",
-   "jistota": "odhad",
-   "odkaz": "11_Mapy/Analyza_mapy.md",
-   "pozn": "Obelisk / socha u severovýchodního poloostrova."
-  },
-  {
-   "nazev": "Svatyně torii",
-   "x": 1632,
-   "y": 1017,
-   "typ": "misto",
-   "jistota": "odhad",
-   "odkaz": "11_Mapy/Analyza_mapy.md",
-   "pozn": "Svatyně na skále u pobřeží Zairamu."
-  },
-  {
    "nazev": "Zřícený chrám v pralese",
-   "x": 562,
-   "y": 993,
+   "x": 562.0,
+   "y": 993.0,
    "typ": "misto",
    "jistota": "odhad",
    "odkaz": "02_Zeme/Provincie_Noet.md",
    "pozn": "Chrám v palmovém pralese Nöetu."
-  },
-  {
-   "nazev": "Hinai Mihi",
-   "x": 1210,
-   "y": 645,
-   "typ": "misto",
-   "jistota": "kanon",
-   "odkaz": "01_Svet/Mista/Hinai_Mihi.md",
-   "pozn": "Temný prales na severním břehu východní části jezera Amir – polohu potvrdil DM."
-  },
-  {
-   "nazev": "Severní záliv",
-   "x": 755,
-   "y": 520,
-   "typ": "more",
-   "jistota": "odhad",
-   "odkaz": "11_Mapy/Analyza_mapy.md",
-   "pozn": "Záliv severního moře se třemi sídly na břehu."
-  },
-  {
-   "nazev": "Velký vír",
-   "x": 1870,
-   "y": 630,
-   "typ": "misto",
-   "jistota": "mapa",
-   "odkaz": "01_Svet/Mista/More_a_ostrovy.md",
-   "pozn": "Vír ve východním oceánu."
-  },
-  {
-   "nazev": "Mořský had",
-   "x": 1555,
-   "y": 200,
-   "typ": "misto",
-   "jistota": "mapa",
-   "odkaz": "01_Svet/Mista/More_a_ostrovy.md",
-   "pozn": "Severovýchodní moře."
-  },
-  {
-   "nazev": "Okřídlený démon",
-   "x": 790,
-   "y": 250,
-   "typ": "misto",
-   "jistota": "mapa",
-   "odkaz": "01_Svet/Mista/More_a_ostrovy.md",
-   "pozn": "Démon nad severním mořem."
-  },
-  {
-   "nazev": "Vrak",
-   "x": 90,
-   "y": 950,
-   "typ": "misto",
-   "jistota": "mapa",
-   "odkaz": "01_Svet/Mista/More_a_ostrovy.md",
-   "pozn": "Vrak lodi v západním oceánu."
-  },
-  {
-   "nazev": "Lodě",
-   "x": 1740,
-   "y": 1250,
-   "typ": "misto",
-   "jistota": "mapa",
-   "odkaz": "11_Mapy/Analyza_mapy.md",
-   "pozn": "Tři plachetnice u velkého jihovýchodního ostrova."
-  },
-  {
-   "nazev": "Velký ostrov na jihozápadě",
-   "x": 215,
-   "y": 1350,
-   "typ": "misto",
-   "jistota": "mapa",
-   "odkaz": "11_Mapy/Analyza_mapy.md",
-   "pozn": "Velký ostrov jižně od Dräaru – na mapě bez jména."
-  },
-  {
-   "nazev": "Ostrov na západě",
-   "x": 184,
-   "y": 585,
-   "typ": "misto",
-   "jistota": "mapa",
-   "odkaz": "11_Mapy/Analyza_mapy.md",
-   "pozn": "Ostrov u západního pobřeží – bez jména."
-  },
-  {
-   "nazev": "Východní ostrov s útesy",
-   "x": 1767,
-   "y": 840,
-   "typ": "misto",
-   "jistota": "mapa",
-   "odkaz": "11_Mapy/Analyza_mapy.md",
-   "pozn": "Ostrov/poloostrov s útesy jižně od víru, nečitelný popisek „Dö…“."
-  },
-  {
-   "nazev": "Kolonáda",
-   "x": 1520,
-   "y": 945,
-   "typ": "misto",
-   "jistota": "mapa",
-   "odkaz": "11_Mapy/Analyza_mapy.md",
-   "pozn": "Řada sloupů na hranici Knärghe Zhie a Tali."
-  },
-  {
-   "nazev": "Sídlo (bez jména)",
-   "x": 115,
-   "y": 100,
-   "typ": "sidlo",
-   "jistota": "mapa",
-   "odkaz": "11_Mapy/Analyza_mapy.md",
-   "pozn": "Kroužek na mapě DM – jméno zatím nepřiřazeno."
-  },
-  {
-   "nazev": "Sídlo (bez jména)",
-   "x": 245,
-   "y": 285,
-   "typ": "sidlo",
-   "jistota": "mapa",
-   "odkaz": "11_Mapy/Analyza_mapy.md",
-   "pozn": "Kroužek na mapě DM – jméno zatím nepřiřazeno."
-  },
-  {
-   "nazev": "Sídlo (bez jména)",
-   "x": 555,
-   "y": 275,
-   "typ": "sidlo",
-   "jistota": "mapa",
-   "odkaz": "11_Mapy/Analyza_mapy.md",
-   "pozn": "Kroužek na mapě DM – jméno zatím nepřiřazeno."
-  },
-  {
-   "nazev": "Sídlo (bez jména)",
-   "x": 600,
-   "y": 270,
-   "typ": "sidlo",
-   "jistota": "mapa",
-   "odkaz": "11_Mapy/Analyza_mapy.md",
-   "pozn": "Kroužek na mapě DM – jméno zatím nepřiřazeno."
-  },
-  {
-   "nazev": "Sídlo (bez jména)",
-   "x": 965,
-   "y": 300,
-   "typ": "sidlo",
-   "jistota": "mapa",
-   "odkaz": "11_Mapy/Analyza_mapy.md",
-   "pozn": "Kroužek na mapě DM – jméno zatím nepřiřazeno."
-  },
-  {
-   "nazev": "Sídlo (bez jména)",
-   "x": 1285,
-   "y": 385,
-   "typ": "sidlo",
-   "jistota": "mapa",
-   "odkaz": "11_Mapy/Analyza_mapy.md",
-   "pozn": "Kroužek na mapě DM – jméno zatím nepřiřazeno."
-  },
-  {
-   "nazev": "Sídlo (bez jména)",
-   "x": 1844,
-   "y": 505,
-   "typ": "sidlo",
-   "jistota": "mapa",
-   "odkaz": "11_Mapy/Analyza_mapy.md",
-   "pozn": "Kroužek na mapě DM – jméno zatím nepřiřazeno."
-  },
-  {
-   "nazev": "Sídlo (bez jména)",
-   "x": 1784,
-   "y": 445,
-   "typ": "sidlo",
-   "jistota": "mapa",
-   "odkaz": "11_Mapy/Analyza_mapy.md",
-   "pozn": "Kroužek na mapě DM – jméno zatím nepřiřazeno."
-  },
-  {
-   "nazev": "Sídlo (bez jména)",
-   "x": 1954,
-   "y": 435,
-   "typ": "sidlo",
-   "jistota": "mapa",
-   "odkaz": "11_Mapy/Analyza_mapy.md",
-   "pozn": "Kroužek na mapě DM – jméno zatím nepřiřazeno."
-  },
-  {
-   "nazev": "Sídlo (bez jména)",
-   "x": 1630,
-   "y": 495,
-   "typ": "sidlo",
-   "jistota": "mapa",
-   "odkaz": "11_Mapy/Analyza_mapy.md",
-   "pozn": "Kroužek na mapě DM – jméno zatím nepřiřazeno."
-  },
-  {
-   "nazev": "Sídlo (bez jména)",
-   "x": 751,
-   "y": 544,
-   "typ": "sidlo",
-   "jistota": "mapa",
-   "odkaz": "11_Mapy/Analyza_mapy.md",
-   "pozn": "Kroužek na mapě DM – jméno zatím nepřiřazeno."
-  },
-  {
-   "nazev": "Sídlo (bez jména)",
-   "x": 856,
-   "y": 549,
-   "typ": "sidlo",
-   "jistota": "mapa",
-   "odkaz": "11_Mapy/Analyza_mapy.md",
-   "pozn": "Kroužek na mapě DM – jméno zatím nepřiřazeno."
-  },
-  {
-   "nazev": "Sídlo (bez jména)",
-   "x": 798,
-   "y": 585,
-   "typ": "sidlo",
-   "jistota": "mapa",
-   "odkaz": "11_Mapy/Analyza_mapy.md",
-   "pozn": "Kroužek na mapě DM – jméno zatím nepřiřazeno."
-  },
-  {
-   "nazev": "Sídlo (bez jména)",
-   "x": 892,
-   "y": 774,
-   "typ": "sidlo",
-   "jistota": "mapa",
-   "odkaz": "11_Mapy/Analyza_mapy.md",
-   "pozn": "Kroužek na mapě DM – jméno zatím nepřiřazeno."
-  },
-  {
-   "nazev": "Sídlo (bez jména)",
-   "x": 1016,
-   "y": 557,
-   "typ": "sidlo",
-   "jistota": "mapa",
-   "odkaz": "11_Mapy/Analyza_mapy.md",
-   "pozn": "Kroužek na mapě DM – jméno zatím nepřiřazeno."
-  },
-  {
-   "nazev": "Sídlo (bez jména)",
-   "x": 1233,
-   "y": 717,
-   "typ": "sidlo",
-   "jistota": "mapa",
-   "odkaz": "11_Mapy/Analyza_mapy.md",
-   "pozn": "Kroužek na mapě DM – jméno zatím nepřiřazeno."
-  },
-  {
-   "nazev": "Sídlo (bez jména)",
-   "x": 1272,
-   "y": 640,
-   "typ": "sidlo",
-   "jistota": "mapa",
-   "odkaz": "11_Mapy/Analyza_mapy.md",
-   "pozn": "Kroužek na mapě DM – jméno zatím nepřiřazeno."
-  },
-  {
-   "nazev": "Sídlo (bez jména)",
-   "x": 1307,
-   "y": 717,
-   "typ": "sidlo",
-   "jistota": "mapa",
-   "odkaz": "11_Mapy/Analyza_mapy.md",
-   "pozn": "Kroužek na mapě DM – jméno zatím nepřiřazeno."
-  },
-  {
-   "nazev": "Sídlo (bez jména)",
-   "x": 1291,
-   "y": 766,
-   "typ": "sidlo",
-   "jistota": "mapa",
-   "odkaz": "11_Mapy/Analyza_mapy.md",
-   "pozn": "Kroužek na mapě DM – jméno zatím nepřiřazeno."
-  },
-  {
-   "nazev": "Sídlo (bez jména)",
-   "x": 1214,
-   "y": 791,
-   "typ": "sidlo",
-   "jistota": "mapa",
-   "odkaz": "11_Mapy/Analyza_mapy.md",
-   "pozn": "Kroužek na mapě DM – jméno zatím nepřiřazeno."
-  },
-  {
-   "nazev": "Wortmir",
-   "x": 1145,
-   "y": 832,
-   "typ": "mesto",
-   "hlavni_mesto": true,
-   "jistota": "odhad",
-   "odkaz": "03_Mesta/Mesto_Wortmir.md",
-   "pozn": "Největší sídlo v Khärghe Zhii – velký kruh západně od popisku KHÄRGHE ZHIA."
-  },
-  {
-   "nazev": "Město Imonir",
-   "x": 915,
-   "y": 270,
-   "typ": "mesto",
-   "hlavni_mesto": true,
-   "jistota": "odhad",
-   "odkaz": "03_Mesta/Mesto_Imonir.md",
-   "pozn": "Největší sídlo na hlavním ostrově Imoniru – hrad s věžemi."
-  },
-  {
-   "nazev": "Sídlo (bez jména)",
-   "x": 1263,
-   "y": 851,
-   "typ": "sidlo",
-   "jistota": "mapa",
-   "odkaz": "11_Mapy/Analyza_mapy.md",
-   "pozn": "Kroužek na mapě DM – jméno zatím nepřiřazeno."
-  },
-  {
-   "nazev": "Sídlo (bez jména)",
-   "x": 1288,
-   "y": 813,
-   "typ": "sidlo",
-   "jistota": "mapa",
-   "odkaz": "11_Mapy/Analyza_mapy.md",
-   "pozn": "Kroužek na mapě DM – jméno zatím nepřiřazeno."
-  },
-  {
-   "nazev": "Sídlo (bez jména)",
-   "x": 1189,
-   "y": 881,
-   "typ": "sidlo",
-   "jistota": "mapa",
-   "odkaz": "11_Mapy/Analyza_mapy.md",
-   "pozn": "Kroužek na mapě DM – jméno zatím nepřiřazeno."
-  },
-  {
-   "nazev": "Sídlo (bez jména)",
-   "x": 1192,
-   "y": 939,
-   "typ": "sidlo",
-   "jistota": "mapa",
-   "odkaz": "11_Mapy/Analyza_mapy.md",
-   "pozn": "Kroužek na mapě DM – jméno zatím nepřiřazeno."
-  },
-  {
-   "nazev": "Sídlo (bez jména)",
-   "x": 1327,
-   "y": 898,
-   "typ": "sidlo",
-   "jistota": "mapa",
-   "odkaz": "11_Mapy/Analyza_mapy.md",
-   "pozn": "Kroužek na mapě DM – jméno zatím nepřiřazeno."
-  },
-  {
-   "nazev": "Sídlo (bez jména)",
-   "x": 1415,
-   "y": 906,
-   "typ": "sidlo",
-   "jistota": "mapa",
-   "odkaz": "11_Mapy/Analyza_mapy.md",
-   "pozn": "Kroužek na mapě DM – jméno zatím nepřiřazeno."
-  },
-  {
-   "nazev": "Sídlo (bez jména)",
-   "x": 1437,
-   "y": 744,
-   "typ": "sidlo",
-   "jistota": "mapa",
-   "odkaz": "11_Mapy/Analyza_mapy.md",
-   "pozn": "Kroužek na mapě DM – jméno zatím nepřiřazeno."
-  },
-  {
-   "nazev": "Sídlo (bez jména)",
-   "x": 1486,
-   "y": 483,
-   "typ": "sidlo",
-   "jistota": "mapa",
-   "odkaz": "11_Mapy/Analyza_mapy.md",
-   "pozn": "Kroužek na mapě DM – jméno zatím nepřiřazeno."
-  },
-  {
-   "nazev": "Sídlo (bez jména)",
-   "x": 1415,
-   "y": 568,
-   "typ": "sidlo",
-   "jistota": "mapa",
-   "odkaz": "11_Mapy/Analyza_mapy.md",
-   "pozn": "Kroužek na mapě DM – jméno zatím nepřiřazeno."
-  },
-  {
-   "nazev": "Sídlo (bez jména)",
-   "x": 1735,
-   "y": 646,
-   "typ": "sidlo",
-   "jistota": "mapa",
-   "odkaz": "11_Mapy/Analyza_mapy.md",
-   "pozn": "Kroužek na mapě DM – jméno zatím nepřiřazeno."
-  },
-  {
-   "nazev": "Sídlo (bez jména)",
-   "x": 1655,
-   "y": 569,
-   "typ": "sidlo",
-   "jistota": "mapa",
-   "odkaz": "11_Mapy/Analyza_mapy.md",
-   "pozn": "Kroužek na mapě DM – jméno zatím nepřiřazeno."
-  },
-  {
-   "nazev": "Sídlo (bez jména)",
-   "x": 1603,
-   "y": 487,
-   "typ": "sidlo",
-   "jistota": "mapa",
-   "odkaz": "11_Mapy/Analyza_mapy.md",
-   "pozn": "Kroužek na mapě DM – jméno zatím nepřiřazeno."
-  },
-  {
-   "nazev": "Sídlo (bez jména)",
-   "x": 1486,
-   "y": 482,
-   "typ": "sidlo",
-   "jistota": "mapa",
-   "odkaz": "11_Mapy/Analyza_mapy.md",
-   "pozn": "Kroužek na mapě DM – jméno zatím nepřiřazeno."
-  },
-  {
-   "nazev": "Sídlo (bez jména)",
-   "x": 1620,
-   "y": 942,
-   "typ": "sidlo",
-   "jistota": "mapa",
-   "odkaz": "11_Mapy/Analyza_mapy.md",
-   "pozn": "Kroužek na mapě DM – jméno zatím nepřiřazeno."
-  },
-  {
-   "nazev": "Sídlo (bez jména)",
-   "x": 1556,
-   "y": 972,
-   "typ": "sidlo",
-   "jistota": "mapa",
-   "odkaz": "11_Mapy/Analyza_mapy.md",
-   "pozn": "Kroužek na mapě DM – jméno zatím nepřiřazeno."
-  },
-  {
-   "nazev": "Sídlo (bez jména)",
-   "x": 443,
-   "y": 975,
-   "typ": "sidlo",
-   "jistota": "mapa",
-   "odkaz": "11_Mapy/Analyza_mapy.md",
-   "pozn": "Kroužek na mapě DM – jméno zatím nepřiřazeno."
-  },
-  {
-   "nazev": "Sídlo (bez jména)",
-   "x": 552,
-   "y": 1208,
-   "typ": "sidlo",
-   "jistota": "mapa",
-   "odkaz": "11_Mapy/Analyza_mapy.md",
-   "pozn": "Kroužek na mapě DM – jméno zatím nepřiřazeno."
-  },
-  {
-   "nazev": "Sídlo (bez jména)",
-   "x": 562,
-   "y": 1340,
-   "typ": "sidlo",
-   "jistota": "mapa",
-   "odkaz": "11_Mapy/Analyza_mapy.md",
-   "pozn": "Kroužek na mapě DM – jméno zatím nepřiřazeno."
-  },
-  {
-   "nazev": "Sídlo (bez jména)",
-   "x": 716,
-   "y": 1213,
-   "typ": "sidlo",
-   "jistota": "mapa",
-   "odkaz": "11_Mapy/Analyza_mapy.md",
-   "pozn": "Kroužek na mapě DM – jméno zatím nepřiřazeno."
-  },
-  {
-   "nazev": "Sídlo (bez jména)",
-   "x": 738,
-   "y": 1112,
-   "typ": "sidlo",
-   "jistota": "mapa",
-   "odkaz": "11_Mapy/Analyza_mapy.md",
-   "pozn": "Kroužek na mapě DM – jméno zatím nepřiřazeno."
-  },
-  {
-   "nazev": "Sídlo (bez jména)",
-   "x": 817,
-   "y": 1243,
-   "typ": "sidlo",
-   "jistota": "mapa",
-   "odkaz": "11_Mapy/Analyza_mapy.md",
-   "pozn": "Kroužek na mapě DM – jméno zatím nepřiřazeno."
-  },
-  {
-   "nazev": "Sídlo (bez jména)",
-   "x": 861,
-   "y": 1224,
-   "typ": "sidlo",
-   "jistota": "mapa",
-   "odkaz": "11_Mapy/Analyza_mapy.md",
-   "pozn": "Kroužek na mapě DM – jméno zatím nepřiřazeno."
-  },
-  {
-   "nazev": "Sídlo (bez jména)",
-   "x": 705,
-   "y": 977,
-   "typ": "sidlo",
-   "jistota": "mapa",
-   "odkaz": "11_Mapy/Analyza_mapy.md",
-   "pozn": "Kroužek na mapě DM – jméno zatím nepřiřazeno."
-  },
-  {
-   "nazev": "Sídlo (bez jména)",
-   "x": 1412,
-   "y": 1059,
-   "typ": "sidlo",
-   "jistota": "mapa",
-   "odkaz": "11_Mapy/Analyza_mapy.md",
-   "pozn": "Kroužek na mapě DM – jméno zatím nepřiřazeno."
-  },
-  {
-   "nazev": "Sídlo (bez jména)",
-   "x": 1412,
-   "y": 1186,
-   "typ": "sidlo",
-   "jistota": "mapa",
-   "odkaz": "11_Mapy/Analyza_mapy.md",
-   "pozn": "Kroužek na mapě DM – jméno zatím nepřiřazeno."
-  },
-  {
-   "nazev": "Sídlo (bez jména)",
-   "x": 1250,
-   "y": 1054,
-   "typ": "sidlo",
-   "jistota": "mapa",
-   "odkaz": "11_Mapy/Analyza_mapy.md",
-   "pozn": "Kroužek na mapě DM – jméno zatím nepřiřazeno."
-  },
-  {
-   "nazev": "Sídlo (bez jména)",
-   "x": 1568,
-   "y": 1048,
-   "typ": "sidlo",
-   "jistota": "mapa",
-   "odkaz": "11_Mapy/Analyza_mapy.md",
-   "pozn": "Kroužek na mapě DM – jméno zatím nepřiřazeno."
-  },
-  {
-   "nazev": "Sídlo (bez jména)",
-   "x": 1494,
-   "y": 1153,
-   "typ": "sidlo",
-   "jistota": "mapa",
-   "odkaz": "11_Mapy/Analyza_mapy.md",
-   "pozn": "Kroužek na mapě DM – jméno zatím nepřiřazeno."
-  },
-  {
-   "nazev": "Sídlo (bez jména)",
-   "x": 1060,
-   "y": 1326,
-   "typ": "sidlo",
-   "jistota": "mapa",
-   "odkaz": "11_Mapy/Analyza_mapy.md",
-   "pozn": "Kroužek na mapě DM – jméno zatím nepřiřazeno."
-  },
-  {
-   "nazev": "Sídlo (bez jména)",
-   "x": 1574,
-   "y": 1265,
-   "typ": "sidlo",
-   "jistota": "mapa",
-   "odkaz": "11_Mapy/Analyza_mapy.md",
-   "pozn": "Kroužek na mapě DM – jméno zatím nepřiřazeno."
-  },
-  {
-   "nazev": "Sídlo (bez jména)",
-   "x": 1914,
-   "y": 1109,
-   "typ": "sidlo",
-   "jistota": "mapa",
-   "odkaz": "11_Mapy/Analyza_mapy.md",
-   "pozn": "Kroužek na mapě DM – jméno zatím nepřiřazeno."
-  },
-  {
-   "nazev": "Velký ostrov s loděmi",
-   "x": 1870,
-   "y": 1135,
-   "typ": "misto",
-   "jistota": "mapa",
-   "odkaz": "11_Mapy/Analyza_mapy.md",
-   "pozn": "Velký ostrov na jihovýchodě – bez jména."
-  },
-  {
-   "nazev": "Urkal?",
-   "x": 1300,
-   "y": 805,
-   "typ": "mesto",
-   "hlavni_mesto": false,
-   "jistota": "odhad",
-   "odkaz": "01_Svet/Mista/Urkal.md",
-   "pozn": "Palácové město v Khärghe Zhii kousek od hranic s Knärghe Zhii (DM: poloha v zemi)."
   }
  ]
 }

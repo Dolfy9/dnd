@@ -50,6 +50,7 @@ Seznam věcí k rozhodnutí DM. Po rozhodnutí položku přesuň do sekce *Vyře
 
 ## Heraldika
 - **Tali a Divoký Sever:** mají mít státní symboly, nebo regionální či kmenové symboly? (návrhy znaků schválené – zbývá doplnit symboliku těchto dvou)
+- **Banerbo a Imatoma:** navržená heraldika (návrh) – Banerbo: zlatá plachetnice a navigační hvězda na modrém poli („Synové vln"); Imatoma: stříbrná ryba a rybářská síť na mořskozeleném poli („země lovců ryb"). Plošná grafika vygenerovaná programově (`tools/heraldika_navrh.py`) jako placeholder – DM může přes `/heraldika` vyměnit obrázky i texty. *(čeká na DM schválení)*
 
 ## Atlas mapy – prvky z loru (návrh, potvrď polohy)
 - Polohy odvozené z textů, ne z kresby: Východní hvozd (východ Mönohenu), ledovce Fornheimu (SV poloostrov), písek Dräaru, hranice mrtvé Knärghe Zhie, opuštěné císařské věže na pobřeží Divokého Severu, věže starého Kop Aramu čnějící z jezera. Zdroj: `tools/svet_lore.json`. *(DM: držet se kresby – schváleno za podmínky shody s ní)*

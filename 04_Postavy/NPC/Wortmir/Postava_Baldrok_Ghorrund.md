@@ -2,41 +2,16 @@
 postava:
   jmeno: Baldrok Ghorrund
   titul: Stařešina klanu Ghorrund
-  vek: 312 let
-  pohlavi: muž
   druh: Dwarf
   pozadi: Soldier
-  velikost: Medium
   zarovnani: Neutral
-  mesta:
-  - 03_Mesta/Mesto_Wortmir.md
-  zeme:
-  - 02_Zeme/Kralovstvi_Kharghae_Zia.md
-  frakce:
-  - 05_Frakce/Klan_Ghorrund.md
-  stitky:
-  - Wortmir
-  - 'skupina: Klan Ghorrund — kovářský klan'
-  - obyvatel
+  velikost: Medium
   tridy:
   - trida: Fighter
     uroven: 5
     podtrida: Champion
-  atributy:
-    STR: 19
-    CON: 15
-    DEX: 13
-    INT: 12
-    WIS: 10
-    CHA: 8
-  puvod_atributu: Standard Array; Soldier +2 STR, +1 CON; Fighter ASI na úrovních
-    4
-  dovednosti:
-  - Athletics
-  - Intimidation
-  - Acrobatics
-  - Animal Handling
-  expertiza: []
+  - trida: Bard
+    uroven: 2
   featy:
   - nazev: Savage Attacker
     zdroj: Pozadí (Soldier)
@@ -44,6 +19,21 @@ postava:
     zdroj: Fighting Style (Fighter 1)
   - nazev: Ability Score Improvement
     zdroj: Fighter 4
+  atributy:
+    STR: 19
+    CON: 15
+    DEX: 13
+    INT: 12
+    WIS: 10
+    CHA: 8
+  puvod_atributu: Standard Array; Soldier +2 STR, +1 CON; Fighter ASI na úrovních 4
+  dovednosti:
+  - Athletics
+  - Intimidation
+  - Acrobatics
+  - Animal Handling
+  jazyky:
+  - Common
   zbroj:
     nazev: Chain Mail
     typ: heavy
@@ -57,32 +47,36 @@ postava:
     mastery: Sap
   mastery:
   - Longsword (Sap)
-  kouzla: []
   vybava:
   - Chain Mail
   - Longsword
   - měřicí kružítko
   penize:
     GP: 10
-  jazyky:
-  - Common
-  nastroje: []
-  osobnost:
-    rysy: V každém rozhovoru si nejprve všimne toho, co ostatní přehlédli.
-    idealy: Důvěra se získává činy, ne sliby.
-    pouta: Závazek ke skupině stále určuje, kde zůstává.
-    vady: Když je pod tlakem, příliš dlouho mlčí.
-  vzhled: Trpaslík (312 let; muž) má uhlově šedý pracovní oděv, na rukou stopy od
-    řemesla a u pasu měřicí kružítko. Jeho držení těla prozrazuje dlouhé směny ve
-    Wortmiru.
-  prevod_2024: Subclass se získává na 3. úrovni; schopnosti, ASI a výbava vycházejí
-    z PHB 2024.
   boj:
     dpr: 11
     akce: []
     bonusove_akce: []
     reakce: []
     taktika: Využívá schopnosti povolání a chrání spojence.
+  osobnost:
+    rysy: V každém rozhovoru si nejprve všimne toho, co ostatní přehlédli.
+    idealy: Důvěra se získává činy, ne sliby.
+    pouta: Závazek ke skupině stále určuje, kde zůstává.
+    vady: Když je pod tlakem, příliš dlouho mlčí.
+  zeme: 02_Zeme/Kralovstvi_Kharghae_Zia.md
+  frakce: 05_Frakce/Klan_Ghorrund.md
+  stitky:
+  - Wortmir
+  - 'skupina: Klan Ghorrund — kovářský klan'
+  - obyvatel
+  vzhled: Trpaslík (312 let; muž) má uhlově šedý pracovní oděv, na rukou stopy od řemesla a u pasu měřicí kružítko. Jeho držení
+    těla prozrazuje dlouhé směny ve Wortmiru.
+  prevod_2024: Subclass se získává na 3. úrovni; schopnosti, ASI a výbava vycházejí z PHB 2024.
+  vek: 312 let
+  pohlavi: muž
+  mesta:
+  - 03_Mesta/Mesto_Wortmir.md
 ---
 # Postava: Baldrok Ghorrund
 

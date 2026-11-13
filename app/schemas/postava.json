@@ -1,0 +1,554 @@
+{
+  "type": "postava",
+  "label": "Postava",
+  "sections": [
+    {
+      "title": "Identita",
+      "fields": [
+        {
+          "key": "jmeno",
+          "label": "Jméno",
+          "type": "text",
+          "required": true
+        },
+        {
+          "key": "titul",
+          "label": "Role / titul",
+          "type": "text"
+        },
+        {
+          "key": "druh",
+          "label": "Druh (Species)",
+          "type": "text"
+        },
+        {
+          "key": "druh_volby",
+          "label": "Volby druhu",
+          "type": "text"
+        },
+        {
+          "key": "pozadi",
+          "label": "Pozadí (Background)",
+          "type": "text"
+        },
+        {
+          "key": "zarovnani",
+          "label": "Zarovnání",
+          "type": "select",
+          "options": [
+            "",
+            "Lawful Good",
+            "Neutral Good",
+            "Chaotic Good",
+            "Lawful Neutral",
+            "Neutral",
+            "Chaotic Neutral",
+            "Lawful Evil",
+            "Neutral Evil",
+            "Chaotic Evil"
+          ]
+        },
+        {
+          "key": "velikost",
+          "label": "Velikost",
+          "type": "select",
+          "options": [
+            "",
+            "Tiny",
+            "Small",
+            "Medium",
+            "Large",
+            "Huge",
+            "Gargantuan"
+          ]
+        },
+        {
+          "key": "portret",
+          "label": "Portrét (cesta)",
+          "type": "text"
+        }
+      ]
+    },
+    {
+      "title": "Povolání a úrovně",
+      "fields": [
+        {
+          "key": "tridy",
+          "label": "Třídy",
+          "type": "dictlist",
+          "fields": [
+            {
+              "key": "trida",
+              "label": "Class",
+              "type": "text"
+            },
+            {
+              "key": "uroven",
+              "label": "Úroveň",
+              "type": "number"
+            },
+            {
+              "key": "podtrida",
+              "label": "Subclass",
+              "type": "text"
+            }
+          ]
+        },
+        {
+          "key": "featy",
+          "label": "Featy",
+          "type": "dictlist",
+          "fields": [
+            {
+              "key": "nazev",
+              "label": "Název",
+              "type": "text"
+            },
+            {
+              "key": "zdroj",
+              "label": "Zdroj",
+              "type": "text"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Atributy a dovednosti",
+      "fields": [
+        {
+          "key": "atributy",
+          "label": "Atributy",
+          "type": "dict",
+          "fields": [
+            {
+              "key": "STR",
+              "type": "number"
+            },
+            {
+              "key": "DEX",
+              "type": "number"
+            },
+            {
+              "key": "CON",
+              "type": "number"
+            },
+            {
+              "key": "INT",
+              "type": "number"
+            },
+            {
+              "key": "WIS",
+              "type": "number"
+            },
+            {
+              "key": "CHA",
+              "type": "number"
+            }
+          ]
+        },
+        {
+          "key": "puvod_atributu",
+          "label": "Původ atributů",
+          "type": "text"
+        },
+        {
+          "key": "dovednosti",
+          "label": "Dovednosti",
+          "type": "tags"
+        },
+        {
+          "key": "expertiza",
+          "label": "Expertíza",
+          "type": "tags"
+        },
+        {
+          "key": "jazyky",
+          "label": "Jazyky",
+          "type": "tags"
+        },
+        {
+          "key": "nastroje",
+          "label": "Nástroje",
+          "type": "tags"
+        },
+        {
+          "key": "smysly",
+          "label": "Smysly",
+          "type": "tags"
+        },
+        {
+          "key": "zachrany_navic",
+          "label": "Záchrany navíc",
+          "type": "tags"
+        }
+      ]
+    },
+    {
+      "title": "Boj a vybavení",
+      "fields": [
+        {
+          "key": "zbroj",
+          "label": "Zbroj",
+          "type": "dict",
+          "fields": [
+            {
+              "key": "nazev",
+              "label": "Název",
+              "type": "text"
+            },
+            {
+              "key": "typ",
+              "label": "Typ",
+              "type": "select",
+              "options": [
+                "",
+                "light",
+                "medium",
+                "heavy"
+              ]
+            },
+            {
+              "key": "zakladni_ac",
+              "label": "Základní AC",
+              "type": "number"
+            },
+            {
+              "key": "stit",
+              "label": "Štít",
+              "type": "checkbox"
+            },
+            {
+              "key": "bonus",
+              "label": "Bonus (AC)",
+              "type": "number"
+            }
+          ]
+        },
+        {
+          "key": "utoky",
+          "label": "Útoky",
+          "type": "dictlist",
+          "fields": [
+            {
+              "key": "nazev",
+              "label": "Zbraň / útok",
+              "type": "text"
+            },
+            {
+              "key": "atribut",
+              "label": "Atribut",
+              "type": "select",
+              "options": [
+                "",
+                "STR",
+                "DEX",
+                "FIN",
+                "SPELL",
+                "INT",
+                "WIS",
+                "CHA"
+              ]
+            },
+            {
+              "key": "kostka",
+              "label": "Kostka",
+              "type": "text"
+            },
+            {
+              "key": "typ",
+              "label": "Typ zranění",
+              "type": "text"
+            },
+            {
+              "key": "bonus",
+              "label": "Bonus",
+              "type": "number"
+            },
+            {
+              "key": "bonus_zraneni",
+              "label": "Bonus zranění",
+              "type": "number"
+            },
+            {
+              "key": "bez_hodu",
+              "label": "Bez hodu na zásah",
+              "type": "checkbox"
+            },
+            {
+              "key": "bez_modu",
+              "label": "Bez modifikátoru",
+              "type": "checkbox"
+            },
+            {
+              "key": "mastery",
+              "label": "Mastery",
+              "type": "text"
+            },
+            {
+              "key": "dosah",
+              "label": "Dosah",
+              "type": "text"
+            },
+            {
+              "key": "poznamka",
+              "label": "Poznámka",
+              "type": "text"
+            }
+          ]
+        },
+        {
+          "key": "mastery",
+          "label": "Weapon Mastery",
+          "type": "tags"
+        },
+        {
+          "key": "vybava",
+          "label": "Výbava",
+          "type": "list"
+        },
+        {
+          "key": "naladeni",
+          "label": "Attunement",
+          "type": "list"
+        },
+        {
+          "key": "penize",
+          "label": "Peníze",
+          "type": "dict",
+          "fields": [
+            {
+              "key": "GP",
+              "type": "number"
+            },
+            {
+              "key": "SP",
+              "type": "number"
+            },
+            {
+              "key": "CP",
+              "type": "number"
+            },
+            {
+              "key": "PP",
+              "type": "number"
+            }
+          ]
+        },
+        {
+          "key": "kouzla",
+          "label": "Kouzla",
+          "type": "dictlist",
+          "fields": [
+            {
+              "key": "nazev",
+              "label": "Kouzlo",
+              "type": "text"
+            },
+            {
+              "key": "uroven",
+              "label": "Úroveň",
+              "type": "number"
+            },
+            {
+              "key": "trida",
+              "label": "Třída / zdroj",
+              "type": "text"
+            },
+            {
+              "key": "vzdy",
+              "label": "Vždy připravené",
+              "type": "checkbox"
+            },
+            {
+              "key": "poznamka",
+              "label": "Poznámka",
+              "type": "text"
+            }
+          ]
+        },
+        {
+          "key": "statblok",
+          "label": "Statblok (SRD klíč)",
+          "type": "text"
+        }
+      ]
+    },
+    {
+      "title": "DM přepisy a obrana",
+      "fields": [
+        {
+          "key": "ac_rucne",
+          "label": "AC ručně",
+          "type": "number"
+        },
+        {
+          "key": "hp_rucne",
+          "label": "HP ručně",
+          "type": "number"
+        },
+        {
+          "key": "rychlost_rucne",
+          "label": "Rychlost ručně",
+          "type": "number"
+        },
+        {
+          "key": "odolnosti",
+          "label": "Odolnosti (Resistance)",
+          "type": "tags"
+        },
+        {
+          "key": "imunity",
+          "label": "Imunity (Immunity)",
+          "type": "tags"
+        },
+        {
+          "key": "zranitelnosti",
+          "label": "Zranitelnosti (Vulnerability)",
+          "type": "tags"
+        },
+        {
+          "key": "vlastni_rysy",
+          "label": "Zvláštní / božské rysy",
+          "type": "dictlist",
+          "fields": [
+            {
+              "key": "nazev",
+              "label": "Název",
+              "type": "text"
+            },
+            {
+              "key": "text",
+              "label": "Text",
+              "type": "textarea"
+            }
+          ]
+        },
+        {
+          "key": "boj",
+          "label": "Připravenost na boj",
+          "type": "dict",
+          "fields": [
+            {
+              "key": "dpr",
+              "label": "DPR ručně",
+              "type": "number"
+            },
+            {
+              "key": "cr_rucne",
+              "label": "CR ručně",
+              "type": "text"
+            },
+            {
+              "key": "akce",
+              "label": "Akce",
+              "type": "list"
+            },
+            {
+              "key": "bonusove_akce",
+              "label": "Bonusové akce",
+              "type": "list"
+            },
+            {
+              "key": "reakce",
+              "label": "Reakce",
+              "type": "list"
+            },
+            {
+              "key": "legendarni",
+              "label": "Legendární akce",
+              "type": "list"
+            },
+            {
+              "key": "taktika",
+              "label": "Taktika",
+              "type": "textarea"
+            }
+          ]
+        },
+        {
+          "key": "xp",
+          "label": "XP",
+          "type": "number"
+        }
+      ]
+    },
+    {
+      "title": "Osobnost a svět",
+      "fields": [
+        {
+          "key": "osobnost",
+          "label": "Osobnost",
+          "type": "dict",
+          "fields": [
+            {
+              "key": "rysy",
+              "label": "Rysy",
+              "type": "textarea"
+            },
+            {
+              "key": "idealy",
+              "label": "Ideály",
+              "type": "textarea"
+            },
+            {
+              "key": "pouta",
+              "label": "Pouta",
+              "type": "textarea"
+            },
+            {
+              "key": "vady",
+              "label": "Vady",
+              "type": "textarea"
+            }
+          ]
+        },
+        {
+          "key": "mesto",
+          "label": "Město",
+          "type": "link",
+          "target": "mesto"
+        },
+        {
+          "key": "zeme",
+          "label": "Země",
+          "type": "link",
+          "target": "zeme"
+        },
+        {
+          "key": "frakce",
+          "label": "Frakce",
+          "type": "link",
+          "target": "frakce"
+        },
+        {
+          "key": "zvirata",
+          "label": "Zvířata / společníci",
+          "type": "links",
+          "target": "postava"
+        },
+        {
+          "key": "stitky",
+          "label": "Štítky",
+          "type": "tags"
+        },
+        {
+          "key": "vzhled",
+          "label": "Vzhled",
+          "type": "textarea"
+        },
+        {
+          "key": "prevod_2024",
+          "label": "Převod na 2024",
+          "type": "textarea"
+        },
+        {
+          "key": "kampane",
+          "label": "Kampaně",
+          "type": "links",
+          "target": "kampan"
+        }
+      ]
+    }
+  ]
+}

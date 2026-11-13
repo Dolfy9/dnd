@@ -1,0 +1,13 @@
+{
+  "type": "svet",
+  "label": "Svět / historie",
+  "sections": [
+    {
+      "title": "Základní údaje",
+      "fields": [
+        {"key": "nazev", "label": "Název", "type": "text", "required": true},
+        {"key": "stitky", "label": "Štítky", "type": "tags"}
+      ]
+    }
+  ]
+}

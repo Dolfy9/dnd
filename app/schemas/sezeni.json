@@ -1,0 +1,50 @@
+{
+  "type": "sezeni",
+  "label": "Sezení",
+  "sections": [
+    {
+      "title": "Základní údaje",
+      "fields": [
+        {
+          "key": "nazev",
+          "label": "Název",
+          "type": "text",
+          "required": true
+        },
+        {
+          "key": "cislo",
+          "label": "Číslo sezení",
+          "type": "number"
+        },
+        {
+          "key": "datum",
+          "label": "Datum",
+          "type": "text"
+        },
+        {
+          "key": "kampane",
+          "label": "Kampaně",
+          "type": "links",
+          "target": "kampan"
+        },
+        {
+          "key": "ucastnici",
+          "label": "Účastníci",
+          "type": "links",
+          "target": "postava"
+        },
+        {
+          "key": "lokace",
+          "label": "Lokace",
+          "type": "links",
+          "target": "misto"
+        },
+        {
+          "key": "stitky",
+          "label": "Štítky",
+          "type": "tags"
+        }
+      ]
+    }
+  ]
+}

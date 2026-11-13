@@ -20,6 +20,18 @@ Imatoma je „země lovců ryb“ a nepodléhá koruně. Po staletí na ni úto�
 ## Háčky pro dobrodružství
 > **Stav:** návrh
 
+## Heraldika
+
+> **Stav:** návrh
+
+![Znak – Imatoma](obrazky/Znak_imatoma.webp){.heraldika-img .heraldika-znak} ![Vlajka – Imatoma](obrazky/Vlajka_imatoma.webp){.heraldika-img .heraldika-vlajka}
+
+**Znak:** V mořskozeleném štítu stříbrná rybářská síť, nad ní stříbrná ryba; v patě tři stříbrné vlny.
+
+**Vlajka:** Mořskozelená vlajka prostředena stříbrnou rybářskou sítí, uprostřed stříbrná ryba, při dolním okraji stříbrné vlny.
+
+**Proč:** „Země lovců ryb“ – síť, v níž končí nepřátelé na dně oceánu.
+
 ## Pro DM (tajné)
 
 ## Související

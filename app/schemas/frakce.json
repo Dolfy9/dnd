@@ -1,0 +1,22 @@
+{
+  "type": "frakce",
+  "label": "Frakce",
+  "sections": [
+    {
+      "title": "Základní údaje",
+      "fields": [
+        {"key": "nazev", "label": "Název", "type": "text", "required": true},
+        {"key": "typ", "label": "Typ", "type": "select",
+         "options": ["", "řád", "odboj", "cech", "kult", "šlechtický rod", "vojsko", "tajná společnost", "jiná"]},
+        {"key": "vudce", "label": "Vůdce", "type": "link", "target": "postava"},
+        {"key": "sidlo", "label": "Sídlo", "type": "link", "target": "mesto"},
+        {"key": "pusobnost", "label": "Působnost", "type": "links", "target": "zeme"},
+        {"key": "vztah_k_ordenu", "label": "Vztah k Ordenu", "type": "select",
+         "options": ["", "součást", "spojenec", "neutrální", "nepřátelský", "zakázaná"]},
+        {"key": "verejny_cil", "label": "Veřejný cíl", "type": "text"},
+        {"key": "skryty_cil", "label": "Skrytý cíl (DM)", "type": "text"},
+        {"key": "stitky", "label": "Štítky", "type": "tags"}
+      ]
+    }
+  ]
+}

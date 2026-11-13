@@ -1,0 +1,75 @@
+{
+  "type": "quest",
+  "label": "Quest",
+  "sections": [
+    {
+      "title": "Přehled",
+      "fields": [
+        {
+          "key": "nazev",
+          "label": "Název",
+          "type": "text",
+          "required": true
+        },
+        {
+          "key": "typ",
+          "label": "Typ",
+          "type": "select",
+          "options": [
+            "",
+            "hlavní",
+            "vedlejší",
+            "osobní",
+            "frakční"
+          ]
+        },
+        {
+          "key": "uroven",
+          "label": "Doporučená úroveň",
+          "type": "text"
+        },
+        {
+          "key": "kampane",
+          "label": "Kampaně",
+          "type": "links",
+          "target": "kampan"
+        },
+        {
+          "key": "zadavatel",
+          "label": "Zadavatel",
+          "type": "link",
+          "target": "postava"
+        },
+        {
+          "key": "lokace",
+          "label": "Lokace",
+          "type": "links",
+          "target": "misto"
+        },
+        {
+          "key": "odmeny",
+          "label": "Odměny",
+          "type": "list"
+        },
+        {
+          "key": "stav",
+          "label": "Stav",
+          "type": "select",
+          "options": [
+            "",
+            "nápad",
+            "připravený",
+            "rozehraný",
+            "dokončený",
+            "neúspěšný"
+          ]
+        },
+        {
+          "key": "stitky",
+          "label": "Štítky",
+          "type": "tags"
+        }
+      ]
+    }
+  ]
+}

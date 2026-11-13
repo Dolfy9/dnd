@@ -1,0 +1,41 @@
+{
+  "type": "obchod",
+  "label": "Obchod",
+  "sections": [
+    {
+      "title": "Základní údaje",
+      "fields": [
+        {"key": "nazev", "label": "Název", "type": "text", "required": true},
+        {"key": "typ", "label": "Typ", "type": "text"},
+        {"key": "majitel", "label": "Majitel", "type": "links", "target": "postava"},
+        {"key": "personal", "label": "Personál", "type": "links", "target": "postava"},
+        {"key": "mesto", "label": "Město", "type": "link", "target": "mesto"},
+        {"key": "zeme", "label": "Země", "type": "link", "target": "zeme"},
+        {"key": "ctvrt", "label": "Čtvrť", "type": "text"},
+        {"key": "oteviraci_doba", "label": "Otevírací doba", "type": "text"},
+        {"key": "stitky", "label": "Štítky", "type": "tags"}
+      ]
+    },
+    {
+      "title": "Nabídka a služby",
+      "fields": [
+        {"key": "nabidka", "label": "Nabídka", "type": "dictlist",
+         "fields": [
+           {"key": "nazev", "label": "Předmět", "type": "text"},
+           {"key": "srd", "label": "SRD klíč", "type": "text"},
+           {"key": "cena", "label": "Cena", "type": "text"},
+           {"key": "skladem", "label": "Skladem", "type": "number"},
+           {"key": "kategorie", "label": "Kategorie", "type": "text"},
+           {"key": "pozn", "label": "Poznámka", "type": "text"}
+         ]},
+        {"key": "sluzby", "label": "Služby", "type": "dictlist",
+         "fields": [
+           {"key": "nazev", "label": "Služba", "type": "text"},
+           {"key": "cena", "label": "Cena", "type": "text"},
+           {"key": "doba", "label": "Doba", "type": "text"},
+           {"key": "pozn", "label": "Poznámka", "type": "text"}
+         ]}
+      ]
+    }
+  ]
+}

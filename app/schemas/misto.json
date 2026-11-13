@@ -1,0 +1,19 @@
+{
+  "type": "misto",
+  "label": "Místo",
+  "sections": [
+    {
+      "title": "Základní údaje",
+      "fields": [
+        {"key": "nazev", "label": "Název", "type": "text", "required": true},
+        {"key": "typ", "label": "Typ", "type": "select",
+         "options": ["", "dungeon", "les", "hora", "jezero", "řeka", "ostrov", "poust", "močál", "průsmyk", "zřícenina", "ostatní"]},
+        {"key": "zeme", "label": "Země", "type": "link", "target": "zeme"},
+        {"key": "mesto", "label": "Nejbližší město", "type": "link", "target": "mesto"},
+        {"key": "nebezpeci", "label": "Nebezpečí", "type": "select",
+         "options": ["", "bezpečné", "mírné", "nebezpečné", "smrtelné"]},
+        {"key": "stitky", "label": "Štítky", "type": "tags"}
+      ]
+    }
+  ]
+}

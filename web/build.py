@@ -107,7 +107,7 @@ def boj_index():
         except Exception:
             continue
         if meta.get("postava"):
-            out.append({"cesta": str(p.relative_to(ROOT)), "postava": meta["postava"]})
+            out.append({"cesta": p.relative_to(ROOT).as_posix(), "postava": meta["postava"]})
     (DOCS / "boj_postavy.json").write_text(json.dumps(out, ensure_ascii=False, default=str), encoding="utf-8")
 
 

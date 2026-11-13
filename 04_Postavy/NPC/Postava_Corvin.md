@@ -8,11 +8,23 @@ postava:
   zarovnani: Chaotic Good
   tridy:
   - trida: Bard
-    uroven: 11
+    uroven: 14
     podtrida: College of Lore
+  featy:
+  - nazev: Skilled
+    zdroj: Pozadí (Scribe)
+    poznamka: History, Arcana, Religion
+  - nazev: Alert
+    zdroj: Human – Versatile
+  - nazev: Ability Score Improvement
+    zdroj: Bard 4
+    poznamka: +2 CHA
+  - nazev: Ability Score Improvement
+    zdroj: Bard 8
+    poznamka: +1 CHA, +1 CON
   atributy:
     STR: 8
-    DEX: 14
+    DEX: 16
     CON: 13
     INT: 10
     WIS: 16
@@ -37,18 +49,15 @@ postava:
   - Persuasion
   - Investigation
   - Deception
-  featy:
-  - nazev: Skilled
-    zdroj: Pozadí (Scribe)
-    poznamka: History, Arcana, Religion
-  - nazev: Alert
-    zdroj: Human – Versatile
-  - nazev: Ability Score Improvement
-    zdroj: Bard 4
-    poznamka: +2 CHA
-  - nazev: Ability Score Improvement
-    zdroj: Bard 8
-    poznamka: +1 CHA, +1 CON
+  jazyky:
+  - Common
+  - Elvish
+  - Halfling
+  nastroje:
+  - Calligrapher's Supplies
+  - Lute
+  - Flute
+  - Viol
   zbroj:
     nazev: Studded Leather Armor
     typ: light
@@ -65,6 +74,15 @@ postava:
     kostka: 1d4
     typ: Piercing
     dosah: 20/60 ft
+  vybava:
+  - Studded Leather Armor
+  - Dagger
+  - Lute
+  - Calligrapher's Supplies
+  - Zakázané spisy odboje
+  - Slepecká hůl
+  penize:
+    GP: 75
   kouzla:
   - nazev: Vicious Mockery
     uroven: 0
@@ -131,30 +149,6 @@ postava:
   vlastni_rysy:
   - nazev: Oslepen Ordenem (DM)
     text: Trvale oslepen (Blinded), ale má Blindsight 30 ft – v tomto dosahu vnímá okolí bez zraku.
-  vybava:
-  - Studded Leather Armor
-  - Dagger
-  - Lute
-  - Calligrapher's Supplies
-  - Zakázané spisy odboje
-  - Slepecká hůl
-  penize:
-    GP: 75
-  jazyky:
-  - Common
-  - Elvish
-  - Halfling
-  nastroje:
-  - Calligrapher's Supplies
-  - Lute
-  - Flute
-  - Viol
-  osobnost:
-    rysy: Klidný hlas, který umí uklidnit i roztančit dav.
-    idealy: Pravda patří všem.
-    pouta: Octowerinský odboj a jeho spisy.
-    vady: Ze msty riskuje životy svých lidí.
-  prevod_2024: Half-Elf není v PHB 2024 → Human (elfí předci vyprávěcí). Blindsight 30 ft = zvláštní schopnost (DM).
   boj:
     dpr: 12
     akce:
@@ -173,6 +167,12 @@ postava:
     - nazev: Counterspell
       text: Zruší kouzlo.
     taktika: Vždy má únikovou cestu; Greater Invisibility a Dimension Door. Chrání spisy víc než sebe.
+  osobnost:
+    rysy: Klidný hlas, který umí uklidnit i roztančit dav.
+    idealy: Pravda patří všem.
+    pouta: Octowerinský odboj a jeho spisy.
+    vady: Ze msty riskuje životy svých lidí.
+  prevod_2024: Half-Elf není v PHB 2024 → Human (elfí předci vyprávěcí). Blindsight 30 ft = zvláštní schopnost (DM).
 ---
 # Postava: "Slepý" Corvin (Vůdce Odboje)
 

@@ -1,0 +1,32 @@
+services:
+  app:
+    build:
+      context: ..
+      dockerfile: app/Dockerfile
+    environment:
+      MONT_ROOT: /repo
+      MONT_DATA: /data
+      # v produkci za HTTPS (Caddy) nastav na 1:
+      MONT_COOKIE_SECURE: "0"
+      # silný náhodný klíč – nastav přes .env nebo secrets:
+      # MONT_SECRET: ""
+    volumes:
+      # obsah repozitáře – rw, aby API mohlo zapisovat úpravy do Markdownu
+      - ..:/repo
+      - montelien-data:/data
+    restart: unless-stopped
+
+  caddy:
+    image: caddy:2-alpine
+    restart: unless-stopped
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./Caddyfile:/etc/caddy/Caddyfile:ro
+      - caddy-data:/data
+    depends_on: [app]
+
+volumes:
+  montelien-data:
+  caddy-data:

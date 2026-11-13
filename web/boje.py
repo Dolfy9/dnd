@@ -23,7 +23,7 @@ def link_in(p: Path, label: str):
     m = re.search(r"\*\*" + label + r":\*\*.*?\]\(([^)]+\.md)\)", p.read_text(encoding="utf-8"))
     if not m:
         return ""
-    return str((p.parent / m.group(1)).resolve().relative_to(ROOT)) if (p.parent / m.group(1)).exists() else ""
+    return (p.parent / m.group(1)).resolve().relative_to(ROOT).as_posix() if (p.parent / m.group(1)).exists() else ""
 
 
 def pages(folder, label=None):
@@ -31,7 +31,7 @@ def pages(folder, label=None):
     for p in sorted((ROOT / folder).glob("*.md")):
         if p.name == "README.md":
             continue
-        e = {"cesta": str(p.relative_to(ROOT)), "nazev": title(p)}
+        e = {"cesta": p.relative_to(ROOT).as_posix(), "nazev": title(p)}
         if label:
             e["kampan"] = link_in(p, label)
         out.append(e)

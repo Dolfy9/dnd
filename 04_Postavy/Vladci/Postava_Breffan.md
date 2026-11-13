@@ -10,24 +10,6 @@ postava:
   - trida: Wizard
     uroven: 15
     podtrida: Diviner
-  atributy:
-    STR: 8
-    DEX: 14
-    CON: 15
-    INT: 20
-    WIS: 12
-    CHA: 10
-  puvod_atributu: Standard Array (INT 15, DEX 14, CON 13, WIS 12, CHA 10, STR 8); Sage +2 INT, +1 CON; ASI (4) +2 INT; War
-    Caster (8) +1 INT; Resilient (12) +1 CON.
-  dovednosti:
-  - Investigation
-  - Medicine
-  - Arcana
-  - History
-  expertiza:
-  - Arcana
-  zachrany_navic:
-  - CON
   featy:
   - nazev: Magic Initiate
     zdroj: Pozadí (Sage)
@@ -41,6 +23,31 @@ postava:
   - nazev: Resilient
     zdroj: Wizard 12
     poznamka: +1 CON, CON saves
+  atributy:
+    STR: 8
+    DEX: 14
+    CON: 16
+    INT: 20
+    WIS: 12
+    CHA: 13
+  puvod_atributu: Standard Array (INT 15, DEX 14, CON 13, WIS 12, CHA 10, STR 8); Sage +2 INT, +1 CON; ASI (4) +2 INT; War
+    Caster (8) +1 INT; Resilient (12) +1 CON.
+  dovednosti:
+  - Investigation
+  - Medicine
+  - Arcana
+  - History
+  expertiza:
+  - Arcana
+  jazyky:
+  - Common
+  - Draconic
+  - Abyssal
+  - Infernal
+  nastroje:
+  - Calligrapher's Supplies
+  zachrany_navic:
+  - CON
   zbroj:
     nazev: Mage Armor + Hadí róba (+1)
     typ: none
@@ -63,6 +70,14 @@ postava:
     atribut: STR
     kostka: 1d6
     typ: Bludgeoning
+  vybava:
+  - Hadí róba (+1 AC)
+  - Quarterstaff
+  - Spellbook (zakázaný výzkum)
+  - Arcane Focus (krystalová lebka)
+  - Calligrapher's Supplies
+  penize:
+    GP: 4000
   kouzla:
   - nazev: Fire Bolt
     uroven: 0
@@ -167,28 +182,6 @@ postava:
   - nazev: Clone
     trida: Wizard
     uroven: 8
-  vybava:
-  - Hadí róba (+1 AC)
-  - Quarterstaff
-  - Spellbook (zakázaný výzkum)
-  - Arcane Focus (krystalová lebka)
-  - Calligrapher's Supplies
-  penize:
-    GP: 4000
-  jazyky:
-  - Common
-  - Draconic
-  - Abyssal
-  - Infernal
-  nastroje:
-  - Calligrapher's Supplies
-  osobnost:
-    rysy: Chladný, zvědavý, mluví v otázkách.
-    idealy: Poznání stojí nad zákonem i morálkou.
-    pouta: Dohoda s Ordenem, která kryje jeho výzkum.
-    vady: Pýcha – věří, že ho nikdo nepřechytračí.
-  prevod_2024: Yuan-ti (MotM) → Tiefling s Chthonic legacy (PHB 2024; hadí krev vyprávěcí). School of Transmutation není v
-    PHB 2024 → Diviner. „Anathema Caster“ odstraněno.
   boj:
     dpr: 40
     akce:
@@ -208,6 +201,13 @@ postava:
       text: Nahradí hod tvora předpověděným číslem (2×/den).
     taktika: Contingency (Teleport při pádu pod polovinu HP), Globe of Invulnerability, nemrtví sluhové. V Mictimě má připravené
       pasti.
+  osobnost:
+    rysy: Chladný, zvědavý, mluví v otázkách.
+    idealy: Poznání stojí nad zákonem i morálkou.
+    pouta: Dohoda s Ordenem, která kryje jeho výzkum.
+    vady: Pýcha – věří, že ho nikdo nepřechytračí.
+  prevod_2024: Yuan-ti (MotM) → Tiefling s Chthonic legacy (PHB 2024; hadí krev vyprávěcí). School of Transmutation není v
+    PHB 2024 → Diviner. „Anathema Caster“ odstraněno.
 ---
 # Postava: Arcimág Breffan
 

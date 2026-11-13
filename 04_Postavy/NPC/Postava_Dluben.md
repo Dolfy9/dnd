@@ -48,8 +48,9 @@ postava:
     trida: PJ
     vzdy: true
     poznamka: dle PJ
+  kampane:
+  - 07_Kampane/Zlomena_pecet.md
 ---
-
 # Dluben
 
 > **Stav:** návrh

@@ -1,0 +1,31 @@
+{
+  "type": "mesto",
+  "label": "Město",
+  "sections": [
+    {
+      "title": "Základní údaje",
+      "fields": [
+        {"key": "nazev", "label": "Název", "type": "text", "required": true},
+        {"key": "zeme", "label": "Země", "type": "link", "target": "zeme"},
+        {"key": "vladce", "label": "Vládce / správce", "type": "link", "target": "postava"},
+        {"key": "velikost", "label": "Velikost", "type": "select",
+         "options": ["", "osada", "vesnice", "městečko", "město", "velkoměsto", "metropole"]},
+        {"key": "populace", "label": "Populace", "type": "number"},
+        {"key": "bohatstvi", "label": "Bohatství", "type": "select",
+         "options": ["", "chudé", "průměrné", "zámožné", "bohaté", "mimořádně bohaté"]},
+        {"key": "vztah_k_ordenu", "label": "Vztah k Ordenu", "type": "select",
+         "options": ["", "loajální", "poslušné", "rezervované", "vzdorující", "odbojné"]}
+      ]
+    },
+    {
+      "title": "Vazby",
+      "fields": [
+        {"key": "ctvrti", "label": "Čtvrti a místa", "type": "list"},
+        {"key": "obchody", "label": "Obchody a služby", "type": "links", "target": "obchod"},
+        {"key": "frakce", "label": "Frakce ve městě", "type": "links", "target": "frakce"},
+        {"key": "postavy", "label": "Významné postavy", "type": "links", "target": "postava"},
+        {"key": "stitky", "label": "Štítky", "type": "tags"}
+      ]
+    }
+  ]
+}

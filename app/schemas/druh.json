@@ -1,0 +1,23 @@
+{
+  "type": "druh",
+  "label": "Druh (Species)",
+  "sections": [
+    {
+      "title": "Pravidlová data",
+      "fields": [
+        {"key": "nazev", "label": "Název (EN)", "type": "text", "required": true},
+        {"key": "zdroj", "label": "Zdroj", "type": "text"},
+        {"key": "rok", "label": "Rok vydání", "type": "number"},
+        {"key": "edice", "label": "Edice", "type": "select", "options": ["", "2024+", "2014", "jiná"]},
+        {"key": "legacy", "label": "Legacy (2014)", "type": "checkbox"},
+        {"key": "alternativa_2024", "label": "Alternativa ve 2024", "type": "text"},
+        {"key": "velikost", "label": "Velikost", "type": "text"},
+        {"key": "rychlost", "label": "Rychlost", "type": "text"},
+        {"key": "typ", "label": "Typ tvora", "type": "text"},
+        {"key": "delka_zivota", "label": "Délka života", "type": "text"},
+        {"key": "overeno", "label": "Ověřeno (zdroje)", "type": "list"},
+        {"key": "stitky", "label": "Štítky", "type": "tags"}
+      ]
+    }
+  ]
+}

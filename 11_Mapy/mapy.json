@@ -1,0 +1,19 @@
+{
+ "vychozi": "montelien",
+ "mapy": [
+  {
+   "id": "montelien",
+   "nazev": "Montelien",
+   "mista": "mista.json",
+   "svet": "svet.json",
+   "vodstvo": "vodstvo.json"
+  },
+  {
+   "id": "test",
+   "nazev": "test",
+   "mista": "mista.json",
+   "svet": "svet.json",
+   "vodstvo": "vodstvo.json"
+  }
+ ]
+}

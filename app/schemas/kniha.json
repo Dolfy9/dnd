@@ -1,0 +1,59 @@
+{
+  "type": "kniha",
+  "label": "Kniha / dokument",
+  "sections": [
+    {
+      "title": "Základní údaje",
+      "fields": [
+        {
+          "key": "nazev",
+          "label": "Název",
+          "type": "text",
+          "required": true
+        },
+        {
+          "key": "typ",
+          "label": "Typ",
+          "type": "select",
+          "options": [
+            "",
+            "kniha",
+            "dopis",
+            "handout",
+            "svitek",
+            "deník",
+            "dekret",
+            "píseň"
+          ]
+        },
+        {
+          "key": "autor",
+          "label": "Autor",
+          "type": "link",
+          "target": "postava"
+        },
+        {
+          "key": "jazyk",
+          "label": "Jazyk",
+          "type": "text"
+        },
+        {
+          "key": "pro_hrace",
+          "label": "Přístupné hráčům",
+          "type": "checkbox"
+        },
+        {
+          "key": "stitky",
+          "label": "Štítky",
+          "type": "tags"
+        },
+        {
+          "key": "kampane",
+          "label": "Kampaně",
+          "type": "links",
+          "target": "kampan"
+        }
+      ]
+    }
+  ]
+}

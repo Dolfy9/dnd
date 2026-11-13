@@ -1,0 +1,17 @@
+{
+  "type": "povolani",
+  "label": "Povolání (Class)",
+  "sections": [
+    {
+      "title": "Pravidlová data",
+      "fields": [
+        {"key": "nazev", "label": "Název (EN)", "type": "text", "required": true},
+        {"key": "zdroj", "label": "Zdroj", "type": "text"},
+        {"key": "kostka_zivotu", "label": "Hit Die", "type": "select",
+         "options": ["", "d6", "d8", "d10", "d12"]},
+        {"key": "podtridy", "label": "Podtřídy", "type": "list"},
+        {"key": "stitky", "label": "Štítky", "type": "tags"}
+      ]
+    }
+  ]
+}

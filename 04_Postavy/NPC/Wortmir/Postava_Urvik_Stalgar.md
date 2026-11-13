@@ -3,32 +3,79 @@ postava:
   jmeno: Urvik Stalgar
   titul: Žoldnéř
   druh: Human
-  druh_volby: "Skillful: získává navíc proficiency v Perception."
+  druh_volby: 'Skillful: získává navíc proficiency v Perception.'
   pozadi: Soldier
   zarovnani: Lawful Neutral
-  mesta: [03_Mesta/Mesto_Wortmir.md]
-  zeme: [02_Zeme/Kralovstvi_Kharghae_Zia.md]
-  stitky: [Wortmir, lze pozvat, žoldnéř, obchod]
+  mesta:
+  - 03_Mesta/Mesto_Wortmir.md
+  zeme:
+  - 02_Zeme/Kralovstvi_Kharghae_Zia.md
+  stitky:
+  - Wortmir
+  - lze pozvat
+  - žoldnéř
+  - obchod
   tridy:
-  - {trida: Fighter, uroven: 3, podtrida: Battle Master}
-  atributy: {STR: 17, DEX: 13, CON: 15, INT: 10, WIS: 12, CHA: 8}
+  - trida: Fighter
+    uroven: 3
+    podtrida: Battle Master
+  atributy:
+    STR: 17
+    DEX: 13
+    CON: 15
+    INT: 10
+    WIS: 12
+    CHA: 8
   puvod_atributu: Standard Array; Soldier +2 STR, +1 CON; Fighter 3.
-  dovednosti: [Athletics, Intimidation, Perception, Survival, Insight]
+  dovednosti:
+  - Athletics
+  - Intimidation
+  - Perception
+  - Survival
+  - Insight
   expertiza: []
   featy:
-  - {nazev: Savage Attacker, zdroj: "Pozadí (Soldier)"}
-  - {nazev: Alert, zdroj: "Human – Versatile"}
-  - {nazev: Dueling, zdroj: Fighting Style (Fighter 1)}
-  zbroj: {nazev: Scale Mail, typ: medium, zakladni_ac: 14, stit: true}
+  - nazev: Savage Attacker
+    zdroj: Pozadí (Soldier)
+  - nazev: Alert
+    zdroj: Human – Versatile
+  - nazev: Dueling
+    zdroj: Fighting Style (Fighter 1)
+  zbroj:
+    nazev: Scale Mail
+    typ: medium
+    zakladni_ac: 14
+    stit: true
   utoky:
-  - {nazev: Longsword, atribut: STR, kostka: 1d8, typ: Slashing, mastery: Sap}
-  - {nazev: Spear, atribut: STR, kostka: 1d6, typ: Piercing, mastery: Sap}
-  mastery: [Longsword (Sap), Spear (Sap)]
+  - nazev: Longsword
+    atribut: STR
+    kostka: 1d8
+    typ: Slashing
+    mastery: Sap
+  - nazev: Spear
+    atribut: STR
+    kostka: 1d6
+    typ: Piercing
+    mastery: Sap
+  mastery:
+  - Longsword (Sap)
+  - Spear (Sap)
   kouzla: []
-  vybava: [Scale Mail, Shield, Longsword, Spear, "Soldier's Pack", Dice Set, faded Orden insignia]
-  penize: {GP: 17}
-  jazyky: [Common]
-  nastroje: [Dice Set, Land Vehicles]
+  vybava:
+  - Scale Mail
+  - Shield
+  - Longsword
+  - Spear
+  - Soldier's Pack
+  - Dice Set
+  - faded Orden insignia
+  penize:
+    GP: 17
+  jazyky:
+  - Common
+  nastroje:
+  - Dice Set
+  - Land Vehicles
   osobnost:
     rysy: Před přijetím zakázky se ptá, kdo ještě bude u toho.
     idealy: Rozkaz není omluva, pokud zbytečně ohrozí civilisty.
@@ -38,13 +85,20 @@ postava:
   boj:
     dpr: 14
     akce:
-    - {nazev: Longsword (Sap), text: Zasáhne cíl a ztíží mu další útok.}
-    - {nazev: Action Surge, text: Jednou za Short Rest získá další akci.}
-    - {nazev: "Maneuver: Trip Attack", text: Přidá superiority die a pokusí se cíl srazit k zemi.}
+    - nazev: Longsword (Sap)
+      text: Zasáhne cíl a ztíží mu další útok.
+    - nazev: Action Surge
+      text: Jednou za Short Rest získá další akci.
+    - nazev: 'Maneuver: Trip Attack'
+      text: Přidá superiority die a pokusí se cíl srazit k zemi.
     bonusove_akce:
-    - {nazev: Second Wind, text: Obnoví si 1d10 + 3 HP jednou za Short Rest.}
+    - nazev: Second Wind
+      text: Obnoví si 1d10 + 3 HP jednou za Short Rest.
     reakce: []
-    taktika: Drží se mezi nepřáteli a najatým cílem, používá manévry k rozbití formace a bojuje disciplinovaně, dokud zakázka neohrožuje civilisty.
+    taktika: Drží se mezi nepřáteli a najatým cílem, používá manévry k rozbití formace a bojuje disciplinovaně, dokud zakázka
+      neohrožuje civilisty.
+  kampane:
+  - 07_Kampane/Zlomena_pecet.md
 ---
 # Postava: Urvik Stalgar
 

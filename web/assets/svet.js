@@ -115,7 +115,7 @@
     (D.zeme || []).forEach(function (z, i) {
       var c = z.stat === null ? (z.barva || "#838b8f") : ((PAL.state_colors || {})[z.nazev] || ZPAL[i % ZPAL.length] || "#777");
       (z.pas || []).forEach(function (b) { o.push('<path d="' + (typeof b[0][0] === "number" ? pathD(b, true) : b.map(function (r) { return pathD(r, true); }).join(" ")) + '" fill="' + c + '" fill-rule="evenodd" opacity="' + (PAL.state_tint_opacity == null ? .12 : PAL.state_tint_opacity) + '"/>'); });
-      if (z.stat === null) (z.body || []).forEach(function (ring) { o.push('<path d="' + pathD(ring, true) + '" fill="' + c + '" fill-opacity=".12"/>'); });
+      if (z.stat === null && !z._auto_body) (z.body || []).forEach(function (ring) { o.push('<path d="' + pathD(ring, true) + '" fill="' + c + '" fill-opacity=".12"/>'); });
     });
     (D.oblasti || []).forEach(function (a, i) {
       if (a.typ !== "pole") return;

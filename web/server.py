@@ -230,9 +230,9 @@ class Handler(SimpleHTTPRequestHandler):
                 boje.write_index(SITE, WEB / "docs")
                 return self.send_json({"ok": True})
             if u.path == "/api/strom" and method == "GET":
-                files = sorted(str(f.relative_to(ROOT)) for f in ROOT.rglob("*.md")
+                files = sorted(f.relative_to(ROOT).as_posix() for f in ROOT.rglob("*.md")
                                if f.relative_to(ROOT).parts[0] not in BLOCKED)
-                dirs = sorted({str(Path(f).parent) for f in files if "/" in f})
+                dirs = sorted({Path(f).parent.as_posix() for f in files if "/" in f})
                 return self.send_json({"soubory": files, "slozky": dirs})
             return self.send_json({"chyba": "neznámý požadavek"}, 404)
         except (KeyError, ValueError, json.JSONDecodeError, FileNotFoundError) as e:

@@ -1,0 +1,28 @@
+{
+  "type": "zeme",
+  "label": "Země",
+  "sections": [
+    {
+      "title": "Základní přehled",
+      "fields": [
+        {"key": "nazev", "label": "Název", "type": "text", "required": true},
+        {"key": "hlavni_mesto", "label": "Hlavní město", "type": "link", "target": "mesto"},
+        {"key": "hlava_statu", "label": "Hlava státu", "type": "link", "target": "postava"},
+        {"key": "podrizenost", "label": "Podřízenost", "type": "text"},
+        {"key": "obyvatelstvo", "label": "Obyvatelstvo", "type": "text"},
+        {"key": "vztah_k_ordenu", "label": "Vztah k Ordenu", "type": "select",
+         "options": ["", "loajální", "poslušná", "rezervovaná", "vzdorující", "odbojná", "okupovaná"]}
+      ]
+    },
+    {
+      "title": "Vazby",
+      "fields": [
+        {"key": "sousede", "label": "Sousedé", "type": "links", "target": "zeme"},
+        {"key": "mesta", "label": "Města", "type": "links", "target": "mesto"},
+        {"key": "frakce", "label": "Frakce", "type": "links", "target": "frakce"},
+        {"key": "vyznamna_mista", "label": "Významná místa", "type": "links", "target": "misto"},
+        {"key": "stitky", "label": "Štítky", "type": "tags"}
+      ]
+    }
+  ]
+}

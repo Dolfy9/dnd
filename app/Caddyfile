@@ -1,0 +1,11 @@
+# Bez domény: nahraď za sslip.io hostname své VPS (např. 203.0.113.10.sslip.io)
+# nebo vlastní doménu. Caddy si sám vyžádá Let's Encrypt certifikát.
+#
+# montelien.1.2.3.4.sslip.io {
+#     reverse_proxy app:8001
+# }
+
+# Lokalně / jen HTTP:
+:80 {
+    reverse_proxy app:8001
+}
