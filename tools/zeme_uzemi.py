@@ -110,6 +110,9 @@ def main() -> None:
     changed = 0
     for z in named:
         n = z["nazev"]
+        if z.get("_uzemi"):
+            print(f"  - {n}: území z uzemi_dm.py (_uzemi={z['_uzemi']}), přeskakuju")
+            continue
         sid = ids.get(n)
         if not sid:
             print(f"  ! {n}: bez semínka, přeskakuju")

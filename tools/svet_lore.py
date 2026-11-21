@@ -448,41 +448,44 @@ def lore(svet):
         for b in kousky(p, 45):
             ob3.append(o | {"body": b})
     ob[:] = ob3
-    svet["zeme"] = [{"nazev": z["nazev"], "body": [body_presne(p) for p in z["polys"] if p.area > 1], "pozn": "území státu vypočtené z popisků a terénu (návrh)"}
-                    | ({"barva": "#1e1614"} if z is kn else {"barva": "#6b6b6b"} if z["divoke"] else {}) for z in st]
-    for u in neprirazene:
-        parts = [body_presne(p) for p in geoms(u["geom"]) if p.geom_type == "Polygon" and p.area > 1]
-        if parts:
-            svet["zeme"].append({
-                "id": u["id"],
-                "nazev": "Samostatné území (bez jména)", "stat": None,
-                "barva": u["barva"], "pozn": u["pozn"],
-                "body": parts,
-            })
-    cb = land.boundary.buffer(7)
-    for z, zz in zip(st, svet["zeme"]):
-        U = unary_union(z["polys"])
-        zz["pas"] = [[body(p.simplify(1.2))] + [[[round(x), round(y)] for x, y in r.coords[:-1]] for r in p.interiors]
-                     for p in geoms(U.difference(U.buffer(-7)).difference(land.boundary.buffer(3))) if p.geom_type == "Polygon" and p.area >= 40]
-    for i in range(len(st)):
-        A = unary_union(st[i]["polys"])
-        for j in range(i + 1, len(st)):
-            B = unary_union(st[j]["polys"])
-            if not A.buffer(6).intersects(B):
-                continue
-            seg = A.boundary.intersection(B.buffer(6)).difference(cb)
-            seg = linemerge([g for g in geoms(seg) if g.geom_type == "LineString"]) if seg.geom_type != "LineString" else seg
-            for g in geoms(seg):
-                if g.geom_type == "LineString" and g.length > 25:
-                    g = g.simplify(1.5)
-                    svet["hranice"].append({"typ": "hranice", "pozn": f"hranice {st[i]['nazev']} / {st[j]['nazev']} (vypočtená, návrh)", "body": [[round(x), round(y)] for x, y in g.coords]})
-                    if st[i] is kn or st[j] is kn:
-                        for d in np.arange(10, g.length - 5, 34):
-                            p = g.interpolate(d); q = nearest_points(mz.buffer(-6), p)[0] if mz.buffer(-6).area > 0 else p
-                            svet["symboly"].append({"typ": "kul", "x": int(q.x), "y": int(q.y), "m": round(float(rng.uniform(.85, 1.15)), 2), "pozn": "kůly s lebkami na hranici Knärghe Zhie (DM)"})
-    hranice_kresba = [h for h in K.get("hranice", []) if h.get("carkovana")]
-    if hranice_kresba:
-        svet["hranice"].extend(hranice_kresba)
+    if any(z.get("_uzemi") for z in svet.get("zeme", [])):
+        print("Území a statní hranice jsou z tools/uzemi_dm.py (_uzemi) – přepočet území států přeskakuju.")
+    else:
+        svet["zeme"] = [{"nazev": z["nazev"], "body": [body_presne(p) for p in z["polys"] if p.area > 1], "pozn": "území státu vypočtené z popisků a terénu (návrh)"}
+                        | ({"barva": "#1e1614"} if z is kn else {"barva": "#6b6b6b"} if z["divoke"] else {}) for z in st]
+        for u in neprirazene:
+            parts = [body_presne(p) for p in geoms(u["geom"]) if p.geom_type == "Polygon" and p.area > 1]
+            if parts:
+                svet["zeme"].append({
+                    "id": u["id"],
+                    "nazev": "Samostatné území (bez jména)", "stat": None,
+                    "barva": u["barva"], "pozn": u["pozn"],
+                    "body": parts,
+                })
+        cb = land.boundary.buffer(7)
+        for z, zz in zip(st, svet["zeme"]):
+            U = unary_union(z["polys"])
+            zz["pas"] = [[body(p.simplify(1.2))] + [[[round(x), round(y)] for x, y in r.coords[:-1]] for r in p.interiors]
+                         for p in geoms(U.difference(U.buffer(-7)).difference(land.boundary.buffer(3))) if p.geom_type == "Polygon" and p.area >= 40]
+        for i in range(len(st)):
+            A = unary_union(st[i]["polys"])
+            for j in range(i + 1, len(st)):
+                B = unary_union(st[j]["polys"])
+                if not A.buffer(6).intersects(B):
+                    continue
+                seg = A.boundary.intersection(B.buffer(6)).difference(cb)
+                seg = linemerge([g for g in geoms(seg) if g.geom_type == "LineString"]) if seg.geom_type != "LineString" else seg
+                for g in geoms(seg):
+                    if g.geom_type == "LineString" and g.length > 25:
+                        g = g.simplify(1.5)
+                        svet["hranice"].append({"typ": "hranice", "pozn": f"hranice {st[i]['nazev']} / {st[j]['nazev']} (vypočtená, návrh)", "body": [[round(x), round(y)] for x, y in g.coords]})
+                        if st[i] is kn or st[j] is kn:
+                            for d in np.arange(10, g.length - 5, 34):
+                                p = g.interpolate(d); q = nearest_points(mz.buffer(-6), p)[0] if mz.buffer(-6).area > 0 else p
+                                svet["symboly"].append({"typ": "kul", "x": int(q.x), "y": int(q.y), "m": round(float(rng.uniform(.85, 1.15)), 2), "pozn": "kůly s lebkami na hranici Knärghe Zhie (DM)"})
+        hranice_kresba = [h for h in K.get("hranice", []) if h.get("carkovana")]
+        if hranice_kresba:
+            svet["hranice"].extend(hranice_kresba)
     for o in ob:
         if o["typ"] in ("les", "haj", "louky") and len(o["body"]) > 2 and mz.contains(Polygon(o["body"]).buffer(0).representative_point()):
             o["typ"] = "mrtvy"

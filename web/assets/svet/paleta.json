@@ -148,7 +148,18 @@
  "state_colors": {
   "Imonir": "#4f8359",
   "Banerbo": "#4d7b9a",
-  "Imatoma": "#a76e49"
+  "Imatoma": "#a76e49",
+  "Briria": "#b8873b",
+  "Nöet": "#5f84a3",
+  "Nölien": "#8a5f86",
+  "Orden": "#8e4f45",
+  "Laertmund": "#a08a50",
+  "Tali": "#9a5a40",
+  "Zairam": "#6f5f92",
+  "Khärghe Zhia": "#6f8a4f",
+  "Svobodné Jižní ostrovy": "#4f8a86",
+  "Khearaz": "#5a6f8a",
+  "Mönohen": "#96844a"
  },
  "grade": {
   "parchment": "#efe0bd",

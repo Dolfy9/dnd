@@ -4,6 +4,8 @@ import L from "leaflet";
 import "leaflet/dist/leaflet.css";
 import { get, post, put, del } from "../api";
 import { useApp, isEditor } from "../store";
+import { toast, confirmDialog } from "../components/ui";
+import { Layers, Map as MapIcon, MapPinPlus, PencilLine, Plus, Ruler, Search } from "lucide-react";
 import EntityPicker from "../components/EntityPicker";
 
 declare global { interface Window { L?: any; MontelienSvet?: any; MontelienMapa?: any; MontelienEditor?: any; SVET_PALETA?: any; MONTELIEN_HERALDIKA?: any; } }
@@ -60,6 +62,14 @@ export default function Mapa() {
   const [mapList, setMapList] = useState<any[]>([]);
   const [newMap, setNewMap] = useState(false);
   const [editOn, setEditOn] = useState(false);
+  const [baseNames, setBaseNames] = useState<string[]>([]);
+  const [baseName, setBaseName] = useState("Atlas (z dat)");
+  const [prekryv, setPrekryv] = useState(0);
+  const [prekryvOK, setPrekryvOK] = useState(false);
+  const [vis, setVis] = useState<Record<string, boolean>>({ uzemi: true, hranice: true, mista: true, popisky: true, boje: true });
+  const [stavy, setStavy] = useState<{ nazev: string; color: string; navrh: boolean }[]>([]);
+  const [vrstvyOn, setVrstvyOn] = useState(false);
+  const [stavyOn, setStavyOn] = useState(false);
   const byName = useRef<Record<string, { m: any; c: L.CircleMarker }>>({});
   const mapData = useRef<any>(null);
   const mer = useRef<any>({ start: null as any, stop: null as any, pts: [], line: null, lab: null }).current as any;
@@ -113,9 +123,29 @@ export default function Mapa() {
         vrstvy[t ? t[1] : p.nazev] = L.imageOverlay(baseDir + p.soubor + imgV, bounds);
       });
       const pam = localStorage.getItem("mapa-vrstva") || "";
-      (crop ? atlas : vrstvy[pam] || atlas).addTo(map);
-      L.control.layers(vrstvy, {}, { position: "bottomleft" }).addTo(map);
-      map.on("baselayerchange", (e: any) => localStorage.setItem("mapa-vrstva", e.name));
+      const baseNames = Object.keys(vrstvy);
+      const initialBase = crop ? "Atlas (z dat)" : (vrstvy[pam] ? pam : "Atlas (z dat)");
+      (crop ? atlas : vrstvy[initialBase]).addTo(map);
+      setBaseNames(baseNames);
+      setBaseName(initialBase);
+      const setBase = (name: string) => {
+        baseNames.forEach((n) => map.removeLayer(vrstvy[n]));
+        vrstvy[name].addTo(map);
+        localStorage.setItem("mapa-vrstva", name);
+        setBaseName(name);
+      };
+      (el as any)._setBase = setBase;
+
+      // překryv původní kresby DM nad podkladem (jen hlavní mapa)
+      const prekryvLayer = mapId === "montelien"
+        ? L.imageOverlay(REPO + "11_Mapy/Montelien_mapa_vyrovnana.jpg" + imgV, bounds,
+            { opacity: 0, interactive: false }).addTo(map)
+        : null;
+      const savedPrekryv = Math.max(0, Math.min(1, Number(localStorage.getItem("mapa-prekryv") || 0)));
+      if (prekryvLayer) prekryvLayer.setOpacity(savedPrekryv);
+      setPrekryv(savedPrekryv);
+      setPrekryvOK(!!prekryvLayer);
+      (el as any)._setPrekryv = (v: number) => prekryvLayer?.setOpacity(v);
 
       const LABELS = window.SVET_PALETA?.labels || {};
       const HER = window.MONTELIEN_HERALDIKA || {};
@@ -142,6 +172,7 @@ export default function Mapa() {
         svgEl.querySelectorAll("[data-map-dashed-border]").forEach((l: any) => {
           l.style.display = showDashed ? "" : "none";
         });
+        (el as any)._applyVis?.(); // přebití podle přepínačů viditelnosti
       }
 
       // --- hover nad státy + heraldika ---
@@ -166,12 +197,29 @@ export default function Mapa() {
         for (let i = 0, j = r.length - 1; i < r.length; j = i++) a += (r[j][0] + r[i][0]) * (r[j][1] - r[i][1]);
         return Math.abs(a / 2);
       };
-      const stateArea = (z: any) => pasAreas(z).reduce((s, r) => s + ringArea(r), 0);
       const inRing = (x: number, y: number, ring: number[][]) => {
         let inside = false;
         for (let i = 0, j = ring.length - 1; i < ring.length; j = i++)
           if ((ring[i][1] > y) !== (ring[j][1] > y) && x < (ring[j][0] - ring[i][0]) * (y - ring[i][1]) / (ring[j][1] - ring[i][1]) + ring[i][0]) inside = !inside;
         return inside;
+      };
+      // plocha území: vnější prsteny − díry (even-odd)
+      const stateArea = (z: any) => {
+        const rings = pasAreas(z);
+        return rings.reduce((s, r, i) => {
+          const p = r[0];
+          const depth = rings.reduce((d, o, j) => d + (j !== i && inRing(p[0], p[1], o) ? 1 : 0), 0);
+          return s + ringArea(r) * (depth % 2 === 0 ? 1 : -1);
+        }, 0);
+      };
+      // barva státu: explicitní barva z dat → paleta podle jména → výchozí odstín
+      const ZPAL0 = window.SVET_PALETA?.state_tints || [];
+      const ZCOL0 = window.SVET_PALETA?.state_colors || {};
+      const stateColor = (z: any) =>
+        z.barva || (z.stat === null ? "#838b8f" : (ZCOL0[z.nazev] || ZPAL0[(D.zeme || []).indexOf(z) % ZPAL0.length] || "#777"));
+      const shade = (hex: string, f: number) => {
+        const n = [1, 3, 5].map((i) => parseInt(hex.slice(i, i + 2), 16));
+        return "#" + n.map((v) => Math.round(v * f).toString(16).padStart(2, "0")).join("");
       };
       const herState = (name: string) => {
         const zeme = HER.zeme || [];
@@ -197,10 +245,12 @@ export default function Mapa() {
         // zvýraznění = celé území (body – stejná data jako hit-test,
         // takže svítí přesně stát pod kurzorem; jen výplň, bez obrysu)
         const rings = pasAreas(z);
+        const col = stateColor(z);
         if (rings.length) stateHighlight.addLayer(L.polygon(
           rings.map((r) => r.map((p) => [H - p[1], p[0]] as L.LatLngTuple)), {
-            interactive: false, stroke: false,
-            fillColor: "#ffd94d", fillOpacity: pin ? .42 : .3,
+            interactive: false, fillRule: "evenodd",
+            color: shade(col, .55), weight: 2.5, opacity: .95,
+            fillColor: col, fillOpacity: pin ? .4 : .28,
           }));
         if (stateTip) { map.removeLayer(stateTip); stateTip = null; }
         const place = M.mista.find((m: any) => m.typ === "zeme" && m.nazev === z.nazev);
@@ -219,8 +269,9 @@ export default function Mapa() {
             .setLatLng(latlng).setContent(herState(z.nazev)).addTo(map);
         }
       };
+      // hit-test: even-odd parita přes všechny prsteny státu (díry nesvítí)
       const pickState = (x: number, y: number) =>
-        stateData.find((z) => pasAreas(z).some((ring) => inRing(x, y, ring)));
+        stateData.find((z) => pasAreas(z).reduce((inside, ring) => inside !== inRing(x, y, ring), false));
       map.on("mousemove", (e) => {
         if (crop || !stateData.length || pinnedState) return;
         const found = pickState(e.latlng.lng, H - e.latlng.lat);
@@ -274,6 +325,49 @@ export default function Mapa() {
         }
       });
       if (!crop) { map.addLayer(body); bojL.addTo(map); }
+
+      // --- viditelnost vrstev atlasu (území / hranice / místa / popisky / boje) ---
+      const applyVis = (v: Record<string, boolean>) => {
+        svgEl.querySelectorAll('[data-sv-layer="zeme"]').forEach((g: any) => { g.style.display = v.uzemi ? "" : "none"; });
+        svgEl.querySelectorAll('[data-sv-layer="hranice"]').forEach((g: any) => { g.style.display = v.hranice ? "" : "none"; });
+        svgEl.querySelectorAll('[data-map-label], [data-city-label]').forEach((l: any) => { l.style.display = v.popisky ? "" : "none"; });
+        if (v.mista) { map.addLayer(body); map.addLayer(sidla); } else { map.removeLayer(body); map.removeLayer(sidla); }
+        if (v.boje) map.addLayer(bojL); else map.removeLayer(bojL);
+      };
+      const vis0 = { uzemi: true, hranice: true, mista: true, popisky: true, boje: true,
+        ...JSON.parse(localStorage.getItem("mapa-viditelnost") || "{}") };
+      let visCur = vis0;
+      setVis(vis0);
+      applyVis(vis0);
+      (el as any)._applyVis = () => applyVis(visCur);
+      (el as any)._setVis = (key: string, on: boolean) => {
+        visCur = { ...visCur, [key]: on };
+        localStorage.setItem("mapa-viditelnost", JSON.stringify(visCur));
+        applyVis(visCur);
+        setVis(visCur);
+      };
+      // --- seznam států pro legendu + interakce ---
+      setStavy(stateData.map((z) => ({
+        nazev: z.nazev, navrh: z._uzemi === "navrh", color: stateColor(z),
+      })).sort((a, b) => a.nazev.localeCompare(b.nazev, "cs")));
+      (el as any)._ukazStat = (nazev: string, pin: boolean) => {
+        const z = stateData.find((s) => s.nazev === nazev);
+        if (!z) return;
+        if (pin) pinnedState = z;
+        showState(z, null, pin);
+      };
+      (el as any)._skryjStat = () => { if (!pinnedState) clearState(); };
+      (el as any)._zamerStat = (nazev: string) => {
+        const z = stateData.find((s) => s.nazev === nazev);
+        if (!z) return;
+        const pts: L.LatLngTuple[] = [];
+        pasAreas(z).forEach((ring) => ring.forEach((p) => pts.push([H - p[1], p[0]])));
+        if (pts.length) map.fitBounds(L.latLngBounds(pts).pad(.12));
+        pinnedState = z;
+        showState(z, null, true);
+        const place = M.mista.find((m: any) => m.typ === "zeme" && m.nazev === nazev);
+        if (place) openPlace(place);
+      };
 
       // --- souřadnice + měření ---
       const coord = document.createElement("div");
@@ -330,7 +424,13 @@ export default function Mapa() {
         map.invalidateSize({ pan: false });
         const fitZoom = Math.log2(Math.min(el.clientWidth / W, el.clientHeight / H));
         map.setMinZoom(Math.min(-1.5, fitZoom - .1));
-        map.fitBounds(bounds, { padding: [0, 0], animate: false });
+        // na portrait displejích přizpůsobíme šířce a lehce přiblížíme —
+        // mapa je čitelnější a panuje se (fit-bounds by ji na vysokém displeji zmenšil)
+        if (el.clientHeight > el.clientWidth) {
+          map.setView([H / 2, W / 2], Math.log2(el.clientWidth / W) + 0.35, { animate: false });
+        } else {
+          map.fitBounds(bounds, { padding: [0, 0], animate: false });
+        }
         refreshLabels();
       };
       map.on("zoomend", refreshLabels);
@@ -349,7 +449,23 @@ export default function Mapa() {
           if (state) {
             const pts: L.LatLngTuple[] = [];
             pasAreas(state).forEach((ring) => ring.forEach((p) => pts.push([H - p[1], p[0]])));
-            if (pts.length) map.fitBounds(L.latLngBounds(pts).pad(.16), { padding: [18, 18], animate: false });
+            if (pts.length) {
+              map.fitBounds(L.latLngBounds(pts).pad(.16), { padding: [18, 18], animate: false });
+              // výřez: zeslabit okolí (maska mimo území) a zvýraznit hranici státu
+              const rect: L.LatLngTuple[] = [[0, 0], [0, W], [H, W], [H, 0]];
+              const rings = pasAreas(state).map((r) => r.map((p) => [H - p[1], p[0]] as L.LatLngTuple));
+              stateHighlight.clearLayers();
+              stateHighlight.addLayer(L.polygon([rect, ...rings], {
+                interactive: false, fillRule: "evenodd", stroke: false,
+                fillColor: "#17120c", fillOpacity: .45,
+              }));
+              const col = stateColor(state);
+              stateHighlight.addLayer(L.polygon(rings, {
+                interactive: false, fillRule: "evenodd",
+                color: shade(col, .55), weight: 2.5, opacity: .95,
+                fillColor: col, fillOpacity: .22,
+              }));
+            }
             return;
           }
         }
@@ -370,7 +486,11 @@ export default function Mapa() {
     };
   }, [mapId]); // eslint-disable-line
 
-  const doSearch = (v: string) => { setSearchQ(v); const el = ref.current as any; el?._najdi?.(v); };
+  const doSearch = (v: string) => { setSearchQ(v); setSuggOn(false); const el = ref.current as any; el?._najdi?.(v); };
+  const [suggOn, setSuggOn] = useState(false);
+  const suggestions = searchQ.trim()
+    ? Object.keys(byName.current).filter((n) => n.includes(searchQ.trim().toLowerCase())).slice(0, 8)
+    : [];
 
   const startEditor = async () => {
     const el = ref.current as any;
@@ -398,60 +518,145 @@ export default function Mapa() {
   return (
     <div className="h-full flex flex-col relative">
       {!crop && (
-        <div className="flex items-center gap-2 px-3 py-1.5 border-b border-[var(--line)] font-ui flex-wrap text-xs">
-          <b className="text-sm mr-1">{mapList.find((m) => m.id === mapId)?.nazev || "Atlas Montelienu"}</b>
+        <div className="mapa-toolbar flex items-center gap-2 px-3 py-1.5 border-b border-[var(--line)] font-ui flex-wrap text-xs relative">
+          <b className="mapa-title text-sm mr-1 flex items-center gap-1.5"><MapIcon size={15} />{mapList.find((m) => m.id === mapId)?.nazev || "Atlas Montelienu"}</b>
           {mapList.length > 1 && (
-            <select className="inp !w-40 !py-0.5 text-xs" value={mapId}
+            <select className="mapa-sel inp !w-40 !py-0.5 text-xs" value={mapId}
               onChange={(e) => setParams({ mapa: e.target.value })}>
               {mapList.map((m) => <option key={m.id} value={m.id}>{m.nazev}</option>)}
             </select>
           )}
-          {editor && mapList.length > 0 && (
-            <button className="btn sm" onClick={() => setNewMap(true)}>+ Nová mapa</button>
-          )}
-          <input className="inp !w-48 !py-1 text-xs" placeholder="Hledat místo…" list="mapa-seznam"
-            value={searchQ} onChange={(e) => setSearchQ(e.target.value)}
-            onKeyDown={(e) => { if (e.key === "Enter") doSearch(searchQ); }} />
-          <datalist id="mapa-seznam">{Object.keys(byName.current).map((n) => <option key={n} value={n} />)}</datalist>
-          <button className="btn sm" onClick={() => doSearch(searchQ)}>Najít</button>
-          <span className="flex items-center gap-1"><i className="w-2 h-2 rounded-full inline-block" style={{ background: "#8e4f45" }} /> mapa DM</span>
-          <span className="flex items-center gap-1"><i className="w-2 h-2 rounded-full inline-block" style={{ background: "#4f7657" }} /> kánon</span>
-          <span className="flex items-center gap-1"><i className="w-2 h-2 rounded-full inline-block" style={{ background: "#9a8050" }} /> odhad</span>
-          <label className="flex items-center gap-1"><input type="checkbox" checked={stitky} onChange={(e) => {
-            setStitky(e.target.checked);
-            Object.values(byName.current).forEach(({ m, c }) => {
-              if (m.typ !== "mesto" && m.typ !== "misto") return;
-              c.unbindTooltip(); c.bindTooltip(m.nazev, { className: "mapa-stitek", direction: "top", offset: [0, -6], permanent: e.target.checked });
-              if (e.target.checked) c.openTooltip();
-            });
-          }} /> jména měst</label>
-          <button className={"btn sm" + (merOn ? " chip-accent" : "")} onClick={() => {
-            const next = !merOn; setMerOn(next);
-            if (next) mer.start(); else mer.stop();
-          }}>⟷ Měřit trasu</button>
-          {editor && (
-            <button className={"btn sm" + (addMode ? " chip-accent" : "")} onClick={() => {
-              const n = !addMode; setAddMode(n);
-              const el = ref.current; if (el) el.style.cursor = n ? "copy" : "";
-            }}>+ Přidat místo</button>
-          )}
-          {editor && !editOn && (
-            <button className="btn sm chip-accent" onClick={startEditor}
-              title="Kreslení oblastí, řek, cest, hranic, terénu, symbolů a popisků">✎ Editor mapy</button>
-          )}
+          <span className="mapa-sep w-px h-5 bg-[var(--line)]" />
+          <div className="mapa-hledat relative">
+            <Search size={12} className="absolute left-2 top-1/2 -translate-y-1/2 text-[var(--ink-3)]" />
+            <input className="inp !w-48 !py-1 !pl-6 text-xs" placeholder="Hledat místo…" autoComplete="off"
+              value={searchQ}
+              onChange={(e) => { setSearchQ(e.target.value); setSuggOn(true); }}
+              onFocus={() => setSuggOn(true)}
+              onBlur={() => setTimeout(() => setSuggOn(false), 150)}
+              onKeyDown={(e) => { if (e.key === "Enter") doSearch(suggestions[0] || searchQ); if (e.key === "Escape") setSuggOn(false); }} />
+            {suggOn && suggestions.length > 0 && (
+              <div className="absolute left-0 top-full mt-1 card !p-1 w-56 z-[700]">
+                {suggestions.map((n) => (
+                  <button key={n} className="block w-full text-left px-2 py-1 rounded hover:bg-[var(--bg-3)] capitalize"
+                    onMouseDown={(e) => { e.preventDefault(); doSearch(n); }}>{n}</button>
+                ))}
+              </div>
+            )}
+          </div>
+          <button className="btn sm mapa-najit" onClick={() => doSearch(searchQ)}>Najít</button>
+          {/* na mobilu se akce sbalí pod ⋯; na desktopu se box zobrazí inline */}
+          <input type="checkbox" id="mapa-acts-cb" className="mapa-acts-cb" hidden />
+          <label htmlFor="mapa-acts-cb" className="btn sm mapa-acts-btn" title="Akce mapy">⋯</label>
+          <div className="mapa-acts-box">
+            {editor && mapList.length > 0 && (
+              <button className="btn sm mapa-novamapa" onClick={() => setNewMap(true)} title="Nová mapa">
+                <Plus size={13} className="inline -mt-0.5" /> <span className="mapa-act-txt">Nová mapa</span>
+              </button>
+            )}
+            <button className={"btn sm" + (merOn ? " chip-accent" : "")} onClick={() => {
+              const next = !merOn; setMerOn(next);
+              if (next) mer.start(); else mer.stop();
+            }}><Ruler size={13} className="inline -mt-0.5" /> <span className="mapa-act-txt">Měřit</span></button>
+            {editor && (
+              <button className={"btn sm" + (addMode ? " chip-accent" : "")} onClick={() => {
+                const n = !addMode; setAddMode(n);
+                const el = ref.current; if (el) el.style.cursor = n ? "copy" : "";
+              }}><MapPinPlus size={13} className="inline -mt-0.5" /> <span className="mapa-act-txt">Přidat místo</span></button>
+            )}
+            {editor && !editOn && (
+              <button className="btn sm chip-accent" onClick={startEditor}
+                title="Kreslení oblastí, řek, cest, hranic, terénu, symbolů a popisků"><PencilLine size={13} className="inline -mt-0.5" /> <span className="mapa-act-txt">Editor</span></button>
+            )}
+          </div>
         </div>
       )}
       <div className="flex-1 relative isolate overflow-hidden">
         <div ref={ref} className={"absolute inset-0" + (crop ? " mapa-vyrez" : "")} />
         {err && <div className="absolute inset-0 flex items-center justify-center text-sm text-[#a33] font-ui p-8">Mapu se nepodařilo načíst: {err}</div>}
         {!ready && !err && <div className="absolute inset-0 flex items-center justify-center text-[var(--ink-3)] font-ui">Načítám atlas…</div>}
+        {ready && !crop && (
+          <>
+            <div className="mapa-staty absolute left-3 top-28 z-[600] card !p-2 w-56 font-ui text-xs">
+              <button className="w-full flex items-center justify-between font-bold text-[var(--ink-2)]"
+                onClick={() => setStavyOn((v) => !v)}>
+                Státy <span className="text-[var(--ink-3)]">{stavyOn ? "▾" : "▸"}</span>
+              </button>
+              {stavyOn && (
+                <div className="mt-1 max-h-[50dvh] overflow-y-auto">
+                  {stavy.map((s) => (
+                    <button key={s.nazev} className="w-full flex items-center gap-2 px-1 py-0.5 rounded hover:bg-[var(--bg-3)] text-left"
+                      onMouseEnter={() => (ref.current as any)?._ukazStat?.(s.nazev, false)}
+                      onMouseLeave={() => (ref.current as any)?._skryjStat?.()}
+                      onClick={() => (ref.current as any)?._zamerStat?.(s.nazev)}>
+                      <i className="w-3 h-3 rounded-sm inline-block flex-none border border-black/20" style={{ background: s.color }} />
+                      <span className="truncate">{s.nazev}</span>
+                      {s.navrh && <span className="ml-auto text-[9px] px-1 rounded bg-[var(--bg-3)] text-[var(--ink-3)]">návrh</span>}
+                    </button>
+                  ))}
+                </div>
+              )}
+            </div>
+            <div className="mapa-vrstvy absolute left-3 bottom-8 z-[600] card !p-2 w-60 font-ui text-xs">
+              <button className="w-full flex items-center justify-between font-bold text-[var(--ink-2)]"
+                onClick={() => setVrstvyOn((v) => !v)}>
+                <span className="flex items-center gap-1"><Layers size={12} /> Vrstvy</span>
+                <span className="text-[var(--ink-3)]">{vrstvyOn ? "▾" : "▸"}</span>
+              </button>
+              {vrstvyOn && (
+                <div className="mt-1.5 flex flex-col gap-1.5">
+                  <div className="flex flex-wrap gap-0.5">
+                    {baseNames.map((n) => (
+                      <button key={n}
+                        className={"btn sm !px-1.5 !py-0.5 !text-[10px]" + (baseName === n ? " chip-accent" : "")}
+                        onClick={() => (ref.current as any)?._setBase?.(n)}>{n}</button>
+                    ))}
+                  </div>
+                  {prekryvOK && (
+                    <label className="flex items-center gap-2">
+                      <span className="w-28 flex-none">Překryv kresby</span>
+                      <input type="range" min={0} max={1} step={0.05} value={prekryv} className="flex-1"
+                        onChange={(e) => {
+                          const v = Number(e.target.value); setPrekryv(v);
+                          localStorage.setItem("mapa-prekryv", String(v));
+                          (ref.current as any)?._setPrekryv?.(v);
+                        }} />
+                    </label>
+                  )}
+                  {[["uzemi", "Území států"], ["hranice", "Hranice"], ["mista", "Místa"], ["popisky", "Popisky"], ["boje", "Boje"]].map(([k, t]) => (
+                    <label key={k} className="flex items-center gap-1.5">
+                      <input type="checkbox" checked={!!vis[k]}
+                        onChange={(e) => (ref.current as any)?._setVis?.(k, e.target.checked)} /> {t}
+                    </label>
+                  ))}
+                  <label className="flex items-center gap-1.5"><input type="checkbox" checked={stitky} onChange={(e) => {
+                    setStitky(e.target.checked);
+                    Object.values(byName.current).forEach(({ m, c }) => {
+                      if (m.typ !== "mesto" && m.typ !== "misto") return;
+                      c.unbindTooltip(); c.bindTooltip(m.nazev, { className: "mapa-stitek", direction: "top", offset: [0, -6], permanent: e.target.checked });
+                      if (e.target.checked) c.openTooltip();
+                    });
+                  }} /> jména měst</label>
+                  <div className="flex items-center gap-3 pt-1 border-t border-[var(--line)] text-[10px] text-[var(--ink-3)]">
+                    <span className="flex items-center gap-1"><i className="w-2 h-2 rounded-full inline-block" style={{ background: "#8e4f45" }} /> mapa DM</span>
+                    <span className="flex items-center gap-1"><i className="w-2 h-2 rounded-full inline-block" style={{ background: "#4f7657" }} /> kánon</span>
+                    <span className="flex items-center gap-1"><i className="w-2 h-2 rounded-full inline-block" style={{ background: "#9a8050" }} /> odhad</span>
+                  </div>
+                </div>
+              )}
+            </div>
+          </>
+        )}
       </div>
       {sel && (
-          <aside className="absolute right-3 top-3 z-[600] card p-4 w-72 font-ui max-h-[80%] overflow-y-auto">
+          <aside className="mapa-sel absolute right-3 top-3 z-[600] card p-4 w-72 font-ui max-h-[80%] overflow-y-auto">
             <button className="float-right text-[var(--ink-3)]" onClick={() => setSel(null)}>✕</button>
             <div className="text-lg font-bold">{sel.nazev}</div>
-            <div className="text-xs text-[var(--ink-3)] mb-2">{sel.typ}
-              {sel.jistota === "kanon" ? " · potvrzeno DM" : sel.jistota === "mapa" ? " · popsáno na mapě DM" : " · odhad"}
+            <div className="flex items-center gap-1.5 mb-2 text-[10px]">
+              <span className="px-1.5 py-0.5 rounded bg-[var(--bg-3)] text-[var(--ink-2)]">{sel.typ}</span>
+              <span className="px-1.5 py-0.5 rounded text-white" style={{
+                background: { mapa: "#8e4f45", kanon: "#4f7657", odhad: "#9a8050" }[sel.jistota as string] || "#777",
+              }}>{sel.jistota === "kanon" ? "potvrzeno DM" : sel.jistota === "mapa" ? "mapa DM" : "odhad"}</span>
             </div>
             {(() => {
               const her = (window.MONTELIEN_HERALDIKA?.mesta || []).find((e: any) => e.soubor === sel.odkaz);
@@ -493,7 +698,7 @@ function NewMapForm({ onDone }: { onDone: (id: string) => void }) {
     try {
       await post("/api/map/create", { id: f.id.trim(), nazev: f.nazev.trim() || f.id.trim(), sirka: f.sirka, vyska: f.vyska });
       onDone(f.id.trim());
-    } catch (e: any) { alert(e.message); } finally { setBusy(false); }
+    } catch (e: any) { toast(e.message, "err"); } finally { setBusy(false); }
   };
   return (
     <div className="fixed inset-0 z-[700] bg-black/50 flex items-center justify-center" onClick={() => onDone("")}>
@@ -537,17 +742,17 @@ function PlaceForm({ form, setForm, onDone, mapa }: any) {
       if (f.mode === "new") await post("/api/map/places" + qs, body);
       else await put(`/api/map/places/${f.id}` + qs, body);
       onDone();
-    } catch (e: any) { alert(e.message); } finally { setBusy(false); }
+    } catch (e: any) { toast(e.message, "err"); } finally { setBusy(false); }
   };
   const remove = async () => {
-    if (!confirm(`Smazat místo „${f.nazev}“ z mapy?`)) return;
+    if (!await confirmDialog({ title: "Smazat místo", text: `Smazat místo „${f.nazev}“ z mapy?`, okLabel: "Smazat", danger: true })) return;
     setBusy(true);
     try { await del(`/api/map/places/${f.id}` + qs); onDone(); }
-    catch (e: any) { alert(e.message); } finally { setBusy(false); }
+    catch (e: any) { toast(e.message, "err"); } finally { setBusy(false); }
   };
   return (
     <div className="fixed inset-0 z-[700] bg-black/50 flex items-center justify-center" onClick={() => setForm(null)}>
-      <div className="card p-4 w-[380px] font-ui max-h-[90vh] overflow-y-auto" onClick={(e) => e.stopPropagation()}>
+      <div className="card p-4 w-[380px] font-ui max-h-[90dvh] overflow-y-auto" onClick={(e) => e.stopPropagation()}>
         <h3 className="font-bold mb-3">{f.mode === "new" ? `Nové místo (x ${f.x}, y ${f.y})` : `Upravit „${f.nazev}“`}</h3>
         <label className="block text-xs mb-1">Název</label>
         <input className="inp mb-2" value={f.nazev} onChange={(e) => set("nazev", e.target.value)} autoFocus />

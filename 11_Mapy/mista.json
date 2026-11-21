@@ -1034,6 +1034,15 @@
    "pozn": "Ostrov/poloostrov s útesy jižně od víru, nečitelný popisek „Dö…“."
   },
   {
+   "nazev": "Weremirský les",
+   "x": 1179.0,
+   "y": 838.0,
+   "typ": "misto",
+   "jistota": "mapa",
+   "odkaz": "",
+   "pozn": "Sídlo Weremirských druidů"
+  },
+  {
    "nazev": "Werenor",
    "x": 894.0,
    "y": 770.0,

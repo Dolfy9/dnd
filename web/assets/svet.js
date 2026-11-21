@@ -112,11 +112,22 @@
     o.push('<path d="' + landD + '" fill="none" stroke="#7a5a37" stroke-opacity=".18" stroke-width="2" stroke-linejoin="round"/>');
     (D.oblasti || []).forEach(function (a) { if (!a.tmavy) return; o.push('<path d="' + pathD(a.body, true) + '" fill="' + AP.tmavy + '" opacity="' + PAL.area_opacity.tmavy + '" filter="url(#sv-mekce)"/>'); });
     var ZPAL = PAL.state_tints || [];
+    o.push('<g data-sv-layer="zeme">');
     (D.zeme || []).forEach(function (z, i) {
-      var c = z.stat === null ? (z.barva || "#838b8f") : ((PAL.state_colors || {})[z.nazev] || ZPAL[i % ZPAL.length] || "#777");
-      (z.pas || []).forEach(function (b) { o.push('<path d="' + (typeof b[0][0] === "number" ? pathD(b, true) : b.map(function (r) { return pathD(r, true); }).join(" ")) + '" fill="' + c + '" fill-rule="evenodd" opacity="' + (PAL.state_tint_opacity == null ? .12 : PAL.state_tint_opacity) + '"/>'); });
-      if (z.stat === null && !z._auto_body) (z.body || []).forEach(function (ring) { o.push('<path d="' + pathD(ring, true) + '" fill="' + c + '" fill-opacity=".12"/>'); });
+      var c = z.barva || (z.stat === null ? "#838b8f" : ((PAL.state_colors || {})[z.nazev] || ZPAL[i % ZPAL.length] || "#777"));
+      var rings = (z.body || []).filter(function (r) { return r && r.length >= 3; });
+      if (rings.length) {
+        // území státu: jedna cesta (even-odd, díry v území) = tint + barevný pás podél hranice
+        var d = rings.map(function (r) { return pathD(r, true); }).join(" ");
+        o.push('<path d="' + d + '" fill="' + c + '" fill-rule="evenodd" opacity="' + (PAL.state_tint_opacity == null ? .10 : PAL.state_tint_opacity) + '"/>');
+        o.push('<clipPath id="sv-z' + i + '"><path d="' + d + '" clip-rule="evenodd"/></clipPath>'
+          + '<g clip-path="url(#sv-z' + i + ')"><path d="' + d + '" fill="none" stroke="' + c + '" stroke-width="14" opacity=".4"/></g>');
+      } else {
+        (z.pas || []).forEach(function (b) { o.push('<path d="' + (typeof b[0][0] === "number" ? pathD(b, true) : b.map(function (r) { return pathD(r, true); }).join(" ")) + '" fill="' + c + '" fill-rule="evenodd" opacity="' + (PAL.state_tint_opacity == null ? .12 : PAL.state_tint_opacity) + '"/>'); });
+        if (z.stat === null && !z._auto_body) (z.body || []).forEach(function (ring) { o.push('<path d="' + pathD(ring, true) + '" fill="' + c + '" fill-opacity=".12"/>'); });
+      }
     });
+    o.push('</g>');
     (D.oblasti || []).forEach(function (a, i) {
       if (a.typ !== "pole") return;
       var cell = Math.max(10, Math.min(14, FIELD.cell || 12)), size = cell * 3, colors = FIELD.colors || ["#9fad66", "#a6b36d", "#a9a978"],
@@ -154,11 +165,7 @@
       if (r.typ === "hreben") return;
       o.push('<path d="' + pathD(r.body, false) + '" fill="none" stroke="#3a2e22" stroke-width="2" opacity=".05"/>');
     });
-    (D.hranice || []).forEach(function (r) {
-      var d = pathD(r.body, false);
-      if (r.carkovana) o.push('<path d="' + d + '" fill="none" stroke="#3a2412" stroke-width="1.2" stroke-dasharray="6 4" vector-effect="non-scaling-stroke" data-map-dashed-border="1" opacity=".9"/>');
-      else o.push('<path d="' + d + '" fill="none" stroke="#f3e6c4" stroke-width="4" opacity=".5"/><path d="' + d + '" fill="none" stroke="#7a2416" stroke-width="1.6" stroke-dasharray="9 3 2 3" opacity=".85"/>');
-    });
+    // státní hranice se kreslí až po symbolech terénu (viz níže) – nad terénem, pod popisky
     // symboly v oblastech (seřazené podle y, aby se překrývaly správně)
     var items = [], landPolys = (D.pevnina || []).filter(function (p) { return p.typ === "pevnina" || p.typ === "ostrov"; }),
       ridgeAreas = (D.oblasti || []).filter(function (a) { return a.typ === "hory" || a.typ === "velehory"; });
@@ -415,6 +422,18 @@
     var sprites = [];
     o.push('<foreignObject id="sv-spr" x="0" y="0" width="1" height="1"><canvas xmlns="http://www.w3.org/1999/xhtml" style="display:block;width:100%;height:100%"></canvas></foreignObject>');
     items.sort(function (a, b) { return a[0] - b[0]; }).forEach(function (i) { if (typeof i[1] === "string") o.push(i[1]); else sprites.push(i[1]); });
+    // statní hranice nad terénními symboly, pod popisky
+    o.push('<g data-sv-layer="hranice">');
+    (D.hranice || []).forEach(function (r) {
+      var d = pathD(r.body, false);
+      if (r.carkovana) o.push('<path d="' + d + '" fill="none" stroke="#3a2412" stroke-width="1.2" stroke-dasharray="6 4" vector-effect="non-scaling-stroke" data-map-dashed-border="1" opacity=".9"/>');
+      else if (r.typ === "statni" && r.navrh)
+        o.push('<path d="' + d + '" fill="none" stroke="#f3e6c4" stroke-width="4" opacity=".4"/><path d="' + d + '" fill="none" stroke="#7a2416" stroke-width="1.8" stroke-dasharray="2 4" opacity=".65"/>');
+      else if (r.typ === "statni")
+        o.push('<path d="' + d + '" fill="none" stroke="#f3e6c4" stroke-width="5" opacity=".55"/><path d="' + d + '" fill="none" stroke="#7a2416" stroke-width="2.2" stroke-dasharray="9 3 2 3" opacity=".9"/>');
+      else o.push('<path d="' + d + '" fill="none" stroke="#f3e6c4" stroke-width="4" opacity=".5"/><path d="' + d + '" fill="none" stroke="#7a2416" stroke-width="1.6" stroke-dasharray="9 3 2 3" opacity=".85"/>');
+    });
+    o.push('</g>');
     // popisky z mista.json
     (M.mista || []).forEach(function (m) {
       var p = m.popisek; if (!p) return;
