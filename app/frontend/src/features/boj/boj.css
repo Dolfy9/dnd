@@ -520,3 +520,8 @@ body.boj-max .app-topbar, body.boj-max .sb-wrap { display: none !important }
 .boj-check-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(74px,1fr));gap:4px}
 .boj-mini{padding:4px 6px;font-size:11px;border:1px solid var(--line);border-radius:6px;background:var(--panel-2);color:var(--ink);cursor:pointer;min-height:28px}
 .boj-mini:disabled{opacity:.45;cursor:default}
+.boj-rx{display:flex;flex-direction:column;gap:8px;max-width:360px}
+.boj-rx h3{margin:0;font-size:14px}
+.boj-rx-opt{display:flex;flex-direction:column;gap:2px;text-align:left;padding:8px 10px;border:1px solid var(--line);border-radius:8px;background:var(--panel-2);color:var(--ink);cursor:pointer;font-size:12px;min-height:36px}
+.boj-rx-opt span{opacity:.75;font-size:11px}
+.boj-rx-opt:hover{border-color:var(--accent)}

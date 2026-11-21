@@ -60,7 +60,8 @@ export interface AttackDef {
   durationRounds?: number;
   heal?: { dice: string; flat: number; plusMod?: boolean };  // léčící kouzlo
   utility?: boolean;               // utility kouzlo — jen cast log/slot/conc
-  ritual?: boolean;                // lze seslat jako rituál      // trvání efektu v kolech
+  ritual?: boolean;                // lze seslat jako rituál
+  ritualCast?: boolean;            // sesláno rituálně (bez slotu, +10 min)      // trvání efektu v kolech
   slot?: number;                // použitý spell slot (při seslání)
   upcast?: { dice: string; per: number }; // škálování na vyšší slot ("+1d6 za level nad 3" → {dice:"1d6",per:3})
   mastery?: string;
@@ -295,6 +296,7 @@ export interface BattleSettings {
     recharge: "auto" | "rucne";
     deathSaves: "auto" | "rucne";
     ekonomika: "hlidat" | "varovat" | "vypnuto";
+    reakce: "zeptat" | "vypnuto";
     sloty: "hlidat" | "varovat" | "vypnuto";
     dosah: "hlidat" | "varovat";
   };

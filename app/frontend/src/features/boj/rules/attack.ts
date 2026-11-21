@@ -5,6 +5,7 @@ import { CONDITIONS, exhaustion, hasCond, isIncap, isProne } from "./conditions"
 import { effectiveAc, sumMods } from "./effects";
 import { gapFt, hostile } from "./grid";
 import { coverOf, COVER_BONUS, COVER_TEXT, type Cover } from "./los";
+import { sharpshooterCover } from "./actions/features";
 import { canSeeTarget } from "./lighting";
 import { d20, rollDice, diceOnlyAvg, type Rng, defaultRng } from "./dice";
 
@@ -91,7 +92,7 @@ export function evaluateAttack(ctx: AttackCtx): AttackEval {
   const de = Math.abs(((map as any).vyska?.[`${a.x ?? 0},${a.y ?? 0}`] ?? 0) - ((map as any).vyska?.[`${b.x ?? 0},${b.y ?? 0}`] ?? 0));
   const dist = Math.max(distAB(a, b, ctx.ax, ctx.ay), de);
   const teren = ctx.teren ?? ctx.state?.teren;
-  const cov = ctx.overrideCover ?? coverOf({ ...a, x: ctx.ax ?? a.x, y: ctx.ay ?? a.y }, b, map, tokens, undefined, undefined, teren, ctx.state?.dvere);
+  const cov = sharpshooterCover(ctx.attacker, (ctx.overrideCover ?? coverOf({ ...a, x: ctx.ax ?? a.x, y: ctx.ay ?? a.y }, b, map, tokens, undefined, undefined, teren, ctx.state?.dvere)) as Cover) as Cover;
   const notes: string[] = [];
   const beyond = !inRange(atk, dist);
   const { adv, dis } = advFor(a, b, atk, dist, tokens);

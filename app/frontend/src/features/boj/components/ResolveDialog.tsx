@@ -10,7 +10,7 @@ import { settingsOf } from "../rules/settings";
 import { dmgStyle } from "./visual";
 import { Dices, Keyboard, X } from "lucide-react";
 
-export interface ResolveAttack { kind: "attack"; atk: AttackDef; srcId: string; tgtId: string; force?: boolean }
+export interface ResolveAttack { kind: "attack"; atk: AttackDef; srcId: string; tgtId: string; force?: boolean; meta?: string[] }
 export interface ResolveArea { kind: "area"; atk: AttackDef; srcId: string; spec: { shape: any; size: number; anchor: [number, number]; dir?: number }; tgtIds: string[]; slot?: number; force?: boolean }
 export type Resolve = ResolveAttack | ResolveArea;
 

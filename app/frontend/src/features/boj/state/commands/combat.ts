@@ -20,6 +20,9 @@ import { dropConc } from "./effects";
 import { settingsOf } from "../../rules/settings";
 import { isFree } from "../../rules/free";
 import { grappleResolve, escapeResolve, hideResolve, searchResolve, standUpCost } from "../../rules/actions/actions";
+import { hasGWM, hasSavage, savagePick, metaCost, spendSP, METAMAGIC } from "../../rules/actions/features";
+import { EFFECT_PRESETS } from "../../rules/effects";
+import { addEffect } from "./effects";
 
 /* ---------- útoky ---------- */
 export interface AtkArgs {
@@ -27,6 +30,7 @@ export interface AtkArgs {
   overrideAdv?: number | null; manualD20?: number; manualDmg?: number;
   ax?: number; ay?: number; slot?: number; pact?: boolean;
   override?: boolean; // ⚙ DM: přeskočit hlídané kontroly
+  meta?: string[];   // Metamagic ids (Sorcerer)
 }
 /** Kontrola podle nastavení: vypnuto → ok, varovat → ok+log, hlidat → jen s override. */
 function check(S: StavBoje, setting: "hlidat" | "varovat" | "vypnuto", override: boolean | undefined, msg: string): boolean {
@@ -40,10 +44,37 @@ export function cmdAttack(S: StavBoje, a: AtkArgs, ctx: CmdCtx): { ok: boolean; 
   const A = byId(S, a.atkId), B = byId(S, a.tgtId);
   if (!A || !B || !ctx.map) return { ok: false, reason: "chybí útočník/cíl" };
   const st = settingsOf(S).automatizace;
+  // Metamagic (Sorcerer): SP náklad + efekty
+  let atk: AttackDef = a.atk;
+  if (a.meta?.length) {
+    const cost = metaCost(a.meta, atk.lvl || 0);
+    if (!spendSP(A, cost)) return { ok: false, reason: `Sorcery Points: potřeba ${cost}, nemáš` };
+    if (a.meta.includes("distant") && (atk.range || atk.reach)) atk = { ...atk, range: (atk.range || atk.reach || 5) * 2 };
+    if (a.meta.includes("quickened")) atk = { ...atk, ba: true };
+    log(S, "system", `${A.nazev}: Metamagic ${a.meta.map((m) => METAMAGIC.find((x) => x.id === m)?.nazev || m).join(", ")} (−${cost} SP)`, A.nazev);
+  }
+  a = { ...a, atk };
   if (a.atk.rc && A.spent?.[a.atk.nazev]) {
     if (!check(S, st.dosah, a.override, `${a.atk.nazev} použito i když se dobíjí (⚙ DM)`))
       return { ok: false, reason: `${a.atk.nazev} se dobíjí` };
 
+  }
+  // preset-klasifikovaný buff/debuff bez damage rollu → čistý cast na cíl
+  if (a.atk.kouzlo && !a.atk.dmg && !a.atk.save) {
+    const p = EFFECT_PRESETS.find((x) => x.nazev.toLowerCase() === (a.atk.kouzlo || "").toLowerCase());
+    if (p) {
+      const slotErr = slotError(A, a.atk, a.slot, a.pact);
+      if (slotErr && !isFree(S) && !check(S, st.sloty, a.override, `${A.nazev}: ${a.atk.nazev} bez volného slotu (⚙ DM)`))
+        return { ok: false, reason: slotErr };
+      if (!isFree(S)) consumeSlot(A, a.atk, a.slot, a.pact);
+      if (!a.atk.ba && !a.atk.rea) useEco(S, A, "a"); else if (a.atk.ba) useEco(S, A, "b"); else useEco(S, A, "r");
+      const tgtId = p.zone?.shape.kind === "emanation" || p.target === "self" ? A.id : B.id;
+      addEffect(S, tgtId, p.id, A.id);
+      const e2 = S.eco[A.id];
+      if (!isFree(S) && (a.atk.lvl || 0) > 0 && e2) e2.spell += 1;
+      log(S, "effect", `${A.nazev} seslal ${a.atk.kouzlo} → ${byId(S, tgtId)?.nazev}${p.conc ? " (Concentration)" : ""}`, A.nazev);
+      return { ok: true };
+    }
   }
   // léčící kouzlo: heal místo útoku
   if (a.atk.heal && B) {
@@ -78,6 +109,12 @@ export function cmdAttack(S: StavBoje, a: AtkArgs, ctx: CmdCtx): { ok: boolean; 
     if (!check(S, st.sloty, a.override, `${A.nazev}: ${a.atk.nazev} bez volného slotu (⚙ DM)`))
       return { ok: false, reason: slotErr };
   }
+  // 2024: jen jedno kouzlo se slotem za tah (cantripy volné)
+  const ecoA = S.eco[A.id];
+  if (!isFree(S) && a.atk.kind === "spell" && (a.atk.lvl || 0) > 0 && !a.atk.ritualCast && ecoA && ecoA.spell > 0) {
+    if (!check(S, st.ekonomika, a.override, `${A.nazev}: druhé kouzlo se slotem tento tah (⚙ DM)`))
+      return { ok: false, reason: "za tah už bylo sesláno kouzlo se slotem" };
+  }
   const actx: AttackCtx = { attacker: A, target: B, atk: a.atk, map: ctx.map, tokens: S.tok, ax: a.ax, ay: a.ay, overrideAdv: a.overrideAdv, state: S, teren: S.teren };
   const ev = evaluateAttack(actx);
   const force = isFree(S) || a.override && st.dosah === "hlidat" || st.dosah === "varovat";
@@ -109,6 +146,14 @@ export function cmdAttack(S: StavBoje, a: AtkArgs, ctx: CmdCtx): { ok: boolean; 
     useEco(S, B, "r");
     log(S, "effect", `${B.nazev}: Uncanny Dodge — damage za pulku`, B.nazev);
   }
+  // Savage Attacker: jednou za tah weapon damage přehodit, vzít vyšší
+  const ecoS = S.eco[A.id];
+  if (r.hit && a.manualDmg == null && ecoS && hasSavage(A) && !a.atk.kouzlo && a.atk.dmg && !(ecoS as any).savage) {
+    (ecoS as any).savage = 1;
+    const again = rollDice(a.atk.dmg).total;
+    const rolled = parts.reduce((x, p) => x + p.amount, 0);
+    if (again > rolled) { parts[0].amount += again - rolled; log(S, "damage", `${A.nazev}: Savage Attacker — přehozeno ${rolled} → ${again}`, A.nazev); }
+  }
   let dmgRes: ReturnType<typeof applyDamage> | null = null;
   if (r.hit) dmgRes = applyDamage(B, parts, { crit: r.crit });
   const txt = `${A.nazev} → ${B.nazev}: ${a.atk.nazev}${n > 1 ? ` ×${n}` : ""} ` +
@@ -134,7 +179,26 @@ export function cmdAttack(S: StavBoje, a: AtkArgs, ctx: CmdCtx): { ok: boolean; 
   if (r.hit && a.atk.condOnHit) for (const c of a.atk.condOnHit) {
     if (!hasCond(B, c.n)) { B.cond.push({ n: c.n, src: A.id }); log(S, "cond", `${B.nazev}: ${c.n}${c.dc ? ` (DC ${c.dc})` : ""}`, A.nazev); }
   }
+  // GWM: +PB damage jednou za tah (Heavy melee — zjednodušeně melee weapon)
+  const e2 = S.eco[A.id];
+  if (r.hit && e2 && hasGWM(A) && a.atk.melee && !a.atk.kouzlo && !(e2 as any).gwm) {
+    (e2 as any).gwm = 1;
+    const bonus = A.pb ?? 2;
+    applyDamage(B, [{ amount: bonus, type: a.atk.typ || "Bludgeoning" }]);
+    log(S, "damage", `${A.nazev}: Great Weapon Master +${bonus} dmg`, A.nazev);
+  }
   applyMastery(S, A, B, a.atk, r.hit);
+  // preset-klasifikované kouzlo: aplikuj preset na cíl (efekt + conc + zóna)
+  if (a.atk.kouzlo && !a.atk.utility) {
+    const p = EFFECT_PRESETS.find((x) => x.nazev.toLowerCase() === (a.atk.kouzlo || "").toLowerCase());
+    if (p) {
+      const tgtId = p.zone?.shape.kind === "emanation" || p.target === "self" ? A.id : B.id;
+      addEffect(S, tgtId, p.id, A.id);
+      log(S, "effect", `${A.nazev}: ${a.atk.kouzlo} → preset ${p.nazev}${p.conc ? " (Concentration)" : ""}`, A.nazev);
+    }
+  }
+  // počítadlo leveled spell za tah (2024)
+  if (!isFree(S) && a.atk.kind === "spell" && (a.atk.lvl || 0) > 0 && e2) e2.spell += 1;
   if (r.hit && am.dmgOnHitOnce) consumeMod(A, "dmgOnHitOnce");
   if (bmT.nextAtkAdvBy) consumeMod(B, "nextAtkAdvBy");
   if (am.nextAtkDis) consumeMod(A, "nextAtkDis");

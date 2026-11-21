@@ -10,3 +10,4 @@ export * from "./resources";
 export * from "./tools";
 export { isIncap, speedOf } from "../../rules/conditions";
 export { meleeReach, cellsOf } from "../../rules/grid";
+export * from "./features";

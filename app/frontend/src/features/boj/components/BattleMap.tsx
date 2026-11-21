@@ -28,6 +28,7 @@ export interface Targeting {
   anchor?: [number, number];
   slot?: number;
   pact?: boolean;
+  meta?: string[];
 }
 
 export interface ZonePlace { preset: EffectPreset; anchor?: [number, number] }

@@ -2,25 +2,29 @@
    akce 2024, sloty/zdroje (klikatelné), action economy. Pro hráče read-only. */
 import type { AttackDef, StavBoje, Token } from "../types";
 import { STD_ACTIONS, ecoOf, moveLeft } from "../rules/turn";
+import { featureActions } from "../state/commands/features";
+import { METAMAGIC, isSorcerer } from "../rules/actions/features";
+import { useState } from "react";
 import { slotsLeft } from "../state/commands";
 import { dmgStyle, SIDE_STYLE } from "./visual";
 import ConditionIcon from "./ConditionIcon";
 import { sg } from "../types";
 import { Sword, Wand2, Hand, Zap, ChevronRight, Shield } from "lucide-react";
-import { useState } from "react";
 import type { Targeting } from "./BattleMap";
 
-export default function ActorPanel({ S, t, targeting, onAttack, onStdAction, onResource, onUndoMove, onHoverAtk, dm, onCheck, onUseItem }: {
+export default function ActorPanel({ S, t, targeting, onAttack, onStdAction, onResource, onUndoMove, onHoverAtk, dm, onCheck, onUseItem, onFeature }: {
   S: StavBoje; t: Token; targeting: Targeting | null;
-  onAttack: (atk: AttackDef, opts?: { slot?: number; pact?: boolean }) => void;
+  onAttack: (atk: AttackDef, opts?: { slot?: number; pact?: boolean; meta?: string[] }) => void;
   onStdAction: (id: string) => void;
   onResource: (idx: number) => void;
   onUndoMove?: () => void;
   onHoverAtk?: (a: AttackDef | null) => void;
   onCheck?: (name: string, mod: number, mode: "adv" | "dis" | "norm") => void;
   onUseItem?: (idx: number, asBA?: boolean) => void;
+  onFeature?: (key: string) => void;
   dm: boolean;
 }) {
+  const [metaSel, setMetaSel] = useState<string[]>([]);
   const [slotFor, setSlotFor] = useState<AttackDef | null>(null);
   const e = ecoOf(S, t);
   const mv = moveLeft(S, t);
@@ -42,7 +46,7 @@ export default function ActorPanel({ S, t, targeting, onAttack, onStdAction, onR
       if (!dm) return;
       if (leveled && !a.lvl) return;
       if (leveled && (t.slots?.length || t.pact)) { setSlotFor(slotFor === a ? null : a); return; }
-      onAttack(a);
+      onAttack(a, metaSel.length ? { meta: metaSel } : undefined);
     };
     return (
       <div className={`boj-atkwrap ${slotFor === a ? "open" : ""}`}>
@@ -71,14 +75,14 @@ export default function ActorPanel({ S, t, targeting, onAttack, onStdAction, onR
               .map((l) => {
                 const left = t.slots[l - 1].max - t.slots[l - 1].used;
                 return (
-                  <button key={l} disabled={!left} onClick={() => { setSlotFor(null); onAttack(a, { slot: l }); }}
+                  <button key={l} disabled={!left} onClick={() => { setSlotFor(null); onAttack(a, { slot: l, meta: metaSel.length ? metaSel : undefined }); }}
                           title={a.upcast ? `upcast +${(l - (a.lvl || 0))}×${a.upcast.dice}` : `${l}. slot`}>
                     {l}. ({left}×){a.upcast && l > (a.lvl || 0) ? ` +${l - (a.lvl || 0)}${a.upcast.dice}` : ""}
                   </button>
                 );
               })}
             {t.pact && t.pact.lvl >= (a.lvl || 1) && (
-              <button disabled={t.pact.used >= t.pact.max} onClick={() => { setSlotFor(null); onAttack(a, { pact: true }); }}>
+              <button disabled={t.pact.used >= t.pact.max} onClick={() => { setSlotFor(null); onAttack(a, { pact: true, meta: metaSel.length ? metaSel : undefined }); }}>
                 Pact {t.pact.lvl}. ({t.pact.max - t.pact.used}×)
               </button>
             )}
@@ -116,6 +120,19 @@ export default function ActorPanel({ S, t, targeting, onAttack, onStdAction, onR
 
       {!!actions.length && (
         <div className="boj-sec"><h4><Sword size={12} /> Akce</h4>{actions.map((a, i) => <AtkRow key={i} a={a} />)}</div>
+      )}
+      {!!spells.length && isSorcerer(t) && (
+        <div className="boj-sec"><h4>Metamagic</h4>
+          <div className="boj-check-grid">
+            {METAMAGIC.map((m) => (
+              <label key={m.id} className="boj-meta" title={`${m.desc} (${m.cost(1)}+ SP)`}>
+                <input type="checkbox" checked={metaSel.includes(m.id)}
+                       onChange={(e) => setMetaSel(e.target.checked ? [...metaSel, m.id] : metaSel.filter((x) => x !== m.id))} />
+                {m.nazev}
+              </label>
+            ))}
+          </div>
+        </div>
       )}
       {!!spells.length && (
         <div className="boj-sec"><h4><Wand2 size={12} /> Kouzla {t.dc ? `(DC ${t.dc})` : ""}</h4>
@@ -158,7 +175,14 @@ export default function ActorPanel({ S, t, targeting, onAttack, onStdAction, onR
           )}
         </div>
       )}
-          {!!t.items?.length && (
+          {!!featureActions(t).length && (
+        <div className="boj-sec"><h4>Schopnosti</h4>
+          {featureActions(t).map((f) => (
+            <button key={f.key} className="boj-mini boj-feat-btn" title={f.desc} onClick={() => onFeature?.(f.key)}>{f.nazev}</button>
+          ))}
+        </div>
+      )}
+      {!!t.items?.length && (
         <div className="boj-sec"><h4>Předměty</h4>
           {t.items.map((it, i) => (
             <div key={i} className="boj-item-row">

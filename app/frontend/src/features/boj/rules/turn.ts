@@ -1,3 +1,4 @@
+import { alertInit } from "./actions/features";
 /* Kolo/tah: iniciativa, posun tahu, zpracování začátku/konce tahu, action economy,
    recharge, legendary actions, death-save prompt. Stav = StavBoje (legacy-kompatibilní). */
 import type { StavBoje, Token, LogEntry, EcoState } from "../types";
@@ -23,7 +24,7 @@ export function log(S: StavBoje, typ: LogEntry["typ"], t: string, kdo?: string, 
 export function rollInitiative(S: StavBoje, rng: Rng = defaultRng, surpriseIds: string[] = []): void {
   for (const t of S.tok) {
     const r = d20(surpriseIds.includes(t.id) ? -1 : 0, rng);
-    t.init = r.r + (t.initB || 0);
+    t.init = r.r + (t.initB || 0) + alertInit(t);
     t.initRoll = r.rolls;
   }
   S.ord = [...S.tok].sort((x, y) => (y.init ?? 0) - (x.init ?? 0) || (y.initB ?? 0) - (x.initB ?? 0)).map((t) => t.id);
