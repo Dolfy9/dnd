@@ -1,0 +1,569 @@
+/* Hlavní stránka boje: layout, orchestrace (výběr, targeting, resolve, inspektor,
+   přidávání, nástroje, zóny, kontextové menu, multi-select, klávesnice, bottom sheet). */
+import { useEffect, useMemo, useRef, useState } from "react";
+import { useSearchParams } from "react-router-dom";
+import { useQuery } from "@tanstack/react-query";
+import { get } from "../../../api";
+import { useApp, isEditor } from "../../../store";
+import { toast, confirmDialog } from "../../../components/ui";
+import { useBattle } from "../state/useBattle";
+import "../boj.css";
+import * as C from "../state/commands";
+import { byId, cur, log } from "../rules/turn";
+import { presetById } from "../rules/effects";
+import { tokensInArea } from "../rules/areas";
+import { planMovement, type MovementPlan } from "../rules/movement";
+import { settingsOf } from "../rules/settings";
+import { resolveAttack } from "../rules/attack";
+import { previewDamage } from "../rules/damage";
+import type { AttackDef, BattleMapData, Token, EffectPreset, MoveMode } from "../types";
+import MovePopover, { type DropReq } from "./MovePopover";
+import OverridePrompt, { type OverrideOption } from "./OverridePrompt";
+import SettingsPanel from "./SettingsPanel";
+import BattleMap, { type Targeting, type ZonePlace, type MoveAtkPreview } from "./BattleMap";
+import InitiativeBar, { MiniCoin } from "./InitiativeBar";
+import ActorPanel from "./ActorPanel";
+import TokenInspector from "./TokenInspector";
+import AddCombatants, { freeSpot } from "./AddCombatants";
+import CombatLog from "./CombatLog";
+import ResolveDialog, { type Resolve } from "./ResolveDialog";
+import EffectsPanel from "./EffectsPanel";
+import ToolsPanel from "./ToolsPanel";
+import TurnBanner from "./TurnBanner";
+import CtxMenu from "./CtxMenu";
+import HelpOverlay from "./HelpOverlay";
+import { difficulty } from "../rules/encounter";
+import { resourceAction } from "../rules/resources";
+import { MousePointer2, Ruler, MapPin, Users, ScrollText, ShieldQuestion, X, Sparkles, Globe2, HelpCircle, Settings, Type, PanelRightClose, PanelRightOpen, MoreHorizontal } from "lucide-react";
+
+type Panel = "akce" | "efekty" | "prostredi" | "inspektor" | "log";
+
+export default function BattlePage() {
+  const [params] = useSearchParams();
+  const bid = params.get("boj") || "";
+  const { user, previewPlayer } = useApp();
+  const dm = isEditor(user) && !previewPlayer;
+  const b = useBattle(bid);
+  const [sel, setSel] = useState<string | null>(null);
+  const [selSet, setSelSet] = useState<Set<string>>(new Set());
+  const [panel, setPanel] = useState<Panel>("akce");
+  const [inspId, setInspId] = useState<string | null>(null);
+  const [tool, setTool] = useState<"select" | "measure" | "zone" | "paint" | "fog" | "light">("select");
+  const [paintTile, setPaintTile] = useState("#");
+  const [fogMode, setFogMode] = useState<"reveal" | "hide">("reveal");
+  const [zonePlace, setZonePlace] = useState<ZonePlace | null>(null);
+  const [pendingLight, setPendingLight] = useState<{ nazev: string; bright: number; dim: number } | null>(null);
+  const [targeting, setTargeting] = useState<Targeting | null>(null);
+  const [resolve, setResolve] = useState<Resolve | null>(null);
+  const [moveAtk, setMoveAtk] = useState<{ plan: MoveAtkPreview; tgtId: string; atk: AttackDef; srcId: string } | null>(null);
+  const [addOpen, setAddOpen] = useState(false);
+  const [ctxMenu, setCtxMenu] = useState<{ t: Token; x: number; y: number } | null>(null);
+  const [help, setHelp] = useState(false);
+  const [dropReq, setDropReq] = useState<DropReq | null>(null);       // MovePopover při dropu
+  const [ov, setOv] = useState<{ title: string; reason?: string; options: OverrideOption[]; children?: React.ReactNode } | null>(null); // generický override
+  const [dmgCfm, setDmgCfm] = useState<{ r: Resolve; o: { overrideAdv?: number | null; manualD20?: number; manualDmg?: number; slot?: number; pact?: boolean; override?: boolean }; rolled: number; base: number; applied: number; mods: string[]; tgt: string; tgtId: string; hit: boolean } | null>(null);
+  const [moreOpen, setMoreOpen] = useState(false);                   // ⋯ menu v toolbaru (mobil)
+  const [loh, setLoh] = useState<{ idx: number; max: number; nazev: string; amt: number } | null>(null); // Lay on Hands input
+  const [setOpen, setSetOpen] = useState(false);                     // Nastavení boje
+  const [sheet, setSheet] = useState<"peek" | "half" | "full">("peek");
+  const [names, setNames] = useState<"hover" | "always">(() => (localStorage.getItem("boj-names") as "always") || "hover");
+  const [hoverAtk, setHoverAtk] = useState<AttackDef | null>(null);
+  const [sideW, setSideW] = useState(() => Math.min(520, Math.max(300, Number(localStorage.getItem("boj-sidew")) || 340)));
+  const [sideMini, setSideMini] = useState(false);
+  const sheetRef = useRef<HTMLDivElement>(null);
+  const sheetStart = useRef<number>(0);
+
+  const maps = useQuery({
+    queryKey: ["map-data"],
+    queryFn: () => get<{ bojove_mapy: BattleMapData[] }>("/api/map/data"),
+    staleTime: 300_000,
+  });
+  const map = useMemo(() => {
+    const raw: any = maps.data as any;
+    const list = (raw?.bojove_mapy || raw?.data?.bojove_mapy || raw?.mapy || []).map((m: any) => ({ ...(m.data || {}), ...m, data: undefined })) as BattleMapData[];
+    return list.find((m) => m.id === b.S?.map) || list[0];
+  }, [maps.data, b.S?.map]);
+
+  useEffect(() => { b.load(); }, [bid]);
+  // app sidebar: sbalit na stránce boje, při odchodu vrátit
+  const setSidebar = useApp((s) => s.setSidebar);
+  useEffect(() => {
+    const was = useApp.getState().sidebarOpen;
+    setSidebar(false);
+    return () => setSidebar(was);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+  const S = b.S;
+  const selTok = sel ? byId(S!, sel) : undefined;
+  const curTok = S ? cur(S) : undefined;
+  const shownTok = selTok || curTok;
+  const diff = S ? difficulty(S.tok) : null;
+
+  /* ---- klávesové zkratky ---- */
+  useEffect(() => {
+    if (!S || !map) return;
+    const h = (e: KeyboardEvent) => {
+      const tag = (e.target as HTMLElement).tagName;
+      if (e.key === "Escape") { setTargeting(null); setResolve(null); setMoveAtk(null); setCtxMenu(null); setZonePlace(null); setTool("select"); setDropReq(null); setOv(null); setDmgCfm(null); setLoh(null); setSetOpen(false); return; }
+      if (["INPUT", "SELECT", "TEXTAREA"].includes(tag)) return;
+      if (e.key === "?") { setHelp((v) => !v); return; }
+      if (!dm) return;
+      if ((e.key === " " || e.key.toLowerCase() === "n") && !e.ctrlKey) { e.preventDefault(); b.dispatch((s) => C.nextTurn(s)); return; }
+      if (e.ctrlKey && e.key.toLowerCase() === "z") { e.preventDefault(); e.shiftKey ? b.redo() : b.undo(); return; }
+      if (e.ctrlKey && e.key.toLowerCase() === "y") { e.preventDefault(); b.redo(); return; }
+      if (e.key.toLowerCase() === "m") { setTool("measure"); return; }
+      if (e.key.toLowerCase() === "f") { window.dispatchEvent(new Event("boj-fit")); return; }
+      if (e.key === "+") { window.dispatchEvent(new CustomEvent("boj-zoom", { detail: "in" })); return; }
+      if (e.key === "-") { window.dispatchEvent(new CustomEvent("boj-zoom", { detail: "out" })); return; }
+      if (e.key === "0") { window.dispatchEvent(new CustomEvent("boj-zoom", { detail: "reset" })); return; }
+      if (e.key.toLowerCase() === "t" && shownTok?.atk[0]) { setTargeting({ atk: shownTok.atk[0], srcId: shownTok.id }); return; }
+      if (/^[1-9]$/.test(e.key) && shownTok) {
+        const a = shownTok.atk[Number(e.key) - 1];
+        if (a) onAttack(a);
+        return;
+      }
+      if (e.key === "Delete" && selTok) {
+        void confirmDialog({ title: "Odebrat z boje", text: selTok.nazev, okLabel: "Odebrat", danger: true })
+          .then((ok) => { if (ok) b.dispatch((s) => C.removeToken(s, selTok.id)); });
+        return;
+      }
+      if (["ArrowUp", "ArrowDown", "ArrowLeft", "ArrowRight"].includes(e.key) && selTok?.x != null) {
+        e.preventDefault();
+        const d: Record<string, [number, number]> = { ArrowUp: [0, -1], ArrowDown: [0, 1], ArrowLeft: [-1, 0], ArrowRight: [1, 0] };
+        const [dx, dy] = d[e.key];
+        const nx = selTok.x + dx, ny = selTok.y! + dy;
+        const set = settingsOf(S);
+        if (e.altKey) { // Alt+šipka = teleport o krok
+          b.dispatch((s) => C.moveToken(s, selTok.id, nx, ny, { mode: "teleport" }));
+          return;
+        }
+        const pl = planMovement(S, map, selTok, [], [nx, ny], "pravidla", set);
+        if (!pl.blocked && pl.overFt <= 0 && !pl.oas.length)
+          b.dispatch((s) => C.moveToken(s, selTok.id, nx, ny, { ft: pl.ft, oas: pl.oas, mode: "pravidla" }));
+        else setDropReq({ t: selTok, plan: pl, waypoints: [], pt: { x: window.innerWidth / 2, y: window.innerHeight / 2 }, kind: pl.blocked ? "blocked" : pl.oas.length && pl.overFt <= 0 ? "oa" : "over" });
+        return;
+      }
+      if (e.key.toLowerCase() === "h" || e.key.toLowerCase() === "d") {
+        if (selTok) { setInspId(selTok.id); setPanel("inspektor"); }
+      }
+    };
+    window.addEventListener("keydown", h);
+    return () => window.removeEventListener("keydown", h);
+  });
+
+  if (b.err) return <div className="boj-err">⚠ {b.err} <button className="boj-btn2" onClick={b.load}>Znovu</button></div>;
+  if (!S || !map) return <div className="boj-loading">Načítám bojiště…</div>;
+
+  const cmd = b.dispatch;
+  const ctx = { map };
+
+  /* ---- handlery ---- */
+  const onAttack = (atk: AttackDef, opts?: { slot?: number; pact?: boolean }) => {
+    const src = shownTok;
+    if (!src) { toast("Nejdřív vyber útočníka", "err"); return; }
+    if (atk.area) setTargeting({ atk, srcId: src.id, area: true, slot: opts?.slot, pact: opts?.pact });
+    else setTargeting({ atk, srcId: src.id, slot: opts?.slot, pact: opts?.pact });
+    setPanel("akce");
+  };
+  const onTarget = (tgtId: string) => {
+    if (!targeting) return;
+    const src = byId(S, targeting.srcId), tgt = byId(S, tgtId);
+    if (!src || !tgt) return;
+    const ev = C.evalUi(S, map, src, tgt, targeting.atk);
+    const reason = ev.beyondRange ? "mimo dostřel" : ev.cover === 9 ? "plný kryt" : "nelze zacílit";
+    if (!ev.canTarget) {
+      // nabídni přesun+útok pro melee
+      const plan = C.planMoveAttack(S, map, src, tgt, targeting.atk);
+      if (plan) { setMoveAtk({ plan, tgtId, atk: targeting.atk, srcId: targeting.srcId }); setTargeting(null); return; }
+      const st = settingsOf(S).automatizace.dosah;
+      if (st === "hlidat") {
+        setOv({
+          title: `${src.nazev} → ${tgt.nazev}`,
+          reason: `${reason} (${ev.dist} ft) — pravidla to neumožňují`,
+          options: [
+            { label: "Zaútočit i tak (DM)", dm: true, onPick: () => { setOv(null); setResolve({ kind: "attack", atk: targeting.atk, srcId: targeting.srcId, tgtId, force: true }); setTargeting(null); } },
+          ],
+        });
+      } else if (st === "varovat") {
+        setResolve({ kind: "attack", atk: targeting.atk, srcId: targeting.srcId, tgtId, force: true });
+      } else { toast(`${tgt.nazev}: ${reason} (${ev.dist} ft)`, "err"); return; }
+      setTargeting(null);
+      return;
+    }
+    setResolve({ kind: "attack", atk: targeting.atk, srcId: targeting.srcId, tgtId });
+    setTargeting(null);
+  };
+  const doMoveAttack = () => {
+    if (!moveAtk) return;
+    const { plan, tgtId, atk, srcId } = moveAtk;
+    cmd((s) => C.moveToken(s, srcId, plan.cell[0], plan.cell[1], { ft: plan.ft, oas: plan.oas }));
+    setMoveAtk(null);
+    setResolve({ kind: "attack", atk, srcId, tgtId });
+  };
+  const onArea = (anchor: [number, number]) => {
+    if (!targeting?.area) return;
+    const a = targeting.atk;
+    const src = byId(S, targeting.srcId);
+    const shape = a.area!.shape;
+    let spec: any = { shape, size: a.area!.size, anchor };
+    if ((shape === "cone" || shape === "line") && src?.x != null) {
+      spec = { ...spec, anchor: [src.x, src.y!], dir: Math.atan2(anchor[1] - (src.y ?? 0), anchor[0] - (src.x ?? 0)) * 180 / Math.PI };
+    }
+    const tgtIds = tokensInArea(spec, S.tok, src).map((t) => t.id);
+    setResolve({ kind: "area", atk: a, srcId: targeting.srcId, spec, tgtIds, slot: targeting.slot });
+    setTargeting(null);
+  };
+  const onZone = (x: number, y: number, dir?: number) => {
+    if (!zonePlace?.preset.zone) return;
+    if (!zonePlace.anchor) { setZonePlace({ ...zonePlace, anchor: [x, y] }); return; }
+    cmd((s) => C.cmdPresetZone(s, zonePlace.preset.id, [x, y], dir ?? 0, curTok?.id || sel || undefined));
+    setZonePlace(null); setTool("select");
+  };
+  /* ---- drag&drop rozhodovací strom: příprava → volno, mimo tah → podle nastavení,
+     limit/OA → popover, jinak rovnou pohyb. Alt = teleport, Shift = nucený. ---- */
+  const execMove = (t: Token, plan: MovementPlan, wps: [number, number][], mode: MoveMode, to: [number, number], zones?: boolean) => {
+    const target = plan.blocked && plan.farthest ? plan.farthest : to;
+    const mid = [...wps, target].slice(0, -1); // pro segmentové trigger zóny stačí finální pozice
+    void mid;
+    cmd((s) => C.moveToken(s, t.id, target[0], target[1], {
+      ft: mode === "pravidla" || mode === "prekrocit" || mode === "dash" ? plan.ft : 0,
+      oas: mode === "nuceny" || mode === "teleport" ? [] : plan.oas,
+      mode, override: true, zones,
+    }));
+  };
+  const onDrop = (t: Token, to: [number, number], plan: MovementPlan, wps: [number, number][],
+                 pt: { x: number; y: number }, mods: { alt: boolean; shift: boolean }, group?: Set<string>) => {
+    if (!dm) return;
+    const set = settingsOf(S);
+    // modifikátory mají přednost
+    if (mods.alt) { execMove(t, plan, wps, "teleport", to); return; }
+    if (mods.shift) { execMove(t, plan, wps, "nuceny", to); return; }
+    // skupinový drag: příprava = volné posunutí zachovající offsety; boj = nucený přesun
+    if (group && group.size > 1) {
+      const dx = to[0] - (t.x ?? 0), dy = to[1] - (t.y ?? 0);
+      cmd((s) => {
+        for (const id of group) {
+          const g = byId(s, id); if (!g || g.x == null) continue;
+          C.moveToken(s, id, g.x + dx, (g.y ?? 0) + dy, { mode: "nuceny", zones: set.pohyb.zonyPriPresunuDM && S.round > 0 });
+        }
+      });
+      return;
+    }
+    // příprava: vždy volné rozmístění, bez nákladů/OA/zón
+    if (S.round === 0) { execMove(t, plan, wps, "nuceny", to, false); return; }
+    // žeton mimo tah
+    if (cur(S)?.id !== t.id) {
+      if (set.pohyb.mimoTah === "zeptat") setDropReq({ t, plan, waypoints: wps, pt, kind: "mimoTah" });
+      else execMove(t, plan, wps, "nuceny", to);
+      return;
+    }
+    // blokovaná cesta → teleport/nucený popover
+    if (plan.blocked) { setDropReq({ t, plan, waypoints: wps, pt, kind: "blocked" }); return; }
+    // přes limit
+    if (plan.overFt > 0) {
+      if (set.pohyb.limit === "volne") { execMove(t, plan, wps, set.pohyb.vychoziPrekroceni || "prekrocit", to); return; }
+      setDropReq({ t, plan, waypoints: wps, pt, kind: "over" });
+      return;
+    }
+    // OA podle nastavení
+    if (plan.oas.length) {
+      if (set.pohyb.oa === "zeptat") { setDropReq({ t, plan, waypoints: wps, pt, kind: "oa" }); return; }
+      execMove(t, plan, wps, "pravidla", to);
+      if (set.pohyb.oa === "jenZaznam") cmd((s) => log(s, "system", `${t.nazev}: OA připomenutí — ${plan.oas.join(", ")}`, "PJ"));
+      return;
+    }
+    execMove(t, plan, wps, "pravidla", to);
+  };
+  const applyResolve = (o: { overrideAdv?: number | null; manualD20?: number; manualDmg?: number; slot?: number; pact?: boolean; override?: boolean }) => {
+    if (!resolve) return;
+    const r = resolve;
+    // potvrzení zranění: nejdřív náhled (stejný d20), DM může upravit a pak teprve aplikovat
+    if (r.kind === "attack" && o.manualDmg == null && settingsOf(S).automatizace.zraneni === "potvrdit") {
+      const A = byId(S, r.srcId), B = byId(S, r.tgtId);
+      if (A && B) {
+        const res = resolveAttack({ attacker: A, target: B, atk: r.atk, map, tokens: S.tok, overrideAdv: o.overrideAdv, state: S, teren: S.teren, ax: undefined, ay: undefined }, { manualD20: o.manualD20, force: r.force });
+        if (res && res.hit && res.dmgByType.length) {
+          const n = r.atk.n || 1;
+          const parts = res.dmgByType.map((p) => ({ amount: p.amount * n, type: p.type }));
+          const prev = previewDamage(B, parts);
+          setResolve(null);
+          setDmgCfm({ r, o, rolled: res.used, base: parts.reduce((a, p) => a + p.amount, 0), applied: prev.applied, mods: prev.mods, tgt: B.nazev, tgtId: B.id, hit: true });
+          return;
+        }
+      }
+    }
+    cmd((s) => {
+      if (r.kind === "attack") {
+        const res = C.cmdAttack(s, { atkId: r.srcId, tgtId: r.tgtId, atk: r.atk, ...o, override: o.override || r.force }, ctx);
+        if (!res.ok) toast(res.reason || "Útok nešel", "err");
+      } else {
+        const res = C.cmdArea(s, { srcId: r.srcId, spec: r.spec, atk: r.atk, manualDmg: o.manualDmg, slot: o.slot ?? r.slot, pact: o.pact, override: o.override || r.force }, ctx);
+        if (!res.ok) toast(res.reason || "Nešlo", "err");
+      }
+    });
+    setResolve(null);
+  };
+  const onPickPreset = (p: EffectPreset) => {
+    const ids = selSet.size ? [...selSet] : sel ? [sel] : [];
+    if (!ids.length) { toast("Vyber žeton(y) pro efekt", "err"); return; }
+    cmd((s) => ids.forEach((id) => C.addEffect(s, id, p.id, curTok?.id || sel || undefined)));
+    if (p.zone) { setZonePlace({ preset: p }); setTool("zone"); }
+    toast(`${p.nazev} → ${ids.length} žeton${ids.length > 1 ? "ů" : ""}`, "ok");
+  };
+  const onZonePreset = (p: EffectPreset) => { setZonePlace({ preset: p }); setTool("zone"); setPanel("prostredi"); };
+  const onCtxAction = (a: string) => {
+    const t = ctxMenu?.t; if (!t) return;
+    switch (a) {
+      case "attack": {
+        const atk = t.atk?.[0];
+        if (atk) setTargeting({ atk, srcId: t.id });
+        break;
+      }
+      case "dmg": case "heal": case "cond": setInspId(t.id); setPanel("inspektor"); break;
+      case "effect": setSel(t.id); setPanel("efekty"); break;
+      case "hide": cmd((s) => C.patchToken(s, t.id, { skryty: !t.skryty })); break;
+      case "remove": void confirmDialog({ title: "Odebrat z boje", text: t.nazev, okLabel: "Odebrat", danger: true })
+        .then((ok) => { if (ok) cmd((s) => C.removeToken(s, t.id)); }); break;
+    }
+  };
+  const onResource = (idx: number) => {
+    const t = shownTok; if (!t) return;
+    const z = t.zdroje?.[idx]; if (!z) return;
+    const act = resourceAction(z.nazev, t);
+    if (act.kind === "area") {
+      const atk: AttackDef = {
+        nazev: z.nazev, kind: "feature", save: "DEX", dc: t.dc || 8 + (t.pb || 2) + (t.mods.CON || 0),
+        area: { shape: "cone", size: 30 }, dmg: "4d6", typ: "Fire", half: true,
+      };
+      setTargeting({ atk, srcId: t.id, area: true });
+      cmd((s) => { const x = byId(s, t.id); if (x) x.zdroje[idx].used += 1; });
+      return;
+    }
+    if (act.needsAmount) { setLoh({ idx, max: z.max - z.used, nazev: z.nazev, amt: Math.min(10, z.max - z.used) }); return; }
+    cmd((s) => {
+      const r = C.cmdUseResource(s, t.id, idx);
+      if (!r.ok) setOv({ title: z.nazev, reason: r.msg, options: [{ label: "Použít i tak", dm: true, onPick: () => { setOv(null); cmd((s2) => void C.cmdUseResource(s2, t.id, idx, undefined, true)); } }] });
+    });
+  };
+
+  const panels: { id: Panel; n: string; ico: React.ReactNode }[] = [
+    { id: "akce", n: "Akce", ico: <ShieldQuestion size={13} /> },
+    { id: "efekty", n: "Efekty", ico: <Sparkles size={13} /> },
+    { id: "prostredi", n: "Prostředí", ico: <Globe2 size={13} /> },
+    { id: "inspektor", n: "Inspektor", ico: <MousePointer2 size={13} /> },
+    { id: "log", n: "Log", ico: <ScrollText size={13} /> },
+  ];
+
+  /* ---- bottom-sheet drag (mobile) ---- */
+  const sheetDrag = (e: React.PointerEvent) => {
+    sheetStart.current = e.clientY;
+    const el = sheetRef.current!;
+    el.setPointerCapture(e.pointerId);
+  };
+  const sheetMove = (e: React.PointerEvent) => {
+    if (!sheetStart.current) return;
+    const d = e.clientY - sheetStart.current;
+    if (Math.abs(d) < 40) return;
+    const order: ("peek" | "half" | "full")[] = ["peek", "half", "full"];
+    const i = order.indexOf(sheet) + (d < 0 ? 1 : -1);
+    setSheet(order[Math.max(0, Math.min(2, i))]);
+    sheetStart.current = 0;
+  };
+  const sheetEnd = () => { sheetStart.current = 0; };
+
+  /* resizable pravý panel (300–520 px, remembered) */
+  const sideDrag = (e: React.PointerEvent) => {
+    (e.currentTarget as HTMLElement).setPointerCapture(e.pointerId);
+    (e.currentTarget as HTMLElement).classList.add("on");
+  };
+  const sideMove = (e: React.PointerEvent) => {
+    if (!(e.currentTarget as HTMLElement).classList.contains("on")) return;
+    const w = Math.min(520, Math.max(300, window.innerWidth - e.clientX));
+    setSideW(w);
+  };
+  const sideEnd = (e: React.PointerEvent) => {
+    (e.currentTarget as HTMLElement).classList.remove("on");
+    try { localStorage.setItem("boj-sidew", String(sideW)); } catch { /* */ }
+  };
+  const cancelMode = () => { setTargeting(null); setZonePlace(null); setMoveAtk(null); if (["measure", "paint", "fog", "light"].includes(tool)) setTool("select"); };
+
+  const empty = !S.tok.length;
+
+  return (
+    <div className="boj-page">
+      <InitiativeBar
+        S={S} sel={sel} dm={dm}
+        onSelect={(id) => { setSel(id); setPanel("akce"); }}
+        onNext={() => cmd((s) => C.nextTurn(s))}
+        onRoll={() => cmd((s) => C.cmdRollInit(s))}
+        onUndo={b.undo} onRedo={b.redo}
+        canUndo canRedo saving={b.saving}
+      />
+      <div className="boj-body">
+        <div className="boj-mapwrap">
+          <TurnBanner S={S} />
+          <div className="boj-toolbar">
+            <button className={`boj-tbtn ${tool === "select" ? "on" : ""}`} title="Vybrat / táhnout žetony" onClick={() => { setTool("select"); setZonePlace(null); }}><MousePointer2 size={14} /></button>
+            <button className={`boj-tbtn ${tool === "measure" ? "on" : ""}`} title="Metr (M)" onClick={() => setTool("measure")}><Ruler size={14} /></button>
+            {dm && <button className={`boj-tbtn ${tool === "zone" ? "on" : ""}`} title="Umístit zónu z knihovny" onClick={() => { setPanel("efekty"); }}><MapPin size={14} /></button>}
+            <span className="boj-mapname">{map.nazev}{map.osvetleni ? ` · ${map.osvetleni}` : ""}</span>
+            {diff && <span className={`boj-diff ${diff.cls}`}>{diff.label}</span>}
+            {dm && <button className="boj-btn2 pri" onClick={() => setAddOpen(true)}><Users size={14} /> Přidat</button>}
+            {moveAtk && (
+              <button className="boj-btn2 warn" onClick={doMoveAttack} title="Přesunout a zaútočit">
+                ➤ {moveAtk.plan.ft} ft {moveAtk.plan.oas.length ? `⚠${moveAtk.plan.oas.length}` : ""}
+              </button>
+            )}
+            {(targeting || zonePlace || moveAtk) && (
+              <button className="boj-btn2 err" onClick={() => { setTargeting(null); setZonePlace(null); setMoveAtk(null); }}>
+                <X size={13} /> {targeting?.area ? "klikni = střed oblasti" : targeting ? "klikni na cíl" : zonePlace ? "umísti zónu" : "zrušit"}
+              </button>
+            )}
+            <div className={`boj-more ${moreOpen ? "open" : ""}`}>
+              <button className="boj-tbtn boj-more-btn" title="Další nástroje" onClick={() => setMoreOpen(!moreOpen)}><MoreHorizontal size={14} /></button>
+              <div className="boj-more-items">
+                <button className={`boj-tbtn ${names === "always" ? "on" : ""}`} title={`Jména na mapě: ${names === "always" ? "vždy" : "při najetí"} (klik = přepnout)`}
+                        onClick={() => { const v = names === "always" ? "hover" : "always"; setNames(v); localStorage.setItem("boj-names", v); }}><Type size={14} /><span className="boj-more-lab">Jména</span></button>
+                {dm && <button className="boj-tbtn" title="Nastavení boje" onClick={() => { setSetOpen(true); setMoreOpen(false); }}><Settings size={14} /><span className="boj-more-lab">Nastavení</span></button>}
+                <button className="boj-tbtn" title="Nápověda (?)" onClick={() => { setHelp(true); setMoreOpen(false); }}><HelpCircle size={14} /><span className="boj-more-lab">Nápověda</span></button>
+              </div>
+            </div>
+          </div>
+          <BattleMap
+            bid={bid} S={S} map={map} sel={sel} selSet={selSet} dm={dm} tool={tool}
+            paintTile={paintTile} fogMode={fogMode}
+            targeting={targeting} zonePlace={zonePlace} moveAtk={moveAtk?.plan}
+            hoverAtk={hoverAtk} names={names} followTurn={settingsOf(S).pohyb.sledujTah !== false}
+            onCancelMode={cancelMode}
+            fx={b.newFx} onFxDone={b.markFx}
+            onSelect={(id, add) => { if (add && id) { const n = new Set(selSet); n.has(id) ? n.delete(id) : n.add(id); setSelSet(n); } else { setSel(id); if (!add) setSelSet(new Set()); } }}
+            onSelSet={setSelSet}
+            onInspect={(id) => { setInspId(id); setPanel("inspektor"); }}
+            onDrop={onDrop}
+            onTarget={onTarget}
+            onArea={onArea}
+            onZone={onZone}
+            onPaint={(cells) => cmd((s) => C.cmdPaint(s, cells, paintTile))}
+            onFogPaint={(cells, reveal) => cmd((s) => C.cmdFogCells(s, cells, reveal))}
+            onLightPlace={(x, y) => { if (pendingLight) { cmd((s) => C.cmdAddLight(s, { ...pendingLight, anchor: [x, y] })); setPendingLight(null); setTool("select"); } }}
+            onCtxMenu={(t, pt) => setCtxMenu({ t, x: pt.x, y: pt.y })}
+          />
+        </div>
+        <aside ref={sheetRef} className={`boj-side sheet-${sheet} ${sideMini ? "mini" : ""}`} style={sideMini ? undefined : { width: sideW }}>
+          <div className="boj-sheet-handle" onPointerDown={sheetDrag} onPointerMove={sheetMove} onPointerUp={sheetEnd} onPointerCancel={sheetEnd} />
+          <div className="boj-side-resizer" onPointerDown={sideDrag} onPointerMove={sideMove} onPointerUp={sideEnd} onPointerCancel={sideEnd} />
+          <div className={`boj-side-tabs ${sideW < 450 ? "icons" : ""}`}>
+            {panels.map((p) => (
+              <button key={p.id} className={panel === p.id && !sideMini ? "on" : ""} title={p.n}
+                      onClick={() => { setPanel(p.id); setSideMini(false); }}>{p.ico} <span>{p.n}</span></button>
+            ))}
+            <button className="boj-side-collapse" title={sideMini ? "Rozbalit panel" : "Sbalit panel"} onClick={() => setSideMini(!sideMini)}>
+              {sideMini ? <PanelRightOpen size={14} /> : <PanelRightClose size={14} />}
+            </button>
+          </div>
+          <div className="boj-side-body">
+            {panel === "akce" && (
+              shownTok
+                ? <ActorPanel S={S} t={shownTok} targeting={targeting} onAttack={onAttack}
+                              onStdAction={(a) => cmd((s) => C.cmdStdAction(s, shownTok.id, a, selTok?.id))}
+                              onResource={onResource} onUndoMove={() => cmd((s) => C.undoTurnMovement(s, shownTok.id))} dm={dm}
+                              onHoverAtk={setHoverAtk} />
+                : <i className="boj-none">Vyber žeton na mapě</i>
+            )}
+            {panel === "efekty" && (
+              <EffectsPanel S={S} sel={shownTok || null} selSet={selSet} dm={dm}
+                onPickPreset={onPickPreset}
+                onZonePreset={onZonePreset}
+                onRemoveEffect={(tid, eid) => cmd((s) => C.removeEffect(s, tid, eid))}
+                onRemoveZone={(zid) => cmd((s) => C.removeZone(s, zid))}
+                onDropConc={(srcId) => cmd((s) => C.dropConc(s, srcId))} />
+            )}
+            {panel === "prostredi" && (
+              <ToolsPanel S={S} map={map} sel={selTok || null} dm={dm}
+                tool={tool} paintTile={paintTile} fogMode={fogMode}
+                onTool={setTool} onPaintTile={setPaintTile} onFogMode={setFogMode}
+                onFogToggle={(on) => cmd((s) => C.cmdFogToggle(s, on))}
+                onFogParty={() => cmd((s) => C.cmdFogParty(s))}
+                onAddLight={(l) => { if (l.tokenId) cmd((s) => C.cmdAddLight(s, l)); else { setPendingLight(l); setTool("light"); toast("Klikni do mapy = umísti světlo", "ok"); } }}
+                onRemoveLight={(id) => cmd((s) => C.cmdRemoveLight(s, id))}
+                onLightLevel={(l) => cmd((s) => C.cmdLightLevel(s, l))}
+                onRemoveZone={(zid) => cmd((s) => C.removeZone(s, zid))}
+                onDice={(expr, adv) => cmd((s) => C.cmdDice(s, shownTok?.nazev || "PJ", expr, adv))}
+                onRest={(kind) => cmd((s) => C.cmdRest(s, s.tok.filter((t) => !t.dead).map((t) => t.id), kind))} />
+            )}
+            {panel === "inspektor" && (
+              inspId && byId(S, inspId)
+                ? <TokenInspector S={S} t={byId(S, inspId)!} cmd={cmd} dm={dm} onClose={() => setInspId(null)} />
+                : <i className="boj-none">Dvojklik na žeton otevře inspektor</i>
+            )}
+            {panel === "log" && <CombatLog log={S.log} pj={dm} />}
+          </div>
+        </aside>
+      </div>
+
+      {addOpen && dm && (
+        <AddCombatants
+          S={S} map={map}
+          onAdd={(t) => { const xy = freeSpot(S, map, t.side, t.s); cmd((s) => C.addToken(s, t, xy)); }}
+          onClose={() => setAddOpen(false)}
+        />
+      )}
+      {resolve && (
+        <ResolveDialog S={S} map={map} r={resolve} onApply={applyResolve} onClose={() => setResolve(null)} />
+      )}
+      {ctxMenu && <CtxMenu t={ctxMenu.t} x={ctxMenu.x} y={ctxMenu.y} dm={dm} onClose={() => setCtxMenu(null)} onAction={onCtxAction} />}
+      {help && <HelpOverlay onClose={() => setHelp(false)} />}
+      {dropReq && dm && <MovePopover S={S} map={map} req={dropReq} cmd={cmd} onClose={() => setDropReq(null)} />}
+      {setOpen && dm && <SettingsPanel S={S} cmd={cmd} onClose={() => setSetOpen(false)} />}
+      {ov && <OverridePrompt title={ov.title} reason={ov.reason} options={ov.options} onClose={() => setOv(null)}>{ov.children}</OverridePrompt>}
+      {loh && (
+        <OverridePrompt title={loh.nazev} reason={`Kolik HP z poolu? (${loh.max} volných)`} onClose={() => setLoh(null)}
+          options={[
+            { label: `Použít ${loh.amt} HP`, onPick: () => { const amt = loh.amt, idx = loh.idx; const t = shownTok; setLoh(null); if (t) cmd((s) => { const r = C.cmdUseResource(s, t.id, idx, amt); if (!r.ok) toast(r.msg, "err"); }); } },
+          ]}>
+          <input type="number" min={1} max={loh.max} value={loh.amt} autoFocus
+                 onChange={(e) => setLoh({ ...loh, amt: Math.max(1, Math.min(loh.max, Number(e.target.value) || 1)) })}
+                 style={{ width: "100%", marginTop: 4 }} />
+        </OverridePrompt>
+      )}
+      {dmgCfm && (
+        <OverridePrompt title={`Zranění: ${dmgCfm.tgt}`} reason={`Hod d20 ${dmgCfm.rolled} — výsledné damage po resistencích${dmgCfm.mods.length ? ` (${dmgCfm.mods.join(", ")})` : ""}`} onClose={() => setDmgCfm(null)}
+          options={[
+            { label: `Aplikovat ${dmgCfm.applied}`, onPick: () => { const d = dmgCfm; setDmgCfm(null); cmd((s) => { const rr = d.r; if (rr.kind === "attack") { const res = C.cmdAttack(s, { atkId: rr.srcId, tgtId: rr.tgtId, atk: rr.atk, ...d.o, manualD20: d.rolled, manualDmg: d.applied, override: d.o.override || rr.force }, ctx); if (!res.ok) toast(res.reason || "Útok nešel", "err"); } }); } },
+          ]}>
+          <div className="boj-dmg-hero">
+            <input type="number" min={0} value={dmgCfm.applied} aria-label="Výsledné zranění"
+                   onChange={(e) => setDmgCfm({ ...dmgCfm, applied: Math.max(0, Number(e.target.value) || 0) })} />
+          </div>
+          <div className="boj-seg boj-seg-full">
+            {[["×½", Math.floor(dmgCfm.applied / 2)], ["×2", dmgCfm.applied * 2], ["0", 0]].map(([l, v]) => (
+              <button key={l as string} onClick={() => setDmgCfm({ ...dmgCfm, applied: v as number })}>{l}</button>
+            ))}
+          </div>
+          {(() => { const tt = byId(S, dmgCfm.tgtId); return tt ? (
+            <div className="boj-dmg-tgt">
+              <MiniCoin t={tt} size={26} />
+              <b>{tt.nazev}</b>
+              <span>finální zranění <b className="num">{dmgCfm.applied}</b></span>
+            </div>
+          ) : null; })()}
+          <em className="boj-dmg-base">(hozeno {dmgCfm.base}{dmgCfm.mods.length ? ` · ${dmgCfm.mods.join(", ")}` : ""})</em>
+        </OverridePrompt>
+      )}
+      {empty && !addOpen && (
+        <div className="boj-onboard">
+          <div>
+            <h3>Příprava boje</h3>
+            <ol>
+              <li>Vyber mapu bojiště (v tomto boji: <b>{map.nazev}</b>)</li>
+              <li>Přidej družinu — tlačítko <b>Přidat</b> vpravo nahoře</li>
+              <li>Přidej střetnutí z mapy nebo netvory z bestiáře</li>
+              <li>Zahoď <b>Iniciativu</b> a hraj</li>
+            </ol>
+            {dm && <button className="boj-btn2 pri" onClick={() => setAddOpen(true)}><Users size={14} /> Přidat účastníky</button>}
+          </div>
+        </div>
+      )}
+    </div>
+  );
+}

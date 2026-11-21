@@ -1,0 +1,152 @@
+"""Boje: player_view filtrace + version-only WS broadcast."""
+import pytest
+from fastapi.testclient import TestClient
+from fastapi import Request
+
+from app import db, security
+from app.api import battles as battles_mod
+from app.main import app
+
+
+def _fake_user(request: Request):
+    role = request.headers.get("x-test-role", "editor")
+    return {"login": "t_" + role, "name": role, "role": role, "csrf": "x"}
+
+
+@pytest.fixture(autouse=True)
+def _auth_override():
+    app.dependency_overrides[security.user] = _fake_user
+    app.dependency_overrides[security.optional] = _fake_user
+    yield
+    app.dependency_overrides.clear()
+
+
+@pytest.fixture()
+def editor():
+    c = TestClient(app)
+    c.headers["x-test-role"] = "editor"
+    return c
+
+
+@pytest.fixture()
+def player():
+    c = TestClient(app)
+    c.headers["x-test-role"] = "player"
+    return c
+
+
+def _mk_battle(client) -> str:
+    r = client.post("/api/battles", json={"name": "Test Pybattle", "map_ref": "octowerin-ulicka"})
+    assert r.status_code == 200, r.text
+    bid = r.json()["id"]
+    return bid
+
+
+def _mk_state():
+    return {"nazev": "T", "stav_boje": {
+        "round": 2, "turn": 0, "ord": ["a", "b"],
+        "tok": [
+            {"id": "a", "nazev": "Hero", "side": "druzina", "hp": 20, "max": 20, "ac": 15},
+            {"id": "b", "nazev": "Goblin", "side": "nepratele", "hp": 3, "max": 7, "tmp": 2,
+             "pj_note": "tajné", "saves": {"DEX": 2}},
+            {"id": "c", "nazev": "Skrytý", "side": "nepratele", "hp": 9, "max": 9, "skryty": True},
+        ],
+        "log": [
+            {"k": 1, "c": "10:00", "kdo": "Hero", "typ": "attack", "t": "zásah"},
+            {"k": 1, "c": "10:00", "kdo": "PJ", "typ": "system", "t": "dm tajné", "pj": True},
+        ],
+        "eco": {}, "zones": [], "fx": [],
+    }, "dm_notes": "super tajné"}
+
+
+# ---------- player_view (čistá funkce) ----------
+
+def test_player_view_strips_hidden_and_pj():
+    s = battles_mod.player_view(_mk_state())
+    toks = s["stav_boje"]["tok"]
+    assert [t["nazev"] for t in toks] == ["Hero", "Goblin"]
+    gob = toks[1]
+    assert "hp" not in gob and "max" not in gob and "tmp" not in gob
+    assert gob["hp_stav"] == "Těžce zraněný"  # 3/7
+    assert "pj_note" not in gob and "saves" not in gob
+    hero = toks[0]
+    assert hero["hp"] == 20  # družina vidí přesná čísla
+    logs = s["stav_boje"]["log"]
+    assert len(logs) == 1 and logs[0]["t"] == "zásah"
+    assert "dm_notes" not in s
+
+
+def test_player_view_buckets():
+    def bucket(hp, mx, dead=False):
+        s = battles_mod.player_view({"stav_boje": {"tok": [
+            {"id": "x", "nazev": "e", "side": "nepratele", "hp": hp, "max": mx, "dead": dead}], "log": []}})
+        return s["stav_boje"]["tok"][0]["hp_stav"]
+    assert bucket(10, 10) == "Nezraněný"
+    assert bucket(6, 10) == "Lehce zraněný"
+    assert bucket(4, 10) == "Těžce zraněný"
+    assert bucket(1, 10) == "Na pokraji"
+    assert bucket(0, 10) == "Mrtvý"
+    assert bucket(5, 10, dead=True) == "Mrtvý"
+
+
+def test_player_view_fog_strips_enemies_on_unrevealed_cells():
+    s = _mk_state()
+    sb = s["stav_boje"]
+    for t, xy in zip(sb["tok"], [(0, 0), (5, 5), (0, 0)]):
+        t["x"], t["y"], t["s"] = xy[0], xy[1], 1
+    sb["fog"] = {"on": True, "revealed": {"0,0": 1}}
+    out = battles_mod.player_view(s)["stav_boje"]["tok"]
+    assert [t["nazev"] for t in out] == ["Hero"]  # Goblin v mlze, Skrytý skrytý
+
+
+def test_player_view_fog_off_keeps_tokens():
+    s = _mk_state()
+    s["stav_boje"]["fog"] = {"on": False, "revealed": {}}
+    for t in s["stav_boje"]["tok"]:
+        t["x"], t["y"], t["s"] = 9, 9, 1
+    out = battles_mod.player_view(s)["stav_boje"]["tok"]
+    assert len(out) == 2  # jen skrytý odfiltrován
+
+
+def test_player_view_fog_large_token_partially_revealed():
+    s = _mk_state()
+    sb = s["stav_boje"]
+    og = {"id": "o", "nazev": "Ogre", "side": "nepratele", "hp": 5, "max": 10,
+          "x": 2, "y": 2, "s": 2}
+    sb["tok"] = [og]
+    sb["fog"] = {"on": True, "revealed": {"2,2": 1, "3,2": 1}}  # 2 z 4 buněk
+    assert battles_mod.player_view(s)["stav_boje"]["tok"] == []
+    sb["fog"]["revealed"].update({"2,3": 1, "3,3": 1})
+    assert len(battles_mod.player_view(s)["stav_boje"]["tok"]) == 1
+
+
+# ---------- integrace ----------
+
+def test_get_detail_player_filtered(editor, player):
+    bid = _mk_battle(editor)
+    r = editor.put(f"/api/battles/{bid}/state", json={"state": _mk_state(), "version": 0})
+    assert r.status_code == 200
+    editor.post(f"/api/battles/{bid}/share", json={"shared": True})
+    r = player.get(f"/api/battles/{bid}")
+    assert r.status_code == 200, r.text
+    sb = r.json()["state"]["stav_boje"]
+    assert len(sb["tok"]) == 2
+    assert sb["tok"][1]["hp_stav"] == "Těžce zraněný"
+    assert len(sb["log"]) == 1
+    r = editor.get(f"/api/battles/{bid}")
+    sb = r.json()["state"]["stav_boje"]
+    assert len(sb["tok"]) == 3 and len(sb["log"]) == 2  # editor vidí vše
+    editor.delete(f"/api/battles/{bid}")
+
+
+def test_put_state_broadcasts_version_only(editor, monkeypatch):
+    sent = {}
+    async def fake_broadcast(channel, event, data):
+        sent["data"] = data
+    monkeypatch.setattr(battles_mod.hub, "broadcast", fake_broadcast)
+    bid = _mk_battle(editor)
+    r = editor.put(f"/api/battles/{bid}/state", json={"state": _mk_state(), "version": 0})
+    assert r.status_code == 200
+    assert sent["data"] == {"version": 1}
+    assert "state" not in sent["data"]
+    editor.delete(f"/api/battles/{bid}")

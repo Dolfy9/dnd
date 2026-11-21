@@ -3,6 +3,8 @@ import { Link } from "react-router-dom";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { get, post, del } from "../api";
 import { useApp, isEditor } from "../store";
+import { Swords } from "lucide-react";
+import { toast, confirmDialog, PageHeader } from "../components/ui";
 
 const PAGE = 25;
 
@@ -68,17 +70,19 @@ export default function Boje() {
 
   return (
     <div className="p-6 max-w-5xl mx-auto font-ui">
-      <div className="flex items-center gap-3 mb-4">
-        <h1 className="text-2xl font-bold">⚔ Boje</h1>
-        <input className="inp !w-56 !py-1.5 ml-auto" placeholder="Filtrovat…" value={q} onChange={(e) => { setQ(e.target.value); setPage(0); }} />
-        <select className="inp !w-auto !py-1.5" value={kampanFiltr}
-          onChange={(e) => { setKampanFiltr(e.target.value); setPage(0); }}>
-          <option value="">Všechny kampaně</option>
-          {kampanPages.map((p) => <option key={p.path} value={p.title}>{p.title}</option>)}
-        </select>
-        {editor && <button className="btn" onClick={openNew}>+ Nový boj</button>}
-      </div>
-      <div className="card overflow-hidden">
+      <PageHeader icon={<Swords size={20} />} title="Boje"
+        actions={
+          <>
+            <input className="inp !w-56 !py-1.5" placeholder="Filtrovat…" value={q} onChange={(e) => { setQ(e.target.value); setPage(0); }} />
+            <select className="inp !w-auto !py-1.5" value={kampanFiltr}
+              onChange={(e) => { setKampanFiltr(e.target.value); setPage(0); }}>
+              <option value="">Všechny kampaně</option>
+              {kampanPages.map((p) => <option key={p.path} value={p.title}>{p.title}</option>)}
+            </select>
+            {editor && <button className="btn" onClick={openNew}>+ Nový boj</button>}
+          </>
+        } />
+      <div className="card overflow-x-auto">
         <table className="tbl w-full">
           <thead><tr>{th("name", "Název")}{th("status", "Stav")}{th("kampan", "Kampaň")}<th>Účastníci</th>{th("kola", "Kolo")}{th("updated_at", "Upraveno")}{editor && <th />}</tr></thead>
           <tbody>
@@ -103,7 +107,7 @@ export default function Boje() {
                 {editor && (
                   <td className="text-right">
                     <button className="btn sm" title="Smazat" onClick={async () => {
-                      if (confirm(`Smazat boj „${b.name}“?`)) { await del(`/api/battles/${b.id}`); qc.invalidateQueries({ queryKey: ["battles"] }); }
+                      if (await confirmDialog({ title: "Smazat boj", text: `Smazat boj „${b.name}“?`, okLabel: "Smazat", danger: true })) { await del(`/api/battles/${b.id}`); qc.invalidateQueries({ queryKey: ["battles"] }); toast("Boj smazán.", "ok"); }
                     }}>✕</button>
                   </td>
                 )}

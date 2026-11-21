@@ -7,8 +7,14 @@ export default defineConfig({
   server: {
     port: 5173,
     proxy: {
-      "/api": "http://localhost:8001",
-      "/repo": "http://localhost:8001",
+      "/api": {
+        target: "http://localhost:8001",
+        configure: (proxy) => proxy.on("error", (e: any) => console.warn("proxy /api:", e.code || e.message)),
+      },
+      "/repo": {
+        target: "http://localhost:8001",
+        configure: (proxy) => proxy.on("error", (e: any) => console.warn("proxy /repo:", e.code || e.message)),
+      },
     },
   },
   build: {

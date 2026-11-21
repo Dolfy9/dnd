@@ -31,6 +31,61 @@ def _row_or_404(bid: str):
     return r
 
 
+def _hp_bucket(t: dict) -> str:
+    hp, mx = t.get("hp", 0) or 0, t.get("max", 1) or 1
+    if t.get("dead") or hp <= 0:
+        return "Mrtvý"
+    if hp >= mx:
+        return "Nezraněný"
+    f = hp / mx
+    return "Lehce zraněný" if f > 0.5 else "Těžce zraněný" if f > 0.25 else "Na pokraji"
+
+
+def player_view(state: dict) -> dict:
+    """Stav boje pro hráče: bez skrytých žetonů, DM poznámek, pj logů a přesných HP nepřátel."""
+    import copy
+    s = copy.deepcopy(state or {})
+    sb = s.get("stav_boje")
+    if not isinstance(sb, dict):
+        return s
+    fog = sb.get("fog") or {}
+    fog_on = bool(fog.get("on"))
+    revealed = fog.get("revealed") or {}
+
+    def _in_fog(t):
+        """Token je skryt v mlze, pokud nejsou odhaleny vsechny jeho bunky."""
+        if not fog_on or t.get("side") == "druzina":
+            return False
+        x, y, sz = t.get("x"), t.get("y"), t.get("s", 1) or 1
+        if x is None or y is None:
+            return False
+        for dx in range(sz):
+            for dy in range(sz):
+                if f"{x + dx},{y + dy}" not in revealed:
+                    return True
+        return False
+
+    toks = []
+    for t in sb.get("tok", []):
+        if t.get("skryty") or t.get("hidden"):
+            continue
+        if _in_fog(t):
+            continue
+        t = dict(t)
+        if t.get("side") != "druzina":
+            t["hp_stav"] = _hp_bucket(t)
+            for k in ("hp", "max", "tmp", "ds", "saves", "pj_note", "poznamka"):
+                t.pop(k, None)
+        else:
+            t.pop("pj_note", None)
+        toks.append(t)
+    sb["tok"] = toks
+    sb["log"] = [l for l in sb.get("log", []) if not l.get("pj")]
+    s.pop("pj_poznamky", None)
+    s.pop("dm_notes", None)
+    return s
+
+
 def _summary(r) -> dict:
     s = db.jload(r["state"])
     stav = s.get("stav_boje") or {}
@@ -69,7 +124,16 @@ def get_battle(bid: str, u: dict | None = Depends(security.optional)):
     if not security.can_edit(u) and not r["shared"]:
         raise HTTPException(404, "boj nenalezen")
     out = _summary(r)
-    out["state"] = db.jload(r["state"])
+    state = db.jload(r["state"])
+    if not security.can_edit(u):
+        state = player_view(state)
+        out["ucastnici"] = [
+            {"nazev": re.sub(r"<[^>]+>", "", str(t.get("nazev", ""))),
+             "strana": t.get("side"), "hp_stav": t.get("hp_stav"),
+             "hp": t.get("hp"), "max": t.get("max"),
+             "mrtvy": bool(t.get("dead"))}
+            for t in (state.get("stav_boje") or {}).get("tok", [])]
+    out["state"] = state
     return out
 
 
@@ -132,7 +196,7 @@ async def put_state(bid: str, b: BattleState, u: dict = Depends(security.require
          state.get("sezeni", r["sezeni"]), state.get("mapa", r["map_ref"]), bid))
     con.commit()
     _mirror(bid, state)
-    await hub.broadcast(f"battle:{bid}", "state", {"version": r["version"] + 1, "state": state})
+    await hub.broadcast(f"battle:{bid}", "state", {"version": r["version"] + 1})
     db.audit(u["login"], "battle.state", bid)
     return {"ok": True, "version": r["version"] + 1}
 
