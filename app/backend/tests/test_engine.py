@@ -221,3 +221,23 @@ def test_magic_initiate_autoresolve():
                              atributy_zaklad=attr(STR=15)))
     assert any(v["volba"] == "Seznam kouzel"
                for v in s2["chybejici_volby"])
+
+
+def test_boj_nova_pola():
+    """d['boj'] nese skills/featy/rysy/kouzla/vybava/inspirace pro battle UI."""
+    s = charsheet.compute(c(
+        tridy=[{"trida": "Cleric", "uroven": 3}], druh="Human",
+        dovednosti=["Medicine", "Perception"],
+        featy=[{"nazev": "Healer"}],
+        kouzla=[{"nazev": "Cure Wounds", "uroven": 1, "pripraveno": True}],
+        vybava=[{"nazev": "Potion of Healing", "pocet": 2}],
+        boj={"inspirace": True},
+    ))
+    b = s["boj"]
+    assert b["dovednosti"]["Medicine"] >= 2 and "Perception" in b["dovednosti"]
+    assert "Healer" in b["featy"]
+    assert any(r["nazev"] for r in b["rysy"])
+    kk = next(x for x in b["kouzla"] if x["nazev"] == "Cure Wounds")
+    assert kk["uroven"] == 1 and kk["pripraveno"] is True and "ritual" in kk
+    assert b["vybava"] and b["vybava"][0]["nazev"] == "Potion of Healing"
+    assert b["inspirace"] is True

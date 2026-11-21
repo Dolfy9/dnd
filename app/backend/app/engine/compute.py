@@ -808,6 +808,7 @@ def compute(c: dict) -> dict:
             "skola": meta.get("skola") or "", "cas": meta.get("cas") or "",
             "dosah": meta.get("dosah") or "", "slozky": meta.get("slozky") or "",
             "trvani": meta.get("trvani") or "", "text": meta.get("text") or "",
+            "ritual": bool(k.get("ritual") or meta.get("obradnik") or meta.get("ritual")),
             "cs": meta.get("cs") or ""})
 
     for k in c.get("kouzla") or []:
@@ -975,5 +976,17 @@ def compute(c: dict) -> dict:
         "zdroje": [{"nazev": z2["nazev"], "max": z2["max"], "obnova": z2["obnova"]}
                    for z2 in zdroje],
         "pb": d["pb"], "mods": mods, "utoky_za_akci": utoky_za_akci,
+        "dovednosti": {k: v["val"] for k, v in d["skills"].items()},
+        "featy": [f["nazev"] for f in d["feats_info"]],
+        "rysy": [{"nazev": f["nazev"], "text": f["text"][:200], "zdroj": f["zdroj"], "uroven": f["uroven"]}
+                 for f in d["features"]] +
+                [{"nazev": f["nazev"], "text": f["text"][:200], "zdroj": "species", "uroven": 0}
+                 for f in d["species_rysy"]],
+        "kouzla": [{"nazev": k["nazev"], "uroven": k["uroven"], "pripraveno": k["pripraveno"],
+                    "ritual": k.get("ritual"), "cas": k["cas"], "trvani": k["trvani"],
+                    "text": k["text"], "trida": k["trida"], "vzdy": k["vzdy"], "cs": k.get("cs") or ""}
+                   for k in d["kouzla"]],
+        "vybava": c.get("vybava") or [],
+        "inspirace": bool((c.get("boj") or {}).get("inspirace") or c.get("inspirace")),
     }
     return d

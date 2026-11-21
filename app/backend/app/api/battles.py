@@ -21,7 +21,7 @@ ID_RE = re.compile(r"^[a-z0-9][a-z0-9-]{0,80}$")
 def _mirror(bid: str, state: dict) -> None:
     d = ROOT / "11_Mapy" / "boje"
     d.mkdir(parents=True, exist_ok=True)
-    (d / f"{bid}.json").write_text(json.dumps(state, ensure_ascii=False, indent=1), encoding="utf-8")
+    (d / f"{bid}.json").write_text(json.dumps(state, ensure_ascii=False, indent=1), encoding="utf-8", newline="")
 
 
 def _row_or_404(bid: str):

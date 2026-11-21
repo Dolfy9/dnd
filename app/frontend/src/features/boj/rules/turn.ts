@@ -5,6 +5,7 @@ import { uid } from "../types";
 import { hasCond, isIncap, speedOf, flySpeedOf } from "./conditions";
 import { sumMods, tickEffects, dropConcentration } from "./effects";
 import { d20, type Rng, defaultRng } from "./dice";
+import { settingsOf } from "./settings";
 
 export const byId = (S: StavBoje, id?: string | null) => S.tok.find((t) => t.id === id);
 export const cur = (S: StavBoje) => byId(S, S.ord?.[S.turn ?? -1]);
@@ -54,6 +55,7 @@ export const moveLeft = (S: StavBoje, t: Token): number => {
 export const ecoFree = (S: StavBoje, t: Token, k: "a" | "b" | "r"): boolean => !ecoOf(S, t)[k];
 
 export function useEco(S: StavBoje, t: Token, k: "a" | "b" | "r" | "objInt"): boolean {
+  if (settingsOf(S).rezim === "volny") return true;   // Volný režim: ekonomika se nesleduje
   const e = ecoOf(S, t);
   if (e[k]) return false;
   e[k] = 1;
@@ -104,6 +106,18 @@ export function startOfTurnProcess(S: StavBoje, t: Token, rng: Rng = defaultRng)
 export function advanceTurn(S: StavBoje, rng: Rng = defaultRng): { newRound: boolean; msg: string[] } {
   const msg: string[] = [];
   const t = cur(S);
+  const free = settingsOf(S).rezim === "volny";
+  if (free) {
+    S.ord = (S.ord || []).filter((id) => { const x = byId(S, id); return x && !x.dead; });
+    let ni = (S.turn ?? -1) + 1;
+    let newRound = false;
+    if (S.ord.length && ni >= S.ord.length) { ni = 0; S.round += 1; newRound = true; }
+    S.turn = ni;
+    const nx = cur(S);
+    if (nx) log(S, "turn", `${nx.nazev} je na tahu${newRound ? ` (kolo ${S.round})` : ""}`, "PJ");
+    S.turnMsgs = [];
+    return { newRound, msg };
+  }
   if (t) msg.push(...endOfTurnProcess(S, t, rng));
   S.ord = (S.ord || []).filter((id) => { const x = byId(S, id); return x && !x.dead; });
   let ni = (S.turn ?? -1) + 1;

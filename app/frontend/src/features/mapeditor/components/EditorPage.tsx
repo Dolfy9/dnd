@@ -5,7 +5,7 @@ import { Link, useNavigate, useParams } from "react-router-dom";
 import {
   ArrowLeft, Undo2, Redo2, Save, Maximize, Minimize, Swords, MousePointer2, Brush,
   PaintBucket, Layers3, DoorOpen, Square, Spline, Package, PenLine,
-  Mountain, Lightbulb, Flag, StickyNote, Eraser, Pipette, Upload,
+  Mountain, Lightbulb, Flag, StickyNote, Eraser, Pipette, Upload, Library,
 } from "lucide-react";
 import { post, upload } from "../../../api";
 import { toast } from "../../../components/ui";
@@ -85,6 +85,7 @@ export default function EditorPage() {
   const [snap, setSnap] = useState<1 | 0.5 | 0>(1);
   const [sel, setSel] = useState<Sel[]>([]);
   const [tab, setTab] = useState<TabId>("vrstvy");
+  const [panelOpen, setPanelOpen] = useState(false);
   const [layerVis, setLayerVis] = useState<Record<string, boolean>>(Object.fromEntries(LAYERS.map(([l]) => [l, true])));
   const [genId, setGenId] = useState("dungeon");
   const [genSeed, setGenSeed] = useState(12345);
@@ -388,6 +389,7 @@ export default function EditorPage() {
 
       <div className="me-ed-body">
         <nav className="me-rail">
+          <button className={`me-tool me-sheetbtn ${panelOpen ? "on" : ""}`} title="Panely" onClick={() => setPanelOpen(!panelOpen)}><Library size={18} /></button>
           {TOOLS.map((t) => (
             <button key={t.id} className={`me-tool ${tool === t.id ? "on" : ""}`}
                     title={`${t.nazev} (${t.key})`} onClick={() => setTool(t.id)}>{t.icon}</button>
@@ -554,7 +556,7 @@ export default function EditorPage() {
           </footer>
         </div>
 
-        <aside className="me-right">
+        <aside className={`me-right ${panelOpen ? "open" : ""}`}>
           <div className="me-tabs">
             {TABS.map(([t, ic, n]) => (
               <button key={t} className={tab === t ? "on" : ""} onClick={() => setTab(t)} title={n}>{ic}<span className="me-tab-n">{n}</span></button>

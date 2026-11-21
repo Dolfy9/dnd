@@ -99,6 +99,7 @@ export default function ActorPanel({ S, t, targeting, onAttack, onStdAction, onR
           <span title="Bonus Action"><i className={e.b ? "off" : ""}>B</i></span>
           <span title="Reaction"><i className={e.r ? "off" : ""}>R</i></span>
           <b title="Zbývající pohyb">{mv} ft</b>
+          {(t.extraAtk || 0) > 1 && <span className="boj-atkleft" title="Útoky v rámci Attack akce">⚔ {e.a ? (t.extraAtk || 0) - (e.atkLeft || 0) : 0}/{t.extraAtk}</span>}
         </div>
       </div>
       <div className="boj-sec" style={{ marginTop: -4 }}>

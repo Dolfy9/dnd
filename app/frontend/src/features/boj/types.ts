@@ -222,6 +222,11 @@ export interface Token {
   dc?: number;                  // spell save DC
   casting?: { trida?: string; ab?: Ability; dc?: number; atk?: number };
   extraAtk?: number;            // útoků za Attack akci (Extra Attack)
+  skills?: Record<string, number>;     // bonusy dovedností (z listu)
+  feats?: string[];                    // názvy featů
+  features?: { nazev: string; text: string; zdroj?: string; uroven?: number }[];
+  items?: { nazev: string; qty: number }[];   // consumables z výbavy
+  heroicInspiration?: boolean;         // Heroic Inspiration k použití
   initRoll?: number[];          // hozené d20 iniciativy (jen log)
   exhaustion?: number;          // úroveň Exhaustion (zrcadleno i v cond.lvl)
   rysy?: { nazev: string; text: string }[];
@@ -250,6 +255,7 @@ export interface FxEvent {
 }
 
 export interface EcoState {
+  atkLeft?: number;             // zbývající útoky Attack akce (Extra Attack)
   a: number;                    // Action použita
   b: number;                    // Bonus Action použita
   r: number;                    // Reaction použita (mirror of token.react)
@@ -264,6 +270,7 @@ export interface EcoState {
 
 /** Nastavení boje — DM volitelné chování pravidel (persist v boji). */
 export interface BattleSettings {
+  rezim?: "pravidla" | "volny";   // Volný režim = bez pravidel
   pohyb: {
     limit: "prisne" | "zeptat" | "volne";
     uhlopricky: "5" | "5-10";

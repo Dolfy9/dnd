@@ -1,6 +1,7 @@
 """Stránky: navigace, detail (role-aware HTML), CRUD, linkify zmínek."""
 import re
 from pathlib import Path
+from ..repo_write import write_repo_text
 
 from fastapi import APIRouter, Depends, HTTPException
 from pydantic import BaseModel
@@ -210,7 +211,7 @@ def put_page(path: str, body: PageBody, u: dict = Depends(security.require("edit
     else:
         meta, _old_body, _ = M.split_front(p.read_text(encoding="utf-8"))
         text = M.join_front(meta, body.body)
-    p.write_text(text, encoding="utf-8", newline="")
+    write_repo_text(p, text)
     stats = importer.reingest([rel])
     db.audit(u["login"], "page.save", rel)
     return {"ok": True, "stats": stats}
@@ -241,7 +242,7 @@ def new_page(b: NewPage, u: dict = Depends(security.require("editor"))):
     else:
         text = f"# {name}\n\n> **Stav:** návrh\n\n"
     p.parent.mkdir(parents=True, exist_ok=True)
-    p.write_text(text, encoding="utf-8", newline="")
+    write_repo_text(p, text)
     rel = p.relative_to(ROOT).as_posix()
     importer.reingest([rel])
     db.audit(u["login"], "page.create", rel)
@@ -294,7 +295,7 @@ def linkify(path: str, b: LinkifyBody, u: dict = Depends(security.require("edito
     body2, n = pat.subn(lambda m: f"[{m.group(0)}]({rel_link})", body, count=max(1, b.occurrences))
     if not n:
         raise HTTPException(400, "výskyt nenalezen")
-    p.write_text(M.join_front(meta, body2), encoding="utf-8", newline="")
+    write_repo_text(p, M.join_front(meta, body2))
     rel = p.relative_to(ROOT).as_posix()
     importer.reingest([rel])
     db.audit(u["login"], "page.linkify", rel, f"{name} → {b.target} ×{n}")

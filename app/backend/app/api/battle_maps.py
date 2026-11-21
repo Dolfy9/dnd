@@ -30,7 +30,7 @@ def _load() -> dict:
     if not JSON_F.is_file():
         return {"mapy": []}
     try:
-        return json.loads(JSON_F.read_text(encoding="utf-8"))
+        return json.loads(JSON_F.read_text(encoding="utf-8", newline=""))
     except ValueError:
         return {"mapy": []}
 
@@ -149,7 +149,7 @@ async def upload_obrazek(mid: str, file: UploadFile,
         raise HTTPException(404, "mapa nenalezena")
     ext = ("." + (file.filename or "").rsplit(".", 1)[-1]).lower() if "." in (file.filename or "") else ""
     if ext not in IMG_EXT or not (file.content_type or "").startswith(("image/", "application/octet")):
-        raise HTTPException(400, "jen obrázky (jpg/png/webp/svg/gif)")
+        raise HTTPException(400, "jen obrázky (jpg/png/webp/gif)")
     data = await file.read()
     if len(data) > MAX_IMG:
         raise HTTPException(413, "obrázek je příliš velký (max 50 MB)")
@@ -223,7 +223,7 @@ async def upload_asset(file: UploadFile, u: dict = Depends(security.require("edi
     doc2 = {"assety": []}
     if mf.is_file():
         try:
-            doc2 = json.loads(mf.read_text(encoding="utf-8"))
+            doc2 = json.loads(mf.read_text(encoding="utf-8", newline=""))
         except ValueError:
             pass
     doc2.setdefault("assety", [e for e in doc2.get("assety", []) if e.get("id") != aid])

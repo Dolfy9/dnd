@@ -19,7 +19,7 @@ import { dmgStyle } from "./visual";
 import { ZoneShape, ZonePatterns, TerenLayer, LightingLayer, FogLayer } from "./MapLayers";
 import { ZoomIn, ZoomOut, Maximize2, Crosshair, X } from "lucide-react";
 
-export type Tool = "select" | "measure" | "zone" | "paint" | "fog" | "light";
+export type Tool = "select" | "measure" | "zone" | "paint" | "fog" | "light" | "kresba";
 
 export interface Targeting {
   atk: AttackDef;
@@ -65,6 +65,8 @@ interface Props {
   onSelSet?: (ids: Set<string>) => void;
   onCancelMode?: () => void;
   onDoor?: (w: MapWall) => void;             // DM klik na dveře v mapě
+  onDraw?: (pts: [number, number][], stroke: string) => void;
+  drawColor?: string;
 }
 
 const viewKey = (bid: string) => `boj-view:${bid}`;
@@ -85,6 +87,7 @@ export default function BattleMap(p: Props) {
     wps?: [number, number][];
     moved: boolean;
   } | null>(null);
+  const [drawLive, setDrawLive] = useState<{ pts: [number, number][]; stroke?: string } | null>(null);
   const [measure, setMeasure] = useState<{ a: [number, number]; b: [number, number] } | null>(null);
   const paintRef = useRef<Set<string>>(new Set());
   const lpRef = useRef<number>(0);
@@ -288,7 +291,7 @@ export default function BattleMap(p: Props) {
       pinch.current = { d0: Math.hypot(a.x - b.x, a.y - b.y) || 1, k0: V.k, wx: ((a.x + b.x) / 2 - (rect()?.left || 0) - V.x) / V.k, wy: ((a.y + b.y) / 2 - (rect()?.top || 0) - V.y) / V.k };
       setDrag(null); return;
     }
-    const { cx, cy } = toGrid(e);
+    const { cx, cy, gx, gy } = toGrid(e);
     const t = tokAt(cx, cy);
     if (p.tool === "measure") { setMeasure({ a: [cx, cy], b: [cx, cy] }); return; }
     if (p.tool === "zone") {
@@ -304,6 +307,7 @@ export default function BattleMap(p: Props) {
     }
     if (p.tool === "paint" || p.tool === "fog") { paintRef.current = new Set([`${cx},${cy}`]); setDrag({ id: "", to: null, moved: true }); return; }
     if (p.tool === "light") { p.onLightPlace?.(cx, cy); return; }
+    if (p.tool === "kresba") { setDrawLive({ pts: [[gx, gy]], stroke: p.drawColor || "#f59e0b" }); setDrag({ id: "", to: null, moved: true }); return; }
     if (p.targeting) {
       if (p.targeting.area) {
         if (!p.targeting.anchor) { p.onArea([cx, cy]); return; }
@@ -331,10 +335,11 @@ export default function BattleMap(p: Props) {
       flash();
       return;
     }
-    const { cx, cy } = toGrid(e);
+    const { cx, cy, gx, gy } = toGrid(e);
     setHoverCell([cx, cy]);
     if (lpRef.current && drag?.moved) { clearTimeout(lpRef.current); lpRef.current = 0; }
     if (p.tool === "measure" && measure) { setMeasure({ a: measure.a, b: [cx, cy] }); return; }
+    if (p.tool === "kresba" && drawLive) { setDrawLive({ ...drawLive, pts: [...drawLive.pts, [gx, gy]] }); return; }
     if ((p.tool === "paint" || p.tool === "fog") && drag) { paintRef.current.add(`${cx},${cy}`); return; }
     if (!drag) { setHoverTok(tokAt(cx, cy)?.id || null); return; }
     if (drag.box) { setDrag({ ...drag, box: { a: drag.box.a, b: [cx, cy] }, moved: true }); return; }
@@ -352,6 +357,10 @@ export default function BattleMap(p: Props) {
     if (ptrs.current.size < 2) pinch.current = null;
     if (lpRef.current) { clearTimeout(lpRef.current); lpRef.current = 0; }
     if (p.tool === "measure") return;
+    if (p.tool === "kresba" && drawLive) {
+      if (drawLive.pts.length > 1) p.onDraw?.(drawLive.pts, drawLive.stroke || "#f59e0b");
+      setDrawLive(null); setDrag(null); return;
+    }
     if ((p.tool === "paint" || p.tool === "fog") && drag) {
       const cells = [...paintRef.current].map((k) => k.split(",").map(Number) as [number, number]);
       if (cells.length) {
@@ -395,7 +404,7 @@ export default function BattleMap(p: Props) {
     }
   };
   const dbl = (e: React.MouseEvent) => {
-    const { cx, cy } = toGrid(e);
+    const { cx, cy, gx, gy } = toGrid(e);
     const t = tokAt(cx, cy);
     if (t) p.onInspect(t.id);
     else { // dvojklik do prázdna = přiblížit ke kurzoru
@@ -477,6 +486,9 @@ export default function BattleMap(p: Props) {
           <MapObjectLayer map={map as MapV2} dm={p.dm} />
           {p.dm && <MapNoteLayer map={map as MapV2} />}
           </g>
+          {(S.kresby as any)?.length ? <MapDrawingLayer map={{ kresby: S.kresby } as MapV2} dm /> : null}
+          {drawLive?.pts?.length ? <polyline points={drawLive.pts.map(([x, y]) => `${x * PX},${y * PX}`).join(" ")}
+            fill="none" stroke={drawLive.stroke || "#f59e0b"} strokeWidth={3} strokeLinecap="round" opacity={.85} /> : null}
           {S.zones.map((z) => <ZoneShape key={z.id} z={z} px={PX} tokens={S.tok} lab={cs} />)}
           {zonePrevCells.map(([x, y]) => (
             <rect key={`zp${x},${y}`} x={x * PX + 1} y={y * PX + 1} width={PX - 2} height={PX - 2} rx={4}

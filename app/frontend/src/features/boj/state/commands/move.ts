@@ -18,6 +18,7 @@ import type { BattleMapData, MoveMode } from "../../types";
 import { settingsOf } from "../../rules/settings";
 import { planMovement } from "../../rules/movement";
 import { fx } from "./shared";
+import { isFree } from "../../rules/free";
 
 /* ---------- pohyb ---------- */
 export interface MoveOpts {
@@ -29,6 +30,11 @@ const MODE_LABEL: Record<string, string> = {
 };
 export const moveToken = (S: StavBoje, id: string, x: number, y: number, o: MoveOpts = {}) => {
   const t = byId(S, id); if (!t) return;
+  if (isFree(S)) {           // volný režim: přemístění bez pravidel
+    t.x = x; t.y = y;
+    log(S, "move", `${t.nazev} → (${x},${y}) (volný přesun)`, t.nazev);
+    return;
+  }
   const mode = o.mode || "pravidla";
   const set = settingsOf(S).pohyb;
   t.x = x; t.y = y;

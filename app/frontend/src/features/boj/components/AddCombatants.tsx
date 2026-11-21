@@ -46,6 +46,7 @@ export default function AddCombatants({ S, map, onAdd, onClose }: {
   const [q, setQ] = useState("");
   const [cnt, setCnt] = useState(1);
   const [cN, setCN] = useState(""); const [cHp, setCHp] = useState(10); const [cAc, setCAc] = useState(12);
+  const [cS, setCS] = useState(1); const [cColor, setCColor] = useState("#8a6d3b"); const [cImg, setCImg] = useState("");
   const best = useBestiary();
   const diff = difficulty(S.tok);
 
@@ -130,7 +131,12 @@ export default function AddCombatants({ S, map, onAdd, onClose }: {
             <input value={cN} onChange={(e) => setCN(e.target.value)} placeholder="Název…" />
             <label>HP <input type="number" value={cHp} onChange={(e) => setCHp(Number(e.target.value) || 1)} /></label>
             <label>AC <input type="number" value={cAc} onChange={(e) => setCAc(Number(e.target.value) || 10)} /></label>
-            <button className="boj-btn2 acc" disabled={!cN.trim()} onClick={() => onAdd(custom(cN.trim(), side, cHp, cAc))}>Přidat</button>
+            <label>Velikost <select value={cS} onChange={(e) => setCS(Number(e.target.value))}>
+              <option value={1}>1×1</option><option value={2}>2×2</option><option value={3}>3×3</option><option value={4}>4×4</option>
+            </select></label>
+            <label>Barva <input type="color" value={cColor} onChange={(e) => setCColor(e.target.value)} /></label>
+            <input value={cImg} onChange={(e) => setCImg(e.target.value)} placeholder="URL obrázku (volitelné)…" />
+            <button className="boj-btn2 acc" disabled={!cN.trim()} onClick={() => onAdd(custom(cN.trim(), side, cHp, cAc, 30, { s: cS, color: cColor, obrazek: cImg.trim() || undefined }))}>Přidat</button>
           </div>
         )}
       </div>

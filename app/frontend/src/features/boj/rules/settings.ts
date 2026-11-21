@@ -38,6 +38,7 @@ export function mergeSettings(o?: Partial<BattleSettings> | null): BattleSetting
   return {
     pohyb: { ...d.pohyb, ...(o.pohyb || {}) },
     automatizace: { ...d.automatizace, ...(o.automatizace || {}) },
+    ...(o.rezim ? { rezim: o.rezim } : {}),
   };
 }
 

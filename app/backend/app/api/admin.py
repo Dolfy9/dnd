@@ -4,6 +4,7 @@ import sqlite3
 import time
 
 from fastapi import APIRouter, Depends, HTTPException
+from ..repo_write import write_repo_text
 from pydantic import BaseModel
 
 from .. import db, security
@@ -162,7 +163,7 @@ def put_heraldry(b: HeraldryBody, u: dict = Depends(security.require("editor")))
         import json
         raw = json.loads(f.read_text(encoding="utf-8")) if f.is_file() else {}
         raw[b.entity] = b.data
-        f.write_text(json.dumps(raw, ensure_ascii=False, indent=1), encoding="utf-8")
+        f.write_text(json.dumps(raw, ensure_ascii=False, indent=1), encoding="utf-8", newline="")
     except Exception:
         pass
     db.audit(u["login"], "heraldry.save", b.entity)
@@ -192,10 +193,10 @@ def put_heraldry_entry(b: HeraldryEntryBody, u: dict = Depends(security.require(
         entry = {"id": b.id}
         items.append(entry)
     entry.update({k: v for k, v in b.fields.items() if v is not None})
-    f.write_text(json.dumps(raw, ensure_ascii=False, indent=1), encoding="utf-8")
+    f.write_text(json.dumps(raw, ensure_ascii=False, indent=1), encoding="utf-8", newline="")
     idx = ROOT / "web" / "docs" / "heraldika_index.json"
     if idx.is_file() or True:
-        idx.write_text(json.dumps(raw, ensure_ascii=False, indent=1), encoding="utf-8")
+        idx.write_text(json.dumps(raw, ensure_ascii=False, indent=1), encoding="utf-8", newline="")
     con = db.connect()
     con.execute("INSERT INTO heraldry(entity,data) VALUES(?,?) ON CONFLICT(entity) DO UPDATE SET data=excluded.data",
                 (b.typ, db.jdump(items)))
@@ -205,7 +206,7 @@ def put_heraldry_entry(b: HeraldryEntryBody, u: dict = Depends(security.require(
     if soubor:
         md = ROOT / soubor
         if md.is_file():
-            text = md.read_text(encoding="utf-8")
+            text = md.read_text(encoding="utf-8", newline="")
             lines = text.split("\n")
             out, in_sec, i = [], False, 0
             while i < len(lines):
@@ -218,7 +219,7 @@ def put_heraldry_entry(b: HeraldryEntryBody, u: dict = Depends(security.require(
                             ln = f"{label} {entry.get(key, '')}"
                 out.append(ln)
                 i += 1
-            md.write_text("\n".join(out), encoding="utf-8")
+            md.write_text("\n".join(out), encoding="utf-8", newline="")
     db.audit(u["login"], "heraldry.entry", f"{b.typ}/{b.id}")
     return {"ok": True, "entry": entry}
 

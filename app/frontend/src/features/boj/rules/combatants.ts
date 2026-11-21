@@ -59,6 +59,11 @@ export function fromCharacter(md: string, name: string, sheet: any, side: Side =
        : undefined;
   t.casting = Array.isArray(sheet?.casting) ? sheet.casting[0] : sheet?.casting;
   t.extraAtk = boj.utoky_za_akci;
+  t.skills = boj.dovednosti || {};
+  t.feats = boj.featy || [];
+  t.features = boj.rysy || [];
+  t.items = (boj.vybava || []).map((v: any) => typeof v === "string" ? { nazev: v, qty: 1 } : { nazev: v.nazev || v.predmet || "?", qty: v.pocet ?? v.qty ?? 1 });
+  t.heroicInspiration = !!boj.inspirace;
   t.exhaustion = sheet?.exhaustion || 0;
   if (t.exhaustion) t.cond.push({ n: "Exhaustion", lvl: t.exhaustion });
   t.portret = portret;
@@ -79,7 +84,7 @@ export function fromCharacter(md: string, name: string, sheet: any, side: Side =
   // kouzla → naparsované akce
   const ctx = { dc: t.dc || t.casting?.dc || 10, atk: t.casting?.atk ?? (t.casting?.dc ?? 10) - 8, smod: Math.max(0, (t.casting?.atk ?? 0) - (t.pb ?? 2)), lvl: sheet?.uroven || sheet?.level || 1 };
   t.lvl = ctx.lvl;
-  t.kouzla = (sheet?.kouzla || [])
+  t.kouzla = (boj.kouzla?.length ? boj.kouzla : sheet?.kouzla || [])
     .map((k: any) => parseSpell(k.nazev || k, { [k.nazev || k]: k }, ctx))
     .filter(Boolean) as AttackDef[];
   if (!t.atk.length && !t.kouzla.length)
@@ -121,9 +126,12 @@ export function fromMonster(m: MonsterEntry, side: Side = "nepratele"): Token {
   return t;
 }
 
-export function custom(nazev: string, side: Side, hp: number, ac: number, speed = 30): Token {
+export function custom(nazev: string, side: Side, hp: number, ac: number, speed = 30, opt?: { s?: number; color?: string; obrazek?: string }): Token {
   const t = baseTok(nazev, side, "custom");
   t.hp = t.max = hp; t.ac = ac; t.speed = speed;
+  if (opt?.s) t.s = opt.s;
+  if (opt?.color) (t as any).color = opt.color;
+  if (opt?.obrazek) t.portret = opt.obrazek;
   t.atk.push({ nazev: "Útok", kind: "weapon", melee: true, reach: 5, bonus: 3, dmg: "1d6+1", typ: "Bludgeoning", n: 1 });
   return t;
 }

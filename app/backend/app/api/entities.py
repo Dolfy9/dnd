@@ -5,6 +5,7 @@ Uložení → validace → mirror do .md frontmatteru → reimport (aktualizuje 
 import re
 
 from fastapi import APIRouter, Depends, HTTPException
+from ..repo_write import write_repo_text
 from pydantic import BaseModel
 
 from .. import db, render, schemas, security
@@ -182,7 +183,7 @@ def new_entity(b: NewEntity, u: dict = Depends(security.require("editor"))):
         body = f"# {b.name}\n\n> **Stav:** návrh\n\n## Pro DM (tajné)\n"
     from ..ingest.markdown import join_front
     p.parent.mkdir(parents=True, exist_ok=True)
-    p.write_text(join_front(meta, body), encoding="utf-8", newline="")
+    write_repo_text(p, join_front(meta, body))
     rel = p.relative_to(ROOT).as_posix()
     importer.reingest([rel])
     db.audit(u["login"], "entity.create", rel, b.type)

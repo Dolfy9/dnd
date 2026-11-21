@@ -109,10 +109,16 @@
   .me-rail{order:2;flex-direction:row;overflow-x:auto;width:100%;padding:6px 8px;gap:6px;scrollbar-width:none;position:relative;z-index:60}
   .me-rail .me-tool{flex:0 0 40px}
   .me-center{order:1;min-height:0;flex:1}
-  .me-right{display:none}
+  .me-right{display:none;position:fixed;left:0;right:0;bottom:52px;max-height:62vh;z-index:65;background:var(--panel,#241f1a);border-top:2px solid var(--line,#4a4238);overflow-y:auto;box-shadow:0 -8px 24px #0007}
+  .me-right.open{display:block}
+  .me-sheetbtn{display:inline-flex!important}
+  .me-rail .me-sheetbtn{display:inline-flex}
   .me-minimap{display:none}
   .me-ctx{flex-wrap:nowrap;overflow-x:auto}
 }
 body:has(.me-ed) .hudba-fab,body:has(.me-ed) .music-fab{display:none!important}
 body:has(.me-ed) .mus-fab{display:none!important}
 @media (max-width:700px){.me-snaplab{display:none}}
+
+.me-sheetbtn{display:none}
+@media (max-width:700px){.me-sheetbtn{display:inline-flex}}

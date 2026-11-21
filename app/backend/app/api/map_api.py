@@ -35,7 +35,7 @@ def _registry() -> dict:
     reg = {"vychozi": DEFAULT_MAP, "mapy": []}
     if f.is_file():
         try:
-            reg.update(json.loads(f.read_text(encoding="utf-8")))
+            reg.update(json.loads(f.read_text(encoding="utf-8", newline="")))
         except ValueError:
             pass
     if not any(m.get("id") == DEFAULT_MAP for m in reg["mapy"]):
@@ -49,7 +49,7 @@ def _registry() -> dict:
 def _save_registry(reg: dict) -> None:
     reg = {k: v for k, v in reg.items()}
     (MAPY / "mapy.json").write_text(
-        json.dumps(reg, ensure_ascii=False, indent=1), encoding="utf-8")
+        json.dumps(reg, ensure_ascii=False, indent=1), encoding="utf-8", newline="")
 
 
 def _map_dir(map_id: str) -> tuple[object, dict]:
@@ -69,7 +69,7 @@ def _jread(d, name: str, default):
     f = d / name
     if f.is_file():
         try:
-            return json.loads(f.read_text(encoding="utf-8"))
+            return json.loads(f.read_text(encoding="utf-8", newline=""))
         except ValueError:
             pass
     return default
@@ -77,7 +77,7 @@ def _jread(d, name: str, default):
 
 def _jwrite(d, name: str, data) -> None:
     d.mkdir(parents=True, exist_ok=True)
-    (d / name).write_text(json.dumps(data, ensure_ascii=False, indent=1), encoding="utf-8")
+    (d / name).write_text(json.dumps(data, ensure_ascii=False, indent=1), encoding="utf-8", newline="")
 
 
 def _podklady(d) -> list[dict]:
@@ -195,7 +195,7 @@ def _dump_mista() -> None:
     old = {}
     if f.is_file():
         try:
-            meta = json.loads(f.read_text(encoding="utf-8"))
+            meta = json.loads(f.read_text(encoding="utf-8", newline=""))
             old = {(m.get("nazev"), m.get("x"), m.get("y")): m for m in meta.get("mista", [])}
         except ValueError:
             meta, old = {}, {}
@@ -213,7 +213,7 @@ def _dump_mista() -> None:
         mista.append(m)
     out = {"_popis": meta.get("_popis", ""), "sirka": meta.get("sirka", 2048),
            "vyska": meta.get("vyska", 1440), "mista": mista}
-    f.write_text(json.dumps(out, ensure_ascii=False, indent=1), encoding="utf-8")
+    f.write_text(json.dumps(out, ensure_ascii=False, indent=1), encoding="utf-8", newline="")
 
 
 def _render_map() -> tuple[bool, str]:
@@ -401,7 +401,7 @@ def put_soubor(b: SouborBody, u: dict = Depends(security.require("editor"))):
     old_path = (d / name)
     if old_path.is_file() and isinstance(parsed, dict):
         try:
-            old = json.loads(old_path.read_text(encoding="utf-8"))
+            old = json.loads(old_path.read_text(encoding="utf-8", newline=""))
             for k, v in old.items():
                 if k not in parsed:
                     parsed[k] = v

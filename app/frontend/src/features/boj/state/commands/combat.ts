@@ -18,6 +18,7 @@ import type { BattleMapData } from "../../types";
 import { fx, type CmdCtx } from "./shared";
 import { dropConc } from "./effects";
 import { settingsOf } from "../../rules/settings";
+import { isFree } from "../../rules/free";
 
 /* ---------- útoky ---------- */
 export interface AtkArgs {
@@ -28,6 +29,7 @@ export interface AtkArgs {
 }
 /** Kontrola podle nastavení: vypnuto → ok, varovat → ok+log, hlidat → jen s override. */
 function check(S: StavBoje, setting: "hlidat" | "varovat" | "vypnuto", override: boolean | undefined, msg: string): boolean {
+  if (isFree(S)) return true;
   if (setting === "vypnuto") return true;
   if (setting === "varovat") { log(S, "system", `⚠ ${msg}`, "PJ"); return true; }
   if (override) { log(S, "system", msg, "PJ"); return true; }
@@ -49,7 +51,7 @@ export function cmdAttack(S: StavBoje, a: AtkArgs, ctx: CmdCtx): { ok: boolean; 
   }
   const actx: AttackCtx = { attacker: A, target: B, atk: a.atk, map: ctx.map, tokens: S.tok, ax: a.ax, ay: a.ay, overrideAdv: a.overrideAdv, state: S, teren: S.teren };
   const ev = evaluateAttack(actx);
-  const force = a.override && st.dosah === "hlidat" || st.dosah === "varovat";
+  const force = isFree(S) || a.override && st.dosah === "hlidat" || st.dosah === "varovat";
   const r = resolveAttack(actx, { manualD20: a.manualD20, force: force && !ev.canTarget });
   if (!r) return { ok: false, reason: ev.beyondRange ? "mimo dostřel" : ev.cover === 9 ? "plný kryt" : "nelze zacílit" };
   if (!ev.canTarget) log(S, "system", `⚙ DM: útok ${a.atk.nazev} přes ${ev.beyondRange ? "dostřel" : "plný kryt"}`, A.nazev);
@@ -107,10 +109,22 @@ export function cmdAttack(S: StavBoje, a: AtkArgs, ctx: CmdCtx): { ok: boolean; 
   if (r.hit && am.dmgOnHitOnce) consumeMod(A, "dmgOnHitOnce");
   if (bmT.nextAtkAdvBy) consumeMod(B, "nextAtkAdvBy");
   if (am.nextAtkDis) consumeMod(A, "nextAtkDis");
-  if (a.atk.rc) { A.spent = A.spent || {}; A.spent[a.atk.nazev] = true; }
-  consumeSlot(A, a.atk, a.slot, a.pact);
-  if (a.atk.conc) { dropConc(S, A.id); A.conc = a.atk.kouzlo || a.atk.nazev; }
-  if (!a.atk.ba && !a.atk.rea) useEco(S, A, "a"); else if (a.atk.ba) useEco(S, A, "b"); else useEco(S, A, "r");
+  if (!isFree(S)) {
+    if (a.atk.rc) { A.spent = A.spent || {}; A.spent[a.atk.nazev] = true; }
+    consumeSlot(A, a.atk, a.slot, a.pact);
+    if (a.atk.conc) { dropConc(S, A.id); A.conc = a.atk.kouzlo || a.atk.nazev; }
+  }
+  if (!a.atk.ba && !a.atk.rea) {
+    // Attack action: Extra Attack — první útok stojí akci, další jdou z počítadla atkLeft
+    const eco = ecoOf(S, A);
+    if (!isFree(S) && !a.atk.kouzlo && (eco.atkLeft ?? 0) > 0) eco.atkLeft!--;
+    else {
+      useEco(S, A, "a");
+      // utoky_za_akci = celkový počet útoků za Attack akci → zbývá N−1
+      if (!isFree(S) && !a.atk.kouzlo && (A.extraAtk || 0) > 1) eco.atkLeft = A.extraAtk! - 1;
+    }
+  }
+  else if (a.atk.ba) useEco(S, A, "b"); else useEco(S, A, "r");
   return { ok: true };
 }
 

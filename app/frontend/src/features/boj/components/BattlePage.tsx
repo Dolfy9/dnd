@@ -19,9 +19,11 @@ import { presetById } from "../rules/effects";
 import { tokensInArea } from "../rules/areas";
 import { planMovement, type MovementPlan } from "../rules/movement";
 import { settingsOf } from "../rules/settings";
+import { isFree } from "../rules/free";
 import { resolveAttack } from "../rules/attack";
 import { previewDamage } from "../rules/damage";
 import type { AttackDef, BattleMapData, Token, EffectPreset, MoveMode } from "../types";
+import { uid } from "../types";
 import MovePopover, { type DropReq } from "./MovePopover";
 import OverridePrompt, { type OverrideOption } from "./OverridePrompt";
 import SettingsPanel from "./SettingsPanel";
@@ -39,7 +41,7 @@ import CtxMenu from "./CtxMenu";
 import HelpOverlay from "./HelpOverlay";
 import { difficulty } from "../rules/encounter";
 import { resourceAction } from "../rules/resources";
-import { MousePointer2, Ruler, MapPin, Users, ScrollText, ShieldQuestion, X, Sparkles, Globe2, HelpCircle, Settings, Type, PanelRightClose, PanelRightOpen, MoreHorizontal , Maximize, PenLine, Eye} from "lucide-react";
+import { MousePointer2, Ruler, MapPin, Users, Eraser, ScrollText, ShieldQuestion, X, Sparkles, Globe2, HelpCircle, Settings, Type, PanelRightClose, PanelRightOpen, MoreHorizontal , Maximize, PenLine, Eye} from "lucide-react";
 
 type Panel = "akce" | "efekty" | "prostredi" | "inspektor" | "log";
 
@@ -53,10 +55,11 @@ export default function BattlePage() {
   const [selSet, setSelSet] = useState<Set<string>>(new Set());
   const [panel, setPanel] = useState<Panel>("akce");
   const [inspId, setInspId] = useState<string | null>(null);
-  const [tool, setTool] = useState<"select" | "measure" | "zone" | "paint" | "fog" | "light">("select");
+  const [tool, setTool] = useState<"select" | "measure" | "zone" | "paint" | "fog" | "light" | "kresba">("select");
   const [paintTile, setPaintTile] = useState("#");
   const [fogMode, setFogMode] = useState<"reveal" | "hide">("reveal");
   const [zonePlace, setZonePlace] = useState<ZonePlace | null>(null);
+  const [drawColor, setDrawColor] = useState("#f59e0b");
   const [pendingLight, setPendingLight] = useState<{ nazev: string; bright: number; dim: number } | null>(null);
   const [targeting, setTargeting] = useState<Targeting | null>(null);
   const [resolve, setResolve] = useState<Resolve | null>(null);
@@ -292,6 +295,19 @@ export default function BattlePage() {
                  pt: { x: number; y: number }, mods: { alt: boolean; shift: boolean }, group?: Set<string>) => {
     if (!dm) return;
     const set = settingsOf(S);
+    // Volný režim: přímé přemístění bez plánování/OA/popoverů
+    if (isFree(S)) {
+      cmd((s) => {
+        if (group && group.size > 1) {
+          const dx = to[0] - (t.x ?? 0), dy = to[1] - (t.y ?? 0);
+          for (const id of group) {
+            const g = byId(s, id); if (!g || g.x == null) continue;
+            C.moveToken(s, id, g.x + dx, (g.y ?? 0) + dy, {});
+          }
+        } else C.moveToken(s, t.id, to[0], to[1], {});
+      });
+      return;
+    }
     // modifikátory mají přednost
     if (mods.alt) { execMove(t, plan, wps, "teleport", to); return; }
     if (mods.shift) { execMove(t, plan, wps, "nuceny", to); return; }
@@ -335,7 +351,7 @@ export default function BattlePage() {
     if (!resolve) return;
     const r = resolve;
     // potvrzení zranění: nejdřív náhled (stejný d20), DM může upravit a pak teprve aplikovat
-    if (r.kind === "attack" && o.manualDmg == null && settingsOf(S).automatizace.zraneni === "potvrdit") {
+    if (r.kind === "attack" && o.manualDmg == null && (settingsOf(S).automatizace.zraneni === "potvrdit" || isFree(S))) {
       const A = byId(S, r.srcId), B = byId(S, r.tgtId);
       if (A && B) {
         const res = resolveAttack({ attacker: A, target: B, atk: r.atk, map, tokens: S.tok, overrideAdv: o.overrideAdv, state: S, teren: S.teren, ax: undefined, ay: undefined }, { manualD20: o.manualD20, force: r.force });
@@ -457,12 +473,16 @@ export default function BattlePage() {
         canUndo canRedo saving={b.saving}
       />
       <div className="boj-body">
-        <div className="boj-mapwrap">
+        <div className={`boj-mapwrap ${isFree(S) ? "free-map" : ""}`}>
+          {isFree(S) && <div className="boj-freechip">Volný režim — bez pravidel</div>}
           <TurnBanner S={S} />
           <div className="boj-toolbar">
             <button className={`boj-tbtn ${tool === "select" ? "on" : ""}`} title="Vybrat / táhnout žetony" onClick={() => { setTool("select"); setZonePlace(null); }}><MousePointer2 size={14} /></button>
             <button className={`boj-tbtn ${tool === "measure" ? "on" : ""}`} title="Metr (M)" onClick={() => setTool("measure")}><Ruler size={14} /></button>
             {dm && <button className={`boj-tbtn ${tool === "zone" ? "on" : ""}`} title="Umístit zónu z knihovny" onClick={() => { setPanel("efekty"); }}><MapPin size={14} /></button>}
+            {dm && <button className={`boj-tbtn ${tool === "kresba" ? "on" : ""}`} title="Kresba na mapu" onClick={() => setTool("kresba")}><PenLine size={14} /></button>}
+            {dm && tool === "kresba" && <input type="color" className="boj-tcolor" value={drawColor} onChange={(e) => setDrawColor(e.target.value)} title="Barva kresby" />}
+            {dm && tool === "kresba" && <button className="boj-tbtn" title="Smazat všechny kresby" onClick={() => cmd((s) => { s.kresby = []; log(s, "system", "Kresby smazány", "PJ"); })}><Eraser size={14} /></button>}
             <span className="boj-mapname">{map.nazev}{map.osvetleni ? ` · ${map.osvetleni}` : ""}</span>
             {diff && <span className={`boj-diff ${diff.cls}`}>{diff.label}</span>}
             {dm && <button className="boj-btn2 pri" onClick={() => setAddOpen(true)}><Users size={14} /> Přidat</button>}
@@ -490,6 +510,10 @@ export default function BattlePage() {
                   cmd((s) => { s.fog = { ...(s.fog || {}), on: true, auto: on }; });
                   setMoreOpen(false);
                 }}><Eye size={14} /><span className="boj-more-lab">Auto-fog{(S.fog as any)?.auto ? " ✓" : ""}</span></button>}
+                {dm && <div className="boj-seg" role="group" aria-label="Režim boje">
+                  <button className={`boj-seg-b ${!isFree(S) ? "on" : ""}`} onClick={() => cmd((s) => { if (isFree(s)) { s.nastaveni = { ...(s.nastaveni || {}), rezim: "pravidla" } as any; log(s, "system", "Režim: Pravidla", "PJ"); } })}>Pravidla</button>
+                  <button className={`boj-seg-b free ${isFree(S) ? "on" : ""}`} onClick={() => cmd((s) => { if (!isFree(s)) { s.nastaveni = { ...(s.nastaveni || {}), rezim: "volny" } as any; log(s, "system", "Režim: Volný — bez pravidel", "PJ"); } })}>Volný</button>
+                </div>}
               </div>
             </div>
           </div>
@@ -512,6 +536,8 @@ export default function BattlePage() {
             onLightPlace={(x, y) => { if (pendingLight) { cmd((s) => C.cmdAddLight(s, { ...pendingLight, anchor: [x, y] })); setPendingLight(null); setTool("select"); } }}
             onCtxMenu={(t, pt) => setCtxMenu({ t, x: pt.x, y: pt.y })}
             onDoor={onDoor}
+            drawColor={drawColor}
+            onDraw={(pts, stroke) => cmd((s) => { s.kresby = [...(s.kresby || []), { id: uid(), kind: "free", pts, stroke, width: 3, dmOnly: true } as any]; })}
           />
         </div>
         <aside ref={sheetRef} className={`boj-side sheet-${sheet} ${sideMini ? "mini" : ""}`} style={sideMini ? undefined : { width: sideW }}>
