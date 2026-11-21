@@ -26,6 +26,7 @@ Královské město Bririe, sídlo krále Forpy VII. a centrum ordenské inkvizic
 - Inkvizitor Vaelen – katedrála
 - Bratr Osmund – cenzor Písařské ulice, úplatný
 - Mara Rybářka – pašerák v říčním přístavu
+- [Ysmera Vanthal](../04_Postavy/NPC/Postava_Ysmera_Vanthal.md) – Šedá kronikářka, strážkyně Zapečetěného archivu pod katedrálou
 
 ## Setkání a scény (návrh)
 - Ordenská hlídka kontroluje knihy u brány (DC 14 Deception/Sleight of Hand).

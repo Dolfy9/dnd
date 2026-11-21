@@ -1,0 +1,48 @@
+{
+ "id": "fight-1-mwavelcr",
+ "nazev": "Fight 1",
+ "stav": "priprava",
+ "kampan": "",
+ "quest": "",
+ "sezeni": "",
+ "poznamky": "",
+ "vysledek": "",
+ "vytvoreno": "2026-11-10T15:54:15.579Z",
+ "upraveno": "2026-11-10T15:56:44.195Z",
+ "mapa": "octowerin-ulicka",
+ "hudba": [],
+ "stav_boje": {
+  "map": 0,
+  "tok": [],
+  "ord": [],
+  "turn": -1,
+  "round": 0,
+  "log": [
+   {
+    "k": 0,
+    "c": "16:53:50",
+    "d": "2026-11-10",
+    "kdo": "",
+    "t": "Nový boj.",
+    "pj": false,
+    "blok": false,
+    "warn": false
+   }
+  ],
+  "moved": 0,
+  "dash": false,
+  "disengage": false,
+  "sel": null,
+  "zoom": 1,
+  "paint": null,
+  "groups": true,
+  "tab": "boje",
+  "eco": {
+   "a": 0,
+   "b": 0,
+   "spell": 0,
+   "baSpell": 0
+  },
+  "oa": []
+ }
+}

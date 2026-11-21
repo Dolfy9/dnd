@@ -24,6 +24,7 @@ Herní texty, které mohou hráči najít. Každá kniha má na konci sekci **Pr
 | 17 | [Lodní deník z Menkantu](Kniha_17_Lodni_denik_z_Menkantu.md) | kapitánka | Menkant, Miria | vysoká | ne |
 | 18 | [Regule šedých kutn](Kniha_18_Regule_sedych_kuten.md) | Orden | Pevnost Orden | pravdivá | interní |
 | 19 | [Zeměpis známých zemí](Kniha_19_Zemepis_znamych_zemi.md) | učebnice | Briria | základní | ne |
+| 20 | [Dopis šedé kronikářky](Kniha_20_Dopis_sede_kronikarky.md) | Ysmera Vanthal (bez podpisu) | Corvin, U Slepé lucerny | vysoká | ano |
 
 ## Mapa informací – kde se hráči co dozví
 | Informace | Knihy |
@@ -68,4 +69,5 @@ Každé informaci z [historie](../01_Svet/Historie_Montelienu.md) odpovídá asp
 - [Lodní deník z Menkantu](Kniha_17_Lodni_denik_z_Menkantu.md)
 - [Regule šedých kutn](Kniha_18_Regule_sedych_kuten.md)
 - [Zeměpis známých zemí](Kniha_19_Zemepis_znamych_zemi.md)
+- [Dopis šedé kronikářky](Kniha_20_Dopis_sede_kronikarky.md)
 <!-- /INDEX -->

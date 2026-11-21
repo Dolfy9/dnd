@@ -3,5 +3,5 @@
 Nový soubor vytvoř kopií šablony [Sablona_Kampan](../_Sablony/Sablona_Kampan.md).
 
 <!-- INDEX -->
-_(zatím prázdné)_
+- [Zlomená pečeť](Zlomena_pecet.md)
 <!-- /INDEX -->

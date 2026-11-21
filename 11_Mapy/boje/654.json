@@ -1,0 +1,1233 @@
+{
+ "stav_boje": {
+  "map": "mictima-krypta",
+  "tok": [
+   {
+    "id": "g8f6z99g",
+    "nazev": "Zombie 1",
+    "kind": "mon",
+    "side": "nepratele",
+    "s": 1,
+    "x": 16,
+    "y": 7,
+    "hp": 11,
+    "max": 15,
+    "tmp": 0,
+    "ac": 8,
+    "initB": -2,
+    "init": null,
+    "speed": 20,
+    "swim": 0,
+    "fly": 0,
+    "climb": 0,
+    "saves": {
+     "WIS": 0
+    },
+    "mods": {
+     "STR": 1,
+     "DEX": -2,
+     "CON": 3,
+     "INT": -4,
+     "WIS": -2,
+     "CHA": -3
+    },
+    "pb": 2,
+    "odolnosti": [],
+    "imunity": [
+     "poison",
+     "exhaustion",
+     "poisoned"
+    ],
+    "zranitelnosti": [],
+    "imunity_stavu": [],
+    "smysly": [
+     "darkvision 60 ft"
+    ],
+    "atk": [
+     {
+      "nazev": "Slam",
+      "kind": "feature",
+      "text": "Melee Attack Roll: +3, reach 5 ft. 5 (1d8 + 1) Bludgeoning damage.",
+      "n": 1,
+      "dmg": "1d8+1",
+      "typ": "Bludgeoning",
+      "avg": 5,
+      "bonus": 3,
+      "melee": true,
+      "reach": 5
+     }
+    ],
+    "cond": [],
+    "effects": [],
+    "conc": false,
+    "react": true,
+    "spent": {},
+    "slots": [],
+    "zdroje": [],
+    "ds": {
+     "s": 0,
+     "f": 0
+    },
+    "dead": false,
+    "xp": 50,
+    "cr": "1/4",
+    "src": {
+     "srd": "Zombie"
+    },
+    "typ": "undead",
+    "velikost": "Medium",
+    "exhaustion": 0
+   },
+   {
+    "id": "nvnvz6vs",
+    "nazev": "Zombie 2",
+    "kind": "mon",
+    "side": "nepratele",
+    "s": 1,
+    "x": 19,
+    "y": 9,
+    "hp": 7,
+    "max": 15,
+    "tmp": 0,
+    "ac": 8,
+    "initB": -2,
+    "init": null,
+    "speed": 20,
+    "swim": 0,
+    "fly": 0,
+    "climb": 0,
+    "saves": {
+     "WIS": 0
+    },
+    "mods": {
+     "STR": 1,
+     "DEX": -2,
+     "CON": 3,
+     "INT": -4,
+     "WIS": -2,
+     "CHA": -3
+    },
+    "pb": 2,
+    "odolnosti": [],
+    "imunity": [
+     "poison",
+     "exhaustion",
+     "poisoned"
+    ],
+    "zranitelnosti": [],
+    "imunity_stavu": [],
+    "smysly": [
+     "darkvision 60 ft"
+    ],
+    "atk": [
+     {
+      "nazev": "Slam",
+      "kind": "feature",
+      "text": "Melee Attack Roll: +3, reach 5 ft. 5 (1d8 + 1) Bludgeoning damage.",
+      "n": 1,
+      "dmg": "1d8+1",
+      "typ": "Bludgeoning",
+      "avg": 5,
+      "bonus": 3,
+      "melee": true,
+      "reach": 5
+     }
+    ],
+    "cond": [],
+    "effects": [],
+    "conc": false,
+    "react": true,
+    "spent": {},
+    "slots": [],
+    "zdroje": [],
+    "ds": {
+     "s": 0,
+     "f": 0
+    },
+    "dead": false,
+    "xp": 50,
+    "cr": "1/4",
+    "src": {
+     "srd": "Zombie"
+    },
+    "typ": "undead",
+    "velikost": "Medium",
+    "exhaustion": 0
+   },
+   {
+    "id": "qvp4n6s6",
+    "nazev": "Zombie 3",
+    "kind": "mon",
+    "side": "nepratele",
+    "s": 1,
+    "x": 14,
+    "y": 10,
+    "hp": 11,
+    "max": 15,
+    "tmp": 0,
+    "ac": 8,
+    "initB": -2,
+    "init": null,
+    "speed": 20,
+    "swim": 0,
+    "fly": 0,
+    "climb": 0,
+    "saves": {
+     "WIS": 0
+    },
+    "mods": {
+     "STR": 1,
+     "DEX": -2,
+     "CON": 3,
+     "INT": -4,
+     "WIS": -2,
+     "CHA": -3
+    },
+    "pb": 2,
+    "odolnosti": [],
+    "imunity": [
+     "poison",
+     "exhaustion",
+     "poisoned"
+    ],
+    "zranitelnosti": [],
+    "imunity_stavu": [],
+    "smysly": [
+     "darkvision 60 ft"
+    ],
+    "atk": [
+     {
+      "nazev": "Slam",
+      "kind": "feature",
+      "text": "Melee Attack Roll: +3, reach 5 ft. 5 (1d8 + 1) Bludgeoning damage.",
+      "n": 1,
+      "dmg": "1d8+1",
+      "typ": "Bludgeoning",
+      "avg": 5,
+      "bonus": 3,
+      "melee": true,
+      "reach": 5
+     }
+    ],
+    "cond": [
+     {
+      "n": "Grappled"
+     }
+    ],
+    "effects": [],
+    "conc": false,
+    "react": true,
+    "spent": {},
+    "slots": [],
+    "zdroje": [],
+    "ds": {
+     "s": 0,
+     "f": 0
+    },
+    "dead": false,
+    "xp": 50,
+    "cr": "1/4",
+    "src": {
+     "srd": "Zombie"
+    },
+    "typ": "undead",
+    "velikost": "Medium",
+    "exhaustion": 0
+   },
+   {
+    "id": "o3ultepz",
+    "nazev": "Zombie 4",
+    "kind": "mon",
+    "side": "nepratele",
+    "s": 1,
+    "x": 16,
+    "y": 13,
+    "hp": 11,
+    "max": 15,
+    "tmp": 0,
+    "ac": 8,
+    "initB": -2,
+    "init": null,
+    "speed": 20,
+    "swim": 0,
+    "fly": 0,
+    "climb": 0,
+    "saves": {
+     "WIS": 0
+    },
+    "mods": {
+     "STR": 1,
+     "DEX": -2,
+     "CON": 3,
+     "INT": -4,
+     "WIS": -2,
+     "CHA": -3
+    },
+    "pb": 2,
+    "odolnosti": [],
+    "imunity": [
+     "poison",
+     "exhaustion",
+     "poisoned"
+    ],
+    "zranitelnosti": [],
+    "imunity_stavu": [],
+    "smysly": [
+     "darkvision 60 ft"
+    ],
+    "atk": [
+     {
+      "nazev": "Slam",
+      "kind": "feature",
+      "text": "Melee Attack Roll: +3, reach 5 ft. 5 (1d8 + 1) Bludgeoning damage.",
+      "n": 1,
+      "dmg": "1d8+1",
+      "typ": "Bludgeoning",
+      "avg": 5,
+      "bonus": 3,
+      "melee": true,
+      "reach": 5
+     }
+    ],
+    "cond": [],
+    "effects": [],
+    "conc": false,
+    "react": true,
+    "spent": {},
+    "slots": [],
+    "zdroje": [],
+    "ds": {
+     "s": 0,
+     "f": 0
+    },
+    "dead": false,
+    "xp": 50,
+    "cr": "1/4",
+    "src": {
+     "srd": "Zombie"
+    },
+    "typ": "undead",
+    "velikost": "Medium",
+    "exhaustion": 0
+   },
+   {
+    "id": "9j0pbc00",
+    "nazev": "Zombie 5",
+    "kind": "mon",
+    "side": "nepratele",
+    "s": 1,
+    "x": 22,
+    "y": 6,
+    "hp": 11,
+    "max": 15,
+    "tmp": 0,
+    "ac": 8,
+    "initB": -2,
+    "init": null,
+    "speed": 20,
+    "swim": 0,
+    "fly": 0,
+    "climb": 0,
+    "saves": {
+     "WIS": 0
+    },
+    "mods": {
+     "STR": 1,
+     "DEX": -2,
+     "CON": 3,
+     "INT": -4,
+     "WIS": -2,
+     "CHA": -3
+    },
+    "pb": 2,
+    "odolnosti": [],
+    "imunity": [
+     "poison",
+     "exhaustion",
+     "poisoned"
+    ],
+    "zranitelnosti": [],
+    "imunity_stavu": [],
+    "smysly": [
+     "darkvision 60 ft"
+    ],
+    "atk": [
+     {
+      "nazev": "Slam",
+      "kind": "feature",
+      "text": "Melee Attack Roll: +3, reach 5 ft. 5 (1d8 + 1) Bludgeoning damage.",
+      "n": 1,
+      "dmg": "1d8+1",
+      "typ": "Bludgeoning",
+      "avg": 5,
+      "bonus": 3,
+      "melee": true,
+      "reach": 5
+     }
+    ],
+    "cond": [],
+    "effects": [],
+    "conc": false,
+    "react": true,
+    "spent": {},
+    "slots": [],
+    "zdroje": [],
+    "ds": {
+     "s": 0,
+     "f": 0
+    },
+    "dead": false,
+    "xp": 50,
+    "cr": "1/4",
+    "src": {
+     "srd": "Zombie"
+    },
+    "typ": "undead",
+    "velikost": "Medium",
+    "exhaustion": 0
+   },
+   {
+    "id": "cgjzh19x",
+    "nazev": "Zombie 6",
+    "kind": "mon",
+    "side": "nepratele",
+    "s": 1,
+    "x": 21,
+    "y": 14,
+    "hp": 7,
+    "max": 15,
+    "tmp": 0,
+    "ac": 8,
+    "initB": -2,
+    "init": null,
+    "speed": 20,
+    "swim": 0,
+    "fly": 0,
+    "climb": 0,
+    "saves": {
+     "WIS": 0
+    },
+    "mods": {
+     "STR": 1,
+     "DEX": -2,
+     "CON": 3,
+     "INT": -4,
+     "WIS": -2,
+     "CHA": -3
+    },
+    "pb": 2,
+    "odolnosti": [],
+    "imunity": [
+     "poison",
+     "exhaustion",
+     "poisoned"
+    ],
+    "zranitelnosti": [],
+    "imunity_stavu": [],
+    "smysly": [
+     "darkvision 60 ft"
+    ],
+    "atk": [
+     {
+      "nazev": "Slam",
+      "kind": "feature",
+      "text": "Melee Attack Roll: +3, reach 5 ft. 5 (1d8 + 1) Bludgeoning damage.",
+      "n": 1,
+      "dmg": "1d8+1",
+      "typ": "Bludgeoning",
+      "avg": 5,
+      "bonus": 3,
+      "melee": true,
+      "reach": 5
+     }
+    ],
+    "cond": [],
+    "effects": [],
+    "conc": false,
+    "react": true,
+    "spent": {},
+    "slots": [],
+    "zdroje": [],
+    "ds": {
+     "s": 0,
+     "f": 0
+    },
+    "dead": false,
+    "xp": 50,
+    "cr": "1/4",
+    "src": {
+     "srd": "Zombie"
+    },
+    "typ": "undead",
+    "velikost": "Medium",
+    "exhaustion": 0
+   },
+   {
+    "id": "iq5062zy",
+    "nazev": "Zombie 7",
+    "kind": "mon",
+    "side": "nepratele",
+    "s": 1,
+    "x": 16,
+    "y": 10,
+    "hp": 7,
+    "max": 15,
+    "tmp": 0,
+    "ac": 8,
+    "initB": -2,
+    "init": null,
+    "speed": 20,
+    "swim": 0,
+    "fly": 0,
+    "climb": 0,
+    "saves": {
+     "WIS": 0
+    },
+    "mods": {
+     "STR": 1,
+     "DEX": -2,
+     "CON": 3,
+     "INT": -4,
+     "WIS": -2,
+     "CHA": -3
+    },
+    "pb": 2,
+    "odolnosti": [],
+    "imunity": [
+     "poison",
+     "exhaustion",
+     "poisoned"
+    ],
+    "zranitelnosti": [],
+    "imunity_stavu": [],
+    "smysly": [
+     "darkvision 60 ft"
+    ],
+    "atk": [
+     {
+      "nazev": "Slam",
+      "kind": "feature",
+      "text": "Melee Attack Roll: +3, reach 5 ft. 5 (1d8 + 1) Bludgeoning damage.",
+      "n": 1,
+      "dmg": "1d8+1",
+      "typ": "Bludgeoning",
+      "avg": 5,
+      "bonus": 3,
+      "melee": true,
+      "reach": 5
+     }
+    ],
+    "cond": [],
+    "effects": [],
+    "conc": false,
+    "react": true,
+    "spent": {},
+    "slots": [],
+    "zdroje": [],
+    "ds": {
+     "s": 0,
+     "f": 0
+    },
+    "dead": false,
+    "xp": 50,
+    "cr": "1/4",
+    "src": {
+     "srd": "Zombie"
+    },
+    "typ": "undead",
+    "velikost": "Medium",
+    "exhaustion": 0
+   },
+   {
+    "id": "2tbbyk9s",
+    "nazev": "Zombie 8",
+    "kind": "mon",
+    "side": "nepratele",
+    "s": 1,
+    "x": 18,
+    "y": 13,
+    "hp": 11,
+    "max": 15,
+    "tmp": 0,
+    "ac": 8,
+    "initB": -2,
+    "init": null,
+    "speed": 20,
+    "swim": 0,
+    "fly": 0,
+    "climb": 0,
+    "saves": {
+     "WIS": 0
+    },
+    "mods": {
+     "STR": 1,
+     "DEX": -2,
+     "CON": 3,
+     "INT": -4,
+     "WIS": -2,
+     "CHA": -3
+    },
+    "pb": 2,
+    "odolnosti": [],
+    "imunity": [
+     "poison",
+     "exhaustion",
+     "poisoned"
+    ],
+    "zranitelnosti": [],
+    "imunity_stavu": [],
+    "smysly": [
+     "darkvision 60 ft"
+    ],
+    "atk": [
+     {
+      "nazev": "Slam",
+      "kind": "feature",
+      "text": "Melee Attack Roll: +3, reach 5 ft. 5 (1d8 + 1) Bludgeoning damage.",
+      "n": 1,
+      "dmg": "1d8+1",
+      "typ": "Bludgeoning",
+      "avg": 5,
+      "bonus": 3,
+      "melee": true,
+      "reach": 5
+     }
+    ],
+    "cond": [],
+    "effects": [],
+    "conc": false,
+    "react": true,
+    "spent": {},
+    "slots": [],
+    "zdroje": [],
+    "ds": {
+     "s": 0,
+     "f": 0
+    },
+    "dead": false,
+    "xp": 50,
+    "cr": "1/4",
+    "src": {
+     "srd": "Zombie"
+    },
+    "typ": "undead",
+    "velikost": "Medium",
+    "exhaustion": 0
+   },
+   {
+    "id": "uief0nmv",
+    "nazev": "Postava Dluben",
+    "kind": "pc",
+    "side": "druzina",
+    "s": 1,
+    "x": 17,
+    "y": 10,
+    "hp": 59,
+    "max": 59,
+    "tmp": 0,
+    "ac": 13,
+    "initB": 2,
+    "init": null,
+    "speed": 50,
+    "swim": 0,
+    "fly": 0,
+    "climb": 0,
+    "saves": {
+     "STR": 5,
+     "DEX": 5,
+     "CON": 2,
+     "INT": 1,
+     "WIS": 1,
+     "CHA": -1
+    },
+    "mods": {
+     "STR": 2,
+     "DEX": 2,
+     "CON": 2,
+     "INT": 1,
+     "WIS": 1,
+     "CHA": -1
+    },
+    "pb": 3,
+    "odolnosti": [],
+    "imunity": [],
+    "zranitelnosti": [],
+    "imunity_stavu": [],
+    "smysly": [
+     "Darkvision 60 ft"
+    ],
+    "extraAtk": 2,
+    "atk": [
+     {
+      "nazev": "Unarmed Strike",
+      "kind": "weapon",
+      "bonus": 5,
+      "dmg": "@Martial Arts+2+0",
+      "typ": "Bludgeoning",
+      "mastery": "",
+      "melee": true,
+      "n": 1,
+      "reach": 5
+     }
+    ],
+    "kouzla": [
+     {
+      "nazev": "Circle Of Death (6. úr.)",
+      "kouzlo": "Circle Of Death",
+      "kind": "spell",
+      "lvl": 6,
+      "dmg": "8d8",
+      "typ": "Necrotic",
+      "n": 1,
+      "conc": false,
+      "ba": false,
+      "rea": false,
+      "durationRounds": 0,
+      "text": "Negative energy ripples out in a 60-foot-radius Sphere from a point you choose within range. Each creature in that area makes a Constitution saving throw, taking 8d8 Necrotic damage on a failed save or half as much damage on a successful one.\nUsing a Higher-Level Spell Slot. The damage increases by 2d8 for each spell slot level above 6.",
+      "area": {
+       "shape": "sphere",
+       "size": 60
+      },
+      "range": 150,
+      "save": "CON",
+      "dc": 10,
+      "half": true,
+      "pozn": "+2d8/slot >6"
+     }
+    ],
+    "cond": [
+     {
+      "n": "Prone",
+      "src": "uief0nmv"
+     }
+    ],
+    "effects": [
+     {
+      "id": "o2hxolym",
+      "nazev": "Hideous Laughter",
+      "icon": "🤣",
+      "src": "uief0nmv",
+      "conc": "Hideous Laughter",
+      "duration": {
+       "kind": "rounds",
+       "rounds": 10
+      },
+      "saveEnd": {
+       "ab": "WIS",
+       "dc": 0
+      },
+      "mods": {}
+     }
+    ],
+    "conc": "Hideous Laughter",
+    "react": true,
+    "spent": {},
+    "slots": [],
+    "zdroje": [
+     {
+      "nazev": "Large Form",
+      "max": 1,
+      "used": 0,
+      "obnova": "long"
+     },
+     {
+      "nazev": "Focus Points",
+      "max": 8,
+      "used": 1,
+      "obnova": "short"
+     }
+    ],
+    "ds": {
+     "s": 0,
+     "f": 0
+    },
+    "dead": false,
+    "xp": 0,
+    "lvl": 1,
+    "portret": "04_Postavy/obrazky/Postava_Dluben.webp",
+    "src": {
+     "cesta": "04_Postavy/NPC/Postava_Dluben.md"
+    },
+    "exhaustion": 0
+   }
+  ],
+  "ord": [
+   "g8f6z99g",
+   "nvnvz6vs",
+   "qvp4n6s6",
+   "o3ultepz",
+   "9j0pbc00",
+   "cgjzh19x",
+   "iq5062zy",
+   "2tbbyk9s",
+   "uief0nmv"
+  ],
+  "turn": -1,
+  "round": 0,
+  "log": [
+   {
+    "k": 0,
+    "c": "14:10",
+    "kdo": "Zombie 2",
+    "typ": "move",
+    "t": "Zombie 2 → (19,9) (nucený přesun ⚙)"
+   },
+   {
+    "k": 0,
+    "c": "13:58",
+    "kdo": "Zombie 3",
+    "typ": "cond",
+    "t": "Zombie 3: +Grappled"
+   },
+   {
+    "k": 0,
+    "c": "13:58",
+    "kdo": "Postava Dluben",
+    "typ": "move",
+    "t": "Postava Dluben → (17,10) (nucený přesun ⚙)"
+   },
+   {
+    "k": 0,
+    "c": "13:57",
+    "kdo": "Postava Dluben",
+    "typ": "effect",
+    "t": "Postava Dluben: efekt Hideous Laughter (Concentration)"
+   },
+   {
+    "k": 0,
+    "c": "13:57",
+    "kdo": "Postava Dluben",
+    "typ": "effect",
+    "t": "Postava Dluben: Focus Points (1/8)"
+   },
+   {
+    "k": 0,
+    "c": "12:20",
+    "kdo": "Postava Dluben",
+    "typ": "system",
+    "t": "Postava Dluben: akce už použita"
+   },
+   {
+    "k": 0,
+    "c": "12:20",
+    "kdo": "Postava Dluben",
+    "typ": "move",
+    "t": "Postava Dluben → (12,10) — 50 ft"
+   },
+   {
+    "k": 0,
+    "c": "12:20",
+    "kdo": "Postava Dluben",
+    "typ": "attack",
+    "t": "Postava Dluben: Circle Of Death (6. úr.) (Zombie 1, Zombie 2, Zombie 3, Zombie 4, Zombie 5, Zombie 6, Zombie 7, Zombie 8)"
+   },
+   {
+    "k": 0,
+    "c": "12:20",
+    "kdo": "Zombie 8",
+    "typ": "save",
+    "t": "Zombie 8: CON save 15+3 vs DC 10 → úspěch",
+    "detail": "d20:15"
+   },
+   {
+    "k": 0,
+    "c": "12:20",
+    "kdo": "Zombie 7",
+    "typ": "save",
+    "t": "Zombie 7: CON save 6+3 vs DC 10 → neúspěch",
+    "detail": "d20:6"
+   },
+   {
+    "k": 0,
+    "c": "12:20",
+    "kdo": "Zombie 6",
+    "typ": "save",
+    "t": "Zombie 6: CON save 1+3 vs DC 10 → neúspěch",
+    "detail": "d20:1"
+   },
+   {
+    "k": 0,
+    "c": "12:20",
+    "kdo": "Zombie 5",
+    "typ": "save",
+    "t": "Zombie 5: CON save 7+3 vs DC 10 → úspěch",
+    "detail": "d20:7"
+   },
+   {
+    "k": 0,
+    "c": "12:20",
+    "kdo": "Zombie 4",
+    "typ": "save",
+    "t": "Zombie 4: CON save 18+3 vs DC 10 → úspěch",
+    "detail": "d20:18"
+   },
+   {
+    "k": 0,
+    "c": "12:20",
+    "kdo": "Zombie 3",
+    "typ": "save",
+    "t": "Zombie 3: CON save 20+3 vs DC 10 → úspěch",
+    "detail": "d20:20"
+   },
+   {
+    "k": 0,
+    "c": "12:20",
+    "kdo": "Zombie 2",
+    "typ": "save",
+    "t": "Zombie 2: CON save 3+3 vs DC 10 → neúspěch",
+    "detail": "d20:3"
+   },
+   {
+    "k": 0,
+    "c": "12:20",
+    "kdo": "Zombie 1",
+    "typ": "save",
+    "t": "Zombie 1: CON save 18+3 vs DC 10 → úspěch",
+    "detail": "d20:18"
+   },
+   {
+    "k": 0,
+    "c": "12:19",
+    "kdo": "Zombie 1",
+    "typ": "move",
+    "t": "Zombie 1 → (16,7) — 15 ft"
+   },
+   {
+    "k": 0,
+    "c": "12:19",
+    "kdo": "Zombie 5",
+    "typ": "move",
+    "t": "Zombie 5 → (22,6) — 20 ft"
+   },
+   {
+    "k": 0,
+    "c": "12:19",
+    "kdo": "Zombie 6",
+    "typ": "move",
+    "t": "Zombie 6 → (21,14) — 20 ft"
+   },
+   {
+    "k": 0,
+    "c": "12:19",
+    "kdo": "Zombie 7",
+    "typ": "move",
+    "t": "Zombie 7 → (16,10) — 20 ft"
+   },
+   {
+    "k": 0,
+    "c": "12:19",
+    "kdo": "Zombie 8",
+    "typ": "move",
+    "t": "Zombie 8 → (18,13) — 15 ft"
+   },
+   {
+    "k": 0,
+    "c": "12:18",
+    "kdo": "Zombie 3",
+    "typ": "move",
+    "t": "Zombie 3 → (14,10) — 20 ft"
+   },
+   {
+    "k": 0,
+    "c": "12:18",
+    "kdo": "Zombie 2",
+    "typ": "move",
+    "t": "Zombie 2 → (15,5) — 20 ft"
+   },
+   {
+    "k": 0,
+    "c": "12:18",
+    "kdo": "Zombie 3",
+    "typ": "move",
+    "t": "Zombie 3 → (18,9)"
+   },
+   {
+    "k": 0,
+    "c": "12:18",
+    "kdo": "Zombie 4",
+    "typ": "move",
+    "t": "Zombie 4 → (16,13) — 20 ft"
+   },
+   {
+    "k": 0,
+    "c": "12:17",
+    "kdo": "PJ",
+    "typ": "system",
+    "t": "Postava Dluben přidán do boje"
+   },
+   {
+    "k": 0,
+    "c": "12:16",
+    "kdo": "PJ",
+    "typ": "system",
+    "t": "Zombie 8 přidán do boje"
+   },
+   {
+    "k": 0,
+    "c": "12:16",
+    "kdo": "PJ",
+    "typ": "system",
+    "t": "Zombie 7 přidán do boje"
+   },
+   {
+    "k": 0,
+    "c": "12:16",
+    "kdo": "PJ",
+    "typ": "system",
+    "t": "Zombie 6 přidán do boje"
+   },
+   {
+    "k": 0,
+    "c": "12:16",
+    "kdo": "PJ",
+    "typ": "system",
+    "t": "Zombie 5 přidán do boje"
+   },
+   {
+    "k": 0,
+    "c": "12:16",
+    "kdo": "PJ",
+    "typ": "system",
+    "t": "Zombie 4 přidán do boje"
+   },
+   {
+    "k": 0,
+    "c": "12:16",
+    "kdo": "PJ",
+    "typ": "system",
+    "t": "Zombie 3 přidán do boje"
+   },
+   {
+    "k": 0,
+    "c": "12:16",
+    "kdo": "PJ",
+    "typ": "system",
+    "t": "Zombie 2 přidán do boje"
+   },
+   {
+    "k": 0,
+    "c": "12:16",
+    "kdo": "PJ",
+    "typ": "system",
+    "t": "Zombie přidán do boje"
+   }
+  ],
+  "eco": {
+   "g8f6z99g": {
+    "a": 0,
+    "b": 0,
+    "r": 0,
+    "moved": 15,
+    "objInt": 0,
+    "spell": 0,
+    "baSpell": 0,
+    "dash": 0,
+    "disengage": 0,
+    "extraA": 0
+   },
+   "nvnvz6vs": {
+    "a": 0,
+    "b": 0,
+    "r": 0,
+    "moved": 20,
+    "objInt": 0,
+    "spell": 0,
+    "baSpell": 0,
+    "dash": 0,
+    "disengage": 0,
+    "extraA": 0
+   },
+   "qvp4n6s6": {
+    "a": 0,
+    "b": 0,
+    "r": 0,
+    "moved": 20,
+    "objInt": 0,
+    "spell": 0,
+    "baSpell": 0,
+    "dash": 0,
+    "disengage": 0,
+    "extraA": 0
+   },
+   "o3ultepz": {
+    "a": 0,
+    "b": 0,
+    "r": 0,
+    "moved": 20,
+    "objInt": 0,
+    "spell": 0,
+    "baSpell": 0,
+    "dash": 0,
+    "disengage": 0,
+    "extraA": 0
+   },
+   "9j0pbc00": {
+    "a": 0,
+    "b": 0,
+    "r": 0,
+    "moved": 20,
+    "objInt": 0,
+    "spell": 0,
+    "baSpell": 0,
+    "dash": 0,
+    "disengage": 0,
+    "extraA": 0
+   },
+   "cgjzh19x": {
+    "a": 0,
+    "b": 0,
+    "r": 0,
+    "moved": 20,
+    "objInt": 0,
+    "spell": 0,
+    "baSpell": 0,
+    "dash": 0,
+    "disengage": 0,
+    "extraA": 0
+   },
+   "iq5062zy": {
+    "a": 0,
+    "b": 0,
+    "r": 0,
+    "moved": 20,
+    "objInt": 0,
+    "spell": 0,
+    "baSpell": 0,
+    "dash": 0,
+    "disengage": 0,
+    "extraA": 0
+   },
+   "2tbbyk9s": {
+    "a": 0,
+    "b": 0,
+    "r": 0,
+    "moved": 15,
+    "objInt": 0,
+    "spell": 0,
+    "baSpell": 0,
+    "dash": 0,
+    "disengage": 0,
+    "extraA": 0
+   },
+   "uief0nmv": {
+    "a": 1,
+    "b": 1,
+    "r": 0,
+    "moved": 50,
+    "objInt": 0,
+    "spell": 0,
+    "baSpell": 0,
+    "dash": 0,
+    "disengage": 0,
+    "extraA": 0
+   }
+  },
+  "zones": [],
+  "fx": [
+   {
+    "id": "zwju5m1r",
+    "typ": "aoe",
+    "area": {
+     "shape": "sphere",
+     "size": 60,
+     "anchor": [
+      18,
+      10
+     ]
+    },
+    "dmgType": "Necrotic",
+    "text": "Circle Of Death (6. úr.)"
+   },
+   {
+    "id": "w6o45saj",
+    "typ": "dmg",
+    "to": [
+     16,
+     7
+    ],
+    "text": "4",
+    "dmgType": "Necrotic",
+    "tokenId": "g8f6z99g"
+   },
+   {
+    "id": "rwf9usi5",
+    "typ": "dmg",
+    "to": [
+     15,
+     5
+    ],
+    "text": "8",
+    "dmgType": "Necrotic",
+    "tokenId": "nvnvz6vs"
+   },
+   {
+    "id": "vtpgt12h",
+    "typ": "dmg",
+    "to": [
+     14,
+     10
+    ],
+    "text": "4",
+    "dmgType": "Necrotic",
+    "tokenId": "qvp4n6s6"
+   },
+   {
+    "id": "iyj0oiv4",
+    "typ": "dmg",
+    "to": [
+     16,
+     13
+    ],
+    "text": "4",
+    "dmgType": "Necrotic",
+    "tokenId": "o3ultepz"
+   },
+   {
+    "id": "scf0syef",
+    "typ": "dmg",
+    "to": [
+     22,
+     6
+    ],
+    "text": "4",
+    "dmgType": "Necrotic",
+    "tokenId": "9j0pbc00"
+   },
+   {
+    "id": "21srs0hw",
+    "typ": "dmg",
+    "to": [
+     21,
+     14
+    ],
+    "text": "8",
+    "dmgType": "Necrotic",
+    "tokenId": "cgjzh19x"
+   },
+   {
+    "id": "o38ybyz9",
+    "typ": "dmg",
+    "to": [
+     16,
+     10
+    ],
+    "text": "8",
+    "dmgType": "Necrotic",
+    "tokenId": "iq5062zy"
+   },
+   {
+    "id": "bekqwmvr",
+    "typ": "dmg",
+    "to": [
+     18,
+     13
+    ],
+    "text": "4",
+    "dmgType": "Necrotic",
+    "tokenId": "2tbbyk9s"
+   }
+  ]
+ },
+ "id": "654",
+ "upraveno": "2026-11-18T14:10:17"
+}

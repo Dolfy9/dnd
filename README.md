@@ -108,6 +108,7 @@ Repo je kompatibilní i s [Obsidianem](https://obsidian.md) (stačí otevřít s
   - [Dluben](04_Postavy/NPC/Postava_Dluben.md)
   - [Kazi Nocostřel (Průvodce)](04_Postavy/NPC/Postava_Kazi.md)
   - [Inkvizitor Vaelen (NPC Antagonista)](04_Postavy/NPC/Postava_Vaelen.md)
+  - [Ysmera Vanthal (Šedá kronikářka)](04_Postavy/NPC/Postava_Ysmera_Vanthal.md)
   - [Ederhan Vossk](04_Postavy/NPC/Straz_Wortmiru/Postava_Ederhan_Vossk.md)
   - [Morn](04_Postavy/NPC/Straz_Wortmiru/Postava_Morn.md)
   - [Vorek Hald](04_Postavy/NPC/Straz_Wortmiru/Postava_Vorek_Hald.md)
@@ -197,6 +198,7 @@ Repo je kompatibilní i s [Obsidianem](https://obsidian.md) (stačí otevřít s
   - [Král Veanor I.](04_Postavy/Vladci/Postava_Veanor_I.md)
   - [Vévoda Wort XXIV.](04_Postavy/Vladci/Postava_Wort_XXIV.md)
   - [Královna Yuthika](04_Postavy/Vladci/Postava_Yuthika.md)
+- [Quenthel Canraeh [Kvintel Kanrech]](04_Postavy/Postava_Quenthel_Canraeh_Kvintel_Kanrech.md)
 
 ### [05_Frakce](05_Frakce/)
 - [Důlní parta Hlubin](05_Frakce/Dulni_Parta_Hlubin.md)
@@ -236,18 +238,19 @@ Repo je kompatibilní i s [Obsidianem](https://obsidian.md) (stačí otevřít s
 - [Lodní deník z Menkantu](06_Knihy_a_Dokumenty/Kniha_17_Lodni_denik_z_Menkantu.md)
 - [Regule šedých kutn](06_Knihy_a_Dokumenty/Kniha_18_Regule_sedych_kuten.md)
 - [Zeměpis známých zemí](06_Knihy_a_Dokumenty/Kniha_19_Zemepis_znamych_zemi.md)
+- [Dopis šedé kronikářky](06_Knihy_a_Dokumenty/Kniha_20_Dopis_sede_kronikarky.md)
 
 ### [07_Kampane](07_Kampane/)
-_(zatím prázdné)_
+- [Zlomená pečeť](07_Kampane/Zlomena_pecet.md)
 
 ### [08_Questy](08_Questy/)
-_(zatím prázdné)_
+- [Welcome to Khärghe](08_Questy/Quest_Welcome_to_Kharghe.md)
 
 ### [09_Hadanky](09_Hadanky/)
 _(zatím prázdné)_
 
 ### [10_Sezeni](10_Sezeni/)
-_(zatím prázdné)_
+- [Session zero](10_Sezeni/Sezeni_Session_zero.md)
 
 ### [11_Mapy](11_Mapy/)
 - [Analýza mapy po dílech](11_Mapy/Analyza_mapy.md)
