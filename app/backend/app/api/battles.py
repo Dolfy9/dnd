@@ -158,10 +158,21 @@ def create_battle(b: NewBattle, u: dict = Depends(security.require("editor"))):
         i += 1
     kampane = list(dict.fromkeys(b.kampane or ([b.kampan] if b.kampan else [])))
     kampan = kampane[0] if kampane else ""
+    stav_boje: dict = {}
+    if b.map_ref:
+        row = db.connect().execute("SELECT data FROM battle_maps WHERE id=?", (b.map_ref,)).fetchone()
+        if row:
+            mdata = db.jload(row["data"]) or {}
+            if mdata.get("svetla"):
+                stav_boje["lights"] = [
+                    {"id": l.get("id", f"l{i}"), "anchor": [l.get("x", 0), l.get("y", 0)],
+                     "bright": l.get("bright", 0), "dim": l.get("dim", 0),
+                     "nazev": l.get("nazev", "světlo mapy")}
+                    for i, l in enumerate(mdata["svetla"])]
     state = {"id": bid, "nazev": b.name, "stav": "priprava", "kampan": kampan,
              "kampane": kampane,
              "quest": b.quest, "sezeni": b.sezeni, "mapa": b.map_ref,
-             "vytvoreno": db.now(), "upraveno": db.now(), "stav_boje": {}}
+             "vytvoreno": db.now(), "upraveno": db.now(), "stav_boje": stav_boje}
     con = db.connect()
     con.execute(
         "INSERT INTO battles(id,name,status,kampan,quest,sezeni,map_ref,state,version,created_at,updated_at)"

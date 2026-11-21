@@ -15,6 +15,8 @@ import { AdminUsers, AdminAudit, AdminSystem } from "./pages/Admin";
 import Mapa from "./pages/Mapa";
 import Boj from "./pages/Boj";
 import Boje from "./pages/Boje";
+import MapyIndex from "./features/mapeditor/components/MapyIndex";
+import EditorPage from "./features/mapeditor/components/EditorPage";
 import Kampane from "./pages/Kampane";
 import KampanDetail from "./pages/KampanDetail";
 import { ZnalostiPage } from "./pages/Placeholders";
@@ -75,6 +77,7 @@ export default function App() {
       <ConfirmHost />
       <Routes>
         <Route path="/login" element={<Login />} />
+        <Route path="/boj/mapa/:id" element={<EditorPage />} />
         <Route element={<AppShell />}>
           <Route index element={<Dashboard />} />
           <Route path="/p/*" element={<PageView />} />
@@ -89,6 +92,7 @@ export default function App() {
           <Route path="/mapa" element={<Mapa />} />
           <Route path="/boj" element={<BojGuard />} />
           <Route path="/boje" element={<Boje />} />
+          <Route path="/boj/mapy" element={<MapyIndex />} />
           <Route path="/kampane" element={<Kampane />} />
           <Route path="/kampane/*" element={<KampanDetail />} />
           <Route path="/hudba" element={<Hudba />} />

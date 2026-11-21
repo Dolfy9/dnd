@@ -188,7 +188,7 @@ export function cmdArea(S: StavBoje, a: AreaArgs, ctx: CmdCtx): { ok: boolean; t
     let dmg = dmgBase ?? 0;
     let applies = true;
     if (a.atk.save && a.atk.dc) {
-      const cov = ctx.map ? coverOf(A, T, ctx.map, S.tok) : 0;
+      const cov = ctx.map ? coverOf(A, T, ctx.map, S.tok, undefined, undefined, S.teren, (S as any).dvere) : 0;
       const sr = resolveSave(T, a.atk.save, a.atk.dc, { cover: cov });
       applies = !sr.success;
       const tMods = sumMods(T);

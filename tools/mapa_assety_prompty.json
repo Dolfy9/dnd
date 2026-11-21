@@ -1,0 +1,683 @@
+{
+ "style_asset": "hand-painted realistic top-down orthographic 90° view, premium D&D battlemap asset, single isolated object, transparent background, no grid, no text, no frame, no watermark, consistent soft light from top-left, subtle soft drop shadow, dark fantasy painterly style",
+ "style_texture": "seamless tileable hand-painted top-down texture for a D&D battlemap, no objects, no border, no text, flat orthographic 90° view, consistent soft light, dark fantasy painterly style",
+ "assety": [
+  {
+   "id": "stul-ctverec",
+   "nazev": "Stůl čtvercový",
+   "kategorie": "Nábytek",
+   "prompt": "square wooden tavern table"
+  },
+  {
+   "id": "stul-obdelnik",
+   "nazev": "Stůl dlouhý",
+   "kategorie": "Nábytek",
+   "prompt": "long wooden dining table"
+  },
+  {
+   "id": "stul-kulaty",
+   "nazev": "Stůl kulatý",
+   "kategorie": "Nábytek",
+   "prompt": "round wooden table"
+  },
+  {
+   "id": "zidle",
+   "nazev": "Židle",
+   "kategorie": "Nábytek",
+   "prompt": "wooden chair"
+  },
+  {
+   "id": "lavice",
+   "nazev": "Lavice",
+   "kategorie": "Nábytek",
+   "prompt": "wooden bench"
+  },
+  {
+   "id": "postel",
+   "nazev": "Postel",
+   "kategorie": "Nábytek",
+   "prompt": "medieval bed with blanket"
+  },
+  {
+   "id": "postel-dvou",
+   "nazev": "Dvoulůžko",
+   "kategorie": "Nábytek",
+   "prompt": "large double bed"
+  },
+  {
+   "id": "skrin",
+   "nazev": "Skříň",
+   "kategorie": "Nábytek",
+   "prompt": "wooden wardrobe"
+  },
+  {
+   "id": "truhel",
+   "nazev": "Truhla",
+   "kategorie": "Nábytek",
+   "prompt": "iron-bound wooden chest"
+  },
+  {
+   "id": "knihovna",
+   "nazev": "Knihovna",
+   "kategorie": "Nábytek",
+   "prompt": "tall bookshelf full of books"
+  },
+  {
+   "id": "krzeslo",
+   "nazev": "Křeslo / trůn",
+   "kategorie": "Nábytek",
+   "prompt": "ornate wooden throne"
+  },
+  {
+   "id": "stolni-deska",
+   "nazev": "Psací stůl",
+   "kategorie": "Nábytek",
+   "prompt": "writing desk with parchment"
+  },
+  {
+   "id": "krb",
+   "nazev": "Krb",
+   "kategorie": "Nábytek",
+   "prompt": "stone fireplace with fire"
+  },
+  {
+   "id": "pult",
+   "nazev": "Pult / bar",
+   "kategorie": "Nábytek",
+   "prompt": "tavern bar counter"
+  },
+  {
+   "id": "koberec-velky",
+   "nazev": "Koberec",
+   "kategorie": "Nábytek",
+   "prompt": "ornate red carpet"
+  },
+  {
+   "id": "sud",
+   "nazev": "Sud",
+   "kategorie": "Nábytek",
+   "prompt": "wooden barrel"
+  },
+  {
+   "id": "bedna",
+   "nazev": "Bedna",
+   "kategorie": "Nábytek",
+   "prompt": "wooden crate"
+  },
+  {
+   "id": "bedny-sesup",
+   "nazev": "Hromada beden",
+   "kategorie": "Nábytek",
+   "prompt": "stack of wooden crates"
+  },
+  {
+   "id": "pydel",
+   "nazev": "Pytel",
+   "kategorie": "Nábytek",
+   "prompt": "burlap sack"
+  },
+  {
+   "id": "sloup",
+   "nazev": "Sloup",
+   "kategorie": "Dungeon",
+   "prompt": "stone pillar"
+  },
+  {
+   "id": "sloup-velky",
+   "nazev": "Masivní sloup",
+   "kategorie": "Dungeon",
+   "prompt": "massive stone column"
+  },
+  {
+   "id": "socha",
+   "nazev": "Socha",
+   "kategorie": "Dungeon",
+   "prompt": "hooded statue on pedestal"
+  },
+  {
+   "id": "sarkofag",
+   "nazev": "Sarkofág",
+   "kategorie": "Dungeon",
+   "prompt": "stone sarcophagus"
+  },
+  {
+   "id": "hrobka-kryt",
+   "nazev": "Hrob",
+   "kategorie": "Dungeon",
+   "prompt": "stone grave slab"
+  },
+  {
+   "id": "oltar",
+   "nazev": "Oltář",
+   "kategorie": "Dungeon",
+   "prompt": "stone altar with candles"
+  },
+  {
+   "id": "kazatelna",
+   "nazev": "Kazatelna",
+   "kategorie": "Dungeon",
+   "prompt": "wooden lectern"
+  },
+  {
+   "id": "mriz",
+   "nazev": "Mříž / cela",
+   "kategorie": "Dungeon",
+   "prompt": "iron prison bars segment"
+  },
+  {
+   "id": "studna",
+   "nazev": "Studna",
+   "kategorie": "Dungeon",
+   "prompt": "stone well"
+  },
+  {
+   "id": "tajna-mistnost",
+   "nazev": "Pokladnice",
+   "kategorie": "Dungeon",
+   "prompt": "treasure chest open with gold"
+  },
+  {
+   "id": "pavouk-web",
+   "nazev": "Pavučiny",
+   "kategorie": "Dungeon",
+   "prompt": "thick spider webs"
+  },
+  {
+   "id": "kostlivec",
+   "nazev": "Kostlivec",
+   "kategorie": "Dungeon",
+   "prompt": "human skeleton remains"
+  },
+  {
+   "id": "kosti-hromada",
+   "nazev": "Hromada kostí",
+   "kategorie": "Dungeon",
+   "prompt": "pile of old bones"
+  },
+  {
+   "id": "prulom",
+   "nazev": "Prolomená zeď",
+   "kategorie": "Dungeon",
+   "prompt": "collapsed rubble wall"
+  },
+  {
+   "id": "schod-dolu",
+   "nazev": "Schody dolů",
+   "kategorie": "Dungeon",
+   "prompt": "stone stairs going down"
+  },
+  {
+   "id": "balvan",
+   "nazev": "Balvan",
+   "kategorie": "Dungeon",
+   "prompt": "large boulder"
+  },
+  {
+   "id": "stalaktit",
+   "nazev": "Stalaktit",
+   "kategorie": "Dungeon",
+   "prompt": "cave stalagmite"
+  },
+  {
+   "id": "trhlina",
+   "nazev": "Trhlina",
+   "kategorie": "Dungeon",
+   "prompt": "cracked floor fissure"
+  },
+  {
+   "id": "strom",
+   "nazev": "Strom",
+   "kategorie": "Příroda",
+   "prompt": "large deciduous tree canopy"
+  },
+  {
+   "id": "strom-velky",
+   "nazev": "Strom velký",
+   "kategorie": "Příroda",
+   "prompt": "huge ancient tree canopy"
+  },
+  {
+   "id": "smrk",
+   "nazev": "Smrk",
+   "kategorie": "Příroda",
+   "prompt": "pine tree top"
+  },
+  {
+   "id": "keř",
+   "nazev": "Keř",
+   "kategorie": "Příroda",
+   "prompt": "leafy bush"
+  },
+  {
+   "id": "kamen",
+   "nazev": "Kámen",
+   "kategorie": "Příroda",
+   "prompt": "mossy rock"
+  },
+  {
+   "id": "skala",
+   "nazev": "Skalní útvar",
+   "kategorie": "Příroda",
+   "prompt": "rocky outcrop"
+  },
+  {
+   "id": "pazdrovi",
+   "nazev": "Pařez",
+   "kategorie": "Příroda",
+   "prompt": "tree stump"
+  },
+  {
+   "id": "padly-strom",
+   "nazev": "Padlý strom",
+   "kategorie": "Příroda",
+   "prompt": "fallen log"
+  },
+  {
+   "id": "houby",
+   "nazev": "Houby",
+   "kategorie": "Příroda",
+   "prompt": "mushroom cluster"
+  },
+  {
+   "id": "houby-svitici",
+   "nazev": "Svítící houby",
+   "kategorie": "Příroda",
+   "prompt": "glowing blue mushrooms"
+  },
+  {
+   "id": "vinorost",
+   "nazev": "Vřes / porost",
+   "kategorie": "Příroda",
+   "prompt": "thorny undergrowth"
+  },
+  {
+   "id": "reka-prechod",
+   "nazev": "Brod",
+   "kategorie": "Příroda",
+   "prompt": "river ford stones"
+  },
+  {
+   "id": "koreny",
+   "nazev": "Kořeny",
+   "kategorie": "Příroda",
+   "prompt": "exposed tree roots"
+  },
+  {
+   "id": "kvety",
+   "nazev": "Květiny",
+   "kategorie": "Příroda",
+   "prompt": "wildflower patch"
+  },
+  {
+   "id": "studna-mesto",
+   "nazev": "Městská studna",
+   "kategorie": "Město",
+   "prompt": "city stone well"
+  },
+  {
+   "id": "stodola-vuz",
+   "nazev": "Vůz",
+   "kategorie": "Město",
+   "prompt": "wooden cart wagon"
+  },
+  {
+   "id": "stojan-stand",
+   "nazev": "Tržní stánek",
+   "kategorie": "Město",
+   "prompt": "market stall with awning"
+  },
+  {
+   "id": "lavoir-kasna",
+   "nazev": "Kašna",
+   "kategorie": "Město",
+   "prompt": "ornate fountain"
+  },
+  {
+   "id": "latarnik",
+   "nazev": "Lampa",
+   "kategorie": "Město",
+   "prompt": "iron street lamp lit"
+  },
+  {
+   "id": "plot",
+   "nazev": "Plot",
+   "kategorie": "Město",
+   "prompt": "wooden fence segment"
+  },
+  {
+   "id": "zabradi",
+   "nazev": "Zábradlí",
+   "kategorie": "Město",
+   "prompt": "iron railing"
+  },
+  {
+   "id": "kvetinac",
+   "nazev": "Květináč",
+   "kategorie": "Město",
+   "prompt": "flower pot"
+  },
+  {
+   "id": "kolo-voza",
+   "nazev": "Rozbitý vůz",
+   "kategorie": "Město",
+   "prompt": "broken cart wreck"
+  },
+  {
+   "id": "markyza",
+   "nazev": "Markýza",
+   "kategorie": "Město",
+   "prompt": "striped market awning"
+  },
+  {
+   "id": "smiti",
+   "nazev": "Hromada odpadu",
+   "kategorie": "Město",
+   "prompt": "garbage heap"
+  },
+  {
+   "id": "dvere-ikona",
+   "nazev": "Vrata",
+   "kategorie": "Město",
+   "prompt": "large wooden gate"
+  },
+  {
+   "id": "clun",
+   "nazev": "Člun",
+   "kategorie": "Loď",
+   "prompt": "small wooden rowboat"
+  },
+  {
+   "id": "stożar",
+   "nazev": "Stěžeň",
+   "kategorie": "Loď",
+   "prompt": "Stěžeň"
+  },
+  {
+   "id": "kotva",
+   "nazev": "Kotva",
+   "kategorie": "Loď",
+   "prompt": "iron anchor"
+  },
+  {
+   "id": "vrv-kotel",
+   "nazev": "Kladka / lano",
+   "kategorie": "Loď",
+   "prompt": "rope coil"
+  },
+  {
+   "id": "truhla-lod",
+   "nazev": "Náklad",
+   "kategorie": "Loď",
+   "prompt": "ship cargo crate"
+  },
+  {
+   "id": "mag-kruh",
+   "nazev": "Magický kruh",
+   "kategorie": "Magie",
+   "prompt": "glowing arcane summoning circle"
+  },
+  {
+   "id": "portal",
+   "nazev": "Portál",
+   "kategorie": "Magie",
+   "prompt": "magical portal gateway"
+  },
+  {
+   "id": "rune-kamen",
+   "nazev": "Runový kámen",
+   "kategorie": "Magie",
+   "prompt": "rune-carved standing stone"
+  },
+  {
+   "id": "krystal",
+   "nazev": "Krystal",
+   "kategorie": "Magie",
+   "prompt": "glowing blue crystal cluster"
+  },
+  {
+   "id": "kotel",
+   "nazev": "Kotel",
+   "kategorie": "Magie",
+   "prompt": "witch cauldron with green brew"
+  },
+  {
+   "id": "magicky-oltar",
+   "nazev": "Rituální oltář",
+   "kategorie": "Magie",
+   "prompt": "ritual altar glowing runes"
+  },
+  {
+   "id": "svitek-police",
+   "nazev": "Police svitků",
+   "kategorie": "Magie",
+   "prompt": "scroll shelf"
+  },
+  {
+   "id": "spiky",
+   "nazev": "Hřeby / spiky",
+   "kategorie": "Pasti a nebezpečí",
+   "prompt": "floor spike trap"
+  },
+  {
+   "id": "jama-spiky",
+   "nazev": "Jáma s hřeby",
+   "kategorie": "Pasti a nebezpečí",
+   "prompt": "spiked pit trap"
+  },
+  {
+   "id": "past-klapka",
+   "nazev": "Padací klapka",
+   "kategorie": "Pasti a nebezpečí",
+   "prompt": "floor trap door"
+  },
+  {
+   "id": "ohen-past",
+   "nazev": "Ohnivá past",
+   "kategorie": "Pasti a nebezpečí",
+   "prompt": "fire glyph trap"
+  },
+  {
+   "id": "lano-past",
+   "nazev": "Lanková past",
+   "kategorie": "Pasti a nebezpečí",
+   "prompt": "rope snare trap"
+  },
+  {
+   "id": "trn",
+   "nazev": "Trnitý porost",
+   "kategorie": "Pasti a nebezpečí",
+   "prompt": "thorny vines hazard"
+  },
+  {
+   "id": "kyselina",
+   "nazev": "Kyselá louže",
+   "kategorie": "Pasti a nebezpečí",
+   "prompt": "acid pool"
+  },
+  {
+   "id": "netopyri",
+   "nazev": "Hnízdo netopýrů",
+   "kategorie": "Pasti a nebezpečí",
+   "prompt": "bat swarm nest"
+  },
+  {
+   "id": "pochodeň",
+   "nazev": "Pochodeň",
+   "kategorie": "Světla",
+   "prompt": "lit torch"
+  },
+  {
+   "id": "ohriste",
+   "nazev": "Ohniště",
+   "kategorie": "Světla",
+   "prompt": "campfire with stone ring"
+  },
+  {
+   "id": "brasier",
+   "nazev": "Žhavina / brazier",
+   "kategorie": "Světla",
+   "prompt": "iron brazier with coals"
+  },
+  {
+   "id": "svicka",
+   "nazev": "Svíčka",
+   "kategorie": "Světla",
+   "prompt": "single lit candle"
+  },
+  {
+   "id": "lucerna",
+   "nazev": "Lucerna",
+   "kategorie": "Světla",
+   "prompt": "brass lantern lit"
+  },
+  {
+   "id": "kandelabr",
+   "nazev": "Svícen",
+   "kategorie": "Světla",
+   "prompt": "three-arm candelabra lit"
+  },
+  {
+   "id": "svitici-runa",
+   "nazev": "Svítící runa",
+   "kategorie": "Světla",
+   "prompt": "glowing rune stone"
+  },
+  {
+   "id": "krb-vapka",
+   "nazev": "Magický plamen",
+   "kategorie": "Světla",
+   "prompt": "magical blue flame"
+  },
+  {
+   "id": "stan",
+   "nazev": "Stan",
+   "kategorie": "Tábor/bitva",
+   "prompt": "small canvas tent"
+  },
+  {
+   "id": "stan-velky",
+   "nazev": "Stan velký",
+   "kategorie": "Tábor/bitva",
+   "prompt": "large war tent"
+  },
+  {
+   "id": "ohne-tabor",
+   "nazev": "Táborák",
+   "kategorie": "Tábor/bitva",
+   "prompt": "campfire"
+  },
+  {
+   "id": "barikada",
+   "nazev": "Barikáda",
+   "kategorie": "Tábor/bitva",
+   "prompt": "wooden barricade"
+  },
+  {
+   "id": "jezek",
+   "nazev": "Protijezdecký ježek",
+   "kategorie": "Tábor/bitva",
+   "prompt": "caltrop wooden hedgehog"
+  },
+  {
+   "id": "vlajka",
+   "nazev": "Vlajka",
+   "kategorie": "Tábor/bitva",
+   "prompt": "battle banner flag"
+  },
+  {
+   "id": "zbroj-stojan",
+   "nazev": "Stojan na zbraně",
+   "kategorie": "Tábor/bitva",
+   "prompt": "weapon rack"
+  },
+  {
+   "id": "zavazi",
+   "nazev": "Válec / pytle",
+   "kategorie": "Tábor/bitva",
+   "prompt": "sandbag pile"
+  },
+  {
+   "id": "valek-buben",
+   "nazev": "Válečný buben",
+   "kategorie": "Tábor/bitva",
+   "prompt": "war drum"
+  }
+ ],
+ "textury": [
+  {
+   "id": "dlazba",
+   "nazev": "Dlažba",
+   "prompt": "grey stone floor tiles"
+  },
+  {
+   "id": "kocici-hlavy",
+   "nazev": "Kočičí hlavy",
+   "prompt": "cobblestone floor"
+  },
+  {
+   "id": "drevo",
+   "nazev": "Dřevo",
+   "prompt": "old wooden planks floor"
+  },
+  {
+   "id": "trava",
+   "nazev": "Tráva",
+   "prompt": "grass field"
+  },
+  {
+   "id": "hlina",
+   "nazev": "Hlína",
+   "prompt": "packed dirt ground"
+  },
+  {
+   "id": "pisek",
+   "nazev": "Písek",
+   "prompt": "sandy ground"
+  },
+  {
+   "id": "snih",
+   "nazev": "Sníh",
+   "prompt": "snow ground"
+  },
+  {
+   "id": "mramor",
+   "nazev": "Mramor",
+   "prompt": "white marble floor"
+  },
+  {
+   "id": "koberec",
+   "nazev": "Koberec",
+   "prompt": "dark red woven carpet"
+  },
+  {
+   "id": "melka-voda",
+   "nazev": "Mělká voda",
+   "prompt": "shallow clear water"
+  },
+  {
+   "id": "hluboka-voda",
+   "nazev": "Hluboká voda",
+   "prompt": "deep dark water"
+  },
+  {
+   "id": "lava",
+   "nazev": "Láva",
+   "prompt": "molten lava with cracks"
+  },
+  {
+   "id": "led",
+   "nazev": "Led",
+   "prompt": "frozen ice sheet"
+  },
+  {
+   "id": "bazina",
+   "nazev": "Bažina",
+   "prompt": "murky swamp water"
+  },
+  {
+   "id": "jeskyne",
+   "nazev": "Jeskynní skála",
+   "prompt": "rough cave rock floor"
+  }
+ ]
+}

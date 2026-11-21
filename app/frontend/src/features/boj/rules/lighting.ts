@@ -4,6 +4,7 @@
 import type { BattleMapData, LightSource, StavBoje, Token, Zone } from "../types";
 import { cellsOf, gapFt } from "./grid";
 import { coverOf } from "./los";
+import { edgeBlocksSight, wallIndex } from "../model/mapV2";
 import { hasCond, isIncap } from "./conditions";
 
 export type LightLevel = "bright" | "dim" | "dark";
@@ -57,6 +58,7 @@ export function lightAt(S: StavBoje, map: BattleMapData, x: number, y: number): 
   const global = S.lightLevel || parseLightLevel(map.osvetleni);
   let lvl: LightLevel = global;
   const rank = { dark: 0, dim: 1, bright: 2 };
+  const wIdx = wallIndex((map as any).steny);
   for (const L of S.lights || []) {
     const src = L.tokenId ? S.tok.find((t) => t.id === L.tokenId) : undefined;
     const ax = src ? src.x! : L.anchor?.[0];
@@ -65,10 +67,25 @@ export function lightAt(S: StavBoje, map: BattleMapData, x: number, y: number): 
     const d = Math.max(Math.abs(x - ax), Math.abs(y - ay)) * 5;
     const inDark = obscuredAt(S, ax, ay); // světlo ve tmě nesvítí (Darkness 2024)
     if (inDark) continue;
+    if (wIdx.size && sightBlocked(idxOr(wIdx), ax, ay, x, y, (S as any).dvere)) continue; // světlo skrz zeď nesvítí
     if (d <= L.bright) return "bright";
     if (d <= L.bright + L.dim && rank[lvl] < 1) lvl = "dim";
   }
   return lvl;
+}
+
+const idxOr = (i: Map<string, any>) => i;
+/** Zjednodušená kontrola, zda přímka A(x,y)→B(x,y) kříží zdi blokující výhled (po buňkách). */
+export function sightBlocked(wIdx: Map<string, import("../model/mapV2").MapWall>, ax: number, ay: number, bx: number, by: number, doors?: Record<string, boolean>): boolean {
+  const n = Math.max(2, Math.ceil(Math.hypot(bx - ax, by - ay) * 4));
+  let px = Math.floor(ax), py = Math.floor(ay);
+  for (let i = 1; i <= n; i++) {
+    const cx = Math.floor(ax + (bx - ax) * i / n), cy = Math.floor(ay + (by - ay) * i / n);
+    if (cx === px && cy === py) continue;
+    if (edgeBlocksSight(wIdx, px, py, cx, cy, doors)) return true;
+    px = cx; py = cy;
+  }
+  return false;
 }
 
 export interface Verdict { see: boolean; reason?: string; sense?: string }
@@ -83,7 +100,7 @@ export function canSeeTarget(S: StavBoje, map: BattleMapData, a: Token, b: Token
   if (dist <= sn.truesight) return { see: true, sense: "Truesight" };
   if (dist <= sn.blindsight) return { see: true, sense: "Blindsight" };
   // LOS přes zeď / total cover
-  if (coverOf(a, b, map, S.tok, undefined, undefined, S.teren) === 9)
+  if (coverOf(a, b, map, S.tok, undefined, undefined, S.teren, (S as any).dvere) === 9)
     return { see: false, reason: "mimo dohled (Total Cover)" };
   // Invisible cíl
   if (hasCond(b, "Invisible")) return { see: false, reason: "cíl Invisible" };

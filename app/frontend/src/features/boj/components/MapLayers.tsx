@@ -169,10 +169,15 @@ export function LightingLayer({ S, map, px, W, H, dm }: {
 export function FogLayer({ S, px, W, H, dm }: { S: StavBoje; px: number; W: number; H: number; dm: boolean }) {
   if (!S.fog?.on) return null;
   const a = dm ? 0.45 : 0.97;
+  const dimA = dm ? 0.18 : 0.55;                       // explored-but-not-visible veil
   const cells: JSX.Element[] = [];
-  for (let x = 0; x < W; x++) for (let y = 0; y < H; y++)
-    if (!S.fog.revealed[`${x},${y}`])
-      cells.push(<rect key={`${x},${y}`} x={x * px} y={y * px} width={px} height={px} fill="#000" opacity={a} />);
+  const hasVis = !!S.fog.visible;
+  for (let x = 0; x < W; x++) for (let y = 0; y < H; y++) {
+    const rev = S.fog.revealed[`${x},${y}`];
+    if (!rev) cells.push(<rect key={`${x},${y}`} x={x * px} y={y * px} width={px} height={px} fill="#000" opacity={a} />);
+    else if (hasVis && !S.fog.visible![`${x},${y}`])
+      cells.push(<rect key={`${x},${y}`} x={x * px} y={y * px} width={px} height={px} fill="#000" opacity={dimA} />);
+  }
   return <g pointerEvents="none">{cells}</g>;
 }
 

@@ -11,6 +11,8 @@ import { reachableCells, evalUi } from "../state/commands";
 import { planMovement, cumFt, type MovementPlan } from "../rules/movement";
 import { settingsOf } from "../rules/settings";
 import { mapSize, tileAt, tileDef } from "../rules/grid";
+import type { MapV2, MapWall } from "../model/mapV2";
+import { MapTextureLayer, MapElevationLayer, MapWallLayer, MapObjectLayer, MapDrawingLayer, MapLightLayer, MapNoteLayer, MapGridLayer } from "./MapV2Layers";
 import { BASE_COLORS } from "../types";
 import { areaCells } from "../rules/areas";
 import { dmgStyle } from "./visual";
@@ -62,6 +64,7 @@ interface Props {
   onCtxMenu?: (t: Token, pt: { x: number; y: number }) => void;
   onSelSet?: (ids: Set<string>) => void;
   onCancelMode?: () => void;
+  onDoor?: (w: MapWall) => void;             // DM klik na dveře v mapě
 }
 
 const viewKey = (bid: string) => `boj-view:${bid}`;
@@ -126,8 +129,9 @@ export default function BattleMap(p: Props) {
       if ((!r.width || !r.height) && tries++ < 30) { req = requestAnimationFrame(attempt); return; }
       const placed = S.tok.filter((t) => t.x != null);
       if (!placed.length) {
-        const k = kCover();
+        const k = Math.max(kFit() * 0.92, 0.5);
         setView({ x: (r.width - W * PX * k) / 2, y: (r.height - H * PX * k) / 2, k });
+        fittedRef.current = true;
         return;
       }
       const pad = 2;
@@ -362,7 +366,24 @@ export default function BattleMap(p: Props) {
       const ids = new Set(S.tok.filter((t) => t.x != null && t.x < x1 && t.x + t.s > x0 && t.y! < y1 && t.y! + t.s > y0).map((t) => t.id));
       p.onSelSet?.(ids); setDrag(null); return;
     }
-    if (drag?.pan) { const wasPan = drag.moved; setDrag(null); if (!wasPan) p.onSelect(null); return; }
+    if (drag?.pan) {
+      const wasPan = drag.moved; setDrag(null);
+      if (!wasPan) {
+        // DM klik na dveře (svg má pointer capture → onClick na <g> nespustí)
+        if (p.dm && p.onDoor) {
+          const { gx, gy } = toGrid(e);
+          const door = ((map as MapV2).steny || []).filter((w) => w.typ === "door")
+            .find((w) => {
+              const dx = w.b[0] - w.a[0], dy = w.b[1] - w.a[1], l2 = dx * dx + dy * dy || 1;
+              const tt = Math.max(0, Math.min(1, ((gx - w.a[0]) * dx + (gy - w.a[1]) * dy) / l2));
+              return Math.hypot(gx - (w.a[0] + tt * dx), gy - (w.a[1] + tt * dy)) < .5;
+            });
+          if (door) { p.onDoor(door); return; }
+        }
+        p.onSelect(null);
+      }
+      return;
+    }
     if (drag?.id) {
       const t = byId(S, drag.id);
       if (drag.to && drag.moved && t) {
@@ -434,6 +455,10 @@ export default function BattleMap(p: Props) {
         <g transform={`translate(${V.x},${V.y}) scale(${V.k})`}>
           <rect width={W * PX} height={H * PX} fill={base} />
           {img && <image href={img} width={W * PX} height={H * PX} preserveAspectRatio="none" opacity={0.92} />}
+          {/* v2 vrstvy jsou v jednotkách 24 px/buňka → škálovaná skupina na bitevní PX */}
+          <g transform={`scale(${PX / 24})`}>
+          <MapTextureLayer map={map as MapV2} />
+          <MapElevationLayer map={map as MapV2} />
           {map.mrizka.map((row, y) => row.split("").map((c, x) => {
             const t = tileAt(map, x, y, S.teren);
             const d = tileDef(t);
@@ -443,9 +468,15 @@ export default function BattleMap(p: Props) {
             if (d.cover) return <rect key={`${x},${y}`} x={x * PX} y={y * PX} width={PX} height={PX} fill="#0ea5e9" opacity={0.12} />;
             return null;
           }))}
-          {Array.from({ length: W + 1 }, (_, i) => <line key={"v" + i} x1={i * PX} y1={0} x2={i * PX} y2={H * PX} stroke="#000" opacity={0.18} strokeWidth={0.8} />)}
-          {Array.from({ length: H + 1 }, (_, i) => <line key={"h" + i} x1={0} y1={i * PX} x2={W * PX} y2={H * PX} stroke="#000" opacity={0.18} strokeWidth={0.8} />)}
+          <MapGridLayer map={map as MapV2} W={W} H={H} />
           <TerenLayer S={S} map={map} px={PX} />
+          <MapDrawingLayer map={map as MapV2} dm={p.dm} />
+          <MapLightLayer map={map as MapV2} />
+          <MapWallLayer map={map as MapV2} doors={S.dvere} dm={p.dm}
+                        onDoor={p.dm && p.onDoor ? p.onDoor : undefined} />
+          <MapObjectLayer map={map as MapV2} dm={p.dm} />
+          {p.dm && <MapNoteLayer map={map as MapV2} />}
+          </g>
           {S.zones.map((z) => <ZoneShape key={z.id} z={z} px={PX} tokens={S.tok} lab={cs} />)}
           {zonePrevCells.map(([x, y]) => (
             <rect key={`zp${x},${y}`} x={x * PX + 1} y={y * PX + 1} width={PX - 2} height={PX - 2} rx={4}

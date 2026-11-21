@@ -87,9 +87,11 @@ export function inRange(atk: AttackDef, dist: number): boolean {
 
 export function evaluateAttack(ctx: AttackCtx): AttackEval {
   const { attacker: a, target: b, atk, map, tokens } = ctx;
-  const dist = distAB(a, b, ctx.ax, ctx.ay);
+  // vzdálenost = max(horizontální grid ft, |Δvýška|) — viz model/mapV2 distFt
+  const de = Math.abs(((map as any).vyska?.[`${a.x ?? 0},${a.y ?? 0}`] ?? 0) - ((map as any).vyska?.[`${b.x ?? 0},${b.y ?? 0}`] ?? 0));
+  const dist = Math.max(distAB(a, b, ctx.ax, ctx.ay), de);
   const teren = ctx.teren ?? ctx.state?.teren;
-  const cov = ctx.overrideCover ?? coverOf({ ...a, x: ctx.ax ?? a.x, y: ctx.ay ?? a.y }, b, map, tokens, undefined, undefined, teren);
+  const cov = ctx.overrideCover ?? coverOf({ ...a, x: ctx.ax ?? a.x, y: ctx.ay ?? a.y }, b, map, tokens, undefined, undefined, teren, ctx.state?.dvere);
   const notes: string[] = [];
   const beyond = !inRange(atk, dist);
   const { adv, dis } = advFor(a, b, atk, dist, tokens);

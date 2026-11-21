@@ -80,6 +80,7 @@ export default function Boje() {
               {kampanPages.map((p) => <option key={p.path} value={p.title}>{p.title}</option>)}
             </select>
             {editor && <button className="btn" onClick={openNew}>+ Nový boj</button>}
+            <Link className="btn ghost" to="/boj/mapy">Mapy</Link>
           </>
         } />
       <div className="card overflow-x-auto">

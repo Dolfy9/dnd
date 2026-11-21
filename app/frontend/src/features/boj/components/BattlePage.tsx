@@ -6,6 +6,11 @@ import { useQuery } from "@tanstack/react-query";
 import { get } from "../../../api";
 import { useApp, isEditor } from "../../../store";
 import { toast, confirmDialog } from "../../../components/ui";
+import { sightBlocked, lightAt, sensesOf } from "../rules/lighting";
+import { useAssetManifest, useTextureManifest } from "../../mapeditor/assets/manifest";
+import { setManifests } from "./MapV2Layers";
+import { wallIndex, type MapWall } from "../model/mapV2";
+import { Link, useNavigate } from "react-router-dom";
 import { useBattle } from "../state/useBattle";
 import "../boj.css";
 import * as C from "../state/commands";
@@ -34,7 +39,7 @@ import CtxMenu from "./CtxMenu";
 import HelpOverlay from "./HelpOverlay";
 import { difficulty } from "../rules/encounter";
 import { resourceAction } from "../rules/resources";
-import { MousePointer2, Ruler, MapPin, Users, ScrollText, ShieldQuestion, X, Sparkles, Globe2, HelpCircle, Settings, Type, PanelRightClose, PanelRightOpen, MoreHorizontal } from "lucide-react";
+import { MousePointer2, Ruler, MapPin, Users, ScrollText, ShieldQuestion, X, Sparkles, Globe2, HelpCircle, Settings, Type, PanelRightClose, PanelRightOpen, MoreHorizontal , Maximize, PenLine, Eye} from "lucide-react";
 
 type Panel = "akce" | "efekty" | "prostredi" | "inspektor" | "log";
 
@@ -57,6 +62,7 @@ export default function BattlePage() {
   const [resolve, setResolve] = useState<Resolve | null>(null);
   const [moveAtk, setMoveAtk] = useState<{ plan: MoveAtkPreview; tgtId: string; atk: AttackDef; srcId: string } | null>(null);
   const [addOpen, setAddOpen] = useState(false);
+  const [onboardHide, setOnboardHide] = useState(false);
   const [ctxMenu, setCtxMenu] = useState<{ t: Token; x: number; y: number } | null>(null);
   const [help, setHelp] = useState(false);
   const [dropReq, setDropReq] = useState<DropReq | null>(null);       // MovePopover při dropu
@@ -85,6 +91,16 @@ export default function BattlePage() {
   }, [maps.data, b.S?.map]);
 
   useEffect(() => { b.load(); }, [bid]);
+  const assetsQ = useAssetManifest(); const texQ = useTextureManifest();
+  useEffect(() => { setManifests(assetsQ.data || {}, texQ.data || {}); }, [assetsQ.data, texQ.data]);
+  const [maxi, setMaxi] = useState(false);
+  const nav = useNavigate();
+  useEffect(() => {
+    document.body.classList.toggle("boj-max", maxi);
+    if (maxi) document.documentElement.requestFullscreen?.().catch(() => {});
+    else if (document.fullscreenElement) document.exitFullscreen().catch(() => {});
+    return () => document.body.classList.remove("boj-max");
+  }, [maxi]);
   // app sidebar: sbalit na stránce boje, při odchodu vrátit
   const setSidebar = useApp((s) => s.setSidebar);
   useEffect(() => {
@@ -112,7 +128,10 @@ export default function BattlePage() {
       if (e.ctrlKey && e.key.toLowerCase() === "z") { e.preventDefault(); e.shiftKey ? b.redo() : b.undo(); return; }
       if (e.ctrlKey && e.key.toLowerCase() === "y") { e.preventDefault(); b.redo(); return; }
       if (e.key.toLowerCase() === "m") { setTool("measure"); return; }
-      if (e.key.toLowerCase() === "f") { window.dispatchEvent(new Event("boj-fit")); return; }
+      if (e.key.toLowerCase() === "f") {
+        if (e.shiftKey && dm) { setMaxi((v) => !v); return; }
+        window.dispatchEvent(new Event("boj-fit")); return;
+      }
       if (e.key === "+") { window.dispatchEvent(new CustomEvent("boj-zoom", { detail: "in" })); return; }
       if (e.key === "-") { window.dispatchEvent(new CustomEvent("boj-zoom", { detail: "out" })); return; }
       if (e.key === "0") { window.dispatchEvent(new CustomEvent("boj-zoom", { detail: "reset" })); return; }
@@ -154,7 +173,45 @@ export default function BattlePage() {
   if (b.err) return <div className="boj-err">⚠ {b.err} <button className="boj-btn2" onClick={b.load}>Znovu</button></div>;
   if (!S || !map) return <div className="boj-loading">Načítám bojiště…</div>;
 
-  const cmd = b.dispatch;
+  const onDoor = (w: MapWall) => {
+    const open = S.dvere?.[w.id] ?? w.open;
+    const toggle = () => cmd((s) => {
+      s.dvere = { ...(s.dvere || {}), [w.id]: !open };
+      log(s, "system", `${!open ? "Otevřeny" : "Zavřeny"} dveře`, "PJ");
+    });
+    if (w.locked && !open) {
+      confirmDialog({ title: "Zamčené dveře", text: "Dveře jsou zamčené. Odemknout a otevřít?", okLabel: "Odemknout" })
+        .then((ok) => { if (ok) { cmd((s) => { s.dvere = { ...(s.dvere || {}), [w.id]: true }; log(s, "system", "Dveře odemčeny a otevřeny", "PJ"); }); } });
+    } else toggle();
+  };
+  // přepočet viditelnosti družiny do fog stavu `s` (volá se ručně i kontinuálně při fog.auto)
+  const applyAutoFog = (s: any) => {
+    const wIdx = wallIndex((map as any).steny);
+    const party = s.tok.filter((t: Token) => !t.dead && t.x != null && t.side !== "nepratele" && !t.skryty);
+    const vis: Record<string, 1> = {}, rev: Record<string, 1> = { ...(s.fog?.revealed || {}) };
+    const R = 12; // 60 ft
+    for (const t of party) {
+      const sn = sensesOf(t);
+      const rr = Math.max(R, Math.ceil(Math.max(sn.darkvision, sn.blindsight, sn.truesight) / 5));
+      for (let y = Math.max(0, (t.y ?? 0) - rr); y <= Math.min(map.mrizka.length - 1, (t.y ?? 0) + rr); y++)
+        for (let x = Math.max(0, (t.x ?? 0) - rr); x <= Math.min((map.mrizka[0]?.length || 1) - 1, (t.x ?? 0) + rr); x++) {
+          const d = Math.max(Math.abs(x - (t.x ?? 0)), Math.abs(y - (t.y ?? 0))) * 5;
+          if (d > rr * 5) continue;
+          const ll = lightAt(s, map, x, y);
+          const darkvis = d <= sn.darkvision || d <= sn.blindsight || sn.truesight > 0;
+          if (ll === "dark" && !darkvis) continue;
+          if (wIdx.size && sightBlocked(wIdx, (t.x ?? 0) + .5, (t.y ?? 0) + .5, x + .5, y + .5, s.dvere)) continue;
+          vis[`${x},${y}`] = 1; rev[`${x},${y}`] = 1;
+        }
+    }
+    s.fog = { ...(s.fog || {}), on: true, revealed: rev, visible: vis };
+  };
+  const autoFog = () => {
+    cmd((s) => { applyAutoFog(s); log(s, "system", "Fog: automaticky podle výhledu družiny", "PJ"); });
+  };
+  const cmdBase = b.dispatch;
+  // dispatch wrapper: při zapnutém fog.auto přepočítá výhled po každé změně stavu
+  const cmd = (fn: (s: any) => void) => cmdBase((s: any) => { fn(s); if (s.fog?.auto) applyAutoFog(s); });
   const ctx = { map };
 
   /* ---- handlery ---- */
@@ -426,6 +483,13 @@ export default function BattlePage() {
                         onClick={() => { const v = names === "always" ? "hover" : "always"; setNames(v); localStorage.setItem("boj-names", v); }}><Type size={14} /><span className="boj-more-lab">Jména</span></button>
                 {dm && <button className="boj-tbtn" title="Nastavení boje" onClick={() => { setSetOpen(true); setMoreOpen(false); }}><Settings size={14} /><span className="boj-more-lab">Nastavení</span></button>}
                 <button className="boj-tbtn" title="Nápověda (?)" onClick={() => { setHelp(true); setMoreOpen(false); }}><HelpCircle size={14} /><span className="boj-more-lab">Nápověda</span></button>
+                {dm && <button className="boj-tbtn" title="Maximalizovat (Shift+F)" onClick={() => { setMaxi(!maxi); setMoreOpen(false); }}><Maximize size={14} /><span className="boj-more-lab">Maximalizovat</span></button>}
+                {dm && map?.id && <button className="boj-tbtn" title="Otevřít tuto mapu v editoru" onClick={() => { nav(`/boj/mapa/${map.id}`); setMoreOpen(false); }}><PenLine size={14} /><span className="boj-more-lab">Upravit mapu</span></button>}
+                {dm && <button className="boj-tbtn" title="Automatický fog podle výhledu družiny — trvalý přepočet při pohybu" onClick={() => {
+                  const on = !(S.fog as any)?.auto;
+                  cmd((s) => { s.fog = { ...(s.fog || {}), on: true, auto: on }; });
+                  setMoreOpen(false);
+                }}><Eye size={14} /><span className="boj-more-lab">Auto-fog{(S.fog as any)?.auto ? " ✓" : ""}</span></button>}
               </div>
             </div>
           </div>
@@ -447,6 +511,7 @@ export default function BattlePage() {
             onFogPaint={(cells, reveal) => cmd((s) => C.cmdFogCells(s, cells, reveal))}
             onLightPlace={(x, y) => { if (pendingLight) { cmd((s) => C.cmdAddLight(s, { ...pendingLight, anchor: [x, y] })); setPendingLight(null); setTool("select"); } }}
             onCtxMenu={(t, pt) => setCtxMenu({ t, x: pt.x, y: pt.y })}
+            onDoor={onDoor}
           />
         </div>
         <aside ref={sheetRef} className={`boj-side sheet-${sheet} ${sideMini ? "mini" : ""}`} style={sideMini ? undefined : { width: sideW }}>
@@ -489,7 +554,7 @@ export default function BattlePage() {
                 onLightLevel={(l) => cmd((s) => C.cmdLightLevel(s, l))}
                 onRemoveZone={(zid) => cmd((s) => C.removeZone(s, zid))}
                 onDice={(expr, adv) => cmd((s) => C.cmdDice(s, shownTok?.nazev || "PJ", expr, adv))}
-                onRest={(kind) => cmd((s) => C.cmdRest(s, s.tok.filter((t) => !t.dead).map((t) => t.id), kind))} />
+                onRest={(kind) => cmd((s) => C.cmdRest(s, s.tok.filter((t: Token) => !t.dead).map((t: Token) => t.id), kind))} />
             )}
             {panel === "inspektor" && (
               inspId && byId(S, inspId)
@@ -550,9 +615,10 @@ export default function BattlePage() {
           <em className="boj-dmg-base">(hozeno {dmgCfm.base}{dmgCfm.mods.length ? ` · ${dmgCfm.mods.join(", ")}` : ""})</em>
         </OverridePrompt>
       )}
-      {empty && !addOpen && (
+      {empty && !addOpen && !onboardHide && (
         <div className="boj-onboard">
           <div>
+            <button className="boj-onboard-x" onClick={() => setOnboardHide(true)} title="Zavřít">✕</button>
             <h3>Příprava boje</h3>
             <ol>
               <li>Vyber mapu bojiště (v tomto boji: <b>{map.nazev}</b>)</li>

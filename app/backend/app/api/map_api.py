@@ -15,6 +15,7 @@ from fastapi import APIRouter, Depends, HTTPException
 from pydantic import BaseModel
 
 from .. import db, render, security
+from . import battle_maps as battle_maps_mod
 from ..config import ROOT
 from .pages import safe_path
 
@@ -177,8 +178,10 @@ def map_data(mapa: str = DEFAULT_MAP, u: dict | None = Depends(security.optional
         "svet": svet_g,
         "vodstvo": vodstvo_g,
         "podklady": _podklady(d),
-        "bojove_mapy": [dict(r, data=db.jload(r["data"]))
-                        for r in con.execute("SELECT * FROM battle_maps")],
+        "bojove_mapy": [
+            dict(r, data=(db.jload(r["data"]) if security.can_edit(u)
+                         else battle_maps_mod.strip_for_player(db.jload(r["data"]))))
+            for r in con.execute("SELECT * FROM battle_maps")],
         "editable": security.can_edit(u),
     }
 

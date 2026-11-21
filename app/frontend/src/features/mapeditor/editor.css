@@ -1,0 +1,118 @@
+/* Map editor — plnoobrazovkový layout, theme proměnné. */
+.me-ed { position: fixed; inset: 0; display: flex; flex-direction: column; background: var(--bg); color: var(--ink); z-index: 50; font-size: 13px }
+.me-loading { align-items: center; justify-content: center; display: flex }
+.me-ed-head { display: flex; align-items: center; gap: 6px; padding: 6px 10px; background: var(--panel); border-bottom: 2px solid var(--accent); min-height: 46px }
+.me-name { background: transparent; border: 1px solid transparent; color: var(--ink); font: 600 15px inherit; padding: 4px 8px; border-radius: 6px; min-width: 200px }
+.me-name:hover, .me-name:focus { border-color: var(--line); background: var(--panel-2) }
+.me-savestate { font-size: 12px; color: var(--ink-3) } .me-savestate.dirty { color: #d97706; font-weight: 700 }
+.me-sp { flex: 1 }
+.me-btn { display: inline-flex; align-items: center; gap: 6px; padding: 8px 12px; min-height: 36px; border-radius: 8px; border: 1px solid var(--line); background: var(--panel-2); color: var(--ink); cursor: pointer; font: 600 13px inherit; text-decoration: none }
+.me-btn:hover { background: var(--accent-soft, #3f3a33) }
+.me-btn:disabled { opacity: .45; cursor: not-allowed }
+.me-btn.primary { background: var(--accent); border-color: var(--accent); color: var(--accent-ink, #fff) }
+.me-btn.danger { background: #7f1d1d; border-color: #991b1b; color: #fecaca }
+.me-btn.ghost { background: transparent }
+.me-btn.sm { padding: 5px 9px; min-height: 32px; font-size: 12px }
+.me-btn.sm.on, .me-tool.on { background: var(--accent); color: var(--accent-ink, #fff); border-color: var(--accent) }
+.me-ed-body { flex: 1; display: flex; min-height: 0 }
+.me-rail { width: 52px; background: var(--panel); border-right: 1px solid var(--line); display: flex; flex-direction: column; gap: 2px; padding: 6px 4px; overflow-y: auto }
+.me-tool { width: 44px; height: 44px; display: grid; place-items: center; border: 1px solid transparent; border-radius: 8px; background: transparent; color: var(--ink-2); cursor: pointer }
+.me-tool:hover { background: var(--panel-2); color: var(--ink) }
+.me-center { flex: 1; display: flex; flex-direction: column; min-width: 0 }
+.me-ctx { display: flex; align-items: center; gap: 6px; padding: 5px 10px; background: var(--panel); border-bottom: 1px solid var(--line); min-height: 42px; flex-wrap: wrap }
+.me-ctx select, .me-ctx input[type=number], .me-props input, .me-props select, .me-gen select, .me-gen input, .me-mapmeta input, .me-mapmeta select, .me-lib input, .me-lib select, .me-props textarea, .me-mapmeta textarea, .me-modal textarea, .me-search input {
+  background: var(--panel-2); border: 1px solid var(--line); color: var(--ink); border-radius: 6px; padding: 5px 8px; font: 13px inherit; min-height: 32px }
+.me-ctx-hint { color: var(--ink-3); font-size: 12px }
+.me-ctx-chk { display: inline-flex; align-items: center; gap: 5px; font-size: 12px }
+.me-canvas-wrap { flex: 1; position: relative; overflow: hidden; background: var(--bg) }
+.me-canvas { display: block; cursor: default }
+.me-canvas.tool-teren, .me-canvas.tool-textura, .me-canvas.tool-kresba, .me-canvas.tool-stena, .me-canvas.tool-vyska, .me-canvas.tool-svetlo, .me-canvas.tool-guma, .me-canvas.tool-fill, .me-canvas.tool-flood, .me-canvas.tool-mistnost, .me-canvas.tool-start, .me-canvas.tool-poznamka, .me-canvas.tool-dvere { cursor: crosshair }
+.me-canvas.tool-objekt, .me-canvas.tool-kapatko { cursor: copy }
+.me-minimap { position: absolute; right: 12px; bottom: 12px; width: 160px; max-height: 140px; background: var(--panel); border: 1px solid var(--line); border-radius: 8px; opacity: .9; cursor: pointer }
+.me-status { display: flex; align-items: center; gap: 14px; padding: 4px 12px; background: var(--panel); border-top: 1px solid var(--line); font-size: 12px; color: var(--ink-2); font-variant-numeric: tabular-nums; min-height: 28px }
+.me-right { width: 300px; background: var(--panel); border-left: 1px solid var(--line); display: flex; flex-direction: column }
+.me-tabs { display: flex; border-bottom: 1px solid var(--line) }
+.me-tabs button { flex: 1; display: flex; flex-direction: column; align-items: center; gap: 2px; padding: 8px 2px; background: transparent; border: none; border-bottom: 2px solid transparent; color: var(--ink-3); font: 600 11px inherit; cursor: pointer; min-height: 44px }
+.me-tabs button.on { color: var(--ink); border-bottom-color: var(--accent) }
+.me-right-body { flex: 1; overflow-y: auto; padding: 10px }
+.me-layers { list-style: none; margin: 0; padding: 0 }
+.me-layers li { display: flex; align-items: center; gap: 8px; padding: 6px 4px; border-bottom: 1px solid var(--line) }
+.me-eye { background: none; border: none; cursor: pointer; opacity: .35; font-size: 14px; min-width: 32px; min-height: 32px }
+.me-eye.on { opacity: 1 }
+.me-layers-n { margin-left: auto; color: var(--ink-3); font-size: 11px }
+.me-lib { display: flex; flex-direction: column; gap: 8px }
+.me-lib-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 5px }
+.me-stamp { aspect-ratio: 1; border: 1px solid var(--line); border-radius: 6px; background: var(--panel-2); cursor: pointer; padding: 2px }
+.me-stamp svg { width: 100%; height: 100% }
+.me-stamp.on { border-color: var(--accent); box-shadow: 0 0 0 1px var(--accent) }
+.me-props, .me-gen, .me-mapmeta { display: flex; flex-direction: column; gap: 8px }
+.me-props h4, .me-mapmeta h4 { margin: 8px 0 2px; font-size: 12px; text-transform: uppercase; letter-spacing: .05em; color: var(--ink-3) }
+.me-props label, .me-gen label, .me-mapmeta label { display: flex; align-items: center; justify-content: space-between; gap: 8px; font-size: 12px }
+.me-props label input, .me-gen label input, .me-mapmeta label input, .me-props label select { width: 130px }
+.me-props textarea, .me-mapmeta textarea { width: 100%; min-height: 70px }
+.me-resize { display: flex; flex-wrap: wrap; gap: 4px }
+.me-none { color: var(--ink-3); font-size: 12px }
+.me-genprev { position: fixed; inset: 0; background: #000a; display: grid; place-items: center; z-index: 60; cursor: pointer }
+.me-genprev svg { width: min(80vw, 900px); max-height: 80vh; border: 2px solid var(--accent); border-radius: 8px }
+/* modal */
+.me-modal-back { position: fixed; inset: 0; background: #0009; display: grid; place-items: center; z-index: 70 }
+.me-modal { background: var(--panel); border: 1px solid var(--line); border-radius: 12px; padding: 18px; width: min(420px, 92vw); box-shadow: 0 12px 40px #0007 }
+.me-modal h3 { margin: 0 0 10px }
+.me-modal textarea { width: 100%; min-height: 90px }
+.me-modal-acts { display: flex; justify-content: flex-end; gap: 8px; margin-top: 12px }
+/* index */
+.me-index { padding: 20px; max-width: 1300px; margin: 0 auto }
+.me-index-head { display: flex; align-items: center; gap: 10px; margin-bottom: 18px; flex-wrap: wrap }
+.me-index-head h1 { display: flex; align-items: center; gap: 8px; font-size: 20px; margin: 0 }
+.me-search { display: flex; align-items: center; gap: 6px; background: var(--panel); border: 1px solid var(--line); border-radius: 8px; padding: 0 10px }
+.me-search input { border: none; background: transparent; min-height: 36px; width: 200px }
+.me-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 14px }
+.me-card { background: var(--panel); border: 1px solid var(--line); border-radius: 12px; overflow: hidden; display: flex; flex-direction: column }
+.me-thumb { display: block; aspect-ratio: 16/10; background: var(--bg); }
+.me-thumb svg { width: 100%; height: 100% }
+.me-card-body { padding: 10px 12px; display: flex; flex-direction: column; gap: 6px }
+.me-card-name { font-weight: 700; color: var(--ink); text-decoration: none; font-size: 14px }
+.me-card-name:hover { color: var(--accent) }
+.me-card-meta { font-size: 11px; color: var(--ink-3) }
+.me-card-acts { display: flex; gap: 6px }
+/* responsive */
+@media (max-width: 1023px) {
+  .me-right { position: absolute; right: 0; top: 0; bottom: 0; box-shadow: -8px 0 24px #0006; transform: translateX(100%); transition: transform .2s; }
+  .me-ed-body:focus-within .me-right { transform: none }
+}
+@media (max-width: 767px) {
+  .me-rail { position: absolute; bottom: 28px; left: 0; right: 0; width: auto; height: 52px; flex-direction: row; overflow-x: auto; z-index: 10; border-top: 1px solid var(--line); border-right: none }
+  .me-right { width: 100%; }
+  .me-minimap { display: none }
+  .me-status { padding-bottom: 56px }
+  .me-name { min-width: 120px }
+}
+.me-stamp img { width:100%; height:100%; object-fit:contain }
+.me-missing { position:absolute; inset:auto 0 0 0; font-size:9px; background:#000a; color:#fca5a5; padding:1px; border-radius:0 0 5px 5px }
+.me-stamp { position:relative }
+
+/* --- fix pass --- */
+.me-ctx-tool{font-weight:700;font-size:13px;color:var(--accent,#c9a45c);white-space:nowrap;margin-right:6px}
+.me-ctx-lab{font-size:11.5px;opacity:.7;white-space:nowrap;margin:0 4px 0 8px}
+.me-ctx select,.me-mapmeta select,.me-gen select,.me-lib select,.me-props select{min-width:70px}
+.me-props h4,.me-mapmeta h4,.me-gen h4{margin:10px 0 4px;font-size:12px;opacity:.8}
+.me-mapmeta label,.me-gen label,.me-props label{display:flex;align-items:center;gap:6px;font-size:12.5px;margin:3px 0;white-space:nowrap}
+.me-mapmeta label input,.me-gen label input,.me-props label input[type=number]{width:70px;flex:0 0 auto}
+.me-mapmeta textarea,.me-props textarea,.me-modal textarea{width:100%;min-height:60px;background:var(--panel-2,#2b2620);color:var(--ink,#e8e0d0);border:1px solid var(--line,#4a4238);border-radius:6px;padding:6px;font-size:13px}
+.me-stamp{position:relative}
+.me-missing{position:absolute;bottom:1px;left:1px;font-size:8.5px;background:#000a;color:#fbbf24;padding:0 3px;border-radius:3px}
+.me-btn.on{background:var(--accent,#c9a45c);color:#1c1710}
+.me-btn.danger{color:#ef4444}
+/* mobil: nástroje do spodního scroll-baru, hudba-fab mimo editor */
+@media (max-width:700px){
+  .me-ed-body{flex-direction:column}
+  .me-rail{order:2;flex-direction:row;overflow-x:auto;width:100%;padding:6px 8px;gap:6px;scrollbar-width:none;position:relative;z-index:60}
+  .me-rail .me-tool{flex:0 0 40px}
+  .me-center{order:1;min-height:0;flex:1}
+  .me-right{display:none}
+  .me-minimap{display:none}
+  .me-ctx{flex-wrap:nowrap;overflow-x:auto}
+}
+body:has(.me-ed) .hudba-fab,body:has(.me-ed) .music-fab{display:none!important}
+body:has(.me-ed) .mus-fab{display:none!important}
+@media (max-width:700px){.me-snaplab{display:none}}

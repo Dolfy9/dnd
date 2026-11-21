@@ -77,7 +77,7 @@ export function triggerZone(S: StavBoje, t: Token, z: Zone, on: NonNullable<Zone
 export interface MovePlan { ft: number; path: [number, number][]; blocked: boolean; oas: string[] }
 export function planMove(S: StavBoje, map: BattleMapData, t: Token, to: [number, number]): MovePlan {
   const lim = moveLeft(S, t) + (t.fly ? 0 : 0);
-  const r = reachable(t, Math.max(lim, 0), map, S.tok, S.zones, S.teren);
+  const r = reachable(t, Math.max(lim, 0), map, S.tok, S.zones, S.teren, (S as any).dvere);
   const ft = r.dist[`${to[0]},${to[1]}`];
   const path = ft != null ? r.path(to[0], to[1]) : [];
   const disengaged = sumMods(t).noOA || !!ecoOf(S, t).disengage;
@@ -86,7 +86,7 @@ export function planMove(S: StavBoje, map: BattleMapData, t: Token, to: [number,
   return { ft: ft ?? 0, path, blocked, oas };
 }
 export function reachableCells(S: StavBoje, map: BattleMapData, t: Token) {
-  return reachable(t, Math.max(moveLeft(S, t), 0), map, S.tok, S.zones, S.teren).dist;
+  return reachable(t, Math.max(moveLeft(S, t), 0), map, S.tok, S.zones, S.teren, (S as any).dvere).dist;
 }
 
 /* ---------- move & attack ---------- */
@@ -95,7 +95,7 @@ export interface MoveAttackPlan { cell: [number, number]; ft: number; path: [num
 export function planMoveAttack(S: StavBoje, map: BattleMapData, A: Token, B: Token, atk: AttackDef): MoveAttackPlan | null {
   if (!atk.melee) return null;
   const lim = moveLeft(S, A);
-  const r = reachable(A, Math.max(lim, 0), map, S.tok, S.zones, S.teren);
+  const r = reachable(A, Math.max(lim, 0), map, S.tok, S.zones, S.teren, (S as any).dvere);
   const reach = atk.reach || 5;
   let best: MoveAttackPlan | null = null;
   for (const key of Object.keys(r.dist)) {

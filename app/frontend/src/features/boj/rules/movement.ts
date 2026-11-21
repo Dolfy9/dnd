@@ -6,6 +6,7 @@ import type { StavBoje, Token, BattleMapData, BattleSettings, MoveMode, Zone } f
 import { mapSize, tileAt, tileDef, cellsOf, occupantAt, hostile, zoneCovers, oaAlong } from "./grid";
 import { isIncap } from "./conditions";
 import { moveLeft, ecoOf } from "./turn";
+import { cellInfo, edgeBlocked, wallIndex, type DoorStates } from "../model/mapV2";
 
 export interface MovementPlan {
   mode: MoveMode;
@@ -36,7 +37,10 @@ function stepCostM(t: Token, x: number, y: number, map: BattleMapData, tokens: T
     if (!def.cost && c !== "_") return Infinity;
     let k = forced ? 1 : (def.cost || 1);
     if (c === "~" && t.swim) k = 1;
-    if (t.fly && "^,%~_".includes(c)) k = 1;
+    if (t.fly && "^,%~_lipfu".includes(c)) k = 1;
+    const ci = cellInfo(map, cx, cy, teren);
+    if (ci.blocksMove && def.cost && !forced) return Infinity;
+    if (!forced && ci.difficult && k < 2) k = 2;
     const o = occupantAt(tokens, cx, cy, t);
     if (o) {
       if (hostile(t, o) && Math.abs(o.s - t.s) < 2 && !isIncap(o)) {
@@ -63,6 +67,8 @@ function dijkstra(t: Token, from: [number, number], map: BattleMapData, S: StavB
   const start = key(from[0], from[1], 0);
   dist.set(start, 0);
   const q: [number, number, number, number][] = [[0, from[0], from[1], 0]];
+  const wIdx = wallIndex((map as any).steny);
+  const doors = (S as any).dvere as DoorStates;
   while (q.length) {
     q.sort((a, b) => a[0] - b[0]);
     const [c, x, y, p] = q.shift()!;
@@ -72,6 +78,7 @@ function dijkstra(t: Token, from: [number, number], map: BattleMapData, S: StavB
       const nx = x + dx, ny = y + dy;
       if (nx < 0 || ny < 0 || nx + t.s > W || ny + t.s > H) continue;
       if (dx && dy && !tileDef(tileAt(map, x + dx, y, S.teren)).cost && !tileDef(tileAt(map, x, y + dy, S.teren)).cost) continue;
+      if (wIdx.size && edgeBlocked(wIdx, x, y, nx, ny, doors)) continue;
       const sc = stepCostM(t, nx, ny, map, S.tok, S.zones, S.teren, passHostile, forced);
       if (sc === Infinity) continue;
       const diagStep = !!(dx && dy);
@@ -194,6 +201,8 @@ export function planMovement(
     // je koncová buňka legální pro zastavení?
     const occ = cellsOf(t, target[0], target[1]).some(([cx, cy]) => occupantAt(S.tok, cx, cy, t));
     if (occ) { blocked = "obsazeno"; farthest = path.length > 1 ? path[path.length - 2] : undefined; }
+    else if (!path.length || path[path.length - 1][0] !== target[0] || path[path.length - 1][1] !== target[1])
+      blocked = "zed";   // nedosažitelné — zeď/terén
   }
 
   const dis = !!e.disengage || S.tok.some((x) => x.id === t.id && x.effects?.some((ef) => ef.mods?.noOA));

@@ -303,7 +303,8 @@ export interface StavBoje {
   teren?: Record<string, string>;         // "x,y" → znak dlaždice (přepisuje mrizka)
   lights?: LightSource[];                 // světelné zdroje
   lightLevel?: "bright" | "dim" | "dark"; // globální osvětlení (z map.osvetleni)
-  fog?: { on: boolean; revealed: Record<string, 1> }; // fog of war
+  fog?: { on: boolean; revealed: Record<string, 1>; visible?: Record<string, 1> }; // fog of war
+  dvere?: Record<string, boolean>;            // wallId → otevřené dveře (stav v boji)
   nastaveni?: BattleSettings;     // DM nastavení pravidel tohoto boje
   turnMsgs?: string[];              // hlášky posledního posunu tahu (banner)
   sel?: string | null;
@@ -340,6 +341,16 @@ export interface BattleMapData {
   stretnuti?: { nazev: string; pocet: number }[];
   mrizka: string[];
   obrazek?: string;
+  /* v2 pole — viz model/mapV2.ts (volitelná, staré mapy beze změny) */
+  textury?: Record<string, string>;
+  vyska?: Record<string, number>;
+  steny?: import("./model/mapV2").MapWall[];
+  objekty?: import("./model/mapV2").MapObject[];
+  kresby?: import("./model/mapV2").MapDrawing[];
+  svetla?: import("./model/mapV2").MapLightV2[];
+  poznamky?: import("./model/mapV2").MapNote[];
+  mrizkaStyl?: import("./model/mapV2").MapMrizkaStyl;
+  kalibrace?: import("./model/mapV2").MapKalibrace;
 }
 
 export interface TileDef {
@@ -347,6 +358,9 @@ export interface TileDef {
   cost: number;                 // 0 = neprůchodné
   cover?: number;               // 2 half, 3 three-quarters
   difficult?: boolean;
+  blocksSight?: boolean;        // hustý porost apod. — blokuje LoS
+  hazard?: string;              // např. "Fire" (láva)
+  obscure?: 1 | 2;              // 1 lightly, 2 heavily obscured
 }
 
 export const TILES: Record<string, TileDef> = {
@@ -365,6 +379,14 @@ export const TILES: Record<string, TileDef> = {
   _: { nazev: "Propast / jáma", cost: 0 },
   x: { nazev: "Nebezpečí", cost: 1 },
   S: { nazev: "Schody", cost: 1 },
+  /* --- v2 nové dlaždice --- */
+  l: { nazev: "Láva", cost: 0, hazard: "Fire" },
+  i: { nazev: "Led", cost: 2, difficult: true },
+  p: { nazev: "Jáma / příkop", cost: 0 },
+  f: { nazev: "Řídký porost", cost: 2, difficult: true, obscure: 1 },
+  F: { nazev: "Hustý porost", cost: 2, difficult: true, blocksSight: true, obscure: 2 },
+  u: { nazev: "Suti / kamení", cost: 2, difficult: true },
+  h: { nazev: "Nízká zeď (half cover, těžký terén)", cost: 2, difficult: true, cover: 2 },
   " ": { nazev: "Mimo mapu", cost: 0 },
 };
 

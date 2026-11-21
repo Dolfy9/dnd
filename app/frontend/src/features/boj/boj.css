@@ -426,8 +426,9 @@
 .boj-turnbanner span { display: block; }
 .boj-help-grid { display: grid; grid-template-columns: auto 1fr; gap: 7px 14px; font-size: var(--fs-b); }
 .boj-help-grid kbd { background: var(--panel-2); border: 1px solid var(--line); border-radius: 6px; padding: 2px 7px; font-size: var(--fs-s); white-space: nowrap; }
-.boj-onboard { position: fixed; inset: 0; z-index: 55; display: grid; place-items: center; background: #0008; }
-.boj-onboard > div { background: var(--panel); border: 1px solid var(--line); border-radius: 14px; padding: 24px; max-width: 400px; }
+.boj-onboard { position: fixed; inset: 0; z-index: 55; display: grid; place-items: center; pointer-events: none; }
+.boj-onboard > div { background: var(--panel); border: 1px solid var(--line); border-radius: 14px; padding: 24px; max-width: 400px; pointer-events: auto; position: relative; box-shadow: 0 8px 30px #0006; }
+.boj-onboard-x { position: absolute; top: 8px; right: 10px; background: none; border: 0; font-size: 16px; cursor: pointer; color: var(--ink-3, #8b8578); }
 .boj-onboard h3 { margin: 0 0 10px; font-size: var(--fs-xl); }
 .boj-onboard ol { margin: 0 0 14px; padding-left: 20px; font-size: var(--fs-b); display: flex; flex-direction: column; gap: 7px; }
 .boj-slots-pick { display: flex; flex-wrap: wrap; gap: 4px; padding: 6px 7px; background: var(--panel-2); border-radius: 0 0 9px 9px; }
@@ -504,3 +505,5 @@
   .boj-coin-pulse, .boj-coin-selring, .boj-conc-ring, .boj-zone, .boj-zone-fog { animation: none !important; }
   .bfx-num, .bfx-crit, .bfx-slash { animation-duration: .2s !important; }
 }
+/* Maximalizovaný boj — schovat app chrome */
+body.boj-max .app-topbar, body.boj-max .sb-wrap { display: none !important }
