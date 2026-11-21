@@ -5,12 +5,163 @@
     {
       "title": "Pravidlová data",
       "fields": [
-        {"key": "nazev", "label": "Název (EN)", "type": "text", "required": true},
-        {"key": "zdroj", "label": "Zdroj", "type": "text"},
-        {"key": "kostka_zivotu", "label": "Hit Die", "type": "select",
-         "options": ["", "d6", "d8", "d10", "d12"]},
-        {"key": "podtridy", "label": "Podtřídy", "type": "list"},
-        {"key": "stitky", "label": "Štítky", "type": "tags"}
+        {
+          "key": "nazev",
+          "label": "Název (EN)",
+          "type": "text",
+          "required": true
+        },
+        {
+          "key": "zdroj",
+          "label": "Zdroj",
+          "type": "text"
+        },
+        {
+          "key": "kostka_zivotu",
+          "label": "Hit Die",
+          "type": "select",
+          "options": [
+            "",
+            "d6",
+            "d8",
+            "d10",
+            "d12"
+          ]
+        },
+        {
+          "key": "podtridy",
+          "label": "Podtřídy",
+          "type": "list"
+        },
+        {
+          "key": "stitky",
+          "label": "Štítky",
+          "type": "tags"
+        },
+        {
+          "key": "vlastni",
+          "label": "Vlastní obsah",
+          "type": "checkbox"
+        },
+        {
+          "key": "hit_die",
+          "label": "Hit Die (číslo)",
+          "type": "number"
+        },
+        {
+          "key": "primarni_atribut",
+          "label": "Primární atribut",
+          "type": "text"
+        },
+        {
+          "key": "zachrany",
+          "label": "Záchrany (2)",
+          "type": "list"
+        },
+        {
+          "key": "dovednosti_volba",
+          "label": "Volba dovedností",
+          "type": "dict",
+          "fields": [
+            {
+              "key": "pocet",
+              "label": "Počet",
+              "type": "number"
+            },
+            {
+              "key": "z",
+              "label": "Z nabídky",
+              "type": "list"
+            }
+          ]
+        },
+        {
+          "key": "zbroj",
+          "label": "Proficiency – zbroj",
+          "type": "list"
+        },
+        {
+          "key": "zbrane",
+          "label": "Proficiency – zbraně",
+          "type": "list"
+        },
+        {
+          "key": "nastroje",
+          "label": "Proficiency – nástroje",
+          "type": "list"
+        },
+        {
+          "key": "kouzleni",
+          "label": "Kouzlení",
+          "type": "dict",
+          "fields": [
+            {
+              "key": "typ",
+              "label": "Typ",
+              "type": "select",
+              "options": [
+                "",
+                "full",
+                "half",
+                "third",
+                "pact",
+                "none"
+              ]
+            },
+            {
+              "key": "atribut",
+              "label": "Atribut",
+              "type": "text"
+            },
+            {
+              "key": "pripravuje",
+              "label": "Připravuje kouzla",
+              "type": "checkbox"
+            }
+          ]
+        },
+        {
+          "key": "tabulka",
+          "label": "Tabulka úrovní",
+          "type": "dict"
+        },
+        {
+          "key": "rysy",
+          "label": "Features (nazev/uroven/text/efekty)",
+          "type": "dictlist",
+          "fields": [
+            {
+              "key": "nazev",
+              "label": "Název (EN)",
+              "type": "text"
+            },
+            {
+              "key": "uroven",
+              "label": "Úroveň",
+              "type": "number"
+            },
+            {
+              "key": "text",
+              "label": "Text",
+              "type": "textarea"
+            }
+          ]
+        },
+        {
+          "key": "podtrida_uroven",
+          "label": "Úroveň výběru podtřídy",
+          "type": "number"
+        },
+        {
+          "key": "asi_urovne",
+          "label": "Úrovně ASI",
+          "type": "list"
+        },
+        {
+          "key": "efekty",
+          "label": "Efekty třídy (core)",
+          "type": "dictlist"
+        }
       ]
     }
   ]

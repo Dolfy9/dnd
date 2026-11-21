@@ -3,6 +3,7 @@ import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { Plus, Trash2 } from "lucide-react";
 import { get, put, post } from "../api";
 import EntityPicker from "./EntityPicker";
+import { toast } from "./ui";
 
 interface Field {
   key: string; label: string; type: string; required?: boolean;
@@ -168,9 +169,12 @@ interface Props {
   name: string;
   status: string;
   onSaved?: () => void;
+  onCancel?: () => void;
 }
 
-export default function EntityForm({ type, entityId, entityPath, initial, name, status, onSaved }: Props) {
+const FULLW = new Set(["textarea", "links", "tags", "list", "dict", "dictlist"]);
+
+export default function EntityForm({ type, entityId, entityPath, initial, name, status, onSaved, onCancel }: Props) {
   const qc = useQueryClient();
   const schema = useQuery({
     queryKey: ["schema", type],
@@ -180,22 +184,28 @@ export default function EntityForm({ type, entityId, entityPath, initial, name, 
   const [data, setData] = useState<Data>({});
   const [title, setTitle] = useState(name);
   const [stat, setStat] = useState(status);
-  const [msg, setMsg] = useState("");
   const [openSec, setOpenSec] = useState<Record<number, boolean>>({ 0: true });
 
-  useEffect(() => { setData(initial || {}); setTitle(name); setStat(status); },
-    [initial, name, status]);
+  const schemaKeys = useMemo(
+    () => new Set((schema.data?.sections || []).flatMap((s) => s.fields.map((f) => f.key))),
+    [schema.data]);
+
+  useEffect(() => {
+    const d = { ...(initial || {}) };
+    for (const k of ["nazev", "jmeno"]) if (!d[k] && schemaKeys.has(k)) d[k] = name;
+    setData(d); setTitle(name); setStat(status);
+  }, [initial, name, status, schemaKeys]);
 
   const save = useMutation({
     mutationFn: () => put(`/api/entities/${entityId}`, { data, name: title, status: stat }),
     onSuccess: () => {
-      setMsg("Uloženo ✓");
       qc.invalidateQueries({ queryKey: ["page"] });
       qc.invalidateQueries({ queryKey: ["entity-index"] });
       qc.invalidateQueries({ queryKey: ["catalog"] });
+      toast("Atributy uloženy.", "ok");
       onSaved?.();
     },
-    onError: (e) => setMsg(e.message),
+    onError: (e) => toast(e.message || "Uložení selhalo", "err"),
   });
 
   const sections = schema.data?.sections || [];
@@ -227,9 +237,9 @@ export default function EntityForm({ type, entityId, entityPath, initial, name, 
             <span className="text-[var(--ink-3)] text-xs">{openSec[si] !== false ? "▾" : "▸"}</span>
           </button>
           {openSec[si] !== false && (
-            <div className="p-3 space-y-3">
+            <div className="p-3 grid grid-cols-1 md:grid-cols-2 gap-x-3 gap-y-3">
               {sec.fields.map((f) => (
-                <div key={f.key}>
+                <div key={f.key} className={FULLW.has(f.type) ? "md:col-span-2" : ""}>
                   <label className="block text-[11px] font-semibold text-[var(--ink-2)] mb-1">
                     {f.label}{f.required && <span className="text-[var(--accent)]"> *</span>}
                   </label>
@@ -259,12 +269,12 @@ export default function EntityForm({ type, entityId, entityPath, initial, name, 
         </details>
       )}
 
-      <div className="flex items-center gap-2 mt-4 pt-3 border-t border-[var(--line)]">
+      <div className="flex items-center gap-2 mt-4 pt-3 border-t border-[var(--line)] sticky bottom-0 bg-[var(--panel)] pb-1">
         <button className="btn btn-primary !text-sm" onClick={() => save.mutate()} disabled={save.isPending}>
           {save.isPending ? "Ukládám…" : "Uložit atributy"}
         </button>
-        <span className="text-xs text-[var(--ink-3)]">{entityPath}</span>
-        {msg && <span className={`ml-auto text-xs ${msg.includes("✓") ? "text-emerald-500" : "text-red-400"}`}>{msg}</span>}
+        {onCancel && <button className="btn !text-sm" onClick={onCancel}>Zrušit</button>}
+        <span className="ml-auto text-xs text-[var(--ink-3)]">{entityPath}</span>
       </div>
     </div>
   );

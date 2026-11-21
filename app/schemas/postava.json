@@ -549,6 +549,73 @@
           "target": "kampan"
         }
       ]
+    },
+    {
+      "title": "Pokročilé mechaniky",
+      "fields": [
+        {
+          "key": "atributy_zaklad",
+          "label": "Základní atributy (před bonusy)",
+          "type": "dict"
+        },
+        {
+          "key": "bonusy_pozadi",
+          "label": "Bonusy pozadí k atributům",
+          "type": "dict"
+        },
+        {
+          "key": "postup",
+          "label": "Historie postupu úrovní",
+          "type": "dictlist"
+        },
+        {
+          "key": "hp_metoda",
+          "label": "Metoda HP",
+          "type": "select",
+          "options": [
+            "",
+            "prumer",
+            "hody"
+          ]
+        },
+        {
+          "key": "volby",
+          "label": "Volby efektů",
+          "type": "dict"
+        },
+        {
+          "key": "efekty",
+          "label": "Vlastní efekty",
+          "type": "dictlist"
+        },
+        {
+          "key": "vlastni_rysy",
+          "label": "Vlastní rysy",
+          "type": "dictlist",
+          "fields": [
+            {
+              "key": "nazev",
+              "label": "Název",
+              "type": "text"
+            },
+            {
+              "key": "text",
+              "label": "Text",
+              "type": "textarea"
+            }
+          ]
+        },
+        {
+          "key": "prepis",
+          "label": "Manuální přepisy",
+          "type": "dict"
+        },
+        {
+          "key": "prilohy",
+          "label": "Přílohy",
+          "type": "dictlist"
+        }
+      ]
     }
   ]
 }

@@ -20,8 +20,13 @@ def kinds(u: dict | None = Depends(security.optional)):
 
 @router.get("/list/{kind}")
 def list_rules(kind: str, q: str = "", sort: str = "name", order: str = "asc",
-               page: int = 1, size: int = 0,
+               page: int = 1, size: int = 0, zdroj: str = "",
                u: dict | None = Depends(security.optional)):
+    """Sloučený seznam oficiálního + vlastního obsahu.
+
+    Každá položka má `vlastni` (bool) a případně `stranka` (cesta .md entity).
+    `zdroj=vlastni` → jen vlastní obsah, `zdroj=oficialni` → jen oficiální.
+    """
     if kind not in KINDS:
         raise HTTPException(404, "neznámý druh")
     con = db.connect()
@@ -31,7 +36,16 @@ def list_rules(kind: str, q: str = "", sort: str = "name", order: str = "asc",
             (kind, f"%{q}%")).fetchall()
     else:
         rows = con.execute("SELECT key,name,data FROM rules WHERE kind=? ORDER BY name", (kind,)).fetchall()
-    items = [{"key": r["key"], "name": r["name"], "data": db.jload(r["data"])} for r in rows]
+    items = []
+    for r in rows:
+        data = db.jload(r["data"])
+        vlastni = bool(data.get("vlastni"))
+        if zdroj == "vlastni" and not vlastni:
+            continue
+        if zdroj == "oficialni" and vlastni:
+            continue
+        items.append({"key": r["key"], "name": r["name"], "vlastni": vlastni,
+                      "stranka": data.get("stranka"), "data": data})
     return paginate(items, q=q, q_fields=("name",), sort=sort, order=order, page=page, size=size)
 
 

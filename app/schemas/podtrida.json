@@ -5,10 +5,93 @@
     {
       "title": "Pravidlová data",
       "fields": [
-        {"key": "nazev", "label": "Název (EN)", "type": "text", "required": true},
-        {"key": "trida", "label": "Třída", "type": "link", "target": "povolani"},
-        {"key": "zdroj", "label": "Zdroj", "type": "text"},
-        {"key": "stitky", "label": "Štítky", "type": "tags"}
+        {
+          "key": "nazev",
+          "label": "Název (EN)",
+          "type": "text",
+          "required": true
+        },
+        {
+          "key": "trida",
+          "label": "Třída",
+          "type": "link",
+          "target": "povolani"
+        },
+        {
+          "key": "zdroj",
+          "label": "Zdroj",
+          "type": "text"
+        },
+        {
+          "key": "stitky",
+          "label": "Štítky",
+          "type": "tags"
+        },
+        {
+          "key": "vlastni",
+          "label": "Vlastní obsah",
+          "type": "checkbox"
+        },
+        {
+          "key": "rysy",
+          "label": "Features (nazev/uroven/text/efekty)",
+          "type": "dictlist",
+          "fields": [
+            {
+              "key": "nazev",
+              "label": "Název (EN)",
+              "type": "text"
+            },
+            {
+              "key": "uroven",
+              "label": "Úroveň",
+              "type": "number"
+            },
+            {
+              "key": "text",
+              "label": "Text",
+              "type": "textarea"
+            }
+          ]
+        },
+        {
+          "key": "kouzla_vzdy",
+          "label": "Vždy připravená kouzla",
+          "type": "dictlist",
+          "fields": [
+            {
+              "key": "uroven",
+              "label": "Úroveň",
+              "type": "number"
+            },
+            {
+              "key": "kouzla",
+              "label": "Kouzla",
+              "type": "list"
+            }
+          ]
+        },
+        {
+          "key": "kouzleni",
+          "label": "Kouzlení (third-caster)",
+          "type": "dict",
+          "fields": [
+            {
+              "key": "typ",
+              "label": "Typ",
+              "type": "select",
+              "options": [
+                "",
+                "third"
+              ]
+            },
+            {
+              "key": "atribut",
+              "label": "Atribut",
+              "type": "text"
+            }
+          ]
+        }
       ]
     }
   ]

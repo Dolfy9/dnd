@@ -1,0 +1,20 @@
+{
+  "type": "pozadi",
+  "label": "Pozadí (Background)",
+  "sections": [
+    {
+      "title": "Pravidlová data",
+      "fields": [
+        {"key": "nazev", "label": "Název (EN)", "type": "text", "required": true},
+        {"key": "atributy", "label": "Atributy (3)", "type": "list"},
+        {"key": "feat", "label": "Origin Feat", "type": "text"},
+        {"key": "dovednosti", "label": "Dovednosti (2)", "type": "list"},
+        {"key": "nastroj", "label": "Nástroj", "type": "text"},
+        {"key": "vybava", "label": "Výbava", "type": "list"},
+        {"key": "vlastni", "label": "Vlastní obsah", "type": "checkbox"},
+        {"key": "text", "label": "Popis", "type": "textarea"},
+        {"key": "stitky", "label": "Štítky", "type": "tags"}
+      ]
+    }
+  ]
+}

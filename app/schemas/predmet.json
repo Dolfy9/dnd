@@ -1,0 +1,45 @@
+{
+  "type": "predmet",
+  "label": "Předmět (Item)",
+  "sections": [
+    {
+      "title": "Základ",
+      "fields": [
+        {"key": "nazev", "label": "Název (EN)", "type": "text", "required": true},
+        {"key": "typ", "label": "Typ", "type": "select",
+         "options": ["", "weapon", "armor", "shield", "wondrous", "potion", "ring", "rod", "staff", "wand", "scroll", "gear", "other"]},
+        {"key": "vzacnost", "label": "Vzácnost", "type": "select",
+         "options": ["", "Common", "Uncommon", "Rare", "Very Rare", "Legendary", "Artifact"]},
+        {"key": "naladeni", "label": "Vyžaduje attunement", "type": "checkbox"},
+        {"key": "hmotnost", "label": "Hmotnost", "type": "text"},
+        {"key": "cena", "label": "Cena", "type": "text"},
+        {"key": "vlastni", "label": "Vlastní obsah", "type": "checkbox"},
+        {"key": "stitky", "label": "Štítky", "type": "tags"}
+      ]
+    },
+    {
+      "title": "Zbroj / zbraň",
+      "fields": [
+        {"key": "zbroj", "label": "Zbroj", "type": "dict", "fields": [
+          {"key": "zakladni_ac", "label": "Základní AC", "type": "number"},
+          {"key": "typ", "label": "Typ zbroje", "type": "select", "options": ["", "light", "medium", "heavy", "shield"]},
+          {"key": "max_dex", "label": "Max DEX bonus", "type": "number"}
+        ]},
+        {"key": "zbran", "label": "Zbraň", "type": "dict", "fields": [
+          {"key": "kostka", "label": "Kostka zranění", "type": "text"},
+          {"key": "typ_zraneni", "label": "Typ zranění", "type": "text"},
+          {"key": "vlastnosti", "label": "Vlastnosti", "type": "list"},
+          {"key": "mastery", "label": "Weapon Mastery", "type": "text"},
+          {"key": "dosah", "label": "Dosah", "type": "text"}
+        ]}
+      ]
+    },
+    {
+      "title": "Text a efekty",
+      "fields": [
+        {"key": "text", "label": "Text předmětu", "type": "textarea"},
+        {"key": "efekty", "label": "Efekty (seznam objektů)", "type": "dictlist"}
+      ]
+    }
+  ]
+}

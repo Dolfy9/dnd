@@ -1,7 +1,13 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
-import { Sword, Star, BookOpen, ScrollText, Package, User, Activity, Shield, History } from "lucide-react";
+import { Sword, Star, BookOpen, ScrollText, Package, User, Activity, Shield, History, Paperclip, ChevronUp } from "lucide-react";
 import { get, put, upload } from "../api";
+import Rozpis from "./Rozpis";
+import ContentPicker from "./ContentPicker";
+import EffectEditor from "./EffectEditor";
+import PrilohyTab from "./PrilohyTab";
+import LevelUpDialog, { revertPostup, confirmRevert } from "./LevelUpDialog";
+import { confirmDialog } from "./ui";
 
 const AB = ["STR", "DEX", "CON", "INT", "WIS", "CHA"];
 const AB_CZ: Record<string, string> = { STR: "Síla", DEX: "Obratnost", CON: "Odolnost", INT: "Inteligence", WIS: "Moudrost", CHA: "Charisma" };
@@ -18,7 +24,7 @@ const SR_RES: Record<string, string> = { "Focus Points": "all", "Second Wind": "
 
 const sg = (n: number) => (n >= 0 ? "+" : "") + n;
 
-type Tab = "boj" | "dovednosti" | "kouzla" | "rysy" | "vybava" | "pribeh" | "log";
+type Tab = "boj" | "dovednosti" | "kouzla" | "rysy" | "vybava" | "pribeh" | "prilohy" | "log";
 const TABS: { id: Tab; label: string; icon: typeof Sword }[] = [
   { id: "boj", label: "Boj", icon: Sword },
   { id: "dovednosti", label: "Dovednosti", icon: Star },
@@ -26,6 +32,7 @@ const TABS: { id: Tab; label: string; icon: typeof Sword }[] = [
   { id: "rysy", label: "Rysy", icon: Activity },
   { id: "vybava", label: "Výbava", icon: Package },
   { id: "pribeh", label: "Příběh", icon: ScrollText },
+  { id: "prilohy", label: "Přílohy", icon: Paperclip },
   { id: "log", label: "Log", icon: History },
 ];
 
@@ -42,10 +49,14 @@ function saveSess(key: string, s: Session) {
   try { localStorage.setItem(key + ":s2", JSON.stringify(s)); } catch {}
 }
 
-function Card({ title, children, className }: { title?: string; children: React.ReactNode; className?: string }) {
+function Card({ title, children, className, extra }: { title?: string; children: React.ReactNode; className?: string; extra?: React.ReactNode }) {
   return (
     <div className={"card-in" + (className ? " " + className : "")}>
-      {title && <h4 className="text-[11px] font-bold uppercase tracking-wider text-[var(--ink-3)] mb-1.5">{title}</h4>}
+      {title && (
+        <h4 className="text-[11px] font-bold uppercase tracking-wider text-[var(--ink-3)] mb-1.5 flex items-center justify-between gap-2">
+          <span>{title}</span>{extra}
+        </h4>
+      )}
       {children}
     </div>
   );
@@ -77,8 +88,8 @@ function Pips({ n, used, onUse }: { n: number; used: number; onUse: (u: number) 
   );
 }
 
-export default function CharSheet({ sheet, ent, hpKey, editor, edit: editProp, onEditToggle }:
-  { sheet: any; ent?: any; hpKey: string; editor?: boolean; edit?: boolean; onEditToggle?: (v: boolean) => void }) {
+export default function CharSheet({ sheet, ent, hpKey, editor, edit: editProp, onEditToggle, pagePath, playerMode }:
+  { sheet: any; ent?: any; hpKey: string; editor?: boolean; edit?: boolean; onEditToggle?: (v: boolean) => void; pagePath?: string; playerMode?: boolean }) {
   const [tab, setTab] = useState<Tab | "all">("boj");
   const [delta, setDelta] = useState("");
   const [sess, setSess] = useState<Session>(() => loadSess(hpKey));
@@ -183,14 +194,16 @@ export default function CharSheet({ sheet, ent, hpKey, editor, edit: editProp, o
   }) => {
     const [on, setOn] = useState(false);
     const [val, setVal] = useState("");
+    const orig = useRef("");
     if (!canEdit) return <>{v}</>;
     if (!on) return (
       <span className="cs-edv" role="button" title="Klik = upravit hodnotu"
-        onClick={() => { if (fbClick) return fbClick(); setVal(String(getk(k, "") || fb || "")); setOn(true); }}>
+        onClick={(e) => { e.stopPropagation(); if (fbClick) return fbClick(); const s = String(getk(k, "") || fb || ""); orig.current = s; setVal(s); setOn(true); }}>
         {v}
       </span>);
     const done = (save: boolean) => {
-      if (save) setk(k, num ? (val === "" ? null : Number(val)) : val);
+      // neukládej beze změny – jen otevření + blur nesmí zapsat přepis
+      if (save && val !== orig.current) setk(k, num ? (val === "" ? null : Number(val)) : val);
       setOn(false);
     };
     return <input className="cs-e cs-edvi" style={{ width: w }} autoFocus value={val}
@@ -199,23 +212,40 @@ export default function CharSheet({ sheet, ent, hpKey, editor, edit: editProp, o
       onKeyDown={(e) => { if (e.key === "Enter") done(true); if (e.key === "Escape") done(false); }} />;
   };
 
-  /* portrét: šířka = výška × poměr stran obrázku (poměr vždy zachován) */
+  /* portrét: pevná kompaktní šířka, poměr stran drží object-fit */
   const crestRef = useRef<HTMLDivElement>(null);
-  const [ratio, setRatio] = useState(2 / 3);
-  const [crestW, setCrestW] = useState(150);
+  /* slim sticky bar: zobrazí se, když hero pás odscrolluje pryč */
+  const heroRef = useRef<HTMLDivElement>(null);
+  const [scrolled, setScrolled] = useState(false);
   useEffect(() => {
-    const el = crestRef.current;
+    const el = heroRef.current;
     if (!el) return;
-    const ro = new ResizeObserver(() => {
-      const h = el.offsetHeight;
-      if (h > 40) setCrestW(Math.max(100, Math.min(320, Math.round(h * ratio))));
-    });
-    ro.observe(el);
-    return () => ro.disconnect();
-  }, [ratio]);
+    const io = new IntersectionObserver(
+      ([e]) => setScrolled(!e.isIntersecting),
+      { rootMargin: "-120px 0px 0px 0px" });
+    io.observe(el);
+    return () => io.disconnect();
+  }, []);
 
   /* level up/down dialog — funguje i pro multiclass */
   const [lvlOpen, setLvlOpen] = useState(false);
+  const [postupOpen, setPostupOpen] = useState(false);
+  const rozpis = sheet.rozpis || {};
+  const prepisMap = cur.prepis || {};
+  /* ruční přepis derivované hodnoty (klíč v prepis: save:STR, skill:X, init, passive…) */
+  const [ovrKey, setOvrKey] = useState<string | null>(null);
+  const [ovrVal, setOvrVal] = useState("");
+  const askOverride = (k: string) => { setOvrKey(k); setOvrVal(String(prepisMap[k] ?? "")); };
+  const commitOverride = () => {
+    if (!ovrKey) return;
+    const next = JSON.parse(JSON.stringify(cur));
+    next.prepis = { ...(next.prepis || {}) };
+    if (ovrVal === "") delete next.prepis[ovrKey]; else next.prepis[ovrKey] = Number(ovrVal);
+    commit(next); setOvrKey(null);
+  };
+  const Rzp = ({ stat, label, children }: { stat: string; label?: string; children: React.ReactNode }) => (
+    <Rozpis stat={stat} label={label} value={children} rozpis={rozpis[stat]}
+      canEdit={canEdit} overridden={stat in prepisMap} onOverride={askOverride} />);
   const adjLvl = (i: number, d: number) => {
     const arr = ((cur.tridy || []) as any[]).map((t, j) =>
       j === i ? { ...t, uroven: Math.max(1, Math.min(20, (Number(t.uroven) || 0) + d)) } : t);
@@ -269,6 +299,11 @@ export default function CharSheet({ sheet, ent, hpKey, editor, edit: editProp, o
   const cr = sheet.cr || {};
   const concSpells = sheet.concentration_spells || [];
   const portrait = ent?.portret ? "/repo/" + encodeURI(ent.portret) : "";
+  // druh + volba druhu ve stručném tvaru ("Dragonborn · Bronze (Lightning)")
+  const druhVolba = ov.druh_volby
+    ? String(ov.druh_volby).replace(new RegExp(String(ov.druh || "").replace(/[.*+?^${}()|[\]\\]/g, "\\$&"), "i"), "").trim()
+    : "";
+  const [volbyOpen, setVolbyOpen] = useState(false);
   const initials = (ent?.name || "?").split(/\s+/).map((w: string) => w[0]).join("").slice(0, 2).toUpperCase();
 
   // kouzla dle úrovně
@@ -304,9 +339,19 @@ export default function CharSheet({ sheet, ent, hpKey, editor, edit: editProp, o
 
   /* ---------- sekce tabů ---------- */
   const paneBoj = (
-    <div className="cs-2col">
+    <div>
+      <div className="cs-2col">
       <div>
-        <Card title="Útoky">
+        <Card title="Útoky" extra={
+          <span className="cs-att-sum">
+            <span title={sheet.dpr_popis ? `Odhad: ${sheet.dpr_popis}` : "Odhad DPR"}>
+              DPR <b><EdV k="boj.dpr" v={bj.dpr ? bj.dpr : `~${sheet.dpr_auto || "—"}`} w="42px" /></b>
+            </span>
+            {(sheet.utoky_za_akci || 0) > 1 && (
+              <span title="Útoků za Attack action"> · {sheet.utoky_za_akci}×/akci</span>
+            )}
+          </span>
+        }>
           {edit ? (
             <Dicts k="utoky" keys={[["nazev", "Útok"], ["atribut", "At."], ["kostka", "Kostka"], ["typ", "Typ"], ["bonus", "+hit"], ["bonus_zraneni", "+dmg"], ["dosah", "Dosah"], ["mastery", "Mastery"], ["poznamka", "Pozn."]]} />
           ) : sheet.attacks?.length ? (
@@ -341,18 +386,31 @@ export default function CharSheet({ sheet, ent, hpKey, editor, edit: editProp, o
             )}
           </Card>
         )}
-        {!!res.length && (
-          <Card title="Zdroje povolání">
+        {!!(sheet.zdroje?.length || res.length) && (
+          <Card title="Zdroje">
             <ul className="cs-res">
-              {res.map((r: any, i: number) => {
-                const n = /^\d+$/.test(r.hodnota) ? Number(r.hodnota) : 0;
+              {(sheet.zdroje || []).map((z: any, i: number) => {
+                const n = /^\d+$/.test(String(z.max)) ? Number(z.max) : 0;
                 return (
-                  <li key={i}><span>{r.nazev}</span><b>{r.hodnota}</b>
-                    {n > 0 && n <= 20 && <Pips n={n} used={usedRes[r.nazev] || 0}
-                      onUse={(u) => upd({ res: { ...usedRes, [r.nazev]: u } })} />}
+                  <li key={"z" + i}>
+                    <span>{z.nazev}{z.zdroj && <small className="cs-feat-src"> · {z.zdroj}</small>}
+                      {z.obnova && <small className="cs-feat-src"> · {z.obnova === "short" ? "Short" : "Long"} Rest</small>}</span>
+                    <b>{z.max}{z.kostka ? ` (${z.kostka})` : ""}</b>
+                    {n > 0 && n <= 20 && <Pips n={n} used={usedRes[z.nazev] || 0}
+                      onUse={(u) => upd({ res: { ...usedRes, [z.nazev]: u } })} />}
                   </li>
                 );
               })}
+              {res.filter((r: any) => !(sheet.zdroje || []).find((z: any) => String(r.nazev).endsWith(z.nazev)))
+                .map((r: any, i: number) => {
+                  const n = /^\d+$/.test(r.hodnota) ? Number(r.hodnota) : 0;
+                  return (
+                    <li key={i}><span>{r.nazev}</span><b>{r.hodnota}</b>
+                      {n > 0 && n <= 20 && <Pips n={n} used={usedRes[r.nazev] || 0}
+                        onUse={(u) => upd({ res: { ...usedRes, [r.nazev]: u } })} />}
+                    </li>
+                  );
+                })}
             </ul>
           </Card>
         )}
@@ -379,6 +437,7 @@ export default function CharSheet({ sheet, ent, hpKey, editor, edit: editProp, o
             </>}
         </Card>
       </div>
+      </div>
     </div>
   );
 
@@ -391,7 +450,7 @@ export default function CharSheet({ sheet, ent, hpKey, editor, edit: editProp, o
             return (
               <li key={s} className={k.exp ? "e" : k.prof ? "p" : ""}>
                 <i /> <span>{s} <small>{ab}</small></span>
-                <b>{sg(k.val + pen - sheet.exhaust_penalty)}</b>
+                <b><Rzp stat={`skill:${s}`} label={s}>{sg(k.val + pen - sheet.exhaust_penalty)}</Rzp></b>
               </li>
             );
           })}
@@ -406,6 +465,29 @@ export default function CharSheet({ sheet, ent, hpKey, editor, edit: editProp, o
         )}
       </Card>
       <div>
+        {edit && (
+          <Card title="Přepisy (ruční)">
+            <p className="text-[11px] text-[var(--ink-3)] mb-1">Klíče: init, passive, ac, hp, speed, spell_dc, spell_atk, save:STR…, skill:Stealth…</p>
+            {Object.entries(getk("prepis") || {}).map(([kk, vv]: any) => (
+              <div key={kk} className="cs-edict">
+                <input className="cs-e" value={kk} readOnly />
+                <input className="cs-e" value={String(vv)} onChange={(e) => {
+                  const n = { ...(getk("prepis") || {}) };
+                  n[kk] = e.target.value === "" ? undefined : Number(e.target.value);
+                  if (n[kk] === undefined) delete n[kk];
+                  setk("prepis", n);
+                }} />
+                <button type="button" className="cs-edel" onClick={() => {
+                  const n = { ...(getk("prepis") || {}) }; delete n[kk]; setk("prepis", n);
+                }}>✕</button>
+              </div>
+            ))}
+            <button type="button" className="btn sm" onClick={() => {
+              const k2 = prompt("Klíč přepisu (např. passive):");
+              if (k2) setk("prepis", { ...(getk("prepis") || {}), [k2]: 0 });
+            }}>+ přepis</button>
+          </Card>
+        )}
         <Card title="Výcvik a zdatnosti">
           <dl className="cs-dl">
             <dt>Zbroj</dt><dd>{sheet.train?.armor || "—"}</dd>
@@ -449,8 +531,12 @@ export default function CharSheet({ sheet, ent, hpKey, editor, edit: editProp, o
   const paneKouzla = (
     <div>
       {edit && (
-        <Card title="Kouzla — ruční seznam">
+        <Card title="Kouzla — seznam">
           <Dicts k="kouzla" keys={[["nazev", "Kouzlo"], ["uroven", "Úr."], ["trida", "Třída"], ["poznamka", "Pozn."]]} />
+          <div className="cs-erow mt-1">
+            <ContentPicker kind="spell" placeholder="+ přidat kouzlo z rejstříku…" value=""
+              onChange={(name) => name && setk("kouzla", [...(getk("kouzla") || []), { nazev: name }])} />
+          </div>
         </Card>
       )}
       {casting.length > 0 && (
@@ -458,7 +544,7 @@ export default function CharSheet({ sheet, ent, hpKey, editor, edit: editProp, o
           {casting.map((x: any, i: number) => (
             <div key={i} className="cs-castbox">
               <div className="text-[10px] uppercase tracking-wide text-[var(--ink-3)]">{x.trida} · ability {x.ab}</div>
-              <div className="text-[13px]"><b>Spell save DC {x.dc}</b> · attack {sg(x.atk + pen - sheet.exhaust_penalty)}</div>
+              <div className="text-[13px]"><b>Spell save DC <Rzp stat="spell_dc" label="Spell save DC">{x.dc}</Rzp></b> · attack <Rzp stat="spell_atk" label="Spell attack">{sg(x.atk + pen - sheet.exhaust_penalty)}</Rzp></div>
             </div>
           ))}
         </div>
@@ -526,7 +612,13 @@ export default function CharSheet({ sheet, ent, hpKey, editor, edit: editProp, o
         )}
         {(!!feats.length || edit) && (
           <Card title="Featy">
-            {edit ? <Dicts k="featy" keys={[["nazev", "Feat"], ["zdroj", "Zdroj"]]} />
+            {edit ? <>
+                <Dicts k="featy" keys={[["nazev", "Feat"], ["zdroj", "Zdroj"]]} />
+                <div className="cs-erow mt-1">
+                  <ContentPicker kind="feat" placeholder="+ feat z rejstříku…" value=""
+                    onChange={(name) => name && setk("featy", [...(getk("featy") || []), { nazev: name }])} />
+                </div>
+              </>
               : feats.map((f: any, i: number) => (
                 <Det key={i} head={<>{f.nazev} <small className="cs-feat-src">{f.zdroj}{f.poznamka ? ` · ${f.poznamka}` : ""}</small></>} text={f.text} />
               ))}
@@ -542,8 +634,38 @@ export default function CharSheet({ sheet, ent, hpKey, editor, edit: editProp, o
         )}
         {(!!sheet.vlastni_rysy?.length || edit) && (
           <Card title="Zvláštní a božské rysy">
-            {edit ? <Dicts k="vlastni_rysy" keys={[["nazev", "Název"], ["text", "Text"]]} />
-              : sheet.vlastni_rysy.map((f: any, i: number) => <Det key={i} head={f.nazev || String(f)} text={f.text} />)}
+            {edit ? (
+              <div className="cs-edicts">
+                {((getk("vlastni_rysy") || []) as any[]).map((r: any, i: number) => (
+                  <div key={i} className="fx-row">
+                    <div className="fx-head">
+                      <input className="cs-e" placeholder="Název" value={r.nazev || ""}
+                        onChange={(e) => { const n = [...getk("vlastni_rysy")]; n[i] = { ...r, nazev: e.target.value }; setk("vlastni_rysy", n); }} />
+                      <button type="button" className="cs-edel" onClick={() => setk("vlastni_rysy", getk("vlastni_rysy").filter((_: any, j: number) => j !== i))}>✕</button>
+                    </div>
+                    <textarea className="cs-e cs-ea" rows={2} placeholder="Popis" value={r.text || ""}
+                      onChange={(e) => { const n = [...getk("vlastni_rysy")]; n[i] = { ...r, text: e.target.value }; setk("vlastni_rysy", n); }} />
+                    <EffectEditor effects={r.efekty || []}
+                      onChange={(l) => { const n = [...getk("vlastni_rysy")]; n[i] = { ...r, efekty: l }; setk("vlastni_rysy", n); }} />
+                  </div>
+                ))}
+                <button type="button" className="btn sm" onClick={() => setk("vlastni_rysy", [...(getk("vlastni_rysy") || []), { nazev: "", text: "", efekty: [] }])}>+ vlastní rys</button>
+              </div>
+            ) : sheet.vlastni_rysy.map((f: any, i: number) => <Det key={i} head={f.nazev || String(f)} text={f.text} />)}
+          </Card>
+        )}
+        {edit && (
+          <Card title="Ruční efekty (postava)">
+            <EffectEditor effects={getk("efekty") || []} onChange={(l) => setk("efekty", l)} />
+          </Card>
+        )}
+        {!edit && !!sheet.efekty_aplikovane?.length && (
+          <Card title="Aplikované efekty">
+            <ul className="cs-gear">
+              {sheet.efekty_aplikovane.map((e: any, i: number) => (
+                <li key={i}><span className="chip">{e.typ}</span> {e.popis || ""} <small className="cs-feat-src">{e.zdroj}</small></li>
+              ))}
+            </ul>
           </Card>
         )}
       </div>
@@ -555,9 +677,46 @@ export default function CharSheet({ sheet, ent, hpKey, editor, edit: editProp, o
     <div className="cs-2col">
       <div>
         <Card title="Výbava">
-          {edit ? <Lines k="vybava" />
+          {edit ? (
+            <div className="cs-edicts">
+              {((getk("vybava") || []) as any[]).map((v: any, i: number) => {
+                const it = typeof v === "object" ? v : { nazev: String(v) };
+                const naladenoCelkem = (getk("vybava") || []).filter((x: any) => typeof x === "object" && x.naladeno).length;
+                return (
+                  <div key={i} className="cs-edict">
+                    <ContentPicker kind="item" value={it.nazev || ""} placeholder="Předmět"
+                      onChange={(name, item) => {
+                        const n = [...getk("vybava")];
+                        n[i] = { ...it, nazev: name, ...(item?.data?.naladeni ? {} : {}) };
+                        setk("vybava", n);
+                      }} />
+                    <input type="number" className="cs-e" style={{ width: 46 }} title="Počet" value={it.pocet ?? 1}
+                      onChange={(e) => { const n = [...getk("vybava")]; n[i] = { ...it, pocet: Number(e.target.value) || 1 }; setk("vybava", n); }} />
+                    <label className="cs-echeck" title="Vybaveno (neseno/používáno)">
+                      <input type="checkbox" checked={!!it.vybaveno}
+                        onChange={(e) => { const n = [...getk("vybava")]; n[i] = { ...it, vybaveno: e.target.checked || undefined }; setk("vybava", n); }} />na sobě</label>
+                    <label className="cs-echeck" title={`Attunement (max 3, nyní ${naladenoCelkem})`}>
+                      <input type="checkbox" checked={!!it.naladeno}
+                        onChange={(e) => {
+                          if (e.target.checked && naladenoCelkem >= 3) { alert("Attunement je max. 3 předměty."); return; }
+                          const n = [...getk("vybava")]; n[i] = { ...it, naladeno: e.target.checked || undefined }; setk("vybava", n);
+                        }} />naladěno</label>
+                    <button type="button" className="cs-edel" onClick={() => setk("vybava", getk("vybava").filter((_: any, j: number) => j !== i))}>✕</button>
+                  </div>
+                );
+              })}
+              <button type="button" className="btn sm" onClick={() => setk("vybava", [...(getk("vybava") || []), { nazev: "", pocet: 1 }])}>+ předmět</button>
+            </div>
+          )
             : sheet.vybava ? (Array.isArray(sheet.vybava)
-              ? <ul className="cs-gear">{sheet.vybava.map((v: any, i: number) => <li key={i}>{typeof v === "object" ? Object.values(v).join(" ") : String(v)}</li>)}</ul>
+              ? <ul className="cs-gear">{sheet.vybava.map((v: any, i: number) => {
+                  if (typeof v !== "object") return <li key={i}>{String(v)}</li>;
+                  return <li key={i}>
+                    {v.nazev}{(v.pocet ?? 1) > 1 && ` ×${v.pocet}`}
+                    {v.vybaveno && <span className="chip cs-gearchip">na sobě</span>}
+                    {v.naladeno && <span className="chip cs-gearchip att">attuned</span>}
+                  </li>;
+                })}</ul>
               : <p className="text-[13px] whitespace-pre-line">{String(sheet.vybava)}</p>) : "—"}
         </Card>
         <Card title="Attunement">
@@ -650,6 +809,11 @@ export default function CharSheet({ sheet, ent, hpKey, editor, edit: editProp, o
     </div>
   );
 
+  const panePrilohy = (
+    <PrilohyTab ent={{ ...ent, path: pagePath || ent?.path }} editor={!!editor}
+      playerMode={playerMode} commit={commit} />
+  );
+
   const paneLog = (
     <Card title="Historie změn">
       {logQ.isLoading && <p className="text-[12px] text-[var(--ink-3)]">Načítám…</p>}
@@ -669,18 +833,18 @@ export default function CharSheet({ sheet, ent, hpKey, editor, edit: editProp, o
 
   const panes: [Tab, React.ReactNode][] = [
     ["boj", paneBoj], ["dovednosti", paneDovednosti], ["kouzla", paneKouzla],
-    ["rysy", paneRysy], ["vybava", paneVybava], ["pribeh", panePribeh], ["log", paneLog]];
+    ["rysy", paneRysy], ["vybava", paneVybava], ["pribeh", panePribeh],
+    ["prilohy", panePrilohy], ["log", paneLog]];
 
   const diceCompact = Object.entries(sheet.dice || {}).map(([k, n]) => `${n}×${k}`).join(" · ");
 
   return (
     <div className="cs">
       {/* ===== HERO — portrét + horizontální pásy ===== */}
-      <div className="cs-hero">
-        <div className="cs-crest" ref={crestRef} style={{ width: crestW }}>
+      <div className="cs-hero" ref={heroRef}>
+        <div className="cs-crest" ref={crestRef}>
           {portrait
-            ? <img src={portrait} alt={ent?.name || ""}
-                onLoad={(e) => { const im = e.target as HTMLImageElement; if (im.naturalWidth) setRatio(im.naturalWidth / im.naturalHeight); }} />
+            ? <img src={portrait} alt={ent?.name || ""} />
             : <span className="cs-crest-init">{initials}</span>}
           <div className="cs-lvl" title={canEdit ? "Úroveň — klik = level up/down" : "Celková úroveň"}
             onClick={() => canEdit && setLvlOpen(!lvlOpen)} role={canEdit ? "button" : undefined}>
@@ -698,6 +862,16 @@ export default function CharSheet({ sheet, ent, hpKey, editor, edit: editProp, o
                 </div>
               ))}
               {!(cur.tridy || []).length && <p className="text-[11px] text-[var(--ink-3)]">Postava nemá třídu — přidej ji v editaci.</p>}
+              <button type="button" className="btn sm btn-primary" onClick={() => { setLvlOpen(false); setPostupOpen(true); }}>
+                <ChevronUp size={12} /> Postup na úroveň
+              </button>
+              {!!(cur.postup || []).length && (
+                <button type="button" className="btn sm" onClick={async () => {
+                  if (await confirmRevert(cur)) {
+                    const n = revertPostup(cur); if (n) commit(n);
+                  }
+                }}>Vrátit poslední postup</button>
+              )}
             </div>
           )}
           {canEdit && (
@@ -721,13 +895,41 @@ export default function CharSheet({ sheet, ent, hpKey, editor, edit: editProp, o
                   : ov.titul && <span className="cs-title">{ov.titul}</span>}
                 {edit ? (
                   <div className="cs-echips">
-                    <Dicts k="tridy" keys={[["trida", "Třída"], ["uroven", "Úr."], ["podtrida", "Subclass"]]} />
+                    <div className="cs-edicts">
+                      {((getk("tridy") || []) as any[]).map((t: any, i: number) => (
+                        <div key={i} className="cs-edict">
+                          <ContentPicker kind="class" value={t.trida} placeholder="Třída"
+                            onChange={(name) => { const n = [...getk("tridy")]; n[i] = { ...t, trida: name }; setk("tridy", n); }} />
+                          <input type="number" className="cs-e" style={{ width: 52 }} value={t.uroven ?? 1} min={1} max={20}
+                            onChange={(e) => { const n = [...getk("tridy")]; n[i] = { ...t, uroven: Number(e.target.value) || 1 }; setk("tridy", n); }} />
+                          <ContentPicker kind="subclass" value={t.podtrida || ""} placeholder="Subclass"
+                            filter={(it) => !t.trida || it.data?.trida === t.trida}
+                            onChange={(name) => { const n = [...getk("tridy")]; n[i] = { ...t, podtrida: name || undefined }; setk("tridy", n); }} />
+                          <button type="button" className="cs-edel" onClick={() => setk("tridy", getk("tridy").filter((_: any, j: number) => j !== i))}>✕</button>
+                        </div>
+                      ))}
+                      <button type="button" className="btn sm" onClick={() => setk("tridy", [...(getk("tridy") || []), { trida: "Fighter", uroven: 1 }])}>+ třída</button>
+                    </div>
                     <div className="cs-erow">
-                      <input className="cs-e" placeholder="Druh" value={getk("druh")} onChange={(e) => setk("druh", e.target.value)} />
+                      <ContentPicker kind="species" value={getk("druh")} placeholder="Druh" onChange={(name) => setk("druh", name)} />
                       <input className="cs-e" placeholder="Volba druhu" value={getk("druh_volby")} onChange={(e) => setk("druh_volby", e.target.value)} />
-                      <input className="cs-e" placeholder="Pozadí" value={getk("pozadi")} onChange={(e) => setk("pozadi", e.target.value)} />
+                      <ContentPicker kind="background" value={getk("pozadi")} placeholder="Pozadí" onChange={(name) => setk("pozadi", name)} />
                       <input className="cs-e" placeholder="Zarovnání" value={getk("zarovnani")} onChange={(e) => setk("zarovnani", e.target.value)} />
                       <input className="cs-e" placeholder="Velikost" value={getk("velikost")} onChange={(e) => setk("velikost", e.target.value)} />
+                    </div>
+                    <div className="cs-erow">
+                      <label className="cs-echeck"><input type="checkbox" checked={!!getk("hrac")} onChange={(e) => setk("hrac", e.target.checked)} /> hráčská postava</label>
+                      {!getk("atributy_zaklad") && (
+                        <button type="button" className="btn sm" title="Zkopíruje současné atributy jako základ; bonusy pozadí nech prázdné"
+                          onClick={async () => {
+                            if (await confirmDialog({ title: "Převést na výpočet z bází", text: "Současné atributy se uloží jako atributy_zaklad (s prázdnými bonusy pozadí). Pokračovat?", okLabel: "Převést" })) {
+                              const n = JSON.parse(JSON.stringify(cur));
+                              n.atributy_zaklad = { ...(n.atributy || {}) };
+                              n.bonusy_pozadi = {};
+                              commit(n);
+                            }
+                          }}>Převést na výpočet z bází</button>
+                      )}
                     </div>
                   </div>
                 ) : (
@@ -736,7 +938,7 @@ export default function CharSheet({ sheet, ent, hpKey, editor, edit: editProp, o
                       <span key={i} className="p2-chip p2-class">{t.trida} {t.uroven}{t.podtrida ? ` · ${t.podtrida}` : ""}</span>
                     ))}
                     {!ent?.data?.tridy?.length && <span className="p2-chip p2-class">{sheet.statblok || "Bez povolání"}</span>}
-                    <span className="p2-chip">{ov.druh || "—"}{ov.druh_volby ? ` (${ov.druh_volby})` : ""}</span>
+                    <span className="p2-chip">{ov.druh || "—"}{druhVolba ? ` · ${druhVolba}` : ""}</span>
                     <span className="p2-chip">{ov.pozadi || "—"}</span>
                     <span className="p2-chip">{ov.zarovnani || "—"}</span>
                     <span className="p2-chip">{ov.velikost || "Medium"}</span>
@@ -752,46 +954,11 @@ export default function CharSheet({ sheet, ent, hpKey, editor, edit: editProp, o
                 )}
               </div>
             </div>
-            {/* konec řádku: Init | Speed | Hit Dice | CR | Inspirace */}
-            <div className="cs-hero-side">
-              <div className="cs-side"><b>{sg(sheet.init + pen - sheet.exhaust_penalty)}</b><span>Init.</span></div>
-              <div className="cs-side">
-                <b><EdV k="rychlost_rucne" v={`${sheet.speed} ft`} fb={sheet.speed} w="56px" /></b><span>Rychlost</span>
-              </div>
-              <div className="cs-side" title={diceCompact}>
-                <b><button className="btn sm" onClick={() => upd({ hd: Math.max(0, hdLeft - 1) })}>−</button>
-                  {hdLeft}<button className="btn sm" onClick={() => upd({ hd: Math.min(sheet.lvl, hdLeft + 1) })}>+</button>
-                </b><span>Hit Dice</span>
-              </div>
-              <div className="cs-cr" title={`obrana CR ${cr.def || "?"} · útok CR ${cr.off || "?"}`}>
-                <strong><EdV k="boj.cr_rucne" v={cr.cr || "—"} fb={cr.cr} w="44px" /></strong><span>CR</span>
-                {cr.xp != null && <small>{cr.xp} XP</small>}
-                {!canEdit && bj.cr_rucne && <small>{bj.cr_rucne}</small>}
-              </div>
-              <button type="button" className={"p2-insp" + (insp ? " on" : "")} onClick={() => upd({ insp: !insp })}>
-                <span>{insp ? "★" : "☆"}</span> Insp.
-              </button>
-            </div>
           </div>
-          {/* pás 2: atributy — 6 boxů vedle sebe */}
-          <div className="cs-abil-row">
-            {AB.map((a) => (
-              <div key={a} className="cs-ab2" title={a}>
-                <b className="cs-ab2-mod">{sg(sheet.check_mods[a] + pen - sheet.exhaust_penalty)}</b>
-                <span className="cs-ab2-i">
-                  <b className="cs-ab2-name">{AB_CZ[a]}</b>
-                  <span className="cs-ab2-sv" title={`Záchrana ${a}`}>
-                    <b className="cs-ab2-score"><EdV k={`atributy.${a}`} v={sheet.atributy?.[a] ?? 10} fb={sheet.atributy?.[a]} w="42px" /></b>
-                    <span className={sheet.save_prof?.includes(a) ? " p" : ""}>sv {sg(sheet.saves[a] + pen - sheet.exhaust_penalty)}</span>
-                  </span>
-                </span>
-              </div>
-            ))}
-          </div>
-          {/* pás 3: AC + HP — Death Saves místo baru při 0 HP */}
+          {/* pás 2: vitals — AC | HP | Init | Speed | PB | Pas. Perc. | Hit Dice | CR | Insp. */}
           <div className="cs-vitals">
             <div className="cs-shield">
-              <b><EdV k="ac_rucne" v={sheet.ac} fb={sheet.ac} w="44px" /></b>
+              <b><Rzp stat="ac" label="AC">{sheet.ac}</Rzp></b>
               <span>AC</span>
             </div>
             <div className="cs-hp">
@@ -799,7 +966,7 @@ export default function CharSheet({ sheet, ent, hpKey, editor, edit: editProp, o
                 <span className="cs-l">HP</span>
                 <button className="btn sm" onClick={() => upd({ hp: Math.max(0, hpNow - 1) })}>−</button>
                 <input type="number" value={hpNow} onChange={(e) => upd({ hp: Number(e.target.value) || 0 })} />
-                <span>/ <EdV k="hp_rucne" v={sheet.hp} fb={sheet.hp} w="44px" /></span>
+                <span>/ <Rzp stat="hp" label="Maximum HP">{sheet.hp}</Rzp></span>
                 <button className="btn sm" onClick={() => upd({ hp: Math.min(sheet.hp, hpNow + 1) })}>+</button>
                 <label className="cs-hp-l" title="Temporary Hit Points — zasáhnou se dřív než HP">Tmp <input type="number" value={tmp || ""} onChange={(e) => upd({ tmp: Number(e.target.value) || 0 })} /></label>
                 <label className="cs-hp-l" title="Rychlé zranění/léčení: zadej číslo — Enter = zranění, Shift+Enter = léčení">± <input type="number" placeholder="dmg" value={delta} onChange={(e) => setDelta(e.target.value)}
@@ -818,7 +985,50 @@ export default function CharSheet({ sheet, ent, hpKey, editor, edit: editProp, o
                 <div className="cs-hpbar"><i style={{ width: Math.max(0, Math.min(100, (hpNow / sheet.hp) * 100)) + "%" }} /></div>
               )}
             </div>
-            {/* trackery ve stejné řadě jako HP */}
+            <div className="cs-side"><b><Rzp stat="init" label="Iniciativa">{sg(sheet.init + pen - sheet.exhaust_penalty)}</Rzp></b><span>Init.</span></div>
+            <div className="cs-side">
+              <b><Rzp stat="speed" label="Rychlost">{sheet.speed}</Rzp></b>
+              <span>Rychlost{Object.keys(sheet.rychlosti || {}).filter((k) => k !== "walk").length ? "*" : ""}</span>
+              {Object.keys(sheet.rychlosti || {}).filter((k) => k !== "walk").length > 0 && (
+                <small className="cs-spd2" title={Object.entries(sheet.rychlosti).map(([k, v]: any) => `${k} ${v} ft`).join(" · ")}>
+                  {Object.entries(sheet.rychlosti).filter(([k]) => k !== "walk").map(([k, v]: any) => `${k} ${v}`).join(" · ")}
+                </small>
+              )}
+            </div>
+            <div className="cs-side"><b>{sg(sheet.pb)}</b><span>PB</span></div>
+            <div className="cs-side"><b><Rzp stat="passive" label="Passive Perception">{sheet.passive}</Rzp></b><span>Pas. Perc.</span></div>
+            <div className="cs-side" title={diceCompact}>
+              <b><button className="btn sm" onClick={() => upd({ hd: Math.max(0, hdLeft - 1) })}>−</button>
+                {hdLeft}<button className="btn sm" onClick={() => upd({ hd: Math.min(sheet.lvl, hdLeft + 1) })}>+</button>
+              </b><span>Hit Dice</span>
+            </div>
+            <div className="cs-cr" title={`obrana CR ${cr.def || "?"} · útok CR ${cr.off || "?"}`}>
+              <strong><EdV k="boj.cr_rucne" v={cr.cr || "—"} fb={cr.cr} w="44px" /></strong><span>CR</span>
+              {cr.xp != null && <small>{cr.xp} XP</small>}
+              {!canEdit && bj.cr_rucne && <small>{bj.cr_rucne}</small>}
+            </div>
+            <button type="button" className={"p2-insp" + (insp ? " on" : "")} onClick={() => upd({ insp: !insp })}>
+              <span>{insp ? "★" : "☆"}</span> Insp.
+            </button>
+          </div>
+          {/* pás 3: šest atributů vedle sebe */}
+          <div className="cs-abil-row">
+            {AB.map((a) => (
+              <div key={a} className="cs-ab2">
+                <div className="cs-ab2-top">
+                  <span className="cs-ab2-name" title={AB_CZ[a]}>{AB_CZ[a]}</span>
+                  <i className={"cs-dot" + (sheet.save_prof?.includes(a) ? " on" : "")} title={`Záchrana ${a}${sheet.save_prof?.includes(a) ? " — zdatnost" : ""}`} />
+                </div>
+                <b className="cs-ab2-mod">{sg(sheet.check_mods[a] + pen - sheet.exhaust_penalty)}</b>
+                <div className="cs-ab2-bot">
+                  <b className="cs-ab2-score"><EdV k={`atributy.${a}`} v={sheet.atributy?.[a] ?? 10} fb={sheet.atributy?.[a]} w="40px" /></b>
+                  <span className={sheet.save_prof?.includes(a) ? "p" : ""}>sv <Rzp stat={`save:${a}`} label={`Záchrana ${a}`}>{sg(sheet.saves[a] + pen - sheet.exhaust_penalty)}</Rzp></span>
+                </div>
+              </div>
+            ))}
+          </div>
+          {/* pás 4: stav — Exhaustion | Concentration | Conditions | Rest */}
+          <div className="cs-strip">
             <div className="cs-tr">
               <b>Exhaustion</b>
               <div className="flex items-center gap-1">
@@ -863,18 +1073,41 @@ export default function CharSheet({ sheet, ent, hpKey, editor, edit: editProp, o
       </div>
       {exh > 0 && <div className="cs-warn">Exhaustion {exh} · {pen} na D20 hody · −{exh * 5} ft Speed{exh === 6 ? " · Smrt" : ""}</div>}
 
+      {/* nevyřešené volby (linie druhu, featy s volbou…) — sbalitelný jantarový pás */}
+      {!!sheet.chybejici_volby?.length && (
+        <div className="cs-volby">
+          <button type="button" className="cs-volby-t" onClick={() => setVolbyOpen(!volbyOpen)}>
+            {volbyOpen ? "▾" : "▸"} {sheet.chybejici_volby.length} {sheet.chybejici_volby.length === 1 ? "nevyřešená volba" : sheet.chybejici_volby.length < 5 ? "nevyřešené volby" : "nevyřešených voleb"}
+          </button>
+          {volbyOpen && sheet.chybejici_volby.map((v: any, i: number) => {
+            const klic = `${v.zdroj}|${v.volba}`;
+            return (
+              <span key={i} className="cs-volba">
+                {v.zdroj}: {v.volba}
+                {canEdit ? (
+                  <select className="inp !py-0.5 !text-[12px]" value={getk(`volby.${klic}`)}
+                    onChange={(e) => setk(`volby.${klic}`, e.target.value)}>
+                    <option value="">— vyber —</option>
+                    {(v.moznosti || []).map((m: string) => <option key={m} value={m}>{m}</option>)}
+                  </select>
+                ) : (
+                  <em>nevybráno</em>
+                )}
+              </span>
+            );
+          })}
+        </div>
+      )}
+
       {/* ===== TABS na celou šířku ===== */}
       <div className="cs-main">
-          {!!casting.length && (
-            <div className="flex flex-wrap gap-2 mb-2">
-              {casting.map((x: any, i: number) => (
-                <div key={i} className="cs-castbox">
-                  <div className="text-[10px] uppercase tracking-wide text-[var(--ink-3)]">{x.trida} · ability {x.ab}</div>
-                  <div className="text-[13px]"><b>Spell save DC {x.dc}</b> · attack {sg(x.atk + pen - sheet.exhaust_penalty)}</div>
-                </div>
-              ))}
-            </div>
-          )}
+          {/* slim sticky lišta po odscrollování hero pásu */}
+          <div className={"cs-mini" + (scrolled ? " on" : "")}>
+            <b className="cs-mini-name">{nm || ent?.name}</b>
+            <span>AC <b>{sheet.ac}</b></span>
+            <span>HP <b>{hpNow}{tmp ? `+${tmp}` : ""}</b>/{sheet.hp}</span>
+            <span>Init <b>{sg(sheet.init - (sheet.exhaust_penalty || 0))}</b></span>
+          </div>
           <div className="cs-tabbar">
             <div className="cs-tabs">
               {TABS.filter((t) => t.id !== "log" || canEdit).map((t) => (
@@ -887,20 +1120,37 @@ export default function CharSheet({ sheet, ent, hpKey, editor, edit: editProp, o
               ))}
               <button className={"cs-tab" + (tab === "all" ? " on" : "")} onClick={() => setTab("all")} title="Zobrazit vše (i pro tisk)">☰ Vše</button>
             </div>
-            {/* PB | PP | DPR napravo od záložek */}
+            {/* akce napravo od záložek; na mobilu sbalené do ⋯ menu */}
             <div className="cs-tab-stats">
-              <div className="cs-stat"><b>{sg(sheet.pb)}</b><span>PB</span></div>
-              <div className="cs-stat"><b title="Passive Perception">{sheet.passive}</b><span>Pas. Perc.</span></div>
-              <div className="cs-stat" title={sheet.dpr_popis ? `Odhad: ${sheet.dpr_popis}` : ""}>
-                <b><EdV k="boj.dpr" v={bj.dpr ? bj.dpr : `~${sheet.dpr_auto || "—"}`} w="48px" /></b><span>DPR</span>
-              </div>
+              <span className="cs-acts-inline">
+                {canEdit && (
+                  <button type="button" className="cs-tab" title="Postup na další úroveň"
+                    onClick={() => setPostupOpen(true)}>
+                    <ChevronUp size={13} /> Úroveň+
+                  </button>
+                )}
+                {canEdit && (
+                  <button type="button"
+                    className={"cs-tab cs-editbtn" + (edit ? " on" : "")}
+                    title={edit ? "Vypnout inline úpravy" : "Zapnout inline úpravy — klik a piš, ukládá se samo"}
+                    onClick={() => setEdit(!edit)}>
+                    ✎ {edit ? "Hotovo" : "Upravit"}
+                  </button>
+                )}
+              </span>
               {canEdit && (
-                <button type="button"
-                  className={"cs-tab cs-editbtn" + (edit ? " on" : "")}
-                  title={edit ? "Vypnout inline úpravy" : "Zapnout inline úpravy — klik a piš, ukládá se samo"}
-                  onClick={() => setEdit(!edit)}>
-                  ✎ {edit ? "Hotovo" : "Upravit"}
-                </button>
+                <details className="cs-acts">
+                  <summary className="cs-tab" title="Akce">⋯</summary>
+                  <div className="cs-acts-menu">
+                    <button type="button" className="cs-tab" onClick={(e) => { (e.currentTarget.closest("details") as HTMLDetailsElement).open = false; setPostupOpen(true); }}>
+                      <ChevronUp size={13} /> Úroveň+
+                    </button>
+                    <button type="button" className={"cs-tab cs-editbtn" + (edit ? " on" : "")}
+                      onClick={(e) => { (e.currentTarget.closest("details") as HTMLDetailsElement).open = false; setEdit(!edit); }}>
+                      ✎ {edit ? "Hotovo" : "Upravit"}
+                    </button>
+                  </div>
+                </details>
               )}
               {edit && saved && <span className="cs-saved">{saved}</span>}
             </div>
@@ -909,6 +1159,25 @@ export default function CharSheet({ sheet, ent, hpKey, editor, edit: editProp, o
             ? panes.filter(([id]) => id !== "log" || canEdit).map(([id, p]) => <section key={id} className="cs-pane"><h3 className="cs-pane-h">{TABS.find((t) => t.id === id)?.label}</h3>{p}</section>)
             : <section className="cs-pane">{panes.find(([id]) => id === tab)?.[1]}</section>}
       </div>
+      {postupOpen && canEdit && (
+        <LevelUpDialog data={cur} onClose={() => setPostupOpen(false)}
+          onApply={(next) => commit(next)} />
+      )}
+      {ovrKey && (
+        <div className="cs-ovr-modal" onClick={() => setOvrKey(null)}>
+          <div className="cs-ovr-box" onClick={(e) => e.stopPropagation()}>
+            <b>Ruční přepis: {ovrKey}</b>
+            <input className="cs-e" autoFocus type="number" value={ovrVal}
+              placeholder="prázdné = zrušit přepis"
+              onChange={(e) => setOvrVal(e.target.value)}
+              onKeyDown={(e) => { if (e.key === "Enter") commitOverride(); if (e.key === "Escape") setOvrKey(null); }} />
+            <div className="flex gap-1 justify-end mt-2">
+              <button className="btn sm" onClick={() => setOvrKey(null)}>Zrušit</button>
+              <button className="btn sm btn-primary" onClick={commitOverride}>Uložit</button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

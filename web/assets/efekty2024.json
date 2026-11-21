@@ -1,0 +1,7172 @@
+{
+ "_pozn": "Mechanické efekty pravidel D&D 2024 pro engine app/engine. Sekce species/feat/class/subclass/item/background; vlastní obsah nese efekty přímo ve frontmatteru stránky.",
+ "species": {
+  "Aasimar": {
+   "Celestial Resistance": [
+    {
+     "typ": "odolnost",
+     "hodnota": "Necrotic"
+    },
+    {
+     "typ": "odolnost",
+     "hodnota": "Radiant"
+    }
+   ],
+   "Darkvision": [
+    {
+     "typ": "smysl",
+     "nazev": "Darkvision",
+     "dosah": 60
+    }
+   ],
+   "Healing Hands": [
+    {
+     "typ": "zdroj",
+     "nazev": "Healing Hands",
+     "pocet": 1,
+     "obnova": "long"
+    }
+   ],
+   "Celestial Revelation": [
+    {
+     "typ": "volba_slot",
+     "volba": "Celestial Revelation",
+     "od_urovne": 3,
+     "moznosti": {
+      "Necrotic Shroud": [
+       {
+        "typ": "poznamka",
+        "text": "Necrotic Shroud: Frightened okolí + bonus necrotic damage"
+       }
+      ],
+      "Radiant Consumption": [
+       {
+        "typ": "poznamka",
+        "text": "Radiant Consumption: záře + radiant damage navíc"
+       }
+      ],
+      "Radiant Soul": [
+       {
+        "typ": "poznamka",
+        "text": "Radiant Soul: Flying Speed + radiant damage navíc"
+       }
+      ]
+     }
+    }
+   ]
+  },
+  "Dragonborn": {
+   "Darkvision": [
+    {
+     "typ": "smysl",
+     "nazev": "Darkvision",
+     "dosah": 60
+    }
+   ],
+   "Draconic Ancestry": [
+    {
+     "typ": "volba_slot",
+     "volba": "Draconic Ancestry",
+     "moznosti": {
+      "Black Dragonborn": [
+       {
+        "typ": "odolnost",
+        "hodnota": "Acid"
+       }
+      ],
+      "Blue Dragonborn": [
+       {
+        "typ": "odolnost",
+        "hodnota": "Lightning"
+       }
+      ],
+      "Brass Dragonborn": [
+       {
+        "typ": "odolnost",
+        "hodnota": "Fire"
+       }
+      ],
+      "Bronze Dragonborn": [
+       {
+        "typ": "odolnost",
+        "hodnota": "Lightning"
+       }
+      ],
+      "Copper Dragonborn": [
+       {
+        "typ": "odolnost",
+        "hodnota": "Acid"
+       }
+      ],
+      "Gold Dragonborn": [
+       {
+        "typ": "odolnost",
+        "hodnota": "Fire"
+       }
+      ],
+      "Green Dragonborn": [
+       {
+        "typ": "odolnost",
+        "hodnota": "Poison"
+       }
+      ],
+      "Red Dragonborn": [
+       {
+        "typ": "odolnost",
+        "hodnota": "Fire"
+       }
+      ],
+      "Silver Dragonborn": [
+       {
+        "typ": "odolnost",
+        "hodnota": "Cold"
+       }
+      ],
+      "White Dragonborn": [
+       {
+        "typ": "odolnost",
+        "hodnota": "Cold"
+       }
+      ]
+     }
+    }
+   ],
+   "Breath Weapon": [
+    {
+     "typ": "zdroj",
+     "nazev": "Breath Weapon",
+     "pocet": "PB",
+     "obnova": "long",
+     "kostka": "1d10+"
+    }
+   ],
+   "Draconic Flight": [
+    {
+     "typ": "zdroj",
+     "nazev": "Draconic Flight",
+     "pocet": 1,
+     "obnova": "long",
+     "od_urovne": 5
+    },
+    {
+     "typ": "poznamka",
+     "text": "Bonus Action → spektrální křídla 10 minut: Flying Speed = Speed",
+     "od_urovne": 5
+    }
+   ]
+  },
+  "Dwarf": {
+   "Darkvision": [
+    {
+     "typ": "smysl",
+     "nazev": "Darkvision",
+     "dosah": 120
+    }
+   ],
+   "Dwarven Resilience": [
+    {
+     "typ": "odolnost",
+     "hodnota": "Poison"
+    },
+    {
+     "typ": "vyhoda",
+     "cil": "zachrana",
+     "popis": "Advantage na záchrany proti stavu Poisoned"
+    }
+   ],
+   "Dwarven Toughness": [
+    {
+     "typ": "hp",
+     "za_uroven": 1
+    }
+   ],
+   "Stonecunning": [
+    {
+     "typ": "zdroj",
+     "nazev": "Stonecunning",
+     "pocet": "PB",
+     "obnova": "long"
+    },
+    {
+     "typ": "poznamka",
+     "text": "Bonus Action → Tremorsense 60 ft na 10 minut (musí stát na/dotýkat se kamene)"
+    }
+   ]
+  },
+  "Elf": {
+   "Darkvision": [
+    {
+     "typ": "smysl",
+     "nazev": "Darkvision",
+     "dosah": 60
+    }
+   ],
+   "Elven Lineage": [
+    {
+     "typ": "volba_slot",
+     "volba": "Elven Lineage",
+     "moznosti": {
+      "Drow": [
+       {
+        "typ": "kouzlo",
+        "nazev": "Dancing Lights",
+        "vzdy": true
+       },
+       {
+        "typ": "kouzlo",
+        "nazev": "Faerie Fire",
+        "od_urovne": 3,
+        "obnova": "long"
+       },
+       {
+        "typ": "kouzlo",
+        "nazev": "Darkness",
+        "od_urovne": 5,
+        "obnova": "long"
+       },
+       {
+        "typ": "smysl",
+        "nazev": "Darkvision",
+        "dosah": 120
+       }
+      ],
+      "High Elf": [
+       {
+        "typ": "kouzlo",
+        "nazev": "Prestidigitation",
+        "vzdy": true
+       },
+       {
+        "typ": "kouzlo",
+        "nazev": "Detect Magic",
+        "od_urovne": 3,
+        "obnova": "long"
+       },
+       {
+        "typ": "kouzlo",
+        "nazev": "Misty Step",
+        "od_urovne": 5,
+        "obnova": "long"
+       }
+      ],
+      "Wood Elf": [
+       {
+        "typ": "kouzlo",
+        "nazev": "Druidcraft",
+        "vzdy": true
+       },
+       {
+        "typ": "kouzlo",
+        "nazev": "Longstrider",
+        "od_urovne": 3,
+        "obnova": "long"
+       },
+       {
+        "typ": "kouzlo",
+        "nazev": "Pass without Trace",
+        "od_urovne": 5,
+        "obnova": "long"
+       },
+       {
+        "typ": "rychlost",
+        "hodnota": 5
+       }
+      ]
+     }
+    }
+   ],
+   "Fey Ancestry": [
+    {
+     "typ": "vyhoda",
+     "cil": "zachrana",
+     "popis": "Advantage na záchrany proti stavu Charmed"
+    }
+   ],
+   "Keen Senses": [
+    {
+     "typ": "volba_slot",
+     "volba": "Keen Senses",
+     "moznosti": {
+      "Insight": [
+       {
+        "typ": "zdatnost",
+        "oblast": "dovednost",
+        "hodnota": "Insight"
+       }
+      ],
+      "Perception": [
+       {
+        "typ": "zdatnost",
+        "oblast": "dovednost",
+        "hodnota": "Perception"
+       }
+      ],
+      "Survival": [
+       {
+        "typ": "zdatnost",
+        "oblast": "dovednost",
+        "hodnota": "Survival"
+       }
+      ]
+     }
+    }
+   ],
+   "Trance": [
+    {
+     "typ": "poznamka",
+     "text": "Trance: Long Rest po 4 hodinách meditace; lze měnit linii a zdatnosti"
+    }
+   ]
+  },
+  "Gnome": {
+   "Darkvision": [
+    {
+     "typ": "smysl",
+     "nazev": "Darkvision",
+     "dosah": 60
+    }
+   ],
+   "Gnomish Cunning": [
+    {
+     "typ": "vyhoda",
+     "cil": "zachrana",
+     "popis": "Advantage na INT, WIS a CHA záchrany"
+    }
+   ],
+   "Gnomish Lineage": [
+    {
+     "typ": "volba_slot",
+     "volba": "Gnomish Lineage",
+     "moznosti": {
+      "Forest Gnome": [
+       {
+        "typ": "kouzlo",
+        "nazev": "Minor Illusion",
+        "vzdy": true
+       },
+       {
+        "typ": "poznamka",
+        "text": "Speak with Animals (obměněné použití)"
+       }
+      ],
+      "Rock Gnome": [
+       {
+        "typ": "kouzlo",
+        "nazev": "Mending",
+        "vzdy": true
+       },
+       {
+        "typ": "kouzlo",
+        "nazev": "Prestidigitation",
+        "vzdy": true
+       }
+      ]
+     }
+    }
+   ]
+  },
+  "Goliath": {
+   "Giant Ancestry": [
+    {
+     "typ": "volba_slot",
+     "volba": "Giant Ancestry",
+     "moznosti": {
+      "Cloud Giant": [
+       {
+        "typ": "zdroj",
+        "nazev": "Cloud's Jaunt",
+        "pocet": "PB",
+        "obnova": "long"
+       }
+      ],
+      "Fire Giant": [
+       {
+        "typ": "zdroj",
+        "nazev": "Fire's Burn",
+        "pocet": "PB",
+        "obnova": "long"
+       }
+      ],
+      "Frost Giant": [
+       {
+        "typ": "zdroj",
+        "nazev": "Frost's Chill",
+        "pocet": "PB",
+        "obnova": "long"
+       }
+      ],
+      "Hill Giant": [
+       {
+        "typ": "zdroj",
+        "nazev": "Hill's Tumble",
+        "pocet": "PB",
+        "obnova": "long"
+       }
+      ],
+      "Stone Giant": [
+       {
+        "typ": "zdroj",
+        "nazev": "Stone's Endurance",
+        "pocet": "PB",
+        "obnova": "long"
+       }
+      ],
+      "Storm Giant": [
+       {
+        "typ": "zdroj",
+        "nazev": "Storm's Thunder",
+        "pocet": "PB",
+        "obnova": "long"
+       }
+      ]
+     }
+    }
+   ],
+   "Powerful Build": [
+    {
+     "typ": "vyhoda",
+     "cil": "dovednost",
+     "popis": "Advantage při ukončování Grappled; počítá se jako Large pro nosnost"
+    }
+   ],
+   "Large Form": [
+    {
+     "typ": "zdroj",
+     "nazev": "Large Form",
+     "pocet": 1,
+     "obnova": "long",
+     "od_urovne": 5
+    },
+    {
+     "typ": "poznamka",
+     "text": "Bonus Action → Large na 10 minut: Advantage na STR checky, Speed +10",
+     "od_urovne": 5
+    }
+   ]
+  },
+  "Halfling": {
+   "Brave": [
+    {
+     "typ": "vyhoda",
+     "cil": "zachrana",
+     "popis": "Advantage na záchrany proti stavu Frightened"
+    }
+   ],
+   "Halfling Nimbleness": [
+    {
+     "typ": "poznamka",
+     "text": "Může procházet prostorem většího tvora"
+    }
+   ],
+   "Luck": [
+    {
+     "typ": "vyhoda",
+     "cil": "test",
+     "popis": "Při hodu 1 na d20 Test může hod zopakovat"
+    }
+   ],
+   "Naturally Stealthy": [
+    {
+     "typ": "poznamka",
+     "text": "Může se Hide, i když ho kryje jen větší tvor"
+    }
+   ]
+  },
+  "Human": {
+   "Resourceful": [
+    {
+     "typ": "poznamka",
+     "text": "Heroic Inspiration po každém Long Rest"
+    }
+   ],
+   "Skillful": [
+    {
+     "typ": "volba_slot",
+     "volba": "Skillful",
+     "moznosti": {
+      "Acrobatics": [
+       {
+        "typ": "zdatnost",
+        "oblast": "dovednost",
+        "hodnota": "Acrobatics"
+       }
+      ],
+      "Animal Handling": [
+       {
+        "typ": "zdatnost",
+        "oblast": "dovednost",
+        "hodnota": "Animal Handling"
+       }
+      ],
+      "Arcana": [
+       {
+        "typ": "zdatnost",
+        "oblast": "dovednost",
+        "hodnota": "Arcana"
+       }
+      ],
+      "Athletics": [
+       {
+        "typ": "zdatnost",
+        "oblast": "dovednost",
+        "hodnota": "Athletics"
+       }
+      ],
+      "Deception": [
+       {
+        "typ": "zdatnost",
+        "oblast": "dovednost",
+        "hodnota": "Deception"
+       }
+      ],
+      "History": [
+       {
+        "typ": "zdatnost",
+        "oblast": "dovednost",
+        "hodnota": "History"
+       }
+      ],
+      "Insight": [
+       {
+        "typ": "zdatnost",
+        "oblast": "dovednost",
+        "hodnota": "Insight"
+       }
+      ],
+      "Intimidation": [
+       {
+        "typ": "zdatnost",
+        "oblast": "dovednost",
+        "hodnota": "Intimidation"
+       }
+      ],
+      "Investigation": [
+       {
+        "typ": "zdatnost",
+        "oblast": "dovednost",
+        "hodnota": "Investigation"
+       }
+      ],
+      "Medicine": [
+       {
+        "typ": "zdatnost",
+        "oblast": "dovednost",
+        "hodnota": "Medicine"
+       }
+      ],
+      "Nature": [
+       {
+        "typ": "zdatnost",
+        "oblast": "dovednost",
+        "hodnota": "Nature"
+       }
+      ],
+      "Perception": [
+       {
+        "typ": "zdatnost",
+        "oblast": "dovednost",
+        "hodnota": "Perception"
+       }
+      ],
+      "Performance": [
+       {
+        "typ": "zdatnost",
+        "oblast": "dovednost",
+        "hodnota": "Performance"
+       }
+      ],
+      "Persuasion": [
+       {
+        "typ": "zdatnost",
+        "oblast": "dovednost",
+        "hodnota": "Persuasion"
+       }
+      ],
+      "Religion": [
+       {
+        "typ": "zdatnost",
+        "oblast": "dovednost",
+        "hodnota": "Religion"
+       }
+      ],
+      "Sleight of Hand": [
+       {
+        "typ": "zdatnost",
+        "oblast": "dovednost",
+        "hodnota": "Sleight of Hand"
+       }
+      ],
+      "Stealth": [
+       {
+        "typ": "zdatnost",
+        "oblast": "dovednost",
+        "hodnota": "Stealth"
+       }
+      ],
+      "Survival": [
+       {
+        "typ": "zdatnost",
+        "oblast": "dovednost",
+        "hodnota": "Survival"
+       }
+      ]
+     }
+    }
+   ],
+   "Versatile": [
+    {
+     "typ": "poznamka",
+     "text": "Origin feat dle výběru (zapsáno v featy)"
+    }
+   ]
+  },
+  "Orc": {
+   "Adrenaline Rush": [
+    {
+     "typ": "zdroj",
+     "nazev": "Adrenaline Rush",
+     "pocet": "PB",
+     "obnova": "short"
+    }
+   ],
+   "Darkvision": [
+    {
+     "typ": "smysl",
+     "nazev": "Darkvision",
+     "dosah": 60
+    }
+   ],
+   "Relentless Endurance": [
+    {
+     "typ": "zdroj",
+     "nazev": "Relentless Endurance",
+     "pocet": 1,
+     "obnova": "long"
+    }
+   ]
+  },
+  "Tiefling": {
+   "Darkvision": [
+    {
+     "typ": "smysl",
+     "nazev": "Darkvision",
+     "dosah": 60
+    }
+   ],
+   "Otherworldly Presence": [
+    {
+     "typ": "kouzlo",
+     "nazev": "Thaumaturgy",
+     "vzdy": true
+    }
+   ],
+   "Fiendish Legacy": [
+    {
+     "typ": "volba_slot",
+     "volba": "Fiendish Legacy",
+     "moznosti": {
+      "Abyssal": [
+       {
+        "typ": "odolnost",
+        "hodnota": "Poison"
+       },
+       {
+        "typ": "kouzlo",
+        "nazev": "Ray of Sickness",
+        "od_urovne": 3,
+        "obnova": "long"
+       },
+       {
+        "typ": "kouzlo",
+        "nazev": "Hold Person",
+        "od_urovne": 5,
+        "obnova": "long"
+       }
+      ],
+      "Chthonic": [
+       {
+        "typ": "odolnost",
+        "hodnota": "Necrotic"
+       },
+       {
+        "typ": "kouzlo",
+        "nazev": "Chill Touch",
+        "vzdy": true
+       },
+       {
+        "typ": "kouzlo",
+        "nazev": "False Life",
+        "od_urovne": 3,
+        "obnova": "long"
+       },
+       {
+        "typ": "kouzlo",
+        "nazev": "Ray of Enfeeblement",
+        "od_urovne": 5,
+        "obnova": "long"
+       }
+      ],
+      "Infernal": [
+       {
+        "typ": "odolnost",
+        "hodnota": "Fire"
+       },
+       {
+        "typ": "kouzlo",
+        "nazev": "Fire Bolt",
+        "vzdy": true
+       },
+       {
+        "typ": "kouzlo",
+        "nazev": "Hellish Rebuke",
+        "od_urovne": 3,
+        "obnova": "long"
+       },
+       {
+        "typ": "kouzlo",
+        "nazev": "Darkness",
+        "od_urovne": 5,
+        "obnova": "long"
+       }
+      ]
+     }
+    }
+   ]
+  },
+  "Warforged": {
+   "Constructed Resilience": [
+    {
+     "typ": "vyhoda",
+     "cil": "zachrana",
+     "popis": "Advantage na záchrany k ukončení Poisoned"
+    },
+    {
+     "typ": "imunita_stav",
+     "hodnota": "Disease"
+    }
+   ],
+   "Integrated Protection": [
+    {
+     "typ": "ac",
+     "hodnota": 1
+    }
+   ],
+   "Sentry's Rest": [
+    {
+     "typ": "poznamka",
+     "text": "Nepotřebuje spánek; odpočinek v nehybném bdělém stavu"
+    }
+   ],
+   "Tireless": [
+    {
+     "typ": "poznamka",
+     "text": "Bez Exhaustion z dehydratace, podvýživy a dušení"
+    }
+   ]
+  },
+  "Shifter": {
+   "Bestial Instincts": [
+    {
+     "typ": "volba_slot",
+     "volba": "Bestial Instincts",
+     "moznosti": {
+      "Acrobatics": [
+       {
+        "typ": "zdatnost",
+        "oblast": "dovednost",
+        "hodnota": "Acrobatics"
+       }
+      ],
+      "Athletics": [
+       {
+        "typ": "zdatnost",
+        "oblast": "dovednost",
+        "hodnota": "Athletics"
+       }
+      ],
+      "Intimidation": [
+       {
+        "typ": "zdatnost",
+        "oblast": "dovednost",
+        "hodnota": "Intimidation"
+       }
+      ],
+      "Survival": [
+       {
+        "typ": "zdatnost",
+        "oblast": "dovednost",
+        "hodnota": "Survival"
+       }
+      ]
+     }
+    }
+   ],
+   "Darkvision": [
+    {
+     "typ": "smysl",
+     "nazev": "Darkvision",
+     "dosah": 60
+    }
+   ],
+   "Shifting": [
+    {
+     "typ": "zdroj",
+     "nazev": "Shifting",
+     "pocet": "PB",
+     "obnova": "long"
+    }
+   ]
+  },
+  "Rimekin": {
+   "Cold Fire Magic": [
+    {
+     "typ": "kouzlo",
+     "nazev": "Ray of Frost",
+     "vzdy": true
+    },
+    {
+     "typ": "kouzlo",
+     "nazev": "Ice Knife",
+     "od_urovne": 3,
+     "obnova": "long"
+    },
+    {
+     "typ": "kouzlo",
+     "nazev": "Flame Blade",
+     "od_urovne": 5,
+     "obnova": "long"
+    }
+   ],
+   "Cold Resistance": [
+    {
+     "typ": "odolnost",
+     "hodnota": "Cold"
+    }
+   ],
+   "Darkvision": [
+    {
+     "typ": "smysl",
+     "nazev": "Darkvision",
+     "dosah": 60
+    }
+   ]
+  },
+  "Reborn": {
+   "Escaped Death": [
+    {
+     "typ": "vyhoda",
+     "cil": "zachrana",
+     "popis": "Advantage na Death Saving Throws"
+    }
+   ],
+   "Everlasting": [
+    {
+     "typ": "poznamka",
+     "text": "Nepotřebuje spát; Long Rest za 4 hodiny"
+    }
+   ],
+   "Knowledge from a Past Life": [
+    {
+     "typ": "poznamka",
+     "text": "Zdatnost v dovednosti dle výběru + kostka 1d6 k ability checkům"
+    }
+   ],
+   "Strange Endurance": [
+    {
+     "typ": "volba_slot",
+     "volba": "Strange Endurance",
+     "moznosti": {
+      "Cold": [
+       {
+        "typ": "odolnost",
+        "hodnota": "Cold"
+       }
+      ],
+      "Necrotic": [
+       {
+        "typ": "odolnost",
+        "hodnota": "Necrotic"
+       }
+      ],
+      "Poison": [
+       {
+        "typ": "odolnost",
+        "hodnota": "Poison"
+       }
+      ]
+     }
+    }
+   ]
+  },
+  "Lupin": {
+   "Darkvision": [
+    {
+     "typ": "smysl",
+     "nazev": "Darkvision",
+     "dosah": 60
+    }
+   ],
+   "Werewolf Instincts": [
+    {
+     "typ": "volba_slot",
+     "volba": "Werewolf Instincts",
+     "moznosti": {
+      "Perception": [
+       {
+        "typ": "zdatnost",
+        "oblast": "dovednost",
+        "hodnota": "Perception"
+       }
+      ],
+      "Stealth": [
+       {
+        "typ": "zdatnost",
+        "oblast": "dovednost",
+        "hodnota": "Stealth"
+       }
+      ],
+      "Survival": [
+       {
+        "typ": "zdatnost",
+        "oblast": "dovednost",
+        "hodnota": "Survival"
+       }
+      ]
+     }
+    }
+   ],
+   "Feral Pounce": [
+    {
+     "typ": "poznamka",
+     "text": "Unarmed Strike: Slashing; při zásahu lze Prone (1/tah)"
+    }
+   ],
+   "Howl": [
+    {
+     "typ": "zdroj",
+     "nazev": "Howl",
+     "pocet": "PB",
+     "obnova": "long"
+    }
+   ]
+  },
+  "Lorwyn-Shadowmoor Elf": {
+   "Darkvision": [
+    {
+     "typ": "smysl",
+     "nazev": "Darkvision",
+     "dosah": 60
+    }
+   ],
+   "Elven Lineage": [
+    {
+     "typ": "volba_slot",
+     "volba": "Elven Lineage",
+     "moznosti": {
+      "Lorwyn Elf": [
+       {
+        "typ": "poznamka",
+        "text": "Lorwyn linie – kouzla dle kresby"
+       }
+      ],
+      "Shadowmoor Elf": [
+       {
+        "typ": "smysl",
+        "nazev": "Darkvision",
+        "dosah": 120
+       },
+       {
+        "typ": "poznamka",
+        "text": "Shadowmoor linie – kouzla dle kresby"
+       }
+      ]
+     }
+    }
+   ],
+   "Fey Ancestry": [
+    {
+     "typ": "vyhoda",
+     "cil": "zachrana",
+     "popis": "Advantage na záchrany proti stavu Charmed"
+    }
+   ],
+   "Keen Senses": [
+    {
+     "typ": "volba_slot",
+     "volba": "Keen Senses",
+     "moznosti": {
+      "Insight": [
+       {
+        "typ": "zdatnost",
+        "oblast": "dovednost",
+        "hodnota": "Insight"
+       }
+      ],
+      "Perception": [
+       {
+        "typ": "zdatnost",
+        "oblast": "dovednost",
+        "hodnota": "Perception"
+       }
+      ],
+      "Survival": [
+       {
+        "typ": "zdatnost",
+        "oblast": "dovednost",
+        "hodnota": "Survival"
+       }
+      ]
+     }
+    }
+   ],
+   "Trance": [
+    {
+     "typ": "poznamka",
+     "text": "Trance: Long Rest po 4 hodinách meditace"
+    }
+   ]
+  },
+  "Lorwyn Changeling": {
+   "Darkvision": [
+    {
+     "typ": "smysl",
+     "nazev": "Darkvision",
+     "dosah": 120
+    }
+   ],
+   "Delightful Imitator": [
+    {
+     "typ": "volba_slot",
+     "volba": "Delightful Imitator",
+     "moznosti": {
+      "Deception": [
+       {
+        "typ": "zdatnost",
+        "oblast": "dovednost",
+        "hodnota": "Deception"
+       }
+      ],
+      "Performance": [
+       {
+        "typ": "zdatnost",
+        "oblast": "dovednost",
+        "hodnota": "Performance"
+       }
+      ]
+     }
+    }
+   ],
+   "Shape Self": [
+    {
+     "typ": "poznamka",
+     "text": "Přetvoření na Humanoid/Beast podobu"
+    }
+   ],
+   "Unpredictable Movement": [
+    {
+     "typ": "poznamka",
+     "text": "Po hodu iniciativy pohyb do poloviny Speed"
+    }
+   ]
+  },
+  "Kithkin": {
+   "Brave": [
+    {
+     "typ": "vyhoda",
+     "cil": "zachrana",
+     "popis": "Advantage na záchrany proti stavu Frightened"
+    }
+   ],
+   "Kithkin Nimbleness": [
+    {
+     "typ": "poznamka",
+     "text": "Může procházet prostorem většího tvora"
+    }
+   ],
+   "Luck": [
+    {
+     "typ": "vyhoda",
+     "cil": "test",
+     "popis": "Při hodu 1 na d20 Test může hod zopakovat"
+    }
+   ],
+   "Naturally Stealthy": [
+    {
+     "typ": "poznamka",
+     "text": "Hide i za větším tvorem"
+    }
+   ],
+   "Kithkin Lineage": [
+    {
+     "typ": "volba_slot",
+     "volba": "Kithkin Lineage",
+     "moznosti": {
+      "Lorwyn": [
+       {
+        "typ": "poznamka",
+        "text": "Lorwyn původ"
+       }
+      ],
+      "Shadowmoor": [
+       {
+        "typ": "smysl",
+        "nazev": "Darkvision",
+        "dosah": 120
+       }
+      ]
+     }
+    }
+   ]
+  },
+  "Khoravar": {
+   "Darkvision": [
+    {
+     "typ": "smysl",
+     "nazev": "Darkvision",
+     "dosah": 60
+    }
+   ],
+   "Fey Ancestry": [
+    {
+     "typ": "vyhoda",
+     "cil": "zachrana",
+     "popis": "Advantage na záchrany proti stavu Charmed"
+    }
+   ],
+   "Fey Gift": [
+    {
+     "typ": "kouzlo",
+     "nazev": "Friends",
+     "vzdy": true
+    }
+   ],
+   "Lethargy Resilience": [
+    {
+     "typ": "zdroj",
+     "nazev": "Lethargy Resilience",
+     "pocet": 1,
+     "obnova": "long"
+    }
+   ],
+   "Skill Versatility": [
+    {
+     "typ": "poznamka",
+     "text": "Zdatnost v dovednosti/nástroji dle výběru; vyměnitelná po Long Rest"
+    }
+   ]
+  },
+  "Kalashtar": {
+   "Dual Mind": [
+    {
+     "typ": "vyhoda",
+     "cil": "zachrana",
+     "popis": "Advantage na WIS a CHA záchrany"
+    }
+   ],
+   "Mental Discipline": [
+    {
+     "typ": "odolnost",
+     "hodnota": "Psychic"
+    }
+   ],
+   "Severed from Dreams": [
+    {
+     "typ": "imunita",
+     "hodnota": "kouzlo Dream"
+    }
+   ],
+   "Mind Link": [
+    {
+     "typ": "poznamka",
+     "text": "Telepatie do 10 stop za úroveň"
+    }
+   ]
+  },
+  "Gargoyle": {
+   "Darkvision": [
+    {
+     "typ": "smysl",
+     "nazev": "Darkvision",
+     "dosah": 60
+    }
+   ],
+   "Stoneskin": [
+    {
+     "typ": "ac_vzorec",
+     "zaklad": 13,
+     "atributy": [
+      "DEX"
+     ],
+     "stit_povolen": true,
+     "bez_zbroje": true
+    }
+   ],
+   "False Appearance": [
+    {
+     "typ": "poznamka",
+     "text": "V klidu neroznatelný od sochy"
+    }
+   ],
+   "Immutable Form": [
+    {
+     "typ": "poznamka",
+     "text": "Odolnost vůči změnám podoby (neověřeno)"
+    }
+   ],
+   "Elemental Resilience": [
+    {
+     "typ": "poznamka",
+     "text": "Elementální odolnost (neověřeno)"
+    }
+   ],
+   "Tireless": [
+    {
+     "typ": "poznamka",
+     "text": "Nepotřebuje jíst, pít, dýchat ani spát"
+    }
+   ]
+  },
+  "Flamekin": {
+   "Darkvision": [
+    {
+     "typ": "smysl",
+     "nazev": "Darkvision",
+     "dosah": 60
+    }
+   ],
+   "Fire Resistance": [
+    {
+     "typ": "odolnost",
+     "hodnota": "Fire"
+    }
+   ],
+   "Reach to the Blaze": [
+    {
+     "typ": "kouzlo",
+     "nazev": "Produce Flame",
+     "vzdy": true
+    },
+    {
+     "typ": "kouzlo",
+     "nazev": "Burning Hands",
+     "od_urovne": 3,
+     "obnova": "long"
+    },
+    {
+     "typ": "kouzlo",
+     "nazev": "Flame Blade",
+     "od_urovne": 5,
+     "obnova": "long"
+    }
+   ]
+  },
+  "Faerie": {
+   "Flight": [
+    {
+     "typ": "rychlost",
+     "druh": "fly",
+     "hodnota": "walk",
+     "nastavit": true,
+     "popis": "Flying Speed; ne v Medium/Heavy zbroji",
+     "podminka": "bez_stredni_tezke_zbroje"
+    }
+   ],
+   "Faerie Magic": [
+    {
+     "typ": "kouzlo",
+     "nazev": "Druidcraft",
+     "vzdy": true
+    },
+    {
+     "typ": "kouzlo",
+     "nazev": "Faerie Fire",
+     "od_urovne": 3,
+     "obnova": "long"
+    },
+    {
+     "typ": "kouzlo",
+     "nazev": "Enlarge/Reduce",
+     "od_urovne": 5,
+     "obnova": "long"
+    }
+   ]
+  },
+  "Duskling": {
+   "Darkvision": [
+    {
+     "typ": "smysl",
+     "nazev": "Darkvision",
+     "dosah": 60
+    }
+   ],
+   "Enhanced Jump": [
+    {
+     "typ": "poznamka",
+     "text": "Skok: +2 stopy na výšku, +10 stop do dálky"
+    }
+   ],
+   "Inner Magic": [
+    {
+     "typ": "volba_slot",
+     "volba": "Inner Magic",
+     "moznosti": {
+      "Ardor": [
+       {
+        "typ": "poznamka",
+        "text": "Ardor – bojová vášeň"
+       }
+      ],
+      "Mobility": [
+       {
+        "typ": "rychlost",
+        "hodnota": 10
+       }
+      ],
+      "Vigor": [
+       {
+        "typ": "poznamka",
+        "text": "Vigor – odolnost"
+       }
+      ]
+     }
+    }
+   ]
+  },
+  "Dhampir": {
+   "Darkvision": [
+    {
+     "typ": "smysl",
+     "nazev": "Darkvision",
+     "dosah": 60
+    }
+   ],
+   "Spider Climb": [
+    {
+     "typ": "rychlost",
+     "druh": "climb",
+     "hodnota": "walk",
+     "nastavit": true
+    }
+   ],
+   "Trace of Undeath": [
+    {
+     "typ": "odolnost",
+     "hodnota": "Necrotic"
+    }
+   ],
+   "Vampiric Bite": [
+    {
+     "typ": "utok",
+     "nazev": "Vampiric Bite",
+     "kostka": "1d4",
+     "typ_zraneni": "Piercing",
+     "atribut": "CON"
+    }
+   ]
+  },
+  "Changeling": {
+   "Changeling Instincts": [
+    {
+     "typ": "volba_slot",
+     "volba": "Changeling Instincts (1. ze dvou)",
+     "moznosti": {
+      "Deception": [
+       {
+        "typ": "zdatnost",
+        "oblast": "dovednost",
+        "hodnota": "Deception"
+       }
+      ],
+      "Insight": [
+       {
+        "typ": "zdatnost",
+        "oblast": "dovednost",
+        "hodnota": "Insight"
+       }
+      ],
+      "Intimidation": [
+       {
+        "typ": "zdatnost",
+        "oblast": "dovednost",
+        "hodnota": "Intimidation"
+       }
+      ],
+      "Performance": [
+       {
+        "typ": "zdatnost",
+        "oblast": "dovednost",
+        "hodnota": "Performance"
+       }
+      ],
+      "Persuasion": [
+       {
+        "typ": "zdatnost",
+        "oblast": "dovednost",
+        "hodnota": "Persuasion"
+       }
+      ]
+     }
+    }
+   ],
+   "Shape-Shifter": [
+    {
+     "typ": "poznamka",
+     "text": "Změna vzhledu a hlasu"
+    }
+   ]
+  },
+  "Boggart": {
+   "Darkvision": [
+    {
+     "typ": "smysl",
+     "nazev": "Darkvision",
+     "dosah": 60
+    }
+   ],
+   "Fey Ancestry": [
+    {
+     "typ": "vyhoda",
+     "cil": "zachrana",
+     "popis": "Advantage na záchrany proti stavu Charmed"
+    }
+   ],
+   "Fury of the Small": [
+    {
+     "typ": "zdroj",
+     "nazev": "Fury of the Small",
+     "pocet": "PB",
+     "obnova": "long"
+    }
+   ],
+   "Nimble Escape": [
+    {
+     "typ": "poznamka",
+     "text": "Disengage/Hide jako Bonus Action"
+    }
+   ]
+  },
+  "Bariaur": {
+   "Darkvision": [
+    {
+     "typ": "smysl",
+     "nazev": "Darkvision",
+     "dosah": 60
+    }
+   ],
+   "Stable Stance": [
+    {
+     "typ": "vyhoda",
+     "cil": "zachrana",
+     "popis": "Advantage na hody proti Prone"
+    }
+   ],
+   "Wanderer's Instincts": [
+    {
+     "typ": "volba_slot",
+     "volba": "Wanderer's Instincts",
+     "moznosti": {
+      "Animal Handling": [
+       {
+        "typ": "zdatnost",
+        "oblast": "dovednost",
+        "hodnota": "Animal Handling"
+       }
+      ],
+      "Arcana": [
+       {
+        "typ": "zdatnost",
+        "oblast": "dovednost",
+        "hodnota": "Arcana"
+       }
+      ],
+      "Nature": [
+       {
+        "typ": "zdatnost",
+        "oblast": "dovednost",
+        "hodnota": "Nature"
+       }
+      ],
+      "Survival": [
+       {
+        "typ": "zdatnost",
+        "oblast": "dovednost",
+        "hodnota": "Survival"
+       }
+      ]
+     }
+    }
+   ],
+   "Ram": [
+    {
+     "typ": "poznamka",
+     "text": "Po sprintu: Unarmed Strike s odtlačením"
+    }
+   ]
+  },
+  "Hexblood": {
+   "Darkvision": [
+    {
+     "typ": "smysl",
+     "nazev": "Darkvision",
+     "dosah": 60
+    }
+   ],
+   "Eerie Token": [
+    {
+     "typ": "poznamka",
+     "text": "Magický token: vzkazy a dálkové vidění do 10 mil"
+    }
+   ],
+   "Hex Magic": [
+    {
+     "typ": "kouzlo",
+     "nazev": "Disguise Self",
+     "vzdy": true,
+     "obnova": "long"
+    },
+    {
+     "typ": "kouzlo",
+     "nazev": "Hex",
+     "vzdy": true,
+     "obnova": "long"
+    }
+   ]
+  }
+ },
+ "feat": {
+  "Ability Score Improvement": [
+   {
+    "typ": "atribut",
+    "atribut": "STR",
+    "hodnota": 0,
+    "volba": "ASI",
+    "moznosti": {
+     "STR +2": [
+      {
+       "typ": "atribut",
+       "atribut": "STR",
+       "hodnota": 2
+      }
+     ],
+     "DEX +2": [
+      {
+       "typ": "atribut",
+       "atribut": "DEX",
+       "hodnota": 2
+      }
+     ],
+     "CON +2": [
+      {
+       "typ": "atribut",
+       "atribut": "CON",
+       "hodnota": 2
+      }
+     ],
+     "INT +2": [
+      {
+       "typ": "atribut",
+       "atribut": "INT",
+       "hodnota": 2
+      }
+     ],
+     "WIS +2": [
+      {
+       "typ": "atribut",
+       "atribut": "WIS",
+       "hodnota": 2
+      }
+     ],
+     "CHA +2": [
+      {
+       "typ": "atribut",
+       "atribut": "CHA",
+       "hodnota": 2
+      }
+     ],
+     "rozdělené +1/+1": [
+      {
+       "typ": "poznamka",
+       "text": "Rozděl +1 dvěma atributům ručně"
+      }
+     ]
+    }
+   }
+  ],
+  "Actor": [
+   {
+    "typ": "atribut",
+    "atribut": "CHA",
+    "hodnota": 1
+   },
+   {
+    "typ": "vyhoda",
+    "cil": "dovednost",
+    "popis": "Advantage na Deception/Performance při vydávání se za někoho"
+   }
+  ],
+  "Alert": [
+   {
+    "typ": "bonus",
+    "cil": "iniciativa",
+    "hodnota": "PB"
+   },
+   {
+    "typ": "poznamka",
+    "text": "Po hodu iniciativy lze vyměnit iniciativu s ochotným spojencem"
+   }
+  ],
+  "Archery": [
+   {
+    "typ": "bonus",
+    "cil": "utok",
+    "hodnota": 2,
+    "filtr": "ranged"
+   }
+  ],
+  "Athlete": [
+   {
+    "typ": "volba_slot",
+    "volba": "Atribut",
+    "moznosti": {
+     "STR": [
+      {
+       "typ": "atribut",
+       "atribut": "STR",
+       "hodnota": 1
+      }
+     ],
+     "DEX": [
+      {
+       "typ": "atribut",
+       "atribut": "DEX",
+       "hodnota": 1
+      }
+     ]
+    }
+   },
+   {
+    "typ": "poznamka",
+    "text": "Climb Speed; vstávání stojí 5 stop; skok bez rozběhu"
+   }
+  ],
+  "Blind Fighting": [
+   {
+    "typ": "smysl",
+    "nazev": "Blindsight",
+    "dosah": 10
+   }
+  ],
+  "Boon of Combat Prowess": [
+   {
+    "typ": "volba_slot",
+    "volba": "Atribut",
+    "moznosti": {
+     "STR": [
+      {
+       "typ": "atribut",
+       "atribut": "STR",
+       "hodnota": 1,
+       "max": 30
+      }
+     ],
+     "DEX": [
+      {
+       "typ": "atribut",
+       "atribut": "DEX",
+       "hodnota": 1,
+       "max": 30
+      }
+     ],
+     "CON": [
+      {
+       "typ": "atribut",
+       "atribut": "CON",
+       "hodnota": 1,
+       "max": 30
+      }
+     ],
+     "INT": [
+      {
+       "typ": "atribut",
+       "atribut": "INT",
+       "hodnota": 1,
+       "max": 30
+      }
+     ],
+     "WIS": [
+      {
+       "typ": "atribut",
+       "atribut": "WIS",
+       "hodnota": 1,
+       "max": 30
+      }
+     ],
+     "CHA": [
+      {
+       "typ": "atribut",
+       "atribut": "CHA",
+       "hodnota": 1,
+       "max": 30
+      }
+     ]
+    }
+   },
+   {
+    "typ": "poznamka",
+    "text": "1/tah lze proměnit minulý útok na zásah"
+   }
+  ],
+  "Boon of Dimensional Travel": [
+   {
+    "typ": "volba_slot",
+    "volba": "Atribut",
+    "moznosti": {
+     "STR": [
+      {
+       "typ": "atribut",
+       "atribut": "STR",
+       "hodnota": 1,
+       "max": 30
+      }
+     ],
+     "DEX": [
+      {
+       "typ": "atribut",
+       "atribut": "DEX",
+       "hodnota": 1,
+       "max": 30
+      }
+     ],
+     "CON": [
+      {
+       "typ": "atribut",
+       "atribut": "CON",
+       "hodnota": 1,
+       "max": 30
+      }
+     ],
+     "INT": [
+      {
+       "typ": "atribut",
+       "atribut": "INT",
+       "hodnota": 1,
+       "max": 30
+      }
+     ],
+     "WIS": [
+      {
+       "typ": "atribut",
+       "atribut": "WIS",
+       "hodnota": 1,
+       "max": 30
+      }
+     ],
+     "CHA": [
+      {
+       "typ": "atribut",
+       "atribut": "CHA",
+       "hodnota": 1,
+       "max": 30
+      }
+     ]
+    }
+   },
+   {
+    "typ": "poznamka",
+    "text": "Po útoku/kouzlu teleport 30 stop"
+   }
+  ],
+  "Boon of Energy Resistance": [
+   {
+    "typ": "volba_slot",
+    "volba": "Atribut",
+    "moznosti": {
+     "STR": [
+      {
+       "typ": "atribut",
+       "atribut": "STR",
+       "hodnota": 1,
+       "max": 30
+      }
+     ],
+     "DEX": [
+      {
+       "typ": "atribut",
+       "atribut": "DEX",
+       "hodnota": 1,
+       "max": 30
+      }
+     ],
+     "CON": [
+      {
+       "typ": "atribut",
+       "atribut": "CON",
+       "hodnota": 1,
+       "max": 30
+      }
+     ],
+     "INT": [
+      {
+       "typ": "atribut",
+       "atribut": "INT",
+       "hodnota": 1,
+       "max": 30
+      }
+     ],
+     "WIS": [
+      {
+       "typ": "atribut",
+       "atribut": "WIS",
+       "hodnota": 1,
+       "max": 30
+      }
+     ],
+     "CHA": [
+      {
+       "typ": "atribut",
+       "atribut": "CHA",
+       "hodnota": 1,
+       "max": 30
+      }
+     ]
+    }
+   },
+   {
+    "typ": "volba_slot",
+    "volba": "Energie",
+    "moznosti": {
+     "Acid": [
+      {
+       "typ": "odolnost",
+       "hodnota": "Acid"
+      }
+     ],
+     "Cold": [
+      {
+       "typ": "odolnost",
+       "hodnota": "Cold"
+      }
+     ],
+     "Fire": [
+      {
+       "typ": "odolnost",
+       "hodnota": "Fire"
+      }
+     ],
+     "Lightning": [
+      {
+       "typ": "odolnost",
+       "hodnota": "Lightning"
+      }
+     ],
+     "Necrotic": [
+      {
+       "typ": "odolnost",
+       "hodnota": "Necrotic"
+      }
+     ],
+     "Poison": [
+      {
+       "typ": "odolnost",
+       "hodnota": "Poison"
+      }
+     ],
+     "Psychic": [
+      {
+       "typ": "odolnost",
+       "hodnota": "Psychic"
+      }
+     ],
+     "Radiant": [
+      {
+       "typ": "odolnost",
+       "hodnota": "Radiant"
+      }
+     ],
+     "Thunder": [
+      {
+       "typ": "odolnost",
+       "hodnota": "Thunder"
+      }
+     ]
+    }
+   }
+  ],
+  "Boon of Fate": [
+   {
+    "typ": "volba_slot",
+    "volba": "Atribut",
+    "moznosti": {
+     "STR": [
+      {
+       "typ": "atribut",
+       "atribut": "STR",
+       "hodnota": 1,
+       "max": 30
+      }
+     ],
+     "DEX": [
+      {
+       "typ": "atribut",
+       "atribut": "DEX",
+       "hodnota": 1,
+       "max": 30
+      }
+     ],
+     "CON": [
+      {
+       "typ": "atribut",
+       "atribut": "CON",
+       "hodnota": 1,
+       "max": 30
+      }
+     ],
+     "INT": [
+      {
+       "typ": "atribut",
+       "atribut": "INT",
+       "hodnota": 1,
+       "max": 30
+      }
+     ],
+     "WIS": [
+      {
+       "typ": "atribut",
+       "atribut": "WIS",
+       "hodnota": 1,
+       "max": 30
+      }
+     ],
+     "CHA": [
+      {
+       "typ": "atribut",
+       "atribut": "CHA",
+       "hodnota": 1,
+       "max": 30
+      }
+     ]
+    }
+   },
+   {
+    "typ": "zdroj",
+    "nazev": "Boon of Fate",
+    "pocet": "PB",
+    "obnova": "short",
+    "kostka": "2d4"
+   }
+  ],
+  "Boon of Fortitude": [
+   {
+    "typ": "volba_slot",
+    "volba": "Atribut",
+    "moznosti": {
+     "STR": [
+      {
+       "typ": "atribut",
+       "atribut": "STR",
+       "hodnota": 1,
+       "max": 30
+      }
+     ],
+     "DEX": [
+      {
+       "typ": "atribut",
+       "atribut": "DEX",
+       "hodnota": 1,
+       "max": 30
+      }
+     ],
+     "CON": [
+      {
+       "typ": "atribut",
+       "atribut": "CON",
+       "hodnota": 1,
+       "max": 30
+      }
+     ],
+     "INT": [
+      {
+       "typ": "atribut",
+       "atribut": "INT",
+       "hodnota": 1,
+       "max": 30
+      }
+     ],
+     "WIS": [
+      {
+       "typ": "atribut",
+       "atribut": "WIS",
+       "hodnota": 1,
+       "max": 30
+      }
+     ],
+     "CHA": [
+      {
+       "typ": "atribut",
+       "atribut": "CHA",
+       "hodnota": 1,
+       "max": 30
+      }
+     ]
+    }
+   },
+   {
+    "typ": "hp",
+    "hodnota": 40
+   }
+  ],
+  "Boon of Irresistible Offense": [
+   {
+    "typ": "volba_slot",
+    "volba": "Atribut",
+    "moznosti": {
+     "STR": [
+      {
+       "typ": "atribut",
+       "atribut": "STR",
+       "hodnota": 1,
+       "max": 30
+      }
+     ],
+     "DEX": [
+      {
+       "typ": "atribut",
+       "atribut": "DEX",
+       "hodnota": 1,
+       "max": 30
+      }
+     ]
+    }
+   },
+   {
+    "typ": "poznamka",
+    "text": "Zranění ignoruje Resistance; při hodu 20 přidej modifikátor atributu"
+   }
+  ],
+  "Boon of Recovery": [
+   {
+    "typ": "volba_slot",
+    "volba": "Atribut",
+    "moznosti": {
+     "STR": [
+      {
+       "typ": "atribut",
+       "atribut": "STR",
+       "hodnota": 1,
+       "max": 30
+      }
+     ],
+     "DEX": [
+      {
+       "typ": "atribut",
+       "atribut": "DEX",
+       "hodnota": 1,
+       "max": 30
+      }
+     ],
+     "CON": [
+      {
+       "typ": "atribut",
+       "atribut": "CON",
+       "hodnota": 1,
+       "max": 30
+      }
+     ],
+     "INT": [
+      {
+       "typ": "atribut",
+       "atribut": "INT",
+       "hodnota": 1,
+       "max": 30
+      }
+     ],
+     "WIS": [
+      {
+       "typ": "atribut",
+       "atribut": "WIS",
+       "hodnota": 1,
+       "max": 30
+      }
+     ],
+     "CHA": [
+      {
+       "typ": "atribut",
+       "atribut": "CHA",
+       "hodnota": 1,
+       "max": 30
+      }
+     ]
+    }
+   },
+   {
+    "typ": "zdroj",
+    "nazev": "Boon of Recovery",
+    "pocet": 1,
+    "obnova": "long"
+   }
+  ],
+  "Boon of Skill": [
+   {
+    "typ": "volba_slot",
+    "volba": "Atribut",
+    "moznosti": {
+     "STR": [
+      {
+       "typ": "atribut",
+       "atribut": "STR",
+       "hodnota": 1,
+       "max": 30
+      }
+     ],
+     "DEX": [
+      {
+       "typ": "atribut",
+       "atribut": "DEX",
+       "hodnota": 1,
+       "max": 30
+      }
+     ],
+     "CON": [
+      {
+       "typ": "atribut",
+       "atribut": "CON",
+       "hodnota": 1,
+       "max": 30
+      }
+     ],
+     "INT": [
+      {
+       "typ": "atribut",
+       "atribut": "INT",
+       "hodnota": 1,
+       "max": 30
+      }
+     ],
+     "WIS": [
+      {
+       "typ": "atribut",
+       "atribut": "WIS",
+       "hodnota": 1,
+       "max": 30
+      }
+     ],
+     "CHA": [
+      {
+       "typ": "atribut",
+       "atribut": "CHA",
+       "hodnota": 1,
+       "max": 30
+      }
+     ]
+    }
+   },
+   {
+    "typ": "poznamka",
+    "text": "Zdatnost ve všech dovednostech (výběr dle DM)"
+   }
+  ],
+  "Boon of Speed": [
+   {
+    "typ": "volba_slot",
+    "volba": "Atribut",
+    "moznosti": {
+     "STR": [
+      {
+       "typ": "atribut",
+       "atribut": "STR",
+       "hodnota": 1,
+       "max": 30
+      }
+     ],
+     "DEX": [
+      {
+       "typ": "atribut",
+       "atribut": "DEX",
+       "hodnota": 1,
+       "max": 30
+      }
+     ],
+     "CON": [
+      {
+       "typ": "atribut",
+       "atribut": "CON",
+       "hodnota": 1,
+       "max": 30
+      }
+     ],
+     "INT": [
+      {
+       "typ": "atribut",
+       "atribut": "INT",
+       "hodnota": 1,
+       "max": 30
+      }
+     ],
+     "WIS": [
+      {
+       "typ": "atribut",
+       "atribut": "WIS",
+       "hodnota": 1,
+       "max": 30
+      }
+     ],
+     "CHA": [
+      {
+       "typ": "atribut",
+       "atribut": "CHA",
+       "hodnota": 1,
+       "max": 30
+      }
+     ]
+    }
+   },
+   {
+    "typ": "rychlost",
+    "hodnota": 30
+   }
+  ],
+  "Boon of Spell Recall": [
+   {
+    "typ": "volba_slot",
+    "volba": "Atribut",
+    "moznosti": {
+     "STR": [
+      {
+       "typ": "atribut",
+       "atribut": "STR",
+       "hodnota": 1,
+       "max": 30
+      }
+     ],
+     "DEX": [
+      {
+       "typ": "atribut",
+       "atribut": "DEX",
+       "hodnota": 1,
+       "max": 30
+      }
+     ],
+     "CON": [
+      {
+       "typ": "atribut",
+       "atribut": "CON",
+       "hodnota": 1,
+       "max": 30
+      }
+     ],
+     "INT": [
+      {
+       "typ": "atribut",
+       "atribut": "INT",
+       "hodnota": 1,
+       "max": 30
+      }
+     ],
+     "WIS": [
+      {
+       "typ": "atribut",
+       "atribut": "WIS",
+       "hodnota": 1,
+       "max": 30
+      }
+     ],
+     "CHA": [
+      {
+       "typ": "atribut",
+       "atribut": "CHA",
+       "hodnota": 1,
+       "max": 30
+      }
+     ]
+    }
+   },
+   {
+    "typ": "poznamka",
+    "text": "Při seslání kouzla ze slotu hod 1d4 = úroveň → slot se nevyčerpá"
+   }
+  ],
+  "Boon of Truesight": [
+   {
+    "typ": "volba_slot",
+    "volba": "Atribut",
+    "moznosti": {
+     "STR": [
+      {
+       "typ": "atribut",
+       "atribut": "STR",
+       "hodnota": 1,
+       "max": 30
+      }
+     ],
+     "DEX": [
+      {
+       "typ": "atribut",
+       "atribut": "DEX",
+       "hodnota": 1,
+       "max": 30
+      }
+     ],
+     "CON": [
+      {
+       "typ": "atribut",
+       "atribut": "CON",
+       "hodnota": 1,
+       "max": 30
+      }
+     ],
+     "INT": [
+      {
+       "typ": "atribut",
+       "atribut": "INT",
+       "hodnota": 1,
+       "max": 30
+      }
+     ],
+     "WIS": [
+      {
+       "typ": "atribut",
+       "atribut": "WIS",
+       "hodnota": 1,
+       "max": 30
+      }
+     ],
+     "CHA": [
+      {
+       "typ": "atribut",
+       "atribut": "CHA",
+       "hodnota": 1,
+       "max": 30
+      }
+     ]
+    }
+   },
+   {
+    "typ": "smysl",
+    "nazev": "Truesight",
+    "dosah": 60
+   }
+  ],
+  "Boon of the Night Spirit": [
+   {
+    "typ": "volba_slot",
+    "volba": "Atribut",
+    "moznosti": {
+     "STR": [
+      {
+       "typ": "atribut",
+       "atribut": "STR",
+       "hodnota": 1,
+       "max": 30
+      }
+     ],
+     "DEX": [
+      {
+       "typ": "atribut",
+       "atribut": "DEX",
+       "hodnota": 1,
+       "max": 30
+      }
+     ],
+     "CON": [
+      {
+       "typ": "atribut",
+       "atribut": "CON",
+       "hodnota": 1,
+       "max": 30
+      }
+     ],
+     "INT": [
+      {
+       "typ": "atribut",
+       "atribut": "INT",
+       "hodnota": 1,
+       "max": 30
+      }
+     ],
+     "WIS": [
+      {
+       "typ": "atribut",
+       "atribut": "WIS",
+       "hodnota": 1,
+       "max": 30
+      }
+     ],
+     "CHA": [
+      {
+       "typ": "atribut",
+       "atribut": "CHA",
+       "hodnota": 1,
+       "max": 30
+      }
+     ]
+    }
+   },
+   {
+    "typ": "poznamka",
+    "text": "Ve šeru/tmě: resistance na vše mimo Radiant, může Hide jako Bonus Action"
+   }
+  ],
+  "Charger": [
+   {
+    "typ": "volba_slot",
+    "volba": "Atribut",
+    "moznosti": {
+     "STR": [
+      {
+       "typ": "atribut",
+       "atribut": "STR",
+       "hodnota": 1
+      }
+     ],
+     "DEX": [
+      {
+       "typ": "atribut",
+       "atribut": "DEX",
+       "hodnota": 1
+      }
+     ]
+    }
+   },
+   {
+    "typ": "poznamka",
+    "text": "Po Dash: útok navíc nebo +1d8 damage"
+   }
+  ],
+  "Chef": [
+   {
+    "typ": "volba_slot",
+    "volba": "Atribut",
+    "moznosti": {
+     "CON": [
+      {
+       "typ": "atribut",
+       "atribut": "CON",
+       "hodnota": 1
+      }
+     ],
+     "WIS": [
+      {
+       "typ": "atribut",
+       "atribut": "WIS",
+       "hodnota": 1
+      }
+     ]
+    }
+   },
+   {
+    "typ": "zdatnost",
+    "oblast": "nastroj",
+    "hodnota": "Cook's Utensils"
+   },
+   {
+    "typ": "poznamka",
+    "text": "Vaření: temp HP po Short Rest, léčení po Long Rest"
+   }
+  ],
+  "Crafter": [
+   {
+    "typ": "volba_slot",
+    "volba": "Atribut",
+    "moznosti": {
+     "STR": [
+      {
+       "typ": "atribut",
+       "atribut": "STR",
+       "hodnota": 1
+      }
+     ],
+     "DEX": [
+      {
+       "typ": "atribut",
+       "atribut": "DEX",
+       "hodnota": 1
+      }
+     ],
+     "INT": [
+      {
+       "typ": "atribut",
+       "atribut": "INT",
+       "hodnota": 1
+      }
+     ]
+    }
+   },
+   {
+    "typ": "poznamka",
+    "text": "Zdatnost ve 3 řemeslných nástrojích; slevy a rychlé výrobky"
+   }
+  ],
+  "Crossbow Expert": [
+   {
+    "typ": "volba_slot",
+    "volba": "Atribut",
+    "moznosti": {
+     "DEX": [
+      {
+       "typ": "atribut",
+       "atribut": "DEX",
+       "hodnota": 1
+      }
+     ],
+     "CON": [
+      {
+       "typ": "atribut",
+       "atribut": "CON",
+       "hodnota": 1
+      }
+     ]
+    }
+   },
+   {
+    "typ": "poznamka",
+    "text": "Crossbow: bez loading omezení, střelba zblízka bez nevýhody"
+   }
+  ],
+  "Crusher": [
+   {
+    "typ": "volba_slot",
+    "volba": "Atribut",
+    "moznosti": {
+     "STR": [
+      {
+       "typ": "atribut",
+       "atribut": "STR",
+       "hodnota": 1
+      }
+     ],
+     "CON": [
+      {
+       "typ": "atribut",
+       "atribut": "CON",
+       "hodnota": 1
+      }
+     ]
+    }
+   },
+   {
+    "typ": "poznamka",
+    "text": "Bludgeoning: 1/tah posun cíle o 5 stop; po critu advantage pro spojence"
+   }
+  ],
+  "Defense": [
+   {
+    "typ": "ac",
+    "hodnota": 1,
+    "podminka": "zbroj"
+   }
+  ],
+  "Defensive Duelist": [
+   {
+    "typ": "volba_slot",
+    "volba": "Atribut",
+    "moznosti": {
+     "DEX": [
+      {
+       "typ": "atribut",
+       "atribut": "DEX",
+       "hodnota": 1
+      }
+     ],
+     "STR": [
+      {
+       "typ": "atribut",
+       "atribut": "STR",
+       "hodnota": 1
+      }
+     ]
+    }
+   },
+   {
+    "typ": "poznamka",
+    "text": "S finesse zbraní: reakce přidá PB k AC proti jednomu útoku"
+   }
+  ],
+  "Dual Wielder": [
+   {
+    "typ": "volba_slot",
+    "volba": "Atribut",
+    "moznosti": {
+     "STR": [
+      {
+       "typ": "atribut",
+       "atribut": "STR",
+       "hodnota": 1
+      }
+     ],
+     "DEX": [
+      {
+       "typ": "atribut",
+       "atribut": "DEX",
+       "hodnota": 1
+      }
+     ]
+    }
+   },
+   {
+    "typ": "poznamka",
+    "text": "Off-hand útok i ne-light zbraní; extra útok Bonus Action"
+   }
+  ],
+  "Dueling": [
+   {
+    "typ": "bonus",
+    "cil": "zraneni",
+    "hodnota": 2,
+    "popis": "jednoruční zbraň"
+   }
+  ],
+  "Durable": [
+   {
+    "typ": "atribut",
+    "atribut": "CON",
+    "hodnota": 1
+   },
+   {
+    "typ": "vyhoda",
+    "cil": "zachrana",
+    "popis": "Advantage na Death Saving Throws"
+   },
+   {
+    "typ": "zdroj",
+    "nazev": "Durable",
+    "pocet": "uroven",
+    "obnova": "long"
+   }
+  ],
+  "Elemental Adept": [
+   {
+    "typ": "volba_slot",
+    "volba": "Atribut",
+    "moznosti": {
+     "INT": [
+      {
+       "typ": "atribut",
+       "atribut": "INT",
+       "hodnota": 1
+      }
+     ],
+     "WIS": [
+      {
+       "typ": "atribut",
+       "atribut": "WIS",
+       "hodnota": 1
+      }
+     ],
+     "CHA": [
+      {
+       "typ": "atribut",
+       "atribut": "CHA",
+       "hodnota": 1
+      }
+     ]
+    }
+   },
+   {
+    "typ": "volba_slot",
+    "volba": "Element",
+    "moznosti": {
+     "Acid": [
+      {
+       "typ": "poznamka",
+       "text": "Kouzla ignorují Acid resistance; 1 na kostce = 2"
+      }
+     ],
+     "Cold": [
+      {
+       "typ": "poznamka",
+       "text": "Kouzla ignorují Cold resistance; 1 na kostce = 2"
+      }
+     ],
+     "Fire": [
+      {
+       "typ": "poznamka",
+       "text": "Kouzla ignorují Fire resistance; 1 na kostce = 2"
+      }
+     ],
+     "Lightning": [
+      {
+       "typ": "poznamka",
+       "text": "Kouzla ignorují Lightning resistance; 1 na kostce = 2"
+      }
+     ],
+     "Thunder": [
+      {
+       "typ": "poznamka",
+       "text": "Kouzla ignorují Thunder resistance; 1 na kostce = 2"
+      }
+     ]
+    }
+   }
+  ],
+  "Fey Touched": [
+   {
+    "typ": "volba_slot",
+    "volba": "Atribut",
+    "moznosti": {
+     "INT": [
+      {
+       "typ": "atribut",
+       "atribut": "INT",
+       "hodnota": 1
+      }
+     ],
+     "WIS": [
+      {
+       "typ": "atribut",
+       "atribut": "WIS",
+       "hodnota": 1
+      }
+     ],
+     "CHA": [
+      {
+       "typ": "atribut",
+       "atribut": "CHA",
+       "hodnota": 1
+      }
+     ]
+    }
+   },
+   {
+    "typ": "kouzlo",
+    "nazev": "Misty Step",
+    "vzdy": true,
+    "obnova": "long"
+   },
+   {
+    "typ": "volba_slot",
+    "volba": "Kouzlo",
+    "moznosti": {
+     "Bless": [
+      {
+       "typ": "kouzlo",
+       "nazev": "Bless",
+       "vzdy": true,
+       "obnova": "long"
+      }
+     ],
+     "Charm Person": [
+      {
+       "typ": "kouzlo",
+       "nazev": "Charm Person",
+       "vzdy": true,
+       "obnova": "long"
+      }
+     ],
+     "Compelled Duel": [
+      {
+       "typ": "kouzlo",
+       "nazev": "Compelled Duel",
+       "vzdy": true,
+       "obnova": "long"
+      }
+     ],
+     "Dissonant Whispers": [
+      {
+       "typ": "kouzlo",
+       "nazev": "Dissonant Whispers",
+       "vzdy": true,
+       "obnova": "long"
+      }
+     ],
+     "Hex": [
+      {
+       "typ": "kouzlo",
+       "nazev": "Hex",
+       "vzdy": true,
+       "obnova": "long"
+      }
+     ],
+     "Hunter's Mark": [
+      {
+       "typ": "kouzlo",
+       "nazev": "Hunter's Mark",
+       "vzdy": true,
+       "obnova": "long"
+      }
+     ],
+     "Sleep": [
+      {
+       "typ": "kouzlo",
+       "nazev": "Sleep",
+       "vzdy": true,
+       "obnova": "long"
+      }
+     ],
+     "jiné (ručně)": [
+      {
+       "typ": "poznamka",
+       "text": "1st-level Divination/Enchantment dle výběru"
+      }
+     ]
+    }
+   }
+  ],
+  "Grappler": [
+   {
+    "typ": "volba_slot",
+    "volba": "Atribut",
+    "moznosti": {
+     "STR": [
+      {
+       "typ": "atribut",
+       "atribut": "STR",
+       "hodnota": 1
+      }
+     ],
+     "DEX": [
+      {
+       "typ": "atribut",
+       "atribut": "DEX",
+       "hodnota": 1
+      }
+     ]
+    }
+   },
+   {
+    "typ": "vyhoda",
+    "cil": "utok",
+    "popis": "Advantage na útoky proti uchvácenému tvoru"
+   }
+  ],
+  "Great Weapon Fighting": [
+   {
+    "typ": "poznamka",
+    "text": "Dvojruční zbraň: 1-2 na damage kostce = 3"
+   }
+  ],
+  "Great Weapon Master": [
+   {
+    "typ": "atribut",
+    "atribut": "STR",
+    "hodnota": 1
+   },
+   {
+    "typ": "poznamka",
+    "text": "Heavy zbraň: +PB damage; po critu/zabití extra útok"
+   }
+  ],
+  "Healer": [
+   {
+    "typ": "volba_slot",
+    "volba": "Atribut",
+    "moznosti": {
+     "WIS": [
+      {
+       "typ": "atribut",
+       "atribut": "WIS",
+       "hodnota": 1
+      }
+     ],
+     "INT": [
+      {
+       "typ": "atribut",
+       "atribut": "INT",
+       "hodnota": 1
+      }
+     ]
+    }
+   },
+   {
+    "typ": "zdatnost",
+    "oblast": "nastroj",
+    "hodnota": "Healer's Kit"
+   },
+   {
+    "typ": "poznamka",
+    "text": "Healer's Kit: léčení 1d6+4+úroveň cíle"
+   }
+  ],
+  "Heavily Armored": [
+   {
+    "typ": "volba_slot",
+    "volba": "Atribut",
+    "moznosti": {
+     "STR": [
+      {
+       "typ": "atribut",
+       "atribut": "STR",
+       "hodnota": 1
+      }
+     ],
+     "CON": [
+      {
+       "typ": "atribut",
+       "atribut": "CON",
+       "hodnota": 1
+      }
+     ]
+    }
+   },
+   {
+    "typ": "zdatnost",
+    "oblast": "zbroj",
+    "hodnota": "Heavy armor"
+   }
+  ],
+  "Heavy Armor Master": [
+   {
+    "typ": "volba_slot",
+    "volba": "Atribut",
+    "moznosti": {
+     "STR": [
+      {
+       "typ": "atribut",
+       "atribut": "STR",
+       "hodnota": 1
+      }
+     ],
+     "CON": [
+      {
+       "typ": "atribut",
+       "atribut": "CON",
+       "hodnota": 1
+      }
+     ]
+    }
+   },
+   {
+    "typ": "poznamka",
+    "text": "V těžké zbroji: sniž damage o PB za zásah"
+   }
+  ],
+  "Inspiring Leader": [
+   {
+    "typ": "volba_slot",
+    "volba": "Atribut",
+    "moznosti": {
+     "WIS": [
+      {
+       "typ": "atribut",
+       "atribut": "WIS",
+       "hodnota": 1
+      }
+     ],
+     "CHA": [
+      {
+       "typ": "atribut",
+       "atribut": "CHA",
+       "hodnota": 1
+      }
+     ]
+    }
+   },
+   {
+    "typ": "poznamka",
+    "text": "Po Short/Long Rest: temp HP = úroveň + mod pro až 6 tvorů"
+   }
+  ],
+  "Interception": [
+   {
+    "typ": "poznamka",
+    "text": "Reakce: sniž damage spojence o 1d10+PB"
+   }
+  ],
+  "Keen Mind": [
+   {
+    "typ": "atribut",
+    "atribut": "INT",
+    "hodnota": 1
+   },
+   {
+    "typ": "poznamka",
+    "text": "Paměť na vše do měsíce; přesný čas a sever"
+   }
+  ],
+  "Lightly Armored": [
+   {
+    "typ": "volba_slot",
+    "volba": "Atribut",
+    "moznosti": {
+     "STR": [
+      {
+       "typ": "atribut",
+       "atribut": "STR",
+       "hodnota": 1
+      }
+     ],
+     "DEX": [
+      {
+       "typ": "atribut",
+       "atribut": "DEX",
+       "hodnota": 1
+      }
+     ]
+    }
+   },
+   {
+    "typ": "zdatnost",
+    "oblast": "zbroj",
+    "hodnota": "Light armor"
+   }
+  ],
+  "Lucky": [
+   {
+    "typ": "zdroj",
+    "nazev": "Luck Points",
+    "pocet": "PB",
+    "obnova": "long"
+   }
+  ],
+  "Mage Slayer": [
+   {
+    "typ": "volba_slot",
+    "volba": "Atribut",
+    "moznosti": {
+     "STR": [
+      {
+       "typ": "atribut",
+       "atribut": "STR",
+       "hodnota": 1
+      }
+     ],
+     "DEX": [
+      {
+       "typ": "atribut",
+       "atribut": "DEX",
+       "hodnota": 1
+      }
+     ]
+    }
+   },
+   {
+    "typ": "poznamka",
+    "text": "Poškození koncentrace = nevýhoda; 1/short rest úspěch místo selhání save INT/WIS/CHA"
+   }
+  ],
+  "Magic Initiate": [
+   {
+    "typ": "volba_slot",
+    "volba": "Seznam kouzel",
+    "moznosti": {
+     "Cleric": [
+      {
+       "typ": "poznamka",
+       "text": "2 cantripy + 1 kouzlo 1. úrovně ze seznamu Cleric"
+      }
+     ],
+     "Druid": [
+      {
+       "typ": "poznamka",
+       "text": "2 cantripy + 1 kouzlo 1. úrovně ze seznamu Druid"
+      }
+     ],
+     "Wizard": [
+      {
+       "typ": "poznamka",
+       "text": "2 cantripy + 1 kouzlo 1. úrovně ze seznamu Wizard"
+      }
+     ]
+    }
+   }
+  ],
+  "Martial Weapon Training": [
+   {
+    "typ": "volba_slot",
+    "volba": "Atribut",
+    "moznosti": {
+     "STR": [
+      {
+       "typ": "atribut",
+       "atribut": "STR",
+       "hodnota": 1
+      }
+     ],
+     "DEX": [
+      {
+       "typ": "atribut",
+       "atribut": "DEX",
+       "hodnota": 1
+      }
+     ]
+    }
+   },
+   {
+    "typ": "zdatnost",
+    "oblast": "zbran",
+    "hodnota": "Martial weapons"
+   }
+  ],
+  "Medium Armor Master": [
+   {
+    "typ": "volba_slot",
+    "volba": "Atribut",
+    "moznosti": {
+     "STR": [
+      {
+       "typ": "atribut",
+       "atribut": "STR",
+       "hodnota": 1
+      }
+     ],
+     "DEX": [
+      {
+       "typ": "atribut",
+       "atribut": "DEX",
+       "hodnota": 1
+      }
+     ]
+    }
+   },
+   {
+    "typ": "poznamka",
+    "text": "Střední zbroj: DEX bonus do +3; bez nevýhody na Stealth"
+   }
+  ],
+  "Moderately Armored": [
+   {
+    "typ": "volba_slot",
+    "volba": "Atribut",
+    "moznosti": {
+     "STR": [
+      {
+       "typ": "atribut",
+       "atribut": "STR",
+       "hodnota": 1
+      }
+     ],
+     "DEX": [
+      {
+       "typ": "atribut",
+       "atribut": "DEX",
+       "hodnota": 1
+      }
+     ]
+    }
+   },
+   {
+    "typ": "zdatnost",
+    "oblast": "zbroj",
+    "hodnota": "Medium armor"
+   },
+   {
+    "typ": "zdatnost",
+    "oblast": "zbroj",
+    "hodnota": "Shields"
+   }
+  ],
+  "Mounted Combatant": [
+   {
+    "typ": "volba_slot",
+    "volba": "Atribut",
+    "moznosti": {
+     "STR": [
+      {
+       "typ": "atribut",
+       "atribut": "STR",
+       "hodnota": 1
+      }
+     ],
+     "DEX": [
+      {
+       "typ": "atribut",
+       "atribut": "DEX",
+       "hodnota": 1
+      }
+     ],
+     "WIS": [
+      {
+       "typ": "atribut",
+       "atribut": "WIS",
+       "hodnota": 1
+      }
+     ]
+    }
+   },
+   {
+    "typ": "vyhoda",
+    "cil": "utok",
+    "popis": "Advantage na útoky proti menším neosedlaným tvorům"
+   }
+  ],
+  "Musician": [
+   {
+    "typ": "poznamka",
+    "text": "Zdatnost ve 3 hudebních nástrojích; Heroic Inspiration po hraní"
+   }
+  ],
+  "Observant": [
+   {
+    "typ": "volba_slot",
+    "volba": "Atribut",
+    "moznosti": {
+     "INT": [
+      {
+       "typ": "atribut",
+       "atribut": "INT",
+       "hodnota": 1
+      }
+     ],
+     "WIS": [
+      {
+       "typ": "atribut",
+       "atribut": "WIS",
+       "hodnota": 1
+      }
+     ]
+    }
+   },
+   {
+    "typ": "volba_slot",
+    "volba": "Dovednost",
+    "moznosti": {
+     "Insight": [
+      {
+       "typ": "zdatnost",
+       "oblast": "dovednost",
+       "hodnota": "Insight"
+      }
+     ],
+     "Investigation": [
+      {
+       "typ": "zdatnost",
+       "oblast": "dovednost",
+       "hodnota": "Investigation"
+      }
+     ],
+     "Perception": [
+      {
+       "typ": "zdatnost",
+       "oblast": "dovednost",
+       "hodnota": "Perception"
+      }
+     ]
+    }
+   }
+  ],
+  "Piercer": [
+   {
+    "typ": "volba_slot",
+    "volba": "Atribut",
+    "moznosti": {
+     "STR": [
+      {
+       "typ": "atribut",
+       "atribut": "STR",
+       "hodnota": 1
+      }
+     ],
+     "DEX": [
+      {
+       "typ": "atribut",
+       "atribut": "DEX",
+       "hodnota": 1
+      }
+     ]
+    }
+   },
+   {
+    "typ": "poznamka",
+    "text": "Piercing: 1/tah reroll damage kostky; crit +1 kostka"
+   }
+  ],
+  "Poisoner": [
+   {
+    "typ": "volba_slot",
+    "volba": "Atribut",
+    "moznosti": {
+     "DEX": [
+      {
+       "typ": "atribut",
+       "atribut": "DEX",
+       "hodnota": 1
+      }
+     ],
+     "INT": [
+      {
+       "typ": "atribut",
+       "atribut": "INT",
+       "hodnota": 1
+      }
+     ]
+    }
+   },
+   {
+    "typ": "poznamka",
+    "text": "Jed na zbrani: Poisoned na selhání CON save; ignoruje Poison resistance"
+   }
+  ],
+  "Polearm Master": [
+   {
+    "typ": "volba_slot",
+    "volba": "Atribut",
+    "moznosti": {
+     "STR": [
+      {
+       "typ": "atribut",
+       "atribut": "STR",
+       "hodnota": 1
+      }
+     ],
+     "DEX": [
+      {
+       "typ": "atribut",
+       "atribut": "DEX",
+       "hodnota": 1
+      }
+     ]
+    }
+   },
+   {
+    "typ": "poznamka",
+    "text": "Butt-end útok Bonus Action + reakční útok při vstupu do dosahu"
+   }
+  ],
+  "Protection": [
+   {
+    "typ": "poznamka",
+    "text": "Se štítem: reakce = disadvantage na útok na spojence do 5 stop"
+   }
+  ],
+  "Resilient": [
+   {
+    "typ": "volba_slot",
+    "volba": "Atribut",
+    "moznosti": {
+     "STR": [
+      {
+       "typ": "atribut",
+       "atribut": "STR",
+       "hodnota": 1
+      },
+      {
+       "typ": "zdatnost",
+       "oblast": "zachrana",
+       "hodnota": "STR"
+      }
+     ],
+     "DEX": [
+      {
+       "typ": "atribut",
+       "atribut": "DEX",
+       "hodnota": 1
+      },
+      {
+       "typ": "zdatnost",
+       "oblast": "zachrana",
+       "hodnota": "DEX"
+      }
+     ],
+     "CON": [
+      {
+       "typ": "atribut",
+       "atribut": "CON",
+       "hodnota": 1
+      },
+      {
+       "typ": "zdatnost",
+       "oblast": "zachrana",
+       "hodnota": "CON"
+      }
+     ],
+     "INT": [
+      {
+       "typ": "atribut",
+       "atribut": "INT",
+       "hodnota": 1
+      },
+      {
+       "typ": "zdatnost",
+       "oblast": "zachrana",
+       "hodnota": "INT"
+      }
+     ],
+     "WIS": [
+      {
+       "typ": "atribut",
+       "atribut": "WIS",
+       "hodnota": 1
+      },
+      {
+       "typ": "zdatnost",
+       "oblast": "zachrana",
+       "hodnota": "WIS"
+      }
+     ],
+     "CHA": [
+      {
+       "typ": "atribut",
+       "atribut": "CHA",
+       "hodnota": 1
+      },
+      {
+       "typ": "zdatnost",
+       "oblast": "zachrana",
+       "hodnota": "CHA"
+      }
+     ]
+    }
+   }
+  ],
+  "Ritual Caster": [
+   {
+    "typ": "volba_slot",
+    "volba": "Atribut",
+    "moznosti": {
+     "INT": [
+      {
+       "typ": "atribut",
+       "atribut": "INT",
+       "hodnota": 1
+      }
+     ],
+     "WIS": [
+      {
+       "typ": "atribut",
+       "atribut": "WIS",
+       "hodnota": 1
+      }
+     ],
+     "CHA": [
+      {
+       "typ": "atribut",
+       "atribut": "CHA",
+       "hodnota": 1
+      }
+     ]
+    }
+   },
+   {
+    "typ": "poznamka",
+    "text": "Rituální kouzla dle výběru; sesílání bez slotu jako rituál"
+   }
+  ],
+  "Savage Attacker": [
+   {
+    "typ": "vyhoda",
+    "cil": "zraneni",
+    "popis": "1/tah reroll damage kostek zbraně"
+   }
+  ],
+  "Sentinel": [
+   {
+    "typ": "volba_slot",
+    "volba": "Atribut",
+    "moznosti": {
+     "STR": [
+      {
+       "typ": "atribut",
+       "atribut": "STR",
+       "hodnota": 1
+      }
+     ],
+     "DEX": [
+      {
+       "typ": "atribut",
+       "atribut": "DEX",
+       "hodnota": 1
+      }
+     ]
+    }
+   },
+   {
+    "typ": "poznamka",
+    "text": "Zásah zastavuje pohyb; opportunity attack i na Disengage"
+   }
+  ],
+  "Shadow Touched": [
+   {
+    "typ": "volba_slot",
+    "volba": "Atribut",
+    "moznosti": {
+     "INT": [
+      {
+       "typ": "atribut",
+       "atribut": "INT",
+       "hodnota": 1
+      }
+     ],
+     "WIS": [
+      {
+       "typ": "atribut",
+       "atribut": "WIS",
+       "hodnota": 1
+      }
+     ],
+     "CHA": [
+      {
+       "typ": "atribut",
+       "atribut": "CHA",
+       "hodnota": 1
+      }
+     ]
+    }
+   },
+   {
+    "typ": "kouzlo",
+    "nazev": "Invisibility",
+    "vzdy": true,
+    "obnova": "long"
+   },
+   {
+    "typ": "volba_slot",
+    "volba": "Kouzlo",
+    "moznosti": {
+     "Color Spray": [
+      {
+       "typ": "kouzlo",
+       "nazev": "Color Spray",
+       "vzdy": true,
+       "obnova": "long"
+      }
+     ],
+     "Cause Fear": [
+      {
+       "typ": "kouzlo",
+       "nazev": "Cause Fear",
+       "vzdy": true,
+       "obnova": "long"
+      }
+     ],
+     "Disguise Self": [
+      {
+       "typ": "kouzlo",
+       "nazev": "Disguise Self",
+       "vzdy": true,
+       "obnova": "long"
+      }
+     ],
+     "Inflict Wounds": [
+      {
+       "typ": "kouzlo",
+       "nazev": "Inflict Wounds",
+       "vzdy": true,
+       "obnova": "long"
+      }
+     ],
+     "Silent Image": [
+      {
+       "typ": "kouzlo",
+       "nazev": "Silent Image",
+       "vzdy": true,
+       "obnova": "long"
+      }
+     ],
+     "jiné (ručně)": [
+      {
+       "typ": "poznamka",
+       "text": "1st-level Illusion/Necromancy dle výběru"
+      }
+     ]
+    }
+   }
+  ],
+  "Sharpshooter": [
+   {
+    "typ": "atribut",
+    "atribut": "DEX",
+    "hodnota": 1
+   },
+   {
+    "typ": "poznamka",
+    "text": "Ranged: ignoruje cover, bez nevýhody na dálku"
+   }
+  ],
+  "Shield Master": [
+   {
+    "typ": "atribut",
+    "atribut": "STR",
+    "hodnota": 1
+   },
+   {
+    "typ": "poznamka",
+    "text": "Štít: shield bash (Prone/push); štít kryje i DEX save"
+   }
+  ],
+  "Skill Expert": [
+   {
+    "typ": "volba_slot",
+    "volba": "Atribut",
+    "moznosti": {
+     "STR": [
+      {
+       "typ": "atribut",
+       "atribut": "STR",
+       "hodnota": 1
+      }
+     ],
+     "DEX": [
+      {
+       "typ": "atribut",
+       "atribut": "DEX",
+       "hodnota": 1
+      }
+     ],
+     "CON": [
+      {
+       "typ": "atribut",
+       "atribut": "CON",
+       "hodnota": 1
+      }
+     ],
+     "INT": [
+      {
+       "typ": "atribut",
+       "atribut": "INT",
+       "hodnota": 1
+      }
+     ],
+     "WIS": [
+      {
+       "typ": "atribut",
+       "atribut": "WIS",
+       "hodnota": 1
+      }
+     ],
+     "CHA": [
+      {
+       "typ": "atribut",
+       "atribut": "CHA",
+       "hodnota": 1
+      }
+     ]
+    }
+   },
+   {
+    "typ": "poznamka",
+    "text": "Zdatnost + expertíza v dovednostech dle výběru"
+   }
+  ],
+  "Skilled": [
+   {
+    "typ": "poznamka",
+    "text": "Zdatnost ve 3 dovednostech/nástrojích dle výběru"
+   }
+  ],
+  "Skulker": [
+   {
+    "typ": "atribut",
+    "atribut": "DEX",
+    "hodnota": 1
+   },
+   {
+    "typ": "smysl",
+    "nazev": "Blindsight",
+    "dosah": 10
+   },
+   {
+    "typ": "poznamka",
+    "text": "Hide i v lehkém zahalení; minutý útok neodhalí pozici"
+   }
+  ],
+  "Slasher": [
+   {
+    "typ": "volba_slot",
+    "volba": "Atribut",
+    "moznosti": {
+     "STR": [
+      {
+       "typ": "atribut",
+       "atribut": "STR",
+       "hodnota": 1
+      }
+     ],
+     "DEX": [
+      {
+       "typ": "atribut",
+       "atribut": "DEX",
+       "hodnota": 1
+      }
+     ]
+    }
+   },
+   {
+    "typ": "poznamka",
+    "text": "Slashing: 1/tah zpomalení o 10 stop; po critu nevýhoda na útoky"
+   }
+  ],
+  "Speedy": [
+   {
+    "typ": "volba_slot",
+    "volba": "Atribut",
+    "moznosti": {
+     "DEX": [
+      {
+       "typ": "atribut",
+       "atribut": "DEX",
+       "hodnota": 1
+      }
+     ],
+     "CON": [
+      {
+       "typ": "atribut",
+       "atribut": "CON",
+       "hodnota": 1
+      }
+     ]
+    }
+   },
+   {
+    "typ": "rychlost",
+    "hodnota": 10
+   },
+   {
+    "typ": "poznamka",
+    "text": "Dash ignoruje difficult terrain; provokativní útoky nevýhodné"
+   }
+  ],
+  "Spell Sniper": [
+   {
+    "typ": "volba_slot",
+    "volba": "Atribut",
+    "moznosti": {
+     "INT": [
+      {
+       "typ": "atribut",
+       "atribut": "INT",
+       "hodnota": 1
+      }
+     ],
+     "WIS": [
+      {
+       "typ": "atribut",
+       "atribut": "WIS",
+       "hodnota": 1
+      }
+     ],
+     "CHA": [
+      {
+       "typ": "atribut",
+       "atribut": "CHA",
+       "hodnota": 1
+      }
+     ]
+    }
+   },
+   {
+    "typ": "poznamka",
+    "text": "Kouzla ignorují cover; dvojnásobný dosah cantripů"
+   }
+  ],
+  "Tavern Brawler": [
+   {
+    "typ": "volba_slot",
+    "volba": "Atribut",
+    "moznosti": {
+     "STR": [
+      {
+       "typ": "atribut",
+       "atribut": "STR",
+       "hodnota": 1
+      }
+     ],
+     "CON": [
+      {
+       "typ": "atribut",
+       "atribut": "CON",
+       "hodnota": 1
+      }
+     ]
+    }
+   },
+   {
+    "typ": "utok",
+    "nazev": "Unarmed Strike",
+    "kostka": "1d4",
+    "typ_zraneni": "Bludgeoning",
+    "atribut": "STR"
+   },
+   {
+    "typ": "poznamka",
+    "text": "Po zásahu Unarmed Strike lze cíl odtlačit 5 stop"
+   }
+  ],
+  "Telekinetic": [
+   {
+    "typ": "volba_slot",
+    "volba": "Atribut",
+    "moznosti": {
+     "INT": [
+      {
+       "typ": "atribut",
+       "atribut": "INT",
+       "hodnota": 1
+      }
+     ],
+     "WIS": [
+      {
+       "typ": "atribut",
+       "atribut": "WIS",
+       "hodnota": 1
+      }
+     ],
+     "CHA": [
+      {
+       "typ": "atribut",
+       "atribut": "CHA",
+       "hodnota": 1
+      }
+     ]
+    }
+   },
+   {
+    "typ": "kouzlo",
+    "nazev": "Mage Hand",
+    "vzdy": true
+   },
+   {
+    "typ": "poznamka",
+    "text": "Bonus Action: telekinetický strč/tah 30 stop"
+   }
+  ],
+  "Telepathic": [
+   {
+    "typ": "volba_slot",
+    "volba": "Atribut",
+    "moznosti": {
+     "INT": [
+      {
+       "typ": "atribut",
+       "atribut": "INT",
+       "hodnota": 1
+      }
+     ],
+     "WIS": [
+      {
+       "typ": "atribut",
+       "atribut": "WIS",
+       "hodnota": 1
+      }
+     ],
+     "CHA": [
+      {
+       "typ": "atribut",
+       "atribut": "CHA",
+       "hodnota": 1
+      }
+     ]
+    }
+   },
+   {
+    "typ": "kouzlo",
+    "nazev": "Detect Thoughts",
+    "vzdy": true,
+    "obnova": "long"
+   },
+   {
+    "typ": "poznamka",
+    "text": "Telepatie 60 stop"
+   }
+  ],
+  "Thrown Weapon Fighting": [
+   {
+    "typ": "bonus",
+    "cil": "zraneni",
+    "hodnota": 2,
+    "filtr": "thrown"
+   }
+  ],
+  "Tough": [
+   {
+    "typ": "hp",
+    "za_uroven": 2
+   }
+  ],
+  "Two-Weapon Fighting": [
+   {
+    "typ": "poznamka",
+    "text": "Off-hand útok přidává modifikátor k damage"
+   }
+  ],
+  "Unarmed Fighting": [
+   {
+    "typ": "utok",
+    "nazev": "Unarmed Strike",
+    "kostka": "1d6",
+    "typ_zraneni": "Bludgeoning",
+    "atribut": "STR"
+   },
+   {
+    "typ": "poznamka",
+    "text": "Bez zbraně 1d8; při grapple 1d4 damage automaticky"
+   }
+  ],
+  "War Caster": [
+   {
+    "typ": "volba_slot",
+    "volba": "Atribut",
+    "moznosti": {
+     "INT": [
+      {
+       "typ": "atribut",
+       "atribut": "INT",
+       "hodnota": 1
+      }
+     ],
+     "WIS": [
+      {
+       "typ": "atribut",
+       "atribut": "WIS",
+       "hodnota": 1
+      }
+     ],
+     "CHA": [
+      {
+       "typ": "atribut",
+       "atribut": "CHA",
+       "hodnota": 1
+      }
+     ]
+    }
+   },
+   {
+    "typ": "vyhoda",
+    "cil": "zachrana",
+    "popis": "Advantage na CON záchrany za koncentraci"
+   },
+   {
+    "typ": "poznamka",
+    "text": "Somatické složky s plnýma rukama; kouzlo jako opportunity attack"
+   }
+  ],
+  "Weapon Master": [
+   {
+    "typ": "volba_slot",
+    "volba": "Atribut",
+    "moznosti": {
+     "STR": [
+      {
+       "typ": "atribut",
+       "atribut": "STR",
+       "hodnota": 1
+      }
+     ],
+     "DEX": [
+      {
+       "typ": "atribut",
+       "atribut": "DEX",
+       "hodnota": 1
+      }
+     ]
+    }
+   },
+   {
+    "typ": "poznamka",
+    "text": "Mastery vlastnost jednoho druhu zbraně dle výběru"
+   }
+  ]
+ },
+ "class": {
+  "Artificer": {
+   "core": [
+    {
+     "typ": "zdatnost",
+     "oblast": "zachrana",
+     "hodnota": "CON"
+    },
+    {
+     "typ": "zdatnost",
+     "oblast": "zachrana",
+     "hodnota": "INT"
+    },
+    {
+     "typ": "zdatnost",
+     "oblast": "zbroj",
+     "hodnota": "Light armor"
+    },
+    {
+     "typ": "zdatnost",
+     "oblast": "zbroj",
+     "hodnota": "Medium armor"
+    },
+    {
+     "typ": "zdatnost",
+     "oblast": "zbroj",
+     "hodnota": "Shields"
+    }
+   ],
+   "multiclass": [
+    {
+     "typ": "zdatnost",
+     "oblast": "zbroj",
+     "hodnota": "Light armor"
+    },
+    {
+     "typ": "zdatnost",
+     "oblast": "zbroj",
+     "hodnota": "Medium armor"
+    },
+    {
+     "typ": "zdatnost",
+     "oblast": "zbroj",
+     "hodnota": "Shields"
+    }
+   ],
+   "Tinker’s Magic": [
+    {
+     "typ": "poznamka",
+     "text": "Mending + dočasné nástroje"
+    }
+   ],
+   "Replicate Magic Item": [
+    {
+     "typ": "zdroj",
+     "nazev": "Replicate Magic Item",
+     "pocet": "@Magic Items",
+     "obnova": "long"
+    }
+   ],
+   "Flash of Genius": [
+    {
+     "typ": "poznamka",
+     "text": "Reakce: +INT mod k ability checku/save do 30 stop (INT mod použití/long)"
+    }
+   ],
+   "Magic Item Adept": [
+    {
+     "typ": "poznamka",
+     "text": "Naladění na až 4 předměty; výroba uncommon za čtvrtinu"
+    }
+   ],
+   "Magic Item Master": [
+    {
+     "typ": "poznamka",
+     "text": "Naladění na až 6 předmětů"
+    }
+   ],
+   "Spell-Storing Item": [
+    {
+     "typ": "poznamka",
+     "text": "Předmět ukládá kouzlo pro ostatní"
+    }
+   ],
+   "Soul of Artifice": [
+    {
+     "typ": "bonus",
+     "cil": "zachrana",
+     "hodnota": "min(6, naladene)",
+     "popis": "+1 k záchranným za každý naladěný předmět (max 6)"
+    }
+   ]
+  },
+  "Barbarian": {
+   "core": [
+    {
+     "typ": "zdatnost",
+     "oblast": "zachrana",
+     "hodnota": "STR"
+    },
+    {
+     "typ": "zdatnost",
+     "oblast": "zachrana",
+     "hodnota": "CON"
+    },
+    {
+     "typ": "zdatnost",
+     "oblast": "zbroj",
+     "hodnota": "Light armor"
+    },
+    {
+     "typ": "zdatnost",
+     "oblast": "zbroj",
+     "hodnota": "Medium armor"
+    },
+    {
+     "typ": "zdatnost",
+     "oblast": "zbroj",
+     "hodnota": "Shields"
+    },
+    {
+     "typ": "zdatnost",
+     "oblast": "zbran",
+     "hodnota": "Simple weapons"
+    },
+    {
+     "typ": "zdatnost",
+     "oblast": "zbran",
+     "hodnota": "Martial weapons"
+    }
+   ],
+   "multiclass": [
+    {
+     "typ": "zdatnost",
+     "oblast": "zbran",
+     "hodnota": "Martial weapons"
+    }
+   ],
+   "Rage": [
+    {
+     "typ": "zdroj",
+     "nazev": "Rage",
+     "pocet": "@Rages",
+     "obnova": "long"
+    },
+    {
+     "typ": "poznamka",
+     "text": "V rage: +damage STR útokům, odolnost B/P/S, advantage STR checkům"
+    }
+   ],
+   "Unarmored Defense": [
+    {
+     "typ": "ac_vzorec",
+     "zaklad": 10,
+     "atributy": [
+      "DEX",
+      "CON"
+     ],
+     "stit_povolen": true,
+     "bez_zbroje": true
+    }
+   ],
+   "Weapon Mastery": [
+    {
+     "typ": "poznamka",
+     "text": "Mastery vlastnosti dle tabulky"
+    }
+   ],
+   "Danger Sense": [
+    {
+     "typ": "vyhoda",
+     "cil": "zachrana",
+     "popis": "Advantage na DEX záchrany proti viditelným efektům"
+    }
+   ],
+   "Reckless Attack": [
+    {
+     "typ": "vyhoda",
+     "cil": "utok",
+     "popis": "Advantage na STR útoky; útoky na tebe mají Advantage"
+    }
+   ],
+   "Primal Knowledge": [
+    {
+     "typ": "poznamka",
+     "text": "Dovednostní zdatnost navíc dle výběru"
+    }
+   ],
+   "Extra Attack": [
+    {
+     "typ": "utoky_za_akci",
+     "hodnota": 2
+    }
+   ],
+   "Fast Movement": [
+    {
+     "typ": "rychlost",
+     "hodnota": 10,
+     "podminka": "bez_teZke_zbroje"
+    }
+   ],
+   "Feral Instinct": [
+    {
+     "typ": "vyhoda",
+     "cil": "iniciativa",
+     "popis": "Advantage na iniciativu"
+    }
+   ],
+   "Instinctive Pounce": [
+    {
+     "typ": "poznamka",
+     "text": "Při zahájení rage pohyb do poloviny Speed"
+    }
+   ],
+   "Brutal Strike": [
+    {
+     "typ": "poznamka",
+     "text": "Při Reckless Attack zásah navíc: Brutal Strike efekt"
+    }
+   ],
+   "Improved Brutal Strike": [
+    {
+     "typ": "poznamka",
+     "text": "Druhý Brutal Strike efekt"
+    }
+   ],
+   "Relentless Rage": [
+    {
+     "typ": "zdroj",
+     "nazev": "Relentless Rage",
+     "pocet": "PB",
+     "obnova": "long"
+    }
+   ],
+   "Persistent Rage": [
+    {
+     "typ": "poznamka",
+     "text": "Rage netrpí předčasným koncem"
+    }
+   ],
+   "Indomitable Might": [
+    {
+     "typ": "poznamka",
+     "text": "STR check/save: místo hodu lze použít STR score"
+    }
+   ],
+   "Primal Champion": [
+    {
+     "typ": "atribut",
+     "atribut": "STR",
+     "hodnota": 4,
+     "max": 25
+    },
+    {
+     "typ": "atribut",
+     "atribut": "CON",
+     "hodnota": 4,
+     "max": 25
+    }
+   ]
+  },
+  "Bard": {
+   "core": [
+    {
+     "typ": "zdatnost",
+     "oblast": "zachrana",
+     "hodnota": "DEX"
+    },
+    {
+     "typ": "zdatnost",
+     "oblast": "zachrana",
+     "hodnota": "CHA"
+    },
+    {
+     "typ": "zdatnost",
+     "oblast": "zbroj",
+     "hodnota": "Light armor"
+    },
+    {
+     "typ": "zdatnost",
+     "oblast": "zbran",
+     "hodnota": "Simple weapons"
+    }
+   ],
+   "multiclass": [],
+   "Bardic Inspiration": [
+    {
+     "typ": "zdroj",
+     "nazev": "Bardic Inspiration",
+     "pocet": "max(1, mod:CHA)",
+     "obnova": "long",
+     "kostka": "@Bardic Die"
+    }
+   ],
+   "Spellcasting": [
+    {
+     "typ": "poznamka",
+     "text": "Spellcasting podle tabulky Bard"
+    }
+   ],
+   "Expertise": [
+    {
+     "typ": "poznamka",
+     "text": "Dvojnásobný PB ve 2 dovednostech (v expertiza)"
+    }
+   ],
+   "Jack of all Trades": [
+    {
+     "typ": "polovicni_zdatnost",
+     "oblast": "dovednost"
+    }
+   ],
+   "Font of Inspiration": [
+    {
+     "typ": "zdroj",
+     "nazev": "Bardic Inspiration",
+     "pocet": "max(1, mod:CHA)",
+     "obnova": "short",
+     "kostka": "@Bardic Die"
+    },
+    {
+     "typ": "poznamka",
+     "text": "Při hodu 1 na Bardic Die ho lze zachovat"
+    }
+   ],
+   "Countercharm": [
+    {
+     "typ": "poznamka",
+     "text": "Reakce: výhoda na save proti Charmed/Frightened"
+    }
+   ],
+   "Magical Secrets": [
+    {
+     "typ": "poznamka",
+     "text": "Kouzla z libovolného seznamu"
+    }
+   ],
+   "Superior Inspiration": [
+    {
+     "typ": "poznamka",
+     "text": "Při iniciativě bez BI: získej 2 použití"
+    }
+   ],
+   "Words of Creation": [
+    {
+     "typ": "poznamka",
+     "text": "Kouzlo Power Word Heal/Kill efekty"
+    }
+   ]
+  },
+  "Cleric": {
+   "core": [
+    {
+     "typ": "zdatnost",
+     "oblast": "zachrana",
+     "hodnota": "WIS"
+    },
+    {
+     "typ": "zdatnost",
+     "oblast": "zachrana",
+     "hodnota": "CHA"
+    },
+    {
+     "typ": "zdatnost",
+     "oblast": "zbroj",
+     "hodnota": "Light armor"
+    },
+    {
+     "typ": "zdatnost",
+     "oblast": "zbroj",
+     "hodnota": "Medium armor"
+    },
+    {
+     "typ": "zdatnost",
+     "oblast": "zbroj",
+     "hodnota": "Shields"
+    },
+    {
+     "typ": "zdatnost",
+     "oblast": "zbran",
+     "hodnota": "Simple weapons"
+    }
+   ],
+   "multiclass": [],
+   "Spellcasting": [
+    {
+     "typ": "poznamka",
+     "text": "Spellcasting podle tabulky Cleric"
+    }
+   ],
+   "Divine Order": [
+    {
+     "typ": "volba_slot",
+     "volba": "Divine Order",
+     "moznosti": {
+      "Protector": [
+       {
+        "typ": "zdatnost",
+        "oblast": "zbran",
+        "hodnota": "Martial weapons"
+       },
+       {
+        "typ": "zdatnost",
+        "oblast": "zbroj",
+        "hodnota": "Heavy armor"
+       }
+      ],
+      "Thaumaturge": [
+       {
+        "typ": "poznamka",
+        "text": "+PB na Arcana/Religion checky"
+       }
+      ]
+     }
+    }
+   ],
+   "Channel Divinity": [
+    {
+     "typ": "zdroj",
+     "nazev": "Channel Divinity",
+     "pocet": "@Channel Divinity",
+     "obnova": "short"
+    }
+   ],
+   "Sear Undead": [
+    {
+     "typ": "poznamka",
+     "text": "Turn Undead způsobuje radiant damage"
+    }
+   ],
+   "Blessed Strikes": [
+    {
+     "typ": "volba_slot",
+     "volba": "Blessed Strikes",
+     "moznosti": {
+      "Divine Strike": [
+       {
+        "typ": "poznamka",
+        "text": "+1d8 radiant/necrotic 1/tah při zásahu zbraní"
+       }
+      ],
+      "Potent Spellcasting": [
+       {
+        "typ": "poznamka",
+        "text": "Cantripy přidávají WIS mod k damage"
+       }
+      ]
+     }
+    }
+   ],
+   "Divine Intervention": [
+    {
+     "typ": "zdroj",
+     "nazev": "Divine Intervention",
+     "pocet": 1,
+     "obnova": "long"
+    }
+   ],
+   "Improved Blessed Strikes": [
+    {
+     "typ": "poznamka",
+     "text": "Blessed Strikes +1d8"
+    }
+   ],
+   "Greater Divine Intervention": [
+    {
+     "typ": "poznamka",
+     "text": "Divine Intervention i bez oběti slotu na Wish"
+    }
+   ]
+  },
+  "Druid": {
+   "core": [
+    {
+     "typ": "zdatnost",
+     "oblast": "zachrana",
+     "hodnota": "INT"
+    },
+    {
+     "typ": "zdatnost",
+     "oblast": "zachrana",
+     "hodnota": "WIS"
+    },
+    {
+     "typ": "zdatnost",
+     "oblast": "zbroj",
+     "hodnota": "Light armor"
+    },
+    {
+     "typ": "zdatnost",
+     "oblast": "zbroj",
+     "hodnota": "Shields"
+    },
+    {
+     "typ": "zdatnost",
+     "oblast": "zbran",
+     "hodnota": "Simple weapons"
+    }
+   ],
+   "multiclass": [],
+   "Spellcasting": [
+    {
+     "typ": "poznamka",
+     "text": "Spellcasting podle tabulky Druid"
+    }
+   ],
+   "Druidic": [
+    {
+     "typ": "zdatnost",
+     "oblast": "jazyk",
+     "hodnota": "Druidic"
+    }
+   ],
+   "Primal Order": [
+    {
+     "typ": "volba_slot",
+     "volba": "Primal Order",
+     "moznosti": {
+      "Magician": [
+       {
+        "typ": "poznamka",
+        "text": "Cantrip navíc + bonus Arcana/Nature"
+       }
+      ],
+      "Warden": [
+       {
+        "typ": "zdatnost",
+        "oblast": "zbroj",
+        "hodnota": "Medium armor"
+       },
+       {
+        "typ": "zdatnost",
+        "oblast": "zbran",
+        "hodnota": "Martial weapons"
+       }
+      ]
+     }
+    }
+   ],
+   "Wild Shape": [
+    {
+     "typ": "zdroj",
+     "nazev": "Wild Shape",
+     "pocet": "@Wild Shape",
+     "obnova": "short"
+    }
+   ],
+   "Wild Companion": [
+    {
+     "typ": "poznamka",
+     "text": "Find Familiar přes Wild Shape"
+    }
+   ],
+   "Wild Resurgence": [
+    {
+     "typ": "poznamka",
+     "text": "1/long: proměň slot na Wild Shape použití a naopak"
+    }
+   ],
+   "Elemental Fury": [
+    {
+     "typ": "volba_slot",
+     "volba": "Elemental Fury",
+     "moznosti": {
+      "Potent Spellcasting": [
+       {
+        "typ": "poznamka",
+        "text": "Cantripy +WIS mod damage"
+       }
+      ],
+      "Primal Strikes": [
+       {
+        "typ": "poznamka",
+        "text": "Wild Shape útoky +1d8 element damage"
+       }
+      ]
+     }
+    }
+   ],
+   "Improved Elemental Fury": [
+    {
+     "typ": "poznamka",
+     "text": "Elemental Fury +1d8"
+    }
+   ],
+   "Beast Spells": [
+    {
+     "typ": "poznamka",
+     "text": "Kouzla ve Wild Shape"
+    }
+   ],
+   "Archdruid": [
+    {
+     "typ": "poznamka",
+     "text": "Wild Shape obnova při iniciativě"
+    }
+   ]
+  },
+  "Fighter": {
+   "core": [
+    {
+     "typ": "zdatnost",
+     "oblast": "zachrana",
+     "hodnota": "STR"
+    },
+    {
+     "typ": "zdatnost",
+     "oblast": "zachrana",
+     "hodnota": "CON"
+    },
+    {
+     "typ": "zdatnost",
+     "oblast": "zbroj",
+     "hodnota": "Light armor"
+    },
+    {
+     "typ": "zdatnost",
+     "oblast": "zbroj",
+     "hodnota": "Medium armor"
+    },
+    {
+     "typ": "zdatnost",
+     "oblast": "zbroj",
+     "hodnota": "Heavy armor"
+    },
+    {
+     "typ": "zdatnost",
+     "oblast": "zbroj",
+     "hodnota": "Shields"
+    },
+    {
+     "typ": "zdatnost",
+     "oblast": "zbran",
+     "hodnota": "Simple weapons"
+    },
+    {
+     "typ": "zdatnost",
+     "oblast": "zbran",
+     "hodnota": "Martial weapons"
+    }
+   ],
+   "multiclass": [
+    {
+     "typ": "zdatnost",
+     "oblast": "zbroj",
+     "hodnota": "Light armor"
+    },
+    {
+     "typ": "zdatnost",
+     "oblast": "zbroj",
+     "hodnota": "Medium armor"
+    },
+    {
+     "typ": "zdatnost",
+     "oblast": "zbroj",
+     "hodnota": "Shields"
+    },
+    {
+     "typ": "zdatnost",
+     "oblast": "zbran",
+     "hodnota": "Martial weapons"
+    }
+   ],
+   "Fighting Style": [
+    {
+     "typ": "poznamka",
+     "text": "Fighting Style feat dle výběru (v featy)"
+    }
+   ],
+   "Second Wind": [
+    {
+     "typ": "zdroj",
+     "nazev": "Second Wind",
+     "pocet": "@Second Wind",
+     "obnova": "short",
+     "kostka": "1d10"
+    }
+   ],
+   "Weapon Mastery": [
+    {
+     "typ": "poznamka",
+     "text": "Mastery vlastnosti dle tabulky"
+    }
+   ],
+   "Action Surge": [
+    {
+     "typ": "zdroj",
+     "nazev": "Action Surge",
+     "pocet": "1 + uroven:Fighter/17",
+     "obnova": "short"
+    }
+   ],
+   "Tactical Mind": [
+    {
+     "typ": "poznamka",
+     "text": "Second Wind přidá 1d10 k failed check"
+    }
+   ],
+   "Extra Attack": [
+    {
+     "typ": "utoky_za_akci",
+     "hodnota": 2
+    }
+   ],
+   "Tactical Shift": [
+    {
+     "typ": "poznamka",
+     "text": "Po Second Wind pohyb poloviny Speed bez opportunity"
+    }
+   ],
+   "Indomitable": [
+    {
+     "typ": "zdroj",
+     "nazev": "Indomitable",
+     "pocet": "1 + uroven:Fighter/17",
+     "obnova": "long"
+    }
+   ],
+   "Tactical Master": [
+    {
+     "typ": "poznamka",
+     "text": "Nahraď mastery vlastnost za Push/Sap/Slow"
+    }
+   ],
+   "Two Extra Attacks": [
+    {
+     "typ": "utoky_za_akci",
+     "hodnota": 3
+    }
+   ],
+   "Studied Attacks": [
+    {
+     "typ": "poznamka",
+     "text": "Po minutém útoku advantage na další útoky na tentýž cíl"
+    }
+   ],
+   "Three Extra Attacks": [
+    {
+     "typ": "utoky_za_akci",
+     "hodnota": 4
+    }
+   ]
+  },
+  "Monk": {
+   "core": [
+    {
+     "typ": "zdatnost",
+     "oblast": "zachrana",
+     "hodnota": "STR"
+    },
+    {
+     "typ": "zdatnost",
+     "oblast": "zachrana",
+     "hodnota": "DEX"
+    },
+    {
+     "typ": "zdatnost",
+     "oblast": "zbran",
+     "hodnota": "Simple weapons"
+    },
+    {
+     "typ": "zdatnost",
+     "oblast": "zbran",
+     "hodnota": "Martial weapons (light, no heavy/two-handed)"
+    }
+   ],
+   "multiclass": [],
+   "Martial Arts": [
+    {
+     "typ": "utok",
+     "nazev": "Unarmed Strike",
+     "kostka": "@Martial Arts",
+     "typ_zraneni": "Bludgeoning",
+     "atribut": "DEX"
+    },
+    {
+     "typ": "poznamka",
+     "text": "Bonus Action: Unarmed Strike (nebo 2× s Focus Point); DEX místo STR"
+    }
+   ],
+   "Unarmored Defense": [
+    {
+     "typ": "ac_vzorec",
+     "zaklad": 10,
+     "atributy": [
+      "DEX",
+      "WIS"
+     ],
+     "stit_povolen": false,
+     "bez_zbroje": true
+    }
+   ],
+   "Monk’s Focus": [
+    {
+     "typ": "zdroj",
+     "nazev": "Focus Points",
+     "pocet": "@Focus Points",
+     "obnova": "short"
+    }
+   ],
+   "Unarmored Movement": [
+    {
+     "typ": "rychlost",
+     "hodnota": "@Unarmored Movement",
+     "podminka": "bez_zbroje"
+    }
+   ],
+   "Uncanny Metabolism": [
+    {
+     "typ": "poznamka",
+     "text": "1/long při iniciativě: obnov Focus Points + HP"
+    }
+   ],
+   "Deflect Attacks": [
+    {
+     "typ": "poznamka",
+     "text": "Reakce: sniž damage útoku o 1d10+DEX+Monk lvl"
+    }
+   ],
+   "Slow Fall": [
+    {
+     "typ": "poznamka",
+     "text": "Reakce: pád o 5× Monk lvl méně"
+    }
+   ],
+   "Extra Attack": [
+    {
+     "typ": "utoky_za_akci",
+     "hodnota": 2
+    }
+   ],
+   "Stunning Strike": [
+    {
+     "typ": "poznamka",
+     "text": "1/tah za Focus Point: Stun při zásahu"
+    }
+   ],
+   "Empowered Strikes": [
+    {
+     "typ": "poznamka",
+     "text": "Unarmed Strike = Force damage"
+    }
+   ],
+   "Evasion": [
+    {
+     "typ": "poznamka",
+     "text": "DEX save: žádné/polovinu damage"
+    }
+   ],
+   "Acrobatic Movement": [
+    {
+     "typ": "poznamka",
+     "text": "Pohyb po tekutinách/stěnách"
+    }
+   ],
+   "Heightened Focus": [
+    {
+     "typ": "poznamka",
+     "text": "Focus schopnosti zesílené"
+    }
+   ],
+   "Self-Restoration": [
+    {
+     "typ": "poznamka",
+     "text": "Konec tahu: ukonči Charmed/Frightened/Poisoned"
+    }
+   ],
+   "Deflect Energy": [
+    {
+     "typ": "poznamka",
+     "text": "Deflect funguje i na energy útoky"
+    }
+   ],
+   "Disciplined Survivor": [
+    {
+     "typ": "vyhoda",
+     "cil": "zachrana",
+     "popis": "Proficiency ve všech záchranách (Diamond Soul)"
+    }
+   ],
+   "Perfect Focus": [
+    {
+     "typ": "poznamka",
+     "text": "Při iniciativě bez Focus Points: získej 4"
+    }
+   ],
+   "Superior Defense": [
+    {
+     "typ": "poznamka",
+     "text": "3 Focus Points: resistance na vše mimo Force na 1 min"
+    }
+   ],
+   "Body and Mind": [
+    {
+     "typ": "atribut",
+     "atribut": "DEX",
+     "hodnota": 4,
+     "max": 25
+    },
+    {
+     "typ": "atribut",
+     "atribut": "WIS",
+     "hodnota": 4,
+     "max": 25
+    }
+   ]
+  },
+  "Monster Hunter": {
+   "core": [
+    {
+     "typ": "poznamka",
+     "text": "Vlastní povolání – mechaniky doplň ve frontmatteru"
+    }
+   ]
+  },
+  "Paladin": {
+   "core": [
+    {
+     "typ": "zdatnost",
+     "oblast": "zachrana",
+     "hodnota": "WIS"
+    },
+    {
+     "typ": "zdatnost",
+     "oblast": "zachrana",
+     "hodnota": "CHA"
+    },
+    {
+     "typ": "zdatnost",
+     "oblast": "zbroj",
+     "hodnota": "Light armor"
+    },
+    {
+     "typ": "zdatnost",
+     "oblast": "zbroj",
+     "hodnota": "Medium armor"
+    },
+    {
+     "typ": "zdatnost",
+     "oblast": "zbroj",
+     "hodnota": "Heavy armor"
+    },
+    {
+     "typ": "zdatnost",
+     "oblast": "zbroj",
+     "hodnota": "Shields"
+    },
+    {
+     "typ": "zdatnost",
+     "oblast": "zbran",
+     "hodnota": "Simple weapons"
+    },
+    {
+     "typ": "zdatnost",
+     "oblast": "zbran",
+     "hodnota": "Martial weapons"
+    }
+   ],
+   "multiclass": [
+    {
+     "typ": "zdatnost",
+     "oblast": "zbroj",
+     "hodnota": "Light armor"
+    },
+    {
+     "typ": "zdatnost",
+     "oblast": "zbroj",
+     "hodnota": "Medium armor"
+    },
+    {
+     "typ": "zdatnost",
+     "oblast": "zbroj",
+     "hodnota": "Shields"
+    },
+    {
+     "typ": "zdatnost",
+     "oblast": "zbran",
+     "hodnota": "Martial weapons"
+    }
+   ],
+   "Lay On Hands": [
+    {
+     "typ": "zdroj",
+     "nazev": "Lay on Hands",
+     "pocet": "5*uroven:Paladin",
+     "obnova": "long"
+    }
+   ],
+   "Spellcasting": [
+    {
+     "typ": "poznamka",
+     "text": "Spellcasting podle tabulky Paladin"
+    }
+   ],
+   "Weapon Mastery": [
+    {
+     "typ": "poznamka",
+     "text": "Mastery vlastnosti"
+    }
+   ],
+   "Fighting Style": [
+    {
+     "typ": "poznamka",
+     "text": "Fighting Style feat dle výběru (v featy)"
+    }
+   ],
+   "Paladin's Smite": [
+    {
+     "typ": "kouzlo",
+     "nazev": "Divine Smite",
+     "vzdy": true,
+     "trida": "Paladin"
+    }
+   ],
+   "Channel Divinity": [
+    {
+     "typ": "zdroj",
+     "nazev": "Channel Divinity",
+     "pocet": "@Channel Divinity",
+     "obnova": "short"
+    }
+   ],
+   "Extra Attack": [
+    {
+     "typ": "utoky_za_akci",
+     "hodnota": 2
+    }
+   ],
+   "Faithful Steed": [
+    {
+     "typ": "kouzlo",
+     "nazev": "Find Steed",
+     "vzdy": true,
+     "trida": "Paladin"
+    }
+   ],
+   "Aura of Protection": [
+    {
+     "typ": "bonus",
+     "cil": "zachrana",
+     "hodnota": "max(1, mod:CHA)",
+     "popis": "Aura: +CHA mod (min +1) k záchranným (sebe i spojenci do 10 stop; neaktivní při Incapacitated)"
+    }
+   ],
+   "Abjure Foes": [
+    {
+     "typ": "poznamka",
+     "text": "Channel Divinity: Frightened pro fiendy/undead/fey"
+    }
+   ],
+   "Aura of Courage": [
+    {
+     "typ": "imunita_stav",
+     "hodnota": "Frightened"
+    }
+   ],
+   "Radiant Strikes": [
+    {
+     "typ": "poznamka",
+     "text": "+1d8 radiant damage při zásahu zbraní/unarmed"
+    }
+   ],
+   "Restoring Touch": [
+    {
+     "typ": "poznamka",
+     "text": "Lay on Hands léčí i stavy"
+    }
+   ],
+   "Aura Expansion": [
+    {
+     "typ": "poznamka",
+     "text": "Aury na 30 stop"
+    }
+   ]
+  },
+  "Ranger": {
+   "core": [
+    {
+     "typ": "zdatnost",
+     "oblast": "zachrana",
+     "hodnota": "STR"
+    },
+    {
+     "typ": "zdatnost",
+     "oblast": "zachrana",
+     "hodnota": "DEX"
+    },
+    {
+     "typ": "zdatnost",
+     "oblast": "zbroj",
+     "hodnota": "Light armor"
+    },
+    {
+     "typ": "zdatnost",
+     "oblast": "zbroj",
+     "hodnota": "Medium armor"
+    },
+    {
+     "typ": "zdatnost",
+     "oblast": "zbroj",
+     "hodnota": "Shields"
+    },
+    {
+     "typ": "zdatnost",
+     "oblast": "zbran",
+     "hodnota": "Simple weapons"
+    },
+    {
+     "typ": "zdatnost",
+     "oblast": "zbran",
+     "hodnota": "Martial weapons"
+    }
+   ],
+   "multiclass": [
+    {
+     "typ": "zdatnost",
+     "oblast": "zbroj",
+     "hodnota": "Light armor"
+    },
+    {
+     "typ": "zdatnost",
+     "oblast": "zbroj",
+     "hodnota": "Medium armor"
+    },
+    {
+     "typ": "zdatnost",
+     "oblast": "zbroj",
+     "hodnota": "Shields"
+    },
+    {
+     "typ": "zdatnost",
+     "oblast": "zbran",
+     "hodnota": "Martial weapons"
+    }
+   ],
+   "Spellcasting": [
+    {
+     "typ": "poznamka",
+     "text": "Spellcasting podle tabulky Ranger"
+    }
+   ],
+   "Favored Enemy": [
+    {
+     "typ": "zdroj",
+     "nazev": "Hunter's Mark (free)",
+     "pocet": "@Favored Enemy",
+     "obnova": "long"
+    }
+   ],
+   "Weapon Mastery": [
+    {
+     "typ": "poznamka",
+     "text": "Mastery vlastnosti"
+    }
+   ],
+   "Deft Explorer": [
+    {
+     "typ": "poznamka",
+     "text": "Dvojnásobný PB ve zvolené dovednosti + 2 jazyky"
+    }
+   ],
+   "Fighting Style": [
+    {
+     "typ": "poznamka",
+     "text": "Fighting Style feat dle výběru (v featy)"
+    }
+   ],
+   "Extra Attack": [
+    {
+     "typ": "utoky_za_akci",
+     "hodnota": 2
+    }
+   ],
+   "Roving": [
+    {
+     "typ": "rychlost",
+     "hodnota": 10,
+     "podminka": "bez_teZke_zbroje"
+    },
+    {
+     "typ": "rychlost",
+     "druh": "climb",
+     "hodnota": "walk",
+     "nastavit": true,
+     "podminka": "bez_teZke_zbroje"
+    },
+    {
+     "typ": "rychlost",
+     "druh": "swim",
+     "hodnota": "walk",
+     "nastavit": true,
+     "podminka": "bez_teZke_zbroje"
+    }
+   ],
+   "Expertise": [
+    {
+     "typ": "poznamka",
+     "text": "Expertíza ve 2 dovednostech"
+    }
+   ],
+   "Tireless": [
+    {
+     "typ": "poznamka",
+     "text": "Temp HP po akci (1d8+WIS); méně Exhaustion"
+    }
+   ],
+   "Relentless Hunter": [
+    {
+     "typ": "poznamka",
+     "text": "Hunter's Mark koncentrace nepadá při 0 HP"
+    }
+   ],
+   "Nature's Veil": [
+    {
+     "typ": "poznamka",
+     "text": "Bonus Action: Invisible do dalšího tahu"
+    }
+   ],
+   "Precise Hunter": [
+    {
+     "typ": "vyhoda",
+     "cil": "utok",
+     "popis": "Advantage na útoky na cíl Hunter's Mark"
+    }
+   ],
+   "Feral Senses": [
+    {
+     "typ": "poznamka",
+     "text": "Útoky na invisible bez nevýhody; Blindsight 30"
+    }
+   ],
+   "Foe Slayer": [
+    {
+     "typ": "poznamka",
+     "text": "Hunter's Mark +1d10"
+    }
+   ]
+  },
+  "Rogue": {
+   "core": [
+    {
+     "typ": "zdatnost",
+     "oblast": "zachrana",
+     "hodnota": "DEX"
+    },
+    {
+     "typ": "zdatnost",
+     "oblast": "zachrana",
+     "hodnota": "INT"
+    },
+    {
+     "typ": "zdatnost",
+     "oblast": "zbroj",
+     "hodnota": "Light armor"
+    },
+    {
+     "typ": "zdatnost",
+     "oblast": "zbran",
+     "hodnota": "Simple weapons"
+    },
+    {
+     "typ": "zdatnost",
+     "oblast": "zbran",
+     "hodnota": "Martial weapons (finesse/ranged)"
+    },
+    {
+     "typ": "zdatnost",
+     "oblast": "nastroj",
+     "hodnota": "Thieves' Tools"
+    }
+   ],
+   "multiclass": [
+    {
+     "typ": "zdatnost",
+     "oblast": "zbroj",
+     "hodnota": "Light armor"
+    },
+    {
+     "typ": "zdatnost",
+     "oblast": "zbran",
+     "hodnota": "Martial weapons (finesse/ranged)"
+    }
+   ],
+   "Expertise": [
+    {
+     "typ": "poznamka",
+     "text": "Dvojnásobný PB ve 2 dovednostech (v expertiza)"
+    }
+   ],
+   "Sneak Attack": [
+    {
+     "typ": "poznamka",
+     "text": "Sneak Attack damage dle tabulky (sloupec v přehledu)"
+    }
+   ],
+   "Thieves' Cant": [
+    {
+     "typ": "zdatnost",
+     "oblast": "jazyk",
+     "hodnota": "Thieves' Cant"
+    }
+   ],
+   "Weapon Mastery": [
+    {
+     "typ": "poznamka",
+     "text": "Mastery vlastnosti"
+    }
+   ],
+   "Cunning Action": [
+    {
+     "typ": "poznamka",
+     "text": "Bonus Action: Dash/Disengage/Hide"
+    }
+   ],
+   "Steady Aim": [
+    {
+     "typ": "poznamka",
+     "text": "Bonus Action: advantage na útok (pohyb 0)"
+    }
+   ],
+   "Cunning Strike": [
+    {
+     "typ": "poznamka",
+     "text": "Sneak Attack efekty (Poison, Trip, Withdraw)"
+    }
+   ],
+   "Uncanny Dodge": [
+    {
+     "typ": "poznamka",
+     "text": "Reakce: polovina damage zásahu"
+    }
+   ],
+   "Evasion": [
+    {
+     "typ": "poznamka",
+     "text": "DEX save: žádné/polovinu damage"
+    }
+   ],
+   "Reliable Talent": [
+    {
+     "typ": "poznamka",
+     "text": "Dovednosti se zdatností: d20 min 10"
+    }
+   ],
+   "Improved Cunning Strike": [
+    {
+     "typ": "poznamka",
+     "text": "2 Cunning Strike efekty najednou"
+    }
+   ],
+   "Devious Strikes": [
+    {
+     "typ": "poznamka",
+     "text": "Další Cunning Strike efekty"
+    }
+   ],
+   "Slippery Mind": [
+    {
+     "typ": "zdatnost",
+     "oblast": "zachrana",
+     "hodnota": "WIS"
+    },
+    {
+     "typ": "zdatnost",
+     "oblast": "zachrana",
+     "hodnota": "CHA"
+    }
+   ],
+   "Elusive": [
+    {
+     "typ": "poznamka",
+     "text": "Útoky na tebe nemají Advantage"
+    }
+   ],
+   "Stroke of Luck": [
+    {
+     "typ": "poznamka",
+     "text": "1/short: hod 20 místo hodu d20"
+    }
+   ]
+  },
+  "Sorcerer": {
+   "core": [
+    {
+     "typ": "zdatnost",
+     "oblast": "zachrana",
+     "hodnota": "CON"
+    },
+    {
+     "typ": "zdatnost",
+     "oblast": "zachrana",
+     "hodnota": "CHA"
+    },
+    {
+     "typ": "zdatnost",
+     "oblast": "zbran",
+     "hodnota": "Simple weapons"
+    }
+   ],
+   "multiclass": [],
+   "Spellcasting": [
+    {
+     "typ": "poznamka",
+     "text": "Spellcasting podle tabulky Sorcerer"
+    }
+   ],
+   "Innate Sorcery": [
+    {
+     "typ": "poznamka",
+     "text": "Bonus Action: 1 min advantage na spell útoky +1 DC"
+    }
+   ],
+   "Font of Magic": [
+    {
+     "typ": "poznamka",
+     "text": "Konverze slotů ↔ Sorcery Points"
+    }
+   ],
+   "Metamagic": [
+    {
+     "typ": "volba_slot",
+     "volba": "Metamagic (1)",
+     "moznosti": {
+      "Careful Spell": [
+       {
+        "typ": "poznamka",
+        "text": "Careful Spell"
+       }
+      ],
+      "Distant Spell": [
+       {
+        "typ": "poznamka",
+        "text": "Distant Spell"
+       }
+      ],
+      "Empowered Spell": [
+       {
+        "typ": "poznamka",
+        "text": "Empowered Spell"
+       }
+      ],
+      "Extended Spell": [
+       {
+        "typ": "poznamka",
+        "text": "Extended Spell"
+       }
+      ],
+      "Heightened Spell": [
+       {
+        "typ": "poznamka",
+        "text": "Heightened Spell"
+       }
+      ],
+      "Quickened Spell": [
+       {
+        "typ": "poznamka",
+        "text": "Quickened Spell"
+       }
+      ],
+      "Seeking Spell": [
+       {
+        "typ": "poznamka",
+        "text": "Seeking Spell"
+       }
+      ],
+      "Subtle Spell": [
+       {
+        "typ": "poznamka",
+        "text": "Subtle Spell"
+       }
+      ],
+      "Transmuted Spell": [
+       {
+        "typ": "poznamka",
+        "text": "Transmuted Spell"
+       }
+      ],
+      "Twinned Spell": [
+       {
+        "typ": "poznamka",
+        "text": "Twinned Spell"
+       }
+      ]
+     }
+    }
+   ],
+   "Sorcerous Restoration": [
+    {
+     "typ": "poznamka",
+     "text": "Po Short Rest: obnov SP do poloviny max"
+    }
+   ],
+   "Sorcery Incarnate": [
+    {
+     "typ": "poznamka",
+     "text": "Innate Sorcery: 2 Metamagic najednou"
+    }
+   ],
+   "Arcane Apotheosis": [
+    {
+     "typ": "poznamka",
+     "text": "Innate Sorcery: Metamagic zdarma"
+    }
+   ]
+  },
+  "Warlock": {
+   "core": [
+    {
+     "typ": "zdatnost",
+     "oblast": "zachrana",
+     "hodnota": "WIS"
+    },
+    {
+     "typ": "zdatnost",
+     "oblast": "zachrana",
+     "hodnota": "CHA"
+    },
+    {
+     "typ": "zdatnost",
+     "oblast": "zbroj",
+     "hodnota": "Light armor"
+    },
+    {
+     "typ": "zdatnost",
+     "oblast": "zbran",
+     "hodnota": "Simple weapons"
+    }
+   ],
+   "multiclass": [
+    {
+     "typ": "zdatnost",
+     "oblast": "zbroj",
+     "hodnota": "Light armor"
+    }
+   ],
+   "Eldritch Invocations": [
+    {
+     "typ": "poznamka",
+     "text": "Invocations dle tabulky (sloupec)"
+    }
+   ],
+   "Pact Magic": [
+    {
+     "typ": "poznamka",
+     "text": "Pact Magic sloty (krátký rest)"
+    }
+   ],
+   "Magical Cunning": [
+    {
+     "typ": "poznamka",
+     "text": "1/long: obnov polovinu pact slotů po 1 min rituálu"
+    }
+   ],
+   "Contact Patron": [
+    {
+     "typ": "poznamka",
+     "text": "Přímý kontakt s patronem"
+    }
+   ],
+   "Mystic Arcanum": [
+    {
+     "typ": "poznamka",
+     "text": "Kouzla 6.-9. úrovně bez slotů 1/long"
+    }
+   ],
+   "Eldritch Master": [
+    {
+     "typ": "poznamka",
+     "text": "1/long: obnov všechny pact sloty"
+    }
+   ]
+  },
+  "Wizard": {
+   "core": [
+    {
+     "typ": "zdatnost",
+     "oblast": "zachrana",
+     "hodnota": "INT"
+    },
+    {
+     "typ": "zdatnost",
+     "oblast": "zachrana",
+     "hodnota": "WIS"
+    },
+    {
+     "typ": "zdatnost",
+     "oblast": "zbran",
+     "hodnota": "Simple weapons"
+    }
+   ],
+   "multiclass": [],
+   "Spellcasting": [
+    {
+     "typ": "poznamka",
+     "text": "Spellcasting podle tabulky Wizard"
+    }
+   ],
+   "Ritual Adept": [
+    {
+     "typ": "poznamka",
+     "text": "Rituály z knihy kouzel bez přípravy"
+    }
+   ],
+   "Arcane Recovery": [
+    {
+     "typ": "zdroj",
+     "nazev": "Arcane Recovery",
+     "pocet": 1,
+     "obnova": "long"
+    }
+   ],
+   "Scholar": [
+    {
+     "typ": "poznamka",
+     "text": "Expertíza v jedné akademické dovednosti"
+    }
+   ],
+   "Memorize Spell": [
+    {
+     "typ": "poznamka",
+     "text": "Short rest: vyměň připravené kouzlo"
+    }
+   ],
+   "Spell Mastery": [
+    {
+     "typ": "poznamka",
+     "text": "2 kouzla 1./2. úrovně bez slotů"
+    }
+   ],
+   "Signature Spells": [
+    {
+     "typ": "poznamka",
+     "text": "2 kouzla 3. úrovně bez slotů"
+    }
+   ]
+  }
+ },
+ "subclass": {
+  "Abjurer": {
+   "Arcane Ward": [
+    {
+     "typ": "poznamka",
+     "text": "Arcane Ward: HP bariéra (2×lvl+INT)"
+    }
+   ],
+   "Projected Ward": [
+    {
+     "typ": "poznamka",
+     "text": "Ward na spojence (reakce)"
+    }
+   ]
+  },
+  "Arcane Trickster": {
+   "Spellcasting": [
+    {
+     "typ": "kouzlo",
+     "nazev": "Mage Hand",
+     "vzdy": true,
+     "trida": "Rogue"
+    }
+   ],
+   "Mage Hand Legerdemain": [
+    {
+     "typ": "poznamka",
+     "text": "Mage Hand: nenápadné manipulace"
+    }
+   ],
+   "Spell Thief": [
+    {
+     "typ": "poznamka",
+     "text": "Krádež kouzla (reakce po save)"
+    }
+   ]
+  },
+  "Archfey Patron": {
+   "Steps of the Fey": [
+    {
+     "typ": "poznamka",
+     "text": "Misty Step bez slotu PB/long + fey efekt"
+    }
+   ],
+   "Archfey Spells": [
+    {
+     "typ": "kouzlo",
+     "nazev": "Calm Emotions",
+     "od_urovne": 3,
+     "vzdy": true,
+     "trida": "Warlock"
+    },
+    {
+     "typ": "kouzlo",
+     "nazev": "Misty Step",
+     "od_urovne": 3,
+     "vzdy": true,
+     "trida": "Warlock"
+    },
+    {
+     "typ": "kouzlo",
+     "nazev": "Faerie Fire",
+     "od_urovne": 3,
+     "vzdy": true,
+     "trida": "Warlock"
+    },
+    {
+     "typ": "kouzlo",
+     "nazev": "Sleep",
+     "od_urovne": 3,
+     "vzdy": true,
+     "trida": "Warlock"
+    }
+   ]
+  },
+  "Assassin": {
+   "Assassinate": [
+    {
+     "typ": "vyhoda",
+     "cil": "iniciativa",
+     "popis": "Advantage na útoky na tvory, kteří ještě nehráli"
+    },
+    {
+     "typ": "poznamka",
+     "text": "Zásah v 1. kole = extra Sneak Attack damage"
+    }
+   ],
+   "Assassin's Tools": [
+    {
+     "typ": "zdatnost",
+     "oblast": "nastroj",
+     "hodnota": "Disguise Kit"
+    },
+    {
+     "typ": "zdatnost",
+     "oblast": "nastroj",
+     "hodnota": "Poisoner's Kit"
+    }
+   ],
+   "Infiltration Expertise": [
+    {
+     "typ": "poznamka",
+     "text": "Padělání identit a falešných důkazů"
+    }
+   ]
+  },
+  "Banneret": {
+   "Rallying Cry": [
+    {
+     "typ": "poznamka",
+     "text": "Second Wind léčí i spojence"
+    }
+   ],
+   "Royal Envoy": [
+    {
+     "typ": "zdatnost",
+     "oblast": "dovednost",
+     "hodnota": "Persuasion"
+    },
+    {
+     "typ": "poznamka",
+     "text": "Persuasion expertíza"
+    }
+   ]
+  },
+  "Battle Master": {
+   "Combat Superiority": [
+    {
+     "typ": "zdroj",
+     "nazev": "Superiority Dice",
+     "pocet": "@Superiority Dice",
+     "obnova": "short",
+     "kostka": "1d8"
+    }
+   ],
+   "Student of War": [
+    {
+     "typ": "zdatnost",
+     "oblast": "nastroj",
+     "hodnota": "jeden řemeslný nástroj"
+    }
+   ],
+   "Know Your Enemy": [
+    {
+     "typ": "poznamka",
+     "text": "Zhodnocení nepřítele po 1 min pozorování"
+    }
+   ],
+   "Relentless": [
+    {
+     "typ": "poznamka",
+     "text": "Při iniciativě bez kostek: získej 2 Superiority Dice"
+    }
+   ]
+  },
+  "Bladesinger": {
+   "Training in War and Song": [
+    {
+     "typ": "zdatnost",
+     "oblast": "zbroj",
+     "hodnota": "Light armor"
+    },
+    {
+     "typ": "zdatnost",
+     "oblast": "dovednost",
+     "hodnota": "Performance"
+    }
+   ],
+   "Bladesong": [
+    {
+     "typ": "zdroj",
+     "nazev": "Bladesong",
+     "pocet": "PB",
+     "obnova": "long"
+    }
+   ],
+   "Song of Defense": [
+    {
+     "typ": "poznamka",
+     "text": "Reakce: slot → sníž damage o 5× úroveň slotu"
+    }
+   ],
+   "Song of Victory": [
+    {
+     "typ": "poznamka",
+     "text": "Během Bladesong: +INT mod damage útoků zbraní"
+    }
+   ]
+  },
+  "Champion": {
+   "Improved Critical": [
+    {
+     "typ": "poznamka",
+     "text": "Critical hit na 19-20"
+    }
+   ],
+   "Remarkable Athlete": [
+    {
+     "typ": "vyhoda",
+     "cil": "iniciativa",
+     "popis": "Advantage na iniciativu a Athletics"
+    },
+    {
+     "typ": "poznamka",
+     "text": "Po critu pohyb poloviny Speed bez opportunity"
+    }
+   ],
+   "Additional Fighting Style": [
+    {
+     "typ": "poznamka",
+     "text": "Druhý Fighting Style feat"
+    }
+   ],
+   "Heroic Warrior": [
+    {
+     "typ": "poznamka",
+     "text": "Heroic Inspiration po každé iniciativě"
+    }
+   ],
+   "Survivor": [
+    {
+     "typ": "poznamka",
+     "text": "Regenerace 5+CON+PB/2 za tah pod polovinou HP"
+    }
+   ]
+  },
+  "Circle of the Land": {
+   "Circle of the Land Spells": [
+    {
+     "typ": "volba_slot",
+     "volba": "Circle of the Land",
+     "moznosti": {
+      "Arid Land": [
+       {
+        "typ": "kouzlo",
+        "nazev": "Blur",
+        "od_urovne": 3,
+        "vzdy": true,
+        "trida": "Druid"
+       },
+       {
+        "typ": "kouzlo",
+        "nazev": "Burning Hands",
+        "od_urovne": 3,
+        "vzdy": true,
+        "trida": "Druid"
+       },
+       {
+        "typ": "kouzlo",
+        "nazev": "Silent Image",
+        "od_urovne": 3,
+        "vzdy": true,
+        "trida": "Druid"
+       }
+      ],
+      "Polar Land": [
+       {
+        "typ": "kouzlo",
+        "nazev": "Fog Cloud",
+        "od_urovne": 3,
+        "vzdy": true,
+        "trida": "Druid"
+       },
+       {
+        "typ": "kouzlo",
+        "nazev": "Hold Person",
+        "od_urovne": 3,
+        "vzdy": true,
+        "trida": "Druid"
+       },
+       {
+        "typ": "kouzlo",
+        "nazev": "Spike Growth",
+        "od_urovne": 3,
+        "vzdy": true,
+        "trida": "Druid"
+       }
+      ],
+      "Temperate Land": [
+       {
+        "typ": "kouzlo",
+        "nazev": "Misty Step",
+        "od_urovne": 3,
+        "vzdy": true,
+        "trida": "Druid"
+       },
+       {
+        "typ": "kouzlo",
+        "nazev": "Shocking Grasp",
+        "od_urovne": 3,
+        "vzdy": true,
+        "trida": "Druid"
+       },
+       {
+        "typ": "kouzlo",
+        "nazev": "Sleep",
+        "od_urovne": 3,
+        "vzdy": true,
+        "trida": "Druid"
+       }
+      ],
+      "Tropical Land": [
+       {
+        "typ": "kouzlo",
+        "nazev": "Acid Splash",
+        "od_urovne": 3,
+        "vzdy": true,
+        "trida": "Druid"
+       },
+       {
+        "typ": "kouzlo",
+        "nazev": "Ray of Sickness",
+        "od_urovne": 3,
+        "vzdy": true,
+        "trida": "Druid"
+       },
+       {
+        "typ": "kouzlo",
+        "nazev": "Web",
+        "od_urovne": 3,
+        "vzdy": true,
+        "trida": "Druid"
+       }
+      ]
+     }
+    }
+   ],
+   "Land's Aid": [
+    {
+     "typ": "zdroj",
+     "nazev": "Land's Aid",
+     "pocet": 1,
+     "obnova": "long"
+    }
+   ],
+   "Natural Recovery": [
+    {
+     "typ": "poznamka",
+     "text": "Short rest: obnov sloty (součet úrovní ≤ polovina)"
+    }
+   ],
+   "Nature's Ward": [
+    {
+     "typ": "poznamka",
+     "text": "Imunita na charmed/frightened elementálů/fey"
+    }
+   ]
+  },
+  "College of Glamour": {
+   "Beguiling Magic": [
+    {
+     "typ": "poznamka",
+     "text": "Charm Person/Enlarge-Reduce jako Bonus Action"
+    }
+   ],
+   "Mantle of Inspiration": [
+    {
+     "typ": "zdroj",
+     "nazev": "Mantle of Inspiration",
+     "pocet": "PB",
+     "obnova": "long"
+    }
+   ],
+   "Mantle of Majesty": [
+    {
+     "typ": "poznamka",
+     "text": "Command každý tah po dobu 1 min"
+    }
+   ]
+  },
+  "College of Lore": {
+   "Bonus Proficiencies": [
+    {
+     "typ": "poznamka",
+     "text": "3 dovednosti navíc (zapsáno v dovednosti)"
+    }
+   ],
+   "Cutting Words": [
+    {
+     "typ": "poznamka",
+     "text": "Reakce: −Bardic Die z hodu protivníka"
+    }
+   ],
+   "Magical Discoveries": [
+    {
+     "typ": "poznamka",
+     "text": "2 kouzla z libovolných seznamů"
+    }
+   ],
+   "Peerless Skill": [
+    {
+     "typ": "poznamka",
+     "text": "Bardic Inspiration i na vlastní faile checky"
+    }
+   ]
+  },
+  "College of Valor": {
+   "Combat Inspiration": [
+    {
+     "typ": "poznamka",
+     "text": "Bardic Die k útoku/damage/AC"
+    }
+   ],
+   "Extra Attack": [
+    {
+     "typ": "utoky_za_akci",
+     "hodnota": 2,
+     "od_urovne": 6
+    }
+   ],
+   "Battle Magic": [
+    {
+     "typ": "poznamka",
+     "text": "Po seslání kouzla útok jako Bonus Action"
+    }
+   ]
+  },
+  "Diviner": {
+   "Portent": [
+    {
+     "typ": "zdroj",
+     "nazev": "Portent",
+     "pocet": 2,
+     "obnova": "long"
+    }
+   ],
+   "Expert Divination": [
+    {
+     "typ": "poznamka",
+     "text": "Divination kouzlo vrací menší slot"
+    }
+   ],
+   "The Third Eye": [
+    {
+     "typ": "poznamka",
+     "text": "Darkvision 120 / see invisible / read thoughts"
+    }
+   ],
+   "Greater Portent": [
+    {
+     "typ": "zdroj",
+     "nazev": "Portent",
+     "pocet": 3,
+     "obnova": "long"
+    }
+   ]
+  },
+  "Draconic Sorcery": {
+   "Draconic Resilience": [
+    {
+     "typ": "ac_vzorec",
+     "zaklad": 10,
+     "atributy": [
+      "DEX",
+      "CHA"
+     ],
+     "stit_povolen": true,
+     "bez_zbroje": true
+    },
+    {
+     "typ": "hp",
+     "hodnota": "uroven:Sorcerer"
+    }
+   ],
+   "Draconic Spells": [
+    {
+     "typ": "kouzlo",
+     "nazev": "Chromatic Orb",
+     "od_urovne": 3,
+     "vzdy": true,
+     "trida": "Sorcerer"
+    },
+    {
+     "typ": "kouzlo",
+     "nazev": "Dragon's Breath",
+     "od_urovne": 3,
+     "vzdy": true,
+     "trida": "Sorcerer"
+    },
+    {
+     "typ": "kouzlo",
+     "nazev": "Fear",
+     "od_urovne": 5,
+     "vzdy": true,
+     "trida": "Sorcerer"
+    },
+    {
+     "typ": "kouzlo",
+     "nazev": "Arcane Hand",
+     "od_urovne": 7,
+     "vzdy": true,
+     "trida": "Sorcerer"
+    }
+   ],
+   "Elemental Affinity": [
+    {
+     "typ": "poznamka",
+     "text": "+CHA mod k damage zvoleného elementu; resistance 1 hod"
+    }
+   ],
+   "Dragon Wings": [
+    {
+     "typ": "zdroj",
+     "nazev": "Dragon Wings",
+     "pocet": 1,
+     "obnova": "long",
+     "od_urovne": 14
+    },
+    {
+     "typ": "poznamka",
+     "text": "Bonus Action → dračí křídla na 1 hodinu: Fly Speed 60 ft; obnova i za 3 Sorcery Points",
+     "od_urovne": 14
+    }
+   ]
+  },
+  "Eldritch Knight": {
+   "Spellcasting": [
+    {
+     "typ": "poznamka",
+     "text": "Third-caster spellcasting (Wizard list)"
+    }
+   ],
+   "War Bond": [
+    {
+     "typ": "poznamka",
+     "text": "Pouto se zbraní; nelze odzbrojit"
+    }
+   ],
+   "War Magic": [
+    {
+     "typ": "poznamka",
+     "text": "Po cantripu útok zbraní jako Bonus Action"
+    }
+   ],
+   "Eldritch Strike": [
+    {
+     "typ": "poznamka",
+     "text": "Po zásahu zbraní: nevýhoda na save proti tvým kouzlům"
+    }
+   ],
+   "Improved War Magic": [
+    {
+     "typ": "poznamka",
+     "text": "Po kouzlu: 2 útoky jako Bonus Action"
+    }
+   ]
+  },
+  "Evoker": {
+   "Potent Cantrip": [
+    {
+     "typ": "poznamka",
+     "text": "Cantrip damage i při úspěšném save (polovina)"
+    }
+   ],
+   "Sculpt Spells": [
+    {
+     "typ": "poznamka",
+     "text": "Ochraň spojence v oblasti kouzla"
+    }
+   ],
+   "Empowered Evocation": [
+    {
+     "typ": "poznamka",
+     "text": "+INT mod k damage evocation kouzlů"
+    }
+   ],
+   "Overchannel": [
+    {
+     "typ": "poznamka",
+     "text": "Max damage evocation kouzla ≤5. úrovně"
+    }
+   ]
+  },
+  "Fey Wanderer": {
+   "Dreadful Strikes": [
+    {
+     "typ": "poznamka",
+     "text": "+1d4 psychic damage na zásah zbraní"
+    }
+   ],
+   "Fey Wanderer Spells": [
+    {
+     "typ": "kouzlo",
+     "nazev": "Charm Person",
+     "od_urovne": 3,
+     "vzdy": true,
+     "trida": "Ranger"
+    },
+    {
+     "typ": "kouzlo",
+     "nazev": "Misty Step",
+     "od_urovne": 5,
+     "vzdy": true,
+     "trida": "Ranger"
+    },
+    {
+     "typ": "kouzlo",
+     "nazev": "Summon Fey",
+     "od_urovne": 9,
+     "vzdy": true,
+     "trida": "Ranger"
+    }
+   ],
+   "Otherworldly Glamour": [
+    {
+     "typ": "poznamka",
+     "text": "+WIS mod k CHA checkům"
+    }
+   ],
+   "Beguiling Twist": [
+    {
+     "typ": "poznamka",
+     "text": "Imunita Charmed; přesměruj charm na jiného"
+    }
+   ]
+  },
+  "Fiend Patron": {
+   "Dark One's Blessing": [
+    {
+     "typ": "poznamka",
+     "text": "Temp HP při zabití tvora"
+    }
+   ],
+   "Fiend Spells": [
+    {
+     "typ": "kouzlo",
+     "nazev": "Burning Hands",
+     "od_urovne": 3,
+     "vzdy": true,
+     "trida": "Warlock"
+    },
+    {
+     "typ": "kouzlo",
+     "nazev": "Scorching Ray",
+     "od_urovne": 3,
+     "vzdy": true,
+     "trida": "Warlock"
+    },
+    {
+     "typ": "kouzlo",
+     "nazev": "Suggestion",
+     "od_urovne": 3,
+     "vzdy": true,
+     "trida": "Warlock"
+    }
+   ],
+   "Dark One's Own Luck": [
+    {
+     "typ": "poznamka",
+     "text": "+1d10 k checku/save 1/short"
+    }
+   ],
+   "Fiendish Resilience": [
+    {
+     "typ": "volba_slot",
+     "volba": "Fiendish Resilience",
+     "moznosti": {
+      "Acid": [
+       {
+        "typ": "odolnost",
+        "hodnota": "Acid"
+       }
+      ],
+      "Bludgeoning": [
+       {
+        "typ": "odolnost",
+        "hodnota": "Bludgeoning"
+       }
+      ],
+      "Cold": [
+       {
+        "typ": "odolnost",
+        "hodnota": "Cold"
+       }
+      ],
+      "Fire": [
+       {
+        "typ": "odolnost",
+        "hodnota": "Fire"
+       }
+      ],
+      "Lightning": [
+       {
+        "typ": "odolnost",
+        "hodnota": "Lightning"
+       }
+      ],
+      "Necrotic": [
+       {
+        "typ": "odolnost",
+        "hodnota": "Necrotic"
+       }
+      ],
+      "Piercing": [
+       {
+        "typ": "odolnost",
+        "hodnota": "Piercing"
+       }
+      ],
+      "Poison": [
+       {
+        "typ": "odolnost",
+        "hodnota": "Poison"
+       }
+      ],
+      "Psychic": [
+       {
+        "typ": "odolnost",
+        "hodnota": "Psychic"
+       }
+      ],
+      "Radiant": [
+       {
+        "typ": "odolnost",
+        "hodnota": "Radiant"
+       }
+      ],
+      "Slashing": [
+       {
+        "typ": "odolnost",
+        "hodnota": "Slashing"
+       }
+      ],
+      "Thunder": [
+       {
+        "typ": "odolnost",
+        "hodnota": "Thunder"
+       }
+      ]
+     }
+    },
+    {
+     "typ": "poznamka",
+     "text": "Fiendish Resilience: typ zranění lze pře zvolit po každém Short nebo Long Rest."
+    }
+   ]
+  },
+  "Gloom Stalker": {
+   "Dread Ambusher": [
+    {
+     "typ": "bonus",
+     "cil": "iniciativa",
+     "hodnota": "mod:WIS"
+    },
+    {
+     "typ": "poznamka",
+     "text": "První kolo: +10 ft move, extra útok +1d8"
+    },
+    {
+     "typ": "zdroj",
+     "nazev": "Dreadful Strike",
+     "pocet": "max(1, mod:WIS)",
+     "obnova": "long"
+    }
+   ],
+   "Umbral Sight": [
+    {
+     "typ": "smysl",
+     "nazev": "Darkvision",
+     "dosah": 90
+    }
+   ],
+   "Gloom Stalker Spells": [
+    {
+     "typ": "kouzlo",
+     "nazev": "Disguise Self",
+     "od_urovne": 3,
+     "vzdy": true,
+     "trida": "Ranger"
+    },
+    {
+     "typ": "kouzlo",
+     "nazev": "Rope Trick",
+     "od_urovne": 5,
+     "vzdy": true,
+     "trida": "Ranger"
+    },
+    {
+     "typ": "kouzlo",
+     "nazev": "Fear",
+     "od_urovne": 9,
+     "vzdy": true,
+     "trida": "Ranger"
+    }
+   ],
+   "Iron Mind": [
+    {
+     "typ": "zdatnost",
+     "oblast": "zachrana",
+     "hodnota": "WIS",
+     "od_urovne": 7
+    }
+   ]
+  },
+  "Great Old One Patron": {
+   "Awakened Mind": [
+    {
+     "typ": "poznamka",
+     "text": "Telepatie 30 stop"
+    }
+   ],
+   "Great Old One Spells": [
+    {
+     "typ": "kouzlo",
+     "nazev": "Detect Thoughts",
+     "od_urovne": 3,
+     "vzdy": true,
+     "trida": "Warlock"
+    },
+    {
+     "typ": "kouzlo",
+     "nazev": "Dissonant Whispers",
+     "od_urovne": 3,
+     "vzdy": true,
+     "trida": "Warlock"
+    },
+    {
+     "typ": "kouzlo",
+     "nazev": "Phantasmal Force",
+     "od_urovne": 3,
+     "vzdy": true,
+     "trida": "Warlock"
+    }
+   ],
+   "Eldritch Hex": [
+    {
+     "typ": "poznamka",
+     "text": "Hex bez koncentrace přes Pact Magic"
+    }
+   ],
+   "Thought Shield": [
+    {
+     "typ": "odolnost",
+     "hodnota": "Psychic",
+     "od_urovne": 10
+    }
+   ]
+  },
+  "Hunter": {
+   "Hunter's Prey": [
+    {
+     "typ": "volba_slot",
+     "volba": "Hunter's Prey",
+     "moznosti": {
+      "Colossus Slayer": [
+       {
+        "typ": "poznamka",
+        "text": "+1d8 damage na zraněný cíl 1/tah"
+       }
+      ],
+      "Horde Breaker": [
+       {
+        "typ": "poznamka",
+        "text": "Extra útok na jiný cíl do 5 stop"
+       }
+      ]
+     }
+    }
+   ],
+   "Defensive Tactics": [
+    {
+     "typ": "volba_slot",
+     "volba": "Defensive Tactics",
+     "moznosti": {
+      "Escape the Horde": [
+       {
+        "typ": "poznamka",
+        "text": "Opportunity útoky na tebe nevýhodné"
+       }
+      ],
+      "Multiattack Defense": [
+       {
+        "typ": "poznamka",
+        "text": "+4 AC po zásahu tentýmž tvorem"
+       }
+      ]
+     }
+    }
+   ],
+   "Superior Hunter's Defense": [
+    {
+     "typ": "poznamka",
+     "text": "Reakce: resistance na damage jednoho útoku"
+    }
+   ]
+  },
+  "Knowledge Domain": {
+   "Blessings of Knowledge": [
+    {
+     "typ": "poznamka",
+     "text": "2 dovednosti + expertíza (v dovednosti/expertiza)"
+    }
+   ],
+   "Knowledge Domain Spells": [
+    {
+     "typ": "kouzlo",
+     "nazev": "Command",
+     "od_urovne": 3,
+     "vzdy": true,
+     "trida": "Cleric"
+    },
+    {
+     "typ": "kouzlo",
+     "nazev": "Identify",
+     "od_urovne": 3,
+     "vzdy": true,
+     "trida": "Cleric"
+    }
+   ],
+   "Mind Reader": [
+    {
+     "typ": "kouzlo",
+     "nazev": "Detect Thoughts",
+     "od_urovne": 6,
+     "vzdy": true,
+     "trida": "Cleric"
+    }
+   ]
+  },
+  "Life Domain": {
+   "Disciple of Life": [
+    {
+     "typ": "poznamka",
+     "text": "Healing kouzla +2+úroveň kouzla HP navíc"
+    }
+   ],
+   "Life Domain Spells": [
+    {
+     "typ": "kouzlo",
+     "nazev": "Bless",
+     "od_urovne": 3,
+     "vzdy": true,
+     "trida": "Cleric"
+    },
+    {
+     "typ": "kouzlo",
+     "nazev": "Cure Wounds",
+     "od_urovne": 3,
+     "vzdy": true,
+     "trida": "Cleric"
+    },
+    {
+     "typ": "zdatnost",
+     "oblast": "zbroj",
+     "hodnota": "Heavy armor"
+    }
+   ],
+   "Preserve Life": [
+    {
+     "typ": "poznamka",
+     "text": "Channel Divinity: léčení 5× úroveň rozděleně"
+    }
+   ],
+   "Blessed Healer": [
+    {
+     "typ": "poznamka",
+     "text": "Healing kouzla léčí i tebe"
+    }
+   ],
+   "Supreme Healing": [
+    {
+     "typ": "poznamka",
+     "text": "Healing kostky = maximum"
+    }
+   ]
+  },
+  "Light Domain": {
+   "Light Domain Spells": [
+    {
+     "typ": "kouzlo",
+     "nazev": "Burning Hands",
+     "od_urovne": 3,
+     "vzdy": true,
+     "trida": "Cleric"
+    },
+    {
+     "typ": "kouzlo",
+     "nazev": "Faerie Fire",
+     "od_urovne": 3,
+     "vzdy": true,
+     "trida": "Cleric"
+    },
+    {
+     "typ": "kouzlo",
+     "nazev": "Light",
+     "vzdy": true,
+     "trida": "Cleric"
+    }
+   ],
+   "Radiance of the Dawn": [
+    {
+     "typ": "poznamka",
+     "text": "Channel Divinity: 2d10+úroveň radiant AoE"
+    }
+   ],
+   "Warding Flare": [
+    {
+     "typ": "zdroj",
+     "nazev": "Warding Flare",
+     "pocet": "max(1, mod:WIS)",
+     "obnova": "long"
+    }
+   ],
+   "Improved Warding Flare": [
+    {
+     "typ": "poznamka",
+     "text": "Warding Flare i pro spojence"
+    }
+   ]
+  },
+  "Oath of Devotion": {
+   "Oath of Devotion Spells": [
+    {
+     "typ": "kouzlo",
+     "nazev": "Protection from Evil and Good",
+     "od_urovne": 3,
+     "vzdy": true,
+     "trida": "Paladin"
+    },
+    {
+     "typ": "kouzlo",
+     "nazev": "Shield of Faith",
+     "od_urovne": 3,
+     "vzdy": true,
+     "trida": "Paladin"
+    },
+    {
+     "typ": "kouzlo",
+     "nazev": "Aid",
+     "od_urovne": 5,
+     "vzdy": true,
+     "trida": "Paladin"
+    },
+    {
+     "typ": "kouzlo",
+     "nazev": "Zone of Truth",
+     "od_urovne": 5,
+     "vzdy": true,
+     "trida": "Paladin"
+    }
+   ],
+   "Sacred Weapon": [
+    {
+     "typ": "poznamka",
+     "text": "Channel: +CHA mod na útoky zbraní"
+    }
+   ],
+   "Smite of Protection": [
+    {
+     "typ": "poznamka",
+     "text": "Divine Smite → Aura zesílí"
+    }
+   ],
+   "Aura of Devotion": [
+    {
+     "typ": "poznamka",
+     "text": "Aura: imunita Charmed"
+    }
+   ],
+   "Holy Nimbus": [
+    {
+     "typ": "poznamka",
+     "text": "Záře 30 stop + radiant damage"
+    }
+   ]
+  },
+  "Oath of Vengeance": {
+   "Oath of Vengeance Spells": [
+    {
+     "typ": "kouzlo",
+     "nazev": "Bane",
+     "od_urovne": 3,
+     "vzdy": true,
+     "trida": "Paladin"
+    },
+    {
+     "typ": "kouzlo",
+     "nazev": "Hunter's Mark",
+     "od_urovne": 3,
+     "vzdy": true,
+     "trida": "Paladin"
+    },
+    {
+     "typ": "kouzlo",
+     "nazev": "Hold Person",
+     "od_urovne": 5,
+     "vzdy": true,
+     "trida": "Paladin"
+    },
+    {
+     "typ": "kouzlo",
+     "nazev": "Misty Step",
+     "od_urovne": 5,
+     "vzdy": true,
+     "trida": "Paladin"
+    }
+   ],
+   "Vow of Enmity": [
+    {
+     "typ": "vyhoda",
+     "cil": "utok",
+     "popis": "Advantage na útoky na zvoleného nepřítele (Channel)"
+    }
+   ],
+   "Relentless Avenger": [
+    {
+     "typ": "poznamka",
+     "text": "Po opportunity zásahu pohyb poloviny Speed"
+    }
+   ],
+   "Soul of Vengeance": [
+    {
+     "typ": "poznamka",
+     "text": "Reakce: útok na cíl Vow of Enmity při jeho útoku"
+    }
+   ],
+   "Avenging Angel": [
+    {
+     "typ": "zdroj",
+     "nazev": "Avenging Angel",
+     "pocet": 1,
+     "obnova": "long",
+     "od_urovne": 20
+    },
+    {
+     "typ": "poznamka",
+     "text": "Bonus Action → transformace na 10 min: Fly Speed 60 ft + AoE Frightened; obnova i za slot 5. úrovně",
+     "od_urovne": 20
+    }
+   ]
+  },
+  "Path of the Berserker": {
+   "Frenzy": [
+    {
+     "typ": "poznamka",
+     "text": "Reckless frenzy útok: extra damage dle Rage Damage"
+    }
+   ],
+   "Mindless Rage": [
+    {
+     "typ": "poznamka",
+     "text": "Během Rage: imunita Charmed+Frightened; při vstupu do Rage stavy končí",
+     "od_urovne": 6
+    }
+   ],
+   "Retaliation": [
+    {
+     "typ": "poznamka",
+     "text": "Reakce: útok po zásahu od tvora do 5 stop"
+    }
+   ],
+   "Intimidating Presence": [
+    {
+     "typ": "poznamka",
+     "text": "AoE Frightened dle DC"
+    }
+   ]
+  },
+  "Path of the Wild Heart": {
+   "Animal Speaker": [
+    {
+     "typ": "kouzlo",
+     "nazev": "Beast Sense",
+     "od_urovne": 3,
+     "vzdy": true,
+     "trida": "Barbarian"
+    },
+    {
+     "typ": "kouzlo",
+     "nazev": "Speak with Animals",
+     "od_urovne": 3,
+     "vzdy": true,
+     "trida": "Barbarian"
+    }
+   ],
+   "Rage of the Wilds": [
+    {
+     "typ": "volba_slot",
+     "volba": "Rage of the Wilds",
+     "moznosti": {
+      "Bear": [
+       {
+        "typ": "poznamka",
+        "text": "Rage: resistance na vše mimo Psychic"
+       }
+      ],
+      "Eagle": [
+       {
+        "typ": "poznamka",
+        "text": "Rage: Dash+Disengage jako Bonus Action"
+       }
+      ],
+      "Elk": [
+       {
+        "typ": "poznamka",
+        "text": "Rage: Prone knockdown při průchodu"
+       }
+      ],
+      "Wolf": [
+       {
+        "typ": "poznamka",
+        "text": "Rage: spojenci Advantage na melee vs. cíle do 5 stop"
+       }
+      ]
+     }
+    }
+   ],
+   "Aspect of the Wilds": [
+    {
+     "typ": "volba_slot",
+     "volba": "Aspect of the Wilds",
+     "moznosti": {
+      "Owl": [
+       {
+        "typ": "smysl",
+        "nazev": "Darkvision",
+        "dosah": 60,
+        "od_urovne": 6
+       }
+      ],
+      "Panther": [
+       {
+        "typ": "rychlost",
+        "druh": "climb",
+        "hodnota": "walk",
+        "nastavit": true,
+        "od_urovne": 6
+       }
+      ],
+      "Salmon": [
+       {
+        "typ": "rychlost",
+        "druh": "swim",
+        "hodnota": "walk",
+        "nastavit": true,
+        "od_urovne": 6
+       }
+      ],
+      "Chameleon": [
+       {
+        "typ": "poznamka",
+        "text": "Hide jako Bonus Action",
+        "od_urovne": 6
+       }
+      ]
+     }
+    }
+   ]
+  },
+  "Thief": {
+   "Fast Hands": [
+    {
+     "typ": "poznamka",
+     "text": "Bonus Action: Sleight of Hand, Use Object, nástroje"
+    }
+   ],
+   "Second-Story Work": [
+    {
+     "typ": "rychlost",
+     "druh": "climb",
+     "hodnota": "walk",
+     "nastavit": true
+    },
+    {
+     "typ": "poznamka",
+     "text": "Skok: +DEX mod do dálky"
+    }
+   ],
+   "Supreme Sneak": [
+    {
+     "typ": "vyhoda",
+     "cil": "dovednost",
+     "popis": "Advantage na Stealth při pomalém pohybu"
+    }
+   ],
+   "Use Magic Device": [
+    {
+     "typ": "poznamka",
+     "text": "Použití magických předmětů bez omezení + arcane charges"
+    }
+   ],
+   "Thief's Reflexes": [
+    {
+     "typ": "poznamka",
+     "text": "Dva tahy v prvním kole"
+    }
+   ]
+  },
+  "War Domain": {
+   "War Domain Spells": [
+    {
+     "typ": "kouzlo",
+     "nazev": "Divine Favor",
+     "od_urovne": 3,
+     "vzdy": true,
+     "trida": "Cleric"
+    },
+    {
+     "typ": "kouzlo",
+     "nazev": "Shield of Faith",
+     "od_urovne": 3,
+     "vzdy": true,
+     "trida": "Cleric"
+    }
+   ],
+   "War Priest": [
+    {
+     "typ": "zdroj",
+     "nazev": "War Priest",
+     "pocet": "max(1, mod:WIS)",
+     "obnova": "long"
+    }
+   ],
+   "Guided Strike": [
+    {
+     "typ": "poznamka",
+     "text": "Channel: +10 k hodu útoku"
+    }
+   ],
+   "War God's Blessing": [
+    {
+     "typ": "poznamka",
+     "text": "Guided Strike i pro spojence"
+    }
+   ],
+   "Avatar of Battle": [
+    {
+     "typ": "odolnost",
+     "hodnota": "Bludgeoning",
+     "od_urovne": 17
+    },
+    {
+     "typ": "odolnost",
+     "hodnota": "Piercing",
+     "od_urovne": 17
+    },
+    {
+     "typ": "odolnost",
+     "hodnota": "Slashing",
+     "od_urovne": 17
+    }
+   ]
+  },
+  "Warrior of Shadow": {
+   "Shadow Arts": [
+    {
+     "typ": "smysl",
+     "nazev": "Darkvision",
+     "dosah": 60
+    },
+    {
+     "typ": "kouzlo",
+     "nazev": "Minor Illusion",
+     "vzdy": true,
+     "trida": "Monk"
+    }
+   ],
+   "Shadow Step": [
+    {
+     "typ": "poznamka",
+     "text": "Teleport mezi stíny jako Bonus Action"
+    }
+   ],
+   "Cloak of Shadows": [
+    {
+     "typ": "poznamka",
+     "text": "Invisible ve šeru/tmě"
+    }
+   ],
+   "Opportunist": [
+    {
+     "typ": "poznamka",
+     "text": "Reakce: útok na tvora, co minul spojence"
+    }
+   ]
+  },
+  "Warrior of the Open Hand": {
+   "Open Hand Technique": [
+    {
+     "typ": "poznamka",
+     "text": "Unarmed/Flurry: push/topple/stagger efekty"
+    }
+   ],
+   "Wholeness of Body": [
+    {
+     "typ": "zdroj",
+     "nazev": "Wholeness of Body",
+     "pocet": 1,
+     "obnova": "long"
+    }
+   ],
+   "Fleet Step": [
+    {
+     "typ": "poznamka",
+     "text": "Pohyb navíc při Step of the Wind"
+    }
+   ],
+   "Quivering Palm": [
+    {
+     "typ": "poznamka",
+     "text": "Vibrace: okamžité zabití na failed CON save"
+    }
+   ]
+  }
+ },
+ "item": {
+  "Padded": {
+   "zbroj": {
+    "typ": "light",
+    "zakladni_ac": 11
+   }
+  },
+  "Leather": {
+   "zbroj": {
+    "typ": "light",
+    "zakladni_ac": 11
+   }
+  },
+  "Studded Leather": {
+   "zbroj": {
+    "typ": "light",
+    "zakladni_ac": 12
+   }
+  },
+  "Hide": {
+   "zbroj": {
+    "typ": "medium",
+    "zakladni_ac": 12,
+    "max_dex": 2
+   }
+  },
+  "Chain Shirt": {
+   "zbroj": {
+    "typ": "medium",
+    "zakladni_ac": 13,
+    "max_dex": 2
+   }
+  },
+  "Scale Mail": {
+   "zbroj": {
+    "typ": "medium",
+    "zakladni_ac": 14,
+    "max_dex": 2
+   }
+  },
+  "Breastplate": {
+   "zbroj": {
+    "typ": "medium",
+    "zakladni_ac": 14,
+    "max_dex": 2
+   }
+  },
+  "Half Plate": {
+   "zbroj": {
+    "typ": "medium",
+    "zakladni_ac": 15,
+    "max_dex": 2
+   }
+  },
+  "Ring Mail": {
+   "zbroj": {
+    "typ": "heavy",
+    "zakladni_ac": 14
+   }
+  },
+  "Chain Mail": {
+   "zbroj": {
+    "typ": "heavy",
+    "zakladni_ac": 16
+   }
+  },
+  "Splint": {
+   "zbroj": {
+    "typ": "heavy",
+    "zakladni_ac": 17
+   }
+  },
+  "Plate": {
+   "zbroj": {
+    "typ": "heavy",
+    "zakladni_ac": 18
+   }
+  },
+  "Shield": {
+   "zbroj": {
+    "typ": "shield",
+    "zakladni_ac": 2
+   }
+  },
+  "Amulet of Health": {
+   "naladeni": true,
+   "efekty": [
+    {
+     "typ": "atribut_min",
+     "atribut": "CON",
+     "hodnota": 19,
+     "vyzaduje": "naladeni"
+    }
+   ]
+  },
+  "Gauntlets of Ogre Power": {
+   "naladeni": true,
+   "efekty": [
+    {
+     "typ": "atribut_min",
+     "atribut": "STR",
+     "hodnota": 19,
+     "vyzaduje": "naladeni"
+    }
+   ]
+  },
+  "Belt of Hill Giant Strength": {
+   "naladeni": true,
+   "efekty": [
+    {
+     "typ": "atribut_min",
+     "atribut": "STR",
+     "hodnota": 21,
+     "vyzaduje": "naladeni"
+    }
+   ]
+  },
+  "Bracers of Defense": {
+   "naladeni": true,
+   "efekty": [
+    {
+     "typ": "ac",
+     "hodnota": 2,
+     "podminka": "bez_zbroje",
+     "vyzaduje": "naladeni"
+    }
+   ]
+  },
+  "Cloak of Protection": {
+   "naladeni": true,
+   "efekty": [
+    {
+     "typ": "ac",
+     "hodnota": 1,
+     "vyzaduje": "naladeni"
+    },
+    {
+     "typ": "bonus",
+     "cil": "zachrana",
+     "hodnota": 1,
+     "vyzaduje": "naladeni"
+    }
+   ]
+  },
+  "Ring of Protection": {
+   "naladeni": true,
+   "efekty": [
+    {
+     "typ": "ac",
+     "hodnota": 1,
+     "vyzaduje": "naladeni"
+    },
+    {
+     "typ": "bonus",
+     "cil": "zachrana",
+     "hodnota": 1,
+     "vyzaduje": "naladeni"
+    }
+   ]
+  },
+  "Ioun Stone of Protection": {
+   "naladeni": true,
+   "efekty": [
+    {
+     "typ": "ac",
+     "hodnota": 1,
+     "vyzaduje": "naladeni"
+    }
+   ]
+  },
+  "Boots of Speed": {
+   "naladeni": true,
+   "efekty": [
+    {
+     "typ": "poznamka",
+     "text": "Bonus Action: dvojnásobná rychlost na 10 min",
+     "vyzaduje": "naladeni"
+    }
+   ]
+  }
+ },
+ "background": {}
+}

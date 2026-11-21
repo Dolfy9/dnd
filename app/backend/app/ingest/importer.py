@@ -16,6 +16,7 @@ from .. import db
 from ..config import CONTENT_DIRS, ENTITY_KEY, FOLDER_TYPES, ROOT, ROOT_FILES
 from . import links as L
 from . import markdown as M
+from . import rules as rules_ingest
 
 # složka → typ (nejspecifičtější prefix vyhrává)
 SORTED_FOLDERS = sorted(FOLDER_TYPES.keys(), key=len, reverse=True)
@@ -47,7 +48,7 @@ def iter_content() -> list[Path]:
 
 def slug_of(path: str) -> str:
     stem = Path(path).stem
-    return re.sub(r"^(Postava|Mesto|Město|Zeme|Quest|Hadanka|Sezeni|Kampan|Kniha|Obchod|Druh|Povolani|Podtrida|Sablona)_", "", stem)
+    return re.sub(r"^(Postava|Mesto|Město|Zeme|Quest|Hadanka|Sezeni|Kampan|Kniha|Obchod|Druh|Povolani|Podtrida|Feat|Kouzlo|Predmet|Pozadi|Sablona)_", "", stem)
 
 
 class Importer:
@@ -110,6 +111,11 @@ class Importer:
         self.con.execute("INSERT INTO entities_fts(id,type,name,data_text) VALUES(?,?,?,?)",
                          (eid, typ, name, M.plaintext(json.dumps(data, ensure_ascii=False))))
         self.stats["entities"] += 1
+        # vlastní pravidlový obsah → tabulka rules (kind podle typu entity)
+        try:
+            rules_ingest.upsert_entity(self.con, typ, rel, name, data or {})
+        except Exception as e:  # noqa: BLE001
+            self.stats["errors"].append(f"{rel}: rules upsert: {e}")
         return eid
 
     # ---------- vazby ----------
@@ -318,7 +324,10 @@ class Importer:
 
     def run(self, files: list[Path] | None = None) -> dict:
         started = time.time()
+        full = files is None
         files = iter_content() if files is None else files
+        if full:
+            self._prune_stale()
         changed_bodies: dict[str, str] = {}
         for f in files:
             try:
@@ -349,6 +358,13 @@ class Importer:
         self.stats["seconds"] = round(time.time() - started, 2)
         return self.stats
 
+    def _prune_stale(self) -> None:
+        """Odstraní indexované řádky, jejichž .md soubory na disku neexistují."""
+        for row in self.con.execute("SELECT path FROM pages").fetchall():
+            if not (ROOT / row["path"]).is_file():
+                delete_page(row["path"], self.con)
+                self.stats["removed"] += 1
+
 
 def import_all() -> dict:
     """Plný reimport – smaže a znovu naplní index."""
@@ -366,14 +382,32 @@ def reingest(paths: list[str]) -> dict:
     return stats
 
 
-def delete_page(path: str) -> None:
+def prune_stale() -> int:
+    """Smaže indexové řádky k souborům, které na disku už nejsou. Vrací počet."""
     con = db.connect()
+    n = 0
+    for row in con.execute("SELECT path FROM pages").fetchall():
+        if not (ROOT / row["path"]).is_file():
+            delete_page(row["path"], con)
+            n += 1
+    if n:
+        con.commit()
+    return n
+
+
+def delete_page(path: str, con=None) -> None:
+    own = con is None
+    if own:
+        con = db.connect()
     con.execute("DELETE FROM pages WHERE path=?", (path,))
     con.execute("DELETE FROM pages_fts WHERE path=?", (path,))
     con.execute("DELETE FROM dm_fts WHERE path=?", (path,))
     con.execute("DELETE FROM links WHERE src=?", (path,))
+    con.execute("DELETE FROM links WHERE dst=?", (path,))
     row = con.execute("SELECT id FROM entities WHERE path=?", (path,)).fetchone()
     if row:
         con.execute("DELETE FROM entities_fts WHERE id=?", (row["id"],))
         con.execute("DELETE FROM entities WHERE id=?", (row["id"],))
-    con.commit()
+    rules_ingest.remove_path(con, path)
+    if own:
+        con.commit()

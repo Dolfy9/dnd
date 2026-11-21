@@ -1,0 +1,26 @@
+{
+  "type": "kouzlo",
+  "label": "Kouzlo (Spell)",
+  "sections": [
+    {
+      "title": "Pravidlová data",
+      "fields": [
+        {"key": "nazev", "label": "Název (EN)", "type": "text", "required": true},
+        {"key": "uroven", "label": "Úroveň (0 = cantrip)", "type": "number"},
+        {"key": "skola", "label": "Škola", "type": "select",
+         "options": ["", "Abjuration", "Conjuration", "Divination", "Enchantment", "Evocation", "Illusion", "Necromancy", "Transmutation"]},
+        {"key": "cas", "label": "Čas seslání", "type": "text"},
+        {"key": "dosah", "label": "Dosah", "type": "text"},
+        {"key": "slozky", "label": "Složky", "type": "text"},
+        {"key": "trvani", "label": "Trvání", "type": "text"},
+        {"key": "koncentrace", "label": "Concentration", "type": "checkbox"},
+        {"key": "ritual", "label": "Ritual", "type": "checkbox"},
+        {"key": "tridy", "label": "Třídy", "type": "list"},
+        {"key": "vlastni", "label": "Vlastní obsah", "type": "checkbox"},
+        {"key": "text", "label": "Text kouzla", "type": "textarea"},
+        {"key": "vyssi_urovne", "label": "Na vyšší úrovni", "type": "textarea"},
+        {"key": "stitky", "label": "Štítky", "type": "tags"}
+      ]
+    }
+  ]
+}

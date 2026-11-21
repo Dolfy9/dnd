@@ -1,0 +1,20 @@
+{
+  "type": "feat",
+  "label": "Feat",
+  "sections": [
+    {
+      "title": "Pravidlová data",
+      "fields": [
+        {"key": "nazev", "label": "Název (EN)", "type": "text", "required": true},
+        {"key": "kategorie", "label": "Kategorie", "type": "select",
+         "options": ["", "Origin", "General", "Fighting Style", "Epic Boon"]},
+        {"key": "predpoklad", "label": "Předpoklad", "type": "text"},
+        {"key": "opakovatelny", "label": "Opakovatelný", "type": "checkbox"},
+        {"key": "vlastni", "label": "Vlastní obsah", "type": "checkbox"},
+        {"key": "text", "label": "Text pravidla", "type": "textarea"},
+        {"key": "efekty", "label": "Efekty (seznam objektů)", "type": "dictlist"},
+        {"key": "stitky", "label": "Štítky", "type": "tags"}
+      ]
+    }
+  ]
+}

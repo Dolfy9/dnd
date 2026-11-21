@@ -61,3 +61,6 @@ Seznam věcí k rozhodnutí DM. Po rozhodnutí položku přesuň do sekce *Vyře
 - Území jihovýchodně od jižního Nöetu (okolí 720,1292) je v kresbě samostatná smyčka bez vlastníka – komu patří? *(návrh – čeká na DM)*
 - **Tvor s holí u Khearazu (≈1338,568):** není jasné, zda jde o bytost, sochu, nebo jiný symbol; zatím bez samostatné značky. *(návrh – čeká na DM)*
 - **Velký jihovýchodní ostrov s loděmi (≈1870,1135):** kresba mu nedává čitelné jméno. Má mít vlastní název, nebo je součástí Svobodných Jižních ostrovů? *(návrh – čeká na DM)*
+
+## Postavy a pravidla
+- **Mystické druhy bez pravidel:** `Turandar (Stavitel)`, `Turandar (Stavitelka)`, `Ferienský bůh` a `Ferienská bytost` se používají u postav, ale nemají stránku v `13_Druhy/` ani pravidlová data, takže jim karta postavy nepřiřazuje žádné rysy. Mají mít vlastní mechaniku (vlastní druh s efekty)? *(čeká na DM)*
