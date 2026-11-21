@@ -1,5 +1,7 @@
 import { useEffect, useRef, useState } from "react";
+import { useQuery } from "@tanstack/react-query";
 import { get } from "../api";
+import { useApp } from "../store";
 
 declare global { interface Window { YT?: any; onYouTubeIframeAPIReady?: () => void } }
 
@@ -14,20 +16,26 @@ export default function MusicPlayer() {
   const [playing, setPlaying] = useState(false);
   const [vol, setVol] = useState<number>(load().vol ?? 60);
   const [presetId, setPresetId] = useState<string>(load().preset || "");
-  const [presets, setPresets] = useState<Preset[]>([]);
   const [title, setTitle] = useState("Hudba z YouTube");
   const [sub, setSub] = useState("vyber preset a stiskni přehrát");
   const [thumb, setThumb] = useState("");
   const playerRef = useRef<any>(null);
   const ytReady = useRef(false);
   const hostRef = useRef<HTMLDivElement>(null);
+  const musicRequest = useApp((s) => s.musicRequest);
 
-  useEffect(() => { get<any>("/api/admin/music").then((d) => {
-    setPresets(d.items || []);
-    if (!presetId && d.items?.length) setPresetId(d.items[0].id);
-  }); }, []); // eslint-disable-line
+  const presetsQ = useQuery({
+    queryKey: ["music"],
+    queryFn: () => get<{ items: Preset[] }>("/api/admin/music"),
+    staleTime: 30_000,
+  });
+  const presets = presetsQ.data?.items || [];
 
-  const preset = () => presets.find((p) => p.id === presetId) || presets[0];
+  useEffect(() => {
+    if (!presetId && presets.length) setPresetId(presets[0].id);
+  }, [presets, presetId]);
+
+  const preset = (id?: string) => presets.find((p) => p.id === (id || presetId)) || presets[0];
 
   const ensureYT = (cb: () => void) => {
     if (ytReady.current || window.YT?.Player) { ytReady.current = true; return cb(); }
@@ -42,8 +50,8 @@ export default function MusicPlayer() {
     }
   };
 
-  const playPreset = () => {
-    const p = preset(); if (!p || !playerRef.current) return;
+  const playPreset = (id?: string) => {
+    const p = preset(id); if (!p || !playerRef.current) return;
     try {
       if (p.list_id) playerRef.current.loadPlaylist({ list: p.list_id, listType: "playlist", index: 0 });
       else playerRef.current.loadVideoById(p.video_id);
@@ -52,13 +60,13 @@ export default function MusicPlayer() {
     setSub(p.name + (p.note ? ` · ${p.note}` : ""));
   };
 
-  const start = () => ensureYT(() => {
-    if (playerRef.current) return playPreset();
+  const start = (id?: string) => ensureYT(() => {
+    if (playerRef.current) return playPreset(id);
     playerRef.current = new window.YT.Player(hostRef.current, {
       width: 1, height: 1,
       playerVars: { autoplay: 0, controls: 0, disablekb: 1, fs: 0, iv_load_policy: 3, modestbranding: 1, playsinline: 1, rel: 0 },
       events: {
-        onReady: (e: any) => { e.target.setVolume(vol); playPreset(); },
+        onReady: (e: any) => { e.target.setVolume(vol); playPreset(id); },
         onStateChange: (e: any) => {
           const YS = window.YT.PlayerState;
           if (e.data === YS.PLAYING) {
@@ -71,6 +79,16 @@ export default function MusicPlayer() {
       },
     });
   });
+
+  // požadavek z /hudba – otevřít panel a rovnou hrát daný preset
+  useEffect(() => {
+    if (!musicRequest) return;
+    setOpen(true);
+    setPresetId(musicRequest.id);
+    save({ vol, preset: musicRequest.id, open: true });
+    start(musicRequest.id);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [musicRequest?.n]);
 
   const toggle = () => {
     if (!playerRef.current) return start();

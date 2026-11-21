@@ -3,6 +3,8 @@ import { useParams, Link } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 import { ArrowDown, ArrowUp, ChevronLeft, ChevronRight } from "lucide-react";
 import { get } from "../api";
+import { BookA } from "lucide-react";
+import { PageHeader } from "../components/ui";
 
 type Row = Record<string, unknown>;
 type Col = { label: string; sort?: string; fn: (r: Row) => unknown };
@@ -164,20 +166,19 @@ export default function Catalog() {
 
   return (
     <div className="p-6 max-w-6xl mx-auto fade-in">
-      <div className="flex items-center gap-3 mb-4 flex-wrap">
-        <h1 className="text-2xl font-bold">{def.label}</h1>
-        <span className="text-sm text-[var(--ink-3)] font-ui">{total} položek</span>
-        <input
-          className="input !w-64 ml-auto !py-1.5 !text-sm"
-          placeholder="Filtrovat na serveru…"
-          value={qInput}
-          onChange={(e) => setQInput(e.target.value)}
-        />
-      </div>
-      <div className="flex gap-1.5 mb-4 flex-wrap font-ui text-xs">
+      <PageHeader icon={<BookA size={20} />} title={def.label}
+        subtitle={`${total} položek`}
+        actions={
+          <input
+            className="input !w-64 !py-1.5 !text-sm"
+            placeholder="Filtrovat na serveru…"
+            value={qInput}
+            onChange={(e) => setQInput(e.target.value)}
+          />
+        } />
+      <div className="seg mb-4 flex-wrap">
         {Object.entries(KINDS).map(([k, v]) => (
-          <Link key={k} to={`/katalog/${k}`}
-            className={`btn !text-xs !py-1 ${k === kind ? "!border-[var(--accent)] !text-[var(--accent-2)]" : ""}`}>
+          <Link key={k} to={`/katalog/${k}`} className={k === kind ? "on" : ""}>
             {v.label}
           </Link>
         ))}

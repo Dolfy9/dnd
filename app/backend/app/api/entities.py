@@ -155,7 +155,9 @@ def new_entity(b: NewEntity, u: dict = Depends(security.require("editor"))):
     stem = re.sub(r"[^A-Za-z0-9]+", "_", ascii_name).strip("_") or "Nova"
     prefix = {"postava": "Postava_", "obchod": "Obchod_", "druh": "Druh_", "mesto": "Mesto_",
               "quest": "Quest_", "hadanka": "Hadanka_", "sezeni": "Sezeni_", "kniha": "Kniha_",
-              "povolani": "Povolani_", "podtrida": "Podtrida_"}.get(b.type, "")
+              "povolani": "Povolani_", "podtrida": "Podtrida_",
+              "feat": "Feat_", "kouzlo": "Kouzlo_", "predmet": "Predmet_",
+              "pozadi": "Pozadi_"}.get(b.type, "")
     p = safe_path(f"{b.dir.strip('/')}/{prefix}{stem}.md")
     if p.exists():
         raise HTTPException(409, "soubor už existuje")
@@ -180,7 +182,7 @@ def new_entity(b: NewEntity, u: dict = Depends(security.require("editor"))):
         body = f"# {b.name}\n\n> **Stav:** návrh\n\n## Pro DM (tajné)\n"
     from ..ingest.markdown import join_front
     p.parent.mkdir(parents=True, exist_ok=True)
-    p.write_text(join_front(meta, body), encoding="utf-8")
+    p.write_text(join_front(meta, body), encoding="utf-8", newline="")
     rel = p.relative_to(ROOT).as_posix()
     importer.reingest([rel])
     db.audit(u["login"], "entity.create", rel, b.type)

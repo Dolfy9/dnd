@@ -1,6 +1,8 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import { put, upload } from "../api";
+import { Shield } from "lucide-react";
+import { PageHeader } from "../components/ui";
 import { isEditor, useApp } from "../store";
 
 type Item = { id: string; nazev: string; soubor: string; znak?: string; znak_en?: string;
@@ -88,16 +90,18 @@ export default function Heraldika() {
 
   return (
     <div className="p-6 max-w-6xl mx-auto font-ui">
-      <div className="flex items-center gap-3 mb-4 flex-wrap">
-        <h1 className="text-2xl font-bold">🛡 Heraldika</h1>
-        {data?.stav && <span className="chip text-[11px]">{data.stav}</span>}
-        <input className="inp !w-56 !py-1.5 ml-auto" placeholder="Filtrovat…" value={q} onChange={(e) => setQ(e.target.value)} />
-        <div className="flex gap-1">
-          <button className={"btn sm" + (tab === "zeme" ? " chip-accent" : "")} onClick={() => setTab("zeme")}>Země ({data?.zeme?.length ?? "…"})</button>
-          <button className={"btn sm" + (tab === "mesta" ? " chip-accent" : "")} onClick={() => setTab("mesta")}>Města ({data?.mesta?.length ?? "…"})</button>
-        </div>
-      </div>
-      <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+      <PageHeader icon={<Shield size={20} />} title="Heraldika"
+        subtitle={data?.stav || undefined}
+        actions={
+          <>
+            <input className="inp !w-56 !py-1.5" placeholder="Filtrovat…" value={q} onChange={(e) => setQ(e.target.value)} />
+            <div className="seg">
+              <button className={tab === "zeme" ? "on" : ""} onClick={() => setTab("zeme")}>Země ({data?.zeme?.length ?? "…"})</button>
+              <button className={tab === "mesta" ? "on" : ""} onClick={() => setTab("mesta")}>Města ({data?.mesta?.length ?? "…"})</button>
+            </div>
+          </>
+        } />
+      <div className="her-grid grid gap-3 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
         {items.map((it) => (
           <button key={it.id} onClick={() => open(it)}
             className="card p-4 text-left hover:border-[var(--accent)] flex gap-3 items-start">
@@ -114,7 +118,7 @@ export default function Heraldika() {
 
       {sel && (
         <div className="fixed inset-0 z-[700] bg-black/60 flex items-center justify-center p-4" onClick={() => setSel(null)}>
-          <div className="card p-6 w-[560px] max-w-full font-ui max-h-[90vh] overflow-y-auto" onClick={(e) => e.stopPropagation()}>
+          <div className="card p-6 w-[560px] max-w-full font-ui max-h-[90dvh] overflow-y-auto" onClick={(e) => e.stopPropagation()}>
             <button className="float-right text-[var(--ink-3)]" onClick={() => setSel(null)}>✕</button>
             <h2 className="text-xl font-bold mb-3">{sel.nazev}</h2>
             <input ref={fileRef} type="file" accept="image/*" className="hidden" onChange={onFile} />

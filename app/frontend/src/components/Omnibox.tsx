@@ -64,7 +64,7 @@ export default function Omnibox() {
   };
 
   return (
-    <div className="fixed inset-0 z-50 bg-black/40 flex items-start justify-center pt-[12vh]"
+    <div className="fixed inset-0 z-50 bg-black/40 flex items-start justify-center pt-[10dvh]"
       onMouseDown={() => setOmnibox(false)}>
       <div className="card w-full max-w-xl overflow-hidden fade-in" onMouseDown={(e) => e.stopPropagation()}>
         <div className="flex items-center gap-2 px-3 border-b border-[var(--line)]">
@@ -84,7 +84,7 @@ export default function Omnibox() {
           />
           {busy && <span className="text-xs text-[var(--ink-3)] font-ui">…</span>}
         </div>
-        <div className="max-h-[55vh] overflow-y-auto p-1.5">
+        <div className="max-h-[55dvh] overflow-y-auto p-1.5">
           {Object.entries(hits).map(([group, items]) => (
             <div key={group} className="mb-1">
               <div className="px-2 pt-2 pb-1 text-[10px] font-ui font-bold uppercase tracking-wider text-[var(--ink-3)]">

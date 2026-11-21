@@ -210,7 +210,7 @@ def put_page(path: str, body: PageBody, u: dict = Depends(security.require("edit
     else:
         meta, _old_body, _ = M.split_front(p.read_text(encoding="utf-8"))
         text = M.join_front(meta, body.body)
-    p.write_text(text, encoding="utf-8")
+    p.write_text(text, encoding="utf-8", newline="")
     stats = importer.reingest([rel])
     db.audit(u["login"], "page.save", rel)
     return {"ok": True, "stats": stats}
@@ -241,7 +241,7 @@ def new_page(b: NewPage, u: dict = Depends(security.require("editor"))):
     else:
         text = f"# {name}\n\n> **Stav:** návrh\n\n"
     p.parent.mkdir(parents=True, exist_ok=True)
-    p.write_text(text, encoding="utf-8")
+    p.write_text(text, encoding="utf-8", newline="")
     rel = p.relative_to(ROOT).as_posix()
     importer.reingest([rel])
     db.audit(u["login"], "page.create", rel)
@@ -258,6 +258,17 @@ def del_page(path: str, u: dict = Depends(security.require("editor"))):
     importer.delete_page(rel)
     db.audit(u["login"], "page.delete", rel)
     return {"ok": True}
+
+
+class PreviewBody(BaseModel):
+    path: str = ""
+    body: str = ""
+
+
+@router.post("/page/preview")
+def preview_page(b: PreviewBody, u: dict = Depends(security.require("editor"))):
+    """Náhled těla stránky (včetně DM sekcí) pro editor – nic se neukládá."""
+    return {"html": render.render_markdown(b.path or "preview.md", b.body)}
 
 
 class LinkifyBody(BaseModel):
@@ -283,7 +294,7 @@ def linkify(path: str, b: LinkifyBody, u: dict = Depends(security.require("edito
     body2, n = pat.subn(lambda m: f"[{m.group(0)}]({rel_link})", body, count=max(1, b.occurrences))
     if not n:
         raise HTTPException(400, "výskyt nenalezen")
-    p.write_text(M.join_front(meta, body2), encoding="utf-8")
+    p.write_text(M.join_front(meta, body2), encoding="utf-8", newline="")
     rel = p.relative_to(ROOT).as_posix()
     importer.reingest([rel])
     db.audit(u["login"], "page.linkify", rel, f"{name} → {b.target} ×{n}")

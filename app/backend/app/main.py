@@ -80,6 +80,9 @@ MEDIA_EXT = {".webp", ".png", ".jpg", ".jpeg", ".gif", ".svg", ".json", ".pdf",
 @app.get("/repo/{path:path}")
 async def repo_file(path: str):
     p = (config.ROOT / path).resolve()
+    # přílohy entit se servírují jen přes autentizované /api/media/prilohy
+    if "prilohy" in p.parts:
+        return JSONResponse({"chyba": "nenalezeno"}, 404)
     if config.ROOT not in p.parents or not p.is_file() or p.suffix.lower() not in MEDIA_EXT:
         return JSONResponse({"chyba": "nenalezeno"}, 404)
     return FileResponse(p, media_type=mimetypes.guess_type(str(p))[0])

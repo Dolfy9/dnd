@@ -33,6 +33,11 @@ def run() -> None:
         if stats["errors"]:
             print("  chyby:", stats["errors"][:10], flush=True)
         print("Knihovna pravidel:", rules.load(), flush=True)
+    else:
+        # i mimo plný import: zahodit řádky smazaných souborů (delete mimo API / vypnutý backend)
+        n = importer.prune_stale()
+        if n:
+            print(f"  index: odstraněno {n} záznamů smazaných souborů", flush=True)
     pw = ensure_admin()
     if pw:
         print(f"\n>>> Vytvořen admin účet: {config.ADMIN_LOGIN} / {pw}\n"

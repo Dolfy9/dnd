@@ -190,7 +190,7 @@ def _class_page(markdown, src, root):
 
 
 def on_page_markdown(markdown, page, config, files):
-    src = page.file.src_path
+    src = page.file.src_uri
     root = Path(__file__).resolve().parent.parent
     markdown = _class_page(markdown, src, root)
     if src == "README.md":

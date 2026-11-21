@@ -3,10 +3,11 @@ import { Link, useNavigate } from "react-router-dom";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import {
   Plus, Search, Trash2, ArrowUp, ArrowDown, Swords, ScrollText,
-  Users, BookOpen, AlertTriangle, X, ImagePlus,
+  Users, BookOpen, BookMarked, AlertTriangle, X, ImagePlus,
 } from "lucide-react";
 import { get, post, put, del, upload } from "../api";
 import { useApp, isEditor } from "../store";
+import { PageHeader } from "../components/ui";
 
 interface Kampan {
   id: number; name: string; path: string; slug: string; status: string;
@@ -15,10 +16,10 @@ interface Kampan {
 interface Battle { id: string; name: string; status: string; kampan: string }
 
 const STAV: Record<string, string> = {
-  "příprava": "bg-sky-900/40 text-sky-200 border-sky-700/50",
-  "aktivní": "bg-emerald-900/40 text-emerald-200 border-emerald-700/50",
-  "pozastavená": "bg-amber-900/40 text-amber-200 border-amber-700/50",
-  "dokončená": "bg-zinc-700/40 text-zinc-300 border-zinc-600/50",
+  "příprava": "stav-priprava",
+  "aktivní": "stav-aktivni",
+  "pozastavená": "stav-pozastavena",
+  "dokončená": "stav-dokoncena",
 };
 
 const battleFor = (b: Battle, k: Kampan) =>
@@ -144,33 +145,28 @@ export default function Kampane() {
   return (
     <div className="h-full overflow-auto">
       <div className="max-w-6xl mx-auto px-6 py-8 fade-in">
-        <div className="flex items-end justify-between gap-4 mb-1 flex-wrap">
-          <div>
-            <h1 className="chapter-title !text-left !mb-0">Kampaně</h1>
-            <p className="text-sm text-[var(--ink-3)] italic mt-1">
-              Přehled všech kampaní – stav, družina, questy, sezení a boje.
-            </p>
-          </div>
-          <div className="flex items-center gap-2">
-            <div className="relative">
-              <Search size={15} className="absolute left-2.5 top-1/2 -translate-y-1/2 text-[var(--ink-3)]" />
-              <input className="input !pl-8 !py-1.5 w-56" placeholder="Hledat kampaň…"
-                value={q} onChange={(e) => setQ(e.target.value)} />
-            </div>
-            <select className="input !py-1.5 !w-auto" value={sort}
-              onChange={(e) => setSort(e.target.value as any)}>
-              <option value="poradi">Vlastní pořadí</option>
-              <option value="stav">Podle stavu</option>
-              <option value="nazev">Podle názvu</option>
-            </select>
-            {editor && (
-              <button className="btn chip-accent flex items-center gap-1.5" onClick={() => setShowNew(true)}>
-                <Plus size={15} /> Nová kampaň
-              </button>
-            )}
-          </div>
-        </div>
-        <div className="chapter-rule"><i>✦</i></div>
+        <PageHeader icon={<BookMarked size={20} />} title="Kampaně"
+          subtitle="Přehled všech kampaní – stav, družina, questy, sezení a boje."
+          actions={
+            <>
+              <div className="relative">
+                <Search size={15} className="absolute left-2.5 top-1/2 -translate-y-1/2 text-[var(--ink-3)]" />
+                <input className="input !pl-8 !py-1.5 w-56" placeholder="Hledat kampaň…"
+                  value={q} onChange={(e) => setQ(e.target.value)} />
+              </div>
+              <select className="input !py-1.5 !w-auto" value={sort}
+                onChange={(e) => setSort(e.target.value as any)}>
+                <option value="poradi">Vlastní pořadí</option>
+                <option value="stav">Podle stavu</option>
+                <option value="nazev">Podle názvu</option>
+              </select>
+              {editor && (
+                <button className="btn chip-accent flex items-center gap-1.5" onClick={() => setShowNew(true)}>
+                  <Plus size={15} /> Nová kampaň
+                </button>
+              )}
+            </>
+          } />
 
         {kampaneQ.isLoading && <div className="text-[var(--ink-3)] py-12 text-center">Načítám kampaně…</div>}
 
@@ -195,7 +191,7 @@ export default function Kampane() {
                 <div className="kampan-card-grad" />
                 <div className="kampan-card-body">
                   {stav && (
-                    <span className={`chip border self-end ${STAV[stav] || "bg-[var(--bg-2)] text-[var(--ink-2)] border-[var(--line)]"}`}>
+                    <span className={`chip stav-chip self-end ${STAV[stav] || ""}`}>
                       {stav}
                     </span>
                   )}

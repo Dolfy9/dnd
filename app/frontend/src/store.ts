@@ -10,6 +10,8 @@ interface AppState {
   setOmnibox: (v: boolean) => void;
   sidebarOpen: boolean;
   setSidebar: (v: boolean) => void;
+  musicRequest: { id: string; n: number } | null; // požadavek na přehrání presetu z /hudba
+  playMusic: (id: string) => void;
 }
 
 export const useApp = create<AppState>((set) => ({
@@ -19,8 +21,14 @@ export const useApp = create<AppState>((set) => ({
   togglePreview: () => set((s) => ({ previewPlayer: !s.previewPlayer })),
   omnibox: false,
   setOmnibox: (omnibox) => set({ omnibox }),
-  sidebarOpen: false,
-  setSidebar: (sidebarOpen) => set({ sidebarOpen }),
+  // pod 1024px je sidebar off-canvas drawer — startuje zavřená, persist jen pro desktop
+  sidebarOpen: window.innerWidth < 1024 ? false : localStorage.getItem("mont-sidebar") !== "0",
+  setSidebar: (sidebarOpen) => {
+    localStorage.setItem("mont-sidebar", sidebarOpen ? "1" : "0");
+    set({ sidebarOpen });
+  },
+  musicRequest: null,
+  playMusic: (id) => set((s) => ({ musicRequest: { id, n: (s.musicRequest?.n || 0) + 1 } })),
 }));
 
 export const isEditor = (u: User | null | undefined) =>

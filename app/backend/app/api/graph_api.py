@@ -7,7 +7,8 @@ router = APIRouter(prefix="/api/graph", tags=["graph"])
 
 
 @router.get("/neighborhood")
-def neighborhood(path: str = "", entity: int = 0, u: dict | None = Depends(security.optional)):
+def neighborhood(path: str = "", entity: int = 0, hops: int = 1, kinds: str = "link,fm",
+                 u: dict | None = Depends(security.optional)):
     con = db.connect()
     if entity:
         row = con.execute("SELECT path FROM entities WHERE id=?", (entity,)).fetchone()
@@ -16,6 +17,8 @@ def neighborhood(path: str = "", entity: int = 0, u: dict | None = Depends(secur
         path = row["path"]
     if not path:
         raise HTTPException(400, "chybí path nebo entity")
+    hops = max(1, min(2, hops))
+    kinds_set = {k for k in (k.strip() for k in kinds.split(",")) if k} or {"link", "fm"}
     editor = security.can_edit(u)
 
     def page(path_):
@@ -25,11 +28,12 @@ def neighborhood(path: str = "", entity: int = 0, u: dict | None = Depends(secur
     edges: list[dict] = []
     seen = {path}
     frontier = [path]
-    for hop in range(2):
+    for hop in range(hops):
         nxt = []
         for src in frontier:
             rows = con.execute(
                 "SELECT src,dst,kind FROM links WHERE src=? OR dst=?", (src, src)).fetchall()
+            rows = [r for r in rows if r["kind"] in kinds_set]
             for r in rows:
                 other = r["dst"] if r["src"] == src else r["src"]
                 p = page(other)
@@ -59,7 +63,8 @@ def stats(u: dict = Depends(security.require("editor"))):
     edges = {k: con.execute("SELECT count(*) c FROM links WHERE kind=?", (k,)).fetchone()["c"]
              for k in ("link", "fm", "mention")}
     orphans = con.execute(
-        "SELECT p.path,p.title FROM pages p WHERE p.type!='stranka' AND p.path!='README.md'"
+        "SELECT p.path,p.title FROM pages p WHERE p.type NOT IN ('stranka','sablona')"
+        " AND p.path!='README.md' AND p.path NOT LIKE '_Sablony/%'"
         " AND NOT EXISTS(SELECT 1 FROM links l WHERE l.dst=p.path OR l.src=p.path)"
         " ORDER BY p.title LIMIT 200").fetchall()
     return {"pages_by_type": out, "edges": edges,

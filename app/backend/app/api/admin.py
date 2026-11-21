@@ -245,3 +245,12 @@ def put_music(b: MusicBody, u: dict = Depends(security.require("editor"))):
     con.commit()
     db.audit(u["login"], "music.save", b.id)
     return {"ok": True}
+
+
+@router.delete("/music/{preset_id}")
+def del_music(preset_id: str, u: dict = Depends(security.require("editor"))):
+    con = db.connect()
+    con.execute("DELETE FROM music_presets WHERE id=?", (preset_id,))
+    con.commit()
+    db.audit(u["login"], "music.delete", preset_id)
+    return {"ok": True}

@@ -1,13 +1,8 @@
 import { Link, useParams } from "react-router-dom";
-import {
-  Swords, ScrollText, BookOpen, Music, Puzzle, Landmark, MapPin, Flag,
-  Castle, Store, Users, LibraryBig, Map, Compass, Dna, Hammer, GitBranch,
-  Sparkles, Wand, Skull, Package, BookA, Scale, Inbox, HelpCircle,
-  LayoutTemplate, Network, Shield, UserCog, ListChecks, Settings,
-  BookMarked, ClipboardList, Crown, Folder, type LucideIcon,
-} from "lucide-react";
+import { Folder, Wand2 } from "lucide-react";
 import { useNav } from "../api";
 import { useApp } from "../store";
+import { NAV_ICONS } from "../icons";
 import type { NavItem } from "../types";
 
 const INTRO: Record<string, string> = {
@@ -18,26 +13,8 @@ const INTRO: Record<string, string> = {
   mapa: "Interaktivní atlas světa Montelien.",
 };
 
-// ikona pro každou položku navigace
-const ICONS: Record<string, LucideIcon> = {
-  // hra / kampaně
-  boj: Swords, boje: ClipboardList, kampane: BookMarked, questy: ScrollText,
-  sezeni: BookOpen, hadanky: Puzzle, hudba: Music,
-  // svět
-  "svet-historie": Landmark, mista: MapPin, zeme: Flag, mesta: Castle,
-  obchody: Store, postavy: Users, frakce: Crown, knihy: LibraryBig, mapy: Map,
-  // znalosti
-  znalosti: Compass, druhy: Dna, povolani: Hammer, podtridy: GitBranch,
-  pozadi: Landmark, featy: Sparkles, kouzla: Wand, bestiar: Skull,
-  predmety: Package, glosar: BookA, pravidla: Scale,
-  // správa
-  navrhy: Inbox, otazky: HelpCircle, sablony: LayoutTemplate, graf: Network,
-  heraldika: Shield, uzivatele: UserCog, audit: ListChecks, system: Settings,
-};
-
-
 function Tile({ item }: { item: NavItem }) {
-  const Icon = ICONS[item.id || ""] || Folder;
+  const Icon = NAV_ICONS[item.id || ""] || Folder;
   const inner = (
     <>
       <span className="navtile-ico"><Icon size={30} strokeWidth={1.4} /></span>
@@ -69,6 +46,12 @@ export default function Category() {
       )}
       <div className="navtile-grid">
         {(section.children || []).map((c, i) => <Tile key={c.id || i} item={c} />)}
+        {(sec === "znalosti" || sec === "sprava") && (
+          <Link to="/obsah" className="navtile">
+            <span className="navtile-ico"><Wand2 size={30} strokeWidth={1.4} /></span>
+            <span className="navtile-t">Vlastní obsah</span>
+          </Link>
+        )}
       </div>
     </div>
   );

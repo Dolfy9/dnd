@@ -42,6 +42,7 @@ CONTENT_DIRS = [
     "01_Svet", "02_Zeme", "03_Mesta", "04_Postavy", "05_Frakce",
     "06_Knihy_a_Dokumenty", "07_Kampane", "08_Questy", "09_Hadanky",
     "10_Sezeni", "11_Mapy", "12_Obchody", "13_Druhy", "14_Povolani", "15_Podtridy",
+    "16_Featy", "17_Kouzla", "18_Predmety", "19_Pozadi",
     "_Sablony",
 ]
 ROOT_FILES = ["README.md", "Otevrene_otazky.md", "AGENTS.md"]
@@ -54,12 +55,15 @@ FOLDER_TYPES = {
     "06_Knihy_a_Dokumenty": "kniha", "07_Kampane": "kampan",
     "08_Questy": "quest", "09_Hadanky": "hadanka", "10_Sezeni": "sezeni",
     "11_Mapy": "stranka", "12_Obchody": "obchod", "13_Druhy": "druh",
-    "14_Povolani": "povolani", "15_Podtridy": "podtrida", "_Sablony": "sablona",
+    "14_Povolani": "povolani", "15_Podtridy": "podtrida",
+    "16_Featy": "feat", "17_Kouzla": "kouzlo", "18_Predmety": "predmet",
+    "19_Pozadi": "pozadi", "_Sablony": "sablona",
 }
 # Klíč YAML hlavičky pro typy se strukturovanými daty (typ → klíč frontmatteru)
 ENTITY_KEY = {t: t for t in (
     "postava", "obchod", "druh", "mesto", "zeme", "frakce", "misto", "kniha",
     "kampan", "quest", "hadanka", "sezeni", "povolani", "podtrida", "svet",
+    "feat", "kouzlo", "predmet", "pozadi",
 )}
 
 TYPE_LABELS = {
@@ -68,6 +72,7 @@ TYPE_LABELS = {
     "kampan": "Kampaň", "quest": "Quest", "hadanka": "Hádanka", "sezeni": "Sezení",
     "stranka": "Stránka", "obchod": "Obchod", "druh": "Druh", "povolani": "Povolání",
     "podtrida": "Podtřída", "sablona": "Šablona",
+    "feat": "Feat", "kouzlo": "Kouzlo", "predmet": "Předmět", "pozadi": "Pozadí",
 }
 
 ASSETS = Path(__file__).resolve().parent / "static"

@@ -1,7 +1,7 @@
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useQueryClient } from "@tanstack/react-query";
 import {
-  Castle, Search, PanelLeft, SunMoon, Eye, LogOut, ChevronDown, User as UserIcon, Plus,
+  Castle, Search, PanelLeft, SunMoon, Eye, LogOut, ChevronDown, Check, User as UserIcon, Plus, Menu,
 } from "lucide-react";
 import { useState, useRef, useEffect } from "react";
 import { logout, useNav } from "../api";
@@ -62,7 +62,7 @@ export default function TopBar() {
   const nav = useNavigate();
   const loc = useLocation();
   const qc = useQueryClient();
-  const [menu, setMenu] = useState<"" | "theme" | "user">("");
+  const [menu, setMenu] = useState<"" | "theme" | "user" | "cats">("");
   const [openCat, setOpenCat] = useState("");
   const [newEntity, setNewEntity] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
@@ -92,7 +92,7 @@ export default function TopBar() {
     : loc.pathname.startsWith("/k/") ? loc.pathname.slice(3) : "";
 
   return (
-    <header className="shrink-0 flex items-center gap-1 px-3 border-b-2 border-[var(--accent)] bg-[var(--panel)] z-40 relative"
+    <header className="app-topbar shrink-0 flex items-center gap-1 px-3 border-b-2 border-[var(--accent)] bg-[var(--panel)] z-40 relative"
       style={{ height: 52 }} ref={ref}>
       <button className="btn btn-ghost !px-2" onClick={() => setSidebar(!sidebarOpen)} aria-label="Menu">
         <PanelLeft size={18} />
@@ -100,11 +100,33 @@ export default function TopBar() {
       <Link to="/" className="flex items-center gap-2 mr-3 hover:no-underline">
         <Castle size={20} className="text-[var(--accent)]" />
         <span style={{ fontFamily: "var(--font-head)", letterSpacing: ".08em" }}
-          className="font-bold text-[var(--ink)]">MONTELIEN</span>
+          className="font-bold text-[var(--ink)] hidden min-[480px]:inline">MONTELIEN</span>
       </Link>
 
+      {/* <768: kategorie do jednoho menu tlačítka */}
+      <div className="relative xl:hidden">
+        <button className="btn btn-ghost !px-2" aria-label="Kategorie"
+          onClick={() => setMenu(menu === "cats" ? "" : "cats")}>
+          <Menu size={18} />
+        </button>
+        {menu === "cats" && (
+          <div className="topnav-menu" style={{ minWidth: 170, maxHeight: "70dvh", overflowY: "auto" }}>
+            {TOP.filter((t) => t.id !== "sprava" || editor).map((t) => {
+              const sec = byId[t.id];
+              if (!sec) return null;
+              return (
+                <Link key={t.id} to={t.to} onClick={() => setMenu("")} className="flex items-center justify-between">
+                  {sec.title}
+                  {(sec.children?.length ?? 0) > 0 && <ChevronDown size={12} className="opacity-50" />}
+                </Link>
+              );
+            })}
+          </div>
+        )}
+      </div>
+
       {/* hlavní kategorie – hover menu, klik → uvítací stránka */}
-      <nav className="topnav hidden md:flex items-stretch self-stretch" aria-label="Hlavní kategorie">
+      <nav className="topnav hidden xl:flex items-stretch self-stretch" aria-label="Hlavní kategorie">
         {TOP.filter((t) => t.id !== "sprava" || editor).map((t) => {
           const sec = byId[t.id];
           if (!sec) return null;
@@ -127,16 +149,21 @@ export default function TopBar() {
       </nav>
 
       <button
-        className="input !w-auto flex-1 max-w-md text-left flex items-center gap-2 !py-1.5 cursor-pointer ml-auto"
+        className="input !w-auto flex-1 max-w-md text-left hidden xl:flex items-center gap-2 !py-1.5 cursor-pointer ml-auto"
         onClick={() => setOmnibox(true)}
       >
         <Search size={15} className="text-[var(--ink-3)]" />
         <span className="text-[var(--ink-3)]">Hledat…</span>
         <kbd className="ml-auto text-[10px] text-[var(--ink-3)] border border-[var(--line)] rounded px-1">Ctrl K</kbd>
       </button>
+      {/* <768: vyhledávání jen ikonou → full overlay (Omnibox je modal) */}
+      <button className="btn btn-ghost !px-2 ml-auto xl:hidden" aria-label="Hledat"
+        onClick={() => setOmnibox(true)}>
+        <Search size={17} />
+      </button>
 
       {editor && (
-        <button className="btn btn-ghost !px-2" title="Nová entita" onClick={() => setNewEntity(true)}>
+        <button className="btn btn-ghost !px-2" title="Nový obsah" onClick={() => setNewEntity(true)}>
           <Plus size={17} />
         </button>
       )}
@@ -144,6 +171,12 @@ export default function TopBar() {
         <button className="btn btn-ghost !px-2" title={previewPlayer ? "Náhled: hráč" : "Náhled: DM"}
           onClick={togglePreview}>
           <Eye size={17} className={previewPlayer ? "text-[var(--accent)]" : ""} />
+        </button>
+      )}
+      {previewPlayer && (
+        <button className="chip chip-accent !cursor-pointer hover:opacity-80" onClick={togglePreview}
+          title="Vypnout náhled hráče">
+          Náhled hráče
         </button>
       )}
 
@@ -156,12 +189,16 @@ export default function TopBar() {
           <div className="topnav-menu right-0 left-auto" style={{ minWidth: 170 }}>
             {(Object.keys(MODE_LABELS) as Mode[]).map((m) => (
               <a key={m} href="#" onClick={(e) => { e.preventDefault(); setMode(m); }}
-                className={mode === m ? "!text-[var(--accent)]" : ""}>{MODE_LABELS[m]}</a>
+                className={"flex items-center gap-1.5 " + (mode === m ? "!text-[var(--accent)]" : "")}>
+                {mode === m ? <Check size={13} /> : <span className="w-[13px]" />}{MODE_LABELS[m]}
+              </a>
             ))}
             <div className="grp">Motiv</div>
             {Object.keys(THEME_LABELS).map((t) => (
               <a key={t} href="#" onClick={(e) => { e.preventDefault(); setTheme(t as Theme); }}
-                className={theme === t ? "!text-[var(--accent)]" : ""}>{THEME_LABELS[t as Theme]}</a>
+                className={"flex items-center gap-1.5 " + (theme === t ? "!text-[var(--accent)]" : "")}>
+                {theme === t ? <Check size={13} /> : <span className="w-[13px]" />}{THEME_LABELS[t as Theme]}
+              </a>
             ))}
           </div>
         )}
@@ -176,7 +213,7 @@ export default function TopBar() {
         </button>
         {menu === "user" && (
           <div className="topnav-menu right-0 left-auto" style={{ minWidth: 150 }}>
-            <div className="grp">{user?.name} · {user?.role}</div>
+            <div className="grp">{user?.name} · {({ admin: "DM", editor: "editor", player: "hráč" } as Record<string, string>)[user?.role || ""] || user?.role}</div>
             <a href="#" onClick={async (e) => {
               e.preventDefault();
               await logout(); qc.clear(); setUser(null); nav("/login");

@@ -1,7 +1,9 @@
 import { useState } from "react";
+import { ListChecks, Settings, UserCog } from "lucide-react";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { get, post, put, del } from "../api";
 import { useApp } from "../store";
+import { confirmDialog, PageHeader } from "../components/ui";
 
 const ROLES = ["player", "editor", "admin"];
 const ROLE_LABELS: Record<string, string> = { player: "Hráč", editor: "Editor", admin: "DM (admin)" };
@@ -46,7 +48,7 @@ export function AdminUsers() {
 
   return (
     <div className="p-6 max-w-4xl mx-auto fade-in">
-      <h1 className="text-2xl font-bold mb-4">Uživatelé</h1>
+      <PageHeader icon={<UserCog size={20} />} title="Uživatelé" />
       <div className="card p-4 mb-4 font-ui">
         <div className="text-sm font-semibold mb-2">Nový účet</div>
         <div className="flex gap-2 flex-wrap">
@@ -94,7 +96,7 @@ export function AdminUsers() {
                         <button className="btn !text-xs !py-1" onClick={() => update.mutate({ u, disabled: true })}>Zakázat</button>
                       )}
                       <button className="btn btn-danger !text-xs !py-1"
-                        onClick={() => confirm(`Smazat účet ${u.login}?`) && remove.mutate(u.id)}>
+                        onClick={async () => { if (await confirmDialog({ title: "Smazat účet", text: `Smazat účet ${u.login}?`, okLabel: "Smazat", danger: true })) remove.mutate(u.id); }}>
                         Smazat
                       </button>
                     </span>
@@ -116,7 +118,7 @@ export function AdminAudit() {
   });
   return (
     <div className="p-6 max-w-5xl mx-auto fade-in">
-      <h1 className="text-2xl font-bold mb-4">Audit</h1>
+      <PageHeader icon={<ListChecks size={20} />} title="Audit" />
       <div className="card overflow-x-auto font-ui">
         <table className="w-full text-sm">
           <thead>
@@ -159,7 +161,7 @@ export function AdminSystem() {
 
   return (
     <div className="p-6 max-w-3xl mx-auto fade-in">
-      <h1 className="text-2xl font-bold mb-4">Systém</h1>
+      <PageHeader icon={<Settings size={20} />} title="Systém" />
       <div className="card p-4 font-ui text-sm mb-4">
         <div className="text-xs font-bold uppercase tracking-wider text-[var(--ink-3)] mb-2">Stav indexu</div>
         <div className="grid grid-cols-2 gap-x-6 gap-y-1">
