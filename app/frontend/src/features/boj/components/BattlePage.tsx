@@ -221,6 +221,10 @@ export default function BattlePage() {
   const onAttack = (atk: AttackDef, opts?: { slot?: number; pact?: boolean }) => {
     const src = shownTok;
     if (!src) { toast("Nejdřív vyber útočníka", "err"); return; }
+    if (atk.utility) { // utility kouzlo — rovnou seslat na sebe/log (bez targetingu)
+      cmd((s) => { const res = C.cmdAttack(s, { atkId: src.id, tgtId: src.id, atk, slot: opts?.slot, pact: opts?.pact }, ctx); if (!res.ok) toast(res.reason || "Kouzlo nešlo", "err"); });
+      return;
+    }
     if (atk.area) setTargeting({ atk, srcId: src.id, area: true, slot: opts?.slot, pact: opts?.pact });
     else setTargeting({ atk, srcId: src.id, slot: opts?.slot, pact: opts?.pact });
     setPanel("akce");
@@ -471,6 +475,7 @@ export default function BattlePage() {
         onRoll={() => cmd((s) => C.cmdRollInit(s))}
         onUndo={b.undo} onRedo={b.redo}
         canUndo canRedo saving={b.saving}
+        onRound={(d) => cmd((s) => { s.round = Math.max(0, s.round + d); log(s, "system", `Kolo → ${s.round}`, "PJ"); })}
       />
       <div className="boj-body">
         <div className={`boj-mapwrap ${isFree(S) ? "free-map" : ""}`}>
@@ -557,6 +562,8 @@ export default function BattlePage() {
               shownTok
                 ? <ActorPanel S={S} t={shownTok} targeting={targeting} onAttack={onAttack}
                               onStdAction={(a) => cmd((s) => C.cmdStdAction(s, shownTok.id, a, selTok?.id))}
+                              onCheck={(n, m, mode) => cmd((s) => C.cmdCheck(s, shownTok.id, n, m, mode))}
+                              onUseItem={(i, ba) => cmd((s) => C.cmdUseItem(s, shownTok.id, i, undefined, ba))}
                               onResource={onResource} onUndoMove={() => cmd((s) => C.undoTurnMovement(s, shownTok.id))} dm={dm}
                               onHoverAtk={setHoverAtk} />
                 : <i className="boj-none">Vyber žeton na mapě</i>

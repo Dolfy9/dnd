@@ -145,10 +145,24 @@ export function parseSpell(name: string, K: Record<string, SpellEntry>, ctx: {
   if (!k?.text || /stat block/i.test(k.text)) return null;
   const txt = k.text;
   const first = txt.split(/\n(?:Using a Higher-Level Spell Slot|At Higher Levels)/)[0];
+  const lvl0 = Number(k.uroven) || 0;
+  const base: Partial<AttackDef> = {
+    nazev: name + (lvl0 ? ` (${lvl0}. úr.)` : ""), kouzlo: name, kind: "spell", lvl: lvl0,
+    conc: /Concentration/i.test(k.trvani || ""),
+    ba: /Bonus Action/i.test(k.cas || ""), rea: /Reaction/i.test(k.cas || ""),
+    ritual: /Ritual/i.test(k.cas || "") || !!(k as any).obradnik,
+    text: txt, durationRounds: spellDurationRounds(k.trvani),
+  };
+  const hm = first.match(/regains?\s+(\d+)?d(\d+)(\s*\+\s*(\d+|your spellcasting ability modifier))?[^.]*hit points/i);
+  if (hm) {
+    const up = txt.match(/healing increases? by\s+(\d+d\d+)/i);
+    return { ...base, heal: { dice: `${hm[1] || 1}d${hm[2]}`, flat: /modifier/i.test(hm[4] || "") ? 0 : Number(hm[4]) || 0, plusMod: /modifier/i.test(hm[4] || "") },
+             upcast: up ? { dice: up[1] } : undefined } as AttackDef;
+  }
   const dm = first.match(/(\d+)d(\d+)(?:\s*\+\s*(?:your spellcasting ability modifier|\d+))?\s*(\w+)\s*damage/i);
   const svName = first.match(/(Strength|Dexterity|Constitution|Intelligence|Wisdom|Charisma)\s+saving throw/i);
   const isAtk = /(?:spell|melee spell|ranged spell) attack|spell attack roll|make an? (?:ranged )?attack roll/i.test(first);
-  if (!dm && !svName) return null; // utility spell — není co řešit
+  if (!dm && !svName) return { ...base, utility: true } as AttackDef; // utility — zobrazit v panelu
   let n = dm ? Number(dm[1]) : 0;
   const f = dm ? Number(dm[2]) : 0;
   const lvl = Number(k.uroven) || 0;

@@ -10,13 +10,15 @@ import { Sword, Wand2, Hand, Zap, ChevronRight, Shield } from "lucide-react";
 import { useState } from "react";
 import type { Targeting } from "./BattleMap";
 
-export default function ActorPanel({ S, t, targeting, onAttack, onStdAction, onResource, onUndoMove, onHoverAtk, dm }: {
+export default function ActorPanel({ S, t, targeting, onAttack, onStdAction, onResource, onUndoMove, onHoverAtk, dm, onCheck, onUseItem }: {
   S: StavBoje; t: Token; targeting: Targeting | null;
   onAttack: (atk: AttackDef, opts?: { slot?: number; pact?: boolean }) => void;
   onStdAction: (id: string) => void;
   onResource: (idx: number) => void;
   onUndoMove?: () => void;
   onHoverAtk?: (a: AttackDef | null) => void;
+  onCheck?: (name: string, mod: number, mode: "adv" | "dis" | "norm") => void;
+  onUseItem?: (idx: number, asBA?: boolean) => void;
   dm: boolean;
 }) {
   const [slotFor, setSlotFor] = useState<AttackDef | null>(null);
@@ -154,6 +156,32 @@ export default function ActorPanel({ S, t, targeting, onAttack, onStdAction, onR
             <button className="boj-btn2" style={{ marginTop: 6 }} title="Vrátit žeton na začátek tahu"
                     onClick={() => onUndoMove?.()}>↩ Vrátit pohyb ({e.moved} ft)</button>
           )}
+        </div>
+      )}
+          {!!t.items?.length && (
+        <div className="boj-sec"><h4>Předměty</h4>
+          {t.items.map((it, i) => (
+            <div key={i} className="boj-item-row">
+              <span>{it.nazev} <i>×{it.qty}</i></span>
+              <span>
+                <button className="boj-mini" disabled={!it.qty} title="Použít (akce / podání)" onClick={() => onUseItem?.(i)}>Použít</button>
+                <button className="boj-mini" disabled={!it.qty} title="Vypít (Bonus Action)" onClick={() => onUseItem?.(i, true)}>BA</button>
+              </span>
+            </div>
+          ))}
+        </div>
+      )}
+      {onCheck && (
+        <div className="boj-sec"><h4>Hody</h4>
+          <div className="boj-check-grid">
+            {(["STR","DEX","CON","INT","WIS","CHA"] as const).map((ab) => (
+              <button key={ab} className="boj-mini" onClick={() => onCheck(ab, (t.mods as any)[ab] || 0, "norm")}>{ab} {((t.mods as any)[ab] || 0) >= 0 ? "+" : ""}{(t.mods as any)[ab] || 0}</button>
+            ))}
+            {Object.entries(t.skills || {}).filter(([, v]) => (v as number) > (t.mods.DEX || 0)).slice(0, 6).map(([n, v]) => (
+              <button key={n} className="boj-mini" onClick={() => onCheck(n, v as number, "norm")}>{n} +{v}</button>
+            ))}
+            <button className="boj-mini" onClick={() => onCheck("Iniciativa", t.initB || 0, "norm")}>Init +{t.initB || 0}</button>
+          </div>
         </div>
       )}
     </div>

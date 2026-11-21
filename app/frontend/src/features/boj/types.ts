@@ -57,7 +57,10 @@ export interface AttackDef {
   lvl?: number;                 // spell level (0 = cantrip)
   conc?: boolean;
   kouzlo?: string;              // název kouzla pro trvání/koncentraci
-  durationRounds?: number;      // trvání efektu v kolech
+  durationRounds?: number;
+  heal?: { dice: string; flat: number; plusMod?: boolean };  // léčící kouzlo
+  utility?: boolean;               // utility kouzlo — jen cast log/slot/conc
+  ritual?: boolean;                // lze seslat jako rituál      // trvání efektu v kolech
   slot?: number;                // použitý spell slot (při seslání)
   upcast?: { dice: string; per: number }; // škálování na vyšší slot ("+1d6 za level nad 3" → {dice:"1d6",per:3})
   mastery?: string;
@@ -227,6 +230,7 @@ export interface Token {
   features?: { nazev: string; text: string; zdroj?: string; uroven?: number }[];
   items?: { nazev: string; qty: number }[];   // consumables z výbavy
   heroicInspiration?: boolean;         // Heroic Inspiration k použití
+  ready?: { text: string; until?: string }; // Ready akce
   initRoll?: number[];          // hozené d20 iniciativy (jen log)
   exhaustion?: number;          // úroveň Exhaustion (zrcadleno i v cond.lvl)
   rysy?: { nazev: string; text: string }[];

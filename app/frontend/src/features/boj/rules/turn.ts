@@ -148,6 +148,9 @@ export const STD_ACTIONS = [
   { id: "utilize", nazev: "Utilize", desc: "Použij předmět (ne magický)." },
   { id: "grapple", nazev: "Grapple (Unarmed)", desc: "Zápas: cíl STR/DEX save vs DC 8+STR+PB." },
   { id: "shove", nazev: "Shove (Unarmed)", desc: "Strčení: Prone nebo odtlačení 5 ft." },
+  { id: "escape", nazev: "Escape", desc: "Uvolnění z Grappled (Athletics/Acrobatics)." },
+  { id: "standup", nazev: "Stand Up", desc: "Vstát z Prone (½ speed)." },
+  { id: "dropprone", nazev: "Drop Prone", desc: "Lehnout si (zdarma)." },
 ] as const;
 
 export type StdActionId = (typeof STD_ACTIONS)[number]["id"];

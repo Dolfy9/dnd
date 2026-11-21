@@ -19,6 +19,7 @@ import { fx, type CmdCtx } from "./shared";
 import { dropConc } from "./effects";
 import { settingsOf } from "../../rules/settings";
 import { isFree } from "../../rules/free";
+import { grappleResolve, escapeResolve, hideResolve, searchResolve, standUpCost } from "../../rules/actions/actions";
 
 /* ---------- útoky ---------- */
 export interface AtkArgs {
@@ -43,6 +44,34 @@ export function cmdAttack(S: StavBoje, a: AtkArgs, ctx: CmdCtx): { ok: boolean; 
     if (!check(S, st.dosah, a.override, `${a.atk.nazev} použito i když se dobíjí (⚙ DM)`))
       return { ok: false, reason: `${a.atk.nazev} se dobíjí` };
 
+  }
+  // léčící kouzlo: heal místo útoku
+  if (a.atk.heal && B) {
+    const slotErr = slotError(A, a.atk, a.slot, a.pact);
+    if (slotErr && !isFree(S) && !check(S, st.sloty, a.override, `${A.nazev}: ${a.atk.nazev} bez volného slotu (⚙ DM)`))
+      return { ok: false, reason: slotErr };
+    const up = a.slot && a.atk.upcast ? Math.max(0, a.slot - (a.atk.lvl || 1)) : 0;
+    const um = a.atk.upcast?.dice?.match(/(\d+)d(\d+)/);
+    const dice = up && um ? `${a.atk.heal.dice.replace(/\d+d/, `${Number(a.atk.heal.dice.split("d")[0]) + up * Number(um[1])}d`)}` : a.atk.heal.dice;
+    const smod = Math.max(0, ((A.casting?.atk ?? 8) - (A.pb ?? 2)));
+    const rr = rollDice(`${dice}${a.atk.heal.plusMod ? `+${smod}` : `+${a.atk.heal.flat}`}`, { rng: defaultRng });
+    const hr2 = applyHealing(B, rr.total);
+    const healed = hr2.healed ?? rr.total;
+    if (!isFree(S)) { consumeSlot(A, a.atk, a.slot, a.pact); if (a.atk.conc) { dropConc(S, A.id); A.conc = a.atk.kouzlo || a.atk.nazev; } }
+    if (!a.atk.ba && !a.atk.rea) useEco(S, A, "a"); else if (a.atk.ba) useEco(S, A, "b"); else useEco(S, A, "r");
+    fx(S, "heal", { to: [B.x ?? 0, B.y ?? 0], text: `+${healed}`, tokenId: B.id });
+    log(S, "heal", `${A.nazev}: ${a.atk.nazev} → ${B.nazev} +${healed} HP (${rr.parts.join("+") || dice})`, A.nazev);
+    return { ok: true };
+  }
+  // utility kouzlo: jen cast — slot, ekonomika, conc, log
+  if (a.atk.utility) {
+    const slotErr = slotError(A, a.atk, a.slot, a.pact);
+    if (slotErr && !isFree(S) && !check(S, st.sloty, a.override, `${A.nazev}: ${a.atk.nazev} bez volného slotu (⚙ DM)`))
+      return { ok: false, reason: slotErr };
+    if (!isFree(S)) { consumeSlot(A, a.atk, a.slot, a.pact); if (a.atk.conc) { dropConc(S, A.id); A.conc = a.atk.kouzlo || a.atk.nazev; } }
+    if (!a.atk.ba && !a.atk.rea) useEco(S, A, "a"); else if (a.atk.ba) useEco(S, A, "b"); else useEco(S, A, "r");
+    log(S, "system", `${A.nazev} seslal ${a.atk.kouzlo || a.atk.nazev}${a.slot ? ` (${a.slot}. slot)` : ""}${a.atk.ritual && !a.slot ? " (rituál)" : ""}`, A.nazev, a.atk.text?.slice(0, 400));
+    return { ok: true };
   }
   const slotErr = slotError(A, a.atk, a.slot, a.pact);
   if (slotErr) {
@@ -269,7 +298,38 @@ export function cmdStdAction(S: StavBoje, id: string, action: string, tgtId?: st
     case "dash": e.dash += 1; log(S, "system", `${t.nazev}: Dash (+${t.speed} ft pohybu)`, t.nazev); break;
     case "disengage": e.disengage = 1; t.effects.push({ id: uid(), nazev: "Disengage", mods: { noOA: true }, duration: { kind: "startOf", who: t.id } }); log(S, "system", `${t.nazev}: Disengage`, t.nazev); break;
     case "dodge": t.effects.push({ id: uid(), nazev: "Dodge", mods: { dodge: true, atkDisBy: true, saveAdvAb: ["DEX"] }, duration: { kind: "startOf", who: t.id } }); log(S, "system", `${t.nazev}: Dodge`, t.nazev); break;
-    case "hide": t.effects.push({ id: uid(), nazev: "Hidden", mods: {}, duration: { kind: "startOf", who: t.id } }); if (!hasCond(t, "Invisible")) t.cond.push({ n: "Invisible" }); log(S, "system", `${t.nazev}: Hide → Invisible`, t.nazev); break;
+    case "hide": {
+      const hr = hideResolve(t, defaultRng);
+      if (hr.ok || isFree(S)) {
+        t.effects.push({ id: uid(), nazev: "Hidden", mods: { stealthTotal: hr.total } as any, duration: { kind: "startOf", who: t.id } });
+        if (!hasCond(t, "Invisible")) t.cond.push({ n: "Invisible" });
+        log(S, "system", `${t.nazev}: Hide ${hr.roll}+${hr.total - hr.roll}=${hr.total} ≥ 15 → Invisible`, t.nazev);
+      } else log(S, "system", `${t.nazev}: Hide ${hr.roll}+${hr.total - hr.roll}=${hr.total} < 15 — neúspěch`, t.nazev);
+      break;
+    }
+    case "escape": {
+      // Escape z Grappled: Athletics/Acrobatics vs grapple DC zdroje
+      const g = t.cond.find((c) => c.n === "Grappled" && c.src);
+      const src = g?.src ? byId(S, g.src) : undefined;
+      const er = src ? escapeResolve(t, src, defaultRng) : null;
+      if (er && er.ok) { t.cond = t.cond.filter((c) => c !== g); log(S, "system", `${t.nazev}: Escape ${er.roll}+${er.total - er.roll}=${er.total} ≥ ${er.dc} — volný`, t.nazev); }
+      else if (er) log(S, "system", `${t.nazev}: Escape ${er.roll}+${er.total - er.roll}=${er.total} < ${er.dc} — stále Grappled`, t.nazev);
+      else log(S, "system", `${t.nazev}: Escape — není Grappled`, t.nazev);
+      break;
+    }
+    case "standup": {
+      const cost = standUpCost(t);
+      e.moved += cost;
+      t.cond = t.cond.filter((c) => c.n !== "Prone");
+      log(S, "system", `${t.nazev}: Stand Up (−${cost} ft pohybu)`, t.nazev);
+      break;
+    }
+    case "dropprone": {
+      if (!hasCond(t, "Prone")) t.cond.push({ n: "Prone" });
+      e.a += 1; // Drop Prone je zdarma — vrátíme akci
+      log(S, "system", `${t.nazev}: Drop Prone`, t.nazev);
+      break;
+    }
     case "help": {
       const tgt = tgtId ? byId(S, tgtId) : undefined;
       if (tgt) { tgt.effects.push({ id: uid(), nazev: "Help", mods: { advOnHitBy: true }, duration: { kind: "startOf", who: t.id }, src: t.id }); log(S, "system", `${t.nazev}: Help → ${tgt.nazev}`, t.nazev); }
@@ -279,15 +339,34 @@ export function cmdStdAction(S: StavBoje, id: string, action: string, tgtId?: st
     case "grapple": case "shove": {
       const tgt = tgtId ? byId(S, tgtId) : undefined;
       if (tgt) {
-        const dc = 8 + (t.mods.STR ?? 0) + (t.pb ?? 2);
-        const bonus = Math.max(tgt.saves?.STR ?? -99, tgt.saves?.DEX ?? -99, tgt.mods.STR ?? 0, tgt.mods.DEX ?? 0);
-        const r = d20(0, defaultRng);
-        const ok = r.r + bonus >= dc;
-        if (!ok) {
-          if (action === "grapple") { tgt.cond.push({ n: "Grappled", src: t.id }); log(S, "cond", `${tgt.nazev}: Grappled (${t.nazev})`, t.nazev); }
-          else { tgt.cond.push({ n: "Prone" }); log(S, "cond", `${tgt.nazev}: Prone (Shove)`, t.nazev); }
-        } else log(S, "system", `${tgt.nazev}: save ${r.r}+${bonus} ≥ ${dc} — ${action} neuspěl`, tgt.nazev);
+        const r = grappleResolve(t, tgt, defaultRng);
+        if (!r) { log(S, "system", `${tgt.nazev} je příliš velký na Grapple/Shove`, t.nazev); break; }
+        if (r.ok) {
+          if (action === "grapple") { tgt.cond.push({ n: "Grappled", src: t.id }); log(S, "cond", `${tgt.nazev}: Grappled (save ${r.roll}+${r.total - r.roll}=${r.total} < ${r.dc})`, t.nazev); }
+          else { tgt.cond.push({ n: "Prone" }); log(S, "cond", `${tgt.nazev}: Prone — Shove (save ${r.roll}+${r.total - r.roll}=${r.total} < ${r.dc})`, t.nazev); }
+        } else log(S, "system", `${tgt.nazev}: save ${r.roll}+${r.total - r.roll}=${r.total} ≥ ${r.dc} — ${action} neuspěl`, tgt.nazev);
       }
+      break;
+    }
+    case "search": {
+      const tgt = tgtId ? byId(S, tgtId) : undefined;
+      const stealth = tgt?.effects.find((x) => (x.mods as any).stealthTotal != null);
+      if (tgt && stealth) {
+        const sr = searchResolve(t, (stealth.mods as any).stealthTotal, defaultRng);
+        if (sr.ok) {
+          tgt.cond = tgt.cond.filter((c) => c.n !== "Invisible");
+          tgt.effects = tgt.effects.filter((x) => x !== stealth);
+          log(S, "system", `${t.nazev}: Search ${sr.roll}+${sr.total - sr.roll}=${sr.total} ≥ ${sr.dc} — ${tgt.nazev} nalezen`, t.nazev);
+        } else log(S, "system", `${t.nazev}: Search ${sr.roll}+${sr.total - sr.roll}=${sr.total} < ${sr.dc} — nic`, t.nazev);
+      } else {
+        const sr = searchResolve(t, 15, defaultRng);
+        log(S, "system", `${t.nazev}: Search ${sr.roll}+${sr.total - sr.roll}=${sr.total} (vs 15)`, t.nazev);
+      }
+      break;
+    }
+    case "ready": {
+      t.ready = { text: "Připravená akce", until: "turn" } as any;
+      log(S, "system", `${t.nazev}: Ready — spustitelné reakcí`, t.nazev);
       break;
     }
     default: log(S, "system", `${t.nazev}: ${action}`, t.nazev);
@@ -300,3 +379,51 @@ export function evalUi(S: StavBoje, map: BattleMapData, A: Token, B: Token, atk:
 export const canSee = (S: StavBoje, map: BattleMapData, A: Token, B: Token) =>
   canSeeTarget(S, map, A, B).see;
 export const areaPreview = (spec: AreaSpec) => areaCells(spec);
+
+/** Hod na atribut/skill/save/init (d20 + mod, adv/dis). */
+export function cmdCheck(S: StavBoje, id: string, name: string, mod: number, mode: "adv" | "dis" | "norm" = "norm", contest?: { id: string; mod: number }) {
+  const t = byId(S, id); if (!t) return;
+  const r1 = d20(0, defaultRng), r2 = mode !== "norm" ? d20(0, defaultRng) : null;
+  const use = mode === "adv" ? Math.max(r1.r, r2!.r) : mode === "dis" ? Math.min(r1.r, r2!.r) : r1.r;
+  const total = use + mod;
+  const dice = t.effects.find((e) => (e.mods as any).bless || (e.mods as any).guidance || (e.mods as any).bardic);
+  let extra = "";
+  if (dice) { const ex = rollDice("1d4", { rng: defaultRng }).total; extra = ` +${ex} (Bless/Guidance/Bardic)`; }
+  if (contest) {
+    const c = byId(S, contest.id); const cr = c ? d20(0, defaultRng).r + contest.mod : 0;
+    log(S, "system", `${t.nazev}: ${name} ${use}${mod ? `+${mod}` : ""}=${total}${extra} vs ${c?.nazev} ${cr} → ${total >= cr ? "vítězí" : "prohrává"}`, t.nazev);
+  } else
+    log(S, "system", `${t.nazev}: hod ${name} ${mode === "norm" ? "" : `(${mode}) `}${r2 ? `[${r1.r},${r2.r}] ` : ""}${use}${mod ? `+${mod}` : ""}=${total}${extra}`, t.nazev);
+}
+
+const POTION_DICE: [RegExp, string][] = [
+  [/Supreme/i, "10d4+20"], [/Superior/i, "8d4+8"], [/Greater/i, "4d4+4"], [/Potion of Healing/i, "2d4+2"],
+];
+/** Použití consumable z t.items (počet per-battle) — potion léčí, scroll/generic jen log+decrement. */
+export function cmdUseItem(S: StavBoje, id: string, itemIdx: number, tgtId?: string, asBA?: boolean) {
+  const t = byId(S, id); if (!t || !t.items?.[itemIdx]) return;
+  const it = t.items[itemIdx];
+  if ((it.qty ?? 0) <= 0) { log(S, "system", `${t.nazev}: ${it.nazev} došel`, t.nazev); return; }
+  if (!isFree(S) && !useEco(S, t, asBA ? "b" : "a")) {
+    if (!check(S, settingsOf(S).automatizace.ekonomika, undefined, `${t.nazev}: ${asBA ? "bonus akce" : "akce"} už použita (⚙ DM)`)) return;
+  }
+  it.qty = (it.qty ?? 1) - 1;
+  const pd = POTION_DICE.find(([re]) => re.test(it.nazev));
+  if (pd) {
+    const tgt = (tgtId && byId(S, tgtId)) || t;
+    const rr = rollDice(pd[1], { rng: defaultRng });
+    const healed = applyHealing(tgt, rr.total).healed ?? rr.total;
+    fx(S, "heal", { to: [tgt.x ?? 0, tgt.y ?? 0], text: `+${healed}`, tokenId: tgt.id });
+    log(S, "heal", `${t.nazev}: ${it.nazev} → ${tgt.nazev} +${healed} HP (${rr.parts.join("+")})${asBA ? " (BA)" : ""}`, t.nazev);
+  } else log(S, "system", `${t.nazev} použil ${it.nazev} (zbývá ${it.qty}×)`, t.nazev);
+}
+/** Stabilize: Medicine DC 10 akce → dying zatím žije. */
+export function cmdStabilize(S: StavBoje, id: string, tgtId: string) {
+  const t = byId(S, id), tgt = byId(S, tgtId); if (!t || !tgt) return;
+  if (!useEco(S, t, "a") && !isFree(S)) return;
+  const mod = t.skills?.["Medicine"] ?? t.mods.WIS ?? 0;
+  const r = d20(0, defaultRng);
+  const ok = r.r + mod >= 10;
+  if (ok && tgt.dying) { (tgt as any).stable = true; log(S, "system", `${t.nazev}: Stabilize ${r.r}+${mod}≥10 — ${tgt.nazev} stabilizován`, t.nazev); }
+  else log(S, "system", `${t.nazev}: Stabilize ${r.r}+${mod}${ok ? "≥" : "<"}10${ok ? "" : " — neúspěch"}`, t.nazev);
+}

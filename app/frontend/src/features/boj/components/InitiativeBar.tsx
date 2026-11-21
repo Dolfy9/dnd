@@ -74,12 +74,12 @@ export function MiniCoin({ t, size = 40, active }: { t: Token; size?: number; ac
   );
 }
 
-export default function InitiativeBar({ S, sel, onSelect, onNext, onRoll, onUndo, onRedo, canUndo, canRedo, saving, dm }: {
+export default function InitiativeBar({ S, sel, onSelect, onNext, onRoll, onUndo, onRedo, canUndo, canRedo, saving, dm, onRound }: {
   S: StavBoje; sel: string | null;
   onSelect: (id: string) => void;
   onNext: () => void; onRoll: () => void;
   onUndo: () => void; onRedo: () => void;
-  canUndo: boolean; canRedo: boolean; saving: boolean; dm?: boolean;
+  canUndo: boolean; canRedo: boolean; saving: boolean; dm?: boolean; onRound?: (d: number) => void;
 }) {
   const c = cur(S);
   const started = S.round >= 1 && S.turn >= 0;
@@ -87,6 +87,10 @@ export default function InitiativeBar({ S, sel, onSelect, onNext, onRoll, onUndo
     <div className="boj-init">
       <div className="boj-round">
         <b>{started ? `Kolo ${S.round}` : "Příprava"}</b>
+        {dm && onRound && <span className="boj-round-ctl">
+          <button title="Kolo −1" onClick={() => onRound(-1)}>−</button>
+          <button title="Kolo +1" onClick={() => onRound(1)}>+</button>
+        </span>}
         {saving && <i className="boj-saving">ukládám…</i>}
       </div>
       <div className="boj-init-strip">
