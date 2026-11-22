@@ -1,6 +1,6 @@
 /* Sdílené v2 vrstvy mapy (boj + editor): textury, výška, stěny/dveře, objekty,
    kresby, světla, poznámky, mřížka. Vše memoizované — statické podle `map`. */
-import React, { memo } from "react";
+import React, { memo, useSyncExternalStore } from "react";
 import type { MapV2, MapWall, MapObject } from "../model/mapV2";
 import { edgeKey } from "../model/mapV2";
 import { TextureDefs, texUrl, textureById } from "../../mapeditor/assets/textures";
@@ -11,18 +11,28 @@ import { assetUrl, type AssetEntry, type TextureEntry } from "../../mapeditor/as
     v editoru i boji se volá dřív, než se renderují vrstvy. */
 export let ASSETS: Record<string, AssetEntry> = {};
 export let TEXIMG: Record<string, TextureEntry> = {};
-export function setManifests(a: Record<string, AssetEntry>, t: Record<string, TextureEntry>) { ASSETS = a; TEXIMG = t; }
+let snapshot = { assets: ASSETS, textures: TEXIMG };
+const listeners = new Set<() => void>();
+const subscribe = (listener: () => void) => { listeners.add(listener); return () => { listeners.delete(listener); }; };
+const getSnapshot = () => snapshot;
+export function useMapManifests() { return useSyncExternalStore(subscribe, getSnapshot, getSnapshot); }
+export function setManifests(a: Record<string, AssetEntry>, t: Record<string, TextureEntry>) {
+  if (ASSETS === a && TEXIMG === t) return;
+  ASSETS = a; TEXIMG = t; snapshot = { assets: a, textures: t };
+  listeners.forEach(listener => listener());
+}
 
 export const PX = 24;
 const k = (x: number, y: number) => `${x},${y}`;
 
 export const MapTextureLayer = memo(function MapTextureLayer({ map }: { map: MapV2 }) {
+  const { textures } = useMapManifests();
   if (!map.textury || !Object.keys(map.textury).length) return null;
   return (
     <g>
       <defs>
         <TextureDefs />
-        {Object.values(TEXIMG).map((t) => (
+        {Object.values(textures).map((t) => (
           <pattern key={t.id} id={`texi-${t.id}`} width={t.cells * PX} height={t.cells * PX} patternUnits="userSpaceOnUse">
             <image href={assetUrl(t.src)} width={t.cells * PX} height={t.cells * PX} preserveAspectRatio="xMidYMid slice" />
           </pattern>
@@ -30,7 +40,7 @@ export const MapTextureLayer = memo(function MapTextureLayer({ map }: { map: Map
       </defs>
       {Object.entries(map.textury).map(([key, tid]) => {
         const [x, y] = key.split(",").map(Number);
-        const imgT = TEXIMG[tid];
+        const imgT = textures[tid];
         if (!imgT && !textureById(tid)) return null;
         return <rect key={key} x={x * PX} y={y * PX} width={PX} height={PX}
                      fill={imgT ? `url(#texi-${tid})` : texUrl(tid)} />;
@@ -112,6 +122,7 @@ export const MapWallLayer = memo(function MapWallLayer({ map, doors, onDoor, dm,
 });
 
 export const MapObjectLayer = memo(function MapObjectLayer({ map, dm }: { map: MapV2; dm?: boolean }) {
+  const { assets } = useMapManifests();
   const objs = (map.objekty || []).slice().sort((a, b) => (a.z ?? 0) - (b.z ?? 0));
   if (!objs.length) return null;
   return (
@@ -119,7 +130,7 @@ export const MapObjectLayer = memo(function MapObjectLayer({ map, dm }: { map: M
       {objs.map((o: MapObject) => {
         if (o.dmOnly && !dm) return null;
         const isImg = o.asset.startsWith("img:");
-        const man = ASSETS[o.asset];
+        const man = assets[o.asset];
         const def = isImg || man ? null : stampById(o.asset);
         const src = man ? assetUrl(man.src) : isImg ? `/repo/11_Mapy/bojove/${o.asset.slice(4)}` : null;
         return (

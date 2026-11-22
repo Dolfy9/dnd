@@ -121,4 +121,12 @@ body:has(.me-ed) .mus-fab{display:none!important}
 @media (max-width:700px){.me-snaplab{display:none}}
 
 .me-sheetbtn{display:none}
+.me-texture-picker{position:relative;min-width:150px;font-size:12px}
+.me-texture-picker summary{display:flex;align-items:center;gap:6px;cursor:pointer}
+.me-texture-picker summary img{width:32px;height:28px;object-fit:cover;border-radius:3px}
+.me-texture-picker[open]{z-index:30}
+.me-texture-picker .me-lib-grid{position:absolute;top:100%;left:0;width:360px;max-height:380px;overflow:auto;background:#211d18;padding:8px;border:1px solid #8d7854;box-shadow:0 5px 20px #0008}
+.me-texture-picker button{padding:3px;min-width:0}
+.me-texture-picker button img{width:100%;height:60px;object-fit:cover}
+.me-texture-picker small{display:block;font-size:10px;white-space:normal}
 @media (max-width:700px){.me-sheetbtn{display:inline-flex}}

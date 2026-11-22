@@ -16,6 +16,7 @@ import {
   MapTextureLayer, MapElevationLayer, MapWallLayer, MapObjectLayer, MapDrawingLayer,
   MapLightLayer, MapNoteLayer, MapGridLayer, PX, setManifests,
 } from "../../boj/components/MapV2Layers";
+import { TerenLayer } from "../../boj/components/MapLayers";
 import { TEXTURES, textureById } from "../assets/textures";
 import { stampById } from "../assets/stamps";
 import { useAssetManifest, useTextureManifest } from "../assets/manifest";
@@ -23,7 +24,7 @@ import { GENERATORS, type GenOut } from "../generators/generators";
 import { importUvtt, exportUvtt, exportPng } from "../io/uvtt";
 import { useEditorDoc } from "../state/useEditorDoc";
 import * as ops from "../tools/ops";
-import { TABS, LAYERS, WALL_TYPS, WALL_NAZVY, LayersPanel, LibraryPanel, PropertiesPanel, GeneratorPanel, MapPanel, type TabId } from "./panels";
+import { TexturePicker, TABS, LAYERS, WALL_TYPS, WALL_NAZVY, LayersPanel, LibraryPanel, PropertiesPanel, GeneratorPanel, MapPanel, type TabId } from "./panels";
 import "../editor.css";
 
 type Tool = "select" | "teren" | "fill" | "flood" | "textura" | "mistnost" | "stena" | "dvere"
@@ -416,16 +417,12 @@ export default function EditorPage() {
               </>
             )}
             {tool === "textura" && (
-              <select value={brushTex} onChange={(e) => setBrushTex(e.target.value)}>
-                {TEXTURES.map((t) => <option key={t.id} value={t.id}>{t.nazev}</option>)}
-              </select>
+              <TexturePicker value={brushTex} onChange={setBrushTex} />
             )}
             {tool === "mistnost" && (
               <>
                 <span className="me-ctx-lab">Textura:</span>
-                <select value={brushTex} onChange={(e) => setBrushTex(e.target.value)}>
-                  {TEXTURES.map((t) => <option key={t.id} value={t.id}>{t.nazev}</option>)}
-                </select>
+                <TexturePicker value={brushTex} onChange={setBrushTex} />
                 <span className="me-ctx-hint">táhni → podlaha + zdi</span>
               </>
             )}
@@ -470,12 +467,8 @@ export default function EditorPage() {
               <g transform={`translate(${V.x},${V.y}) scale(${V.k})`}>
                 <rect width={W * PX} height={H * PX} fill="#4a453e" />
                 {layerVis.obrazek && map.obrazek && <image href={`/repo/11_Mapy/${map.obrazek}`} width={W * PX} height={H * PX} preserveAspectRatio="none" opacity={0.9} />}
+                {layerVis.teren && <TerenLayer map={map} px={PX} illustration={!!(layerVis.obrazek && map.obrazek)} />}
                 {layerVis.textury && <MapTextureLayer map={map} />}
-                {layerVis.teren && map.mrizka.map((row, y) => row.split("").map((c, x) => {
-                  const d = TILES[c];
-                  if (!d || d.cost) return null;
-                  return <rect key={x + "," + y} x={x * PX} y={y * PX} width={PX} height={PX} fill="#000" opacity={0.42} />;
-                }))}
                 {layerVis.mrizka && <MapGridLayer map={map} W={W} H={H} />}
                 {layerVis.vyska && <MapElevationLayer map={map} />}
                 {layerVis.kresby && <MapDrawingLayer map={map} dm />}

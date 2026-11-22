@@ -1,3 +1,256 @@
 {
- "textury": []
+ "textury": [
+  {
+   "id": "dlazba",
+   "nazev": "Dlažba",
+   "src": "bojove/textury/dlazba.webp",
+   "cells": 4
+  },
+  {
+   "id": "kocici-hlavy",
+   "nazev": "Kočičí hlavy",
+   "src": "bojove/textury/kocici-hlavy.webp",
+   "cells": 4
+  },
+  {
+   "id": "drevo",
+   "nazev": "Dřevo",
+   "src": "bojove/textury/drevo.webp",
+   "cells": 4
+  },
+  {
+   "id": "trava",
+   "nazev": "Tráva",
+   "src": "bojove/textury/trava.webp",
+   "cells": 4
+  },
+  {
+   "id": "hlina",
+   "nazev": "Hlína",
+   "src": "bojove/textury/hlina.webp",
+   "cells": 4
+  },
+  {
+   "id": "pisek",
+   "nazev": "Písek",
+   "src": "bojove/textury/pisek.webp",
+   "cells": 4
+  },
+  {
+   "id": "snih",
+   "nazev": "Sníh",
+   "src": "bojove/textury/snih.webp",
+   "cells": 4
+  },
+  {
+   "id": "mramor",
+   "nazev": "Mramor",
+   "src": "bojove/textury/mramor.webp",
+   "cells": 4
+  },
+  {
+   "id": "koberec",
+   "nazev": "Koberec",
+   "src": "bojove/textury/koberec.webp",
+   "cells": 4
+  },
+  {
+   "id": "melka-voda",
+   "nazev": "Mělká voda",
+   "src": "bojove/textury/melka-voda.webp",
+   "cells": 4
+  },
+  {
+   "id": "hluboka-voda",
+   "nazev": "Hluboká voda",
+   "src": "bojove/textury/hluboka-voda.webp",
+   "cells": 4
+  },
+  {
+   "id": "lava",
+   "nazev": "Láva",
+   "src": "bojove/textury/lava.webp",
+   "cells": 4
+  },
+  {
+   "id": "led",
+   "nazev": "Led",
+   "src": "bojove/textury/led.webp",
+   "cells": 4
+  },
+  {
+   "id": "bazina",
+   "nazev": "Bažina",
+   "src": "bojove/textury/bazina.webp",
+   "cells": 4
+  },
+  {
+   "id": "jeskyne",
+   "nazev": "Jeskynní skála",
+   "src": "bojove/textury/jeskyne.webp",
+   "cells": 4
+  },
+  {
+   "id": "teren-mesto",
+   "nazev": "Městská dlažba",
+   "src": "bojove/textury/teren-mesto.webp",
+   "cells": 4
+  },
+  {
+   "id": "teren-krypta",
+   "nazev": "Podlaha krypty",
+   "src": "bojove/textury/teren-krypta.webp",
+   "cells": 4
+  },
+  {
+   "id": "teren-les",
+   "nazev": "Lesní půda",
+   "src": "bojove/textury/teren-les.webp",
+   "cells": 4
+  },
+  {
+   "id": "teren-ruiny",
+   "nazev": "Ruiny",
+   "src": "bojove/textury/teren-ruiny.webp",
+   "cells": 4
+  },
+  {
+   "id": "teren-reka",
+   "nazev": "Říční břeh",
+   "src": "bojove/textury/teren-reka.webp",
+   "cells": 4
+  },
+  {
+   "id": "teren-more",
+   "nazev": "Moře",
+   "src": "bojove/textury/teren-more.webp",
+   "cells": 4
+  },
+  {
+   "id": "teren-pristav",
+   "nazev": "Přístav",
+   "src": "bojove/textury/teren-pristav.webp",
+   "cells": 4
+  },
+  {
+   "id": "teren-bazina",
+   "nazev": "Bažina",
+   "src": "bojove/textury/teren-bazina.webp",
+   "cells": 4
+  },
+  {
+   "id": "teren-snih",
+   "nazev": "Sníh",
+   "src": "bojove/textury/teren-snih.webp",
+   "cells": 4
+  },
+  {
+   "id": "teren-jeskyne",
+   "nazev": "Jeskyně",
+   "src": "bojove/textury/teren-jeskyne.webp",
+   "cells": 4
+  },
+  {
+   "id": "teren-hory",
+   "nazev": "Hory",
+   "src": "bojove/textury/teren-hory.webp",
+   "cells": 4
+  },
+  {
+   "id": "teren-poust",
+   "nazev": "Poušť",
+   "src": "bojove/textury/teren-poust.webp",
+   "cells": 4
+  },
+  {
+   "id": "teren-plaz",
+   "nazev": "Pláž",
+   "src": "bojove/textury/teren-plaz.webp",
+   "cells": 4
+  },
+  {
+   "id": "teren-g",
+   "nazev": "Tráva",
+   "src": "bojove/textury/teren-g.webp",
+   "cells": 4
+  },
+  {
+   "id": "teren-r",
+   "nazev": "Cesta",
+   "src": "bojove/textury/teren-r.webp",
+   "cells": 4
+  },
+  {
+   "id": "teren-wall",
+   "nazev": "Zdivo",
+   "src": "bojove/textury/teren-wall.webp",
+   "cells": 4
+  },
+  {
+   "id": "teren-rubble",
+   "nazev": "Sutiny",
+   "src": "bojove/textury/teren-rubble.webp",
+   "cells": 4
+  },
+  {
+   "id": "teren-voda",
+   "nazev": "Hluboká voda",
+   "src": "bojove/textury/teren-voda.webp",
+   "cells": 4
+  },
+  {
+   "id": "teren-melcina",
+   "nazev": "Mělčina",
+   "src": "bojove/textury/teren-melcina.webp",
+   "cells": 4
+  },
+  {
+   "id": "teren-most",
+   "nazev": "Most",
+   "src": "bojove/textury/teren-most.webp",
+   "cells": 4
+  },
+  {
+   "id": "teren-propast",
+   "nazev": "Propast",
+   "src": "bojove/textury/teren-propast.webp",
+   "cells": 4
+  },
+  {
+   "id": "teren-schody",
+   "nazev": "Schody",
+   "src": "bojove/textury/teren-schody.webp",
+   "cells": 4
+  },
+  {
+   "id": "teren-skala",
+   "nazev": "Přírodní skalní stěna",
+   "src": "bojove/textury/teren-skala.webp",
+   "cells": 4
+  },
+  {
+   "id": "teren-bedrock",
+   "nazev": "Skalní masiv",
+   "src": "bojove/textury/teren-bedrock.webp",
+   "cells": 4
+  },
+  {
+   "id": "teren-mlha",
+   "nazev": "Mlha",
+   "src": "bojove/textury/teren-mlha.webp",
+   "cells": 4
+  },
+  {
+   "id": "teren-parchment",
+   "nazev": "Pergamen",
+   "src": "bojove/textury/teren-parchment.webp",
+   "cells": 4
+  },
+  {
+   "id": "teren-panel",
+   "nazev": "Dřevěný panel",
+   "src": "bojove/textury/teren-panel.webp",
+   "cells": 4
+  }
+ ]
 }

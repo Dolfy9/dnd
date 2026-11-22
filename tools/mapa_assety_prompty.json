@@ -1,6 +1,6 @@
 {
- "style_asset": "hand-painted realistic top-down orthographic 90° view, premium D&D battlemap asset, single isolated object, transparent background, no grid, no text, no frame, no watermark, consistent soft light from top-left, subtle soft drop shadow, dark fantasy painterly style",
- "style_texture": "seamless tileable hand-painted top-down texture for a D&D battlemap, no objects, no border, no text, flat orthographic 90° view, consistent soft light, dark fantasy painterly style",
+ "style_asset": "Single object seen from strict top-down orthographic view (bird's-eye, looking straight down) for a fantasy tabletop battle map: {s}. Pseudo-realistic fantasy style, highly detailed realistic materials like premium realistic VTT map assets, soft overhead light, no cast shadow, centered, fills about 85% of the frame, isolated on a perfectly flat solid pure magenta (#FF00FF) background, no magenta inside the object, no text, no border, no grid.",
+ "style_texture": "Seamless tileable texture, strict top-down orthographic view straight down, {s}. Pseudo-realistic fantasy battle map style: highly detailed realistic materials like premium realistic VTT map assets, natural colors, even soft overhead lighting, no directional shadows, no vignette, no perspective, no objects, no text, no grid, all four edges tile seamlessly.",
  "assety": [
   {
    "id": "stul-ctverec",

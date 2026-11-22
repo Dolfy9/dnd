@@ -5,7 +5,23 @@ import type { MapV2, MapWall, MapObject, MapLightV2, MapNote } from "../../boj/m
 import { STAMPS, KATEGORIE, stampById, StampSvg, type StampDef } from "../assets/stamps";
 import { TEXTURES } from "../assets/textures";
 import { GENERATORS, type GenOut } from "../generators/generators";
-import { assetUrl, type AssetEntry } from "../assets/manifest";
+import { assetUrl, useTextureManifest, type AssetEntry } from "../assets/manifest";
+
+export function TexturePicker({ value, onChange }: { value: string; onChange: (id: string) => void }) {
+  const { data = {} } = useTextureManifest();
+  const selected = data[value];
+  const options = [...TEXTURES.filter(t => !data[t.id]), ...Object.values(data)];
+  return <details className="me-texture-picker">
+    <summary>{selected && <img src={assetUrl(selected.src)} alt="" />} {selected?.nazev || TEXTURES.find(t => t.id === value)?.nazev || value}</summary>
+    <div className="me-lib-grid">
+      {options.map(t => <button type="button" key={t.id} className={value === t.id ? "on" : ""} title={t.nazev}
+        onClick={e => { onChange(t.id); e.currentTarget.closest("details")?.removeAttribute("open"); }}>
+        {data[t.id] ? <img src={assetUrl(data[t.id].src)} alt={t.nazev} loading="lazy" /> : t.nazev}
+        <small>{t.nazev}</small>
+      </button>)}
+    </div>
+  </details>;
+}
 
 export const TABS = [["vrstvy", <Layers size={14} />, "Vrstvy"], ["knihovna", <Library size={14} />, "Knihovna"],
   ["vlastnosti", <Settings2 size={14} />, "Vlastnosti"], ["generator", <Wand2 size={14} />, "Generátor"],
@@ -43,13 +59,13 @@ export function LibraryPanel({ q, setQ, kat, setKat, stampId, onPick, ASSETS, on
   onUpload: (f: File) => void;
 }) {
   const filtered = STAMPS.filter((s) => (!kat || s.kat === kat) && (!q || s.nazev.toLowerCase().includes(q.toLowerCase())));
-  const customs = Object.values(ASSETS).filter((a) => a.custom && (!q || a.nazev.toLowerCase().includes(q.toLowerCase())));
+  const extras = Object.values(ASSETS).filter((a) => !stampById(a.id) && (!q || a.nazev.toLowerCase().includes(q.toLowerCase())) && (!kat || (kat === "__custom" ? a.custom : a.kategorie === kat)));
   return (
     <div className="me-lib">
       <input placeholder="Hledat…" value={q} onChange={(e) => setQ(e.target.value)} />
       <select value={kat} onChange={(e) => setKat(e.target.value)}>
         <option value="">Vše</option>
-        {KATEGORIE.map((kk) => <option key={kk} value={kk}>{kk}</option>)}
+        {[...new Set([...KATEGORIE, ...Object.values(ASSETS).map(a => a.kategorie).filter((k): k is string => !!k)])].map((kk) => <option key={kk} value={kk}>{kk}</option>)}
         <option value="__custom">Vlastní</option>
       </select>
       <div className="me-lib-grid">
@@ -62,7 +78,7 @@ export function LibraryPanel({ q, setQ, kat, setKat, stampId, onPick, ASSETS, on
             </button>
           );
         })}
-        {(kat === "__custom" || !kat) && customs.map((a) => (
+        {extras.map((a) => (
           <button key={a.id} className={`me-stamp ${stampId === a.id ? "on" : ""}`} title={a.nazev} onClick={() => onPick(a.id)}>
             <img src={assetUrl(a.src)} alt={a.nazev} loading="lazy" />
           </button>

@@ -1,3 +1,1512 @@
 {
- "assety": []
+ "assety": [
+  {
+   "id": "stul-ctverec",
+   "nazev": "Stůl čtvercový",
+   "kategorie": "Nábytek",
+   "src": "bojove/assets/Nábytek/stul-ctverec.webp",
+   "tags": [
+    "Nábytek"
+   ],
+   "custom": false
+  },
+  {
+   "id": "stul-obdelnik",
+   "nazev": "Stůl dlouhý",
+   "kategorie": "Nábytek",
+   "src": "bojove/assets/Nábytek/stul-obdelnik.webp",
+   "tags": [
+    "Nábytek"
+   ],
+   "custom": false
+  },
+  {
+   "id": "stul-kulaty",
+   "nazev": "Stůl kulatý",
+   "kategorie": "Nábytek",
+   "src": "bojove/assets/Nábytek/stul-kulaty.webp",
+   "tags": [
+    "Nábytek"
+   ],
+   "custom": false
+  },
+  {
+   "id": "zidle",
+   "nazev": "Židle",
+   "kategorie": "Nábytek",
+   "src": "bojove/assets/Nábytek/zidle.webp",
+   "tags": [
+    "Nábytek"
+   ],
+   "custom": false
+  },
+  {
+   "id": "lavice",
+   "nazev": "Lavice",
+   "kategorie": "Nábytek",
+   "src": "bojove/assets/Nábytek/lavice.webp",
+   "tags": [
+    "Nábytek"
+   ],
+   "custom": false
+  },
+  {
+   "id": "postel",
+   "nazev": "Postel",
+   "kategorie": "Nábytek",
+   "src": "bojove/assets/Nábytek/postel.webp",
+   "tags": [
+    "Nábytek"
+   ],
+   "custom": false
+  },
+  {
+   "id": "postel-dvou",
+   "nazev": "Dvoulůžko",
+   "kategorie": "Nábytek",
+   "src": "bojove/assets/Nábytek/postel-dvou.webp",
+   "tags": [
+    "Nábytek"
+   ],
+   "custom": false
+  },
+  {
+   "id": "skrin",
+   "nazev": "Skříň",
+   "kategorie": "Nábytek",
+   "src": "bojove/assets/Nábytek/skrin.webp",
+   "tags": [
+    "Nábytek"
+   ],
+   "custom": false
+  },
+  {
+   "id": "truhel",
+   "nazev": "Truhla",
+   "kategorie": "Nábytek",
+   "src": "bojove/assets/Nábytek/truhel.webp",
+   "tags": [
+    "Nábytek"
+   ],
+   "custom": false
+  },
+  {
+   "id": "knihovna",
+   "nazev": "Knihovna",
+   "kategorie": "Nábytek",
+   "src": "bojove/assets/Nábytek/knihovna.webp",
+   "tags": [
+    "Nábytek"
+   ],
+   "custom": false
+  },
+  {
+   "id": "krzeslo",
+   "nazev": "Křeslo / trůn",
+   "kategorie": "Nábytek",
+   "src": "bojove/assets/Nábytek/krzeslo.webp",
+   "tags": [
+    "Nábytek"
+   ],
+   "custom": false
+  },
+  {
+   "id": "stolni-deska",
+   "nazev": "Psací stůl",
+   "kategorie": "Nábytek",
+   "src": "bojove/assets/Nábytek/stolni-deska.webp",
+   "tags": [
+    "Nábytek"
+   ],
+   "custom": false
+  },
+  {
+   "id": "krb",
+   "nazev": "Krb",
+   "kategorie": "Nábytek",
+   "src": "bojove/assets/Nábytek/krb.webp",
+   "tags": [
+    "Nábytek"
+   ],
+   "custom": false
+  },
+  {
+   "id": "pult",
+   "nazev": "Pult / bar",
+   "kategorie": "Nábytek",
+   "src": "bojove/assets/Nábytek/pult.webp",
+   "tags": [
+    "Nábytek"
+   ],
+   "custom": false
+  },
+  {
+   "id": "koberec-velky",
+   "nazev": "Koberec",
+   "kategorie": "Nábytek",
+   "src": "bojove/assets/Nábytek/koberec-velky.webp",
+   "tags": [
+    "Nábytek"
+   ],
+   "custom": false
+  },
+  {
+   "id": "sud",
+   "nazev": "Sud",
+   "kategorie": "Nábytek",
+   "src": "bojove/assets/Nábytek/sud.webp",
+   "tags": [
+    "Nábytek"
+   ],
+   "custom": false
+  },
+  {
+   "id": "bedna",
+   "nazev": "Bedna",
+   "kategorie": "Nábytek",
+   "src": "bojove/assets/Nábytek/bedna.webp",
+   "tags": [
+    "Nábytek"
+   ],
+   "custom": false
+  },
+  {
+   "id": "bedny-sesup",
+   "nazev": "Hromada beden",
+   "kategorie": "Nábytek",
+   "src": "bojove/assets/Nábytek/bedny-sesup.webp",
+   "tags": [
+    "Nábytek"
+   ],
+   "custom": false
+  },
+  {
+   "id": "pydel",
+   "nazev": "Pytel",
+   "kategorie": "Nábytek",
+   "src": "bojove/assets/Nábytek/pydel.webp",
+   "tags": [
+    "Nábytek"
+   ],
+   "custom": false
+  },
+  {
+   "id": "sloup",
+   "nazev": "Sloup",
+   "kategorie": "Dungeon",
+   "src": "bojove/assets/Dungeon/sloup.webp",
+   "tags": [
+    "Dungeon"
+   ],
+   "custom": false
+  },
+  {
+   "id": "sloup-velky",
+   "nazev": "Masivní sloup",
+   "kategorie": "Dungeon",
+   "src": "bojove/assets/Dungeon/sloup-velky.webp",
+   "tags": [
+    "Dungeon"
+   ],
+   "custom": false
+  },
+  {
+   "id": "socha",
+   "nazev": "Socha",
+   "kategorie": "Dungeon",
+   "src": "bojove/assets/Dungeon/socha.webp",
+   "tags": [
+    "Dungeon"
+   ],
+   "custom": false
+  },
+  {
+   "id": "sarkofag",
+   "nazev": "Sarkofág",
+   "kategorie": "Dungeon",
+   "src": "bojove/assets/Dungeon/sarkofag.webp",
+   "tags": [
+    "Dungeon"
+   ],
+   "custom": false
+  },
+  {
+   "id": "hrobka-kryt",
+   "nazev": "Hrob",
+   "kategorie": "Dungeon",
+   "src": "bojove/assets/Dungeon/hrobka-kryt.webp",
+   "tags": [
+    "Dungeon"
+   ],
+   "custom": false
+  },
+  {
+   "id": "oltar",
+   "nazev": "Oltář",
+   "kategorie": "Dungeon",
+   "src": "bojove/assets/Dungeon/oltar.webp",
+   "tags": [
+    "Dungeon"
+   ],
+   "custom": false
+  },
+  {
+   "id": "kazatelna",
+   "nazev": "Kazatelna",
+   "kategorie": "Dungeon",
+   "src": "bojove/assets/Dungeon/kazatelna.webp",
+   "tags": [
+    "Dungeon"
+   ],
+   "custom": false
+  },
+  {
+   "id": "mriz",
+   "nazev": "Mříž / cela",
+   "kategorie": "Dungeon",
+   "src": "bojove/assets/Dungeon/mriz.webp",
+   "tags": [
+    "Dungeon"
+   ],
+   "custom": false
+  },
+  {
+   "id": "studna",
+   "nazev": "Studna",
+   "kategorie": "Dungeon",
+   "src": "bojove/assets/Dungeon/studna.webp",
+   "tags": [
+    "Dungeon"
+   ],
+   "custom": false
+  },
+  {
+   "id": "tajna-mistnost",
+   "nazev": "Pokladnice",
+   "kategorie": "Dungeon",
+   "src": "bojove/assets/Dungeon/tajna-mistnost.webp",
+   "tags": [
+    "Dungeon"
+   ],
+   "custom": false
+  },
+  {
+   "id": "pavouk-web",
+   "nazev": "Pavučiny",
+   "kategorie": "Dungeon",
+   "src": "bojove/assets/Dungeon/pavouk-web.webp",
+   "tags": [
+    "Dungeon"
+   ],
+   "custom": false
+  },
+  {
+   "id": "kostlivec",
+   "nazev": "Kostlivec",
+   "kategorie": "Dungeon",
+   "src": "bojove/assets/Dungeon/kostlivec.webp",
+   "tags": [
+    "Dungeon"
+   ],
+   "custom": false
+  },
+  {
+   "id": "kosti-hromada",
+   "nazev": "Hromada kostí",
+   "kategorie": "Dungeon",
+   "src": "bojove/assets/Dungeon/kosti-hromada.webp",
+   "tags": [
+    "Dungeon"
+   ],
+   "custom": false
+  },
+  {
+   "id": "prulom",
+   "nazev": "Prolomená zeď",
+   "kategorie": "Dungeon",
+   "src": "bojove/assets/Dungeon/prulom.webp",
+   "tags": [
+    "Dungeon"
+   ],
+   "custom": false
+  },
+  {
+   "id": "schod-dolu",
+   "nazev": "Schody dolů",
+   "kategorie": "Dungeon",
+   "src": "bojove/assets/Dungeon/schod-dolu.webp",
+   "tags": [
+    "Dungeon"
+   ],
+   "custom": false
+  },
+  {
+   "id": "balvan",
+   "nazev": "Balvan",
+   "kategorie": "Dungeon",
+   "src": "bojove/assets/Dungeon/balvan.webp",
+   "tags": [
+    "Dungeon"
+   ],
+   "custom": false
+  },
+  {
+   "id": "stalaktit",
+   "nazev": "Stalaktit",
+   "kategorie": "Dungeon",
+   "src": "bojove/assets/Dungeon/stalaktit.webp",
+   "tags": [
+    "Dungeon"
+   ],
+   "custom": false
+  },
+  {
+   "id": "trhlina",
+   "nazev": "Trhlina",
+   "kategorie": "Dungeon",
+   "src": "bojove/assets/Dungeon/trhlina.webp",
+   "tags": [
+    "Dungeon"
+   ],
+   "custom": false
+  },
+  {
+   "id": "strom",
+   "nazev": "Strom",
+   "kategorie": "Příroda",
+   "src": "bojove/assets/Příroda/strom.webp",
+   "tags": [
+    "Příroda"
+   ],
+   "custom": false
+  },
+  {
+   "id": "strom-velky",
+   "nazev": "Strom velký",
+   "kategorie": "Příroda",
+   "src": "bojove/assets/Příroda/strom-velky.webp",
+   "tags": [
+    "Příroda"
+   ],
+   "custom": false
+  },
+  {
+   "id": "smrk",
+   "nazev": "Smrk",
+   "kategorie": "Příroda",
+   "src": "bojove/assets/Příroda/smrk.webp",
+   "tags": [
+    "Příroda"
+   ],
+   "custom": false
+  },
+  {
+   "id": "keř",
+   "nazev": "Keř",
+   "kategorie": "Příroda",
+   "src": "bojove/assets/Příroda/keř.webp",
+   "tags": [
+    "Příroda"
+   ],
+   "custom": false
+  },
+  {
+   "id": "kamen",
+   "nazev": "Kámen",
+   "kategorie": "Příroda",
+   "src": "bojove/assets/Příroda/kamen.webp",
+   "tags": [
+    "Příroda"
+   ],
+   "custom": false
+  },
+  {
+   "id": "skala",
+   "nazev": "Skalní útvar",
+   "kategorie": "Příroda",
+   "src": "bojove/assets/Příroda/skala.webp",
+   "tags": [
+    "Příroda"
+   ],
+   "custom": false
+  },
+  {
+   "id": "pazdrovi",
+   "nazev": "Pařez",
+   "kategorie": "Příroda",
+   "src": "bojove/assets/Příroda/pazdrovi.webp",
+   "tags": [
+    "Příroda"
+   ],
+   "custom": false
+  },
+  {
+   "id": "padly-strom",
+   "nazev": "Padlý strom",
+   "kategorie": "Příroda",
+   "src": "bojove/assets/Příroda/padly-strom.webp",
+   "tags": [
+    "Příroda"
+   ],
+   "custom": false
+  },
+  {
+   "id": "houby",
+   "nazev": "Houby",
+   "kategorie": "Příroda",
+   "src": "bojove/assets/Příroda/houby.webp",
+   "tags": [
+    "Příroda"
+   ],
+   "custom": false
+  },
+  {
+   "id": "houby-svitici",
+   "nazev": "Svítící houby",
+   "kategorie": "Příroda",
+   "src": "bojove/assets/Příroda/houby-svitici.webp",
+   "tags": [
+    "Příroda"
+   ],
+   "custom": false
+  },
+  {
+   "id": "vinorost",
+   "nazev": "Vřes / porost",
+   "kategorie": "Příroda",
+   "src": "bojove/assets/Příroda/vinorost.webp",
+   "tags": [
+    "Příroda"
+   ],
+   "custom": false
+  },
+  {
+   "id": "reka-prechod",
+   "nazev": "Brod",
+   "kategorie": "Příroda",
+   "src": "bojove/assets/Příroda/reka-prechod.webp",
+   "tags": [
+    "Příroda"
+   ],
+   "custom": false
+  },
+  {
+   "id": "koreny",
+   "nazev": "Kořeny",
+   "kategorie": "Příroda",
+   "src": "bojove/assets/Příroda/koreny.webp",
+   "tags": [
+    "Příroda"
+   ],
+   "custom": false
+  },
+  {
+   "id": "kvety",
+   "nazev": "Květiny",
+   "kategorie": "Příroda",
+   "src": "bojove/assets/Příroda/kvety.webp",
+   "tags": [
+    "Příroda"
+   ],
+   "custom": false
+  },
+  {
+   "id": "studna-mesto",
+   "nazev": "Městská studna",
+   "kategorie": "Město",
+   "src": "bojove/assets/Město/studna-mesto.webp",
+   "tags": [
+    "Město"
+   ],
+   "custom": false
+  },
+  {
+   "id": "stodola-vuz",
+   "nazev": "Vůz",
+   "kategorie": "Město",
+   "src": "bojove/assets/Město/stodola-vuz.webp",
+   "tags": [
+    "Město"
+   ],
+   "custom": false
+  },
+  {
+   "id": "stojan-stand",
+   "nazev": "Tržní stánek",
+   "kategorie": "Město",
+   "src": "bojove/assets/Město/stojan-stand.webp",
+   "tags": [
+    "Město"
+   ],
+   "custom": false
+  },
+  {
+   "id": "lavoir-kasna",
+   "nazev": "Kašna",
+   "kategorie": "Město",
+   "src": "bojove/assets/Město/lavoir-kasna.webp",
+   "tags": [
+    "Město"
+   ],
+   "custom": false
+  },
+  {
+   "id": "latarnik",
+   "nazev": "Lampa",
+   "kategorie": "Město",
+   "src": "bojove/assets/Město/latarnik.webp",
+   "tags": [
+    "Město"
+   ],
+   "custom": false
+  },
+  {
+   "id": "plot",
+   "nazev": "Plot",
+   "kategorie": "Město",
+   "src": "bojove/assets/Město/plot.webp",
+   "tags": [
+    "Město"
+   ],
+   "custom": false
+  },
+  {
+   "id": "zabradi",
+   "nazev": "Zábradlí",
+   "kategorie": "Město",
+   "src": "bojove/assets/Město/zabradi.webp",
+   "tags": [
+    "Město"
+   ],
+   "custom": false
+  },
+  {
+   "id": "kvetinac",
+   "nazev": "Květináč",
+   "kategorie": "Město",
+   "src": "bojove/assets/Město/kvetinac.webp",
+   "tags": [
+    "Město"
+   ],
+   "custom": false
+  },
+  {
+   "id": "kolo-voza",
+   "nazev": "Rozbitý vůz",
+   "kategorie": "Město",
+   "src": "bojove/assets/Město/kolo-voza.webp",
+   "tags": [
+    "Město"
+   ],
+   "custom": false
+  },
+  {
+   "id": "markyza",
+   "nazev": "Markýza",
+   "kategorie": "Město",
+   "src": "bojove/assets/Město/markyza.webp",
+   "tags": [
+    "Město"
+   ],
+   "custom": false
+  },
+  {
+   "id": "smiti",
+   "nazev": "Hromada odpadu",
+   "kategorie": "Město",
+   "src": "bojove/assets/Město/smiti.webp",
+   "tags": [
+    "Město"
+   ],
+   "custom": false
+  },
+  {
+   "id": "dvere-ikona",
+   "nazev": "Vrata",
+   "kategorie": "Město",
+   "src": "bojove/assets/Město/dvere-ikona.webp",
+   "tags": [
+    "Město"
+   ],
+   "custom": false
+  },
+  {
+   "id": "clun",
+   "nazev": "Člun",
+   "kategorie": "Loď",
+   "src": "bojove/assets/Loď/clun.webp",
+   "tags": [
+    "Loď"
+   ],
+   "custom": false
+  },
+  {
+   "id": "stożar",
+   "nazev": "Stěžeň",
+   "kategorie": "Loď",
+   "src": "bojove/assets/Loď/stożar.webp",
+   "tags": [
+    "Loď"
+   ],
+   "custom": false
+  },
+  {
+   "id": "kotva",
+   "nazev": "Kotva",
+   "kategorie": "Loď",
+   "src": "bojove/assets/Loď/kotva.webp",
+   "tags": [
+    "Loď"
+   ],
+   "custom": false
+  },
+  {
+   "id": "vrv-kotel",
+   "nazev": "Kladka / lano",
+   "kategorie": "Loď",
+   "src": "bojove/assets/Loď/vrv-kotel.webp",
+   "tags": [
+    "Loď"
+   ],
+   "custom": false
+  },
+  {
+   "id": "truhla-lod",
+   "nazev": "Náklad",
+   "kategorie": "Loď",
+   "src": "bojove/assets/Loď/truhla-lod.webp",
+   "tags": [
+    "Loď"
+   ],
+   "custom": false
+  },
+  {
+   "id": "mag-kruh",
+   "nazev": "Magický kruh",
+   "kategorie": "Magie",
+   "src": "bojove/assets/Magie/mag-kruh.webp",
+   "tags": [
+    "Magie"
+   ],
+   "custom": false
+  },
+  {
+   "id": "portal",
+   "nazev": "Portál",
+   "kategorie": "Magie",
+   "src": "bojove/assets/Magie/portal.webp",
+   "tags": [
+    "Magie"
+   ],
+   "custom": false
+  },
+  {
+   "id": "rune-kamen",
+   "nazev": "Runový kámen",
+   "kategorie": "Magie",
+   "src": "bojove/assets/Magie/rune-kamen.webp",
+   "tags": [
+    "Magie"
+   ],
+   "custom": false
+  },
+  {
+   "id": "krystal",
+   "nazev": "Krystal",
+   "kategorie": "Magie",
+   "src": "bojove/assets/Magie/krystal.webp",
+   "tags": [
+    "Magie"
+   ],
+   "custom": false
+  },
+  {
+   "id": "kotel",
+   "nazev": "Kotel",
+   "kategorie": "Magie",
+   "src": "bojove/assets/Magie/kotel.webp",
+   "tags": [
+    "Magie"
+   ],
+   "custom": false
+  },
+  {
+   "id": "magicky-oltar",
+   "nazev": "Rituální oltář",
+   "kategorie": "Magie",
+   "src": "bojove/assets/Magie/magicky-oltar.webp",
+   "tags": [
+    "Magie"
+   ],
+   "custom": false
+  },
+  {
+   "id": "svitek-police",
+   "nazev": "Police svitků",
+   "kategorie": "Magie",
+   "src": "bojove/assets/Magie/svitek-police.webp",
+   "tags": [
+    "Magie"
+   ],
+   "custom": false
+  },
+  {
+   "id": "spiky",
+   "nazev": "Hřeby / spiky",
+   "kategorie": "Pasti a nebezpečí",
+   "src": "bojove/assets/Pasti a nebezpečí/spiky.webp",
+   "tags": [
+    "Pasti a nebezpečí"
+   ],
+   "custom": false
+  },
+  {
+   "id": "jama-spiky",
+   "nazev": "Jáma s hřeby",
+   "kategorie": "Pasti a nebezpečí",
+   "src": "bojove/assets/Pasti a nebezpečí/jama-spiky.webp",
+   "tags": [
+    "Pasti a nebezpečí"
+   ],
+   "custom": false
+  },
+  {
+   "id": "past-klapka",
+   "nazev": "Padací klapka",
+   "kategorie": "Pasti a nebezpečí",
+   "src": "bojove/assets/Pasti a nebezpečí/past-klapka.webp",
+   "tags": [
+    "Pasti a nebezpečí"
+   ],
+   "custom": false
+  },
+  {
+   "id": "ohen-past",
+   "nazev": "Ohnivá past",
+   "kategorie": "Pasti a nebezpečí",
+   "src": "bojove/assets/Pasti a nebezpečí/ohen-past.webp",
+   "tags": [
+    "Pasti a nebezpečí"
+   ],
+   "custom": false
+  },
+  {
+   "id": "lano-past",
+   "nazev": "Lanková past",
+   "kategorie": "Pasti a nebezpečí",
+   "src": "bojove/assets/Pasti a nebezpečí/lano-past.webp",
+   "tags": [
+    "Pasti a nebezpečí"
+   ],
+   "custom": false
+  },
+  {
+   "id": "trn",
+   "nazev": "Trnitý porost",
+   "kategorie": "Pasti a nebezpečí",
+   "src": "bojove/assets/Pasti a nebezpečí/trn.webp",
+   "tags": [
+    "Pasti a nebezpečí"
+   ],
+   "custom": false
+  },
+  {
+   "id": "kyselina",
+   "nazev": "Kyselá louže",
+   "kategorie": "Pasti a nebezpečí",
+   "src": "bojove/assets/Pasti a nebezpečí/kyselina.webp",
+   "tags": [
+    "Pasti a nebezpečí"
+   ],
+   "custom": false
+  },
+  {
+   "id": "netopyri",
+   "nazev": "Hnízdo netopýrů",
+   "kategorie": "Pasti a nebezpečí",
+   "src": "bojove/assets/Pasti a nebezpečí/netopyri.webp",
+   "tags": [
+    "Pasti a nebezpečí"
+   ],
+   "custom": false
+  },
+  {
+   "id": "pochodeň",
+   "nazev": "Pochodeň",
+   "kategorie": "Světla",
+   "src": "bojove/assets/Světla/pochodeň.webp",
+   "tags": [
+    "Světla"
+   ],
+   "custom": false
+  },
+  {
+   "id": "ohriste",
+   "nazev": "Ohniště",
+   "kategorie": "Světla",
+   "src": "bojove/assets/Světla/ohriste.webp",
+   "tags": [
+    "Světla"
+   ],
+   "custom": false
+  },
+  {
+   "id": "brasier",
+   "nazev": "Žhavina / brazier",
+   "kategorie": "Světla",
+   "src": "bojove/assets/Světla/brasier.webp",
+   "tags": [
+    "Světla"
+   ],
+   "custom": false
+  },
+  {
+   "id": "svicka",
+   "nazev": "Svíčka",
+   "kategorie": "Světla",
+   "src": "bojove/assets/Světla/svicka.webp",
+   "tags": [
+    "Světla"
+   ],
+   "custom": false
+  },
+  {
+   "id": "lucerna",
+   "nazev": "Lucerna",
+   "kategorie": "Světla",
+   "src": "bojove/assets/Světla/lucerna.webp",
+   "tags": [
+    "Světla"
+   ],
+   "custom": false
+  },
+  {
+   "id": "kandelabr",
+   "nazev": "Svícen",
+   "kategorie": "Světla",
+   "src": "bojove/assets/Světla/kandelabr.webp",
+   "tags": [
+    "Světla"
+   ],
+   "custom": false
+  },
+  {
+   "id": "svitici-runa",
+   "nazev": "Svítící runa",
+   "kategorie": "Světla",
+   "src": "bojove/assets/Světla/svitici-runa.webp",
+   "tags": [
+    "Světla"
+   ],
+   "custom": false
+  },
+  {
+   "id": "krb-vapka",
+   "nazev": "Magický plamen",
+   "kategorie": "Světla",
+   "src": "bojove/assets/Světla/krb-vapka.webp",
+   "tags": [
+    "Světla"
+   ],
+   "custom": false
+  },
+  {
+   "id": "stan",
+   "nazev": "Stan",
+   "kategorie": "Tábor/bitva",
+   "src": "bojove/assets/Tábor/bitva/stan.webp",
+   "tags": [
+    "Tábor/bitva"
+   ],
+   "custom": false
+  },
+  {
+   "id": "stan-velky",
+   "nazev": "Stan velký",
+   "kategorie": "Tábor/bitva",
+   "src": "bojove/assets/Tábor/bitva/stan-velky.webp",
+   "tags": [
+    "Tábor/bitva"
+   ],
+   "custom": false
+  },
+  {
+   "id": "ohne-tabor",
+   "nazev": "Táborák",
+   "kategorie": "Tábor/bitva",
+   "src": "bojove/assets/Tábor/bitva/ohne-tabor.webp",
+   "tags": [
+    "Tábor/bitva"
+   ],
+   "custom": false
+  },
+  {
+   "id": "barikada",
+   "nazev": "Barikáda",
+   "kategorie": "Tábor/bitva",
+   "src": "bojove/assets/Tábor/bitva/barikada.webp",
+   "tags": [
+    "Tábor/bitva"
+   ],
+   "custom": false
+  },
+  {
+   "id": "jezek",
+   "nazev": "Protijezdecký ježek",
+   "kategorie": "Tábor/bitva",
+   "src": "bojove/assets/Tábor/bitva/jezek.webp",
+   "tags": [
+    "Tábor/bitva"
+   ],
+   "custom": false
+  },
+  {
+   "id": "vlajka",
+   "nazev": "Vlajka",
+   "kategorie": "Tábor/bitva",
+   "src": "bojove/assets/Tábor/bitva/vlajka.webp",
+   "tags": [
+    "Tábor/bitva"
+   ],
+   "custom": false
+  },
+  {
+   "id": "zbroj-stojan",
+   "nazev": "Stojan na zbraně",
+   "kategorie": "Tábor/bitva",
+   "src": "bojove/assets/Tábor/bitva/zbroj-stojan.webp",
+   "tags": [
+    "Tábor/bitva"
+   ],
+   "custom": false
+  },
+  {
+   "id": "zavazi",
+   "nazev": "Válec / pytle",
+   "kategorie": "Tábor/bitva",
+   "src": "bojove/assets/Tábor/bitva/zavazi.webp",
+   "tags": [
+    "Tábor/bitva"
+   ],
+   "custom": false
+  },
+  {
+   "id": "valek-buben",
+   "nazev": "Válečný buben",
+   "kategorie": "Tábor/bitva",
+   "src": "bojove/assets/Tábor/bitva/valek-buben.webp",
+   "tags": [
+    "Tábor/bitva"
+   ],
+   "custom": false
+  },
+  {
+   "id": "gen2-strom",
+   "nazev": "Dub – realistický",
+   "kategorie": "Příroda",
+   "src": "bojove/assets/Příroda/gen2-strom.webp",
+   "tags": [
+    "Příroda"
+   ],
+   "custom": false,
+   "w": 2,
+   "h": 2,
+   "blocks": true,
+   "cover": 3
+  },
+  {
+   "id": "gen2-strom2",
+   "nazev": "Borovice – realistický",
+   "kategorie": "Příroda",
+   "src": "bojove/assets/Příroda/gen2-strom2.webp",
+   "tags": [
+    "Příroda"
+   ],
+   "custom": false,
+   "w": 2,
+   "h": 2,
+   "blocks": true,
+   "cover": 3
+  },
+  {
+   "id": "gen2-strom3",
+   "nazev": "Bříza – realistický",
+   "kategorie": "Příroda",
+   "src": "bojove/assets/Příroda/gen2-strom3.webp",
+   "tags": [
+    "Příroda"
+   ],
+   "custom": false,
+   "w": 2,
+   "h": 2,
+   "blocks": true,
+   "cover": 3
+  },
+  {
+   "id": "gen2-ker",
+   "nazev": "Keř – realistický",
+   "kategorie": "Příroda",
+   "src": "bojove/assets/Příroda/gen2-ker.webp",
+   "tags": [
+    "Příroda"
+   ],
+   "custom": false,
+   "w": 1,
+   "h": 1,
+   "difficult": true
+  },
+  {
+   "id": "gen2-ker2",
+   "nazev": "Křoví – realistický",
+   "kategorie": "Příroda",
+   "src": "bojove/assets/Příroda/gen2-ker2.webp",
+   "tags": [
+    "Příroda"
+   ],
+   "custom": false,
+   "w": 1,
+   "h": 1,
+   "difficult": true
+  },
+  {
+   "id": "gen2-balvan",
+   "nazev": "Balvan – realistický",
+   "kategorie": "Příroda",
+   "src": "bojove/assets/Příroda/gen2-balvan.webp",
+   "tags": [
+    "Příroda"
+   ],
+   "custom": false,
+   "w": 1,
+   "h": 1,
+   "blocks": true,
+   "cover": 3
+  },
+  {
+   "id": "gen2-balvan2",
+   "nazev": "Skaliska – realistický",
+   "kategorie": "Příroda",
+   "src": "bojove/assets/Příroda/gen2-balvan2.webp",
+   "tags": [
+    "Příroda"
+   ],
+   "custom": false,
+   "w": 1,
+   "h": 1,
+   "blocks": true,
+   "cover": 3
+  },
+  {
+   "id": "gen2-sloup",
+   "nazev": "Sloup – realistický",
+   "kategorie": "Rekvizity",
+   "src": "bojove/assets/Rekvizity/gen2-sloup.webp",
+   "tags": [
+    "Rekvizity"
+   ],
+   "custom": false,
+   "w": 1,
+   "h": 1,
+   "blocks": true,
+   "cover": 3
+  },
+  {
+   "id": "gen2-bedny",
+   "nazev": "Bedny – realistický",
+   "kategorie": "Rekvizity",
+   "src": "bojove/assets/Rekvizity/gen2-bedny.webp",
+   "tags": [
+    "Rekvizity"
+   ],
+   "custom": false,
+   "w": 1,
+   "h": 1,
+   "cover": 2,
+   "difficult": true
+  },
+  {
+   "id": "gen2-sudy",
+   "nazev": "Sudy – realistický",
+   "kategorie": "Rekvizity",
+   "src": "bojove/assets/Rekvizity/gen2-sudy.webp",
+   "tags": [
+    "Rekvizity"
+   ],
+   "custom": false,
+   "w": 1,
+   "h": 1,
+   "cover": 2,
+   "difficult": true
+  },
+  {
+   "id": "gen2-ohen",
+   "nazev": "Oheň – realistický",
+   "kategorie": "Rekvizity",
+   "src": "bojove/assets/Rekvizity/gen2-ohen.webp",
+   "tags": [
+    "Rekvizity"
+   ],
+   "custom": false,
+   "w": 1,
+   "h": 1,
+   "light": {
+    "bright": 10,
+    "dim": 10
+   }
+  },
+  {
+   "id": "gen2-dvere",
+   "nazev": "Dveře – realistický",
+   "kategorie": "Rekvizity",
+   "src": "bojove/assets/Rekvizity/gen2-dvere.webp",
+   "tags": [
+    "Rekvizity"
+   ],
+   "custom": false,
+   "w": 1,
+   "h": 1
+  },
+  {
+   "id": "gen2-sarkofag",
+   "nazev": "Sarkofág – realistický",
+   "kategorie": "Rekvizity",
+   "src": "bojove/assets/Rekvizity/gen2-sarkofag.webp",
+   "tags": [
+    "Rekvizity"
+   ],
+   "custom": false,
+   "w": 1,
+   "h": 1,
+   "cover": 2,
+   "difficult": true
+  },
+  {
+   "id": "gen2-kosti",
+   "nazev": "Kosti – realistický",
+   "kategorie": "Rekvizity",
+   "src": "bojove/assets/Rekvizity/gen2-kosti.webp",
+   "tags": [
+    "Rekvizity"
+   ],
+   "custom": false,
+   "w": 1,
+   "h": 1
+  },
+  {
+   "id": "gen2-portal",
+   "nazev": "Modrý portál – realistický",
+   "kategorie": "Magie",
+   "src": "bojove/assets/Magie/gen2-portal.webp",
+   "tags": [
+    "Magie"
+   ],
+   "custom": false,
+   "w": 1,
+   "h": 1
+  },
+  {
+   "id": "gen2-portal2",
+   "nazev": "Fialový portál – realistický",
+   "kategorie": "Magie",
+   "src": "bojove/assets/Magie/gen2-portal2.webp",
+   "tags": [
+    "Magie"
+   ],
+   "custom": false,
+   "w": 1,
+   "h": 1
+  },
+  {
+   "id": "gen2-lucerna",
+   "nazev": "Lucerna – realistický",
+   "kategorie": "Rekvizity",
+   "src": "bojove/assets/Rekvizity/gen2-lucerna.webp",
+   "tags": [
+    "Rekvizity"
+   ],
+   "custom": false,
+   "w": 1,
+   "h": 1,
+   "light": {
+    "bright": 10,
+    "dim": 10
+   }
+  },
+  {
+   "id": "gen2-pochoden",
+   "nazev": "Pochodeň – realistický",
+   "kategorie": "Rekvizity",
+   "src": "bojove/assets/Rekvizity/gen2-pochoden.webp",
+   "tags": [
+    "Rekvizity"
+   ],
+   "custom": false,
+   "w": 1,
+   "h": 1,
+   "light": {
+    "bright": 10,
+    "dim": 10
+   }
+  },
+  {
+   "id": "gen2-stul",
+   "nazev": "Stůl – realistický",
+   "kategorie": "Rekvizity",
+   "src": "bojove/assets/Rekvizity/gen2-stul.webp",
+   "tags": [
+    "Rekvizity"
+   ],
+   "custom": false,
+   "w": 1,
+   "h": 1,
+   "cover": 2,
+   "difficult": true
+  },
+  {
+   "id": "gen2-zidle",
+   "nazev": "Židle – realistický",
+   "kategorie": "Rekvizity",
+   "src": "bojove/assets/Rekvizity/gen2-zidle.webp",
+   "tags": [
+    "Rekvizity"
+   ],
+   "custom": false,
+   "w": 1,
+   "h": 1
+  },
+  {
+   "id": "gen2-koberec",
+   "nazev": "Koberec – realistický",
+   "kategorie": "Rekvizity",
+   "src": "bojove/assets/Rekvizity/gen2-koberec.webp",
+   "tags": [
+    "Rekvizity"
+   ],
+   "custom": false,
+   "w": 1,
+   "h": 1
+  },
+  {
+   "id": "gen2-studna",
+   "nazev": "Studna – realistický",
+   "kategorie": "Rekvizity",
+   "src": "bojove/assets/Rekvizity/gen2-studna.webp",
+   "tags": [
+    "Rekvizity"
+   ],
+   "custom": false,
+   "w": 1,
+   "h": 1,
+   "blocks": true,
+   "cover": 3
+  },
+  {
+   "id": "gen2-oltar",
+   "nazev": "Oltář – realistický",
+   "kategorie": "Rekvizity",
+   "src": "bojove/assets/Rekvizity/gen2-oltar.webp",
+   "tags": [
+    "Rekvizity"
+   ],
+   "custom": false,
+   "w": 1,
+   "h": 1,
+   "blocks": true,
+   "cover": 3
+  },
+  {
+   "id": "gen2-socha",
+   "nazev": "Socha – realistický",
+   "kategorie": "Rekvizity",
+   "src": "bojove/assets/Rekvizity/gen2-socha.webp",
+   "tags": [
+    "Rekvizity"
+   ],
+   "custom": false,
+   "w": 1,
+   "h": 1,
+   "blocks": true,
+   "cover": 3
+  },
+  {
+   "id": "gen2-kmen",
+   "nazev": "Kmen – realistický",
+   "kategorie": "Příroda",
+   "src": "bojove/assets/Příroda/gen2-kmen.webp",
+   "tags": [
+    "Příroda"
+   ],
+   "custom": false,
+   "w": 1,
+   "h": 1,
+   "cover": 2,
+   "difficult": true
+  },
+  {
+   "id": "gen2-parez",
+   "nazev": "Pařez – realistický",
+   "kategorie": "Příroda",
+   "src": "bojove/assets/Příroda/gen2-parez.webp",
+   "tags": [
+    "Příroda"
+   ],
+   "custom": false,
+   "w": 1,
+   "h": 1,
+   "cover": 2,
+   "difficult": true
+  },
+  {
+   "id": "gen2-houby",
+   "nazev": "Houby – realistický",
+   "kategorie": "Příroda",
+   "src": "bojove/assets/Příroda/gen2-houby.webp",
+   "tags": [
+    "Příroda"
+   ],
+   "custom": false,
+   "w": 1,
+   "h": 1
+  },
+  {
+   "id": "gen2-lekniny",
+   "nazev": "Lekníny – realistický",
+   "kategorie": "Příroda",
+   "src": "bojove/assets/Příroda/gen2-lekniny.webp",
+   "tags": [
+    "Příroda"
+   ],
+   "custom": false,
+   "w": 1,
+   "h": 1
+  },
+  {
+   "id": "gen2-rakos",
+   "nazev": "Rákos – realistický",
+   "kategorie": "Příroda",
+   "src": "bojove/assets/Příroda/gen2-rakos.webp",
+   "tags": [
+    "Příroda"
+   ],
+   "custom": false,
+   "w": 1,
+   "h": 1,
+   "difficult": true
+  },
+  {
+   "id": "gen2-stan",
+   "nazev": "Stan – realistický",
+   "kategorie": "Rekvizity",
+   "src": "bojove/assets/Rekvizity/gen2-stan.webp",
+   "tags": [
+    "Rekvizity"
+   ],
+   "custom": false,
+   "w": 2,
+   "h": 2
+  },
+  {
+   "id": "gen2-vuz",
+   "nazev": "Vůz – realistický",
+   "kategorie": "Rekvizity",
+   "src": "bojove/assets/Rekvizity/gen2-vuz.webp",
+   "tags": [
+    "Rekvizity"
+   ],
+   "custom": false,
+   "w": 2,
+   "h": 2,
+   "cover": 2,
+   "difficult": true
+  },
+  {
+   "id": "gen2-krev",
+   "nazev": "Krev – realistický",
+   "kategorie": "Rekvizity",
+   "src": "bojove/assets/Rekvizity/gen2-krev.webp",
+   "tags": [
+    "Rekvizity"
+   ],
+   "custom": false,
+   "w": 1,
+   "h": 1
+  },
+  {
+   "id": "gen2-truhla",
+   "nazev": "Truhla – realistický",
+   "kategorie": "Rekvizity",
+   "src": "bojove/assets/Rekvizity/gen2-truhla.webp",
+   "tags": [
+    "Rekvizity"
+   ],
+   "custom": false,
+   "w": 1,
+   "h": 1,
+   "cover": 2,
+   "difficult": true
+  },
+  {
+   "id": "gen2-regal",
+   "nazev": "Regál – realistický",
+   "kategorie": "Rekvizity",
+   "src": "bojove/assets/Rekvizity/gen2-regal.webp",
+   "tags": [
+    "Rekvizity"
+   ],
+   "custom": false,
+   "w": 1,
+   "h": 1,
+   "blocks": true,
+   "cover": 3
+  },
+  {
+   "id": "gen2-krystal",
+   "nazev": "Krystal – realistický",
+   "kategorie": "Příroda",
+   "src": "bojove/assets/Příroda/gen2-krystal.webp",
+   "tags": [
+    "Příroda"
+   ],
+   "custom": false,
+   "w": 1,
+   "h": 1
+  },
+  {
+   "id": "gen2-hrob",
+   "nazev": "Hrob – realistický",
+   "kategorie": "Rekvizity",
+   "src": "bojove/assets/Rekvizity/gen2-hrob.webp",
+   "tags": [
+    "Rekvizity"
+   ],
+   "custom": false,
+   "w": 1,
+   "h": 1
+  },
+  {
+   "id": "gen2-kapradi",
+   "nazev": "Kapradí – realistický",
+   "kategorie": "Příroda",
+   "src": "bojove/assets/Příroda/gen2-kapradi.webp",
+   "tags": [
+    "Příroda"
+   ],
+   "custom": false,
+   "w": 1,
+   "h": 1,
+   "difficult": true
+  },
+  {
+   "id": "gen2-keltsky_kamen",
+   "nazev": "Runový kámen – realistický",
+   "kategorie": "Rekvizity",
+   "src": "bojove/assets/Rekvizity/gen2-keltsky_kamen.webp",
+   "tags": [
+    "Rekvizity"
+   ],
+   "custom": false,
+   "w": 1,
+   "h": 1
+  }
+ ]
 }

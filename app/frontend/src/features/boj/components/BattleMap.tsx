@@ -470,19 +470,10 @@ export default function BattleMap(p: Props) {
           {img && <image href={img} width={W * PX} height={H * PX} preserveAspectRatio="none" opacity={0.92} />}
           {/* v2 vrstvy jsou v jednotkách 24 px/buňka → škálovaná skupina na bitevní PX */}
           <g transform={`scale(${PX / 24})`}>
+          <TerenLayer S={S} map={map} px={24} illustration={!!img} />
           <MapTextureLayer map={map as MapV2} />
           <MapElevationLayer map={map as MapV2} />
-          {map.mrizka.map((row, y) => row.split("").map((c, x) => {
-            const t = tileAt(map, x, y, S.teren);
-            const d = tileDef(t);
-            if (!d.cost) return <rect key={`${x},${y}`} x={x * PX} y={y * PX} width={PX} height={PX} fill="#000" opacity={t === "_" ? 0.55 : 0.38} />;
-            if (d.difficult) return <rect key={`${x},${y}`} x={x * PX} y={y * PX} width={PX} height={PX} fill="#7c2d12" opacity={0.14} />;
-            if (t === "x") return <rect key={`${x},${y}`} x={x * PX} y={y * PX} width={PX} height={PX} fill="#f97316" opacity={0.25} />;
-            if (d.cover) return <rect key={`${x},${y}`} x={x * PX} y={y * PX} width={PX} height={PX} fill="#0ea5e9" opacity={0.12} />;
-            return null;
-          }))}
           <MapGridLayer map={map as MapV2} W={W} H={H} />
-          <TerenLayer S={S} map={map} px={PX} />
           <MapDrawingLayer map={map as MapV2} dm={p.dm} />
           <MapLightLayer map={map as MapV2} />
           <MapWallLayer map={map as MapV2} doors={S.dvere} dm={p.dm}
