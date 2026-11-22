@@ -235,6 +235,7 @@ export default function EditorPage() {
       if (e.key === "Escape") { setWallDraft([]); setRoomPoints([]); setDragPt(null); setMarquee(null); setSel([]); setCalib(null); return; }
       if (!e.ctrlKey && sel.length === 1 && sel[0].kind === "objekt" && ["q", "e"].includes(e.key.toLowerCase())) {
         e.preventDefault();
+        if (!doc.mapRef.current?.objekty?.some(o => o.id === sel[0].id)) { setSel([]); return; }
         push(m => ops.rotateSel(m, sel, (e.key.toLowerCase() === "q" ? -1 : 1) * (e.altKey ? 1 : 15)));
         return;
       }
@@ -462,6 +463,7 @@ export default function EditorPage() {
   };
   const onWheel = (e: React.WheelEvent) => {
     if (e.ctrlKey && sel.length === 1 && sel[0].kind === "objekt") {
+      if (!doc.mapRef.current?.objekty?.some(o => o.id === sel[0].id)) { setSel([]); return; }
       push(m => ops.rotateSel(m, sel, e.deltaY < 0 ? 15 : -15));
       return;
     }
