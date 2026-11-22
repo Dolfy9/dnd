@@ -3,11 +3,17 @@ import type {MapV2} from "./mapV2";
 import type {Token,StavBoje} from "../types";
 import {planMovement} from "../rules/movement";
 import {defaultSettings} from "../rules/settings";
-import {reachable,canEndAt} from "../rules/grid";
+import {reachable,canEndAt,stepCost} from "../rules/grid";
 import {deckCoversStep} from "./mapRoutes";
 
 const token={id:"t",s:1,x:0,y:0,speed:30,side:"druzina",cond:[],effects:[],spent:{},atk:[]} as unknown as Token;
 const state={tok:[token],zones:[],eco:{},turn:0,ord:["t"]} as unknown as StavBoje;
+it("allows a flying multi-cell token to take a diagonal over traversable chasm cells",()=>{
+ const t={...token,s:2,fly:30},map:MapV2={id:"m",nazev:"M",podklad:"jine",mrizka:Array(5).fill("_____")};
+ expect(stepCost(t,1,0,map,[t])).toBe(1);expect(stepCost(t,0,1,map,[t])).toBe(1);
+ expect(reachable(t,5,map,[t]).dist["1,1"]).toBe(5);
+ expect(planMovement({...state,tok:[t]},map,t,[],[1,1],"pravidla",defaultSettings()).path).toEqual([[0,0],[1,1]]);
+});
 it("does not use a diagonal deck to squeeze between solid terrain corners",()=>{
  for(const rows of [[".#","#."],["._","#."]]){
   const map:MapV2={id:"m",nazev:"M",podklad:"jine",mrizka:rows,trasy:[{id:"pier",druh:"molo",pts:[[.5,.5],[1.5,1.5]],sirka:.5,hladke:false}]};

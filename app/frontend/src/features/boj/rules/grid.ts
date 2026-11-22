@@ -18,11 +18,18 @@ export const tileAt = (map: BattleMapData, x: number, y: number, teren?: TerenMa
 
 export const tileDef = (c: string) => TILES[c] || TILES["."];
 
+function terrainCost(t:Token,c:string):number {
+  if(c==="_")return t.fly?1:Infinity;
+  const cost=tileDef(c).cost;
+  if(!cost)return Infinity;
+  return (t.fly && "^,%~".includes(c)) || (t.swim && c==="~")?1:cost;
+}
+
 export function diagonalCornerBlocked(t:Token,x:number,y:number,dx:number,dy:number,map:BattleMapData,teren?:TerenMap):boolean {
   if(!dx || !dy)return false;
   return cellsOf(t,x,y).some(([cx,cy])=>{
     const sides=[tileAt(map,cx+dx,cy,teren),tileAt(map,cx,cy+dy,teren)];
-    if(sides.some(c=>tileDef(c).cost))return false;
+    if(sides.some(c=>Number.isFinite(terrainCost(t,c))))return false;
     return !sides.every(c=>c==="_" || c==="~") || !deckCoversStep(map,cx,cy,cx+dx,cy+dy);
   });
 }
@@ -86,12 +93,9 @@ export function stepCost(t: Token, x: number, y: number, map: BattleMapData, tok
   let worst = 1;
   for (const [cx, cy] of cellsOf(t, x, y)) {
     const c = tileAt(map, cx, cy, teren), def = tileDef(c);
-    if (c === "_" && !t.fly) return Infinity;
-    if (!def.cost && c !== "_") return Infinity;
+    let k=terrainCost(t,c);
+    if(!Number.isFinite(k))return Infinity;
     if (def.cost && cellInfo(map,cx,cy,teren).blocksMove) return Infinity;
-    let k = def.cost || 1;
-    if (c === "~" && t.swim) k = 1;
-    if (t.fly && "^,%~_".includes(c)) k = 1;
     if (zoneDifficultAt(zones, cx, cy)) k = Math.max(k, 2);
     const o = occupantAt(tokens, cx, cy, t);
     if (o) {
