@@ -290,7 +290,8 @@ export default function EditorPage() {
         const source = key === "v" ? clipboardRef.current : selected;
         if (!source.length) return;
         e.preventDefault();
-        const copies = ops.duplicateObjects(source);
+        const current = doc.mapRef.current!;
+        const copies = ops.duplicateObjects(source, current.mrizka[0]?.length || 1, current.mrizka.length);
         push(m => { m.objekty = [...(m.objekty || []), ...copies]; });
         setSel(copies.map(o => ({kind:"objekt",id:o.id})));
         return;

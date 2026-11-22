@@ -207,8 +207,13 @@ export function pickInRect(m: MapV2, a: [number, number], b: [number, number]) {
   return out;
 }
 
-export function duplicateObjects(objects: MapObject[]) {
-  return structuredClone(objects).map(o => ({ ...o, id: wallUid(), x: o.x + 1, y: o.y + 1 }));
+export function duplicateObjects(objects: MapObject[], width = Infinity, height = Infinity) {
+  const offset = (position: number, half: number, bound: number) =>
+    bound < half * 2 ? bound / 2 : Math.max(half, Math.min(bound - half, position + (position + 1 + half > bound ? -1 : 1)));
+  return structuredClone(objects).map(o => {
+    const angle = (o.rot || 0) * Math.PI / 180, c = Math.abs(Math.cos(angle)), s = Math.abs(Math.sin(angle));
+    return { ...o, id: wallUid(), x: offset(o.x, (o.w * c + o.h * s) / 2, width), y: offset(o.y, (o.w * s + o.h * c) / 2, height) };
+  });
 }
 
 export function rotateSel(m: MapV2, sel: { kind: string; id: string }[], angle: number) {

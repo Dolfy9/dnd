@@ -82,6 +82,20 @@ describe("placement and selection variants", () => {
     expect(object.light.bright).toBe(10);
     expect(duplicateObjects([])).toEqual([]);
   });
+  it("keeps duplicate footprints inside the map at the last row and column", () => {
+    const edge = {...object,x:9.5,y:7.5,w:1,h:1,rot:0};
+    const [copy] = duplicateObjects([edge],10,8);
+    expect(copy.x + copy.w/2).toBeLessThanOrEqual(10);
+    expect(copy.y + copy.h/2).toBeLessThanOrEqual(8);
+    expect(copy.x).toBeGreaterThanOrEqual(.5);
+    expect(copy.y).toBeGreaterThanOrEqual(.5);
+    const [rotated] = duplicateObjects([{...edge,w:2,h:2,rot:45}],10,8);
+    expect(rotated.x + Math.SQRT2).toBeLessThanOrEqual(10);
+    expect(rotated.y + Math.SQRT2).toBeLessThanOrEqual(8);
+    const [large] = duplicateObjects([{...edge,w:20,h:20}],1,1);
+    expect([large.x,large.y]).toEqual([.5,.5]);
+    expect(duplicateObjects([],10,8)).toEqual([]);
+  });
 });
 
 describe("variant imagery across render surfaces", () => {
