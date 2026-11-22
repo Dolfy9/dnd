@@ -9,6 +9,7 @@ export default defineConfig({
     proxy: {
       "/api": {
         target: "http://localhost:8001",
+        ws: true,
         configure: (proxy) => proxy.on("error", (e: any) => console.warn("proxy /api:", e.code || e.message)),
       },
       "/repo": {

@@ -118,3 +118,61 @@ def test_byte_identical_roundtrip(editor):
                json.dumps(ma, ensure_ascii=False, indent=1)
     editor.delete(f"/api/map/bojove/{mid}")
     assert JSON_F.read_bytes() == raw_before
+
+
+def test_paint_atmosphere_roundtrip(editor, monkeypatch, tmp_path):
+    from app.api import battle_maps
+
+    storage = tmp_path / "mapy.json"
+    monkeypatch.setattr(battle_maps, "JSON_F", storage)
+    fields = {
+        "malba": [{"id": "s", "t": "hlina", "b": 1.25, "o": .8, "h": .4,
+                   "p": [[.1, .2], [1.75, 2.3]]}],
+        "atmosfera": {"amb": .15, "barva": "#101522"},
+        "pocasi": {"typ": "bourka", "sila": .8, "vitr": 125},
+        "interiery": [{"id": "roof", "poly": [[.5,.5],[3,.5],[3,2],[.5,2]]}],
+        "objekty": [{"id": "portal", "asset": "portal", "anim": False, "x": 1, "y": 1, "w": 2, "h": 2}],
+        "svetla": [{"id": "l", "x": 1.2, "y": 2.3, "bright": 10, "dim": 15,
+                    "intenzita": .7, "blikani": True}],
+    }
+    r = editor.post("/api/map/bojove", json={"nazev": "Visual Roundtrip Tmp", **fields})
+    assert r.status_code == 200, r.text
+    mid = r.json()["id"]
+    try:
+        stored = json.loads(storage.read_text())["mapy"][0]
+        for key, value in fields.items():
+            assert stored[key] == value
+            assert r.json()["mapa"][key] == value
+        r = editor.put(f"/api/map/bojove/{mid}", json={"malba": [], "atmosfera": None, "interiery": []})
+        assert r.status_code == 200, r.text
+        stored = json.loads(storage.read_text())["mapy"][0]
+        assert stored["malba"] == []
+        assert stored["interiery"] == []
+        assert "atmosfera" not in stored
+        assert stored["svetla"] == fields["svetla"]
+    finally:
+        editor.delete(f"/api/map/bojove/{mid}")
+
+
+def test_routes_roundtrip(editor, monkeypatch, tmp_path):
+    from app.api import battle_maps
+
+    storage = tmp_path / "routes.json"
+    monkeypatch.setattr(battle_maps, "JSON_F", storage)
+    routes = [{"id": k, "druh": k, "pts": [[.2, .3], [3.4, 4.5]],
+               "sirka": .75, "hladke": True, "seed": 42}
+              for k in ("cesta", "molo", "plot", "zidka")]
+    r = editor.post("/api/map/bojove", json={"nazev": "Route Roundtrip Tmp", "trasy": routes})
+    assert r.status_code == 200, r.text
+    mid = r.json()["id"]
+    try:
+        assert r.json()["mapa"]["trasy"] == routes
+        assert json.loads(storage.read_text())["mapy"][0]["trasy"] == routes
+        assert battle_maps.strip_for_player(r.json()["mapa"])["trasy"] == routes
+        updated = [{**routes[0], "pts": [[1.25, 2.5], [4, 5], [7, 6]]}]
+        r = editor.put(f"/api/map/bojove/{mid}", json={"trasy": updated})
+        assert r.status_code == 200, r.text
+        assert json.loads(storage.read_text())["mapy"][0]["trasy"] == updated
+        assert editor.put(f"/api/map/bojove/{mid}", json={"trasy": []}).json()["mapa"]["trasy"] == []
+    finally:
+        editor.delete(f"/api/map/bojove/{mid}")

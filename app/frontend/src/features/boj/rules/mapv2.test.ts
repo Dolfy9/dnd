@@ -135,9 +135,9 @@ describe("generátory", () => {
   });
 });
 
-describe("migrateMap — 30 existujících map", () => {
-  it("všech 30 migruje, mechanika dlaždic se nemění", () => {
-    expect(doc.mapy.length).toBe(30);
+describe("migrateMap — uložené mapy", () => {
+  it("původních 30 i nově přidané mapy migrují beze změny dlaždic", () => {
+    expect(doc.mapy.length).toBeGreaterThanOrEqual(30);
     for (const m of doc.mapy) {
       const mig = migrateMap(m);
       expect(mig.mrizka).toEqual(m.mrizka);           // dlaždice netknuté

@@ -53,6 +53,7 @@ export function cmdAddLight(S: StavBoje, l: Omit<import("../../types").LightSour
 }
 export function cmdRemoveLight(S: StavBoje, id: string) {
   S.lights = (S.lights || []).filter((l) => l.id !== id);
+  S.zdroje = { ...S.zdroje, [id]: false };
 }
 export function cmdLightLevel(S: StavBoje, lvl: "bright" | "dim" | "dark") {
   S.lightLevel = lvl;

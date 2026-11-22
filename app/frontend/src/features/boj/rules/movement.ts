@@ -3,7 +3,8 @@
    nuceny (forced move — bez pohybu, bez OA, ne projde zdí), teleport.
    Úhlopříčky 5 ft (2024) nebo střídavě 5/10 ft (DMG varianta). */
 import type { StavBoje, Token, BattleMapData, BattleSettings, MoveMode, Zone } from "../types";
-import { mapSize, tileAt, tileDef, cellsOf, occupantAt, hostile, zoneCovers, oaAlong } from "./grid";
+import { mapWalls } from "../model/mapRoutes";
+import { diagonalCornerBlocked, mapSize, tileAt, tileDef, cellsOf, occupantAt, hostile, zoneCovers, oaAlong } from "./grid";
 import { isIncap } from "./conditions";
 import { moveLeft, ecoOf } from "./turn";
 import { cellInfo, edgeBlocked, wallIndex, type DoorStates } from "../model/mapV2";
@@ -67,7 +68,7 @@ function dijkstra(t: Token, from: [number, number], map: BattleMapData, S: StavB
   const start = key(from[0], from[1], 0);
   dist.set(start, 0);
   const q: [number, number, number, number][] = [[0, from[0], from[1], 0]];
-  const wIdx = wallIndex((map as any).steny);
+  const wIdx = wallIndex(mapWalls(map));
   const doors = (S as any).dvere as DoorStates;
   while (q.length) {
     q.sort((a, b) => a[0] - b[0]);
@@ -77,7 +78,7 @@ function dijkstra(t: Token, from: [number, number], map: BattleMapData, S: StavB
       if (!dx && !dy) continue;
       const nx = x + dx, ny = y + dy;
       if (nx < 0 || ny < 0 || nx + t.s > W || ny + t.s > H) continue;
-      if (dx && dy && !tileDef(tileAt(map, x + dx, y, S.teren)).cost && !tileDef(tileAt(map, x, y + dy, S.teren)).cost) continue;
+      if (diagonalCornerBlocked(t,x,y,dx,dy,map,S.teren)) continue;
       if (wIdx.size && edgeBlocked(wIdx, x, y, nx, ny, doors)) continue;
       const sc = stepCostM(t, nx, ny, map, S.tok, S.zones, S.teren, passHostile, forced);
       if (sc === Infinity) continue;

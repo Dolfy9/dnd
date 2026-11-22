@@ -1,0 +1,484 @@
+{
+  "source": "gen8",
+  "overlay_blackpoint": {"ov_svetlusky.png": 26, "ostatni": 3},
+  "rule": "S výjimkou průhledných rybářských sítí: průměr alfa < 65 % mediánu sourozenců A současně > 80 % obsazených pixelů s alfa mezi 0,05 a 0,95. Vadný slot přebírá neporušený základ; pořadí variant se nemění.",
+  "replacements": {
+    "z-kvetinovy-zahon-v2.webp": "z-kvetinovy-zahon.webp",
+    "z-strom-koruna-v1.webp": "z-strom-koruna.webp",
+    "z-zivy-plot-roh-v3.webp": "z-zivy-plot-roh.webp"
+  },
+  "cutouts": {
+    "p-hromada-ryb.webp": {
+      "mean_alpha": 0.824773,
+      "coverage": 0.841099,
+      "semitransparent_fraction": 0.030804,
+      "sibling_median_alpha": 0.8245045
+    },
+    "p-hromada-ryb-v1.webp": {
+      "mean_alpha": 0.82894,
+      "coverage": 0.844495,
+      "semitransparent_fraction": 0.028468,
+      "sibling_median_alpha": 0.8245045
+    },
+    "p-hromada-ryb-v2.webp": {
+      "mean_alpha": 0.817432,
+      "coverage": 0.833999,
+      "semitransparent_fraction": 0.032621,
+      "sibling_median_alpha": 0.8245045
+    },
+    "p-hromada-ryb-v3.webp": {
+      "mean_alpha": 0.824236,
+      "coverage": 0.840492,
+      "semitransparent_fraction": 0.031,
+      "sibling_median_alpha": 0.8245045
+    },
+    "p-lana-svitek.webp": {
+      "mean_alpha": 0.587663,
+      "coverage": 0.607439,
+      "semitransparent_fraction": 0.056813,
+      "sibling_median_alpha": 0.5624370000000001
+    },
+    "p-lana-svitek-v1.webp": {
+      "mean_alpha": 0.515024,
+      "coverage": 0.535998,
+      "semitransparent_fraction": 0.070892,
+      "sibling_median_alpha": 0.5624370000000001
+    },
+    "p-lana-svitek-v2.webp": {
+      "mean_alpha": 0.591152,
+      "coverage": 0.607791,
+      "semitransparent_fraction": 0.04813,
+      "sibling_median_alpha": 0.5624370000000001
+    },
+    "p-lana-svitek-v3.webp": {
+      "mean_alpha": 0.537211,
+      "coverage": 0.559183,
+      "semitransparent_fraction": 0.069246,
+      "sibling_median_alpha": 0.5624370000000001
+    },
+    "p-lodka.webp": {
+      "mean_alpha": 0.683318,
+      "coverage": 0.69708,
+      "semitransparent_fraction": 0.031846,
+      "sibling_median_alpha": 0.6792285
+    },
+    "p-lodka-v1.webp": {
+      "mean_alpha": 0.673097,
+      "coverage": 0.685918,
+      "semitransparent_fraction": 0.030001,
+      "sibling_median_alpha": 0.6792285
+    },
+    "p-lodka-v2.webp": {
+      "mean_alpha": 0.687608,
+      "coverage": 0.699764,
+      "semitransparent_fraction": 0.02738,
+      "sibling_median_alpha": 0.6792285
+    },
+    "p-lodka-v3.webp": {
+      "mean_alpha": 0.675139,
+      "coverage": 0.688934,
+      "semitransparent_fraction": 0.031586,
+      "sibling_median_alpha": 0.6792285
+    },
+    "p-lodni-kolik.webp": {
+      "mean_alpha": 0.670759,
+      "coverage": 0.684375,
+      "semitransparent_fraction": 0.032975,
+      "sibling_median_alpha": 0.586945
+    },
+    "p-lodni-kolik-v1.webp": {
+      "mean_alpha": 0.558758,
+      "coverage": 0.569865,
+      "semitransparent_fraction": 0.031518,
+      "sibling_median_alpha": 0.586945
+    },
+    "p-lodni-kolik-v2.webp": {
+      "mean_alpha": 0.560076,
+      "coverage": 0.570714,
+      "semitransparent_fraction": 0.030886,
+      "sibling_median_alpha": 0.586945
+    },
+    "p-lodni-kolik-v3.webp": {
+      "mean_alpha": 0.613814,
+      "coverage": 0.637269,
+      "semitransparent_fraction": 0.087817,
+      "sibling_median_alpha": 0.586945
+    },
+    "p-nastenna-lucerna.webp": {
+      "mean_alpha": 0.667262,
+      "coverage": 0.687289,
+      "semitransparent_fraction": 0.050249,
+      "sibling_median_alpha": 0.5874745
+    },
+    "p-nastenna-lucerna-v1.webp": {
+      "mean_alpha": 0.668709,
+      "coverage": 0.68377,
+      "semitransparent_fraction": 0.034865,
+      "sibling_median_alpha": 0.5874745
+    },
+    "p-nastenna-lucerna-v2.webp": {
+      "mean_alpha": 0.507687,
+      "coverage": 0.525459,
+      "semitransparent_fraction": 0.060506,
+      "sibling_median_alpha": 0.5874745
+    },
+    "p-nastenna-lucerna-v3.webp": {
+      "mean_alpha": 0.492345,
+      "coverage": 0.511019,
+      "semitransparent_fraction": 0.065235,
+      "sibling_median_alpha": 0.5874745
+    },
+    "p-site.webp": {
+      "mean_alpha": 0.484346,
+      "coverage": 0.584005,
+      "semitransparent_fraction": 0.46377,
+      "sibling_median_alpha": 0.556073
+    },
+    "p-site-v1.webp": {
+      "mean_alpha": 0.661523,
+      "coverage": 0.685774,
+      "semitransparent_fraction": 0.076175,
+      "sibling_median_alpha": 0.556073
+    },
+    "p-site-v2.webp": {
+      "mean_alpha": 0.528567,
+      "coverage": 0.631556,
+      "semitransparent_fraction": 0.453348,
+      "sibling_median_alpha": 0.556073
+    },
+    "p-site-v3.webp": {
+      "mean_alpha": 0.583579,
+      "coverage": 0.631588,
+      "semitransparent_fraction": 0.195078,
+      "sibling_median_alpha": 0.556073
+    },
+    "p-sud-ryby.webp": {
+      "mean_alpha": 0.734369,
+      "coverage": 0.74783,
+      "semitransparent_fraction": 0.027752,
+      "sibling_median_alpha": 0.74874
+    },
+    "p-sud-ryby-v1.webp": {
+      "mean_alpha": 0.749146,
+      "coverage": 0.762893,
+      "semitransparent_fraction": 0.027775,
+      "sibling_median_alpha": 0.74874
+    },
+    "p-sud-ryby-v2.webp": {
+      "mean_alpha": 0.749197,
+      "coverage": 0.762858,
+      "semitransparent_fraction": 0.027387,
+      "sibling_median_alpha": 0.74874
+    },
+    "p-sud-ryby-v3.webp": {
+      "mean_alpha": 0.748334,
+      "coverage": 0.762018,
+      "semitransparent_fraction": 0.027726,
+      "sibling_median_alpha": 0.74874
+    },
+    "p-vor.webp": {
+      "mean_alpha": 0.847279,
+      "coverage": 0.862126,
+      "semitransparent_fraction": 0.027602,
+      "sibling_median_alpha": 0.8572
+    },
+    "p-vor-v1.webp": {
+      "mean_alpha": 0.866531,
+      "coverage": 0.881541,
+      "semitransparent_fraction": 0.026731,
+      "sibling_median_alpha": 0.8572
+    },
+    "p-vor-v2.webp": {
+      "mean_alpha": 0.85585,
+      "coverage": 0.869812,
+      "semitransparent_fraction": 0.025732,
+      "sibling_median_alpha": 0.8572
+    },
+    "p-vor-v3.webp": {
+      "mean_alpha": 0.85855,
+      "coverage": 0.872574,
+      "semitransparent_fraction": 0.023662,
+      "sibling_median_alpha": 0.8572
+    },
+    "z-brectan-previs.webp": {
+      "mean_alpha": 0.455423,
+      "coverage": 0.499935,
+      "semitransparent_fraction": 0.219077,
+      "sibling_median_alpha": 0.4154785
+    },
+    "z-brectan-previs-v1.webp": {
+      "mean_alpha": 0.402302,
+      "coverage": 0.448847,
+      "semitransparent_fraction": 0.294038,
+      "sibling_median_alpha": 0.4154785
+    },
+    "z-brectan-previs-v2.webp": {
+      "mean_alpha": 0.407284,
+      "coverage": 0.454675,
+      "semitransparent_fraction": 0.287488,
+      "sibling_median_alpha": 0.4154785
+    },
+    "z-brectan-previs-v3.webp": {
+      "mean_alpha": 0.423673,
+      "coverage": 0.467763,
+      "semitransparent_fraction": 0.236309,
+      "sibling_median_alpha": 0.4154785
+    },
+    "z-jezirko-fontana.webp": {
+      "mean_alpha": 0.896131,
+      "coverage": 0.908641,
+      "semitransparent_fraction": 0.019858,
+      "sibling_median_alpha": 0.896131
+    },
+    "z-kvetinovy-zahon.webp": {
+      "mean_alpha": 0.502424,
+      "coverage": 0.612833,
+      "semitransparent_fraction": 0.625043,
+      "sibling_median_alpha": 0.4744895
+    },
+    "z-kvetinovy-zahon-v1.webp": {
+      "mean_alpha": 0.446555,
+      "coverage": 0.565827,
+      "semitransparent_fraction": 0.675849,
+      "sibling_median_alpha": 0.4744895
+    },
+    "z-kvetinovy-zahon-v2.webp": {
+      "mean_alpha": 0.253274,
+      "coverage": 0.581416,
+      "semitransparent_fraction": 0.962827,
+      "sibling_median_alpha": 0.4744895
+    },
+    "z-kvetinovy-zahon-v3.webp": {
+      "mean_alpha": 0.50273,
+      "coverage": 0.617511,
+      "semitransparent_fraction": 0.64882,
+      "sibling_median_alpha": 0.4744895
+    },
+    "z-lavicka-kamen.webp": {
+      "mean_alpha": 0.725624,
+      "coverage": 0.746482,
+      "semitransparent_fraction": 0.049891,
+      "sibling_median_alpha": 0.6643095
+    },
+    "z-lavicka-kamen-v1.webp": {
+      "mean_alpha": 0.609958,
+      "coverage": 0.624454,
+      "semitransparent_fraction": 0.039293,
+      "sibling_median_alpha": 0.6643095
+    },
+    "z-lavicka-kamen-v2.webp": {
+      "mean_alpha": 0.687613,
+      "coverage": 0.70399,
+      "semitransparent_fraction": 0.039266,
+      "sibling_median_alpha": 0.6643095
+    },
+    "z-lavicka-kamen-v3.webp": {
+      "mean_alpha": 0.641006,
+      "coverage": 0.660929,
+      "semitransparent_fraction": 0.054063,
+      "sibling_median_alpha": 0.6643095
+    },
+    "z-rotunda-ruina.webp": {
+      "mean_alpha": 0.747215,
+      "coverage": 0.756874,
+      "semitransparent_fraction": 0.020444,
+      "sibling_median_alpha": 0.747215
+    },
+    "z-ruze-ker.webp": {
+      "mean_alpha": 0.598466,
+      "coverage": 0.621623,
+      "semitransparent_fraction": 0.073848,
+      "sibling_median_alpha": 0.5633355
+    },
+    "z-ruze-ker-v1.webp": {
+      "mean_alpha": 0.528362,
+      "coverage": 0.566559,
+      "semitransparent_fraction": 0.188438,
+      "sibling_median_alpha": 0.5633355
+    },
+    "z-ruze-ker-v2.webp": {
+      "mean_alpha": 0.59823,
+      "coverage": 0.621599,
+      "semitransparent_fraction": 0.072169,
+      "sibling_median_alpha": 0.5633355
+    },
+    "z-ruze-ker-v3.webp": {
+      "mean_alpha": 0.528441,
+      "coverage": 0.561381,
+      "semitransparent_fraction": 0.139373,
+      "sibling_median_alpha": 0.5633355
+    },
+    "z-sloup-zlomeny.webp": {
+      "mean_alpha": 0.594389,
+      "coverage": 0.621134,
+      "semitransparent_fraction": 0.082039,
+      "sibling_median_alpha": 0.623683
+    },
+    "z-sloup-zlomeny-v1.webp": {
+      "mean_alpha": 0.657574,
+      "coverage": 0.699117,
+      "semitransparent_fraction": 0.11765,
+      "sibling_median_alpha": 0.623683
+    },
+    "z-sloup-zlomeny-v2.webp": {
+      "mean_alpha": 0.59306,
+      "coverage": 0.625831,
+      "semitransparent_fraction": 0.103489,
+      "sibling_median_alpha": 0.623683
+    },
+    "z-sloup-zlomeny-v3.webp": {
+      "mean_alpha": 0.652977,
+      "coverage": 0.686206,
+      "semitransparent_fraction": 0.09558,
+      "sibling_median_alpha": 0.623683
+    },
+    "z-socha-kral.webp": {
+      "mean_alpha": 0.732074,
+      "coverage": 0.748779,
+      "semitransparent_fraction": 0.038043,
+      "sibling_median_alpha": 0.7440995
+    },
+    "z-socha-kral-v1.webp": {
+      "mean_alpha": 0.778812,
+      "coverage": 0.796864,
+      "semitransparent_fraction": 0.038834,
+      "sibling_median_alpha": 0.7440995
+    },
+    "z-socha-kral-v2.webp": {
+      "mean_alpha": 0.722506,
+      "coverage": 0.738043,
+      "semitransparent_fraction": 0.035487,
+      "sibling_median_alpha": 0.7440995
+    },
+    "z-socha-kral-v3.webp": {
+      "mean_alpha": 0.756125,
+      "coverage": 0.773625,
+      "semitransparent_fraction": 0.038557,
+      "sibling_median_alpha": 0.7440995
+    },
+    "z-sochy-zlomena.webp": {
+      "mean_alpha": 0.494426,
+      "coverage": 0.553002,
+      "semitransparent_fraction": 0.401671,
+      "sibling_median_alpha": 0.5090570000000001
+    },
+    "z-sochy-zlomena-v1.webp": {
+      "mean_alpha": 0.51278,
+      "coverage": 0.590642,
+      "semitransparent_fraction": 0.402227,
+      "sibling_median_alpha": 0.5090570000000001
+    },
+    "z-sochy-zlomena-v2.webp": {
+      "mean_alpha": 0.511024,
+      "coverage": 0.551732,
+      "semitransparent_fraction": 0.202967,
+      "sibling_median_alpha": 0.5090570000000001
+    },
+    "z-sochy-zlomena-v3.webp": {
+      "mean_alpha": 0.50709,
+      "coverage": 0.545182,
+      "semitransparent_fraction": 0.243959,
+      "sibling_median_alpha": 0.5090570000000001
+    },
+    "z-strom-koruna.webp": {
+      "mean_alpha": 0.661742,
+      "coverage": 0.684115,
+      "semitransparent_fraction": 0.061771,
+      "sibling_median_alpha": 0.6177495
+    },
+    "z-strom-koruna-v1.webp": {
+      "mean_alpha": 0.349655,
+      "coverage": 0.637677,
+      "semitransparent_fraction": 0.891885,
+      "sibling_median_alpha": 0.6177495
+    },
+    "z-strom-koruna-v2.webp": {
+      "mean_alpha": 0.605148,
+      "coverage": 0.660552,
+      "semitransparent_fraction": 0.353685,
+      "sibling_median_alpha": 0.6177495
+    },
+    "z-strom-koruna-v3.webp": {
+      "mean_alpha": 0.630351,
+      "coverage": 0.67764,
+      "semitransparent_fraction": 0.412085,
+      "sibling_median_alpha": 0.6177495
+    },
+    "z-urna-kamen.webp": {
+      "mean_alpha": 0.495514,
+      "coverage": 0.517983,
+      "semitransparent_fraction": 0.082013,
+      "sibling_median_alpha": 0.5354304999999999
+    },
+    "z-urna-kamen-v1.webp": {
+      "mean_alpha": 0.542651,
+      "coverage": 0.566554,
+      "semitransparent_fraction": 0.080186,
+      "sibling_median_alpha": 0.5354304999999999
+    },
+    "z-urna-kamen-v2.webp": {
+      "mean_alpha": 0.52821,
+      "coverage": 0.555365,
+      "semitransparent_fraction": 0.111084,
+      "sibling_median_alpha": 0.5354304999999999
+    },
+    "z-urna-kamen-v3.webp": {
+      "mean_alpha": 0.549975,
+      "coverage": 0.573065,
+      "semitransparent_fraction": 0.076703,
+      "sibling_median_alpha": 0.5354304999999999
+    },
+    "z-zivy-plot-roh.webp": {
+      "mean_alpha": 0.509943,
+      "coverage": 0.536495,
+      "semitransparent_fraction": 0.160402,
+      "sibling_median_alpha": 0.446477
+    },
+    "z-zivy-plot-roh-v1.webp": {
+      "mean_alpha": 0.403745,
+      "coverage": 0.497008,
+      "semitransparent_fraction": 0.510287,
+      "sibling_median_alpha": 0.446477
+    },
+    "z-zivy-plot-roh-v2.webp": {
+      "mean_alpha": 0.489209,
+      "coverage": 0.510062,
+      "semitransparent_fraction": 0.113491,
+      "sibling_median_alpha": 0.446477
+    },
+    "z-zivy-plot-roh-v3.webp": {
+      "mean_alpha": 0.163106,
+      "coverage": 0.460738,
+      "semitransparent_fraction": 0.975811,
+      "sibling_median_alpha": 0.446477
+    },
+    "z-zivy-plot.webp": {
+      "mean_alpha": 0.605787,
+      "coverage": 0.682902,
+      "semitransparent_fraction": 0.539568,
+      "sibling_median_alpha": 0.6015874999999999
+    },
+    "z-zivy-plot-v1.webp": {
+      "mean_alpha": 0.597388,
+      "coverage": 0.624767,
+      "semitransparent_fraction": 0.091955,
+      "sibling_median_alpha": 0.6015874999999999
+    },
+    "z-zivy-plot-v2.webp": {
+      "mean_alpha": 0.615466,
+      "coverage": 0.645571,
+      "semitransparent_fraction": 0.108276,
+      "sibling_median_alpha": 0.6015874999999999
+    },
+    "z-zivy-plot-v3.webp": {
+      "mean_alpha": 0.597351,
+      "coverage": 0.624014,
+      "semitransparent_fraction": 0.095606,
+      "sibling_median_alpha": 0.6015874999999999
+    }
+  },
+  "excluded_textures": {
+    "tex_t-molo-prkna.png": "Viditelně nenavazující prkna na svislém švu; průměrná RGB odchylka hrany 21,91 proti 95. percentilu vnitřních sousedních sloupců 9,90.",
+    "tex_t-zed-brectan.png": "Nástěnná koruna s horní hranou; při opakování ve dvou osách vznikají pravidelné vodorovné pásy, nikoli souvislá plocha."
+  }
+}

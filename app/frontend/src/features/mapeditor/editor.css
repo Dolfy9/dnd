@@ -1,3 +1,36 @@
+/* Obrazové volby sdílejí stejné podklady jako mapa. */
+.me-visual-grid { display: grid; grid-template-columns: repeat(3,minmax(0,1fr)); gap: 6px; margin: 6px 0; }
+.me-visual-grid button, .me-category-chips button { padding: 5px; border: 1px solid #c0ab83; border-radius: 6px; background: #f0e5cd; color: #493821; font: inherit; font-size: 11px; cursor: pointer; }
+.me-visual-grid button[aria-pressed="true"], .me-category-chips button[aria-pressed="true"] { border-color: #a13825; box-shadow: 0 0 0 2px #a1382540; background: #ead9b7; }
+.me-visual-grid button:hover, .me-category-chips button:hover { background: #fff2d5; border-color: #a13825; }
+.me-visual-grid svg { width: 100%; display: block; border-radius: 4px; }
+.me-tile-cards { width: 330px; max-height: 420px; overflow: auto; }
+.me-texture-picker .me-tile-cards { position: absolute; top: 100%; left: 0; background: #f0e5cd; padding: 8px; border: 1px solid #ad9061; box-shadow: 0 8px 25px #0006; }
+.me-tile-cards input { grid-column: 1/-1; width: 100%; }
+.me-tile-cards span { display: block; height: 54px; background-size: cover; }
+.me-tile-cards img { height: 100%; width: 100%; object-fit: contain; }
+.me-category-chips { display: flex; gap: 5px; overflow-x: auto; padding: 5px 2px 10px; }
+.me-category-chips button { flex: 0 0 auto; display: flex; align-items: center; gap: 3px; }
+.me-category-chips img { width: 28px; height: 28px; object-fit: contain; }
+.me-generator-cards { grid-template-columns: 1fr; }
+.me-generator-cards .me-map-preview { height: 100px; background: #454b30; }
+.me-map-preview { width: 100%; height: 100%; }
+.me-map-preview :is([class*="map-anim-"], .map-light-flicker) { animation: none !important; }
+.me-card { content-visibility: auto; contain-intrinsic-size: auto 250px; }
+.me-ctx .me-wall-cards { display: flex; margin: 0; }
+.me-ctx .me-wall-cards button { width: 64px; padding: 2px; font-size: 10px; }
+.me-ctx .me-wall-cards svg { height: 20px; }
+.me-light-colors { display: flex; gap: 5px; flex-wrap: wrap; }
+.me-light-colors button { width: 20px; height: 20px; border-radius: 50%; border: 2px solid #786b51; cursor: pointer; }
+.me-light-colors button[aria-pressed=true] { outline: 2px solid var(--accent, #b04722); outline-offset: 2px; }
+.me-atmo-presets { display: grid; grid-template-columns: repeat(3, 1fr); gap: 7px; margin-bottom: 12px; }
+.me-atmo-presets button { padding: 4px; border: 1px solid #a39370; border-radius: 5px; color: var(--ink); background: var(--bg); cursor: pointer; font-size: 11px; }
+.me-atmo-presets button[aria-pressed=true] { outline: 2px solid var(--accent, #b04722); }
+.me-atmo-presets span { position: relative; display: block; height: 39px; background-size: cover; border-radius: 3px; margin-bottom: 3px; overflow: hidden; }
+.me-atmo-presets i { position: absolute; inset: 0; }
+.me-texture-search { grid-column: 1 / -1; width: 100%; color: #eee; background: #2a2721; padding: 6px; }
+.me-ctx:has(.me-texture-picker) label { font-size: 11px; }
+.me-ctx input[type=range] { width: 78px; vertical-align: middle; }
 /* Map editor — plnoobrazovkový layout, theme proměnné. */
 .me-ed { position: fixed; inset: 0; display: flex; flex-direction: column; background: var(--bg); color: var(--ink); z-index: 50; font-size: 13px }
 .me-loading { align-items: center; justify-content: center; display: flex }
@@ -121,4 +154,25 @@ body:has(.me-ed) .mus-fab{display:none!important}
 @media (max-width:700px){.me-snaplab{display:none}}
 
 .me-sheetbtn{display:none}
+.me-texture-picker{position:relative;min-width:150px;font-size:12px}
+.me-variant-count{position:absolute;right:3px;top:3px;background:#211d18df;color:#ffe6ad;padding:2px 4px;border-radius:4px;font-size:10px}
+.me-variant-section{margin:10px 0;padding:8px;border:1px solid var(--line);border-radius:6px}
+.me-variant-strip{display:flex;gap:5px;overflow-x:auto;padding:5px 1px}
+.me-variant-strip button{flex:0 0 calc((100% - 20px)/5);max-width:56px;min-width:0;border:1px solid #857358;border-radius:5px;padding:3px;background:#302a22;color:#f4ead4;cursor:pointer}
+.me-variant-strip button[aria-pressed=true]{outline:2px solid #e7bc60;outline-offset:-2px;background:#57462d}
+.me-variant-strip img{display:block;width:100%;height:48px;object-fit:contain}
+.me-variant-strip small{display:block;font-size:10px}
+.me-texture-picker summary{display:flex;align-items:center;gap:6px;cursor:pointer}
+.me-texture-picker summary img{width:32px;height:28px;object-fit:cover;border-radius:3px}
+.me-texture-picker[open]{z-index:30}
+.me-texture-picker .me-lib-grid{position:absolute;top:100%;left:0;width:360px;max-height:380px;overflow:auto;background:#211d18;padding:8px;border:1px solid #8d7854;box-shadow:0 5px 20px #0008}
+.me-texture-picker button{padding:3px;min-width:0;color:#f4ead4;background:#302a22;border:1px solid #67583f;border-radius:4px}
+.me-texture-picker button.on{border-color:#e7bc60;box-shadow:0 0 0 1px #e7bc60}
+.me-texture-picker button img{width:100%;height:60px;object-fit:cover}
+.me-texture-picker small{display:block;font-size:10px;white-space:normal}
 @media (max-width:700px){.me-sheetbtn{display:inline-flex}}
+@media (max-width:700px){
+  .me-texture-picker .me-lib-grid,.me-texture-picker .me-tile-cards{
+    position:fixed;top:108px;left:8px;right:8px;width:auto;max-height:55dvh;z-index:70
+  }
+}

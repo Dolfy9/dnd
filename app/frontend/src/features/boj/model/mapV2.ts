@@ -2,15 +2,18 @@
    Zpětně kompatibilní: staré mapy (jen `mrizka`) fungují beze změny;
    `migrateMap()` jen doplní výchozí struktury, mechanika se nemění. */
 import type { BattleMapData } from "../types";
+import { normalizeVariant, type VariantAsset } from "./assetVariants";
+import { normalizeRoutes, routeContains, type MapRoute } from "./mapRoutes";
+export type { MapRoute } from "./mapRoutes";
 
 /* ---------- v2 rozšíření ---------- */
 
 export type WallTyp = "wall" | "door" | "window" | "secret" | "half" | "curtain";
 
-/** Hranová zeď mezi dvěma rohy mřížky (unit segment: |ax-bx|+|ay-by| = 1). */
+/** Úsečka zdi; souřadnice v buňkách, bez omezení úhlu. */
 export interface MapWall {
   id: string;
-  a: [number, number];       // roh mřížky (0..W, 0..H), může být i .5 při snap half
+  a: [number, number];
   b: [number, number];
   typ: WallTyp;
   open?: boolean;            // výchozí stav dveří
@@ -19,6 +22,9 @@ export interface MapWall {
 
 /** Objekt na mapě (stamp / vlastní obrázek). x,y = střed v buňkách (float). */
 export interface MapObject {
+  zap?: boolean;
+  v?: number;
+  anim?: string | false;
   id: string;
   asset: string;             // id z knihovny nebo "img:<cesta>"
   x: number; y: number;
@@ -29,6 +35,8 @@ export interface MapObject {
   tint?: string;
   blocks?: boolean;          // blokuje pohyb
   cover?: 2 | 3;             // krytí, které poskytuje
+  stin?: boolean;
+  vyska?: number;
   difficult?: boolean;       // těžký terén
   light?: { bright: number; dim: number };
   dmOnly?: boolean;
@@ -47,11 +55,46 @@ export interface MapDrawing {
 }
 
 export interface MapLightV2 {
+  dmOnly?: boolean;
+  zap?: boolean;
   id: string;
   x: number; y: number;
   bright: number; dim: number;
   nazev?: string;
   color?: string;
+  intenzita?: number;
+  blikani?: boolean;
+  tvar?: "bod" | "kuzel" | "pruh";
+  smer?: number;
+  sirka?: number;
+  delka?: number;
+  efekt?: "zadny" | "mihot" | "plamen" | "pulz" | "magie";
+  rychlost?: number;
+  stiny?: boolean;
+}
+
+export function normalizeLight(light: MapLightV2) {
+  const finite = (v: unknown, fallback: number, min: number, max: number) =>
+    typeof v === "number" && Number.isFinite(v) ? Math.max(min, Math.min(max, v)) : fallback;
+  return {...light,
+    intenzita:finite(light.intenzita,1,0,1), blikani:light.blikani === true,
+    tvar:(["bod","kuzel","pruh"] as const).find(v => v === light.tvar) ?? "bod",
+    smer:typeof light.smer === "number" && Number.isFinite(light.smer) ? (light.smer % 360 + 360) % 360 : 0,
+    sirka:finite(light.sirka,60,10,180), delka:finite(light.delka,3,.1,200),
+    efekt:(["zadny","mihot","plamen","pulz","magie"] as const).find(v => v === light.efekt) ?? (light.efekt === undefined && light.blikani === true ? "mihot" : "zadny"),
+    rychlost:finite(light.rychlost,1,.25,3), stiny:light.stiny !== false,
+  };
+}
+
+export interface MapPaintStroke {
+  id: string;
+  t: string;
+  b: number;
+  o: number;
+  h: number;
+  r?: number;
+  poly?: boolean;
+  p: [number, number][];
 }
 
 export interface MapNote {
@@ -62,9 +105,15 @@ export interface MapNote {
 
 export interface MapKalibrace { cellPx: number; offX: number; offY: number }
 export interface MapMrizkaStyl { typ: "lines" | "dots" | "none"; barva: string; opacita: number }
+export interface MapInterior { id: string; poly: [number, number][] }
 
 /** Plná v2 mapa = BattleMapData + volitelná pole. */
 export interface MapV2 extends BattleMapData {
+  trasy?:MapRoute[];
+  interiery?: MapInterior[];
+  pocasi?: MapWeather;
+  malba?: MapPaintStroke[];
+  atmosfera?: { amb: number; barva: string };
   textury?: Record<string, string>;          // "x,y" → textureId
   vyska?: Record<string, number>;            // "x,y" → ft
   steny?: MapWall[];
@@ -76,19 +125,61 @@ export interface MapV2 extends BattleMapData {
   kalibrace?: MapKalibrace;
 }
 
+export const WEATHER = [["", "Jasno", ""], ["dest", "Déšť", "dest"], ["bourka", "Bouřka", "mraky"],
+  ["snih", "Sníh", "snih"], ["mlha", "Mlha", "mraky"], ["popel", "Popel", "jiskry"], ["vanice", "Vánice", "snih2"]] as const;
+export interface MapWeather { typ: typeof WEATHER[number][0]; sila?: number; vitr?: number }
+export function normalizeWeather(input: unknown): MapWeather {
+  const value = (typeof input === "string" ? { typ: input } : input) as {typ?: unknown; sila?: unknown; vitr?: unknown} | null;
+  return { typ: WEATHER.find(w => w[0] === value?.typ)?.[0] ?? "",
+    sila: typeof value?.sila === "number" && Number.isFinite(value.sila) ? Math.max(0, Math.min(1, value.sila)) : .65,
+    vitr: typeof value?.vitr === "number" && Number.isFinite(value.vitr) ? ((value.vitr % 360) + 360) % 360 : 90 };
+}
+
 export const wallUid = () => "w" + Math.random().toString(36).slice(2, 9);
 
 /** Převede libovolný vstup na MapV2 s vyplněnými defaulty. Staré mapy projdou beze změny mechaniky. */
-export function migrateMap(m: BattleMapData | MapV2 | any): MapV2 {
+export function migrateMap(m: BattleMapData | MapV2 | any, assets?: Record<string, VariantAsset>): MapV2 {
   const out: MapV2 = { ...(m as MapV2) };
+  if(out.trasy!==undefined)out.trasy=normalizeRoutes(out.trasy);
+  if (out.pocasi !== undefined) out.pocasi = normalizeWeather(out.pocasi);
   if (!out.mrizka) out.mrizka = ["...."];
+  const finite = (v: unknown, fallback: number, min: number, max: number) =>
+    typeof v === "number" && Number.isFinite(v) ? Math.max(min, Math.min(max, v)) : fallback;
+  if (out.interiery !== undefined) {
+    out.interiery = (Array.isArray(out.interiery) ? out.interiery : [])
+      .filter(r => r && Array.isArray(r.poly))
+      .map((r, i) => ({ id: typeof r.id === "string" ? r.id : "interier" + i,
+        poly: r.poly.filter(p => Array.isArray(p) && p.length === 2 && p.every(n => typeof n === "number" && Number.isFinite(n))) }))
+      .filter(r => r.poly.length >= 3 && Math.abs(r.poly.reduce((a, p, i) => {
+        const q = r.poly[(i + 1) % r.poly.length]; return a + p[0] * q[1] - q[0] * p[1];
+      }, 0)) > .001);
+  }
+  if (out.malba !== undefined) {
+    out.malba = (Array.isArray(out.malba) ? out.malba : []).filter(s => s && typeof s.t === "string" && Array.isArray(s.p))
+      .map((s, i) => ({ id: typeof s.id === "string" ? s.id : "malba" + i, t: s.t,
+        b: finite(s.b, 1, .25, 8), o: finite(s.o, 1, 0, 1), h: finite(s.h, .5, 0, 1),
+        ...(s.r !== undefined ? { r: finite(s.r, 0, -360000, 360000) } : {}),
+        ...(s.poly === true ? { poly: true } : {}),
+        p: s.p.filter(p => Array.isArray(p) && p.length === 2 && p.every(n => typeof n === "number" && Number.isFinite(n))) }))
+      .filter(s => s.p.length);
+  }
+  if (out.atmosfera !== undefined) {
+    const a = out.atmosfera;
+    out.atmosfera = { amb: finite(a?.amb, 1, 0, 1),
+      barva: typeof a?.barva === "string" && /^#[0-9a-f]{6}$/i.test(a.barva) ? a.barva : "#101522" };
+  }
   if (out.textury && typeof out.textury !== "object") delete out.textury;
   if (out.vyska && typeof out.vyska !== "object") delete out.vyska;
+  if (Array.isArray(out.svetla)) out.svetla = out.svetla.filter(l => l && typeof l === "object");
   for (const k of ["steny", "objekty", "kresby", "svetla", "poznamky"] as const) {
     if (out[k] && !Array.isArray(out[k])) delete out[k];
     (out[k] as any[] | undefined)?.forEach((o: any, i: number) => { if (!o.id) o.id = `${k[0]}${i}`; });
   }
+  if (out.objekty) out.objekty = out.objekty.map(o => o.v === undefined ? o : {
+    ...o, v: normalizeVariant(o.v, assets?.[o.asset] ? assets[o.asset].varianty?.length || 0 : undefined),
+  });
   // normalizace zdí na unit segmenty
+  if (out.svetla) out.svetla = out.svetla.filter(l => l && typeof l === "object").map(normalizeLight);
   if (out.steny) {
     const norm: MapWall[] = [];
     for (const w of out.steny) {
@@ -100,9 +191,11 @@ export function migrateMap(m: BattleMapData | MapV2 | any): MapV2 {
   return out;
 }
 
-/** Rozsekne libovolně dlouhou zeď na unit segmenty (horiz/vert). */
-export function unitWallSegs(w: Pick<MapWall, "a" | "b">): { a: [number, number]; b: [number, number] }[] {
+/** Celočíselné osové zdi zachovávají starý unit index; ostatní zůstanou přesné. */
+export function unitWallSegs(w: Pick<MapWall, "a" | "b"> & Partial<Pick<MapWall, "typ">>): { a: [number, number]; b: [number, number] }[] {
   const [ax, ay] = w.a, [bx, by] = w.b;
+  if (![ax, ay, bx, by].every(Number.isFinite) || (ax === bx && ay === by)) return [];
+  if (w.typ === "door" || ![ax, ay, bx, by].every(Number.isInteger) || (ax !== bx && ay !== by)) return [{ a: [...w.a], b: [...w.b] }];
   const out: { a: [number, number]; b: [number, number] }[] = [];
   if (ax === bx) {
     const [y0, y1] = ay < by ? [ay, by] : [by, ay];
@@ -110,16 +203,6 @@ export function unitWallSegs(w: Pick<MapWall, "a" | "b">): { a: [number, number]
   } else if (ay === by) {
     const [x0, x1] = ax < bx ? [ax, bx] : [bx, ax];
     for (let x = x0; x < x1; x++) out.push({ a: [x, ay], b: [x + 1, ay] });
-  } else {
-    // diagonála: rozdělit na schodové segmenty
-    const n = Math.max(Math.abs(bx - ax), Math.abs(by - ay));
-    for (let i = 0; i < n; i++) {
-      const t0 = i / n, t1 = (i + 1) / n;
-      out.push({
-        a: [Math.round((ax + (bx - ax) * t0) * 2) / 2, Math.round((ay + (by - ay) * t0) * 2) / 2],
-        b: [Math.round((ax + (bx - ax) * t1) * 2) / 2, Math.round((ay + (by - ay) * t1) * 2) / 2],
-      });
-    }
   }
   return out;
 }
@@ -127,11 +210,29 @@ export function unitWallSegs(w: Pick<MapWall, "a" | "b">): { a: [number, number]
 /* ---------- geometrie stěn ---------- */
 
 const key2 = (x: number, y: number) => `${x},${y}`;
+const freeWallCache = new WeakMap<Map<string, MapWall>, MapWall[]>();
+const isGridWall = (w: MapWall) => [...w.a, ...w.b].every(Number.isInteger) &&
+  Math.abs(w.a[0]-w.b[0]) + Math.abs(w.a[1]-w.b[1]) === 1;
+
+export function segmentsIntersect(a: [number, number], b: [number, number], c: [number, number], d: [number, number]): boolean {
+  const cross = (p: number[], q: number[], r: number[]) => (q[0]-p[0])*(r[1]-p[1])-(q[1]-p[1])*(r[0]-p[0]);
+  const on = (p: number[], q: number[], r: number[]) => Math.abs(cross(p,q,r)) < 1e-9 &&
+    r[0] >= Math.min(p[0],q[0])-1e-9 && r[0] <= Math.max(p[0],q[0])+1e-9 &&
+    r[1] >= Math.min(p[1],q[1])-1e-9 && r[1] <= Math.max(p[1],q[1])+1e-9;
+  return (cross(a,b,c)*cross(a,b,d) < 0 && cross(c,d,a)*cross(c,d,b) < 0) ||
+    on(a,b,c) || on(a,b,d) || on(c,d,a) || on(c,d,b);
+}
+
+export function crossedFreeWalls(idx: Map<string, MapWall>, a: [number, number], b: [number, number]): MapWall[] {
+  const walls = freeWallCache.get(idx) || [...idx.values()].filter(w => !isGridWall(w));
+  return walls.filter(w => segmentsIntersect(a, b, w.a, w.b));
+}
 
 /** Rychlý index stěn podle jejich hrany (sjednocený klíč rohů). */
 export function wallIndex(steny?: MapWall[]): Map<string, MapWall> {
   const m = new Map<string, MapWall>();
   for (const w of steny || []) m.set(edgeKey(w.a, w.b), w);
+  freeWallCache.set(m, (steny || []).filter(w => !isGridWall(w)));
   return m;
 }
 export const edgeKey = (a: [number, number], b: [number, number]) =>
@@ -174,6 +275,7 @@ export function wallBetweenCells(idx: Map<string, MapWall>, x: number, y: number
 
 /** Je krok a→b (i diagonálně) zablokován hranovou zdí? Diagonála: obě ortogonální hrany zablokované. */
 export function edgeBlocked(idx: Map<string, MapWall>, x: number, y: number, nx: number, ny: number, doors: DoorStates): boolean {
+  if (crossedFreeWalls(idx, [x+.5,y+.5], [nx+.5,ny+.5]).some(w => wallBlocksMove(w, doors))) return true;
   if (nx === x || ny === y) {
     const w = wallBetweenCells(idx, x, y, nx, ny);
     return wallBlocksMove(w, doors);
@@ -186,7 +288,8 @@ export function edgeBlocked(idx: Map<string, MapWall>, x: number, y: number, nx:
 }
 
 /** Blokuje hranová zeď diagonální průchod pro výhled mezi dvěma buňkami? */
-export function edgeBlocksSight(idx: Map<string, MapWall>, x: number, y: number, nx: number, ny: number, doors: DoorStates): boolean {
+export function edgeBlocksSight(idx: Map<string, MapWall>, x: number, y: number, nx: number, ny: number, doors: DoorStates, skipFree = false): boolean {
+  if (!skipFree && crossedFreeWalls(idx, [x+.5,y+.5], [nx+.5,ny+.5]).some(w => wallBlocksSight(w, doors))) return true;
   if (nx === x || ny === y) return wallBlocksSight(wallBetweenCells(idx, x, y, nx, ny), doors);
   const w1 = wallBlocksSight(wallBetweenCells(idx, x, y, nx, y), doors);
   const w2 = wallBlocksSight(wallBetweenCells(idx, x, y, x, ny), doors);
@@ -239,6 +342,10 @@ export function cellInfo(map: MapV2, x: number, y: number, teren?: Record<string
   const objs = objectsAt(map, x, y);
   let cost = def.cost, cover = def.cover || 0, difficult = !!def.difficult, blocksMove = !def.cost;
   let blocksSight = !!def.blocksSight;
+  for(const r of map.trasy||[])if(routeContains(r,x+.5,y+.5)){
+    if(r.druh==="plot"){blocksMove=true;blocksSight=true;}
+    if(r.druh==="zidka")cover=Math.max(cover,2);
+  }
   for (const o of objs) {
     if (o.blocks) blocksMove = true;
     if (o.cover) cover = Math.max(cover, o.cover);

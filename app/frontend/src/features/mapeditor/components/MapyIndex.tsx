@@ -1,31 +1,20 @@
 /* /boj/mapy — přehled bojových map: karty s náhledy, hledání, nová, duplikovat, smazat. */
-import React, { useMemo, useState } from "react";
+import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { Map as MapIcon, Plus, Copy, Trash2, Search, ArrowLeft } from "lucide-react";
 import { get, post, del } from "../../../api";
 import { toast } from "../../../components/ui";
 import type { MapV2 } from "../../boj/model/mapV2";
-
-const PX = 24;
-const TINT: Record<string, string> = { "#": "#57534e", "~": "#2e4f63", ",": "#5f8a9e", T: "#4a6038", g: "#6d8049", o: "#7d7466", l: "#b3400f", i: "#a8c8dd", f: "#55704a", F: "#3e5c3a", _: "#1c1917", ".": "#8a857c" };
-
-function Thumb({ map }: { map: MapV2 }) {
-  const W = map.mrizka?.[0]?.length || 1, H = map.mrizka?.length || 1;
-  const cells = useMemo(() => {
-    const out: React.ReactElement[] = [];
-    map.mrizka?.forEach((row, y) => row.split("").forEach((c, x) => {
-      out.push(<rect key={x + "," + y} x={x * PX} y={y * PX} width={PX + .5} height={PX + .5} fill={TINT[c] || TINT["."]} />);
-    }));
-    return out;
-  }, [map.mrizka]);
-  if (map.obrazek) return <image href={`/repo/11_Mapy/${map.obrazek}`} width={W * PX} height={H * PX} preserveAspectRatio="xMidYMid slice" />;
-  return <>{cells}</>;
-}
+import { useAssetManifest, useTextureManifest } from "../assets/manifest";
+import { setManifests } from "../../boj/components/MapV2Layers";
+import { MapPreview } from "./MapPreview";
 
 export default function MapyIndex() {
   const nav = useNavigate();
   const qc = useQueryClient();
+  const assets = useAssetManifest(), textures = useTextureManifest();
+  useEffect(() => { if (assets.data && textures.data) setManifests(assets.data, textures.data); }, [assets.data, textures.data]);
   const [q, setQ] = useState("");
   const [delId, setDelId] = useState<string | null>(null);
   const { data } = useQuery({ queryKey: ["map-data"], queryFn: () => get<any>("/api/map/data") });
@@ -64,7 +53,7 @@ export default function MapyIndex() {
           return (
             <div key={m.id} className="me-card">
               <Link to={`/boj/mapa/${m.id}`} className="me-thumb">
-                <svg viewBox={`0 0 ${W * PX} ${H * PX}`} preserveAspectRatio="xMidYMid meet"><Thumb map={m} /></svg>
+                <MapPreview map={m} />
               </Link>
               <div className="me-card-body">
                 <Link to={`/boj/mapa/${m.id}`} className="me-card-name">{m.nazev}</Link>

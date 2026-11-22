@@ -4,8 +4,11 @@
 import type { BattleMapData, LightSource, StavBoje, Token, Zone } from "../types";
 import { cellsOf, gapFt } from "./grid";
 import { coverOf } from "./los";
-import { edgeBlocksSight, wallIndex } from "../model/mapV2";
+import { edgeBlocksSight, wallIndex, crossedFreeWalls, wallBlocksSight } from "../model/mapV2";
+import { mapWalls } from "../model/mapRoutes";
 import { hasCond, isIncap } from "./conditions";
+import { normalizeLight } from "../model/mapV2";
+import { mechanicalLights } from "../model/sourceState";
 
 export type LightLevel = "bright" | "dim" | "dark";
 
@@ -52,22 +55,51 @@ const zoneCoversCell = (z: Zone, x: number, y: number, tokens: Token[]): boolean
 export const obscuredAt = (S: StavBoje, x: number, y: number): boolean =>
   (S.zones || []).some((z) => z.blocksLos && zoneCoversCell(z, x, y, S.tok));
 
+function lightRayOrigin(wIdx: ReturnType<typeof wallIndex>, x: number, y: number, direction: number, doors?: Record<string, boolean>): [number, number] {
+  let ox = x, oy = y;
+  for (const w of wIdx.values()) {
+    if (!wallBlocksSight(w, doors)) continue;
+    const dx = w.b[0] - w.a[0], dy = w.b[1] - w.a[1], len = Math.hypot(dx, dy);
+    if (!len) continue;
+    const t = ((x - w.a[0]) * dx + (y - w.a[1]) * dy) / (len * len);
+    if (t < 0 || t > 1 || Math.abs(dx * (y - w.a[1]) - dy * (x - w.a[0])) / len > 1e-7) continue;
+    const nx = -dy / len, ny = dx / len;
+    const dot = nx * Math.cos(direction) + ny * Math.sin(direction);
+    const side = Math.abs(dot) < 1e-9 ? (nx > 0 || (nx === 0 && ny > 0) ? 1 : -1) : Math.sign(dot);
+    ox += nx * side * 1e-4; oy += ny * side * 1e-4;
+  }
+  return [ox, oy];
+}
+
 /** Úroveň světla na buňce: Darkness/obscured zóny > zdroje > globální. */
 export function lightAt(S: StavBoje, map: BattleMapData, x: number, y: number): LightLevel {
+  const playerLevel = S.playerLightCells?.[`${x},${y}`];
+  if (playerLevel === "bright" || playerLevel === "dim" || playerLevel === "dark") return playerLevel;
   if (obscuredAt(S, x, y)) return "dark";
   const global = S.lightLevel || parseLightLevel(map.osvetleni);
   let lvl: LightLevel = global;
   const rank = { dark: 0, dim: 1, bright: 2 };
-  const wIdx = wallIndex((map as any).steny);
-  for (const L of S.lights || []) {
+  const wIdx = wallIndex(mapWalls(map));
+  for (const L of mechanicalLights(S,map)) {
     const src = L.tokenId ? S.tok.find((t) => t.id === L.tokenId) : undefined;
     const ax = src ? src.x! : L.anchor?.[0];
     const ay = src ? src.y! : L.anchor?.[1];
     if (ax == null || ay == null) continue;
-    const d = Math.max(Math.abs(x - ax), Math.abs(y - ay)) * 5;
+    if (![ax,ay].every(Number.isFinite)) continue;
+    const shape=normalizeLight({...L,x:ax,y:ay});
+    const shaped=shape.tvar!=="bod",exact=!src && L.anchorExact,offset=shaped && src ? (src.s || 1)/2 : 0;
+    const ox=ax+offset,oy=ay+offset;
+    const dx=x+(shaped || exact ? .5 : 0)-ox,dy=y+(shaped || exact ? .5 : 0)-oy,radians=shape.smer*Math.PI/180;
+    const along=dx*Math.cos(radians)+dy*Math.sin(radians);
+    const across=-dx*Math.sin(radians)+dy*Math.cos(radians);
+    if(shape.tvar==="kuzel" && Math.hypot(dx,dy)>1e-9 && Math.abs((Math.atan2(dy,dx)*180/Math.PI-shape.smer+540)%360-180)>shape.sirka/2+1e-9) continue;
+    const d = (shape.tvar==="pruh" ? Math.hypot(Math.max(0,Math.abs(along)-shape.delka/2),across)
+      : shape.tvar==="kuzel" ? Math.hypot(dx,dy) : Math.max(Math.abs(dx),Math.abs(dy))) * 5;
     const inDark = obscuredAt(S, ax, ay); // světlo ve tmě nesvítí (Darkness 2024)
     if (inDark) continue;
-    if (wIdx.size && sightBlocked(idxOr(wIdx), ax, ay, x, y, (S as any).dvere)) continue; // světlo skrz zeď nesvítí
+    const rayOrigin: [number, number] = [ox + (shaped || exact ? 0 : .5), oy + (shaped || exact ? 0 : .5)];
+    const [rx, ry] = shaped || !wIdx.size ? rayOrigin : lightRayOrigin(wIdx, ...rayOrigin, radians, S.dvere);
+    if (wIdx.size && sightBlocked(idxOr(wIdx), rx, ry, x + .5, y + .5, S.dvere)) continue; // světlo skrz zeď nesvítí
     if (d <= L.bright) return "bright";
     if (d <= L.bright + L.dim && rank[lvl] < 1) lvl = "dim";
   }
@@ -77,12 +109,21 @@ export function lightAt(S: StavBoje, map: BattleMapData, x: number, y: number): 
 const idxOr = (i: Map<string, any>) => i;
 /** Zjednodušená kontrola, zda přímka A(x,y)→B(x,y) kříží zdi blokující výhled (po buňkách). */
 export function sightBlocked(wIdx: Map<string, import("../model/mapV2").MapWall>, ax: number, ay: number, bx: number, by: number, doors?: Record<string, boolean>): boolean {
-  const n = Math.max(2, Math.ceil(Math.hypot(bx - ax, by - ay) * 4));
+  if (crossedFreeWalls(wIdx, [ax, ay], [bx, by]).some(w => wallBlocksSight(w, doors))) return true;
   let px = Math.floor(ax), py = Math.floor(ay);
-  for (let i = 1; i <= n; i++) {
-    const cx = Math.floor(ax + (bx - ax) * i / n), cy = Math.floor(ay + (by - ay) * i / n);
-    if (cx === px && cy === py) continue;
-    if (edgeBlocksSight(wIdx, px, py, cx, cy, doors)) return true;
+  const ex = Math.floor(bx), ey = Math.floor(by);
+  const dx = bx - ax, dy = by - ay, sx = Math.sign(dx), sy = Math.sign(dy);
+  const stepX = dx ? 1 / Math.abs(dx) : Infinity, stepY = dy ? 1 / Math.abs(dy) : Infinity;
+  let tx = dx ? (sx > 0 ? px + 1 - ax : ax - px) * stepX : Infinity;
+  let ty = dy ? (sy > 0 ? py + 1 - ay : ay - py) * stepY : Infinity;
+  while (px !== ex || py !== ey) {
+    const crossX = px !== ex && (py === ey || tx <= ty + 1e-10);
+    const crossY = py !== ey && (px === ex || ty <= tx + 1e-10);
+    const cx = px + (crossX ? sx : 0), cy = py + (crossY ? sy : 0);
+    if (edgeBlocksSight(wIdx, px, py, cx, cy, doors, true)) return true;
+    if (crossX && crossY && edgeBlocksSight(wIdx, cx, cy, px, py, doors, true)) return true;
+    if (crossX) tx += stepX;
+    if (crossY) ty += stepY;
     px = cx; py = cy;
   }
   return false;

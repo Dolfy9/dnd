@@ -17,6 +17,7 @@ import Boj from "./pages/Boj";
 import Boje from "./pages/Boje";
 import MapyIndex from "./features/mapeditor/components/MapyIndex";
 import EditorPage from "./features/mapeditor/components/EditorPage";
+import { EditorErrorBoundary } from "./features/mapeditor/components/EditorErrorBoundary";
 import Kampane from "./pages/Kampane";
 import KampanDetail from "./pages/KampanDetail";
 import { ZnalostiPage } from "./pages/Placeholders";
@@ -77,7 +78,7 @@ export default function App() {
       <ConfirmHost />
       <Routes>
         <Route path="/login" element={<Login />} />
-        <Route path="/boj/mapa/:id" element={<EditorPage />} />
+        <Route path="/boj/mapa/:id" element={<EditorErrorBoundary key={loc.pathname}><EditorPage /></EditorErrorBoundary>} />
         <Route element={<AppShell />}>
           <Route index element={<Dashboard />} />
           <Route path="/p/*" element={<PageView />} />

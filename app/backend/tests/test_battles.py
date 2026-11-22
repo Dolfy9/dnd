@@ -59,6 +59,37 @@ def _mk_state():
     }, "dm_notes": "super tajné"}
 
 
+def test_seed_shaped_map_lights(editor, monkeypatch):
+    monkeypatch.setattr(battles_mod, "_mirror", lambda *args: None)
+    con = db.connect()
+    mid = "test-shaped-seed-map"
+    shaped = {"id": "shaped", "x": 3.5, "y": 4.5, "bright": 10, "dim": 20,
+              "tvar": "pruh", "smer": 90, "sirka": 70, "delka": 6,
+              "color": "#ff8800", "intenzita": .7, "efekt": "pulz",
+              "rychlost": .8, "stiny": False, "blikani": False, "zap": False, "dmOnly": True}
+    bid = None
+    try:
+        con.execute("INSERT INTO battle_maps(id,name,data) VALUES(?,?,?)", (mid, "Shaped seed test", db.jdump({"svetla": [shaped, {"id": "old", "bright": 5}]})))
+        con.commit()
+        response = editor.post("/api/battles", json={"name": "Test shaped lights", "map_ref": mid})
+        assert response.status_code == 200, response.text
+        bid = response.json()["id"]
+        state = db.jload(con.execute("SELECT state FROM battles WHERE id=?", (bid,)).fetchone()["state"])
+        light, old = state["stav_boje"]["lights"]
+        assert light == {key: value for key, value in shaped.items() if key not in ("x", "y")} | {"anchor": [3.5, 4.5], "nazev": "světlo mapy"}
+        assert old == {"id": "old", "anchor": [0, 0], "bright": 5, "dim": 0, "nazev": "světlo mapy"}
+        del light["dmOnly"]
+        state["stav_boje"]["zdroje"] = {"shaped": False, "old": True}
+        public = battles_mod.player_view(state)["stav_boje"]
+        assert public["lights"] == [old]
+        assert public["zdroje"] == {"old": True}
+    finally:
+        con.execute("DELETE FROM battle_maps WHERE id=?", (mid,))
+        if bid:
+            con.execute("DELETE FROM battles WHERE id=?", (bid,))
+        con.commit()
+
+
 # ---------- player_view (čistá funkce) ----------
 
 def test_player_view_strips_hidden_and_pj():
@@ -121,6 +152,24 @@ def test_player_view_fog_large_token_partially_revealed():
 
 
 # ---------- integrace ----------
+
+def test_source_states_sync_to_players_but_only_editors_can_write(editor, player, monkeypatch):
+    monkeypatch.setattr(battles_mod, "_mirror", lambda *args: None)
+    bid = _mk_battle(editor)
+    try:
+        state = _mk_state()
+        state["stav_boje"]["zdroje"] = {"torch": False, "portal": True}
+        state["stav_boje"]["log"].append({"typ": "system", "kdo": "PJ", "t": "Pochodeň: vypnuto"})
+        response = editor.put(f"/api/battles/{bid}/state", json={"state": state, "version": 0})
+        assert response.status_code == 200, response.text
+        assert editor.post(f"/api/battles/{bid}/share", json={"shared": True}).status_code == 200
+        shared = player.get(f"/api/battles/{bid}").json()["state"]["stav_boje"]
+        assert shared["zdroje"] == {"torch": False, "portal": True}
+        assert shared["log"][-1]["t"] == "Pochodeň: vypnuto"
+        denied = player.put(f"/api/battles/{bid}/state", json={"state": state, "version": 1})
+        assert denied.status_code == 403
+    finally:
+        editor.delete(f"/api/battles/{bid}")
 
 def test_get_detail_player_filtered(editor, player):
     bid = _mk_battle(editor)

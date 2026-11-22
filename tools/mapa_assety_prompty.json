@@ -1,6 +1,6 @@
 {
- "style_asset": "hand-painted realistic top-down orthographic 90° view, premium D&D battlemap asset, single isolated object, transparent background, no grid, no text, no frame, no watermark, consistent soft light from top-left, subtle soft drop shadow, dark fantasy painterly style",
- "style_texture": "seamless tileable hand-painted top-down texture for a D&D battlemap, no objects, no border, no text, flat orthographic 90° view, consistent soft light, dark fantasy painterly style",
+ "style_asset": "Single object seen from strict top-down orthographic view (bird's-eye, looking straight down) for a fantasy tabletop battle map: {s}. Pseudo-realistic fantasy style, highly detailed realistic materials like premium realistic VTT map assets, soft overhead light, no cast shadow, centered, fills about 85% of the frame, isolated on a perfectly flat solid pure magenta (#FF00FF) background, no magenta inside the object, no text, no border, no grid.",
+ "style_texture": "Seamless tileable texture, strict top-down orthographic view straight down, {s}. Pseudo-realistic fantasy battle map style: highly detailed realistic materials like premium realistic VTT map assets, natural colors, even soft overhead lighting, no directional shadows, no vignette, no perspective, no objects, no text, no grid, all four edges tile seamlessly.",
  "assety": [
   {
    "id": "stul-ctverec",
@@ -601,7 +601,41 @@
    "nazev": "Válečný buben",
    "kategorie": "Tábor/bitva",
    "prompt": "war drum"
-  }
+  },
+  {"id":"p3-lodni-paluba","nazev":"Paluba bouřkové karavely","kategorie":"Přístav","size":512,"w":8,"h":18,"prompt":"Directly overhead cutaway of an empty medieval wooden caravel hull and weathered teak deck, pointed bow, rounded stern, brass trim, railing around perimeter, no sails, no mast, no cargo, no water, isolated solid magenta background."},
+  {"id":"p3-poklad","nazev":"Dračí poklad","kategorie":"Dungeon","size":512,"w":3,"h":2.5,"cover":2,"difficult":true,"prompt":"Overhead irregular low mound of ancient gold coins, scattered silver coins, jeweled crowns, goblets and ruby gemstones, rich worn gold metallic detail, organic scattered outline, isolated solid magenta background."},
+  {"id":"p3-draci-kostra","nazev":"Dračí kostra","kategorie":"Dungeon","size":512,"w":7,"h":5,"cover":2,"difficult":true,"prompt":"Direct overhead ancient enormous curled dragon skeleton, horned skull, curved vertebrae and spread ribs, weathered ivory bones, empty hollow interior visible, no ground, isolated solid magenta background."},
+  {"id":"p3-obsidian","nazev":"Obsidiánové jehly","kategorie":"Příroda","size":512,"w":2,"h":2,"blocks":true,"cover":3,"prompt":"Overhead cluster of jagged black volcanic obsidian spires, glossy fractured black glass with subtle crimson reflections, irregular silhouette, isolated solid magenta background."},
+  {"id":"p3-lana","nazev":"Stočená přístavní lana","kategorie":"Přístav","size":256,"w":0.9,"h":0.9,"prompt":"Direct overhead loosely coiled thick weathered hemp ship rope, frayed loose end, detailed twisted fibers, no hooks, isolated solid magenta background."},
+  {"id":"p3-padaci-dvere","nazev":"Dubový sklepní poklop","kategorie":"Nábytek","size":256,"w":1.5,"h":1.5,"prompt":"Direct overhead closed square oak cellar trapdoor, black wrought iron bands, iron ring handle, weathered planks, isolated solid magenta background."},
+  {"id":"p3-nadobi","nazev":"Hostinská večeře","kategorie":"Nábytek","size":256,"w":0.85,"h":0.65,"prompt":"Overhead tiny tabletop still life of pewter plate with roast meat, bread loaf, cheese and two wooden ale tankards, no table underneath, isolated solid magenta background."},
+  {"id":"p3-sloup-ruina","nazev":"Zlomený elfí sloup","kategorie":"Dungeon","size":512,"w":2,"h":1.2,"cover":2,"difficult":true,"prompt":"Direct overhead fallen broken white marble elven column in three uneven fragments, delicate leaf relief carvings, moss and ivy creeping over cracks, isolated solid magenta background."}
+ ,
+  {"id":"d-krev","nazev":"Zaschlá krev","kategorie":"Obtisky","size":512,"w":2,"h":2,"blocks":false,"z":-20,"prompt":"Supplied pseudo-realistic top-down fantasy Zaschlá krev; isolated on magenta."},
+  {"id":"d-kaluz","nazev":"Dešťová kaluž","kategorie":"Obtisky","size":512,"w":2.5,"h":2,"blocks":false,"z":-20,"prompt":"Supplied pseudo-realistic top-down fantasy Dešťová kaluž; isolated on magenta."},
+  {"id":"d-listi","nazev":"Napadané listí","kategorie":"Obtisky","size":512,"w":2.4,"h":2,"blocks":false,"z":-20,"prompt":"Supplied pseudo-realistic top-down fantasy Napadané listí; isolated on magenta."},
+  {"id":"d-mech","nazev":"Ostrůvek mechu","kategorie":"Obtisky","size":512,"w":2.8,"h":2.4,"blocks":false,"z":-20,"prompt":"Supplied pseudo-realistic top-down fantasy Ostrůvek mechu; isolated on magenta."},
+  {"id":"d-prasklina","nazev":"Prasklina v kameni","kategorie":"Obtisky","size":512,"w":2.5,"h":1.5,"blocks":false,"z":-20,"prompt":"Supplied pseudo-realistic top-down fantasy Prasklina v kameni; isolated on magenta."},
+  {"id":"d-spaleniste","nazev":"Spáleniště","kategorie":"Obtisky","size":512,"w":3,"h":2.5,"blocks":false,"z":-20,"prompt":"Supplied pseudo-realistic top-down fantasy Spáleniště; isolated on magenta."},
+  {"id":"d-sut","nazev":"Drobná suť","kategorie":"Obtisky","size":512,"w":2,"h":1.5,"blocks":false,"z":-20,"prompt":"Supplied pseudo-realistic top-down fantasy Drobná suť; isolated on magenta."},
+  {"id":"d-seno","nazev":"Rozsypané seno","kategorie":"Obtisky","size":512,"w":2,"h":1.5,"blocks":false,"z":-20,"prompt":"Supplied pseudo-realistic top-down fantasy Rozsypané seno; isolated on magenta."},
+  {"id":"d-snih-zavej","nazev":"Sněhová závěj","kategorie":"Obtisky","size":512,"w":3,"h":2,"blocks":false,"z":-20,"prompt":"Supplied pseudo-realistic top-down fantasy Sněhová závěj; isolated on magenta."},
+  {"id":"d-popel","nazev":"Usazený popel","kategorie":"Obtisky","size":512,"w":3,"h":2.5,"blocks":false,"z":-20,"prompt":"Supplied pseudo-realistic top-down fantasy Usazený popel; isolated on magenta."},
+  {"id":"i-pult","nazev":"Rohový hostinský pult","kategorie":"Nábytek","size":512,"w":4,"h":3,"blocks":true,"prompt":"Supplied pseudo-realistic top-down fantasy Rohový hostinský pult; isolated on magenta."},
+  {"id":"i-regal-lahve","nazev":"Police s lahvemi","kategorie":"Nábytek","size":512,"w":3,"h":1,"blocks":true,"prompt":"Supplied pseudo-realistic top-down fantasy Police s lahvemi; isolated on magenta."},
+  {"id":"i-krb","nazev":"Kamenný krb","kategorie":"Nábytek","size":512,"w":2,"h":1.5,"blocks":true,"light":{"bright":3,"dim":6},"prompt":"Supplied pseudo-realistic top-down fantasy Kamenný krb; isolated on magenta."},
+  {"id":"i-lavice","nazev":"Dubová lavice","kategorie":"Nábytek","size":512,"w":2,"h":0.8,"blocks":true,"prompt":"Supplied pseudo-realistic top-down fantasy Dubová lavice; isolated on magenta."},
+  {"id":"i-sudy-stoh","nazev":"Stoh pivních sudů","kategorie":"Nábytek","size":512,"w":2,"h":1.6,"blocks":true,"prompt":"Supplied pseudo-realistic top-down fantasy Stoh pivních sudů; isolated on magenta."},
+  {"id":"i-kuchyn","nazev":"Hostinská kuchyně","kategorie":"Nábytek","size":512,"w":3,"h":2,"blocks":true,"prompt":"Supplied pseudo-realistic top-down fantasy Hostinská kuchyně; isolated on magenta."},
+  {"id":"i-kolebka-lustr","nazev":"Kovaný svíčkový lustr","kategorie":"Nábytek","size":512,"w":2,"h":2,"blocks":false,"light":{"bright":3,"dim":6},"prompt":"Supplied pseudo-realistic top-down fantasy Kovaný svíčkový lustr; isolated on magenta."},
+  {"id":"m-most-kamen","nazev":"Klenutý kamenný most","kategorie":"Stavby","size":512,"w":6,"h":3,"blocks":false,"prompt":"Supplied pseudo-realistic top-down fantasy Klenutý kamenný most; isolated on magenta."},
+  {"id":"m-most-drevo","nazev":"Dřevěný říční most","kategorie":"Stavby","size":512,"w":6,"h":2.5,"blocks":false,"prompt":"Supplied pseudo-realistic top-down fantasy Dřevěný říční most; isolated on magenta."},
+  {"id":"m-molo","nazev":"Přístavní molo","kategorie":"Přístav","size":512,"w":5,"h":2,"blocks":false,"prompt":"Supplied pseudo-realistic top-down fantasy Přístavní molo; isolated on magenta."},
+  {"id":"m-lucerna-sloup","nazev":"Lucerna na sloupu","kategorie":"Přístav","size":512,"w":1,"h":1,"blocks":false,"light":{"bright":3,"dim":6},"prompt":"Supplied pseudo-realistic top-down fantasy Lucerna na sloupu; isolated on magenta."},
+  {"id":"m-sit","nazev":"Rozprostřená rybářská síť","kategorie":"Přístav","size":512,"w":2.5,"h":2,"blocks":false,"prompt":"Supplied pseudo-realistic top-down fantasy Rozprostřená rybářská síť; isolated on magenta."},
+  {"id":"m-kotva-retez","nazev":"Kotva s řetězem","kategorie":"Přístav","size":512,"w":2,"h":2,"blocks":false,"prompt":"Supplied pseudo-realistic top-down fantasy Kotva s řetězem; isolated on magenta."},
+  {"id":"m-dreveny-plot","nazev":"Dřevěná ohrada","kategorie":"Stavby","size":512,"w":3,"h":0.6,"blocks":false,"prompt":"Supplied pseudo-realistic top-down fantasy Dřevěná ohrada; isolated on magenta."},
+  {"id":"m-kamenna-zidka","nazev":"Zahradní kamenná zídka","kategorie":"Stavby","size":512,"w":3,"h":0.7,"blocks":false,"prompt":"Supplied pseudo-realistic top-down fantasy Zahradní kamenná zídka; isolated on magenta."}
  ],
  "textury": [
   {

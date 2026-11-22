@@ -72,6 +72,8 @@ def strip_for_player(m: dict) -> dict:
         m["objekty"] = [o for o in m["objekty"] if not o.get("dmOnly")]
     if m.get("kresby"):
         m["kresby"] = [k for k in m["kresby"] if not k.get("dmOnly")]
+    if m.get("svetla"):
+        m["svetla"] = [l for l in m["svetla"] if not l.get("dmOnly")]
     if m.get("steny"):
         m["steny"] = [{**w, "typ": "wall"} if w.get("typ") == "secret" else w
                       for w in m["steny"]]
@@ -95,7 +97,7 @@ def create_map(b: dict, u: dict = Depends(security.require("editor"))):
         "start": b.get("start", {"druzina": []}),
         "mrizka": b.get("mrizka") or ["." * 20 for _ in range(15)],
     }
-    for k in ("textury", "vyska", "steny", "objekty", "kresby", "svetla",
+    for k in ("textury", "malba", "interiery", "trasy", "atmosfera", "pocasi", "vyska", "steny", "objekty", "kresby", "svetla",
               "poznamky", "mrizkaStyl", "kalibrace", "obrazek", "misto",
               "popis", "stretnuti"):
         if b.get(k) is not None:

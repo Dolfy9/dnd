@@ -7,9 +7,13 @@ import { get } from "../../../api";
 import { useApp, isEditor } from "../../../store";
 import { toast, confirmDialog } from "../../../components/ui";
 import { sightBlocked, lightAt, sensesOf } from "../rules/lighting";
+import { isInteractiveTarget } from "./shortcuts";
 import { useAssetManifest, useTextureManifest } from "../../mapeditor/assets/manifest";
 import { setManifests } from "./MapV2Layers";
 import { wallIndex, type MapWall } from "../model/mapV2";
+import { mapWalls } from "../model/mapRoutes";
+import {toggleSource} from "../state/commands/sources";
+import { updateLightState } from "../model/lightState";
 import { Link, useNavigate } from "react-router-dom";
 import { useBattle } from "../state/useBattle";
 import "../boj.css";
@@ -116,6 +120,12 @@ export default function BattlePage() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   const S = b.S;
+  const lightInit = useRef("");
+  useEffect(() => {
+    if (!dm || !S || !map || lightInit.current === `${bid}:${map.id}`) return;
+    lightInit.current = `${bid}:${map.id}`;
+    b.dispatch(s => updateLightState(s, map));
+  }, [dm, !!S, map, bid]);
   const selTok = sel ? byId(S!, sel) : undefined;
   const curTok = S ? cur(S) : undefined;
   const shownTok = selTok || curTok;
@@ -125,9 +135,8 @@ export default function BattlePage() {
   useEffect(() => {
     if (!S || !map) return;
     const h = (e: KeyboardEvent) => {
-      const tag = (e.target as HTMLElement).tagName;
       if (e.key === "Escape") { setTargeting(null); setResolve(null); setMoveAtk(null); setCtxMenu(null); setZonePlace(null); setTool("select"); setDropReq(null); setOv(null); setDmgCfm(null); setLoh(null); setSetOpen(false); return; }
-      if (["INPUT", "SELECT", "TEXTAREA"].includes(tag)) return;
+      if (isInteractiveTarget(e.target)) return;
       if (e.key === "?") { setHelp((v) => !v); return; }
       if (!dm) return;
       if ((e.key === " " || e.key.toLowerCase() === "n") && !e.ctrlKey) { e.preventDefault(); b.dispatch((s) => C.nextTurn(s)); return; }
@@ -192,7 +201,7 @@ export default function BattlePage() {
   };
   // přepočet viditelnosti družiny do fog stavu `s` (volá se ručně i kontinuálně při fog.auto)
   const applyAutoFog = (s: any) => {
-    const wIdx = wallIndex((map as any).steny);
+    const wIdx = wallIndex(mapWalls(map));
     const party = s.tok.filter((t: Token) => !t.dead && t.x != null && t.side !== "nepratele" && !t.skryty);
     const vis: Record<string, 1> = {}, rev: Record<string, 1> = { ...(s.fog?.revealed || {}) };
     const R = 12; // 60 ft
@@ -217,7 +226,7 @@ export default function BattlePage() {
   };
   const cmdBase = b.dispatch;
   // dispatch wrapper: při zapnutém fog.auto přepočítá výhled po každé změně stavu
-  const cmd = (fn: (s: any) => void) => cmdBase((s: any) => { fn(s); if (s.fog?.auto) applyAutoFog(s); });
+  const cmd = (fn: (s: any) => void) => cmdBase((s: any) => { fn(s); if (s.fog?.auto) applyAutoFog(s); if (map) updateLightState(s, map); });
   const ctx = { map };
 
   /* ---- handlery ---- */
@@ -616,7 +625,8 @@ export default function BattlePage() {
             onFogPaint={(cells, reveal) => cmd((s) => C.cmdFogCells(s, cells, reveal))}
             onLightPlace={(x, y) => { if (pendingLight) { cmd((s) => C.cmdAddLight(s, { ...pendingLight, anchor: [x, y] })); setPendingLight(null); setTool("select"); } }}
             onCtxMenu={(t, pt) => setCtxMenu({ t, x: pt.x, y: pt.y })}
-            onDoor={onDoor}
+            onDoor={onDoor} onSource={id=>{if(dm)cmd(s=>toggleSource(s,map,id,dm));}}
+            onWeather={weather => cmd(s => { s.pocasi = weather; })}
             drawColor={drawColor}
             onDraw={(pts, stroke) => cmd((s) => { s.kresby = [...(s.kresby || []), { id: uid(), kind: "free", pts, stroke, width: 3, dmOnly: true } as any]; })}
           />

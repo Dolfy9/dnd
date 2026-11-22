@@ -2,6 +2,7 @@
    Dijkstra pohyb (těžký terén ×2, zóny, letectví/plavání), Opportunity Attacks. */
 import { TILES, type Token, type Zone, type BattleMapData } from "../types";
 import { isIncap } from "./conditions";
+import { deckAt, deckCoversStep, mapWalls } from "../model/mapRoutes";
 import { cellInfo, edgeBlocked, wallIndex, type DoorStates } from "../model/mapV2";
 
 export type TerenMap = Record<string, string> | undefined | null;
@@ -9,12 +10,29 @@ export type TerenMap = Record<string, string> | undefined | null;
 /** Efektivní dlaždice: override z `teren` (namalované) předchází `mrizka`. */
 export const tileAt = (map: BattleMapData, x: number, y: number, teren?: TerenMap): string => {
   const o = teren?.[`${x},${y}`];
-  if (o) return o;
+  if (o) return "~_".includes(o)&&deckAt(map,x,y)?".":o;
   const m = map.mrizka;
-  return m && y >= 0 && y < m.length && x >= 0 && x < m[y].length ? m[y][x] : "#";
+  const c=m && y >= 0 && y < m.length && x >= 0 && x < m[y].length ? m[y][x] : "#";
+  return "~_".includes(c)&&deckAt(map,x,y)?".":c;
 };
 
 export const tileDef = (c: string) => TILES[c] || TILES["."];
+
+function terrainCost(t:Token,c:string):number {
+  if(c==="_")return t.fly?1:Infinity;
+  const cost=tileDef(c).cost;
+  if(!cost)return Infinity;
+  return (t.fly && "^,%~".includes(c)) || (t.swim && c==="~")?1:cost;
+}
+
+export function diagonalCornerBlocked(t:Token,x:number,y:number,dx:number,dy:number,map:BattleMapData,teren?:TerenMap):boolean {
+  if(!dx || !dy)return false;
+  return cellsOf(t,x,y).some(([cx,cy])=>{
+    const sides=[tileAt(map,cx+dx,cy,teren),tileAt(map,cx,cy+dy,teren)];
+    if(sides.some(c=>Number.isFinite(terrainCost(t,c))))return false;
+    return !sides.every(c=>c==="_" || c==="~") || !deckCoversStep(map,cx,cy,cx+dx,cy+dy);
+  });
+}
 
 export const mapSize = (map: BattleMapData) => ({
   W: map.mrizka[0]?.length || 0,
@@ -75,11 +93,9 @@ export function stepCost(t: Token, x: number, y: number, map: BattleMapData, tok
   let worst = 1;
   for (const [cx, cy] of cellsOf(t, x, y)) {
     const c = tileAt(map, cx, cy, teren), def = tileDef(c);
-    if (c === "_" && !t.fly) return Infinity;
-    if (!def.cost && c !== "_") return Infinity;
-    let k = def.cost || 1;
-    if (c === "~" && t.swim) k = 1;
-    if (t.fly && "^,%~_".includes(c)) k = 1;
+    let k=terrainCost(t,c);
+    if(!Number.isFinite(k))return Infinity;
+    if (def.cost && cellInfo(map,cx,cy,teren).blocksMove) return Infinity;
     if (zoneDifficultAt(zones, cx, cy)) k = Math.max(k, 2);
     const o = occupantAt(tokens, cx, cy, t);
     if (o) {
@@ -103,7 +119,7 @@ export interface ReachResult {
 
 /** Dijkstra po buňkách; limit ve ft. */
 export function reachable(t: Token, limitFt: number, map: BattleMapData, tokens: Token[], zones: Zone[] = [], teren?: TerenMap, doors?: DoorStates): ReachResult {
-  const wIdx = wallIndex((map as any).steny);
+  const wIdx = wallIndex(mapWalls(map));
   const { W, H } = mapSize(map);
   const dist: Record<string, number> = {}, prev: Record<string, string> = {};
   const key = (x: number, y: number) => `${x},${y}`;
@@ -117,7 +133,7 @@ export function reachable(t: Token, limitFt: number, map: BattleMapData, tokens:
       if (!dx && !dy) continue;
       const nx = x + dx, ny = y + dy;
       if (nx < 0 || ny < 0 || nx + t.s > W || ny + t.s > H) continue;
-      if (dx && dy && !tileDef(tileAt(map, x + dx, y, teren)).cost && !tileDef(tileAt(map, x, y + dy, teren)).cost) continue;
+      if (diagonalCornerBlocked(t,x,y,dx,dy,map,teren)) continue;
       if (wIdx.size && edgeBlocked(wIdx, x, y, nx, ny, doors)) continue;   // hranová zeď/dveře
       const sc = stepCost(t, nx, ny, map, tokens, zones, teren);
       if (sc === Infinity) continue;

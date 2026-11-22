@@ -9,7 +9,7 @@ import logging
 import mimetypes
 from pathlib import Path
 
-from fastapi import FastAPI, WebSocket, WebSocketDisconnect
+from fastapi import Depends, FastAPI, WebSocket, WebSocketDisconnect
 from fastapi.responses import FileResponse, JSONResponse
 from fastapi.staticfiles import StaticFiles
 
@@ -78,14 +78,20 @@ MEDIA_EXT = {".webp", ".png", ".jpg", ".jpeg", ".gif", ".svg", ".json", ".pdf",
 
 
 @app.get("/repo/{path:path}")
-async def repo_file(path: str):
+async def repo_file(path: str, u: dict | None = Depends(security.optional)):
     p = (config.ROOT / path).resolve()
     # přílohy entit se servírují jen přes autentizované /api/media/prilohy
     if "prilohy" in p.parts:
         return JSONResponse({"chyba": "nenalezeno"}, 404)
     if config.ROOT not in p.parents or not p.is_file() or p.suffix.lower() not in MEDIA_EXT:
         return JSONResponse({"chyba": "nenalezeno"}, 404)
-    return FileResponse(p, media_type=mimetypes.guess_type(str(p))[0])
+    maps = config.ROOT / "11_Mapy"
+    manifests = {maps / "bojove/assets/assety.json", maps / "bojove/textury/textury.json"}
+    coordinates = p == maps / "mista.json" and security.can_edit(u)
+    if p.suffix.lower() == ".json" and maps in p.parents and p not in manifests and not coordinates:
+        return JSONResponse({"chyba": "nenalezeno"}, 404)
+    headers = {"Cache-Control": "private, no-store", "Vary": "Authorization, Cookie"} if coordinates else None
+    return FileResponse(p, media_type=mimetypes.guess_type(str(p))[0], headers=headers)
 
 
 @app.get("/api/health")

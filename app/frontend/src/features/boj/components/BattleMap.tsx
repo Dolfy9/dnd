@@ -12,12 +12,19 @@ import { planMovement, cumFt, type MovementPlan } from "../rules/movement";
 import { settingsOf } from "../rules/settings";
 import { mapSize, tileAt, tileDef } from "../rules/grid";
 import type { MapV2, MapWall } from "../model/mapV2";
-import { MapTextureLayer, MapElevationLayer, MapWallLayer, MapObjectLayer, MapDrawingLayer, MapLightLayer, MapNoteLayer, MapGridLayer } from "./MapV2Layers";
+import { MapElevationLayer, MapWallLayer, MapDrawingLayer, MapLightLayer, MapNoteLayer, MapGridLayer } from "./MapV2Layers";
 import { BASE_COLORS } from "../types";
 import { areaCells } from "../rules/areas";
 import { dmgStyle } from "./visual";
-import { ZoneShape, ZonePatterns, TerenLayer, LightingLayer, FogLayer } from "./MapLayers";
+import { ZoneShape, ZonePatterns, LightingLayer, FogLayer } from "./MapLayers";
+import { MapAtmosphereLayer } from "./MapAtmoLayers";
+import { BattleTerrain } from "./BattleTerrain";
+import { AnimationButton, WeatherPicker, MapWeatherOverlay } from "./MapMotion";
+import { MapAnimatedScene } from "./MapAnimatedScene";
+import type { MapWeather } from "../model/mapV2";
 import { ZoomIn, ZoomOut, Maximize2, Crosshair, X } from "lucide-react";
+import {sourceAt,sourceMap,sourceOn} from "../model/sourceState";
+import {doorAt} from "../model/doorHit";
 
 export type Tool = "select" | "measure" | "zone" | "paint" | "fog" | "light" | "kresba";
 
@@ -69,6 +76,8 @@ interface Props {
   onSelSet?: (ids: Set<string>) => void;
   onCancelMode?: () => void;
   onDoor?: (w: MapWall) => void;             // DM klik na dveře v mapě
+  onSource?: (id:string)=>void;
+  onWeather?: (weather: MapWeather) => void;
   onDraw?: (pts: [number, number][], stroke: string) => void;
   drawColor?: string;
 }
@@ -77,7 +86,11 @@ const viewKey = (bid: string) => `boj-view:${bid}`;
 const clamp = (v: number, a: number, b: number) => Math.min(b, Math.max(a, v));
 
 export default function BattleMap(p: Props) {
-  const { S, map } = p;
+  const { S } = p;
+  const map=useMemo(()=>sourceMap(p.map,S.zdroje),[p.map,S.zdroje]);
+  const [hoverSource,setHoverSource]=useState<string|null>(null);
+  const [sourceMenu,setSourceMenu]=useState<{id:string;x:number;y:number}|null>(null);
+  const weatherMap = useMemo(() => ({ ...map, pocasi: S.pocasi ?? (map as MapV2).pocasi } as MapV2), [map,S.pocasi]);
   const { W, H } = mapSize(map);
   const PX = 48;
   const svgRef = useRef<SVGSVGElement>(null);
@@ -288,6 +301,7 @@ export default function BattleMap(p: Props) {
 
   /* ---- pointer handling: drag žetonu, pan, pinch, box select ---- */
   const down = (e: React.PointerEvent) => {
+    if(e.button!==0)return;
     (e.currentTarget as Element).setPointerCapture?.(e.pointerId);
     ptrs.current.set(e.pointerId, { x: e.clientX, y: e.clientY });
     if (ptrs.current.size === 2) { // začni pinch — zruš probíhající drag/pan
@@ -330,6 +344,7 @@ export default function BattleMap(p: Props) {
     } else setDrag({ id: "", to: null, pan: { sx: e.clientX, sy: e.clientY, ox: V.x, oy: V.y }, moved: false });
   };
   const move = (e: React.PointerEvent) => {
+    if(p.dm && p.tool==="select" && !p.targeting){const {gx,gy}=toGrid(e);setHoverSource(sourceAt(map,gx,gy)?.id ?? null);}
     if (ptrs.current.has(e.pointerId)) ptrs.current.set(e.pointerId, { x: e.clientX, y: e.clientY });
     if (pinch.current && ptrs.current.size === 2) {
       const [a, b] = [...ptrs.current.values()];
@@ -383,14 +398,13 @@ export default function BattleMap(p: Props) {
       const wasPan = drag.moved; setDrag(null);
       if (!wasPan) {
         // DM klik na dveře (svg má pointer capture → onClick na <g> nespustí)
+        if(p.dm && p.onSource && p.tool==="select"){
+          const {gx,gy}=toGrid(e),source=sourceAt(map,gx,gy);
+          if(source){p.onSource(source.id);return;}
+        }
         if (p.dm && p.onDoor) {
           const { gx, gy } = toGrid(e);
-          const door = ((map as MapV2).steny || []).filter((w) => w.typ === "door")
-            .find((w) => {
-              const dx = w.b[0] - w.a[0], dy = w.b[1] - w.a[1], l2 = dx * dx + dy * dy || 1;
-              const tt = Math.max(0, Math.min(1, ((gx - w.a[0]) * dx + (gy - w.a[1]) * dy) / l2));
-              return Math.hypot(gx - (w.a[0] + tt * dx), gy - (w.a[1] + tt * dy)) < .5;
-            });
+          const door = doorAt(map.steny || [], gx, gy, S.dvere);
           if (door) { p.onDoor(door); return; }
         }
         p.onSelect(null);
@@ -420,9 +434,10 @@ export default function BattleMap(p: Props) {
     const { cx, cy } = toGrid(e);
     if (drag?.id) { e.preventDefault(); setDrag({ ...drag, wps: [...(drag.wps || []), [cx, cy]] }); return; }
     const t = tokAt(cx, cy);
+    if(!t && p.dm && p.onSource){const {gx,gy}=toGrid(e),source=sourceAt(map,gx,gy);if(source){e.preventDefault();setSourceMenu({id:source.id,x:e.clientX,y:e.clientY});return;}}
     if (t && p.onCtxMenu) { e.preventDefault(); p.onCtxMenu(t, { x: e.clientX, y: e.clientY }); }
   };
-  const leave = () => { setHoverCell(null); setHoverTok(null); };
+  const leave = () => { setHoverCell(null); setHoverTok(null);setHoverSource(null); };
 
   const img = map.obrazek ? `/repo/11_Mapy/${map.obrazek}` : null;
   const base = BASE_COLORS[map.podklad] || "#57524d";
@@ -461,33 +476,23 @@ export default function BattleMap(p: Props) {
 
   return (
     <div className="boj-maparea">
+      <MapAnimatedScene map={map as MapV2} view={V} px={PX} dm={p.dm} illustration={!!img} overrides={S.teren} doors={S.dvere} details={<>
+        <MapElevationLayer map={map as MapV2} />
+        <MapGridLayer map={map as MapV2} W={W} H={H} />
+        <MapDrawingLayer map={map as MapV2} dm={p.dm} />
+        <MapWallLayer map={map as MapV2} doors={S.dvere} dm={p.dm} />
+      </>}>
+        <rect width={W*24} height={H*24} fill={base} />
+        {img && <image href={img} width={W*24} height={H*24} preserveAspectRatio="none" opacity={.92} />}
+        <BattleTerrain S={S} map={map as MapV2} illustration={!!img} />
+      </MapAnimatedScene>
       <svg ref={svgRef} className={`boj-map ${cursorCls}`} onWheel={onWheel} onPointerDown={down} onPointerMove={move}
            onPointerUp={up} onDoubleClick={dbl} onPointerLeave={leave} onContextMenu={ctx} style={{ touchAction: "none" }}>
         <CoinDefs />
         <ZonePatterns />
         <g transform={`translate(${V.x},${V.y}) scale(${V.k})`}>
-          <rect width={W * PX} height={H * PX} fill={base} />
-          {img && <image href={img} width={W * PX} height={H * PX} preserveAspectRatio="none" opacity={0.92} />}
           {/* v2 vrstvy jsou v jednotkách 24 px/buňka → škálovaná skupina na bitevní PX */}
           <g transform={`scale(${PX / 24})`}>
-          <MapTextureLayer map={map as MapV2} />
-          <MapElevationLayer map={map as MapV2} />
-          {map.mrizka.map((row, y) => row.split("").map((c, x) => {
-            const t = tileAt(map, x, y, S.teren);
-            const d = tileDef(t);
-            if (!d.cost) return <rect key={`${x},${y}`} x={x * PX} y={y * PX} width={PX} height={PX} fill="#000" opacity={t === "_" ? 0.55 : 0.38} />;
-            if (d.difficult) return <rect key={`${x},${y}`} x={x * PX} y={y * PX} width={PX} height={PX} fill="#7c2d12" opacity={0.14} />;
-            if (t === "x") return <rect key={`${x},${y}`} x={x * PX} y={y * PX} width={PX} height={PX} fill="#f97316" opacity={0.25} />;
-            if (d.cover) return <rect key={`${x},${y}`} x={x * PX} y={y * PX} width={PX} height={PX} fill="#0ea5e9" opacity={0.12} />;
-            return null;
-          }))}
-          <MapGridLayer map={map as MapV2} W={W} H={H} />
-          <TerenLayer S={S} map={map} px={PX} />
-          <MapDrawingLayer map={map as MapV2} dm={p.dm} />
-          <MapLightLayer map={map as MapV2} />
-          <MapWallLayer map={map as MapV2} doors={S.dvere} dm={p.dm}
-                        onDoor={p.dm && p.onDoor ? p.onDoor : undefined} />
-          <MapObjectLayer map={map as MapV2} dm={p.dm} />
           {p.dm && <MapNoteLayer map={map as MapV2} />}
           </g>
           {(S.kresby as any)?.length ? <MapDrawingLayer map={{ kresby: S.kresby } as MapV2} dm /> : null}
@@ -601,6 +606,7 @@ export default function BattleMap(p: Props) {
               </g>
             );
           })}
+          <g transform={`scale(${PX / 24})`}><MapAtmosphereLayer map={map as MapV2} doors={S.dvere} /></g>
           <LightingLayer S={S} map={map} px={PX} W={W} H={H} dm={p.dm} />
           <FogLayer S={S} px={PX} W={W} H={H} dm={p.dm} />
           {measure && (
@@ -615,8 +621,12 @@ export default function BattleMap(p: Props) {
             </g>
           )}
           <FxLayer events={p.fx} px={PX} k={V.k} onDone={p.onFxDone} shakingIds={new Set()} />
+          {p.dm && hoverSource && (()=>{const source=map.objekty?.find(o=>o.id===hoverSource) || map.svetla?.find(l=>l.id===hoverSource);return source?<g className="source-marker" data-source-hover={source.id} pointerEvents="none" transform={`translate(${source.x*PX},${source.y*PX}) scale(${1/V.k})`}><circle r={12}/><text y={3}>{sourceOn(source)?"◉":"○"}</text></g>:null;})()}
         </g>
       </svg>
+      <MapWeatherOverlay map={weatherMap} view={V} px={PX} />
+      {p.dm && sourceMenu && <><div style={{position:"fixed",inset:0,zIndex:100}} onPointerDown={()=>setSourceMenu(null)}/><div role="menu" aria-label="Stav zdroje" className="boj-ctx" style={{position:"fixed",left:Math.min(sourceMenu.x,window.innerWidth-240),top:Math.min(sourceMenu.y,window.innerHeight-80),zIndex:101}} onKeyDown={e=>{if(e.key==="Escape")setSourceMenu(null);}}><button role="menuitem" autoFocus onClick={()=>{p.onSource?.(sourceMenu.id);setSourceMenu(null);}}>Zapnout / vypnout zdroj</button></div></>}
+      <div className="map-live-controls"><AnimationButton />{p.dm && p.onWeather && <WeatherPicker compact map={map as MapV2} value={weatherMap.pocasi} onChange={p.onWeather} />}</div>
 
       {/* zoom ovládání */}
       <div className={`boj-zoombar ${pctFlash ? "flash" : ""}`}>

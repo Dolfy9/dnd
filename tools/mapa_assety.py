@@ -4,6 +4,8 @@
 Použití:
     python3 tools/mapa_assety.py            # vypíše, co chybí; s OPENAI_API_KEY generuje
     python3 tools/mapa_assety.py --index    # jen přeindexovat složky (ručně vložené obrázky)
+    python3 tools/mapa_assety.py --import DIR [--legacy DIR]
+    python3 tools/mapa_assety.py --varianty DIR  # hotové id-v1..v4.webp
 
 - Assety: 11_Mapy/bojove/assets/<kategorie>/<id>.webp, manifest assety.json.
 - Textury: 11_Mapy/bojove/textury/<id>.webp (512 px = 4 buňky), manifest textury.json.
@@ -14,9 +16,13 @@ Použití:
 """
 from __future__ import annotations
 
+import argparse
 import json
+import math
 import os
+import shutil
 import sys
+import unicodedata
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
@@ -26,6 +32,122 @@ PROMPTS = ROOT / "tools" / "mapa_assety_prompty.json"
 MANIFEST_A = ASSETS / "assety.json"
 MANIFEST_T = TEXDIR / "textury.json"
 TEX_CELLS = 4  # 512 px tile = 4×4 buňky
+
+LEGACY_TEXTURES = {
+    "mesto": "Městská dlažba", "krypta": "Podlaha krypty", "les": "Lesní půda", "ruiny": "Ruiny",
+    "reka": "Říční břeh", "more": "Moře", "pristav": "Přístav", "bazina": "Bažina",
+    "snih": "Sníh", "jeskyne": "Jeskyně", "hory": "Hory", "poust": "Poušť", "plaz": "Pláž",
+    "g": "Tráva", "r": "Cesta", "wall": "Zdivo", "rubble": "Sutiny", "voda": "Hluboká voda",
+    "melcina": "Mělčina", "most": "Most", "propast": "Propast", "schody": "Schody",
+    "skala": "Přírodní skalní stěna", "bedrock": "Skalní masiv", "mlha": "Mlha",
+    "parchment": "Pergamen", "panel": "Dřevěný panel",
+}
+LEGACY_PROPS = {
+    "strom": "Dub", "strom2": "Borovice", "strom3": "Bříza", "ker": "Keř", "ker2": "Křoví",
+    "balvan": "Balvan", "balvan2": "Skaliska", "sloup": "Sloup", "bedny": "Bedny", "sudy": "Sudy",
+    "ohen": "Oheň", "dvere": "Dveře", "sarkofag": "Sarkofág", "kosti": "Kosti",
+    "portal": "Modrý portál", "portal2": "Fialový portál", "lucerna": "Lucerna", "pochoden": "Pochodeň",
+    "stul": "Stůl", "zidle": "Židle", "koberec": "Koberec", "studna": "Studna", "oltar": "Oltář",
+    "socha": "Socha", "kmen": "Kmen", "parez": "Pařez", "houby": "Houby", "lekniny": "Lekníny",
+    "rakos": "Rákos", "stan": "Stan", "vuz": "Vůz", "krev": "Krev", "truhla": "Truhla",
+    "regal": "Regál", "krystal": "Krystal", "hrob": "Hrob", "kapradi": "Kapradí", "keltsky_kamen": "Runový kámen",
+}
+
+
+def legacy_assets() -> list[dict]:
+    entries = []
+    for key, name in LEGACY_PROPS.items():
+        natural = key.startswith(("strom", "ker", "balvan")) or key in (
+            "kmen", "parez", "houby", "lekniny", "rakos", "kapradi", "krystal")
+        category = "Příroda" if natural else "Magie" if key.startswith("portal") else "Rekvizity"
+        large = key.startswith("strom") or key in ("vuz", "stan")
+        entry = {"id": "gen2-" + key, "nazev": name + " – realistický", "kategorie": category,
+                 "w": 2 if large else 1, "h": 2 if large else 1, "custom": False}
+        if key.startswith(("strom", "balvan")) or key in ("sloup", "socha", "studna", "oltar", "regal"):
+            entry.update(blocks=True, cover=3)
+        elif key in ("bedny", "sudy", "kmen", "parez", "vuz", "sarkofag", "truhla", "stul"):
+            entry.update(cover=2, difficult=True)
+        elif key.startswith("ker") or key in ("kapradi", "rakos"):
+            entry.update(difficult=True)
+        if key in ("ohen", "lucerna", "pochoden"):
+            entry["light"] = {"bright": 10, "dim": 10}
+        entries.append(entry)
+    return entries
+
+
+def repair_texture(image):
+    from PIL import Image, ImageChops
+    image = image.convert("RGB").resize((512, 512), Image.Resampling.LANCZOS)
+    weights = [round(255 * (1 + math.cos(math.pi * min(1, min(i, 511 - i) / 112))) / 2) for i in range(512)]
+    strip = Image.new("L", (512, 1))
+    strip.putdata(weights)
+    for axis in (0, 1):
+        mask = (strip if axis == 0 else strip.transpose(Image.Transpose.ROTATE_90)).resize((512, 512))
+        shifted = ImageChops.offset(image, 256 if axis == 0 else 0, 256 if axis else 0)
+        image = Image.composite(shifted, image, mask)
+    return image
+
+
+def key_magenta(image, aspect=1, size=512):
+    from PIL import Image, ImageChops, ImageMath
+    image = image.convert("RGBA")
+    r, g, b, original_alpha = image.split()
+    spill = ImageChops.subtract(ImageChops.darker(r, b), g)
+    alpha = ImageChops.invert(spill)
+    denominator = ImageChops.lighter(alpha, Image.new("L", image.size, 1))
+    channels = [ImageMath.lambda_eval(
+        lambda v: v["convert"]((v["c"] - v["s"]) * 255 / v["d"], "L"),
+        c=c, s=spill, d=denominator) for c in (r, g, b)]
+    alpha = ImageChops.multiply(alpha.point(lambda a: 0 if a <= 160 else a), original_alpha)
+    result = Image.merge("RGBA", (*channels, alpha))
+    bbox = alpha.getbbox()
+    width, height = (size, round(size / aspect)) if aspect >= 1 else (round(size * aspect), size)
+    if bbox is None:
+        return Image.new("RGBA", (width, height))
+    result = result.crop(bbox)
+    padding = max(1, round(min(width, height) * .04))
+    result.thumbnail((max(1, width - 2 * padding), max(1, height - 2 * padding)), Image.Resampling.LANCZOS)
+    canvas = Image.new("RGBA", (width, height))
+    canvas.paste(result, ((width - result.width) // 2, (height - result.height) // 2))
+    return canvas
+
+
+def import_images(source: Path, prompts: dict) -> None:
+    from PIL import Image
+    expected = [(source / "assets" / (a["id"] + ".png"), ASSETS / a["kategorie"] / (a["id"] + ".webp"), a)
+                for a in prompts["assety"]]
+    expected += [(source / "textury" / (t["id"] + ".png"), TEXDIR / (t["id"] + ".webp"), False)
+                 for t in prompts["textury"]]
+    expected = [(src if src.is_file() else source / src.name, dst, meta) for src, dst, meta in expected]
+    missing = [str(src) for src, _, _ in expected if not src.is_file()]
+    if missing:
+        raise ValueError("Chybí zdrojové obrázky: " + ", ".join(missing))
+    for src, dst, meta in expected:
+        dst.parent.mkdir(parents=True, exist_ok=True)
+        with Image.open(src) as image:
+            result = key_magenta(image, meta.get("w", 1) / meta.get("h", 1), meta.get("size", 512)) if meta else repair_texture(image)
+            result.save(dst, "WEBP", quality=80, method=6, exact=True)
+    print(f"Import: {len(expected)} obrázků.")
+
+
+def import_legacy(source: Path) -> None:
+    from PIL import Image
+    for key in LEGACY_TEXTURES:
+        shutil.copyfile(source / "tex" / (key + ".webp"), TEXDIR / ("teren-" + key + ".webp"))
+    for entry in legacy_assets():
+        dst = ASSETS / entry["kategorie"]
+        dst.mkdir(parents=True, exist_ok=True)
+        shutil.copyfile(source / "prop" / (entry["id"].removeprefix("gen2-") + ".webp"), dst / (entry["id"] + ".webp"))
+    for kind, folder in (("fx", "fx"), ("ovl", "ovl"), ("icon", "ikony")):
+        target = ASSETS.parent / folder
+        target.mkdir(parents=True, exist_ok=True)
+        for path in (source / kind).glob("*.webp"):
+            with Image.open(path) as image:
+                if max(image.size) > 512:
+                    image.thumbnail((512, 512), Image.Resampling.LANCZOS)
+                    image.save(target / path.name, "WEBP", quality=80, method=6, exact=True)
+                else:
+                    shutil.copyfile(path, target / path.name)
 
 
 def load_prompts() -> dict:
@@ -41,8 +163,8 @@ def to_webp(src: Path, dst: Path, trim: bool = True) -> None:
             pad = 8
             im = im.crop((max(0, bbox[0] - pad), max(0, bbox[1] - pad),
                           min(im.width, bbox[2] + pad), min(im.height, bbox[3] + pad)))
-    im.thumbnail((1024, 1024))
-    im.save(dst, "WEBP", quality=88)
+    im.thumbnail((512, 512))
+    im.save(dst, "WEBP", quality=80, method=6)
 
 
 def gen_image(client, prompt: str, transparent: bool) -> bytes | None:
@@ -56,16 +178,32 @@ def gen_image(client, prompt: str, transparent: bool) -> bytes | None:
         return None
 
 
+def animation_metadata(entry: dict) -> dict:
+    if entry["id"] in ("i-krb", "i-kolebka-lustr", "m-lucerna-sloup"):
+        return {"anim": "ohen"}
+    key = "".join(c for c in unicodedata.normalize("NFD", entry["id"]) if not unicodedata.combining(c)).removeprefix("gen2-")
+    if "portal" in key:
+        return {"anim": "portal"}
+    if key.startswith(("strom", "smrk", "borovice", "ker", "kapradi", "rakos")):
+        return {"anim": "vitr"}
+    if key.startswith(("ohen", "ohne", "ohniste", "ohriste", "krb", "brasier", "kandelabr", "pochoden", "lucerna", "svic", "taborak")):
+        return {"anim": "ohen"}
+    if key.startswith(("krystal", "houby", "run", "svitici-runa", "keltsky")):
+        return {"anim": "zare"}
+    return {}
+
+
 def index_assets(prompts: dict) -> tuple[list[dict], list[dict]]:
     """Přeindexuj složku assets → manifest entries + seznam chybějících."""
     entries, missing = [], []
-    for a in prompts["assety"]:
+    for a in prompts["assety"] + legacy_assets():
         kat_dir = ASSETS / a["kategorie"]
         img = kat_dir / f"{a['id']}.webp"
         if img.is_file():
             entries.append({"id": a["id"], "nazev": a["nazev"], "kategorie": a["kategorie"],
                             "src": f"bojove/assets/{a['kategorie']}/{a['id']}.webp",
-                            "tags": [a["kategorie"]]})
+                            "tags": [a["kategorie"]], "custom": False,
+                            **{k: a[k] for k in ("w", "h", "z", "blocks", "cover", "difficult", "light") if k in a}})
         else:
             # ručně vložené png/jpg → konvertovat
             alt = next((kat_dir.glob(f"{a['id']}.*")), None) if kat_dir.is_dir() else None
@@ -79,13 +217,14 @@ def index_assets(prompts: dict) -> tuple[list[dict], list[dict]]:
                     continue
                 except Exception as e:  # noqa: BLE001
                     print(f"  ! konverze {alt.name}: {e}")
-            missing.append(a)
-    return entries, missing
+            if "prompt" in a:
+                missing.append(a)
+    return [{**e, **animation_metadata(e)} for e in entries], missing
 
 
 def index_textures(prompts: dict) -> tuple[list[dict], list[dict]]:
     entries, missing = [], []
-    for t in prompts["textury"]:
+    for t in prompts["textury"] + [{"id": "teren-" + k, "nazev": n} for k, n in LEGACY_TEXTURES.items()]:
         img = TEXDIR / f"{t['id']}.webp"
         if img.is_file():
             entries.append({"id": t["id"], "nazev": t["nazev"],
@@ -100,16 +239,81 @@ def index_textures(prompts: dict) -> tuple[list[dict], list[dict]]:
                     continue
                 except Exception as e:  # noqa: BLE001
                     print(f"  ! konverze {alt.name}: {e}")
-            missing.append(t)
+            if "prompt" in t:
+                missing.append(t)
     return entries, missing
 
 
+def variant_visible(path: Path) -> bool:
+    from PIL import Image
+    try:
+        with Image.open(path) as image:
+            alpha = image.convert("RGBA").getchannel("A")
+            bbox = alpha.getbbox()
+            if not bbox:
+                return False
+            crop = alpha.crop(bbox)
+            coverage = sum(i * n for i, n in enumerate(crop.histogram())) / (255 * crop.width * crop.height)
+            return coverage >= .03
+    except OSError:
+        return False
+
+
+def index_variants(entries: list[dict], source: Path | None = None) -> None:
+    if source is not None and not source.is_dir():
+        raise ValueError(f"Chybí adresář variant: {source}")
+    imported = 0
+    for entry in entries:
+        try:
+            directory = ASSETS / Path(entry["src"]).parent.relative_to("bojove/assets") / "varianty"
+        except ValueError:
+            continue
+        variants = list(entry.get("varianty", []))
+        for n in range(1, 5):
+            name = f"{entry['id']}-v{n}.webp"
+            destination = directory / name
+            candidate = source / name if source else destination
+            if candidate.is_file() and variant_visible(candidate):
+                if source:
+                    directory.mkdir(parents=True, exist_ok=True)
+                    shutil.copy2(candidate, destination)
+                    imported += 1
+                while len(variants) < n:
+                    variants.append("")
+                variants[n - 1] = "bojove/assets/" + destination.relative_to(ASSETS).as_posix()
+        if variants:
+            entry["varianty"] = variants
+    if source:
+        print(f"Varianty: importováno {imported} obrázků.")
+
+
 def main() -> int:
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("--index", action="store_true")
+    parser.add_argument("--import", dest="source", type=Path)
+    parser.add_argument("--varianty", type=Path, help="Import hotových průhledných variant id-v1..v4.webp")
+    parser.add_argument("--only", help="Importovat jen ID oddělená čárkou; manifest zůstane úplný")
+    parser.add_argument("--legacy", type=Path, help="Dřívější složka boj/{tex,prop,fx,ovl,icon}")
+    args = parser.parse_args()
+    if args.varianty:
+        manifest = json.loads(MANIFEST_A.read_text(encoding="utf-8"))
+        index_variants(manifest["assety"], args.varianty.expanduser())
+        MANIFEST_A.write_text(json.dumps(manifest, ensure_ascii=False, indent=1), encoding="utf-8")
+        print(f"Manifest: {sum(bool(e.get('varianty')) for e in manifest['assety'])} assetů s variantami.")
+        return 0
     prompts = load_prompts()
     ASSETS.mkdir(parents=True, exist_ok=True)
     TEXDIR.mkdir(parents=True, exist_ok=True)
 
-    index_only = "--index" in sys.argv
+    if args.source:
+        selected = set(args.only.split(",")) if args.only else None
+        subset = {k: [e for e in prompts[k] if selected is None or e["id"] in selected] for k in ("assety", "textury")}
+        if selected and selected - {e["id"] for entries in subset.values() for e in entries}:
+            raise ValueError("Neznámé ID pro import")
+        import_images(args.source.expanduser(), subset)
+    if args.legacy:
+        import_legacy(args.legacy.expanduser())
+    index_only = args.index or args.source is not None or args.legacy is not None
     key = os.environ.get("OPENAI_API_KEY")
     client = None
     if key and not index_only:
@@ -175,6 +379,7 @@ def main() -> int:
             entries_a += [e for e in old if e.get("id") not in have and e.get("custom")]
         except ValueError:
             pass
+    index_variants(entries_a)
     MANIFEST_A.write_text(json.dumps({"assety": entries_a}, ensure_ascii=False, indent=1), encoding="utf-8")
     MANIFEST_T.write_text(json.dumps({"textury": entries_t}, ensure_ascii=False, indent=1), encoding="utf-8")
 

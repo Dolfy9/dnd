@@ -12,6 +12,37 @@ Svět, který stvořil uprchlý Ferienec **Ertus Potřísněný** a jeho děti �
 - Web (wiki s vyhledáváním, interaktivní mapou, character sheety a úpravami všeho přímo v prohlížeči): `pip install -r web/requirements.txt && web/serve.sh` → http://localhost:8000
 - Pravidla: **D&D 5e 2024** (PHB 2024, DMG 2024, MM 2025)
 
+## Lokální vývoj aplikace React / FastAPI
+
+Aktuální aplikace je v `app/frontend` a `app/backend` (nikoli starý wiki-server).
+Backend vyžaduje **Python 3.13+** kvůli práci s přesným formátováním souborů
+(`Path.read_text(newline=...)`); frontend Node.js 20+.
+Z kořene repozitáře, ve dvou terminálech:
+
+```sh
+python3.13 -m venv .venv
+source .venv/bin/activate
+pip install -e './app/backend[dev]'
+cd app/backend
+MONT_ADMIN_PASSWORD=montelien-local uvicorn app.main:app --host 127.0.0.1 --port 8001
+```
+
+```sh
+cd app/frontend
+npm ci
+npm run dev -- --host 127.0.0.1 --port 5173
+```
+
+Otevři http://localhost:5173/ (API na http://localhost:8001/).
+Při prvním spuštění se vytvoří účet `admin` s uvedeným lokálním heslem;
+existující účet se nepřepisuje. Bez proměnné se vygenerované přihlašovací
+údaje vypíší při startu a uloží do `app/data/admin_password.txt`.
+Uvedené heslo je pouze pro lokální vývoj. Před zpřístupněním služby mimo
+vlastní počítač nastav vlastní silné heslo; uvedené příkazy naslouchají jen lokálně.
+Pro veřejný Vite preview nastav případně
+`__VITE_ADDITIONAL_SERVER_ALLOWED_HOSTS=.preview.devinapps.com`.
+Watcher sleduje zápisy a přejmenování obsahu, nikoli samotné čtení.
+
 ## Struktura
 
 | Složka | Obsah |
