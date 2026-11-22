@@ -78,12 +78,20 @@ const idxOr = (i: Map<string, any>) => i;
 /** Zjednodušená kontrola, zda přímka A(x,y)→B(x,y) kříží zdi blokující výhled (po buňkách). */
 export function sightBlocked(wIdx: Map<string, import("../model/mapV2").MapWall>, ax: number, ay: number, bx: number, by: number, doors?: Record<string, boolean>): boolean {
   if (crossedFreeWalls(wIdx, [ax, ay], [bx, by]).some(w => wallBlocksSight(w, doors))) return true;
-  const n = Math.max(2, Math.ceil(Math.hypot(bx - ax, by - ay) * 4));
   let px = Math.floor(ax), py = Math.floor(ay);
-  for (let i = 1; i <= n; i++) {
-    const cx = Math.floor(ax + (bx - ax) * i / n), cy = Math.floor(ay + (by - ay) * i / n);
-    if (cx === px && cy === py) continue;
+  const ex = Math.floor(bx), ey = Math.floor(by);
+  const dx = bx - ax, dy = by - ay, sx = Math.sign(dx), sy = Math.sign(dy);
+  const stepX = dx ? 1 / Math.abs(dx) : Infinity, stepY = dy ? 1 / Math.abs(dy) : Infinity;
+  let tx = dx ? (sx > 0 ? px + 1 - ax : ax - px) * stepX : Infinity;
+  let ty = dy ? (sy > 0 ? py + 1 - ay : ay - py) * stepY : Infinity;
+  while (px !== ex || py !== ey) {
+    const crossX = px !== ex && (py === ey || tx <= ty + 1e-10);
+    const crossY = py !== ey && (px === ex || ty <= tx + 1e-10);
+    const cx = px + (crossX ? sx : 0), cy = py + (crossY ? sy : 0);
     if (edgeBlocksSight(wIdx, px, py, cx, cy, doors, true)) return true;
+    if (crossX && crossY && edgeBlocksSight(wIdx, cx, cy, px, py, doors, true)) return true;
+    if (crossX) tx += stepX;
+    if (crossY) ty += stepY;
     px = cx; py = cy;
   }
   return false;
