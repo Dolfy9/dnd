@@ -32,7 +32,7 @@ import * as ops from "../tools/ops";
 import { TexturePicker, TilePicker, WallPicker, LightColors, TABS, LAYERS, LayersPanel, LibraryPanel, PropertiesPanel, GeneratorPanel, MapPanel, type TabId } from "./panels";
 import { CommandPalette, ShortcutHelp, ToolRail, EditorMinimap, type EditorCommand } from "./EditorChrome";
 import type { LibraryMode } from "./AssetLibrary";
-import { actOnObjects, liveSelection, TOOL_HINTS, readPreference, writePreference, rememberAsset, type ObjectAction } from "../state/editorUx";
+import { actOnObjects, liveSelection, playerPreviewMap, TOOL_HINTS, readPreference, writePreference, rememberAsset, type ObjectAction } from "../state/editorUx";
 import { assetUrl } from "../assets/manifest";
 import "../editor.css";
 import "../editorPro.css";
@@ -470,7 +470,7 @@ export default function EditorPage() {
       case "select": {
         if (!map) break;
         const [wx, wy] = toWorld(e);
-        const hit = ops.pickAt(map, wx, wy, true);
+        const hit = ops.pickAt(playerMap!, wx, wy, true);
         if (hit) {
           const ns = e.shiftKey ? (sel.some((s) => s.id === hit.id) ? sel.filter((s) => s.id !== hit.id) : [...sel, hit]) : [hit];
           setSel(ns);
@@ -563,7 +563,7 @@ export default function EditorPage() {
       return;
     }
     if (marquee) {
-      const s = ops.pickInRect(map!, marquee.a, marquee.b);
+      const s = ops.pickInRect(playerMap!, marquee.a, marquee.b);
       setSel(s); setMarquee(null); return;
     }
     if (dragPt) {
@@ -591,7 +591,7 @@ export default function EditorPage() {
     zoomAt(e.deltaY < 0 ? 1.15 : 1 / 1.15, e.clientX - r.left, e.clientY - r.top);
   };
 
-  const playerMap = React.useMemo(() => map && playerPreview ? {...map,objekty:map.objekty?.filter(o => !o.dmOnly),kresby:map.kresby?.filter(o => !o.dmOnly),poznamky:[]} : map,[map,playerPreview]);
+  const playerMap = React.useMemo(() => map && playerPreviewMap(map,playerPreview),[map,playerPreview]);
   /* ---------- render ---------- */
   if (!map) return <div className="me-ed me-loading">Načítám mapu…</div>;
   const selObject = sel.length === 1 && sel[0].kind === "objekt" ? (map.objekty || []).find((o) => o.id === sel[0].id) : null;
@@ -727,7 +727,7 @@ export default function EditorPage() {
             <svg ref={svgRef} className={`me-canvas tool-${tool}`} onWheel={onWheel}
                  onPointerDown={onDown} onPointerMove={onMove} onPointerUp={onUp} onDoubleClick={onDbl}
                  onPointerCancel={() => { strokeRef.current = null; placementRef.current = null; setPaintPreview(null); paintRef.current = false; if (transformStart.current) doc.setMap(transformStart.current); transformStart.current = null; moveRef.current = null; setHandleDrag(null); }}
-                 onPointerLeave={() => setCur(null)} onContextMenu={(e) => { e.preventDefault(); const [x,y] = toWorld(e); const hit = ops.pickAt(map,x,y,true); if(hit?.kind === "objekt"){if(!sel.some(s => s.id === hit.id)) setSel([hit]);setContextMenu({x:Math.max(8,Math.min(window.innerWidth-240,e.clientX)),y:Math.max(8,Math.min(window.innerHeight-380,e.clientY))});} }}
+                 onPointerLeave={() => setCur(null)} onContextMenu={(e) => { e.preventDefault(); const [x,y] = toWorld(e); const hit = ops.pickAt(previewMap,x,y,true); if(hit?.kind === "objekt"){if(!sel.some(s => s.id === hit.id)) setSel([hit]);setContextMenu({x:Math.max(8,Math.min(window.innerWidth-240,e.clientX)),y:Math.max(8,Math.min(window.innerHeight-380,e.clientY))});} }}
                  style={{ touchAction: "none", width: "100%", height: "100%", display: "block" }}>
               <g transform={`translate(${V.x},${V.y}) scale(${V.k})`}>
                 {layerVis.svetla && <MapAtmosphereLayer map={previewMap} />}

@@ -2,7 +2,8 @@ import React from "react";
 import { describe, expect, it, vi, afterEach } from "vitest";
 import { renderToStaticMarkup } from "react-dom/server";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { actOnObjects, liveSelection, fuzzyScore, readPreference, rememberAsset, writePreference, TOOL_GROUPS, TOOL_HINTS } from "./editorUx";
+import { actOnObjects, liveSelection, playerPreviewMap, fuzzyScore, readPreference, rememberAsset, writePreference, TOOL_GROUPS, TOOL_HINTS } from "./editorUx";
+import { pickAt, pickInRect } from "../tools/ops";
 import type { MapObject, MapV2 } from "../../boj/model/mapV2";
 import { EditorWeather, ShortcutHelp, CommandPalette } from "../components/EditorChrome";
 import { ObjectInspector } from "../components/ObjectInspector";
@@ -13,6 +14,18 @@ const object: MapObject = {id:"one",asset:"tree",x:2,y:3,w:1,h:2,v:2,light:{brig
 afterEach(() => vi.unstubAllGlobals());
 
 describe("editor productivity", () => {
+  it("picks only rendered objects in player preview, including overlapping objects", () => {
+    const hidden = {...object,id:"hidden",dmOnly:true};
+    const map = {objekty:[object,hidden]} as MapV2;
+    expect(pickAt(playerPreviewMap(map,false),2,3,true)?.id).toBe("hidden");
+    const preview = playerPreviewMap(map,true);
+    expect(pickAt(preview,2,3,true)?.id).toBe("one");
+    expect(pickInRect(preview,[0,0],[5,5])).toEqual([{kind:"objekt",id:"one"}]);
+    expect(pickAt(playerPreviewMap({objekty:[hidden]} as MapV2,true),2,3,true)).toBeNull();
+    expect(pickAt(playerPreviewMap({} as MapV2,true),2,3,true)).toBeNull();
+    expect(map.objekty).toEqual([object,hidden]);
+    expect(playerPreviewMap(map,false)).toBe(map);
+  });
   it("deletes only the objects shown in a mixed-selection inspector", () => {
     const map = {objekty:[object],steny:[{id:"wall",a:[0,0],b:[1,0],typ:"wall"}]} as MapV2;
     const deleteSelection = vi.fn();

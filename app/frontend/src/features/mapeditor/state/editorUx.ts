@@ -54,6 +54,10 @@ export function fuzzyScore(label: string, query: string): number {
 }
 
 export type ObjectAction = "duplicate" | "delete" | "rotate-left" | "rotate-right" | "flip" | "front" | "back" | "align-x" | "align-y";
+export function playerPreviewMap(map: MapV2, enabled: boolean): MapV2 {
+  return enabled ? {...map,objekty:map.objekty?.filter(o => !o.dmOnly),kresby:map.kresby?.filter(o => !o.dmOnly),poznamky:[]} : map;
+}
+
 export function liveSelection<T extends {kind: string; id: string}>(map: MapV2, selection: T[]): T[] {
   const items: Record<string, {id: string}[] | undefined> = {objekt:map.objekty,stena:map.steny,svetlo:map.svetla,kresba:map.kresby,poznamka:map.poznamky};
   const next = selection.filter(s => items[s.kind]?.some(item => item.id === s.id));
