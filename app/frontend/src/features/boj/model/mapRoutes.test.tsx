@@ -35,8 +35,8 @@ it("smooths through control points, keeps endpoints and caches deterministic tan
  const a=routeGeometry({...route,pts,hladke:true});expect(routeGeometry({...route,pts,hladke:true})).toBe(a);
  expect(routeGeometry({...route,pts,hladke:true,seed:43}).sprites).not.toEqual(a.sprites);
  const straight=routeGeometry(route);expect(straight.sprites.every(s=>s.angle===90)).toBe(true);
- const pier=routeGeometry({...route,druh:"molo",pts,hladke:true});expect(pier.deck.length).toBeGreaterThan(3);
- pier.deck.forEach((s,i)=>expect(s.distance).toBeCloseTo(i?pier.deck[i-1].distance+pier.deck[i-1].length:0));
+ const pier=routeGeometry({...route,druh:"molo",pts,hladke:true});expect(pier.planks.length).toBeGreaterThan(3);
+ expect(pier.planks.every(s=>s.width>0&&s.height>0&&[s.x,s.y,s.angle,s.width,s.height].every(Number.isFinite))).toBe(true);
  for(let i=1;i<straight.sprites.length;i++)expect(straight.sprites[i].distance-straight.sprites[i-1].distance).toBeLessThanOrEqual(route.sirka*.55+1e-8);
  expect(routeContains(route,4,3)).toBe(true);expect(routeContains(route,6,3)).toBe(false);
 });
@@ -66,11 +66,24 @@ it("renders generated image textures and sprites in the editor, shared battle sc
  for(const druh of ["cesta","molo","plot","zidka"] as const){
   const m={...map,trasy:[{...route,druh,brectan:true}]},html=renderToStaticMarkup(<MapRouteLayer map={m}/>);
   expect(html).toContain(`data-route-kind="${druh}"`);expect(html).toContain(".webp");expect(html).not.toContain("t-molo-prkna");
-  if(druh==="molo")expect(renderToStaticMarkup(<MapRouteLayer map={{...m,trasy:[{...m.trasy[0],t:"t-zahradni-cesta"}]}}/>)).toContain("drevo.webp");
+  if(druh==="molo"){
+   expect(html).toContain("data-deck-board");expect(html).toContain("prkno-");expect(html).toContain('data-deck-shadow="true"');expect(html).toContain('stroke-linecap="butt"');expect(html).toContain("data-waterline");
+   expect(renderToStaticMarkup(<MapRouteLayer map={{...m,trasy:[{...m.trasy[0],t:"t-zahradni-cesta"}]}}/>)).not.toContain("t-zahradni-cesta.webp");
+  }
+  if(druh==="plot"){expect(html).toContain("listovi-");expect(html).toContain("data-hedge-side");expect(html).toContain("data-hedge-top");}
   expect(renderToStaticMarkup(<MapPreview map={m} staticLighting/>)).toContain(`data-route-kind="${druh}"`);
   expect(renderToStaticMarkup(<MapAnimatedScene map={m} view={{x:0,y:0,k:1}} lights={false}>{null}</MapAnimatedScene>)).toContain(`data-route-kind="${druh}"`);
  }
  expect(renderToStaticMarkup(<MapRouteLayer map={{}}/>)).not.toContain("data-route-kind");
+});
+it("lays long boards across the deck with stable varied tones, small gaps and occasional worn ends",()=>{
+ const r={...route,druh:"molo" as const,sirka:2,pts:[[1,1],[1,12]] as MapRoute["pts"]},g=routeGeometry(r);
+ expect(routeGeometry(structuredClone(r)).planks).toEqual(g.planks);
+ expect(g.planks.every(p=>p.angle===180&&p.width>p.height*4)).toBe(true);
+ expect(new Set(g.planks.map(p=>p.tone)).size).toBeGreaterThan(3);
+ expect(g.planks.some(p=>p.width<47)).toBe(true);
+ expect(routeGeometry({...r,pts:[]}).planks).toEqual([]);
+ expect(routeGeometry({...r,pts:[[1,1],[1,1]]}).planks).toEqual([]);
 });
 it("selects routes by stroke and marquee and moves control points without losing their metadata",()=>{
  const m=structuredClone(map);expect(pickAt(m,4,3,true)).toEqual({kind:"trasa",id:"r"});expect(pickInRect(m,[0,0],[8,8])).toContainEqual({kind:"trasa",id:"r"});

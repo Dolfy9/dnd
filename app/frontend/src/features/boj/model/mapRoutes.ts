@@ -60,11 +60,24 @@ function buildRoute(r:MapRoute) {
   const pts=smoothRoute(r.pts,r.hladke),seed=r.seed??[...r.id].reduce((n,c)=>Math.imul(n,31)+c.charCodeAt(0),0);
   const sprites=sampleRoute(pts,Math.max(.18,r.druh==="plot"?r.sirka*.55:r.druh==="molo"?2.2:2.6)).map((s,i)=>({...s,v:Math.floor(routeRandom(seed,i)*4),jitter:routeRandom(seed,i+6000)}));
   const walls:MapWall[]=r.druh==="plot"||r.druh==="zidka"?pts.slice(1).map((b,i)=>({id:`route:${r.id}:${i}`,a:pts[i],b,typ:r.druh==="plot"?"wall":"half"})):[];
-  let walked=0;
-  const deck=r.druh==="molo"?pts.slice(1).map((b,i)=>{const a=pts[i],length=Math.hypot(b[0]-a[0],b[1]-a[1]),distance=walked;walked+=length;return {a,length,distance,angle:Math.atan2(b[1]-a[1],b[0]-a[0])*180/Math.PI};}):[];
+  const samples=r.druh==="molo"?sampleRoute(pts,.28):[];
+  const planks=samples.slice(1).map((b,i)=>{
+    const a=samples[i],angle=Math.atan2(b.y-a.y,b.x-a.x),x=(a.x+b.x)/2,y=(a.y+b.y)/2;
+    const jitter=routeRandom(seed,i+12000),offset=(jitter-.5)*.045,broken=i%19===Math.floor(routeRandom(seed,0)*19)?.12:0;
+    const corners=[a,b].flatMap((p,j)=>[-1,1].map(side=>{
+      const t=p.angle*Math.PI/180,reach=r.sirka/2+(side===1?-broken:0)+side*offset;
+      return [p.x-Math.sin(t)*reach*side+Math.cos(angle)*(j?-.012:.012),p.y+Math.cos(t)*reach*side+Math.sin(angle)*(j?-.012:.012)] as RoutePoint;
+    }));
+    const local=corners.map(([px,py])=>[(py-y)*Math.cos(angle)-(px-x)*Math.sin(angle),-(px-x)*Math.cos(angle)-(py-y)*Math.sin(angle)]);
+    return {x,y,angle:angle*180/Math.PI+90,v:Math.floor(routeRandom(seed,i)*4),tone:routeRandom(seed,i+18000)*.18,
+      path:[corners[0],corners[1],corners[3],corners[2]].map(([x,y],j)=>`${j?"L":"M"}${x*24},${y*24}`).join(" ")+"Z",
+      left:Math.min(...local.map(p=>p[0]))*24,top:Math.min(...local.map(p=>p[1]))*24,
+      width:(Math.max(...local.map(p=>p[0]))-Math.min(...local.map(p=>p[0])))*24,
+      height:(Math.max(...local.map(p=>p[1]))-Math.min(...local.map(p=>p[1])))*24};
+  });
   let minX=Infinity,minY=Infinity,maxX=-Infinity,maxY=-Infinity;
   for(const [x,y] of pts){minX=Math.min(minX,x);minY=Math.min(minY,y);maxX=Math.max(maxX,x);maxY=Math.max(maxY,y);}
-  return {pts,sprites,walls,deck,bounds:{minX,minY,maxX,maxY},planks:r.druh==="molo"?sampleRoute(pts,.24):[],path:pts.map(([x,y],i)=>`${i?"L":"M"}${x*24},${y*24}`).join(" ")};
+  return {pts,sprites,walls,bounds:{minX,minY,maxX,maxY},planks,path:pts.map(([x,y],i)=>`${i?"L":"M"}${x*24},${y*24}`).join(" ")};
 }
 export function routeGeometry(r:MapRoute) {
   const entry=routeCache.get(r);
