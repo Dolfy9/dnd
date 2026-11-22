@@ -48,6 +48,7 @@ def player_view(state: dict) -> dict:
     sb = s.get("stav_boje")
     if not isinstance(sb, dict):
         return s
+    sb.pop("pendingResolutions", None)
     fog = sb.get("fog") or {}
     fog_on = bool(fog.get("on"))
     visible = fog.get("visible") if isinstance(fog.get("visible"), dict) else fog.get("revealed") or {}

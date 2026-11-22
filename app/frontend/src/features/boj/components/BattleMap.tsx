@@ -14,7 +14,9 @@ import { mapSize, tileAt, tileDef } from "../rules/grid";
 import type { MapV2, MapWall } from "../model/mapV2";
 import { MapElevationLayer, MapWallLayer, MapDrawingLayer, MapLightLayer, MapNoteLayer, MapGridLayer } from "./MapV2Layers";
 import { BASE_COLORS } from "../types";
-import { areaCells } from "../rules/areas";
+import { areaCells, tokensInArea } from "../rules/areas";
+import { targetStatus, targetingArea } from "./targetingModel";
+import { isInteractiveTarget } from "./shortcuts";
 import { dmgStyle } from "./visual";
 import { ZoneShape, ZonePatterns, LightingLayer, FogLayer } from "./MapLayers";
 import { MapAtmosphereLayer } from "./MapAtmoLayers";
@@ -108,6 +110,8 @@ export default function BattleMap(p: Props) {
   const [view, setView] = useState<{ x: number; y: number; k: number } | null>(null);
   const [hoverCell, setHoverCell] = useState<[number, number] | null>(null);
   const [hoverTok, setHoverTok] = useState<string | null>(null);
+  const [areaRotation, setAreaRotation] = useState(0);
+  useEffect(() => { setAreaRotation(0); }, [p.targeting?.atk, p.targeting?.srcId]);
   useEffect(() => { p.onHoverToken?.(hoverTok); }, [hoverTok, p.onHoverToken]);
   const [drag, setDrag] = useState<{
     id: string; to: [number, number] | null;
@@ -272,14 +276,20 @@ export default function BattleMap(p: Props) {
   const ringAtk = p.targeting ? p.targeting.atk : p.hoverAtk || null;
   const hoverEval = p.targeting && !p.targeting.area && hoverTok && srcTok && byId(S, hoverTok)
     ? evalUi(S, map, srcTok, byId(S, hoverTok)!, p.targeting.atk) : null;
-  const areaPrev = p.targeting?.area && (p.targeting.anchor || hoverCell)
-    ? areaCells({
-        shape: p.targeting.atk.area!.shape, size: p.targeting.atk.area!.size,
-        anchor: p.targeting.anchor || hoverCell!,
-        dir: p.targeting.anchor && hoverCell
-          ? Math.atan2(hoverCell[1] + 0.5 - (p.targeting.anchor[1] + 0.5), hoverCell[0] + 0.5 - (p.targeting.anchor[0] + 0.5)) * 180 / Math.PI
-          : 0,
-      }) : [];
+  const areaSpec = p.targeting?.area && hoverCell && srcTok ? targetingArea(srcTok, p.targeting.atk, hoverCell, areaRotation) : null;
+  const areaPrev = areaSpec ? areaCells(areaSpec) : [];
+  const caught = areaSpec ? tokensInArea(areaSpec, S.tok, srcTok) : [];
+  useEffect(() => { if (p.targeting) svgRef.current?.focus({ preventScroll: true }); }, [p.targeting]);
+  useEffect(() => {
+    if (!p.targeting || !p.dm) return;
+    const handle = (e: KeyboardEvent) => {
+      if (isInteractiveTarget(e.target)) return;
+      if (p.targeting?.area && (e.key.toLowerCase() === "q" || e.key.toLowerCase() === "e")) { e.preventDefault(); setAreaRotation(v => v + (e.key.toLowerCase() === "q" ? -15 : 15)); }
+      if (e.key === "Enter") { e.preventDefault(); if (areaSpec && hoverCell) p.onArea(hoverCell, areaSpec.dir); else if (hoverTok) p.onTarget(hoverTok); }
+    };
+    window.addEventListener("keydown", handle);
+    return () => window.removeEventListener("keydown", handle);
+  }, [p.targeting, p.dm, hoverCell, hoverTok, areaSpec?.dir]);
   const zonePrevCells = useMemo(() => {
     if (p.tool !== "zone" || !p.zonePlace?.preset.zone) return [];
     const zp = p.zonePlace.preset.zone;
@@ -341,7 +351,7 @@ export default function BattleMap(p: Props) {
     if (p.tool === "kresba") { setDrawLive({ pts: [[gx, gy]], stroke: p.drawColor || "#f59e0b" }); setDrag({ id: "", to: null, moved: true }); return; }
     if (p.targeting) {
       if (p.targeting.area) {
-        if (!p.targeting.anchor) { p.onArea([cx, cy]); return; }
+        if (srcTok) { const spec = targetingArea(srcTok, p.targeting.atk, [cx, cy], areaRotation); p.onArea([cx, cy], spec.dir); return; }
       } else if (t) { p.onTarget(t.id); return; }
       return;
     }
@@ -502,7 +512,7 @@ export default function BattleMap(p: Props) {
         {img && <image href={img} width={W*24} height={H*24} preserveAspectRatio="none" opacity={.92} />}
         <BattleTerrain S={S} map={map as MapV2} illustration={!!img} />
       </MapAnimatedScene>
-      <svg ref={svgRef} className={`boj-map ${cursorCls}`} onWheel={onWheel} onPointerDown={down} onPointerMove={move}
+      <svg ref={svgRef} tabIndex={-1} className={`boj-map ${cursorCls}`} onWheel={onWheel} onPointerDown={down} onPointerMove={move}
            onPointerUp={up} onDoubleClick={dbl} onPointerLeave={leave} onContextMenu={ctx} style={{ touchAction: "none" }}>
         <CoinDefs />
         <ZonePatterns />
@@ -581,12 +591,14 @@ export default function BattleMap(p: Props) {
               </Pill>
             </g>
           )}
-          {ringAtk && srcTok && srcTok.x != null && !(p.targeting?.area) && (() => {
+          {ringAtk && srcTok && srcTok.x != null && (() => {
             const rN = ringAtk.melee ? (ringAtk.reach || 5) : (ringAtk.range || 0);
             const rL = ringAtk.melee ? rN : (ringAtk.long || rN);
             const op = p.targeting ? 0.14 : 0.09;
             return (
               <g pointerEvents="none">
+                <rect x={(srcTok.x! - rN / 5) * PX} y={(srcTok.y! - rN / 5) * PX} width={(srcTok.s + rN / 5 * 2) * PX} height={(srcTok.s + rN / 5 * 2) * PX} fill="none" stroke="#6ee7b7" strokeWidth={2 * cs} />
+                {rL > rN && <rect x={(srcTok.x! - rL / 5) * PX} y={(srcTok.y! - rL / 5) * PX} width={(srcTok.s + rL / 5 * 2) * PX} height={(srcTok.s + rL / 5 * 2) * PX} fill="none" stroke="#fbbf24" strokeWidth={2 * cs} strokeDasharray={`${8 * cs} ${6 * cs}`} />}
                 {ringCells(srcTok, rL).map(([x, y]) => (
                   <rect key={`${x},${y}`} x={x * PX + 2} y={y * PX + 2} width={PX - 4} height={PX - 4} rx={4}
                         fill={rL > rN && Math.max(Math.abs(x + 0.5 - ((srcTok.x ?? 0) + srcTok.s / 2)), Math.abs(y + 0.5 - ((srcTok.y ?? 0) + srcTok.s / 2))) * 5 > rN ? "#f59e0b" : "#22c55e"} opacity={op} />
@@ -611,19 +623,21 @@ export default function BattleMap(p: Props) {
           {[...S.tok].sort((a2, b2) => Number(a2.dead) - Number(b2.dead)).map((t) => {
             if (t.x == null) return null;
             const isTarget = p.targeting && !p.targeting.area && t.id !== p.targeting.srcId && !t.dead;
-            const ev = isTarget && t.id === hoverTok ? hoverEval : (isTarget && !hoverTok ? evalUi(S, map, srcTok!, t, p.targeting!.atk) : null);
+            const ev = isTarget && srcTok ? targetStatus(S, map, srcTok, t, p.targeting!.atk) : null;
             return (
-              <g key={t.id} className={isTarget ? (ev?.canTarget ? "boj-targetable" : "boj-untargetable") : ""}
+              <g key={t.id} className={isTarget ? (ev?.highlighted ? "boj-targetable" : "boj-untargetable") : caught.some(c => c.id === t.id) ? "boj-area-caught" : ""}
                 onDragOver={(e) => { if (e.dataTransfer.types.includes("text/preset")) { e.preventDefault(); e.dataTransfer.dropEffect = "copy"; } }}
                 onDrop={(e) => { const pid = e.dataTransfer.getData("text/preset"); if (pid) { e.preventDefault(); e.stopPropagation(); p.onPresetDrop?.(t.id, pid); } }}>
+                {ev && <title>{ev.reason || (ev.longRange ? "Dlouhý dostřel · nevýhoda" : "Legální cíl")} · {ev.dist} ft · {ev.coverText}</title>}
                 <TokenCoin t={t} px={PX * 0.94} step={PX} active={S.ord?.[S.turn] === t.id}
                            selected={p.sel === t.id || !!p.selSet?.has(t.id)}
                            hovered={hoverTok === t.id} dm={p.dm} lab={cs} names={p.names || "hover"} plateClamp={plateClamp} />
                 {isTarget && ev && (
-                  <Pill x={(t.x + t.s / 2) * PX} y={(t.y ?? 0) * PX - 8} w={104}>
+                  <Pill x={(t.x + t.s / 2) * PX} y={(t.y ?? 0) * PX - 8} w={148} h={30}>
                     <text textAnchor="middle" y={-4} fontSize={11.5} fill={ev.canTarget ? "#4ade80" : "#f87171"} fontWeight={800}>
-                      {ev.canTarget ? `${Math.round(ev.hitChance * 100)}% vs AC ${ev.targetAC}` : ev.beyondRange ? "mimo dostřel" : ev.cover === 9 ? "plný kryt" : "nelze"}
+                      {ev.reason ? ev.beyondRange ? "mimo dostřel" : "bez výhledu" : `${Math.round(ev.hitChance * 100)}% vs AC ${ev.targetAC}${ev.longRange ? " · dlouhý" : ""}`}
                     </text>
+                    <text textAnchor="middle" y={9} fontSize={10} fill="#cbd5e1">{ev.coverText} · {ev.dist} ft</text>
                   </Pill>
                 )}
               </g>
@@ -667,6 +681,11 @@ export default function BattleMap(p: Props) {
           {p.onCancelMode && <button onClick={p.onCancelMode}><X size={13} /> Zrušit</button>}
         </div>
       )}
+      {p.targeting && <aside className="combat-targeting-help" aria-label="Zacílení">
+        <b>{p.targeting.atk.nazev}</b><span>{p.targeting.atk.melee ? p.targeting.atk.reach || 5 : p.targeting.atk.range || 0} ft{p.targeting.atk.long ? ` / ${p.targeting.atk.long} ft · přerušovaně` : ""}</span>
+        <small>Klik / Enter: potvrdit · Esc: zrušit{p.targeting.area ? " · Q/E: otočit o 15°" : ""}</small>
+        {p.targeting.area && <div aria-live="polite"><b>V oblasti ({caught.length})</b>{caught.map(t => <span key={t.id}>{t.nazev} · {srcTok && targetStatus(S, map, srcTok, t, p.targeting!.atk).coverText}</span>)}{!caught.length && <span>Nikdo</span>}</div>}
+      </aside>}
       {drag?.id && drag.moved && (
         <div className="boj-draghint">Alt = teleport · Shift = nucený přesun · W / pravé tlačítko = bod trasy · Esc = zrušit</div>
       )}

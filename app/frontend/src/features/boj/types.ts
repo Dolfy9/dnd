@@ -1,5 +1,6 @@
 /* Typy bojového modulu (D&D 5e 2024). Čistá data — žádné React/DOM závislosti. */
 import type { MapLightV2 } from "./model/mapV2";
+import type { PendingDecision } from "./rules/pending";
 
 export type Ability = "STR" | "DEX" | "CON" | "INT" | "WIS" | "CHA";
 export type Side = "druzina" | "nepratele" | "neutral";
@@ -308,6 +309,7 @@ export interface BattleSettings {
 export type MoveMode = "pravidla" | "dash" | "prekrocit" | "nuceny" | "teleport";
 
 export interface StavBoje {
+  pendingResolutions?: PendingDecision[];
   map?: string;
   tok: Token[];
   ord: string[];

@@ -107,6 +107,14 @@ def test_player_view_strips_hidden_and_pj():
     assert "dm_notes" not in s
 
 
+def test_player_view_strips_pending_decisions_without_mutating_gm_state():
+    state = _mk_state()
+    state["stav_boje"]["pendingResolutions"] = [{"kind": "concentration", "label": "Secret caster DC 18"}]
+    public = battles_mod.player_view(state)
+    assert "pendingResolutions" not in public["stav_boje"]
+    assert state["stav_boje"]["pendingResolutions"][0]["label"] == "Secret caster DC 18"
+
+
 def test_player_view_buckets():
     def bucket(hp, mx, dead=False):
         s = battles_mod.player_view({"stav_boje": {"tok": [

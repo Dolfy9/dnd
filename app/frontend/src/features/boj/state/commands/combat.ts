@@ -25,9 +25,10 @@ import { grappleResolve, escapeResolve, hideResolve, searchResolve, standUpCost,
 import { hasGWM, hasSavage, savagePick, metaCost, spendSP, METAMAGIC, elementalAdeptFor } from "../../rules/actions/features";
 import { EFFECT_PRESETS } from "../../rules/effects";
 import { addEffect } from "./effects";
+import { interrupt, spellInterrupt, type ResolutionHooks } from "../../rules/resolutionTrace";
 
 /* ---------- útoky ---------- */
-export interface AtkArgs {
+export interface AtkArgs extends ResolutionHooks {
   atkId: string; tgtId: string; atk: AttackDef;
   overrideAdv?: number | null; manualD20?: number; manualDmg?: number;
   ax?: number; ay?: number; slot?: number; pact?: boolean;
@@ -53,6 +54,8 @@ export function cmdAttack(S: StavBoje, a: AtkArgs, ctx: CmdCtx): { ok: boolean; 
   const legendaryError = a.atk.legendaryCost != null && !isFree(S) ? legendaryActionError(S, A, a.atk.legendaryCost) : undefined;
   if (legendaryError) return { ok: false, reason: legendaryError };
   const st = settingsOf(S).automatizace;
+  const rng = a.rng || defaultRng;
+  if (!(a.meta || []).includes("subtle") && spellInterrupt(S, A.id, a.atk, a)) return { ok: true };
   // Metamagic (Sorcerer): SP náklad + efekty
   let atk: AttackDef = a.atk;
   if (a.meta?.length) {
@@ -97,13 +100,14 @@ export function cmdAttack(S: StavBoje, a: AtkArgs, ctx: CmdCtx): { ok: boolean; 
     const um = a.atk.upcast?.dice?.match(/(\d+)d(\d+)/);
     const dice = up && um ? `${a.atk.heal.dice.replace(/\d+d/, `${Number(a.atk.heal.dice.split("d")[0]) + up * Number(um[1])}d`)}` : a.atk.heal.dice;
     const smod = Math.max(0, ((A.casting?.atk ?? 8) - (A.pb ?? 2)));
-    const rr = rollDice(`${dice}${a.atk.heal.plusMod ? `+${smod}` : `+${a.atk.heal.flat}`}`, { rng: defaultRng });
-    const hr2 = applyHealing(B, rr.total);
+    const rr = rollDice(`${dice}${a.atk.heal.plusMod ? `+${smod}` : `+${a.atk.heal.flat}`}`, { rng });
+    const hr2 = applyHealing(B, a.manualDmg ?? rr.total);
     const healed = hr2.healed ?? rr.total;
     if (!isFree(S)) { consumeSlot(A, a.atk, a.slot, a.pact); if (a.atk.conc) { dropConc(S, A.id); A.conc = a.atk.kouzlo || a.atk.nazev; } }
     spendAttackEconomy(S, A, a.atk);
     fx(S, "heal", { to: [B.x ?? 0, B.y ?? 0], text: `+${healed}`, tokenId: B.id });
     log(S, "heal", `${A.nazev}: ${a.atk.nazev} → ${B.nazev} +${healed} HP (${rr.parts.join("+") || dice})`, A.nazev);
+    a.onResult?.({ tokenId: B.id, outcome: "heal", breakdown: a.manualDmg != null ? `Ručně: ${a.manualDmg}` : `${rr.parts.join("+")} = ${rr.total}`, applied: healed, parts: [] });
     return { ok: true };
   }
   // utility kouzlo: jen cast — slot, ekonomika, conc, log
@@ -127,11 +131,13 @@ export function cmdAttack(S: StavBoje, a: AtkArgs, ctx: CmdCtx): { ok: boolean; 
     if (!check(S, st.ekonomika, a.override, `${A.nazev}: druhé kouzlo se slotem tento tah (⚙ DM)`))
       return { ok: false, reason: "za tah už bylo sesláno kouzlo se slotem" };
   }
-  const actx: AttackCtx = { attacker: A, target: B, atk: a.atk, map: ctx.map, tokens: S.tok, ax: a.ax, ay: a.ay, overrideAdv: a.overrideAdv, state: S, teren: S.teren };
+  const pre = interrupt(S, a, { kind: "hit", attacker: A, target: B, atk: a.atk }, true);
+  const actx: AttackCtx = { attacker: A, target: B, atk: a.atk, map: ctx.map, tokens: S.tok, ax: a.ax, ay: a.ay, overrideAdv: pre.disadvantage ? -1 : a.overrideAdv, state: S, teren: S.teren };
   const ev = evaluateAttack(actx);
   const force = isFree(S) || a.override && st.dosah === "hlidat" || st.dosah === "varovat";
-  const r = resolveAttack(actx, { manualD20: a.manualD20, force: force && !ev.canTarget });
+  const r = resolveAttack(actx, { rng, manualD20: a.manualD20, force: force && !ev.canTarget });
   if (!r) return { ok: false, reason: ev.beyondRange ? "mimo dostřel" : ev.cover === 9 ? "plný kryt" : "nelze zacílit" };
+  if (r.hit && interrupt(S, a, { kind: "hit", attacker: A, target: B, atk: a.atk, hitTotal: r.total }).miss) r.hit = false;
   if (a.atk.legendaryCost != null) spendAttackEconomy(S, A, a.atk);
   if (!ev.canTarget) log(S, "system", `⚙ DM: útok ${a.atk.nazev} přes ${ev.beyondRange ? "dostřel" : "plný kryt"}`, A.nazev);
   const n = a.atk.n || 1;
@@ -146,7 +152,7 @@ export function cmdAttack(S: StavBoje, a: AtkArgs, ctx: CmdCtx): { ok: boolean; 
       && hostile(h, B) && gapFt(h, B) <= 5);
     const eligible = ev.net >= 0 && (ev.net > 0 || allyNear);
     if (!A.spent?.[key] && eligible) {
-      const sr = rollDice(am.sneakDmg.dice);
+      const sr = rollDice(am.sneakDmg.dice, { rng });
       parts.push({ amount: sr.total, type: a.atk.typ || "Piercing" });
       A.spent = A.spent || {}; A.spent[key] = true;
       log(S, "attack", `Sneak Attack +${sr.total} (${am.sneakDmg.dice})`, A.nazev);
@@ -154,14 +160,14 @@ export function cmdAttack(S: StavBoje, a: AtkArgs, ctx: CmdCtx): { ok: boolean; 
   }
   // Uncanny Dodge (reaction): viditelny zasah za pulku — ne crit
   const bmT = sumMods(B);
-  if (r.hit && !r.crit && bmT.uncanny && B.react !== false && !isIncap(B)) {
+  if (r.hit && !r.crit && bmT.uncanny && B.react !== false && !isIncap(B) && st.reakce === "vypnuto") {
     for (const pt of parts) pt.amount = Math.floor(pt.amount / 2);
     useEco(S, B, "r");
     log(S, "effect", `${B.nazev}: Uncanny Dodge — damage za pulku`, B.nazev);
   }
   // Empowered metamagic: přehoď až CHA mod damage kostek (aproximace plný přehod, vezmi lepší)
   if (r.hit && a.manualDmg == null && a.meta?.includes("empowered") && a.atk.dmg) {
-    const again = rollDice(a.atk.dmg, { crit: r.crit }).total;
+    const again = rollDice(a.atk.dmg, { crit: r.crit, rng }).total;
     const rolled = parts.reduce((x, p) => x + p.amount, 0);
     if (again > rolled) { parts[0].amount += again - rolled; log(S, "damage", `${A.nazev}: Empowered — přehozeno ${rolled} → ${again}`, A.nazev); }
   }
@@ -169,12 +175,17 @@ export function cmdAttack(S: StavBoje, a: AtkArgs, ctx: CmdCtx): { ok: boolean; 
   const ecoS = S.eco[A.id];
   if (r.hit && a.manualDmg == null && ecoS && hasSavage(A) && !a.atk.kouzlo && a.atk.dmg && !(ecoS as any).savage) {
     (ecoS as any).savage = 1;
-    const again = rollDice(a.atk.dmg).total;
+    const again = rollDice(a.atk.dmg, { rng }).total;
     const rolled = parts.reduce((x, p) => x + p.amount, 0);
     if (again > rolled) { parts[0].amount += again - rolled; log(S, "damage", `${A.nazev}: Savage Attacker — přehozeno ${rolled} → ${again}`, A.nazev); }
   }
   let dmgRes: ReturnType<typeof applyDamage> | null = null;
-  if (r.hit) dmgRes = applyBattleDamage(S, B, parts, { crit: r.crit, ignoreResist: parts.filter((p) => elementalAdeptFor(A, p.type)).map((p) => p.type) });
+  if (r.hit) {
+    const response = interrupt(S, a, { kind: "damaged", attacker: A, target: B, atk: a.atk });
+    let reduction = Math.max(0, -response.dmgFlat);
+    for (const part of parts) { part.amount = Math.floor(part.amount * response.dmgMul); const sub = Math.min(part.amount, reduction); part.amount -= sub; reduction -= sub; }
+    dmgRes = applyBattleDamage(S, B, parts, { crit: r.crit, ignoreResist: parts.filter((p) => elementalAdeptFor(A, p.type)).map((p) => p.type) }, rng);
+  }
   const txt = `${A.nazev} → ${B.nazev}: ${a.atk.nazev}${n > 1 ? ` ×${n}` : ""} ` +
     `d20(${r.d20s.join("/")})${r.bonus >= 0 ? "+" : ""}${r.bonus} = ${r.total} vs ${ev.acBreak}` +
     (r.hit ? ` → ${r.crit ? "CRIT " : ""}${dmgRes ? dmgRes.applied : 0} ${a.atk.typ || ""}` : " — mina");
@@ -183,7 +194,6 @@ export function cmdAttack(S: StavBoje, a: AtkArgs, ctx: CmdCtx): { ok: boolean; 
   const from: [number, number] = [A.x ?? 0, A.y ?? 0], to: [number, number] = [B.x ?? 0, B.y ?? 0];
   if (r.hit) {
     fx(S, a.atk.kouzlo ? "bolt" : a.atk.melee ? "slash" : "projectile", { from, to, dmgType: a.atk.typ, tokenId: B.id });
-    fx(S, "dmg", { to, text: String(dmgRes?.applied ?? 0), dmgType: a.atk.typ, tokenId: B.id });
     if (r.crit) fx(S, "crit", { to, text: "CRIT!", tokenId: B.id });
     for (const p of dmgRes?.parts || [])
       if (p.mod) fx(S, "dmg", { to, text: p.mod.split(" ")[0], dmgType: p.mod.startsWith("Immune") ? "Immune" : "Resist", tokenId: B.id });
@@ -199,13 +209,15 @@ export function cmdAttack(S: StavBoje, a: AtkArgs, ctx: CmdCtx): { ok: boolean; 
   }
   // GWM: +PB damage jednou za tah (Heavy melee — zjednodušeně melee weapon)
   const e2 = S.eco[A.id];
+  const extraDamage: ReturnType<typeof applyDamage>[] = [];
   if (r.hit && e2 && hasGWM(A) && a.atk.melee && !a.atk.kouzlo && !(e2 as any).gwm) {
     (e2 as any).gwm = 1;
     const bonus = A.pb ?? 2;
-    applyBattleDamage(S, B, [{ amount: bonus, type: a.atk.typ || "Bludgeoning" }]);
+    extraDamage.push(applyBattleDamage(S, B, [{ amount: bonus, type: a.atk.typ || "Bludgeoning" }], {}, rng));
     log(S, "damage", `${A.nazev}: Great Weapon Master +${bonus} dmg`, A.nazev);
   }
-  applyMastery(S, A, B, a.atk, r.hit);
+  const mastery = applyMastery(S, A, B, a.atk, r.hit, rng);
+  if (mastery) extraDamage.push(mastery);
   // preset-klasifikované kouzlo: aplikuj preset na cíl (efekt + conc + zóna)
   if (a.atk.kouzlo && !a.atk.utility) {
     const p = EFFECT_PRESETS.find((x) => x.nazev.toLowerCase() === (a.atk.kouzlo || "").toLowerCase());
@@ -241,6 +253,9 @@ export function cmdAttack(S: StavBoje, a: AtkArgs, ctx: CmdCtx): { ok: boolean; 
     }
   }
   else if (a.atk.legendaryCost == null) spendAttackEconomy(S, A, a.atk);
+  const applied = (dmgRes?.applied || 0) + extraDamage.reduce((sum, damage) => sum + damage.applied, 0);
+  a.onResult?.({ tokenId: B.id, outcome: r.hit ? r.crit ? "crit" : "hit" : "miss", breakdown: `d20(${r.d20s.join("/")}) ${r.bonus >= 0 ? "+" : ""}${r.bonus} = ${r.total} vs ${ev.acBreak}${r.hit ? ` · damage ${a.manualDmg != null ? `ručně ${a.manualDmg}` : r.dmgRolls.join("+")}` : ""}`, parts: [...(dmgRes?.parts || []), ...extraDamage.flatMap(damage => damage.parts)], applied });
+  if (r.hit || applied) fx(S, "dmg", { to, text: String(applied), dmgType: a.atk.typ, tokenId: B.id });
   return { ok: true };
 }
 
@@ -274,12 +289,12 @@ function consumeSlot(t: Token, atk: AttackDef, slot?: number, pact?: boolean) {
   if (t.pact && t.pact.lvl >= use && t.pact.used < t.pact.max) t.pact.used += 1;
 }
 
-function applyMastery(S: StavBoje, A: Token, B: Token, atk: AttackDef, hit: boolean) {
+function applyMastery(S: StavBoje, A: Token, B: Token, atk: AttackDef, hit: boolean, rng = defaultRng) {
   switch (atk.mastery) {
     case "graze":
       if (!hit) {
         const m = Math.max(0, A.mods?.STR ?? 0);
-        if (m) { const r = applyBattleDamage(S, B, [{ amount: m, type: atk.typ || "Slashing" }]); log(S, "attack", `Graze: ${r.applied} ${atk.typ} (${B.nazev})`, A.nazev); }
+        if (m) { const r = applyBattleDamage(S, B, [{ amount: m, type: atk.typ || "Slashing" }], {}, rng); log(S, "attack", `Graze: ${r.applied} ${atk.typ} (${B.nazev})`, A.nazev); return r; }
       }
       break;
     case "push": if (hit) log(S, "cond", `${B.nazev}: odtlačen o 10 ft (Push)`, A.nazev); break;
@@ -292,10 +307,12 @@ function applyMastery(S: StavBoje, A: Token, B: Token, atk: AttackDef, hit: bool
 }
 
 /* ---------- oblasti / záchrany ---------- */
-export interface AreaArgs { srcId: string; spec: AreaSpec; atk: AttackDef; manualDmg?: number; slot?: number; pact?: boolean; override?: boolean; meta?: string[] }
+export interface AreaArgs extends ResolutionHooks { srcId: string; spec: AreaSpec; atk: AttackDef; targetIds?: string[]; manualDmg?: number; manualSaves?: Record<string, number>; targetDamage?: Record<string, number>; slot?: number; pact?: boolean; override?: boolean; meta?: string[] }
 export function cmdArea(S: StavBoje, a: AreaArgs, ctx: CmdCtx): { ok: boolean; targets: number; reason?: string } {
   const A = byId(S, a.srcId);
   if (!A) return { ok: false, targets: 0 };
+  const rng = a.rng || defaultRng;
+  if (!(a.meta || []).includes("subtle") && spellInterrupt(S, A.id, a.atk, a)) return { ok: true, targets: 0 };
   const legendaryError = a.atk.legendaryCost != null && !isFree(S) ? legendaryActionError(S, A, a.atk.legendaryCost) : undefined;
   if (legendaryError) return { ok: false, targets: 0, reason: legendaryError };
   if (a.meta?.length) {
@@ -309,7 +326,7 @@ export function cmdArea(S: StavBoje, a: AreaArgs, ctx: CmdCtx): { ok: boolean; t
     if (!check(S, settingsOf(S).automatizace.sloty, a.override, `${A.nazev}: ${a.atk.nazev} bez volného slotu (⚙ DM)`))
       return { ok: false, targets: 0, reason: slotErr };
   }
-  const targets = tokensInArea(a.spec, S.tok, A);
+  const targets = a.targetIds ? S.tok.filter(t => a.targetIds!.includes(t.id) && !t.dead) : tokensInArea(a.spec, S.tok, A);
   if (a.atk.legendaryCost != null) spendAttackEconomy(S, A, a.atk);
   let dmgBase = a.manualDmg;
   if (dmgBase == null && a.atk.dmg) {
@@ -320,17 +337,21 @@ export function cmdArea(S: StavBoje, a: AreaArgs, ctx: CmdCtx): { ok: boolean; t
       const m = up.dice.match(/^(\d*)d(\d+)/);
       if (m) dice += `+${(a.slot - a.atk.lvl) * (parseInt(m[1] || "1", 10))}d${m[2]}`;
     }
-    dmgBase = rollDice(dice, { treat1as2: a.atk.typ ? elementalAdeptFor(A, a.atk.typ) : false }).total;
+    dmgBase = rollDice(dice, { rng, treat1as2: a.atk.typ ? elementalAdeptFor(A, a.atk.typ) : false }).total;
   }
   fx(S, "aoe", { area: { shape: a.spec.shape, size: a.spec.size, anchor: a.spec.anchor, dir: a.spec.dir }, dmgType: a.atk.typ, text: a.atk.nazev });
   for (const T of targets) {
     let dmg = dmgBase ?? 0;
+    let breakdown = "Bez záchrany";
+    let damageParts: ReturnType<typeof applyDamage>["parts"] = [];
+    let applied = 0;
     let applies = true;
     if (a.atk.save && a.atk.dc) {
       const cov = ctx.map ? coverOf(A, T, ctx.map, S.tok, undefined, undefined, S.teren, (S as any).dvere) : 0;
       if ((a.meta || []).includes("careful") && T.side === A.side) { applies = false; log(S, "system", `${T.nazev}: Careful — automaticky uspěl`, A.nazev); }
       const firstT = targets.indexOf(T) === 0;
-      const sr = resolveSave(T, a.atk.save, a.atk.dc, { cover: cov, forceDis: !!((a.meta || []).includes("heightened") && firstT) });
+      const sr = resolveSave(T, a.atk.save, a.atk.dc, { rng, manualRoll: a.manualSaves?.[T.id], cover: cov, forceDis: !!((a.meta || []).includes("heightened") && firstT) });
+      breakdown = `${a.atk.save} d20(${sr.rolls.join("/")}) ${sr.bonus >= 0 ? "+" : ""}${sr.bonus} = ${sr.total} vs DC ${a.atk.dc} · ${sr.success ? "úspěch" : "neúspěch"}`;
       if (!applies) { dmg = 0; }
       applies = applies && !sr.success;
       const tMods = sumMods(T);
@@ -341,11 +362,14 @@ export function cmdArea(S: StavBoje, a: AreaArgs, ctx: CmdCtx): { ok: boolean; t
       else if (sr.success) dmg = 0;
       log(S, "save", `${T.nazev}: ${a.atk.save} save ${sr.rolled}${sr.bonus >= 0 ? "+" : ""}${sr.bonus} vs DC ${a.atk.dc} → ${sr.success ? "úspěch" : "neúspěch"}${sr.legendaryUsed ? " (Legendary Resistance)" : ""}`, T.nazev, `d20:${sr.rolls.join("/")}`);
     }
+    dmg = a.targetDamage?.[T.id] ?? dmg;
     if (dmg > 0 || (!a.atk.save && dmg > 0)) {
-      const r = applyBattleDamage(S, T, [{ amount: dmg, type: a.atk.typ || "Force" }]);
+      const r = applyBattleDamage(S, T, [{ amount: dmg, type: a.atk.typ || "Force" }], {}, rng);
+      damageParts = r.parts; applied = r.applied;
       fx(S, "dmg", { to: [T.x ?? 0, T.y ?? 0], text: String(r.applied), dmgType: a.atk.typ, tokenId: T.id });
       for (const m of r.messages) log(S, "system", m, T.nazev);
     }
+    a.onResult?.({ tokenId: T.id, outcome: "save", breakdown, parts: damageParts, applied });
     if (applies && a.atk.condOnHit) for (const c of a.atk.condOnHit)
       if (!hasCond(T, c.n)) { T.cond.push({ n: c.n, src: A.id }); log(S, "cond", `${T.nazev}: ${c.n}`, A.nazev); }
   }

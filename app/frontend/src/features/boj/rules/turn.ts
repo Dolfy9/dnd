@@ -1,13 +1,14 @@
 import { alertInit } from "./actions/features";
 /* Kolo/tah: iniciativa, posun tahu, zpracování začátku/konce tahu, action economy,
    recharge, legendary actions, death-save prompt. Stav = StavBoje (legacy-kompatibilní). */
-import type { StavBoje, Token, LogEntry, EcoState } from "../types";
+import type { StavBoje, Token, LogEntry, EcoState, ActiveEffect } from "../types";
 import { uid } from "../types";
 import { hasCond, isIncap, speedOf, flySpeedOf } from "./conditions";
 import { sumMods, tickEffects, tickDuration, dropConcentration } from "./effects";
 import { d20, die, type Rng, defaultRng } from "./dice";
 import { settingsOf } from "./settings";
 import { deathSave } from "./damage";
+import { enqueueDecision } from "./pending";
 
 export const byId = (S: StavBoje, id?: string | null) => S.tok.find((t) => t.id === id);
 export const cur = (S: StavBoje) => byId(S, S.ord?.[S.turn ?? -1]);
@@ -99,6 +100,16 @@ export function endOfTurnProcess(S: StavBoje, t: Token, rng: Rng = defaultRng): 
   const out: string[] = [];
   for (const e of [...(t.effects || [])]) {
     if (e.saveEnd && e.saveEnd.dc) {
+      enqueueDecision(S, { kind: "saveEnd", tokenId: t.id, effectId: e.id, label: `${t.nazev} · ${e.nazev} · ${e.saveEnd.ab} DC ${e.saveEnd.dc}`, key: `saveEnd:${t.id}:${e.id}:${S.round}:${S.turn}` });
+    }
+  }
+  out.push(...tickTurnEffects(S, t, "end"));
+  return out;
+}
+
+export function resolveEndSave(S: StavBoje, t: Token, e: ActiveEffect, rng: Rng = defaultRng): string[] {
+  const out: string[] = [];
+    if (e.saveEnd && e.saveEnd.dc) {
       const bonus = t.saves?.[e.saveEnd.ab] ?? t.mods?.[e.saveEnd.ab] ?? 0;
       const r = d20(0, rng);
       const ok = r.r + bonus >= e.saveEnd.dc;
@@ -114,8 +125,6 @@ export function endOfTurnProcess(S: StavBoje, t: Token, rng: Rng = defaultRng): 
         t.effects = t.effects.filter((x) => x !== e);
       } else out.push(`${t.nazev}: ${e.saveEnd.ab} save ${r.r}${bonus >= 0 ? "+" : ""}${bonus} < ${e.saveEnd.dc} — ${e.nazev} trvá`);
     }
-  }
-  out.push(...tickTurnEffects(S, t, "end"));
   return out;
 }
 

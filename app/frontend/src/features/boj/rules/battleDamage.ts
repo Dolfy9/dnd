@@ -7,12 +7,15 @@ import { isFree } from "./free";
 import { resolveSave } from "./saves";
 import { settingsOf } from "./settings";
 import { log } from "./turn";
+import { enqueueDecision } from "./pending";
 
 export function applyBattleDamage(S: StavBoje, t: Token, parts: DmgPart[], opts: Parameters<typeof applyDamage>[2] = {}, rng: Rng = defaultRng) {
   const result = applyDamage(t, parts, opts);
   if (!t.conc || result.applied <= 0) return result;
   if (isFree(S) || settingsOf(S).automatizace.concentration !== "auto") {
     if (result.concDc) log(S, "system", `${t.nazev}: Concentration DC ${result.concDc}`, "PJ", `dc:${result.concDc}`);
+    if (!isFree(S) && settingsOf(S).automatizace.concentration === "zeptat")
+      enqueueDecision(S, { kind: "concentration", tokenId: t.id, dc: result.concDc || 10, spell: String(t.conc), label: `${t.nazev} · Concentration DC ${result.concDc || 10}` });
     return result;
   }
   if (!t.dead && !isIncap(t) && result.concDc) {

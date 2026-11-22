@@ -20,6 +20,21 @@ export function useBattle(bid: string | undefined) {
   const redoRef = useRef<StavBoje[]>([]);
   const saveT = useRef<number | null>(null);
   const loadRef = useRef<() => Promise<void>>();
+  const revision = useRef(0);
+  const savedRevision = useRef(0);
+  const remoteVersion = useRef(0);
+  const saveBusy = useRef(false);
+  const generation = useRef(0);
+
+  useEffect(() => {
+    generation.current++;
+    revision.current = savedRevision.current = remoteVersion.current = verRef.current = 0;
+    saveBusy.current = false;
+    SRef.current = null;
+    undoRef.current = []; redoRef.current = [];
+    if (saveT.current) window.clearTimeout(saveT.current);
+    setSaving(false);
+  }, [bid]);
 
   const applyRemote = useCallback((d: any) => {
     const sb = migrate(d?.state?.stav_boje ?? d?.stav_boje ?? d ?? {});
@@ -32,13 +47,19 @@ export function useBattle(bid: string | undefined) {
     setSeenFx((sb.fx || []).map((f: any) => f.id));
   }, []);
 
-  const load = useCallback(async () => {
+  const load = useCallback(async (force = false) => {
     if (!bid) return;
+    const startedAt = revision.current;
+    const epoch = generation.current;
     try {
       const d = await get<any>(`/api/battles/${bid}`);
+      if (epoch !== generation.current) return;
+      if (!force && (startedAt !== revision.current || revision.current !== savedRevision.current || saveBusy.current || d.version < verRef.current)) return;
+      savedRevision.current = revision.current;
       applyRemote(d);
       setErr(null);
     } catch (e: any) {
+      if (epoch !== generation.current) return;
       setErr(e?.message || "Načtení boje selhalo");
     }
   }, [bid, applyRemote]);
@@ -53,35 +74,46 @@ export function useBattle(bid: string | undefined) {
     ws.onmessage = (e) => {
       try {
         const m = JSON.parse(e.data);
-        if (m.channel === `battle:${bid}` && m.event === "state" && m.data?.version !== verRef.current) loadRef.current?.();
+        if (m.channel === `battle:${bid}` && m.event === "state" && m.data?.version > verRef.current) {
+          remoteVersion.current = Math.max(remoteVersion.current, m.data.version);
+          if (!saveBusy.current && revision.current === savedRevision.current) loadRef.current?.();
+        }
       } catch { /* ignore */ }
     };
     return () => ws.close();
   }, [bid]);
 
-  const saveBusy = useRef(false);
-  const saveDirty = useRef(false);
   const save = useCallback(async () => {
     if (!bid || !SRef.current) return;
-    if (saveBusy.current) { saveDirty.current = true; return; } // serializace proti 409
+    if (saveBusy.current) return;
     saveBusy.current = true;
+    const savingRevision = revision.current;
+    const epoch = generation.current;
+    let acknowledged = false;
     setSaving(true);
     try {
       const stav_boje = SRef.current;
       const r = await put<any>(`/api/battles/${bid}/state`, { state: { stav_boje }, version: verRef.current });
+      if (epoch !== generation.current) return;
       verRef.current = r.version ?? verRef.current + 1;
+      savedRevision.current = savingRevision;
+      acknowledged = true;
       setVersion(verRef.current);
     } catch (e: any) {
+      if (epoch !== generation.current) return;
       if (e?.status === 409) {
         toast("Souběžná úprava — obnovuji stav", "err");
-        await loadRef.current?.();
+        await load(true);
       } else toast(`Uložení selhalo: ${e?.message || e}`, "err");
     } finally {
-      saveBusy.current = false;
-      setSaving(false);
-      if (saveDirty.current) { saveDirty.current = false; queueSave(); }
+      if (epoch === generation.current) {
+        saveBusy.current = false;
+        setSaving(false);
+        if (revision.current !== savedRevision.current && (acknowledged || revision.current !== savingRevision)) queueSave();
+        else if (remoteVersion.current > verRef.current) loadRef.current?.();
+      }
     }
-  }, [bid]);
+  }, [bid, load]);
 
   const queueSave = useCallback(() => {
     if (saveT.current) window.clearTimeout(saveT.current);
@@ -91,17 +123,17 @@ export function useBattle(bid: string | undefined) {
 
   /** dispatch(mutator): mutace kopie stavu + undo snapshot + queue save. */
   const dispatch = useCallback((fn: (S: StavBoje) => void) => {
-    setS((prev) => {
-      if (!prev) return prev;
-      const next = structuredClone(prev) as StavBoje;
-      undoRef.current.push(prev);
-      if (undoRef.current.length > 100) undoRef.current.shift();
-      redoRef.current = [];
-      fn(next);
-      SRef.current = next;
-      queueSave();
-      return next;
-    });
+    const prev = SRef.current;
+    if (!prev) return;
+    const next = structuredClone(prev) as StavBoje;
+    undoRef.current.push(prev);
+    if (undoRef.current.length > 100) undoRef.current.shift();
+    redoRef.current = [];
+    fn(next);
+    SRef.current = next;
+    revision.current++;
+    setS(next);
+    queueSave();
   }, [queueSave]);
 
   const undo = useCallback(() => {
@@ -109,6 +141,7 @@ export function useBattle(bid: string | undefined) {
     if (!prev || !SRef.current) return;
     redoRef.current.push(SRef.current);
     SRef.current = prev;
+    revision.current++;
     setS(prev);
     queueSave();
   }, [queueSave]);
@@ -118,6 +151,7 @@ export function useBattle(bid: string | undefined) {
     if (!next || !SRef.current) return;
     undoRef.current.push(SRef.current);
     SRef.current = next;
+    revision.current++;
     setS(next);
     queueSave();
   }, [queueSave]);

@@ -8,6 +8,7 @@ import { settingsOf } from "../rules/settings";
 import { byId } from "../rules/turn";
 import * as C from "../state/commands";
 import OverridePrompt from "./OverridePrompt";
+import { queueOpportunityMove } from "../state/commands/pending";
 
 export interface DropReq {
   t: Token;
@@ -35,6 +36,7 @@ export default function MovePopover({ S, map, req, cmd, onClose }: {
         s.nastaveni = s.nastaveni || undefined;
         s.nastaveni = { ...settingsOf(s), pohyb: { ...settingsOf(s).pohyb, limit: "volne" as const, vychoziPrekroceni: mode } };
       }
+      if (plan.oaIds.length && set.pohyb.oa === "zeptat" && mode === "pravidla" && !useDash) { queueOpportunityMove(s, byId(s, t.id)!, plan, target); return; }
       C.moveToken(s, t.id, target[0], target[1], { ft: useDash || mode === "pravidla" || mode === "prekrocit" ? plan.ft : 0, oas: plan.oas, mode: useDash ? "dash" : mode, override: true });
     });
     onClose();

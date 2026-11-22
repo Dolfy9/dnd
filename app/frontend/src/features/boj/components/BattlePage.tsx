@@ -24,9 +24,6 @@ import { tokensInArea } from "../rules/areas";
 import { planMovement, type MovementPlan } from "../rules/movement";
 import { settingsOf } from "../rules/settings";
 import { isFree } from "../rules/free";
-import { reactionOptions, applyReaction, type ReactionOption, type ReactionTrigger } from "../rules/actions/reactions";
-import { resolveAttack } from "../rules/attack";
-import { previewDamage } from "../rules/damage";
 import type { AttackDef, BattleMapData, Token, EffectPreset, MoveMode } from "../types";
 import { uid } from "../types";
 import MovePopover, { type DropReq } from "./MovePopover";
@@ -44,6 +41,11 @@ import ToolsPanel from "./ToolsPanel";
 import TurnBanner from "./TurnBanner";
 import { TurnHud, TargetHud } from "./CombatHud";
 import type { ActionGroup } from "./combatHudModel";
+import { targetingArea } from "./targetingModel";
+import PendingQueue from "./PendingQueue";
+import { pendingOf } from "../rules/pending";
+import { queueOpportunityMove, resolvePending } from "../state/commands/pending";
+import { applyResolution, previewResolution, type ResolutionDraft, type ResolutionOptions } from "../state/resolution";
 import CtxMenu from "./CtxMenu";
 import HelpOverlay from "./HelpOverlay";
 import { difficulty } from "../rules/encounter";
@@ -73,7 +75,6 @@ export default function BattlePage() {
   const [zonePlace, setZonePlace] = useState<ZonePlace | null>(null);
   const [drawColor, setDrawColor] = useState("#f59e0b");
   const [twin1, setTwin1] = useState<string | null>(null);
-  const [rx, setRx] = useState<{ opts: ReactionOption[]; run: (o?: ReactionOption) => void } | null>(null);
   const [pendingLight, setPendingLight] = useState<{ nazev: string; bright: number; dim: number } | null>(null);
   const [targeting, setTargeting] = useState<Targeting | null>(null);
   const [resolve, setResolve] = useState<Resolve | null>(null);
@@ -83,8 +84,9 @@ export default function BattlePage() {
   const [ctxMenu, setCtxMenu] = useState<{ t: Token; x: number; y: number } | null>(null);
   const [help, setHelp] = useState(false);
   const [dropReq, setDropReq] = useState<DropReq | null>(null);       // MovePopover při dropu
+  const [draft, setDraft] = useState<ResolutionDraft | null>(null);
+  useEffect(() => { setDraft(null); }, [resolve]);
   const [ov, setOv] = useState<{ title: string; reason?: string; options: OverrideOption[]; children?: React.ReactNode } | null>(null); // generický override
-  const [dmgCfm, setDmgCfm] = useState<{ r: Resolve; o: { overrideAdv?: number | null; manualD20?: number; manualDmg?: number; slot?: number; pact?: boolean; override?: boolean }; rolled: number; base: number; applied: number; mods: string[]; tgt: string; tgtId: string; hit: boolean } | null>(null);
   const [moreOpen, setMoreOpen] = useState(false);                   // ⋯ menu v toolbaru (mobil)
   const [loh, setLoh] = useState<{ idx: number; max: number; nazev: string; amt: number } | null>(null); // Lay on Hands input
   const [setOpen, setSetOpen] = useState(false);                     // Nastavení boje
@@ -151,7 +153,7 @@ export default function BattlePage() {
   useEffect(() => {
     if (!S || !map) return;
     const h = (e: KeyboardEvent) => {
-      if (e.key === "Escape") { setTargeting(null); setResolve(null); setMoveAtk(null); setCtxMenu(null); setZonePlace(null); setTool("select"); setDropReq(null); setOv(null); setDmgCfm(null); setLoh(null); setSetOpen(false); return; }
+      if (e.key === "Escape") { setTargeting(null); setResolve(null); setMoveAtk(null); setCtxMenu(null); setZonePlace(null); setTool("select"); setDropReq(null); setOv(null); setLoh(null); setSetOpen(false); return; }
       if (isInteractiveTarget(e.target)) return;
       if (e.key === "?") { setHelp((v) => !v); return; }
       if (!hudDm) return;
@@ -188,7 +190,8 @@ export default function BattlePage() {
           return;
         }
         const pl = planMovement(S, map, selTok, [], [nx, ny], "pravidla", set);
-        if (!pl.blocked && pl.overFt <= 0 && !pl.oas.length)
+        if (!pl.blocked && pl.overFt <= 0 && pl.oaIds.length && set.pohyb.oa === "zeptat") cmd(s => queueOpportunityMove(s, byId(s, selTok.id)!, pl, [nx, ny]));
+        else if (!pl.blocked && pl.overFt <= 0 && !pl.oas.length)
           cmd((s) => C.moveToken(s, selTok.id, nx, ny, { ft: pl.ft, oas: pl.oas, mode: "pravidla" }));
         else setDropReq({ t: selTok, plan: pl, waypoints: [], pt: { x: window.innerWidth / 2, y: window.innerHeight / 2 }, kind: pl.blocked ? "blocked" : pl.oas.length && pl.overFt <= 0 ? "oa" : "over" });
         return;
@@ -201,7 +204,7 @@ export default function BattlePage() {
     return () => window.removeEventListener("keydown", h);
   });
 
-  if (b.err) return <div className="boj-err">⚠ {b.err} <button className="boj-btn2" onClick={b.load}>Znovu</button></div>;
+  if (b.err) return <div className="boj-err">⚠ {b.err} <button className="boj-btn2" onClick={() => b.load()}>Znovu</button></div>;
   if (!S || !map) return <div className="boj-loading">Načítám bojiště…</div>;
 
   const onDoor = (w: MapWall) => {
@@ -224,7 +227,7 @@ export default function BattlePage() {
     const src = shownTok;
     if (!src) { toast("Nejdřív vyber útočníka", "err"); return; }
     if (atk.utility) { // utility kouzlo — rovnou seslat na sebe/log (bez targetingu)
-      cmd((s) => { const res = C.cmdAttack(s, { atkId: src.id, tgtId: src.id, atk, slot: opts?.slot, pact: opts?.pact }, ctx); if (!res.ok) toast(res.reason || "Kouzlo nešlo", "err"); });
+      setResolve({ kind: "attack", srcId: src.id, tgtId: src.id, atk, ...opts });
       return;
     }
     if (atk.area) setTargeting({ atk, srcId: src.id, area: true, slot: opts?.slot, pact: opts?.pact, meta: opts?.meta });
@@ -263,21 +266,12 @@ export default function BattlePage() {
     const fire = (dis: boolean) => {
       if (twin1) {
         const t1 = twin1; setTwin1(null); setTargeting(null);
-        cmd((s2) => {
-          C.cmdAttack(s2, { atkId: src.id, tgtId: t1, atk: targeting.atk, slot: targeting.slot, pact: targeting.pact, meta: targeting.meta }, ctx);
-          C.cmdAttack(s2, { atkId: src.id, tgtId, atk: targeting.atk, override: true }, ctx);
-        });
+        setResolve({ kind: "attack", srcId: src.id, tgtId: t1, extraTgtIds: [tgtId], atk: targeting.atk, slot: targeting.slot, pact: targeting.pact, meta: targeting.meta });
         return;
       }
-      setResolve({ kind: "attack", atk: targeting.atk, srcId: targeting.srcId, tgtId, meta: targeting.meta, preDis: dis } as any);
+      setResolve({ kind: "attack", atk: targeting.atk, srcId: targeting.srcId, tgtId, meta: targeting.meta, slot: targeting.slot, pact: targeting.pact });
       setTargeting(null);
     };
-    // Protection: spojenec cíle do 5 ft může před hodem dát Dis
-    const prot = reactionOptions(S, { kind: "hit", attacker: src, target: tgt, atk: targeting.atk }).filter((oo) => oo.id.startsWith("protect"));
-    if (prot.length) {
-      setRx({ opts: prot, run: (oo) => { setRx(null); if (oo) cmd((s2) => { const rr = applyReaction(s2, oo, { kind: "hit", attacker: src, target: tgt, atk: targeting.atk }, Math.random); if (rr.msg) log(s2, "system", rr.msg, "PJ"); }); fire(!!oo); } });
-      return;
-    }
     fire(false);
   };
   const doMoveAttack = () => {
@@ -287,17 +281,15 @@ export default function BattlePage() {
     setMoveAtk(null);
     setResolve({ kind: "attack", atk, srcId, tgtId });
   };
-  const onArea = (anchor: [number, number]) => {
+  const onArea = (anchor: [number, number], dir?: number) => {
     if (!targeting?.area) return;
     const a = targeting.atk;
     const src = byId(S, targeting.srcId);
-    const shape = a.area!.shape;
-    let spec: any = { shape, size: a.area!.size, anchor };
-    if ((shape === "cone" || shape === "line") && src?.x != null) {
-      spec = { ...spec, anchor: [src.x, src.y!], dir: Math.atan2(anchor[1] - (src.y ?? 0), anchor[0] - (src.x ?? 0)) * 180 / Math.PI };
-    }
+    if (!src) return;
+    const spec = targetingArea(src, a, anchor);
+    if (dir != null) spec.dir = dir;
     const tgtIds = tokensInArea(spec, S.tok, src).map((t) => t.id);
-    setResolve({ kind: "area", atk: a, srcId: targeting.srcId, spec, tgtIds, slot: targeting.slot });
+    setResolve({ kind: "area", atk: a, srcId: targeting.srcId, spec, tgtIds, slot: targeting.slot, pact: targeting.pact, meta: targeting.meta });
     setTargeting(null);
   };
   const onZone = (x: number, y: number, dir?: number) => {
@@ -367,81 +359,20 @@ export default function BattlePage() {
     }
     // OA podle nastavení
     if (plan.oas.length) {
-      if (set.pohyb.oa === "zeptat") { setDropReq({ t, plan, waypoints: wps, pt, kind: "oa" }); return; }
+      if (set.pohyb.oa === "zeptat") { cmd(s => queueOpportunityMove(s, byId(s, t.id)!, plan, to)); return; }
       execMove(t, plan, wps, "pravidla", to);
       if (set.pohyb.oa === "jenZaznam") cmd((s) => log(s, "system", `${t.nazev}: OA připomenutí — ${plan.oas.join(", ")}`, "PJ"));
       return;
     }
     execMove(t, plan, wps, "pravidla", to);
   };
-  // Reakce: nabídne prompt; proceed zavolá pokračování
-  const askRx = (trig: ReactionTrigger, proceed: (pre?: { miss?: boolean; dmgMul?: number; dmgFlat?: number; countered?: boolean }) => void) => {
-    const opts = reactionOptions(S, trig);
-    if (!opts.length) { proceed(); return; }
-    setRx({ opts, run: (o) => {
-      setRx(null);
-      if (!o) { proceed(); return; }
-      const res = applyReaction(S, o, trig, Math.random);
-      cmd((s) => { const r = applyReaction(s, o, trig, Math.random); if (r.msg) log(s, "system", r.msg, "PJ"); });
-      proceed(res);
-    } });
+  const stageResolve = (options: ResolutionOptions, reuse = false) => {
+    if (resolve) setDraft(previewResolution(S, map, resolve, options, reuse ? draft || undefined : undefined));
   };
-  const applyResolve = (o: { overrideAdv?: number | null; manualD20?: number; manualDmg?: number; slot?: number; pact?: boolean; override?: boolean; lucky?: "adv" | "dis"; inspire?: boolean }) => {
-    if (!resolve) return;
-    const r = resolve;
-    if ((r as any).preDis && o.overrideAdv == null) o.overrideAdv = -1;
-    if (o.lucky || o.inspire) cmd((s2) => {
-      const A0r = byId(s2, r.srcId);
-      if (o.lucky && A0r) {
-        const z = (A0r.zdroje || []).find((zz: any) => /lucky|luck/i.test(zz.nazev) && zz.max - zz.used > 0);
-        if (z) { z.used++; log(s2, "system", `${A0r.nazev}: Lucky (−1 Luck Point)`, A0r.nazev); }
-      }
-      if (o.inspire && A0r) { A0r.heroicInspiration = false; log(s2, "system", `${A0r.nazev}: Heroic Inspiration — přehozeno`, A0r.nazev); }
-    });
-    // potvrzení zranění: nejdřív náhled (stejný d20), DM může upravit a pak teprve aplikovat
-    if (r.kind === "attack" && o.manualDmg == null && (settingsOf(S).automatizace.zraneni === "potvrdit" || isFree(S))) {
-      const A = byId(S, r.srcId), B = byId(S, r.tgtId);
-      if (A && B) {
-        const res = resolveAttack({ attacker: A, target: B, atk: r.atk, map, tokens: S.tok, overrideAdv: o.overrideAdv, state: S, teren: S.teren, ax: undefined, ay: undefined }, { manualD20: o.manualD20, force: r.force });
-        if (res && res.hit && res.dmgByType.length) {
-          const n = r.atk.n || 1;
-          const parts = res.dmgByType.map((p) => ({ amount: p.amount * n, type: p.type }));
-          const prev = previewDamage(B, parts);
-          setResolve(null);
-          setDmgCfm({ r, o, rolled: res.used, base: parts.reduce((a, p) => a + p.amount, 0), applied: prev.applied, mods: prev.mods, tgt: B.nazev, tgtId: B.id, hit: true });
-          return;
-        }
-      }
-    }
-    const A0 = byId(S, r.srcId);
-    if (r.atk.kind === "spell" && (r.atk.lvl || 0) > 0 && A0 && !(r.meta || []).includes("subtle")) {
-      const opts = reactionOptions(S, { kind: "enemyCasts", attacker: A0, target: undefined, distFt: undefined });
-      if (opts.length) {
-        setRx({ opts, run: (ro) => {
-          setRx(null);
-          cmd((s) => {
-            if (ro) {
-              const res = applyReaction(s, ro, { kind: "enemyCasts", attacker: A0 }, Math.random);
-              if (res.msg) log(s, "system", res.msg, "PJ");
-              if (res.countered) { log(s, "system", `${r.atk.nazev} zrušen Counterspellem — slot se nespotřebuje`, "PJ"); return; }
-            }
-            if (r.kind === "attack") { const res = C.cmdAttack(s, { atkId: r.srcId, tgtId: r.tgtId, atk: r.atk, ...o, override: o.override || r.force, meta: r.meta }, ctx); if (!res.ok) toast(res.reason || "Útok nešel", "err"); }
-          });
-        } });
-        setResolve(null);
-        return;
-      }
-    }
-    cmd((s) => {
-      if (r.kind === "attack") {
-        const res = C.cmdAttack(s, { atkId: r.srcId, tgtId: r.tgtId, atk: r.atk, ...o, override: o.override || r.force, meta: r.meta }, ctx);
-        if (!res.ok) toast(res.reason || "Útok nešel", "err");
-      } else {
-        const res = C.cmdArea(s, { srcId: r.srcId, spec: r.spec, atk: r.atk, manualDmg: o.manualDmg, slot: o.slot ?? r.slot, pact: o.pact, override: o.override || r.force }, ctx);
-        if (!res.ok) toast(res.reason || "Nešlo", "err");
-      }
-    });
-    setResolve(null);
+  const respondToDraft = (key: string, skip: boolean) => {
+    if (!draft || !resolve) return;
+    if (JSON.stringify(S) !== draft.before) { toast("Boj se změnil. Vyhodnoť akci znovu.", "err"); return; }
+    setDraft(previewResolution(S, map, resolve, draft.options, draft, skip ? draft.accepted : [...draft.accepted, key], skip ? [...draft.skipped, key] : draft.skipped));
   };
   const onPickPreset = (p: EffectPreset) => {
     const ids = selSet.size ? [...selSet] : sel ? [sel] : [];
@@ -619,6 +550,11 @@ export default function BattlePage() {
             onDraw={(pts, stroke) => cmd((s) => { s.kresby = [...(s.kresby || []), { id: uid(), kind: "free", pts, stroke, width: 3, dmOnly: true } as any]; })}
           >
             <TargetHud S={S} t={byId(S, hoverToken || sel)} map={map} dm={hudDm} />
+            {hudDm && <PendingQueue rows={[
+              ...pendingOf(S).map(item => ({ id: item.id, kind: item.kind, label: item.label, resolve: () => cmd(s => { resolvePending(s, item.id, false, map); }), skip: () => cmd(s => { resolvePending(s, item.id, true, map); }) })),
+              ...(draft?.reactions || []).filter(offer => !draft!.accepted.includes(offer.key) && !draft!.skipped.includes(offer.key)).map(offer => ({ id: offer.key, kind: "reaction" as const, label: `${offer.option.who} · ${offer.option.nazev}`, detail: offer.option.desc, resolve: () => respondToDraft(offer.key, false), skip: () => respondToDraft(offer.key, true) })),
+              ...(S.legendaryWindow ? [{ id: "legendary", kind: "legendary" as const, label: "Okno legendárních akcí", detail: "Konec cizího tahu · vyber legendární akci nebo pokračuj.", resolve: () => { const owner = S.tok.find(t => t.legendary && t.id !== S.legendaryWindow!.actorId && !S.legendaryWindow!.usedBy.includes(t.id) && t.legendary.used < t.legendary.max && !t.dead); if (owner) { setSel(owner.id); setPanel("akce"); setActionGroup("legendary"); setSideMini(false); } }, skip: () => cmd(s => C.nextTurn(s)) }] : []),
+            ]} />}
             <TurnHud S={S} dm={hudDm} onEnd={() => cmd(s => C.nextTurn(s))} onGroup={group => { setSel(curTok?.id || null); setActionGroup(group); setPanel("akce"); setSideMini(false); setSheet("half"); }} />
           </BattleMap>
         </div>
@@ -687,8 +623,8 @@ export default function BattlePage() {
           onClose={() => setAddOpen(false)}
         />
       )}
-      {resolve && (
-        <ResolveDialog S={S} map={map} r={resolve} onApply={applyResolve} onClose={() => setResolve(null)} />
+      {resolve && hudDm && (
+        <ResolveDialog S={S} map={map} r={resolve} draft={draft} onApply={o => stageResolve(o)} onAdjust={o => stageResolve(o, true)} onCommit={() => { if (draft) cmd(s => { if (applyResolution(s, draft)) setResolve(null); else toast("Boj se změnil. Vyhodnoť akci znovu.", "err"); }); }} onClose={() => setResolve(null)} />
       )}
       {ctxMenu && <CtxMenu t={ctxMenu.t} x={ctxMenu.x} y={ctxMenu.y} dm={dm} onClose={() => setCtxMenu(null)} onAction={onCtxAction} />}
       {help && <HelpOverlay onClose={() => setHelp(false)} />}
@@ -703,65 +639,6 @@ export default function BattlePage() {
           <input type="number" min={1} max={loh.max} value={loh.amt} autoFocus
                  onChange={(e) => setLoh({ ...loh, amt: Math.max(1, Math.min(loh.max, Number(e.target.value) || 1)) })}
                  style={{ width: "100%", marginTop: 4 }} />
-        </OverridePrompt>
-      )}
-      {rx && (
-        <div className="boj-modal"><div className="boj-card boj-rx">
-          <h3>Reakce</h3>
-          {rx.opts.map((o) => (
-            <button key={o.id} className="boj-rx-opt" onClick={() => rx.run(o)}>
-              <b>{o.who}: {o.nazev}</b><span>{o.desc}</span>
-            </button>
-          ))}
-          <button className="boj-btn2" onClick={() => rx.run(undefined)}>Přeskočit</button>
-          <button className="boj-btn2" onClick={() => { setRx(null); cmd((s) => { s.nastaveni = { ...(s.nastaveni || {}), automatizace: { ...s.nastaveni!.automatizace, reakce: "vypnuto" } } as any; log(s, "system", "Reakce: prompty vypnuty pro tento boj", "PJ"); }); }}>Nezobrazovat v tomto boji</button>
-        </div></div>
-      )}
-      {dmgCfm && (
-        <OverridePrompt title={`Zranění: ${dmgCfm.tgt}`} reason={`Hod d20 ${dmgCfm.rolled} — výsledné damage po resistencích${dmgCfm.mods.length ? ` (${dmgCfm.mods.join(", ")})` : ""}`} onClose={() => setDmgCfm(null)}
-          options={[
-            { label: `Aplikovat ${dmgCfm.applied}`, onPick: () => { const d = dmgCfm; setDmgCfm(null); cmd((s) => { const rr = d.r; if (rr.kind === "attack") { const res = C.cmdAttack(s, { atkId: rr.srcId, tgtId: rr.tgtId, atk: rr.atk, ...d.o, manualD20: d.rolled, manualDmg: d.applied, override: d.o.override || rr.force, meta: rr.meta }, ctx); if (!res.ok) toast(res.reason || "Útok nešel", "err"); } }); } },
-          ]}>
-          <div className="boj-dmg-hero">
-            <input type="number" min={0} value={dmgCfm.applied} aria-label="Výsledné zranění"
-                   onChange={(e) => setDmgCfm({ ...dmgCfm, applied: Math.max(0, Number(e.target.value) || 0) })} />
-          </div>
-          <div className="boj-seg boj-seg-full">
-            {[["×½", Math.floor(dmgCfm.applied / 2)], ["×2", dmgCfm.applied * 2], ["0", 0]].map(([l, v]) => (
-              <button key={l as string} onClick={() => setDmgCfm({ ...dmgCfm, applied: v as number })}>{l}</button>
-            ))}
-          </div>
-          {(() => { const tt = byId(S, dmgCfm.tgtId); return tt ? (
-            <div className="boj-dmg-tgt">
-              <MiniCoin t={tt} size={26} />
-              <b>{tt.nazev}</b>
-              <span>finální zranění <b className="num">{dmgCfm.applied}</b></span>
-            </div>
-          ) : null; })()}
-          <em className="boj-dmg-base">(hozeno {dmgCfm.base}{dmgCfm.mods.length ? ` · ${dmgCfm.mods.join(", ")}` : ""})</em>
-          {(() => {
-            if (dmgCfm.r.kind !== "attack") return null;
-            const A = byId(S, dmgCfm.r.srcId), B = byId(S, dmgCfm.tgtId);
-            if (!A || !B) return null;
-            const opts = [
-              ...reactionOptions(S, { kind: "hit", attacker: A, target: B, atk: dmgCfm.r.atk, hitTotal: dmgCfm.rolled + (dmgCfm.r.atk.bonus || 0) }),
-              ...reactionOptions(S, { kind: "damaged", attacker: A, target: B, atk: dmgCfm.r.atk, distFt: Math.max(Math.abs((A.x ?? 0) - (B.x ?? 0)), Math.abs((A.y ?? 0) - (B.y ?? 0))) * 5 }),
-            ];
-            if (!opts.length) return null;
-            return <div className="boj-rx">
-              <b style={{ fontSize: 11 }}>Reakce:</b>
-              {opts.map((o) => <button key={o.id} className="boj-rx-opt" title={o.desc} onClick={() => {
-                const r = dmgCfm.r;
-                cmd((s) => {
-                  const res = applyReaction(s, o, { kind: o.id.startsWith("rebuke") || o.id.startsWith("uncanny") || o.id.startsWith("intercept") ? "damaged" : "hit", attacker: A, target: B, atk: r.atk, hitTotal: dmgCfm.rolled + (r.atk.bonus || 0) }, Math.random);
-                  if (res.msg) log(s, "system", res.msg, "PJ");
-                  if (res.miss) { setDmgCfm(null); return; }
-                  if (res.dmgMul) setDmgCfm((d) => d ? { ...d, applied: Math.floor(d.applied * res.dmgMul!) } : d);
-                  if (res.dmgFlat) setDmgCfm((d) => d ? { ...d, applied: Math.max(0, d.applied + res.dmgFlat!) } : d);
-                });
-              }}><b>{o.who}: {o.nazev}</b></button>)}
-            </div>;
-          })()}
         </OverridePrompt>
       )}
       {empty && !addOpen && !onboardHide && (
