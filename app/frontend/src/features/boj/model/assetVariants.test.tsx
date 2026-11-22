@@ -46,7 +46,7 @@ describe("asset variant resolution and migration", () => {
     expect(object.v).toBe(2);
   });
   it("preserves saved variants through unavailable catalogs and unknown assets", () => {
-    for (const catalog of [undefined, {}, {other: tree}]) {
+    for (const catalog of [undefined, {}, {other: tree}] as (Record<string, typeof tree> | undefined)[]) {
       const loaded = migrateMap({...base(),objekty:[object]},catalog);
       expect(loaded.objekty![0].v).toBe(2);
       const saved = JSON.parse(JSON.stringify(loaded));
