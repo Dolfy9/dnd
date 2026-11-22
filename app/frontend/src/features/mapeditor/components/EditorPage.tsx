@@ -10,13 +10,14 @@ import {
 import { post, upload } from "../../../api";
 import { toast } from "../../../components/ui";
 import { TILES } from "../../boj/types";
-import type { MapV2, MapWall, MapDrawing } from "../../boj/model/mapV2";
+import type { MapV2, MapWall, MapDrawing, MapPaintStroke } from "../../boj/model/mapV2";
 import { migrateMap, wallUid } from "../../boj/model/mapV2";
 import {
   MapTextureLayer, MapElevationLayer, MapWallLayer, MapObjectLayer, MapDrawingLayer,
   MapLightLayer, MapNoteLayer, MapGridLayer, PX, setManifests,
 } from "../../boj/components/MapV2Layers";
 import { TerenLayer } from "../../boj/components/MapLayers";
+import { MapPaintLayer, MapAtmosphereLayer } from "../../boj/components/MapAtmoLayers";
 import { TEXTURES, textureById } from "../assets/textures";
 import { stampById } from "../assets/stamps";
 import { useAssetManifest, useTextureManifest } from "../assets/manifest";
@@ -24,10 +25,10 @@ import { GENERATORS, type GenOut } from "../generators/generators";
 import { importUvtt, exportUvtt, exportPng } from "../io/uvtt";
 import { useEditorDoc } from "../state/useEditorDoc";
 import * as ops from "../tools/ops";
-import { TexturePicker, TABS, LAYERS, WALL_TYPS, WALL_NAZVY, LayersPanel, LibraryPanel, PropertiesPanel, GeneratorPanel, MapPanel, type TabId } from "./panels";
+import { TexturePicker, LightColors, TABS, LAYERS, WALL_TYPS, WALL_NAZVY, LayersPanel, LibraryPanel, PropertiesPanel, GeneratorPanel, MapPanel, type TabId } from "./panels";
 import "../editor.css";
 
-type Tool = "select" | "teren" | "fill" | "flood" | "textura" | "mistnost" | "stena" | "dvere"
+type Tool = "select" | "teren" | "fill" | "flood" | "textura" | "malba" | "mistnost" | "stena" | "dvere"
   | "objekt" | "kresba" | "vyska" | "svetlo" | "start" | "poznamka" | "guma" | "kapatko";
 
 const TOOLS: { id: Tool; icon: React.ReactElement; nazev: string; key: string }[] = [
@@ -36,6 +37,7 @@ const TOOLS: { id: Tool; icon: React.ReactElement; nazev: string; key: string }[
   { id: "fill", icon: <Square size={18} />, nazev: "Výplň obdélníkem", key: "Shift+B" },
   { id: "flood", icon: <PaintBucket size={18} />, nazev: "Flood fill", key: "G" },
   { id: "textura", icon: <Layers3 size={18} />, nazev: "Textura", key: "X" },
+  { id: "malba", icon: <Brush size={18} />, nazev: "Malovat texturou", key: "K" },
   { id: "mistnost", icon: <DoorOpen size={18} />, nazev: "Místnost", key: "R" },
   { id: "stena", icon: <Spline size={18} />, nazev: "Stěny", key: "W" },
   { id: "dvere", icon: <DoorOpen size={18} />, nazev: "Dveře / okna", key: "D" },
@@ -66,6 +68,12 @@ export default function EditorPage() {
   const [tool, setTool] = useState<Tool>("select");
   const [brushTile, setBrushTile] = useState("#");
   const [brushTex, setBrushTex] = useState(TEXTURES[0].id);
+  const [paintSize, setPaintSize] = useState(2);
+  const [paintOpacity, setPaintOpacity] = useState(.85);
+  const [paintHardness, setPaintHardness] = useState(.4);
+  const [paintErase, setPaintErase] = useState(false);
+  const [paintPreview, setPaintPreview] = useState<MapPaintStroke | null>(null);
+  const strokeRef = useRef<{ stroke: MapPaintStroke; erase: boolean } | null>(null);
   const [brushSize, setBrushSize] = useState(1);
   const [brushShape, setBrushShape] = useState<"sq" | "circ">("sq");
   const [wallTyp, setWallTyp] = useState<MapWall["typ"]>("wall");
@@ -82,6 +90,8 @@ export default function EditorPage() {
   const [lightB, setLightB] = useState(20);
   const [lightD, setLightD] = useState(20);
   const [lightColor, setLightColor] = useState("#fbbf24");
+  const [lightIntensity, setLightIntensity] = useState(1);
+  const [lightFlicker, setLightFlicker] = useState(false);
   const [startTyp, setStartTyp] = useState<"druzina" | "nepratele" | "neutral">("druzina");
   const [snap, setSnap] = useState<1 | 0.5 | 0>(1);
   const [sel, setSel] = useState<Sel[]>([]);
@@ -185,6 +195,7 @@ export default function EditorPage() {
     m.steny = (m.steny || []).map((w) => ({ ...w, a: [w.a[0] + dX, w.a[1] + dY] as [number, number], b: [w.b[0] + dX, w.b[1] + dY] as [number, number] }));
     m.objekty = (m.objekty || []).map((o) => ({ ...o, x: o.x + dX, y: o.y + dY }));
     m.svetla = (m.svetla || []).map((l) => ({ ...l, x: l.x + dX, y: l.y + dY }));
+    m.malba = m.malba?.map(s => ({ ...s, p: s.p.map(([x, y]) => [x + dX, y + dY]) }));
     m.poznamky = (m.poznamky || []).map((n) => ({ ...n, x: n.x + dX, y: n.y + dY }));
     if (m.start) for (const kk in m.start) (m.start as any)[kk] = ((m.start as any)[kk] || []).map(([x, y]: number[]) => [x + dX, y + dY]);
   });
@@ -230,6 +241,13 @@ export default function EditorPage() {
   const onDown = (e: React.PointerEvent) => {
     if (e.button === 1 || space || e.button === 2) { panRef.current = { x0: e.clientX, y0: e.clientY, vx: V.x, vy: V.y }; setPanning(true); userZoomRef.current = true; return; }
     const [cx, cy] = cellOf(e);
+    if (tool === "malba") {
+      e.preventDefault(); e.currentTarget.setPointerCapture(e.pointerId);
+      const stroke: MapPaintStroke = { id: wallUid(), t: brushTex, b: paintSize, o: paintOpacity, h: paintHardness, p: [toWorld(e)] };
+      strokeRef.current = { stroke, erase: paintErase || e.altKey };
+      setPaintPreview(strokeRef.current.erase ? null : stroke);
+      return;
+    }
     paintRef.current = true;
     if (calib && map?.obrazek) {
       const p = snapPt(e);
@@ -284,7 +302,7 @@ export default function EditorPage() {
       }
       case "kresba": { const p = snapPt(e); setDragPt({ a: p, b: p }); setFreePts([p]); break; }
       case "vyska": push((m) => { m.vyska = { ...(m.vyska || {}) }; const kk = k2(cx, cy); m.vyska[kk] = (m.vyska[kk] || 0) + (e.altKey ? -elevStep : elevStep); if (!m.vyska[kk]) delete m.vyska[kk]; }); break;
-      case "svetlo": push((m) => { m.svetla = [...(m.svetla || []), { id: "l" + Date.now() % 1e6, x: cx + .5, y: cy + .5, bright: lightB, dim: lightD, color: lightColor }]; }); break;
+      case "svetlo": push((m) => { m.svetla = [...(m.svetla || []), { id: wallUid(), x: cx + .5, y: cy + .5, bright: lightB, dim: lightD, color: lightColor, intenzita: lightIntensity, blikani: lightFlicker }]; }); break;
       case "start": push((m) => {
         m.start = { ...(m.start || {}) } as any;
         const arr = ((m.start as any)[startTyp] || []) as [number, number][];
@@ -315,6 +333,12 @@ export default function EditorPage() {
     }
   };
   const onMove = (e: React.PointerEvent) => {
+    if (strokeRef.current) {
+      const s = strokeRef.current;
+      ops.appendPaintPoint(s.stroke.p, toWorld(e), Math.max(.025, s.stroke.b / 20));
+      if (!s.erase) setPaintPreview({ ...s.stroke, p: [...s.stroke.p] });
+      return;
+    }
     if (panRef.current) {
       setV((v) => ({ ...v, x: panRef.current!.vx + e.clientX - panRef.current!.x0, y: panRef.current!.vy + e.clientY - panRef.current!.y0 }));
       return;
@@ -344,6 +368,14 @@ export default function EditorPage() {
     else if (tool === "guma") push((m) => ops.eraseAt(m, cx, cy));
   };
   const onUp = (e: React.PointerEvent) => {
+    if (strokeRef.current) {
+      const s = strokeRef.current; strokeRef.current = null;
+      ops.appendPaintPoint(s.stroke.p, toWorld(e), .001);
+      push(m => ops.paintStroke(m, s.stroke, s.erase));
+      setPaintPreview(null);
+      if (e.currentTarget.hasPointerCapture(e.pointerId)) e.currentTarget.releasePointerCapture(e.pointerId);
+      return;
+    }
     panRef.current = null; setPanning(false); paintRef.current = false;
     if (moveRef.current) { moveRef.current = null; return; }
     if (handleDrag) { setHandleDrag(null); push(() => {}); return; }
@@ -419,6 +451,14 @@ export default function EditorPage() {
             {tool === "textura" && (
               <TexturePicker value={brushTex} onChange={setBrushTex} />
             )}
+            {tool === "malba" && <>
+              <TexturePicker value={brushTex} onChange={setBrushTex} />
+              <label>Průměr {paintSize}<input aria-label="Průměr štětce" type="range" min=".25" max="8" step=".25" value={paintSize} onChange={e => setPaintSize(+e.target.value)} /></label>
+              <label>Krytí {Math.round(paintOpacity * 100)} %<input aria-label="Krytí malby" type="range" min="0" max="1" step=".05" value={paintOpacity} onChange={e => setPaintOpacity(+e.target.value)} /></label>
+              <label>Tvrdost {Math.round(paintHardness * 100)} %<input aria-label="Tvrdost štětce" type="range" min="0" max="1" step=".05" value={paintHardness} onChange={e => setPaintHardness(+e.target.value)} /></label>
+              <button className={`me-btn sm ${paintErase ? "on" : ""}`} onClick={() => setPaintErase(!paintErase)}>Guma tahů</button>
+              <span className="me-ctx-hint">Alt: mazat celé tahy</span>
+            </>}
             {tool === "mistnost" && (
               <>
                 <span className="me-ctx-lab">Textura:</span>
@@ -447,9 +487,12 @@ export default function EditorPage() {
             {tool === "vyska" && <><span className="me-ctx-lab">Krok:</span>{[5, 10, 20].map((s) => <button key={s} className={`me-btn sm ${elevStep === s ? "on" : ""}`} onClick={() => setElevStep(s)}>{s} ft</button>)}<span className="me-ctx-hint">klik +, Alt+klik −</span></>}
             {tool === "svetlo" && (
               <>
-                <span className="me-ctx-lab">Bright</span><input type="number" value={lightB} onChange={(e) => setLightB(+e.target.value)} style={{ width: 48 }} />
-                <span className="me-ctx-lab">Dim</span><input type="number" value={lightD} onChange={(e) => setLightD(+e.target.value)} style={{ width: 48 }} />
+                <span className="me-ctx-lab">Jasné (ft)</span><input aria-label="Jasné světlo" type="number" min="0" value={lightB} onChange={(e) => setLightB(Math.max(0, +e.target.value))} style={{ width: 48 }} />
+                <span className="me-ctx-lab">Přítmí navíc (ft)</span><input aria-label="Přítmí navíc" type="number" min="0" value={lightD} onChange={(e) => setLightD(Math.max(0, +e.target.value))} style={{ width: 48 }} />
+                <LightColors value={lightColor} onChange={setLightColor} />
                 <input type="color" value={lightColor} onChange={(e) => setLightColor(e.target.value)} />
+                <label>Intenzita<input aria-label="Intenzita světla" type="range" min="0" max="1" step=".05" value={lightIntensity} onChange={e => setLightIntensity(+e.target.value)} /></label>
+                <label><input type="checkbox" checked={lightFlicker} onChange={e => setLightFlicker(e.target.checked)} /> Blikání</label>
               </>
             )}
             {tool === "start" && START_TYPY.map(([v, n]) => <button key={v} className={`me-btn sm ${startTyp === v ? "on" : ""}`} onClick={() => setStartTyp(v as any)}>{n}</button>)}
@@ -462,6 +505,7 @@ export default function EditorPage() {
           <div ref={wrapRef} className="me-canvas-wrap">
             <svg ref={svgRef} className={`me-canvas tool-${tool}`} onWheel={onWheel}
                  onPointerDown={onDown} onPointerMove={onMove} onPointerUp={onUp} onDoubleClick={onDbl}
+                 onPointerCancel={() => { strokeRef.current = null; setPaintPreview(null); paintRef.current = false; }}
                  onPointerLeave={() => setCur(null)} onContextMenu={(e) => e.preventDefault()}
                  style={{ touchAction: "none", width: "100%", height: "100%", display: "block" }}>
               <g transform={`translate(${V.x},${V.y}) scale(${V.k})`}>
@@ -469,12 +513,13 @@ export default function EditorPage() {
                 {layerVis.obrazek && map.obrazek && <image href={`/repo/11_Mapy/${map.obrazek}`} width={W * PX} height={H * PX} preserveAspectRatio="none" opacity={0.9} />}
                 {layerVis.teren && <TerenLayer map={map} px={PX} illustration={!!(layerVis.obrazek && map.obrazek)} />}
                 {layerVis.textury && <MapTextureLayer map={map} />}
+                {layerVis.malba && <MapPaintLayer map={map} preview={paintPreview || undefined} />}
                 {layerVis.mrizka && <MapGridLayer map={map} W={W} H={H} />}
                 {layerVis.vyska && <MapElevationLayer map={map} />}
                 {layerVis.kresby && <MapDrawingLayer map={map} dm />}
                 {layerVis.steny && <MapWallLayer map={map} dm />}
                 {layerVis.objekty && <MapObjectLayer map={map} dm />}
-                {layerVis.svetla && <MapLightLayer map={map} />}
+                {layerVis.svetla && <MapAtmosphereLayer map={map} />}
                 {layerVis.poznamky && <MapNoteLayer map={map} />}
                 {layerVis.starty && START_TYPY.map(([typ]) =>
                   ((map.start as any)?.[typ] || []).map(([x, y]: [number, number], i: number) => (

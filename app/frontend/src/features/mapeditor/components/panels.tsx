@@ -9,11 +9,13 @@ import { assetUrl, useTextureManifest, type AssetEntry } from "../assets/manifes
 
 export function TexturePicker({ value, onChange }: { value: string; onChange: (id: string) => void }) {
   const { data = {} } = useTextureManifest();
+  const [query, setQuery] = React.useState("");
   const selected = data[value];
-  const options = [...TEXTURES.filter(t => !data[t.id]), ...Object.values(data)];
+  const options = [...TEXTURES.filter(t => !data[t.id]), ...Object.values(data)].filter(t => t.nazev.toLocaleLowerCase("cs").includes(query.toLocaleLowerCase("cs")));
   return <details className="me-texture-picker">
     <summary>{selected && <img src={assetUrl(selected.src)} alt="" />} {selected?.nazev || TEXTURES.find(t => t.id === value)?.nazev || value}</summary>
     <div className="me-lib-grid">
+      <input className="me-texture-search" aria-label="Hledat texturu" placeholder="Hledat texturu…" value={query} onChange={e => setQuery(e.target.value)} />
       {options.map(t => <button type="button" key={t.id} className={value === t.id ? "on" : ""} title={t.nazev}
         onClick={e => { onChange(t.id); e.currentTarget.closest("details")?.removeAttribute("open"); }}>
         {data[t.id] ? <img src={assetUrl(data[t.id].src)} alt={t.nazev} loading="lazy" /> : t.nazev}
@@ -23,12 +25,27 @@ export function TexturePicker({ value, onChange }: { value: string; onChange: (i
   </details>;
 }
 
+const LIGHT_COLORS = [["#ffb85c", "Oheň"], ["#ffe6ad", "Svíčka"], ["#a9ceff", "Měsíc"], ["#7095ff", "Modrá"], ["#bd83ff", "Magie"], ["#72e9ae", "Zelená"], ["#ff7777", "Rudá"]] as const;
+export function LightColors({ value, onChange }: { value: string; onChange: (v: string) => void }) {
+  return <div className="me-light-colors" role="group" aria-label="Barvy světla">
+    {LIGHT_COLORS.map(([c, n]) => <button type="button" key={c} title={n} aria-label={n} aria-pressed={value === c}
+      style={{ background: c }} onClick={() => onChange(c)} />)}
+  </div>;
+}
+
+const ATMOSPHERES = [
+  { n: "Den", amb: 1, barva: "#101522" }, { n: "Soumrak", amb: .55, barva: "#302038" },
+  { n: "Noc", amb: .16, barva: "#090e24" }, { n: "Měsíc", amb: .32, barva: "#152d50" },
+  { n: "Pochodně", amb: .12, barva: "#1e120c" }, { n: "Jeskyně", amb: .06, barva: "#080b12" },
+  { n: "Magie", amb: .25, barva: "#281043" },
+];
+
 export const TABS = [["vrstvy", <Layers size={14} />, "Vrstvy"], ["knihovna", <Library size={14} />, "Knihovna"],
   ["vlastnosti", <Settings2 size={14} />, "Vlastnosti"], ["generator", <Wand2 size={14} />, "Generátor"],
   ["mapa", <MapIcon size={14} />, "Mapa"]] as const;
 export type TabId = typeof TABS[number][0];
 export const LAYERS: [string, string][] = [["obrazek", "Podklad"], ["textury", "Textury"], ["teren", "Terén"],
-  ["vyska", "Výška"], ["steny", "Stěny"], ["objekty", "Objekty"], ["kresby", "Kresby"], ["svetla", "Světla"],
+  ["malba", "Volná malba"], ["vyska", "Výška"], ["steny", "Stěny"], ["objekty", "Objekty"], ["kresby", "Kresby"], ["svetla", "Světla a atmosféra"],
   ["poznamky", "Poznámky"], ["mrizka", "Mřížka"], ["starty", "Starty"]];
 export const WALL_TYPS: MapWall["typ"][] = ["wall", "door", "window", "secret", "half", "curtain"];
 export const WALL_NAZVY: Record<string, string> = { wall: "Zeď", door: "Dveře", window: "Okno", secret: "Tajné", half: "Nízká", curtain: "Curtina" };
@@ -129,9 +146,12 @@ export function PropertiesPanel({ map, selObj, push, onDelete }: {
       {selLight && (
         <>
           <h4>Světlo</h4>
-          <label>bright<input type="number" value={selLight.bright} onChange={(e) => push((m) => { m.svetla!.find((l) => l.id === selObj.id)!.bright = +e.target.value; })} /></label>
-          <label>dim<input type="number" value={selLight.dim} onChange={(e) => push((m) => { m.svetla!.find((l) => l.id === selObj.id)!.dim = +e.target.value; })} /></label>
+          <label>Jasné (ft)<input type="number" min="0" value={selLight.bright} onChange={(e) => push((m) => { m.svetla!.find((l) => l.id === selObj.id)!.bright = Math.max(0, +e.target.value); })} /></label>
+          <label>Přítmí navíc (ft)<input type="number" min="0" value={selLight.dim} onChange={(e) => push((m) => { m.svetla!.find((l) => l.id === selObj.id)!.dim = Math.max(0, +e.target.value); })} /></label>
+          <LightColors value={selLight.color || "#fbbf24"} onChange={v => push(m => { m.svetla!.find(l => l.id === selObj.id)!.color = v; })} />
           <label>barva<input type="color" value={selLight.color || "#fbbf24"} onChange={(e) => push((m) => { m.svetla!.find((l) => l.id === selObj.id)!.color = e.target.value; })} /></label>
+          <label>Intenzita<input type="range" min="0" max="1" step=".05" value={selLight.intenzita ?? 1} onChange={e => push(m => { m.svetla!.find(l => l.id === selObj.id)!.intenzita = +e.target.value; })} /></label>
+          <label><input type="checkbox" checked={!!selLight.blikani} onChange={e => push(m => { m.svetla!.find(l => l.id === selObj.id)!.blikani = e.target.checked; })} /> Blikání</label>
         </>
       )}
       {selNote && (
@@ -177,6 +197,21 @@ export function MapPanel({ map, push, onResize, onUploadImg, onImportUvtt, onExp
   const W = map.mrizka[0]?.length || 1, H = map.mrizka.length;
   return (
     <div className="me-mapmeta">
+      <h4>Atmosféra</h4>
+      <div className="me-atmo-presets">
+        {ATMOSPHERES.map(a => <button key={a.n} type="button" aria-pressed={(map.atmosfera?.amb ?? 1) === a.amb && (map.atmosfera?.barva || "#101522") === a.barva}
+          onClick={() => push(m => { m.atmosfera = { amb: a.amb, barva: a.barva }; })}>
+          <span style={{ backgroundImage: "url(/repo/11_Mapy/bojove/textury/teren-les.webp)" }}>
+            <i style={{ background: a.barva, opacity: 1 - a.amb }} />
+          </span>{a.n}
+        </button>)}
+      </div>
+      <label>Okolní světlo {Math.round((map.atmosfera?.amb ?? 1) * 100)} %
+        <input aria-label="Okolní světlo" type="range" min="0" max="1" step=".01" value={map.atmosfera?.amb ?? 1}
+          onChange={e => push(m => { m.atmosfera = { barva: m.atmosfera?.barva || "#101522", amb: +e.target.value }; })} />
+      </label>
+      <label>Odstín prostředí<input aria-label="Odstín prostředí" type="color" value={map.atmosfera?.barva || "#101522"}
+        onChange={e => push(m => { m.atmosfera = { amb: m.atmosfera?.amb ?? 1, barva: e.target.value }; })} /></label>
       <label>Místo<input value={map.misto || ""} onChange={(e) => push((m) => { m.misto = e.target.value; })} /></label>
       <label>Osvětlení<input value={map.osvetleni || ""} onChange={(e) => push((m) => { m.osvetleni = e.target.value; })} /></label>
       <label>Popis<textarea value={map.popis || ""} onChange={(e) => push((m) => { m.popis = e.target.value; })} /></label>

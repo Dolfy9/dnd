@@ -52,6 +52,17 @@ export interface MapLightV2 {
   bright: number; dim: number;
   nazev?: string;
   color?: string;
+  intenzita?: number;
+  blikani?: boolean;
+}
+
+export interface MapPaintStroke {
+  id: string;
+  t: string;
+  b: number;
+  o: number;
+  h: number;
+  p: [number, number][];
 }
 
 export interface MapNote {
@@ -65,6 +76,8 @@ export interface MapMrizkaStyl { typ: "lines" | "dots" | "none"; barva: string; 
 
 /** Plná v2 mapa = BattleMapData + volitelná pole. */
 export interface MapV2 extends BattleMapData {
+  malba?: MapPaintStroke[];
+  atmosfera?: { amb: number; barva: string };
   textury?: Record<string, string>;          // "x,y" → textureId
   vyska?: Record<string, number>;            // "x,y" → ft
   steny?: MapWall[];
@@ -82,13 +95,31 @@ export const wallUid = () => "w" + Math.random().toString(36).slice(2, 9);
 export function migrateMap(m: BattleMapData | MapV2 | any): MapV2 {
   const out: MapV2 = { ...(m as MapV2) };
   if (!out.mrizka) out.mrizka = ["...."];
+  const finite = (v: unknown, fallback: number, min: number, max: number) =>
+    typeof v === "number" && Number.isFinite(v) ? Math.max(min, Math.min(max, v)) : fallback;
+  if (out.malba !== undefined) {
+    out.malba = (Array.isArray(out.malba) ? out.malba : []).filter(s => s && typeof s.t === "string" && Array.isArray(s.p))
+      .map((s, i) => ({ id: typeof s.id === "string" ? s.id : "malba" + i, t: s.t,
+        b: finite(s.b, 1, .25, 8), o: finite(s.o, 1, 0, 1), h: finite(s.h, .5, 0, 1),
+        p: s.p.filter(p => Array.isArray(p) && p.length === 2 && p.every(n => typeof n === "number" && Number.isFinite(n))) }))
+      .filter(s => s.p.length);
+  }
+  if (out.atmosfera !== undefined) {
+    const a = out.atmosfera;
+    out.atmosfera = { amb: finite(a?.amb, 1, 0, 1),
+      barva: typeof a?.barva === "string" && /^#[0-9a-f]{6}$/i.test(a.barva) ? a.barva : "#101522" };
+  }
   if (out.textury && typeof out.textury !== "object") delete out.textury;
   if (out.vyska && typeof out.vyska !== "object") delete out.vyska;
+  if (Array.isArray(out.svetla)) out.svetla = out.svetla.filter(l => l && typeof l === "object");
   for (const k of ["steny", "objekty", "kresby", "svetla", "poznamky"] as const) {
     if (out[k] && !Array.isArray(out[k])) delete out[k];
     (out[k] as any[] | undefined)?.forEach((o: any, i: number) => { if (!o.id) o.id = `${k[0]}${i}`; });
   }
   // normalizace zdí na unit segmenty
+  if (out.svetla) out.svetla = out.svetla.filter(l => l && typeof l === "object").map(l => ({
+    ...l, intenzita: finite(l.intenzita, 1, 0, 1), blikani: l.blikani === true,
+  }));
   if (out.steny) {
     const norm: MapWall[] = [];
     for (const w of out.steny) {

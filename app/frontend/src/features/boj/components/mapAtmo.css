@@ -1,0 +1,10 @@
+@keyframes map-light-flicker {
+  0%, 100% { opacity: 1; }
+  23% { opacity: .91; }
+  47% { opacity: .97; }
+  71% { opacity: .86; }
+}
+.map-light-flicker { animation: map-light-flicker 3.7s ease-in-out infinite; }
+@media (prefers-reduced-motion: reduce) {
+  .map-light-flicker { animation: none; }
+}

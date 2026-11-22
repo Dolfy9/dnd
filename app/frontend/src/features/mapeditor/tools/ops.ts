@@ -1,9 +1,31 @@
 /* Operace nástrojů editoru — čisté funkce nad MapV2 (volá EditorPage). */
-import type { MapV2, MapWall } from "../../boj/model/mapV2";
+import type { MapV2, MapWall, MapPaintStroke } from "../../boj/model/mapV2";
 import { wallUid } from "../../boj/model/mapV2";
 import type { GenOut } from "../generators/generators";
 
 export const k2 = (x: number, y: number) => `${x},${y}`;
+
+export function appendPaintPoint(points: [number, number][], point: [number, number], spacing = .05) {
+  const last = points[points.length - 1];
+  if (!last || Math.hypot(last[0] - point[0], last[1] - point[1]) >= spacing) points.push(point);
+}
+
+function cross(a: [number, number], b: [number, number], c: [number, number]) {
+  return (b[0] - a[0]) * (c[1] - a[1]) - (b[1] - a[1]) * (c[0] - a[0]);
+}
+
+function segmentDistance(a: [number, number], b: [number, number], c: [number, number], d: [number, number]) {
+  const distance = Math.min(pointToSeg(...a, c, d), pointToSeg(...b, c, d), pointToSeg(...c, a, b), pointToSeg(...d, a, b));
+  return cross(a, b, c) * cross(a, b, d) < 0 && cross(c, d, a) * cross(c, d, b) < 0 ? 0 : distance;
+}
+
+export function paintStroke(m: MapV2, stroke: MapPaintStroke, erase = false) {
+  if (!stroke.p.length) return;
+  if (!erase) { m.malba = [...(m.malba || []), stroke]; return; }
+  const segments = (p: [number, number][]) => p.map((v, i) => [p[Math.max(0, i - 1)], v] as const);
+  m.malba = (m.malba || []).filter(s => !segments(s.p).some(([a, b]) =>
+    segments(stroke.p).some(([c, d]) => segmentDistance(a, b, c, d) <= (s.b + stroke.b) / 2)));
+}
 
 export function pointToSeg(px: number, py: number, a: [number, number], b: [number, number]) {
   const dx = b[0] - a[0], dy = b[1] - a[1];

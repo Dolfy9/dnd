@@ -1,3 +1,14 @@
+.me-light-colors { display: flex; gap: 5px; flex-wrap: wrap; }
+.me-light-colors button { width: 20px; height: 20px; border-radius: 50%; border: 2px solid #786b51; cursor: pointer; }
+.me-light-colors button[aria-pressed=true] { outline: 2px solid var(--accent, #b04722); outline-offset: 2px; }
+.me-atmo-presets { display: grid; grid-template-columns: repeat(3, 1fr); gap: 7px; margin-bottom: 12px; }
+.me-atmo-presets button { padding: 4px; border: 1px solid #a39370; border-radius: 5px; color: var(--ink); background: var(--bg); cursor: pointer; font-size: 11px; }
+.me-atmo-presets button[aria-pressed=true] { outline: 2px solid var(--accent, #b04722); }
+.me-atmo-presets span { position: relative; display: block; height: 39px; background-size: cover; border-radius: 3px; margin-bottom: 3px; overflow: hidden; }
+.me-atmo-presets i { position: absolute; inset: 0; }
+.me-texture-search { grid-column: 1 / -1; width: 100%; color: #eee; background: #2a2721; padding: 6px; }
+.me-ctx:has(.me-texture-picker) label { font-size: 11px; }
+.me-ctx input[type=range] { width: 78px; vertical-align: middle; }
 /* Map editor — plnoobrazovkový layout, theme proměnné. */
 .me-ed { position: fixed; inset: 0; display: flex; flex-direction: column; background: var(--bg); color: var(--ink); z-index: 50; font-size: 13px }
 .me-loading { align-items: center; justify-content: center; display: flex }
@@ -126,7 +137,8 @@ body:has(.me-ed) .mus-fab{display:none!important}
 .me-texture-picker summary img{width:32px;height:28px;object-fit:cover;border-radius:3px}
 .me-texture-picker[open]{z-index:30}
 .me-texture-picker .me-lib-grid{position:absolute;top:100%;left:0;width:360px;max-height:380px;overflow:auto;background:#211d18;padding:8px;border:1px solid #8d7854;box-shadow:0 5px 20px #0008}
-.me-texture-picker button{padding:3px;min-width:0}
+.me-texture-picker button{padding:3px;min-width:0;color:#f4ead4;background:#302a22;border:1px solid #67583f;border-radius:4px}
+.me-texture-picker button.on{border-color:#e7bc60;box-shadow:0 0 0 1px #e7bc60}
 .me-texture-picker button img{width:100%;height:60px;object-fit:cover}
 .me-texture-picker small{display:block;font-size:10px;white-space:normal}
 @media (max-width:700px){.me-sheetbtn{display:inline-flex}}

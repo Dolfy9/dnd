@@ -17,6 +17,7 @@ import { BASE_COLORS } from "../types";
 import { areaCells } from "../rules/areas";
 import { dmgStyle } from "./visual";
 import { ZoneShape, ZonePatterns, TerenLayer, LightingLayer, FogLayer } from "./MapLayers";
+import { MapPaintLayer, MapAtmosphereLayer } from "./MapAtmoLayers";
 import { ZoomIn, ZoomOut, Maximize2, Crosshair, X } from "lucide-react";
 
 export type Tool = "select" | "measure" | "zone" | "paint" | "fog" | "light" | "kresba";
@@ -472,10 +473,10 @@ export default function BattleMap(p: Props) {
           <g transform={`scale(${PX / 24})`}>
           <TerenLayer S={S} map={map} px={24} illustration={!!img} />
           <MapTextureLayer map={map as MapV2} />
+          <MapPaintLayer map={map as MapV2} />
           <MapElevationLayer map={map as MapV2} />
           <MapGridLayer map={map as MapV2} W={W} H={H} />
           <MapDrawingLayer map={map as MapV2} dm={p.dm} />
-          <MapLightLayer map={map as MapV2} />
           <MapWallLayer map={map as MapV2} doors={S.dvere} dm={p.dm}
                         onDoor={p.dm && p.onDoor ? p.onDoor : undefined} />
           <MapObjectLayer map={map as MapV2} dm={p.dm} />
@@ -592,6 +593,7 @@ export default function BattleMap(p: Props) {
               </g>
             );
           })}
+          <g transform={`scale(${PX / 24})`}><MapAtmosphereLayer map={map as MapV2} /></g>
           <LightingLayer S={S} map={map} px={PX} W={W} H={H} dm={p.dm} />
           <FogLayer S={S} px={PX} W={W} H={H} dm={p.dm} />
           {measure && (

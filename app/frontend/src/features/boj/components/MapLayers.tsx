@@ -7,7 +7,7 @@ import type { BattleMapData } from "../types";
 import { assetUrl } from "../../mapeditor/assets/manifest";
 import { useMapManifests } from "./MapV2Layers";
 import { terrainTexture, terrainProp, interiorWall } from "../model/terrainArt";
-import { useId } from "react";
+import { memo, useId } from "react";
 
 export const ZONES_STYLE: Record<string, { fill: string; stroke: string; tint?: string; op?: number }> = {
   fire: { fill: "url(#zp-fire)", stroke: "#f97316", tint: "#7c2d12", op: 0.42 },
@@ -172,13 +172,16 @@ export function ZoneShape({ z, px, tokens, lab = 1, edit, onMove, onResize }: {
 }
 
 /** Namalované terén override dlaždice. */
-export function TerenLayer({ S, map, px, illustration = false }: {
+export const TerenLayer = memo(function TerenLayer({ S, map, px, illustration = false }: {
   S?: Pick<StavBoje, "teren">; map: BattleMapData; px: number; illustration?: boolean;
 }) {
   const { textures, assets } = useMapManifests();
   const id = useId().replace(/:/g, "");
   const at = (x: number, y: number) => S?.teren?.[`${x},${y}`] ?? map.mrizka[y]?.[x];
   const surfaces = new Map<string, string[]>();
+  const W = (map.mrizka[0]?.length || 1) * px, H = map.mrizka.length * px;
+  const base = terrainTexture(".", map.podklad);
+  const soft = (tid: string) => /^teren-(g|r|rubble|voda|melcina|skala|les|reka|bazina|poust|snih|hory|jeskyne)$/.test(tid);
   const props: JSX.Element[] = [];
   map.mrizka.forEach((row, y) => [...row].forEach((_, x) => {
     const c = at(x, y) || ".", override = S?.teren?.[`${x},${y}`] !== undefined;
@@ -197,18 +200,33 @@ export function TerenLayer({ S, map, px, illustration = false }: {
         width={size} height={size} preserveAspectRatio="xMidYMid meet" />);
     }
   }));
+  if (!surfaces.size && !props.length) return null;
   return <g pointerEvents="none" data-terrain-art>
-    <defs>{[...surfaces.keys()].map(tid => {
+    <defs>
+      <filter id={id + "-edge"} x="-10%" y="-10%" width="120%" height="120%">
+        <feTurbulence type="fractalNoise" baseFrequency={.08} numOctaves={2} seed={7} result="noise" />
+        <feDisplacementMap in="SourceGraphic" in2="noise" scale={px * .18} xChannelSelector="R" yChannelSelector="G" />
+        <feGaussianBlur stdDeviation={px * .045} />
+      </filter>
+      {[...new Set([...surfaces.keys(), ...(!illustration ? [base] : [])])].map(tid => {
       const t = textures[tid];
       return t ? <pattern key={tid} id={`${id}-${tid}`} width={t.cells * px} height={t.cells * px} patternUnits="userSpaceOnUse">
         <image href={assetUrl(t.src)} width={t.cells * px} height={t.cells * px} preserveAspectRatio="xMidYMid slice" />
       </pattern> : null;
-    })}</defs>
-    {[...surfaces].map(([tid, paths]) => <path key={tid} d={paths.join("")}
-      fill={textures[tid] ? `url(#${id}-${tid})` : "#57524d"} />)}
+    })}
+      {[...surfaces].filter(([tid]) => soft(tid)).map(([tid, paths]) =>
+        <mask key={tid} id={id + "-mask-" + tid} maskUnits="userSpaceOnUse" x={0} y={0} width={W} height={H}>
+          <path d={paths.join("")} fill="white" filter={`url(#${id}-edge)`} />
+        </mask>)}
+    </defs>
+    {!illustration && <rect width={W} height={H} fill={textures[base] ? `url(#${id}-${base})` : "#57524d"} />}
+    {[...surfaces].map(([tid, paths]) => soft(tid)
+      ? <rect key={tid} width={W} height={H} mask={`url(#${id}-mask-${tid})`}
+          fill={textures[tid] ? `url(#${id}-${tid})` : "#57524d"} />
+      : <path key={tid} d={paths.join("")} fill={textures[tid] ? `url(#${id}-${tid})` : "#57524d"} />)}
     {props}
   </g>;
-}
+});
 
 /** Darkness overlay s dírami od světel — pro DM slabší, pro hráče silnější. */
 export function LightingLayer({ S, map, px, W, H, dm }: {
