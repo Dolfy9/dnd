@@ -12,7 +12,7 @@ export function LightHandles({light,zoom,onBegin}:{light:MapLightV2;zoom:number;
       {l.tvar!=="pruh" && <circle r={l.bright/5*24} opacity=".5"/>}
     </g>
     {handles.filter(h=>h.kind!=="origin").map(h=><line key={h.kind} x1={l.x*24} y1={l.y*24} x2={h.point[0]*24} y2={h.point[1]*24} stroke={h.kind==="direction"?"#e9bf70":"#95b4d2"} opacity=".5" strokeDasharray="3 4"/>)}
-    {handles.map(h=><circle key={h.kind} role="button" tabIndex={0} aria-label={h.label} data-light-handle={h.kind} className="me-light-handle"
+    {handles.map(h=><circle key={h.kind} tabIndex={-1} aria-hidden="true" aria-label={h.label} data-light-handle={h.kind} className="me-light-handle"
       cx={h.point[0]*24} cy={h.point[1]*24} r={radius} fill={h.kind==="origin"||h.kind==="direction"?"#f2c36a":h.kind==="bright"?"#fff0ba":"#9bc6ec"}
       onPointerDown={e=>onBegin(e,h.kind)}><title>{h.label}{h.kind==="direction"?" · Shift: po 15°":""}</title></circle>)}
   </g>;

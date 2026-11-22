@@ -103,5 +103,7 @@ describe("light editing operations",()=>{
     const handles=renderToStaticMarkup(<svg><LightHandles light={{...light,tvar:"kuzel"}} zoom={1} onBegin={()=>{}}/></svg>);
     expect(handles).toContain('data-light-handle="edge"');
     expect(handles).toContain('aria-label="Směr světla"');
+    expect(handles).not.toContain('tabindex="0"');
+    expect(handles.match(/tabindex="-1" aria-hidden="true"/g)).toHaveLength(5);
   });
 });
