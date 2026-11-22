@@ -99,3 +99,31 @@ export function mapWalls(map:MapV2):MapWall[] {
   const walls=[...(map.steny||[]),...map.trasy.flatMap(r=>routeGeometry(r).walls)];wallsCache.set(map.trasy,{base:map.steny,walls});return walls;
 }
 export const deckAt=(map:MapV2,x:number,y:number)=>map.trasy?.some(r=>r.druh==="molo"&&routeContains(r,x+.5,y+.5))??false;
+export function deckCoversStep(map:MapV2,x:number,y:number,nx:number,ny:number) {
+  const a:RoutePoint=[x+.5,y+.5],dx=nx-x,dy=ny-y,n=dx*dx+dy*dy,intervals:[number,number][]=[];
+  if(!n)return deckAt(map,x,y);
+  for(const r of map.trasy||[])if(r.druh==="molo"){
+    const {pts}=routeGeometry(r),radius=r.sirka/2;
+    for(let i=1;i<pts.length;i++){
+      const p=pts[i-1],q=pts[i],length=Math.hypot(q[0]-p[0],q[1]-p[1]);
+      for(const c of [p,q]){
+        const px=a[0]-c[0],py=a[1]-c[1],b=px*dx+py*dy,disc=b*b-n*(px*px+py*py-radius*radius);
+        if(disc>=0)intervals.push([Math.max(0,(-b-Math.sqrt(disc))/n),Math.min(1,(-b+Math.sqrt(disc))/n)]);
+      }
+      if(!length)continue;
+      const ux=(q[0]-p[0])/length,uy=(q[1]-p[1])/length,px=a[0]-p[0],py=a[1]-p[1];
+      let lo=0,hi=1;
+      for(const [start,delta,min,max] of [[px*ux+py*uy,dx*ux+dy*uy,0,length],[-px*uy+py*ux,-dx*uy+dy*ux,-radius,radius]]){
+        if(Math.abs(delta)<1e-10){if(start<min||start>max)hi=-1;}
+        else{const t1=(min-start)/delta,t2=(max-start)/delta;lo=Math.max(lo,Math.min(t1,t2));hi=Math.min(hi,Math.max(t1,t2));}
+      }
+      if(lo<=hi)intervals.push([lo,hi]);
+    }
+  }
+  let end=0;
+  for(const [lo,hi] of intervals.filter(([lo,hi])=>lo<=hi).sort((a,b)=>a[0]-b[0])){
+    if(lo>end+1e-8)return false;
+    end=Math.max(end,hi);if(end>=1-1e-8)return true;
+  }
+  return false;
+}

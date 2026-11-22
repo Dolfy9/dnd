@@ -2,7 +2,7 @@
    Dijkstra pohyb (těžký terén ×2, zóny, letectví/plavání), Opportunity Attacks. */
 import { TILES, type Token, type Zone, type BattleMapData } from "../types";
 import { isIncap } from "./conditions";
-import { deckAt, mapWalls } from "../model/mapRoutes";
+import { deckAt, deckCoversStep, mapWalls } from "../model/mapRoutes";
 import { cellInfo, edgeBlocked, wallIndex, type DoorStates } from "../model/mapV2";
 
 export type TerenMap = Record<string, string> | undefined | null;
@@ -119,7 +119,7 @@ export function reachable(t: Token, limitFt: number, map: BattleMapData, tokens:
       if (!dx && !dy) continue;
       const nx = x + dx, ny = y + dy;
       if (nx < 0 || ny < 0 || nx + t.s > W || ny + t.s > H) continue;
-      if (dx && dy && !tileDef(tileAt(map, x + dx, y, teren)).cost && !tileDef(tileAt(map, x, y + dy, teren)).cost) continue;
+      if (dx && dy && !tileDef(tileAt(map, x + dx, y, teren)).cost && !tileDef(tileAt(map, x, y + dy, teren)).cost && !cellsOf(t,x,y).every(([cx,cy])=>deckCoversStep(map,cx,cy,cx+dx,cy+dy))) continue;
       if (wIdx.size && edgeBlocked(wIdx, x, y, nx, ny, doors)) continue;   // hranová zeď/dveře
       const sc = stepCost(t, nx, ny, map, tokens, zones, teren);
       if (sc === Infinity) continue;
