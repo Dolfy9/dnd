@@ -12,7 +12,7 @@ it("does not enter a hedge from the same side of its axis",()=>{
  const t={...token,x:2,y:1},map:MapV2={id:"m",nazev:"M",podklad:"jine",mrizka:Array(4).fill("...."),trasy:[{id:"hedge",druh:"plot",pts:[[1,0],[1,4]],sirka:2,hladke:false}]};
  expect(reachable(t,30,map,[t]).dist["1,1"]).toBeUndefined();
  expect(canEndAt(t,1,1,map,[t])).toBe(false);
- expect(reachable(t,30,{...map,trasy:[]},[t]).dist["1,1"]).toBe(5);
+ const clear:MapV2={...map,trasy:[]};expect(reachable(t,30,clear,[t]).dist["1,1"]).toBe(5);
 });
 it("crosses a narrow diagonal deck even when both adjacent side cells are chasm",()=>{
  const map:MapV2={id:"m",nazev:"M",podklad:"jine",mrizka:["___","___","___"],trasy:[{id:"pier",druh:"molo",pts:[[.5,.5],[2.5,2.5]],sirka:.5,hladke:false}]};
