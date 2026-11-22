@@ -7,6 +7,7 @@ import { get } from "../../../api";
 import { useApp, isEditor } from "../../../store";
 import { toast, confirmDialog } from "../../../components/ui";
 import { sightBlocked, lightAt, sensesOf } from "../rules/lighting";
+import { isInteractiveTarget } from "./shortcuts";
 import { useAssetManifest, useTextureManifest } from "../../mapeditor/assets/manifest";
 import { setManifests } from "./MapV2Layers";
 import { wallIndex, type MapWall } from "../model/mapV2";
@@ -125,9 +126,8 @@ export default function BattlePage() {
   useEffect(() => {
     if (!S || !map) return;
     const h = (e: KeyboardEvent) => {
-      const tag = (e.target as HTMLElement).tagName;
       if (e.key === "Escape") { setTargeting(null); setResolve(null); setMoveAtk(null); setCtxMenu(null); setZonePlace(null); setTool("select"); setDropReq(null); setOv(null); setDmgCfm(null); setLoh(null); setSetOpen(false); return; }
-      if (["INPUT", "SELECT", "TEXTAREA"].includes(tag)) return;
+      if (isInteractiveTarget(e.target)) return;
       if (e.key === "?") { setHelp((v) => !v); return; }
       if (!dm) return;
       if ((e.key === " " || e.key.toLowerCase() === "n") && !e.ctrlKey) { e.preventDefault(); b.dispatch((s) => C.nextTurn(s)); return; }
