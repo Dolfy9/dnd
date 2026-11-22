@@ -40,9 +40,12 @@ export function importUvtt(doc: UvttDoc): Partial<MapV2> & { _image?: string } {
   for (const poly of doc.line_of_sight || []) segs(poly, "wall");
   for (const poly of doc.objects_line_of_sight || []) segs(poly, "wall");
   for (const p of doc.portals || []) {
+    const first = steny.length;
     if (p.bounds?.length >= 2) segs(p.bounds, "door", false);
-    steny[steny.length - 1] && (steny[steny.length - 1].open = p.closed === false);
-    steny[steny.length - 1] && (steny[steny.length - 1].locked = !!p.closed);
+    for (const wall of steny.slice(first)) {
+      wall.open = p.closed === false;
+      wall.locked = !!p.closed;
+    }
   }
   const svetla = (doc.lights || []).map((l, i) => ({
     id: `ul${i}`, x: l.position.x - ox, y: l.position.y - oy,
