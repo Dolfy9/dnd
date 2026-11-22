@@ -1,5 +1,6 @@
 /* combat.ts */
 import { applyBattleDamage } from "../../rules/battleDamage";
+import { legendaryActionError, useLegendaryAction } from "../../rules/turn";
 import type { StavBoje, Token, Zone, AttackDef, FxEvent } from "../../types";
 import { uid } from "../../types";
 import { rollInitiative, advanceTurn, byId, log, useEco, ecoFree, ecoOf, moveLeft, resetEconomy } from "../../rules/turn";
@@ -41,9 +42,16 @@ function check(S: StavBoje, setting: "hlidat" | "varovat" | "vypnuto", override:
   if (override) { log(S, "system", msg, "PJ"); return true; }
   return false;
 }
+function spendAttackEconomy(S: StavBoje, t: Token, atk: AttackDef) {
+  if (atk.legendaryCost != null) {
+    if (!isFree(S)) useLegendaryAction(S, t, atk.legendaryCost);
+  } else useEco(S, t, atk.ba ? "b" : atk.rea ? "r" : "a");
+}
 export function cmdAttack(S: StavBoje, a: AtkArgs, ctx: CmdCtx): { ok: boolean; reason?: string } {
   const A = byId(S, a.atkId), B = byId(S, a.tgtId);
   if (!A || !B || !ctx.map) return { ok: false, reason: "chybí útočník/cíl" };
+  const legendaryError = a.atk.legendaryCost != null && !isFree(S) ? legendaryActionError(S, A, a.atk.legendaryCost) : undefined;
+  if (legendaryError) return { ok: false, reason: legendaryError };
   const st = settingsOf(S).automatizace;
   // Metamagic (Sorcerer): SP náklad + efekty
   let atk: AttackDef = a.atk;
@@ -71,7 +79,7 @@ export function cmdAttack(S: StavBoje, a: AtkArgs, ctx: CmdCtx): { ok: boolean; 
       if (slotErr && !isFree(S) && !check(S, st.sloty, a.override, `${A.nazev}: ${a.atk.nazev} bez volného slotu (⚙ DM)`))
         return { ok: false, reason: slotErr };
       if (!isFree(S)) consumeSlot(A, a.atk, a.slot, a.pact);
-      if (!a.atk.ba && !a.atk.rea) useEco(S, A, "a"); else if (a.atk.ba) useEco(S, A, "b"); else useEco(S, A, "r");
+      spendAttackEconomy(S, A, a.atk);
       const tgtId = p.zone?.shape.kind === "emanation" || p.target === "self" ? A.id : B.id;
       addEffect(S, tgtId, p.id, A.id);
       const e2 = S.eco[A.id];
@@ -93,7 +101,7 @@ export function cmdAttack(S: StavBoje, a: AtkArgs, ctx: CmdCtx): { ok: boolean; 
     const hr2 = applyHealing(B, rr.total);
     const healed = hr2.healed ?? rr.total;
     if (!isFree(S)) { consumeSlot(A, a.atk, a.slot, a.pact); if (a.atk.conc) { dropConc(S, A.id); A.conc = a.atk.kouzlo || a.atk.nazev; } }
-    if (!a.atk.ba && !a.atk.rea) useEco(S, A, "a"); else if (a.atk.ba) useEco(S, A, "b"); else useEco(S, A, "r");
+    spendAttackEconomy(S, A, a.atk);
     fx(S, "heal", { to: [B.x ?? 0, B.y ?? 0], text: `+${healed}`, tokenId: B.id });
     log(S, "heal", `${A.nazev}: ${a.atk.nazev} → ${B.nazev} +${healed} HP (${rr.parts.join("+") || dice})`, A.nazev);
     return { ok: true };
@@ -104,7 +112,7 @@ export function cmdAttack(S: StavBoje, a: AtkArgs, ctx: CmdCtx): { ok: boolean; 
     if (slotErr && !isFree(S) && !check(S, st.sloty, a.override, `${A.nazev}: ${a.atk.nazev} bez volného slotu (⚙ DM)`))
       return { ok: false, reason: slotErr };
     if (!isFree(S)) { consumeSlot(A, a.atk, a.slot, a.pact); if (a.atk.conc) { dropConc(S, A.id); A.conc = a.atk.kouzlo || a.atk.nazev; } }
-    if (!a.atk.ba && !a.atk.rea) useEco(S, A, "a"); else if (a.atk.ba) useEco(S, A, "b"); else useEco(S, A, "r");
+    spendAttackEconomy(S, A, a.atk);
     log(S, "system", `${A.nazev} seslal ${a.atk.kouzlo || a.atk.nazev}${a.slot ? ` (${a.slot}. slot)` : ""}${a.atk.ritual && !a.slot ? " (rituál)" : ""}`, A.nazev, a.atk.text?.slice(0, 400));
     return { ok: true };
   }
@@ -124,6 +132,7 @@ export function cmdAttack(S: StavBoje, a: AtkArgs, ctx: CmdCtx): { ok: boolean; 
   const force = isFree(S) || a.override && st.dosah === "hlidat" || st.dosah === "varovat";
   const r = resolveAttack(actx, { manualD20: a.manualD20, force: force && !ev.canTarget });
   if (!r) return { ok: false, reason: ev.beyondRange ? "mimo dostřel" : ev.cover === 9 ? "plný kryt" : "nelze zacílit" };
+  if (a.atk.legendaryCost != null) spendAttackEconomy(S, A, a.atk);
   if (!ev.canTarget) log(S, "system", `⚙ DM: útok ${a.atk.nazev} přes ${ev.beyondRange ? "dostřel" : "plný kryt"}`, A.nazev);
   const n = a.atk.n || 1;
   const parts = a.manualDmg != null
@@ -221,7 +230,7 @@ export function cmdAttack(S: StavBoje, a: AtkArgs, ctx: CmdCtx): { ok: boolean; 
     consumeSlot(A, a.atk, a.slot, a.pact);
     if (a.atk.conc) { dropConc(S, A.id); A.conc = a.atk.kouzlo || a.atk.nazev; }
   }
-  if (!a.atk.ba && !a.atk.rea) {
+  if (a.atk.legendaryCost == null && !a.atk.ba && !a.atk.rea) {
     // Attack action: Extra Attack — první útok stojí akci, další jdou z počítadla atkLeft
     const eco = ecoOf(S, A);
     if (!isFree(S) && !a.atk.kouzlo && (eco.atkLeft ?? 0) > 0) eco.atkLeft!--;
@@ -231,7 +240,7 @@ export function cmdAttack(S: StavBoje, a: AtkArgs, ctx: CmdCtx): { ok: boolean; 
       if (!isFree(S) && !a.atk.kouzlo && (A.extraAtk || 0) > 1) eco.atkLeft = A.extraAtk! - 1;
     }
   }
-  else if (a.atk.ba) useEco(S, A, "b"); else useEco(S, A, "r");
+  else if (a.atk.legendaryCost == null) spendAttackEconomy(S, A, a.atk);
   return { ok: true };
 }
 
@@ -287,6 +296,8 @@ export interface AreaArgs { srcId: string; spec: AreaSpec; atk: AttackDef; manua
 export function cmdArea(S: StavBoje, a: AreaArgs, ctx: CmdCtx): { ok: boolean; targets: number; reason?: string } {
   const A = byId(S, a.srcId);
   if (!A) return { ok: false, targets: 0 };
+  const legendaryError = a.atk.legendaryCost != null && !isFree(S) ? legendaryActionError(S, A, a.atk.legendaryCost) : undefined;
+  if (legendaryError) return { ok: false, targets: 0, reason: legendaryError };
   if (a.meta?.length) {
     const cost = metaCost(a.meta, a.atk.lvl || 0);
     if (!spendSP(A, cost)) return { ok: false, targets: 0, reason: `Sorcery Points: potřeba ${cost}` };
@@ -299,6 +310,7 @@ export function cmdArea(S: StavBoje, a: AreaArgs, ctx: CmdCtx): { ok: boolean; t
       return { ok: false, targets: 0, reason: slotErr };
   }
   const targets = tokensInArea(a.spec, S.tok, A);
+  if (a.atk.legendaryCost != null) spendAttackEconomy(S, A, a.atk);
   let dmgBase = a.manualDmg;
   if (dmgBase == null && a.atk.dmg) {
     let dice = a.atk.dmg;
@@ -340,7 +352,7 @@ export function cmdArea(S: StavBoje, a: AreaArgs, ctx: CmdCtx): { ok: boolean; t
   log(S, "attack", `${A.nazev}: ${a.atk.nazev} (${targets.map((t) => t.nazev).join(", ") || "nikdo v oblasti"})`, A.nazev);
   consumeSlot(A, a.atk, a.slot, a.pact);
   if (a.atk.conc) { dropConc(S, A.id); A.conc = a.atk.kouzlo || a.atk.nazev; }
-  if (!a.atk.ba) useEco(S, A, "a"); else useEco(S, A, "b");
+  if (a.atk.legendaryCost == null) spendAttackEconomy(S, A, a.atk);
   return { ok: true, targets: targets.length };
 }
 

@@ -8,6 +8,7 @@ export default function TurnBanner({ S }: { S: StavBoje }) {
   const t = cur(S);
   if (!t) return null;
   const items: string[] = [];
+  if (S.legendaryWindow) items.push("Konec tahu — legendární akce, nebo Další pro pokračování");
   const msgs = (S.turnMsgs as string[] | undefined) || [];
   if (msgs.length) items.push(...msgs.slice(0, 6));
   if (t.conc) items.push(`${t.nazev}: Concentration na ${t.conc}`);

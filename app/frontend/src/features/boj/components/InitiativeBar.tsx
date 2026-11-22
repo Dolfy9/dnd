@@ -120,7 +120,7 @@ export default function InitiativeBar({ S, sel, onSelect, onNext, onRoll, onUndo
           <button className="boj-btn2" onClick={onRedo} disabled={!canRedo} title="Vpřed (Ctrl+Shift+Z)"><RotateCw size={14} /></button>
           <button className="boj-btn2 pri" onClick={onRoll} title="Hodit iniciativu za všechny"><Dices size={14} /> Iniciativa</button>
           <button className="boj-btn2 acc" onClick={onNext} disabled={!S.ord.length} title={c ? `Další tah (teď: ${c.nazev})` : "Další tah"}>
-            <SkipForward size={14} /> {c ? <>Další<span className="boj-init-next"> ({c.nazev.split(" ")[0]})</span></> : "Začít"}
+            <SkipForward size={14} /> {S.legendaryWindow ? "Pokračovat" : c ? <>Další<span className="boj-init-next"> ({c.nazev.split(" ")[0]})</span></> : "Začít"}
           </button>
         </div>
       )}

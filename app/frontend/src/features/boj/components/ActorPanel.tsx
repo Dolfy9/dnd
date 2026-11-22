@@ -1,7 +1,7 @@
 /* Panel aktivního/vybraného účastníka: útoky, kouzla (výběr slotu), standardní
    akce 2024, sloty/zdroje (klikatelné), action economy. Pro hráče read-only. */
 import type { AttackDef, StavBoje, Token } from "../types";
-import { STD_ACTIONS, ecoOf, moveLeft } from "../rules/turn";
+import { STD_ACTIONS, ecoOf, moveLeft, legendaryActionError } from "../rules/turn";
 import { featureActions } from "../state/commands/features";
 import { METAMAGIC, isSorcerer } from "../rules/actions/features";
 import { useState } from "react";
@@ -11,6 +11,7 @@ import ConditionIcon from "./ConditionIcon";
 import { sg } from "../types";
 import { Sword, Wand2, Hand, Zap, ChevronRight, Shield } from "lucide-react";
 import type { Targeting } from "./BattleMap";
+import { isFree } from "../rules/free";
 
 export default function ActorPanel({ S, t, targeting, onAttack, onStdAction, onResource, onUndoMove, onHoverAtk, dm, onCheck, onUseItem, onFeature }: {
   S: StavBoje; t: Token; targeting: Targeting | null;
@@ -29,14 +30,16 @@ export default function ActorPanel({ S, t, targeting, onAttack, onStdAction, onR
   const e = ecoOf(S, t);
   const mv = moveLeft(S, t);
   const side = SIDE_STYLE[t.side];
-  const actions = (t.atk || []).filter((a) => !a.ba && !a.rea);
+  const actions = (t.atk || []).filter((a) => !a.ba && !a.rea && a.legendaryCost == null);
   const bonus = (t.atk || []).filter((a) => a.ba);
   const reac = (t.atk || []).filter((a) => a.rea);
+  const legendary = (t.atk || []).filter((a) => a.legendaryCost != null);
   const spells = (t.kouzla || []);
 
   const AtkRow = ({ a }: { a: AttackDef }) => {
     const used = a.rc && t.spent?.[a.nazev];
-    const busy = (a.ba && e.b) || (a.rea && e.r) || (!a.ba && !a.rea && e.a);
+    const legendaryError = a.legendaryCost != null && !isFree(S) ? legendaryActionError(S, t, a.legendaryCost) : undefined;
+    const busy = a.legendaryCost != null ? !!legendaryError : (a.ba && e.b) || (a.rea && e.r) || (!a.ba && !a.rea && e.a);
     const ds = dmgStyle(a.typ);
     const active = targeting?.atk === a;
     const leveled = (a.lvl || 0) > 0;
@@ -51,12 +54,12 @@ export default function ActorPanel({ S, t, targeting, onAttack, onStdAction, onR
     return (
       <div className={`boj-atkwrap ${slotFor === a ? "open" : ""}`}>
         <button className={`boj-atk ${used || busy || noSlots ? "off" : ""} ${active ? "on" : ""}`} onClick={pick}
-                disabled={!dm}
+                disabled={!dm || !!legendaryError}
                 onMouseEnter={() => onHoverAtk?.(a)} onMouseLeave={() => onHoverAtk?.(null)}
-                title={noSlots ? "Došly sloty" : a.text || `${a.nazev}${a.bonus != null ? ` ${sg(a.bonus)}` : ""}${a.dmg ? ` — ${a.dmg} ${a.typ}` : ""}`}>
+                title={legendaryError || (noSlots ? "Došly sloty" : a.text || `${a.nazev}${a.bonus != null ? ` ${sg(a.bonus)}` : ""}${a.dmg ? ` — ${a.dmg} ${a.typ}` : ""}`)}>
           <span className="boj-atk-ico" style={{ background: ds.bg, color: ds.c }}>{ds.icon}</span>
           <span className="boj-atk-name">{a.nazev}{a.n && a.n > 1 ? ` ×${a.n}` : ""}
-            <small>{a.ba ? "Bonus" : a.rea ? "Reakce" : "Action"}{a.melee ? ` · ${a.reach || 5} ft` : a.range ? ` · ${a.range} ft` : ""}</small>
+            <small>{a.legendaryCost != null ? `Legendární · ${a.legendaryCost}` : a.ba ? "Bonus" : a.rea ? "Reakce" : "Action"}{a.melee ? ` · ${a.reach || 5} ft` : a.range ? ` · ${a.range} ft` : ""}</small>
           </span>
           <span className="boj-atk-meta">
             {a.bonus != null && <b>{sg(a.bonus)}</b>}
@@ -148,7 +151,8 @@ export default function ActorPanel({ S, t, targeting, onAttack, onStdAction, onR
         </div>
       )}
       {!!bonus.length && <div className="boj-sec"><h4><Zap size={12} /> Bonus</h4>{bonus.map((a, i) => <AtkRow key={i} a={a} />)}</div>}
-      {!!reac.length && <div className="boj-sec"><h4><Shield size={12} /> Reakce / Legendární</h4>{reac.map((a, i) => <AtkRow key={i} a={a} />)}</div>}
+      {!!reac.length && <div className="boj-sec"><h4><Shield size={12} /> Reakce</h4>{reac.map((a, i) => <AtkRow key={i} a={a} />)}</div>}
+      {!!legendary.length && <div className="boj-sec"><h4><Shield size={12} /> Legendární · {Math.max(0, (t.legendary?.max || 0) - (t.legendary?.used || 0))}/{t.legendary?.max || 0}</h4>{legendary.map((a, i) => <AtkRow key={i} a={a} />)}</div>}
       {!!t.zdroje.length && (
         <div className="boj-sec"><h4><Hand size={12} /> Zdroje</h4>
           {t.zdroje.map((z, i) => (

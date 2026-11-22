@@ -23,6 +23,7 @@ export function log(S: StavBoje, typ: LogEntry["typ"], t: string, kdo?: string, 
 
 /** Hod iniciativy za všechny žetony; Surprise (2024) = Disadvantage. */
 export function rollInitiative(S: StavBoje, rng: Rng = defaultRng, surpriseIds: string[] = []): void {
+  delete S.legendaryWindow;
   for (const t of S.tok) {
     const r = d20(surpriseIds.includes(t.id) ? -1 : 0, rng);
     t.init = r.r + (t.initB || 0) + alertInit(t);
@@ -43,7 +44,6 @@ export function resetEconomy(S: StavBoje, t: Token): void {
   S.eco[t.id] = { a: 0, b: 0, r: 0, moved: 0, objInt: 0, spell: 0, baSpell: 0, dash: 0, disengage: 0, extraA: 0 };
   if (t.x != null) t.startPos = [t.x, t.y!];
   t.react = true;
-  if (t.legendary) t.legendary.used = 0;
 }
 
 /** Zbývající pohyb ve ft (speed − moved + Dash + efekty, speed0 stavy = 0). */
@@ -62,6 +62,24 @@ export function useEco(S: StavBoje, t: Token, k: "a" | "b" | "r" | "objInt"): bo
   if (e[k]) return false;
   e[k] = 1;
   if (k === "r") t.react = false;
+  return true;
+}
+
+export function legendaryActionError(S: StavBoje, t: Token, cost: number): string | undefined {
+  if (t.dead || t.hp <= 0 || isIncap(t)) return "Legendární akce: tvor nemůže jednat";
+  const window = S.legendaryWindow;
+  if (!window || window.actorId !== cur(S)?.id || window.actorId === t.id)
+    return "Legendární akce: jen na konci tahu jiného tvora";
+  if (window.usedBy.includes(t.id)) return "Jen jedna legendární akce na konci tahu";
+  if (!Number.isInteger(cost) || cost < 1 || !t.legendary || t.legendary.max - t.legendary.used < cost)
+    return "Nedostatek legendárních akcí";
+}
+
+export function useLegendaryAction(S: StavBoje, t: Token, cost: number): boolean {
+  if (legendaryActionError(S, t, cost)) return false;
+  t.legendary!.used += cost;
+  S.legendaryWindow!.usedBy.push(t.id);
+  log(S, "effect", `${t.nazev}: legendární akce −${cost} (${t.legendary!.max - t.legendary!.used}/${t.legendary!.max})`, t.nazev);
   return true;
 }
 
@@ -93,6 +111,7 @@ export function endOfTurnProcess(S: StavBoje, t: Token, rng: Rng = defaultRng): 
 export function startOfTurnProcess(S: StavBoje, t: Token, rng: Rng = defaultRng): string[] {
   const out: string[] = [];
   resetEconomy(S, t);
+  if (t.legendary) t.legendary.used = 0;
   for (const n of tickEffects(t, "start", t.id)) out.push(`${t.nazev}: efekt ${n} skončil`);
   for (const u of t.atk || []) {
     if (u.rc && t.spent?.[u.nazev] && settingsOf(S).automatizace.recharge === "auto") {
@@ -113,6 +132,7 @@ export function advanceTurn(S: StavBoje, rng: Rng = defaultRng): { newRound: boo
   const t = cur(S);
   const free = settingsOf(S).rezim === "volny";
   if (free) {
+    delete S.legendaryWindow;
     S.ord = (S.ord || []).filter((id) => { const x = byId(S, id); return x && !x.dead; });
     let ni = (S.turn ?? -1) + 1;
     let newRound = false;
@@ -123,12 +143,24 @@ export function advanceTurn(S: StavBoje, rng: Rng = defaultRng): { newRound: boo
     S.turnMsgs = [];
     return { newRound, msg };
   }
-  if (t) msg.push(...endOfTurnProcess(S, t, rng));
+  if (t && !S.legendaryWindow) {
+    msg.push(...endOfTurnProcess(S, t, rng));
+    S.legendaryWindow = { actorId: t.id, usedBy: [] };
+    if (S.tok.some(owner => owner.atk.some(atk => atk.legendaryCost != null && !legendaryActionError(S, owner, atk.legendaryCost)))) {
+      msg.unshift(`Konec tahu ${t.nazev} — okno pro legendární akce; Další pokračuje`);
+      for (const m of msg) log(S, "system", m, "PJ");
+      S.turnMsgs = msg;
+      return { newRound: false, msg };
+    }
+  }
+  delete S.legendaryWindow;
+  const order = S.ord || [];
+  const living = (id: string) => { const actor = byId(S, id); return actor && !actor.dead; };
+  const nextId = order.slice(S.turn + 1).find(living) ?? order.find(living);
+  const newRound = nextId != null && S.turn >= 0 && order.indexOf(nextId) <= S.turn;
   S.ord = (S.ord || []).filter((id) => { const x = byId(S, id); return x && !x.dead; });
-  let ni = (S.turn ?? -1) + 1;
-  let newRound = false;
-  if (ni >= S.ord.length) { ni = 0; S.round += 1; newRound = true; msg.push(`— kolo ${S.round} —`); }
-  S.turn = ni;
+  if (newRound) { S.round += 1; msg.push(`— kolo ${S.round} —`); }
+  S.turn = nextId == null ? -1 : S.ord.indexOf(nextId);
   const nx = cur(S);
   if (nx) msg.push(...startOfTurnProcess(S, nx, rng));
   if (nx) log(S, "turn", `${nx.nazev} je na tahu${newRound ? ` (kolo ${S.round})` : ""}`, "PJ");

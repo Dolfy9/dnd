@@ -52,7 +52,8 @@ export interface AttackDef {
   // meta
   n?: number;                   // útoků za akci
   ba?: boolean;                 // bonus action
-  rea?: boolean;                // reaction / legendary
+  rea?: boolean;                // reaction
+  legendaryCost?: number;
   rc?: number;                  // Recharge X–6 (X)
   xd?: number;                  // X/Day (pocet)
   lvl?: number;                 // spell level (0 = cantrip)
@@ -311,6 +312,7 @@ export interface StavBoje {
   ord: string[];
   turn: number;
   round: number;
+  legendaryWindow?: { actorId: string; usedBy: string[] };
   log: LogEntry[];
   eco: Record<string, EcoState>;
   zones: Zone[];

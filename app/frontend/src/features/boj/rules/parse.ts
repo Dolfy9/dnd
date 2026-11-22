@@ -49,6 +49,10 @@ export function parseMonsterAction(nazev: string, text: string, kind: "action" |
   const o: AttackDef = { nazev, kind: "feature", text, n: 1 };
   if (kind === "bonus") o.ba = true;
   if (kind === "reaction") o.rea = true;
+  if (kind === "legendary") {
+    const cost = `${nazev} ${text}`.match(/Costs?\s*(\d+)\s*(?:Legendary\s+)?Actions?/i);
+    o.legendaryCost = cost ? Number(cost[1]) : 1;
+  }
   const rc = nazev.match(/Recharge\s*(\d+)/i) || text.match(/\(Recharge\s*(\d+)[–-]6\)/i);
   if (rc) { o.rc = Number(rc[1]); }
   const xd = nazev.match(/(\d+)\/Day/i) || text.match(/\((\d+)\/Day\)/i);
@@ -112,7 +116,6 @@ export function monsterAttacks(m: MonsterEntry): AttackDef[] {
   for (const a of m.reakce || []) out.push(parseMonsterAction(a.nazev, a.text, "reaction"));
   for (const a of m.legendarni || m.legendary || []) {
     const o = parseMonsterAction(a.nazev, a.text, "legendary");
-    o.rea = true;
     const cost = a.nazev.match(/\(Costs?\s*(\d+)\s*Actions?\)/i);
     if (cost) o.pozn = `${cost[1]} legendary actions`;
     out.push(o);

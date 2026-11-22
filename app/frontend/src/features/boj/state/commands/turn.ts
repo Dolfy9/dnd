@@ -25,4 +25,4 @@ export const setInit = (S: StavBoje, id: string, v: number) => {
   if (S.turn >= S.ord.length) S.turn = 0;
 };
 export const nextTurn = (S: StavBoje) => { advanceTurn(S); };
-export const setTurnTo = (S: StavBoje, idx: number) => { if (idx >= 0 && idx < S.ord.length) S.turn = idx; };
+export const setTurnTo = (S: StavBoje, idx: number) => { if (idx >= 0 && idx < S.ord.length) { delete S.legendaryWindow; S.turn = idx; } };

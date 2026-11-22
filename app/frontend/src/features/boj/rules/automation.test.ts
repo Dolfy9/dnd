@@ -31,12 +31,12 @@ describe("Lay on Hands 2024", () => {
 
 describe("recharge d6", () => {
   it.each([[0.5, true], [0.66, true], [0.67, false], [0.999, false]])("recharges 5–6 using a d6 at rng %s", (rng, spent) => {
-    const a = token({ atk: [{ nazev: "Breath", rc: 5 }], spent: { Breath: true } }); const s = state(a);
+    const a = token({ atk: [{ nazev: "Breath", kind: "feature", rc: 5 }], spent: { Breath: true } }); const s = state(a);
     startOfTurnProcess(s, a, () => rng);
     expect(!!a.spent.Breath).toBe(spent);
   });
   it("does not roll unspent abilities or manual recharge", () => {
-    const a = token({ atk: [{ nazev: "Breath", rc: 5 }] }); const s = state(a);
+    const a = token({ atk: [{ nazev: "Breath", kind: "feature", rc: 5 }] }); const s = state(a);
     const rng = vi.fn(() => 0.999);
     startOfTurnProcess(s, a, rng);
     a.spent.Breath = true; s.nastaveni!.automatizace.recharge = "rucne";
@@ -83,7 +83,7 @@ describe("automatic concentration", () => {
       { id: "other", nazev: "Bless", src: "other", conc: "Bless", mods: {} },
     ] });
     const s = state(a, b);
-    s.zones = [{ id: "z", nazev: "Bless", src: a.id, conc: "Bless", shape: { kind: "sphere", size: 5 }, anchor: [0, 0] }];
+    s.zones = [{ id: "z", nazev: "Bless", style: "bless", src: a.id, conc: "Bless", shape: { kind: "sphere", size: 5 }, anchor: [0, 0] }];
     cmdDamage(s, a.id, 8, "Fire");
     expect(a.conc).toBe(false);
     expect(b.effects.map(e => e.id)).toEqual(["other"]);
@@ -115,14 +115,14 @@ describe("automatic concentration", () => {
   it("checks concentration even when temp HP absorbs zone damage", () => {
     vi.spyOn(Math, "random").mockReturnValue(0);
     const a = token({ conc: "Bless", tmp: 50 }); const s = state(a);
-    triggerZone(s, a, { id: "z", nazev: "Fire", shape: { kind: "sphere", size: 5 }, anchor: [0, 0], trigger: { on: "enter", dmg: { dice: "10", typ: "Fire" } } }, "enter");
+    triggerZone(s, a, { id: "z", nazev: "Fire", style: "fire", shape: { kind: "sphere", size: 5 }, anchor: [0, 0], trigger: { on: "enter", dmg: { dice: "10", typ: "Fire" } } }, "enter");
     expect(a.hp).toBe(2000); expect(a.conc).toBe(false);
   });
   it.each([false, true])("handles concentration through attack/area commands (area=%s)", area => {
     vi.spyOn(Math, "random").mockReturnValue(0);
     const a = token({ x: 0, y: 0 }); const b = token({ x: 1, y: 0, conc: "Bless" }); const s = state(a, b);
     const ctx = { map: { id: "m", nazev: "M", podklad: "mesto", mrizka: [".....", "....."] } };
-    const atk = { nazev: "Fire", range: 30, bonus: 10, dmg: "8", typ: "Fire" };
+    const atk = { nazev: "Fire", kind: "feature" as const, range: 30, bonus: 10, dmg: "8", typ: "Fire" };
     const result = area
       ? cmdArea(s, { srcId: a.id, atk, spec: { shape: "sphere", size: 5, anchor: [1, 0] } }, ctx)
       : cmdAttack(s, { atkId: a.id, tgtId: b.id, atk, manualD20: 15, manualDmg: 8 }, ctx);
