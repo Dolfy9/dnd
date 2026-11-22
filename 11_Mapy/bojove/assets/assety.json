@@ -3734,6 +3734,26 @@
     "bojove/assets/Efekty/varianty/ov-svetlusky-v3.webp"
    ],
    "vyska": 0
+  },
+  {
+   "id": "pristav-vor-plachta",
+   "nazev": "Vor s plátěnou plachtou",
+   "kategorie": "Přístav",
+   "src": "bojove/assets/Přístav/pristav-vor-plachta.webp",
+   "varianty": [
+    "bojove/assets/Přístav/varianty/pristav-vor-plachta-v1.webp",
+    "bojove/assets/Přístav/varianty/pristav-vor-plachta-v2.webp"
+   ],
+   "w": 3,
+   "h": 3,
+   "vyska": 1.2,
+   "cover": 2,
+   "tags": [
+    "Přístav",
+    "vor",
+    "plachta"
+   ],
+   "custom": false
   }
  ]
 }

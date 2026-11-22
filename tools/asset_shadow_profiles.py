@@ -32,7 +32,7 @@ def height(asset):
         return 0
     if re.search(r"sloup|soch|strom|smrk|skrin|skříň|rotunda|pilíř|pillar|wardrobe|stalaktit|stożar|stěžeň|skala|skála", text):
         return 3
-    if re.search(r"fontana|fontána|urna|kolik|kolík|stul|stůl|postel|zidle|židle|plot|hrada|hradba|zídka", text):
+    if re.search(r"fontana|fontána|urna|kolik|kolík|stul|stůl|postel|zidle|židle|plot|hrada|hradba|zídka|\bvor\b|\braft\b", text):
         return 1.2
     if re.search(r"lavic|lavič|bedn|crate|sud|barrel|ker|keř|bush|truhl|kamen|kámen|balvan", text):
         return .6

@@ -1,0 +1,94 @@
+{
+ "source": "gen10",
+ "textures": {
+  "zahrada-trava-kvety": {
+   "sha256": "11508a3d4f93da652c0229cdfe7d3540bbcc06b1a6351008a160450fb9c03ec6",
+   "offset_blend": false,
+   "before": {
+    "x": {
+     "edge": 24.32,
+     "interior_p95": 24.887
+    },
+    "y": {
+     "edge": 21.378,
+     "interior_p95": 23.119
+    }
+   },
+   "after": {
+    "x": {
+     "edge": 26.84,
+     "interior_p95": 26.916
+    },
+    "y": {
+     "edge": 23.202,
+     "interior_p95": 24.73
+    }
+   }
+  },
+  "zahrada-mech-listi": {
+   "sha256": "057bb92dcd1a02642302bc861febf931f56ad8ae09b5a157f97b14c883bba2be",
+   "offset_blend": false,
+   "before": {
+    "x": {
+     "edge": 21.086,
+     "interior_p95": 19.744
+    },
+    "y": {
+     "edge": 20.073,
+     "interior_p95": 20.558
+    }
+   },
+   "after": {
+    "x": {
+     "edge": 22.848,
+     "interior_p95": 21.335
+    },
+    "y": {
+     "edge": 21.462,
+     "interior_p95": 22.035
+    }
+   }
+  },
+  "zahrada-hlina-koreny": {
+   "sha256": "5ef4d8414b6cc88ae0a44b1fc489721286de615c4666bd9b73516d21213b4b4d",
+   "offset_blend": false,
+   "before": {
+    "x": {
+     "edge": 14.01,
+     "interior_p95": 15.782
+    },
+    "y": {
+     "edge": 12.87,
+     "interior_p95": 16.702
+    }
+   },
+   "after": {
+    "x": {
+     "edge": 15.094,
+     "interior_p95": 16.874
+    },
+    "y": {
+     "edge": 13.861,
+     "interior_p95": 17.704
+    }
+   }
+  }
+ },
+ "sprites": {
+  "pristav-vor-plachta": {
+   "sha256": "71d7e115089e827aecbb3c588e689138a3cda4cbc7a55d91a56d303bdbabd88c",
+   "alpha_coverage": 0.74935,
+   "magenta_pixels": 0
+  },
+  "pristav-vor-plachta-v1": {
+   "sha256": "a9782a3c8181a9042d100e245cd4e9c2fd2a5a4e8975e0167bac5992b9c1bbad",
+   "alpha_coverage": 0.75041,
+   "magenta_pixels": 0
+  },
+  "pristav-vor-plachta-v2": {
+   "sha256": "ce5a919139f7a26bc189a010c07adeb28128a248b529adc7ee48ae5e8afc3092",
+   "alpha_coverage": 0.75028,
+   "magenta_pixels": 0
+  }
+ }
+}

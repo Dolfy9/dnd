@@ -59,11 +59,25 @@ class ReferenceMapsTest(unittest.TestCase):
         self.assertEqual(harbor["malba"][0]["t"], "hluboka-voda")
         self.assertEqual(harbor["mrizka"][20][12], "~")
         self.assertEqual(harbor["mrizka"][9][12], ".")
-        self.assertTrue(any(o["asset"] == "p3-lodni-paluba" for o in harbor["objekty"]))
-        self.assertTrue(any(o["asset"] == "stan" for o in harbor["objekty"]))
+        raft = next(o for o in harbor["objekty"] if o["asset"] == "pristav-vor-plachta")
+        self.assertEqual(raft["v"], 0)
+        self.assertEqual(raft["w"], raft["h"])
+        self.assertFalse(any(o["asset"] in {"stan", "p3-lodni-paluba"} for o in harbor["objekty"]))
+        amber = [l for l in harbor["svetla"] if l["color"] == "#ff9f45"]
+        self.assertEqual(len(amber), 9)
+        self.assertTrue(all(l["intenzita"] == 1 and l["dim"] <= 9 for l in amber))
+        self.assertTrue(all(m["atmosfera"]["barva"] == "#010102" for m in (harbor, garden)))
         self.assertTrue(any(o["asset"] == "m-kamenna-zidka" for o in harbor["objekty"]))
         self.assertGreater(len(garden["objekty"]), 700)
-        self.assertTrue({"trava", "teren-les", "hlina"} <= {p["t"] for p in garden["malba"] if p["h"] == 0})
+        self.assertTrue({"t-zahrada-trava-kvety", "t-zahrada-mech-listi", "t-zahrada-hlina-koreny"} <= {p["t"] for p in garden["malba"]})
+        hedges = [r for r in garden["trasy"] if r["druh"] == "plot"]
+        self.assertEqual(len(hedges), 4)
+        self.assertTrue(all(r["hladke"] and r["sirka"] >= 1.25 for r in hedges))
+        for y in (3.5, 25):
+            bands = [r for r in hedges if r["pts"][0][1] == y or r["pts"][-1][1] == y]
+            self.assertEqual(len(bands), 2)
+            self.assertEqual(min(p[0] for r in bands for p in r["pts"]), 1)
+            self.assertEqual(max(p[0] for r in bands for p in r["pts"]), 41)
         self.assertEqual(sum(o["asset"] == "z-socha-kral" for o in garden["objekty"]), 8)
         for asset in ["z-rotunda-ruina", "z-jezirko-fontana", "ov-svetlusky", "ov-mesic-odlesk"]:
             self.assertTrue(any(o["asset"] == asset for o in garden["objekty"]))

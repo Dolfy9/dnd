@@ -26,7 +26,7 @@ it("imports stable contiguous reference variants, intact replacement slots and s
 });
 it("indexes usable reference textures and four firefly slots without importing rejected tiles",()=>{
  const textures=textureManifest.textury;
- const added=textures.filter((t:{id:string})=>t.id.startsWith("t-"));expect(added).toHaveLength(5);
+ const added=textures.filter((t:{id:string})=>t.id.startsWith("t-"));expect(added).toHaveLength(8);
  for(const t of added)expect(t.cells).toBe(4);
  expect(textures.some((t:{id:string})=>["t-molo-prkna","t-zed-brectan"].includes(t.id))).toBe(false);
  expect(assets["ov-svetlusky"].varianty).toHaveLength(3);

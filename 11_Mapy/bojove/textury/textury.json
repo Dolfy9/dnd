@@ -281,6 +281,24 @@
    "nazev": "Zahradní trávník",
    "src": "bojove/textury/t-zahradni-travnik.webp",
    "cells": 4
+  },
+  {
+   "id": "t-zahrada-trava-kvety",
+   "nazev": "Zahrada – jetel a drobné květy",
+   "src": "bojove/textury/t-zahrada-trava-kvety.webp",
+   "cells": 4
+  },
+  {
+   "id": "t-zahrada-mech-listi",
+   "nazev": "Zahrada – mech a spadané listí",
+   "src": "bojove/textury/t-zahrada-mech-listi.webp",
+   "cells": 4
+  },
+  {
+   "id": "t-zahrada-hlina-koreny",
+   "nazev": "Zahrada – vlhká hlína s kořeny",
+   "src": "bojove/textury/t-zahrada-hlina-koreny.webp",
+   "cells": 4
   }
  ]
 }

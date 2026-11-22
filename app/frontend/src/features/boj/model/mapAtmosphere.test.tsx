@@ -100,6 +100,19 @@ describe("shared image compositing", () => {
     expect(svg).not.toContain("map-light-effect");
     expect(svg).toContain('opacity="0.9"');
   });
+  it("keeps amber chroma through the floor projection rather than using a white light", () => {
+    const m = {...base(), atmosfera:{amb:.26,barva:"#010102"}, svetla:[{id:"lantern",x:1,y:1,bright:3,dim:9,color:"#ff9f45",intenzita:1}]};
+    const glow=renderToStaticMarkup(<MapAtmosphereArtwork map={m} layer="glow"/>);
+    const light=visualLights(m)[0];
+    expect(light.color).toBe("#ff9f45");
+    expect(light.bright).toBeCloseTo(14.4);
+    expect(light.radius).toBeCloseTo(57.6);
+    expect(glow).toContain('flood-color="#ff9f45"');
+    expect(glow).toContain('in2="SourceAlpha" operator="in"');
+    expect(glow).toContain('mix-blend-mode:screen');
+    const dark=renderToStaticMarkup(<MapAtmosphereArtwork map={m} layer="darkness"/>);
+    expect(dark).toContain('fill="#010102" opacity="0.74"');
+  });
   it("shares feathered cones, oriented strips and wall clipping between glow and darkness", () => {
     const m: MapV2={...base(),atmosfera:{amb:.2,barva:"#101522"},steny:[{id:"wall",a:[1.5,0],b:[1.5,3],typ:"door"}],svetla:[
       {id:"cone",x:1,y:1,bright:5,dim:5,tvar:"kuzel",smer:45,sirka:70,efekt:"plamen",rychlost:2},
