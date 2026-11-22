@@ -53,7 +53,31 @@
   "start_druzina": "a glowing blue magical rune circle sigil drawn on the ground",
   "start_nepritel": "a glowing red magical rune circle sigil drawn on the ground",
   "zar": "a soft round glow of warm orange firelight, light fading to the edges",
-  "aktivni": "a thin circular ring of golden magical light, glowing, empty center"
+  "aktivni": "a thin circular ring of golden magical light, glowing, empty center",
+  "portal": "a swirling magical portal on the ground, vortex of glowing arcane blue and violet energy in a ring of runed stones",
+  "portal2": "a swirling infernal portal on the ground, vortex of glowing green fel fire in a cracked obsidian ring",
+  "lucerna": "a lit iron lantern with warm glowing glass",
+  "pochoden": "a burning wall torch in an iron sconce",
+  "stul": "a rustic wooden tavern table with a candle, mug and bread",
+  "zidle": "a simple wooden chair",
+  "koberec": "an ornate red and gold oriental rug, long rectangular",
+  "studna": "a round stone well with a wooden roof frame and bucket",
+  "oltar": "a carved stone altar with candles and a glowing gem",
+  "socha": "a weathered stone statue of a robed angel seen from above",
+  "kmen": "a fallen mossy tree log, long horizontal",
+  "parez": "a mossy tree stump with mushrooms",
+  "houby": "a cluster of glowing fairy-ring mushrooms",
+  "lekniny": "floating lily pads with pink water lilies",
+  "rakos": "a clump of tall reeds and cattails",
+  "stan": "a canvas camping tent seen from above",
+  "vuz": "a wooden merchant wagon with canvas cover, long horizontal",
+  "krev": "a splatter of dark red blood on the ground",
+  "truhla": "an open treasure chest full of gold coins",
+  "regal": "a wooden bookshelf with old books, long horizontal",
+  "krystal": "a cluster of glowing purple crystals",
+  "hrob": "a mossy stone gravestone and grave mound",
+  "kapradi": "a lush fern plant",
+  "keltsky_kamen": "a tall standing menhir stone with carved glowing runes"
  },
  "icon": {
   "stetec": "a paintbrush",
@@ -83,5 +107,18 @@
   "ovl_zar": "A soft round glow of warm orange-gold firelight with subtle flickering wisps, bright near the center and fading smoothly to the edges, on a perfectly pure black background, no flames, no objects, no text. Top-down, centered, fills the frame.",
   "ovl_vineta": "A pseudo-realistic dark smoky vignette frame: pure white empty center, edges darkening into heavy black smoke and shadow with organic wispy irregular shapes, square image, no objects, no text.",
   "tex_mlha": "Seamless tileable texture of drifting thin fog and mist wisps, soft grey-white mist on a pure black background, top-down, natural organic shapes, no objects, no text, all edges tile seamlessly."
+ },
+ "fx_template": "Seamless tileable visual effects texture for a top-down fantasy battle map overlay: {s}, on a perfectly pure black background, no objects, no text, all four edges tile seamlessly.",
+ "fx": {
+  "fx_dest": "thin bright white-grey diagonal rain streaks of varied length and brightness, falling at about 15 degrees from vertical, sparse and natural",
+  "fx_dest2": "dense fine faint rain streaks, thin white lines slanted about 15 degrees, many small and soft",
+  "fx_snih": "scattered soft white snowflakes of various sizes, some blurred, sparse",
+  "fx_snih2": "many tiny fine white snow particles, soft and slightly blurred, dense",
+  "fx_vlny": "bright white water surface caustic light pattern and ripple highlights, thin organic lines",
+  "fx_mraky": "soft dark storm cloud shadow shapes rendered as grey-white cloud masses with soft edges",
+  "fx_jiskry": "tiny glowing orange embers and sparks drifting, sparse"
+ },
+ "fx_other": {
+  "fx_blesk": "A jagged bright white-blue lightning bolt with branches crossing the frame diagonally, glowing, on a perfectly pure black background, no text."
  }
 }

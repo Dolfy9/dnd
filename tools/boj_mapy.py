@@ -7,6 +7,8 @@ T strom, % bedny/sarkofág/stůl (half cover, těžký terén), ^ těžký teré
 Spuštění: python3 tools/boj_mapy.py [--prepsat]
          python3 tools/boj_mapy.py --predlohy   # schematické předlohy pro ilustrace (viz tools/boj_obrazky.md)
 Ilustrace map leží v 11_Mapy/bojove/<id>.jpg a mapa na ně odkazuje polem "obrazek".
+Volitelná vizuální pole pocasi, rekvizity, malba, svetlo a svetla používá Stavitel.
+Režim --pridat zachovává existující mapy včetně těchto polí; --prepsat je znovu vytvoří.
 """
 import json, random, sys
 from pathlib import Path

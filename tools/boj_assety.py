@@ -2,7 +2,7 @@
 """Připraví textury a průhledné rekvizity pro bojové mapy (Pillow).
 
 Použití: python3 tools/boj_assety.py [vstupní_složka] [--sheet cesta.png]
-Výchozí vstup je ~/gen; tex_*, prop_*, icon_* a ovl_*.png se převedou do web/assets/boj.
+Výchozí vstup je ~/gen; tex_*, prop_*, icon_*, ovl_* a fx_*.png se převedou do web/assets/boj.
 Textury mají plynulé návaznosti, rekvizity odstraněné purpurové pozadí.
 Volitelný přehled ukazuje textury 2×2 a rekvizity na šedém i tmavém pozadí.
 """
@@ -55,9 +55,11 @@ def prop(image, size=256):
     return square.resize((size, size), Image.Resampling.LANCZOS)
 
 
-def overlay(image, key):
-    image = image.convert("RGB").resize((1024, 1024), Image.Resampling.LANCZOS)
+def overlay(image, key, size=1024, boost=1):
+    image = image.convert("RGB").resize((size, size), Image.Resampling.LANCZOS)
     alpha = image.convert("L")
+    if boost != 1:
+        alpha = alpha.point(lambda value: min(255, round(value * boost)))
     if key == "vineta":
         alpha = ImageChops.invert(alpha)
         image = Image.new("RGB", image.size, "black")
@@ -93,7 +95,7 @@ def main():
     parser.add_argument("--sheet", type=Path)
     args = parser.parse_args()
     source = args.input.expanduser()
-    inputs = sorted(p for prefix in ("tex", "prop", "icon", "ovl") for p in source.glob(prefix + "_*.png") if p.name != "prop_zar.png")
+    inputs = sorted(p for prefix in ("tex", "prop", "icon", "ovl", "fx") for p in source.glob(prefix + "_*.png") if p.name != "prop_zar.png")
     if not inputs:
         parser.error(f"Žádné podporované PNG assety v {source}")
     paths = []
@@ -102,8 +104,12 @@ def main():
         target = OUT / kind / (key + ".webp")
         target.parent.mkdir(parents=True, exist_ok=True)
         with Image.open(path) as image:
-            large = key.startswith(("strom", "zakladna", "start_")) or key == "aktivni"
-            result = texture(image) if kind == "tex" else overlay(image, key) if kind == "ovl" else prop(image, 128 if kind == "icon" else 512 if large else 256)
+            large = key.startswith(("strom", "zakladna", "start_", "portal")) or key in ("aktivni", "stan", "vuz", "stul", "koberec")
+            if kind == "fx":
+                image = image if key == "blesk" else texture(image)
+                result = overlay(image, key, 768 if key == "blesk" else 512, 3 if key.startswith("dest") else 1)
+            else:
+                result = texture(image) if kind == "tex" else overlay(image, key) if kind == "ovl" else prop(image, 128 if kind == "icon" else 512 if large else 256)
         result.save(target, "WEBP", quality=76, method=6, exact=True)
         paths.append(target)
     if args.sheet:

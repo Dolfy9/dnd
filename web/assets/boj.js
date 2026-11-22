@@ -473,7 +473,7 @@
   }
   function topExtra() {
     const m = map();
-    return '<button data-act="undo" title="Vrátit poslední krok (Ctrl+Z)"' + (A.hist.length ? "" : " disabled") + '>' + iconImage("zpet") + ' Zpět</button>'
+    return '<label class="bj-weather-choice">Počasí <select data-weather>' + weatherOptions(weatherNow()) + '</select></label><button data-act="animace" aria-pressed="' + FX.enabled + '">' + iconImage("nastaveni") + ' Animace</button><button data-act="undo" title="Vrátit poslední krok (Ctrl+Z)"' + (A.hist.length ? "" : " disabled") + '>' + iconImage("zpet") + ' Zpět</button>'
       + (m.obrazek ? '<button data-act="obr" class="' + (S.bezObr ? "" : "on") + '" title="Ilustrovaná mapa / schéma">Ilustrace</button>' : "")
       + '<button data-act="teren" class="' + (S.teren ? "on" : "") + '" title="Zobrazit terén z mřížky (zdi, voda, krytí)">Terén</button><button data-act="mriz" class="' + (S.mriz === false ? "" : "on") + '" title="Mřížka">Mřížka</button>';
   }
@@ -551,9 +551,232 @@
   function load() { try { S = JSON.parse(localStorage.getItem("boj-stav")) || fresh(); } catch (e) { S = fresh(); } if (S.map >= A.M.mapy.length) S.map = 0; S.eco = S.eco || { a: 0, b: 0, spell: 0, baSpell: 0 }; S.oa = S.oa || []; S.meta = freshMeta(S.meta); }
 
   // ---------- stavitel map ----------
-  const BUILD = { active: false, tool: "b", tile: "#", size: 1, side: "druzina", stroke: null, pngGrid: false };
-  const BUILD_TOOLS = [["b", "stetec", "Štětec"], ["r", "obdelnik", "Obdélník"], ["l", "cara", "Čára"], ["f", "vypln", "Výplň"], ["e", "guma", "Guma"], ["i", "kapatko", "Kapátko"], ["s", "rozhazet", "Rozházet"], ["p", "start", "Start pozice"]];
+  const BUILD = { active: false, tool: "b", tile: "#", size: 1, side: "druzina", stroke: null, pngGrid: false, prop: "portal", selected: null, propDrag: null, texture: "g", brush: 2, opacity: .8, hardness: .5, erase: false, painting: null, light: null, lightDrag: null, lightColor: "#ffbf68", intensity: .85, radius: 4, flicker: true };
+  const BUILD_TOOLS = [["b", "stetec", "Štětec"], ["r", "obdelnik", "Obdélník"], ["l", "cara", "Čára"], ["f", "vypln", "Výplň"], ["e", "guma", "Guma"], ["i", "kapatko", "Kapátko"], ["s", "rozhazet", "Rozházet"], ["p", "start", "Start pozice"], ["o", "stavet", "Rekvizity"], ["k", "stetec", "Malovat texturou"], ["h", "nastaveni", "Světlo"]];
   const PALETTE = [["Terén", ".gr^"], ["Voda", "~,="], ["Překážky a kryt", "#oT%"], ["Ostatní", "+_xS"]];
+
+  const WEATHER = { "": "Bez počasí", dest: "Déšť", bourka: "Bouřka", snih: "Sníh", mlha: "Mlha", popel: "Poletující popel" };
+  const FREE_PROPS = {
+    strom: "Dub", strom2: "Borovice", strom3: "Bříza", ker: "Keř", ker2: "Křoví", balvan: "Balvan", balvan2: "Skály", sloup: "Sloup", bedny: "Bedny", sudy: "Sudy", ohen: "Oheň", dvere: "Dveře", sarkofag: "Sarkofág", kosti: "Kosti",
+    portal: "Modrý portál", portal2: "Fialový portál", lucerna: "Lucerna", pochoden: "Pochodeň", stul: "Stůl", zidle: "Židle", koberec: "Koberec", studna: "Studna", oltar: "Oltář", socha: "Socha", kmen: "Kmen", parez: "Pařez", houby: "Houby", lekniny: "Lekníny", rakos: "Rákos", stan: "Stan", vuz: "Vůz", krev: "Krev", truhla: "Truhla", regal: "Regál", krystal: "Krystal", hrob: "Hrob", kapradi: "Kapradí", keltsky_kamen: "Runový kámen"
+  };
+  const FX = { enabled: true, weather: {}, timer: null };
+  try { FX.enabled = localStorage.getItem("boj-animace") !== "off"; } catch (e) { }
+
+  const TEXTURES = ["mesto", "krypta", "les", "ruiny", "reka", "more", "pristav", "bazina", "snih", "jeskyne", "hory", "poust", "plaz", "g", "r", "wall", "rubble", "voda", "melcina", "most", "propast", "schody", "skala", "bedrock", "parchment", "panel", "mlha"];
+  const TEXTURE_NAMES = { g: "Tráva", r: "Cesta", wall: "Zdivo", rubble: "Sutiny", voda: "Hluboká voda", melcina: "Mělčina", most: "Most", propast: "Propast", schody: "Schody", skala: "Skála", bedrock: "Podloží", parchment: "Pergamen", panel: "Dřevo", mlha: "Mlha" };
+  const LIGHT_COLORS = [["#ffbf68", "Teplá"], ["#fff5de", "Denní"], ["#79bfff", "Ledová"], ["#b18aff", "Tajemná"], ["#ff6666", "Rudá"], ["#79ffb5", "Zelená"]];
+  const LIGHT_PRESETS = [["Bright Light", "Den", 1], ["Dim Light", "Šero", .65], ["Night", "Noc", .35], ["Darkness", "Tma", .08], ["Torches", "Pochodně", .18]];
+  function ambient(m) { return m.svetlo?.amb ?? (/darkness|tma/i.test(m.osvetleni || "") ? .68 : /dim/i.test(m.osvetleni || "") ? .84 : 1); }
+  function lightList(m) {
+    return [...(m.svetla || []), ...(m.rekvizity || []).filter(p => /^(ohen|pochoden|lucerna)$/.test(p.k)).map(p => ({ x: p.x, y: p.y, r: 2.5 * p.s, barva: "#ffbf68", i: .7, f: p.a !== false }))];
+  }
+  function paintSvg(m) {
+    if (!m.malba?.length) return '<g class="bj-paint"></g>';
+    return '<g class="bj-paint"><defs>' + TEXTURES.map(t => '<pattern id="bj-paint-' + t + '" width="3" height="3" patternUnits="userSpaceOnUse"><image href="' + art("tex", t) + '" width="3" height="3"/></pattern>').join("") + '</defs>' + m.malba.map((stroke, i) => {
+      if (!TEXTURES.includes(stroke.t) || !stroke.p?.length) return "";
+      const d = stroke.p.map(([x, y], n) => (n ? "L" : "M") + x + "," + y).join("") + (stroke.p.length === 1 ? "l.001,.001" : "");
+      const blur = stroke.b * (1 - (stroke.h ?? .5)) * .24, w = m.mrizka[0].length, h = m.mrizka.length;
+      return '<defs><filter id="bj-brush-blur-' + i + '" x="-100%" y="-100%" width="300%" height="300%"><feGaussianBlur stdDeviation="' + blur + '"/></filter><mask id="bj-brush-' + i + '" maskUnits="userSpaceOnUse" x="0" y="0" width="' + w + '" height="' + h + '"><path d="' + d + '" fill="none" stroke="white" stroke-width="' + stroke.b + '" stroke-linecap="round" stroke-linejoin="round" filter="url(#bj-brush-blur-' + i + ')"/></mask></defs><rect width="' + w + '" height="' + h + '" fill="url(#bj-paint-' + stroke.t + ')" opacity="' + stroke.o + '" mask="url(#bj-brush-' + i + ')"/>';
+    }).join("") + '</g>';
+  }
+  function lightingSvg(m) {
+    const lights = lightList(m);
+    if (!m.svetlo && !lights.length) return '<g class="bj-lighting"></g>';
+    const w = m.mrizka[0].length, h = m.mrizka.length;
+    let defs = "", holes = "", glows = "", handles = "";
+    lights.forEach((l, i) => {
+      if (![l.x, l.y, l.r, l.i].every(Number.isFinite)) return;
+      const color = /^#[0-9a-f]{6}$/i.test(l.barva) ? l.barva : "#ffbf68";
+      const sprite = ' href="' + art("ovl", "zar") + '" x="' + (l.x - l.r) + '" y="' + (l.y - l.r) + '" width="' + (2 * l.r) + '" height="' + (2 * l.r) + '"';
+      defs += '<filter id="bj-light-color-' + i + '"><feFlood flood-color="' + color + '"/><feComposite in2="SourceGraphic" operator="in"/></filter>';
+      holes += '<image' + sprite + ' opacity="' + l.i + '" filter="url(#bj-light-hole)"/>';
+      glows += '<image' + sprite + ' opacity="' + (l.i * .55) + '" filter="url(#bj-light-color-' + i + ')" class="' + (l.f ? "bj-flame" : "") + '"/>';
+      if (building() && BUILD.tool === "h" && i < (m.svetla || []).length) handles += '<image data-light="' + i + '" href="' + art("prop", "aktivni") + '" x="' + (l.x - .35) + '" y="' + (l.y - .35) + '" width=".7" height=".7" opacity="' + (BUILD.light === i ? 1 : .45) + '"/>';
+    });
+    const tint = /^#[0-9a-f]{6}$/i.test(m.svetlo?.barva) ? m.svetlo.barva : "#080c18";
+    return '<g class="bj-lighting" clip-path="url(#bj-map-clip)"><defs>' + defs + '<filter id="bj-light-hole"><feColorMatrix type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 0"/></filter><mask id="bj-darkmask"><rect width="' + w + '" height="' + h + '" fill="white"/>' + holes + '</mask></defs><rect width="' + w + '" height="' + h + '" fill="' + tint + '" opacity="' + (1 - ambient(m)) + '" mask="url(#bj-darkmask)"/><g style="mix-blend-mode:screen" pointer-events="none">' + glows + '</g><g class="bj-light-handles">' + handles + '</g></g>';
+  }
+  function refreshArt() {
+    const paint = A.host.querySelector(".bj-paint"), light = A.host.querySelector(".bj-lighting");
+    if (paint) paint.outerHTML = paintSvg(map());
+    if (light) light.outerHTML = lightingSvg(map());
+  }
+  function strokeDistance(point, stroke) {
+    let distance = Infinity;
+    stroke.p.forEach((a, i) => {
+      const b = stroke.p[Math.max(0, i - 1)], dx = a[0] - b[0], dy = a[1] - b[1], length = dx * dx + dy * dy;
+      const t = length ? clamp(((point[0] - b[0]) * dx + (point[1] - b[1]) * dy) / length, 0, 1) : 0;
+      distance = Math.min(distance, Math.hypot(point[0] - b[0] - t * dx, point[1] - b[1] - t * dy));
+    });
+    return distance;
+  }
+  function textureDown(e) {
+    if (e.button !== 0) return;
+    const point = freePoint({ clientX: e.clientX, clientY: e.clientY, shiftKey: false });
+    snap(BUILD.erase || e.altKey ? "Smazat malbu" : "Malovat texturou", true);
+    const strokes = map().malba || (map().malba = []);
+    BUILD.painting = { erase: BUILD.erase || e.altKey, index: strokes.length };
+    if (!BUILD.painting.erase) strokes.push({ t: BUILD.texture, b: BUILD.brush, o: BUILD.opacity, h: BUILD.hardness, p: [point] });
+    else map().malba = strokes.filter(stroke => strokeDistance(point, stroke) > (stroke.b + BUILD.brush) / 2);
+    A.host.setPointerCapture(e.pointerId); refreshArt();
+  }
+  function lightDown(e) {
+    if (e.button !== 0) return;
+    const hit = e.target.closest("[data-light]"), point = freePoint(e);
+    if (hit) {
+      BUILD.light = Number(hit.dataset.light); BUILD.lightDrag = false;
+      A.host.setPointerCapture(e.pointerId); refreshArt(); return;
+    }
+    snap("Umístit světlo", true);
+    const lights = map().svetla || (map().svetla = []);
+    lights.push({ x: point[0], y: point[1], r: BUILD.radius, barva: BUILD.lightColor, i: BUILD.intensity, f: BUILD.flicker });
+    BUILD.light = lights.length - 1; save(); draw();
+  }
+  function gallery(title, attr, entries, selected, kind) {
+    return '<fieldset class="bj-gallery"><legend>' + title + '</legend><input data-gallery-search placeholder="Hledat…" aria-label="Hledat: ' + title + '"><div class="bj-cardgrid">' + entries.map(([k, name]) => '<button type="button" ' + attr + '="' + k + '" class="' + (k === selected ? "on" : "") + '"><img alt="" src="' + art(kind, k) + '"><span>' + name + '</span></button>').join("") + '</div></fieldset>';
+  }
+  function artPanel() {
+    if (BUILD.tool === "k") return gallery("Malovat texturou", "data-texture", TEXTURES.map(k => [k, TEXTURE_NAMES[k] || GROUND_NAMES[k] || k]), BUILD.texture, "tex") + '<label>Průměr štětce <input data-brush="brush" type="range" min=".2" max="12" step=".1" value="' + BUILD.brush + '"></label><label>Tvrdost <input data-brush="hardness" type="range" min="0" max="1" step=".05" value="' + BUILD.hardness + '"></label><label>Krytí <input data-brush="opacity" type="range" min=".05" max="1" step=".05" value="' + BUILD.opacity + '"></label><label><input data-erase type="checkbox"' + (BUILD.erase ? " checked" : "") + '> Mazat celé tahy (nebo Alt)</label><p>Malba nemění pravidla polí. Jeden tah = jeden krok Zpět.</p>';
+    if (BUILD.tool !== "h") return "";
+    const light = (map().svetla || [])[BUILD.light];
+    return '<h3>Světlo</h3><p>Klik: přidat / vybrat · tažení: přesun · kolečko: poloměr · Delete: smazat.</p><label>Okolní jas<input data-ambient type="range" min="0" max="1" step=".02" value="' + ambient(map()) + '"></label><label>Odstín tmy<input data-ambient-color type="color" value="' + (map().svetlo?.barva || "#080c18") + '"></label><div class="bj-colorcards">' + LIGHT_COLORS.map(([c, n]) => '<button data-light-color="' + c + '" style="--bj-color:' + c + '" class="' + ((light?.barva || BUILD.lightColor) === c ? "on" : "") + '"><img src="' + art("ovl", "zar") + '" alt=""><span>' + n + '</span></button>').join("") + '</div><label>Vlastní barva<input data-light-control="barva" type="color" value="' + (light?.barva || BUILD.lightColor) + '"></label><label>Poloměr<input data-light-control="r" type="range" min=".5" max="20" step=".5" value="' + (light?.r || BUILD.radius) + '"></label><label>Intenzita<input data-light-control="i" type="range" min="0" max="1" step=".05" value="' + (light?.i ?? BUILD.intensity) + '"></label><label><input data-light-control="f" type="checkbox"' + ((light?.f ?? BUILD.flicker) ? " checked" : "") + '> Mihotání</label>';
+  }
+  function updateLight(key, value) {
+    const defaults = { barva: "lightColor", r: "radius", i: "intensity", f: "flicker" };
+    BUILD[defaults[key]] = value;
+    const light = (map().svetla || [])[BUILD.light];
+    if (light) { snap("Nastavení světla", true); light[key] = value; save(); }
+    draw();
+  }
+  let pickerId = 0;
+  function visualPickers(root) {
+    root.querySelectorAll('[data-f="map"], [data-setting="podklad"], [name="ground"], [data-setting="pocasi"], [data-weather], [data-light-preset], [data-build-size]').forEach(select => {
+      if (select.dataset.visual) return;
+      select.dataset.visual = "yes"; select.hidden = true;
+      if (select.matches("[data-light-preset]")) {
+        select.innerHTML = LIGHT_PRESETS.map(([v, n]) => '<option value="' + v + '">' + n + '</option>').join("");
+        select.value = map().osvetleni || "Bright Light";
+      }
+      const box = document.createElement("details"); box.className = "bj-picker";
+      const summary = document.createElement("summary"); box.append(summary);
+      const grid = document.createElement("div"); grid.className = "bj-cardgrid"; box.append(grid);
+      if (select.options.length > 8) {
+        const search = document.createElement("input"); search.placeholder = "Hledat…"; search.setAttribute("aria-label", "Hledat možnosti");
+        search.addEventListener("input", () => [...grid.children].forEach(c => c.hidden = !c.textContent.toLocaleLowerCase("cs").includes(search.value.toLocaleLowerCase("cs"))));
+        box.insertBefore(search, grid);
+      }
+      function refresh() {
+        const chosen = grid.querySelector(".on"); summary.innerHTML = chosen ? chosen.innerHTML : "Vybrat…";
+      }
+      [...select.options].forEach(option => {
+        const button = document.createElement("button"); button.type = "button"; button.dataset.visualValue = option.value; button.classList.toggle("on", option.selected); button.setAttribute("aria-pressed", option.selected);
+        if (select.matches('[data-f="map"]')) {
+          const m = A.M.mapy[Number(option.value)], w = m.mrizka[0].length, h = m.mrizka.length;
+          const thumb = { podklad: m.podklad, mrizka: Array.from({ length: 6 }, (_, y) => Array.from({ length: 9 }, (_, x) => m.mrizka[Math.min(h - 1, Math.floor(y * h / 6))][Math.min(w - 1, Math.floor(x * w / 9))]).join("")) };
+          A.thumbnails = A.thumbnails || new Map();
+          const cacheKey = m.podklad + ":" + m.mrizka.join("");
+          if (!A.thumbnails.has(cacheKey)) A.thumbnails.set(cacheKey, '<svg viewBox="0 0 9 6">' + terrainSvg(thumb, 9, 6).replaceAll("bj-", "bj-picker-" + (++pickerId) + "-") + '</svg>');
+          button.innerHTML = A.thumbnails.get(cacheKey);
+        } else {
+          let kind = "tex", key = option.value;
+          if (select.matches('[data-weather], [data-setting="pocasi"]')) { kind = "fx"; key = { dest: "dest", bourka: "blesk", snih: "snih", popel: "jiskry" }[key] || "mlha"; if (key === "mlha") kind = "tex"; }
+          if (select.matches("[data-light-preset]")) { kind = "ovl"; key = "zar"; }
+          if (select.matches("[data-build-size]")) { kind = "icon"; key = "stetec"; }
+          button.innerHTML = '<img alt="" src="' + art(kind, key) + '">';
+          if (select.matches('[data-weather], [data-setting="pocasi"]')) button.style.backgroundImage = 'url(' + art("tex", "les") + ')';
+          if (select.matches("[data-light-preset]")) button.style.backgroundColor = { "Bright Light": "#a69b7d", "Dim Light": "#646050", Night: "#283647", Darkness: "#06080e", Torches: "#3c271c" }[option.value];
+        }
+        button.insertAdjacentHTML("beforeend", '<span>' + esc(option.textContent) + '</span>');
+        button.addEventListener("click", e => { e.preventDefault(); select.value = option.value; grid.querySelectorAll("button").forEach(b => { b.classList.toggle("on", b === button); b.setAttribute("aria-pressed", b === button); }); refresh(); box.open = false; select.dispatchEvent(new Event("change", { bubbles: true })); });
+        grid.append(button);
+      });
+      select.addEventListener("change", () => { grid.querySelectorAll("button").forEach(b => b.classList.toggle("on", b.dataset.visualValue === select.value)); refresh(); });
+      refresh(); select.after(box);
+    });
+  }
+
+
+  function validateMapArt(m) {
+    const num = (v, lo = -Infinity, hi = Infinity) => typeof v === "number" && Number.isFinite(v) && v >= lo && v <= hi;
+    const color = v => typeof v === "string" && /^#[0-9a-f]{6}$/i.test(v);
+    const fail = name => { throw Error("Neplatné pole mapy: " + name); };
+    if (m.pocasi !== undefined && !Object.hasOwn(WEATHER, m.pocasi)) fail("pocasi");
+    if (m.rekvizity !== undefined && (!Array.isArray(m.rekvizity) || !m.rekvizity.every(p => p && Object.hasOwn(FREE_PROPS, p.k) && num(p.x) && num(p.y) && num(p.r) && num(p.s, .05, 20) && (p.a === undefined || typeof p.a === "boolean")))) fail("rekvizity");
+    if (m.malba !== undefined && (!Array.isArray(m.malba) || !m.malba.every(p => p && TEXTURES.includes(p.t) && num(p.b, .05, 120) && num(p.o, 0, 1) && (p.h === undefined || num(p.h, 0, 1)) && Array.isArray(p.p) && p.p.length && p.p.every(x => Array.isArray(x) && x.length === 2 && x.every(v => num(v)))))) fail("malba");
+    if (m.svetlo !== undefined && (!m.svetlo || !num(m.svetlo.amb, 0, 1) || !color(m.svetlo.barva))) fail("svetlo");
+    if (m.svetla !== undefined && (!Array.isArray(m.svetla) || !m.svetla.every(l => l && num(l.x) && num(l.y) && num(l.r, .1, 120) && num(l.i, 0, 1) && color(l.barva) && typeof l.f === "boolean"))) fail("svetla");
+    return m;
+  }
+
+  function weatherOptions(value) { return Object.entries(WEATHER).map(([k, n]) => '<option value="' + k + '"' + (k === value ? " selected" : "") + '>' + n + '</option>').join(""); }
+  function weatherNow() { return building() ? map().pocasi || "" : FX.weather[map().id] ?? map().pocasi ?? ""; }
+  function animationClass(key) {
+    return /^(strom|ker|kapradi|rakos)/.test(key) ? "bj-sway" : /^portal/.test(key) ? "bj-portal" : /^(ohen|pochoden|lucerna)$/.test(key) ? "bj-flame" : /^(krystal|houby|keltsky_kamen)$/.test(key) ? "bj-glow" : "";
+  }
+  function freePropsSvg(m) {
+    return '<g class="bj-freeprops" clip-path="url(#bj-map-clip)">' + (m.rekvizity || []).map((p, i) => {
+      if (!FREE_PROPS[p.k] || ![p.x, p.y, p.r, p.s].every(Number.isFinite)) return "";
+      const selected = building() && BUILD.tool === "o" && BUILD.selected === i;
+      return '<g data-prop="' + i + '" transform="translate(' + p.x + " " + p.y + ')"><g transform="rotate(' + p.r + ') scale(' + p.s + ')"><image class="' + (p.a === false ? "" : animationClass(p.k)) + '" style="animation-delay:-' + (i % 11) + 's" href="' + art("prop", p.k) + '" x="-.5" y="-.5" width="1" height="1"/></g>' + (selected ? '<image pointer-events="none" href="' + art("prop", "aktivni") + '" x="' + (-p.s * .65) + '" y="' + (-p.s * .65) + '" width="' + (p.s * 1.3) + '" height="' + (p.s * 1.3) + '"/>' : "") + '</g>';
+    }).join("") + '</g>';
+  }
+  function refreshFreeProps() {
+    const old = A.host.querySelector(".bj-freeprops");
+    if (old) old.outerHTML = freePropsSvg(map());
+  }
+  function editProp(label, change) {
+    const p = (map().rekvizity || [])[BUILD.selected]; if (!p) return;
+    snap(label, true); change(p, map().rekvizity); save(); draw();
+  }
+  function freePoint(e) {
+    const [x, y] = cellAt(e), w = map().mrizka[0].length, h = map().mrizka.length;
+    return [clamp(e.shiftKey ? Math.floor(x) + .5 : x, 0, w), clamp(e.shiftKey ? Math.floor(y) + .5 : y, 0, h)];
+  }
+  function propDown(e) {
+    if (e.button !== 0) return;
+    const hit = e.target.closest("[data-prop]"), point = freePoint(e);
+    if (hit) {
+      BUILD.selected = Number(hit.dataset.prop);
+      const p = map().rekvizity[BUILD.selected];
+      BUILD.propDrag = { start: point, original: [p.x, p.y], moved: false };
+      A.host.setPointerCapture(e.pointerId); refreshFreeProps(); return;
+    }
+    snap("Umístit rekvizitu", true);
+    const props = map().rekvizity || (map().rekvizity = []);
+    props.push({ k: BUILD.prop, x: point[0], y: point[1], r: 0, s: 1 });
+    BUILD.selected = props.length - 1; save(); draw();
+  }
+  function effectsLayer() {
+    clearTimeout(FX.timer);
+    const board = A.host.querySelector(".bj-board"), svg = board && board.querySelector(".bj-svg");
+    if (!svg) return;
+    board.querySelector(".bj-weather")?.remove();
+    const m = map(), w = m.mrizka[0].length, h = m.mrizka.length, c = svg.clientWidth / (w + .7), weather = weatherNow();
+    const fog = weather === "mlha" || /darkness|tma|dim/i.test(m.osvetleni || "");
+    const layer = document.createElement("div");
+    layer.className = "bj-weather" + (FX.enabled ? "" : " bj-paused");
+    Object.assign(layer.style, { left: (svg.getBoundingClientRect().left - board.getBoundingClientRect().left + board.scrollLeft - board.clientLeft + .7 * c) + "px", top: (.7 * c) + "px", width: (w * c) + "px", height: (h * c) + "px", "--bj-fx-size": (12 * c) + "px" });
+    const image = (key, cls, kind = "fx") => '<div class="bj-fx ' + cls + '" style="background-image:url(' + art(kind, key) + ')"></div>';
+    let html = "";
+    if (weather === "dest" || weather === "bourka") html += image("dest", "bj-rain") + image("dest2", "bj-rain bj-parallax");
+    if (weather === "bourka") html += image("mraky", "bj-cloud") + '<img class="bj-lightning" alt="" src="' + art("fx", "blesk") + '">';
+    if (weather === "snih") html += image("snih", "bj-snow") + image("snih2", "bj-snow bj-parallax");
+    if (weather === "popel") html += image("jiskry", "bj-embers");
+    if (fog) html += image("mlha", "bj-fog", "tex") + image("mlha", "bj-fog bj-parallax", "tex");
+    layer.innerHTML = html; board.append(layer);
+    function lightning() {
+      if (!layer.isConnected || weatherNow() !== "bourka") return;
+      if (FX.enabled && !matchMedia("(prefers-reduced-motion: reduce)").matches) {
+        const bolt = layer.querySelector(".bj-lightning");
+        bolt.style.left = (Math.random() * 75) + "%"; bolt.style.top = (Math.random() * 35) + "%";
+        layer.classList.remove("bj-strike"); void layer.offsetWidth; layer.classList.add("bj-strike");
+      }
+      FX.timer = setTimeout(lightning, 6000 + Math.random() * 9000);
+    }
+    if (weather === "bourka") FX.timer = setTimeout(lightning, 6000 + Math.random() * 9000);
+  }
+
   function building() { return BUILD.active && S && S.tab === "mapa" && document.body.classList.contains("ed-on"); }
   function mapDirty() { return A.mapSaved !== JSON.stringify(A.M); }
   function tileBadge(c) { return c === "o" || c === "T" ? "¾ cover · neprůchozí" : c === "%" ? "½ cover · těžký terén" : c === "~" ? "plavání" : c === "#" || c === "_" ? "neprůchozí" : c === "^" || c === "," ? "těžký terén" : c === "x" ? "nebezpečí" : "běžný pohyb"; }
@@ -564,7 +787,7 @@
     return '<div class="bj-builderbar"><strong>' + iconImage("stavet") + ' Stavitel map</strong><div class="bj-tools">' + BUILD_TOOLS.map(([key, icon, name]) => '<button data-tool="' + key + '" class="' + (BUILD.tool === key ? "on" : "") + '" title="' + name + " (" + key.toUpperCase() + (key === "r" ? "; Shift = obrys" : "") + ')" aria-label="' + name + '">' + iconImage(icon) + '<small>' + key.toUpperCase() + '</small></button>').join("") + '</div><label>Velikost <select data-build-size title="Velikost štětce ([ / ])">' + [1, 2, 3].map(n => '<option' + (n === BUILD.size ? " selected" : "") + '>' + n + '</option>').join("") + '</select></label><button data-act="undo" title="Zpět (Ctrl+Z)"' + (!A.hist.length ? " disabled" : "") + '>' + iconImage("zpet") + '</button><button data-act="redo" title="Znovu (Ctrl+Shift+Z / Ctrl+Y)"' + (!(A.redo || []).length ? " disabled" : "") + '>' + iconImage("znovu") + '</button><button data-act="savemap" class="ed-primary">' + (mapDirty() ? "● " : "") + iconImage("ulozit") + ' Uložit mapy</button><button data-act="buildexit">' + iconImage("hotovo") + ' Hotovo</button><span class="bj-buildhint">' + (BUILD_TOOLS.find(x => x[0] === BUILD.tool) || [0, 0, ""])[2] + ' · ' + esc(TILE[BUILD.tile][0].replace(/ \(.*/, "")) + ' · ' + (mapDirty() ? "Neuložené změny" : "Uloženo") + '</span></div>';
   }
   function builderRefresh() {
-    const board = A.host.querySelector(".bj-board"); if (board) board.innerHTML = boardSvg();
+    const board = A.host.querySelector(".bj-board"); if (board) { board.innerHTML = boardSvg(); effectsLayer(); }
     const bar = A.host.querySelector(".bj-builderbar"); if (bar) bar.outerHTML = builderToolbar();
   }
   function validCell(x, y) { return y >= 0 && y < map().mrizka.length && x >= 0 && x < map().mrizka[0].length; }
@@ -600,6 +823,7 @@
     return result;
   }
   function buildPreview(cell, shift) {
+    if (["o", "k", "h"].includes(BUILD.tool)) return;
     const g = A.host.querySelector(".bj-preview"); if (!g) return;
     if (!validCell(...cell)) { g.innerHTML = ""; return; }
     const c = BUILD.tool === "e" ? "." : BUILD.tile, stroke = BUILD.stroke;
@@ -608,6 +832,9 @@
     const actual = tile(...cell); status(cellName(...cell) + " · " + TILE[actual][0].replace(/ \(.*/, "") + " · " + tileBadge(actual) + (BUILD.tool === "r" ? " · Shift: pouze obrys" : ""));
   }
   function buildDown(e) {
+    if (BUILD.tool === "k") { e.preventDefault(); textureDown(e); return; }
+    if (BUILD.tool === "h") { e.preventDefault(); lightDown(e); return; }
+    if (BUILD.tool === "o") { e.preventDefault(); propDown(e); return; }
     if (e.button !== 0) return; const cell = buildCell(e); if (!validCell(...cell)) return; e.preventDefault();
     if (BUILD.tool === "i") { BUILD.tile = tile(...cell); BUILD.tool = "b"; draw(); return; }
     snap("Stavitel: " + BUILD_TOOLS.find(t => t[0] === BUILD.tool)[2], true);
@@ -620,11 +847,25 @@
     builderRefresh(); buildPreview(cell, e.shiftKey);
   }
   function buildMove(e) {
+    if (BUILD.painting) {
+      const point = freePoint({ clientX: e.clientX, clientY: e.clientY, shiftKey: false });
+      if (BUILD.painting.erase) map().malba = (map().malba || []).filter(stroke => strokeDistance(point, stroke) > (stroke.b + BUILD.brush) / 2);
+      else { const stroke = map().malba[BUILD.painting.index], last = stroke.p.at(-1); if (Math.hypot(point[0] - last[0], point[1] - last[1]) > .08) stroke.p.push(point); }
+      refreshArt(); return;
+    }
+    if (BUILD.lightDrag !== null) { const light = (map().svetla || [])[BUILD.light]; if (light) { if (!BUILD.lightDrag) { snap("Přesun světla", true); BUILD.lightDrag = true; } [light.x, light.y] = freePoint(e); refreshArt(); } return; }
+    if (BUILD.tool === "o") {
+      const drag = BUILD.propDrag, p = (map().rekvizity || [])[BUILD.selected];
+      if (drag && p) { const point = freePoint(e); if (!drag.moved && Math.hypot(point[0] - drag.start[0], point[1] - drag.start[1]) > .04) { snap("Přesun rekvizity", true); drag.moved = true; } if (drag.moved) { p.x = point[0]; p.y = point[1]; refreshFreeProps(); } }
+      return;
+    }
     const cell = buildCell(e), stroke = BUILD.stroke;
     if (stroke && ["b", "e", "s"].includes(BUILD.tool)) { putCells(buildLine(stroke.last, cell).flatMap(footprint), BUILD.tool === "e" ? "." : BUILD.tile, BUILD.tool === "s"); stroke.last = cell; builderRefresh(); }
     buildPreview(cell, e.shiftKey);
   }
   function buildUp(e) {
+    if (BUILD.painting || BUILD.lightDrag !== null) { BUILD.painting = null; BUILD.lightDrag = null; if (A.host.hasPointerCapture(e.pointerId)) A.host.releasePointerCapture(e.pointerId); save(); draw(); return; }
+    if (BUILD.propDrag) { BUILD.propDrag = null; if (A.host.hasPointerCapture(e.pointerId)) A.host.releasePointerCapture(e.pointerId); save(); draw(); return; }
     if (!BUILD.stroke) return;
     if (["r", "l"].includes(BUILD.tool)) putCells(shapeCells(BUILD.stroke.start, buildCell(e), e.shiftKey), BUILD.tile);
     BUILD.stroke = null; if (A.host.hasPointerCapture(e.pointerId)) A.host.releasePointerCapture(e.pointerId); save(); draw();
@@ -637,9 +878,10 @@
   }
   function builderPanel() {
     const m = map(), keys = PALETTE.map(p => p[1]).join("");
-    return '<div class="bj-builderpanel"><h3>Paleta dlaždic</h3>' + (BUILD.tool === "p" ? '<div class="bj-start-toggle">Start pozice: ' + ["druzina", "nepratele"].map(s => '<button data-start-side="' + s + '" class="' + (BUILD.side === s ? "on" : "") + '">' + iconImage("start") + (s === "druzina" ? " Družina" : " Nepřátelé") + '</button>').join("") + '</div>' : "")
+    const gallery = BUILD.tool === "o" ? '<fieldset class="bj-gallery"><legend>Rekvizity</legend><input data-gallery-search placeholder="Hledat rekvizitu…"><h3>Rekvizity</h3><p>Klik: umístit / vybrat · tažení: přesun · Shift: střed pole · Q/E nebo kolečko: otočit · Shift+kolečko nebo +/−: velikost · D: kopie · Delete: smazat.</p><div class="bj-propgallery">' + Object.entries(FREE_PROPS).map(([k, name]) => '<button data-free-key="' + k + '" title="' + name + '" class="' + (BUILD.prop === k ? "on" : "") + '"><img src="' + art("prop", k) + '" alt=""><small>' + name + '</small></button>').join("") + '</div></fieldset>' : "";
+    return '<div class="bj-builderpanel">' + artPanel() + gallery + '<h3>Paleta dlaždic</h3>' + (BUILD.tool === "p" ? '<div class="bj-start-toggle">Start pozice: ' + ["druzina", "nepratele"].map(s => '<button data-start-side="' + s + '" class="' + (BUILD.side === s ? "on" : "") + '">' + iconImage("start") + (s === "druzina" ? " Družina" : " Nepřátelé") + '</button>').join("") + '</div>' : "")
       + PALETTE.map(([name, tiles]) => '<h4>' + name + '</h4><div class="bj-swatchgrid">' + [...tiles].map(c => '<button data-paint="' + esc(c) + '" class="bj-swatch ' + (BUILD.tile === c ? "on" : "") + '" title="' + esc(TILE[c][0]) + (keys.indexOf(c) < 10 ? " (" + ((keys.indexOf(c) + 1) % 10) + ")" : "") + '"><svg viewBox="0 0 1 1">' + tileIcon(c) + '</svg><span>' + esc(TILE[c][0].replace(/ \(.*/, "")) + '<small>' + tileBadge(c) + '</small></span></button>').join("") + '</div>').join("")
-      + '<details class="bj-settings" open><summary>' + iconImage("nastaveni") + ' Nastavení mapy</summary><div class="bj-settings-fields"><label>Název<input data-setting="nazev" value="' + esc(m.nazev) + '"></label><label>Podklad<select data-setting="podklad">' + groundOptions(m.podklad) + '</select></label><div class="bj-groundswatches">' + Object.keys(BASE).map(k => '<button data-ground="' + k + '" title="' + GROUND_NAMES[k] + '" aria-label="' + GROUND_NAMES[k] + '"><img alt="" src="' + base() + 'assets/boj/tex/' + k + '.webp"></button>').join("") + '</div><label>Osvětlení<select data-light-preset><option value="">Vlastní text…</option>' + [["Bright Light", "Jasné světlo"], ["Dim Light", "Šero"], ["Darkness", "Tma"]].map(([v, n]) => '<option value="' + v + '">' + n + '</option>').join("") + '</select><input data-setting="osvetleni" value="' + esc(m.osvetleni || "") + '"></label><label>Popis<textarea data-setting="popis" rows="3">' + esc(m.popis || "") + '</textarea></label><label>Místo (cesta ke stránce)<input data-setting="misto" value="' + esc(m.misto || "") + '"></label><label>Obrázek (cesta relativně k 11_Mapy)<input data-setting="obrazek" value="' + esc(m.obrazek || "") + '"></label><label class="bj-inline"><input type="checkbox" data-build-illustration' + (!S.bezObr ? " checked" : "") + '> Ilustrace</label><button data-act="buildsettings">Použít nastavení</button><div class="bj-dimensions"><label>Šířka<input data-width type="number" min="1" max="120" value="' + m.mrizka[0].length + '"></label><span>×</span><label>Výška<input data-height type="number" min="1" max="120" value="' + m.mrizka.length + '"></label></div><button data-act="buildresize">Změnit velikost</button><small>Obsah zůstane ukotvený vlevo nahoře; přebytek se ořízne.</small></div></details><div class="bj-png"><label><input data-png-grid type="checkbox"' + (BUILD.pngGrid ? " checked" : "") + '> Mřížka v PNG</label><button data-act="buildpng">' + iconImage("export") + ' Export PNG</button></div></div>';
+      + '<details class="bj-settings" open><summary>' + iconImage("nastaveni") + ' Nastavení mapy</summary><div class="bj-settings-fields"><label>Název<input data-setting="nazev" value="' + esc(m.nazev) + '"></label><label>Podklad<select data-setting="podklad">' + groundOptions(m.podklad) + '</select></label><div class="bj-groundswatches">' + Object.keys(BASE).map(k => '<button data-ground="' + k + '" title="' + GROUND_NAMES[k] + '" aria-label="' + GROUND_NAMES[k] + '"><img alt="" src="' + base() + 'assets/boj/tex/' + k + '.webp"></button>').join("") + '</div><label>Počasí<select data-setting="pocasi">' + weatherOptions(m.pocasi || "") + '</select></label><label>Osvětlení<select data-light-preset><option value="">Vlastní text…</option>' + [["Bright Light", "Jasné světlo"], ["Dim Light", "Šero"], ["Darkness", "Tma"]].map(([v, n]) => '<option value="' + v + '">' + n + '</option>').join("") + '</select><input data-setting="osvetleni" value="' + esc(m.osvetleni || "") + '"></label><label>Popis<textarea data-setting="popis" rows="3">' + esc(m.popis || "") + '</textarea></label><label>Místo (cesta ke stránce)<input data-setting="misto" value="' + esc(m.misto || "") + '"></label><label>Obrázek (cesta relativně k 11_Mapy)<input data-setting="obrazek" value="' + esc(m.obrazek || "") + '"></label><label class="bj-inline"><input type="checkbox" data-build-illustration' + (!S.bezObr ? " checked" : "") + '> Ilustrace</label><button data-act="buildsettings">Použít nastavení</button><div class="bj-dimensions"><label>Šířka<input data-width type="number" min="1" max="120" value="' + m.mrizka[0].length + '"></label><span>×</span><label>Výška<input data-height type="number" min="1" max="120" value="' + m.mrizka.length + '"></label></div><button data-act="buildresize">Změnit velikost</button><small>Obsah zůstane ukotvený vlevo nahoře; přebytek se ořízne.</small></div></details><div class="bj-png"><label><input data-png-grid type="checkbox"' + (BUILD.pngGrid ? " checked" : "") + '> Mřížka v PNG</label><button data-act="buildpng">' + iconImage("export") + ' Export PNG</button></div></div>';
   }
   function applySettings() {
     snap("Nastavení mapy", true); const m = map(); A.host.querySelectorAll("[data-setting]").forEach(el => { const k = el.dataset.setting, value = el.value; if ((k === "obrazek" || k === "misto") && !value.trim()) delete m[k]; else m[k] = value; }); save(); draw();
@@ -678,8 +920,9 @@
   function newMapModal() {
     const E = window.MontelienEditor, form = E.el("form", { class: "bj-newmap" });
     form.innerHTML = '<label>Název<input name="nazev" required value="Nová mapa"></label><div class="bj-dimensions"><label>Šířka<input name="w" type="number" min="1" max="120" value="30" required></label><label>Výška<input name="h" type="number" min="1" max="120" value="20" required></label></div><label>Podklad<select name="ground">' + groundOptions("mesto") + '</select></label><fieldset class="bj-templatecards"><legend>Šablona</legend>' + [["empty", "Prázdná", "mesto"], ["room", "Místnost se zdmi", "krypta"], ["forest", "Les", "les"], ["cave", "Jeskyně", "jeskyne"], ["river", "Řeka", "reka"]].map(([kind, name, ground]) => '<label><input type="radio" name="template" value="' + kind + '"' + (kind === "empty" ? " checked" : "") + '><svg viewBox="0 0 12 8">' + terrainSvg({podklad: ground, mrizka: templateGrid(kind, 12, 8, "42")}, 12, 8).replaceAll("bj-", "bj-card-" + kind + "-") + '</svg><span>' + name + '</span></label>').join("") + '</fieldset><label>Semínko generátoru<input name="seed" value="42" required></label>';
+    visualPickers(form);
     form.addEventListener("submit", e => e.preventDefault());
-    form.addEventListener("change", e => { if (e.target.name !== "template") return; const ground = { forest: "les", cave: "jeskyne", river: "reka", room: "krypta", empty: "mesto" }; form.elements.ground.value = ground[form.elements.template.value]; });
+    form.addEventListener("change", e => { if (e.target.name !== "template") return; const ground = { forest: "les", cave: "jeskyne", river: "reka", room: "krypta", empty: "mesto" }; form.elements.ground.value = ground[form.elements.template.value]; form.elements.ground.dispatchEvent(new Event("change", { bubbles: true })); });
     E.modal("Nová mapa", form, [{ text: "Vytvořit mapu", primary: true, click(close) {
       if (!form.reportValidity()) return; const dims = mapDimensions(form, '[name="w"]', '[name="h"]'); if (!dims) return;
       const [w, h] = dims; snap("Nová mapa", true); A.M.mapy.push({ id: "mapa-" + uid(), nazev: form.elements.nazev.value.trim() || "Nová mapa", podklad: form.elements.ground.value, osvetleni: "Bright Light", popis: "", start: { druzina: [], nepratele: [] }, stretnuti: [], mrizka: templateGrid(form.elements.template.value, w, h, form.elements.seed.value) });
@@ -693,6 +936,7 @@
       const svg = new DOMParser().parseFromString(markup, "image/svg+xml").documentElement, W = map().mrizka[0].length, H = map().mrizka.length;
       svg.setAttribute("xmlns", "http://www.w3.org/2000/svg"); svg.setAttribute("viewBox", "0 0 " + W + " " + H); svg.setAttribute("width", W * 64); svg.setAttribute("height", H * 64);
       svg.querySelectorAll(".bj-toks,.bj-ov,.bj-lab,.bj-preview,.bj-starts").forEach(e => e.remove());
+      svg.querySelectorAll("[class]").forEach(e => e.removeAttribute("class"));
       svg.querySelectorAll(".bj-firelight").forEach(e => { e.setAttribute("opacity", ".3"); });
       const cache = new Map();
       await Promise.all([...svg.querySelectorAll("image, feImage")].map(async el => {
@@ -739,28 +983,31 @@
       const free = (x, y) => at(x, y) != null && at(x, y) !== "#", freeX = Number(free(x - 1, y)) + Number(free(x + 1, y)), freeY = Number(free(x, y - 1)) + Number(free(x, y + 1));
       const alongX = freeX === freeY ? hash % 2 === 0 : freeX > freeY;
       const angle = key === "dvere" ? (verticalWalls > horizontalWalls ? 90 : 0) : ["bedny", "sarkofag"].includes(key) ? ((alongX === (key === "bedny") ? 0 : 90) + (hash % 2) * 180) : organic ? hash % 360 : 0;
-      props.push('<image href="' + url + "prop/" + key + '.webp" x="-.5" y="-.5" width="1" height="1" transform="translate(' + (x + .5) + " " + (y + .5) + ") rotate(" + angle + ") scale(" + scale + ')"/>');
+      props.push('<g transform="translate(' + (x + .5) + " " + (y + .5) + ") rotate(" + angle + ") scale(" + scale + ')"><image class="' + animationClass(key) + '" style="animation-delay:-' + (hash % 11) + 's" href="' + url + "prop/" + key + '.webp" x="-.5" y="-.5" width="1" height="1"/></g>');
       if (c === "x") fires.push('<image class="bj-firelight" href="' + art("ovl", "zar") + '" x="' + (x - 1.4) + '" y="' + (y - 1.4) + '" width="3.8" height="3.8"/>');
     }
     let s = '<defs>' + [...new Set([ground, "skala", "bedrock", ...Object.values(SURFACE)])].map(k => '<pattern id="bj-tex-' + k + '" width="3" height="3" patternUnits="userSpaceOnUse"><image href="' + url + 'tex/' + k + '.webp" width="3" height="3"/></pattern>').join("")
       + '<filter id="bj-organic" x="-1" y="-1" width="' + (W + 2) + '" height="' + (H + 2) + '" filterUnits="userSpaceOnUse" primitiveUnits="userSpaceOnUse"><feGaussianBlur in="SourceGraphic" stdDeviation=".35"/><feComponentTransfer result="rounded"><feFuncA type="linear" slope="10" intercept="-3.8"/></feComponentTransfer><feImage href="' + art("tex", "mlha") + '" x="0" y="0" width="' + W + '" height="' + H + '" preserveAspectRatio="none" result="noise"/><feDisplacementMap in="rounded" in2="noise" scale=".13" xChannelSelector="R" yChannelSelector="G"/></filter>'
       + '<filter id="bj-raised" x="-10%" y="-10%" width="120%" height="120%" primitiveUnits="userSpaceOnUse"><feDropShadow dx=".12" dy=".16" stdDeviation=".09" flood-opacity=".65"/></filter>'
+      + '<pattern id="bj-caustic" width="3" height="3" patternUnits="userSpaceOnUse"><image href="' + art("fx", "vlny") + '" width="3" height="3"/></pattern>'
       + Object.keys(paths).filter(softSurface).map(c => '<mask id="bj-mask-' + maskKey(c) + '" maskUnits="userSpaceOnUse" x="-1" y="-1" width="' + (W + 2) + '" height="' + (H + 2) + '" style="mask-type:alpha"><g filter="url(#bj-organic)"><path d="' + paths[c].join("") + '" fill="white"/></g></mask>').join("") + '</defs>';
     s += '<rect width="' + W + '" height="' + H + '" fill="url(#bj-tex-' + ground + ')"/>';
     for (const c of Object.keys(paths).sort((a, b) => (a === "#") - (b === "#") || (b === "rockmass") - (a === "rockmass"))) {
       const soft = softSurface(c);
       s += (soft ? '<g mask="url(#bj-mask-' + maskKey(c) + ')">' : "");
       s += (soft ? '<rect width="' + W + '" height="' + H + '"' : '<path d="' + paths[c].join("") + '"') + ' fill="url(#bj-tex-' + (c === "bedrock" || c === "rockmass" ? "bedrock" : natural && c === "#" ? "skala" : SURFACE[c]) + ')"' + '/>';
+      if (c === "~" || c === ",") s += '<g class="bj-water" opacity=".25"><rect x="-3" y="-3" width="' + (W + 6) + '" height="' + (H + 6) + '" fill="url(#bj-caustic)"/></g><g class="bj-water bj-water-back" opacity=".15"><rect x="-3" y="-3" width="' + (W + 6) + '" height="' + (H + 6) + '" fill="url(#bj-caustic)"/></g>';
       s += soft ? "</g>" : "";
     }
+    s += paintSvg(m);
     s += '<g filter="url(#bj-raised)">' + props.join("") + '</g>';
     const light = m.osvetleni || "", dark = /darkness|tma/i.test(light) ? .32 : /dim/i.test(light) ? .16 : 0;
-    return s + '<g class="bj-atmosphere"><image href="' + art("ovl", "vineta") + '" width="' + W + '" height="' + H + '" preserveAspectRatio="none"/>' + (dark ? '<image href="' + art("tex", "mlha") + '" width="' + W + '" height="' + H + '" preserveAspectRatio="none" opacity="' + (dark * 1.5) + '"/><image href="' + art("ovl", "vineta") + '" width="' + W + '" height="' + H + '" preserveAspectRatio="none" opacity="' + (dark * 2) + '"/>' : "") + fires.join("") + '</g>';
+    return s + '<g class="bj-atmosphere"><image href="' + art("ovl", "vineta") + '" width="' + W + '" height="' + H + '" preserveAspectRatio="none"/>' + (dark ? '<image href="' + art("ovl", "vineta") + '" width="' + W + '" height="' + H + '" preserveAspectRatio="none" opacity="' + (dark * 2) + '"/>' : "") + fires.join("") + '</g>';
   }
   function boardSvg() {
     const m = map(), W = m.mrizka[0].length, H = m.mrizka.length, bg = BASE[m.podklad] || BASE.mesto, C = 34 * (S.zoom || 1);
-    let s = '<svg class="bj-svg" viewBox="-0.7 -0.7 ' + (W + 0.7) + " " + (H + 0.7) + '" width="' + Math.round((W + 0.7) * C) + '" height="' + Math.round((H + 0.7) * C) + '">'
-      + '<defs></defs>';
+    let s = '<svg class="bj-svg ' + (FX.enabled ? "" : "bj-paused") + '" viewBox="-0.7 -0.7 ' + (W + 0.7) + " " + (H + 0.7) + '" width="' + Math.round((W + 0.7) * C) + '" height="' + Math.round((H + 0.7) * C) + '">'
+      + '<defs><clipPath id="bj-map-clip"><rect width="' + W + '" height="' + H + '"/></clipPath></defs>';
     s += '<rect x="0" y="0" width="' + W + '" height="' + H + '" fill="' + bg + '"/>';
     const img = m.obrazek && !S.bezObr, tiles = !img || S.teren || building();
     if (img) s += '<image href="' + base() + "11_Mapy/" + esc(m.obrazek) + '" x="0" y="0" width="' + W + '" height="' + H + '" preserveAspectRatio="none"/>';
@@ -773,7 +1020,7 @@
     s += "</g><g class=\"bj-lab\">";
     for (let x = 0; x < W; x++) s += '<text x="' + (x + .5) + '" y="-.2">' + colName(x) + "</text>";
     for (let y = 0; y < H; y++) s += '<text x="-.35" y="' + (y + .62) + '">' + (y + 1) + "</text>";
-    s += '</g><g class="bj-ov"></g>' + (building() ? builderMarkers() : "") + '<g class="bj-preview" pointer-events="none"></g><g class="bj-toks">';
+    s += '</g>' + freePropsSvg(m) + lightingSvg(m) + '<g class="bj-ov"></g>' + (building() ? builderMarkers() : "") + '<g class="bj-preview" pointer-events="none"></g><g class="bj-toks">';
     const act = actor();
     S.tok.filter(t => t.x != null).forEach(t => {
       const cx = t.x + t.s / 2, cy = t.y + t.s / 2, R = t.s / 2 - .07, ini = t.nazev.split(/\s+/).filter(w => !/^\d+$/.test(w)).map(w => (w.match(/[\p{L}]/u) || [""])[0]).join("").slice(0, 2) + (/\d+$/.test(t.nazev) ? t.nazev.match(/\d+$/)[0] : "");
@@ -888,12 +1135,13 @@
     } else if (keep) { const b = host.querySelector(".bj-board"); b.scrollLeft = keep[0]; b.scrollTop = keep[1]; }
     if (S.tab === "pridat") { drawPcFilters(); search("pc"); search("mon"); }
     if (building()) selectGround(map().podklad);
+    effectsLayer(); visualPickers(host);
   }
   function fitBoard() {
     const board = A.host.querySelector(".bj-board"); if (!board || !board.clientWidth) return;
     const m = map(), style = getComputedStyle(board), height = parseFloat(style.maxHeight) - parseFloat(style.borderTopWidth) - parseFloat(style.borderBottomWidth);
     S.zoom = Math.min(board.clientWidth / ((m.mrizka[0].length + .7) * 34), height / ((m.mrizka.length + .7) * 34));
-    board.innerHTML = boardSvg(); board.scrollLeft = 0; board.scrollTop = 0;
+    board.innerHTML = boardSvg(); board.scrollLeft = 0; board.scrollTop = 0; effectsLayer();
   }
   function centerOn(t) { const b = A.host.querySelector(".bj-board"); if (!b || t.x == null) return; const C = 34 * (S.zoom || 1); b.scrollTo({ left: (t.x + .7) * C - b.clientWidth / 2, top: (t.y + .7) * C - b.clientHeight / 2, behavior: "smooth" }); }
   function search(kind) {
@@ -945,7 +1193,7 @@
       drag = { t, g, dj: overlay(t), moved: false, sx: e.clientX, sy: e.clientY }; g.setPointerCapture(e.pointerId);
     });
     host.addEventListener("pointermove", e => {
-      if (building() && (BUILD.stroke || e.target.closest(".bj-svg"))) { buildMove(e); return; }
+      if (building() && (BUILD.stroke || BUILD.propDrag || BUILD.painting || BUILD.lightDrag !== null || e.target.closest(".bj-svg"))) { buildMove(e); return; }
       if (building()) { const preview = host.querySelector(".bj-preview"); if (preview) preview.innerHTML = ""; return; }
       if (drag) {
         if (Math.abs(e.clientX - drag.sx) + Math.abs(e.clientY - drag.sy) > 4) drag.moved = true;
@@ -961,7 +1209,7 @@
       status(s);
     });
     host.addEventListener("pointerup", e => {
-      if (BUILD.stroke) { buildUp(e); return; }
+      if (BUILD.stroke || BUILD.propDrag || BUILD.painting || BUILD.lightDrag !== null) { buildUp(e); return; }
       if (!drag) return; const t = drag.t, d0 = drag; drag = null;
       if (!d0.moved) { draw(); return; }
       const [px, py] = cellAt(e), x = Math.floor(px - t.s / 2 + .5), y = Math.floor(py - t.s / 2 + .5);
@@ -973,10 +1221,13 @@
       const pcFilter = e.target.closest("[data-pc-filter]");
       if (pcFilter) { const set = A.pcf[pcFilter.dataset.pcFilter], value = pcFilter.dataset.value; set.has(value) ? set.delete(value) : set.add(value); draw(); return; }
       const tb = e.target.closest("[data-tab]"); if (tb) { S.tab = tb.dataset.tab; save(); draw(); return; }
+      const texture = e.target.closest("[data-texture]"); if (texture && building()) { BUILD.texture = texture.dataset.texture; draw(); return; }
+      const color = e.target.closest("[data-light-color]"); if (color && building()) { updateLight("barva", color.dataset.lightColor); return; }
+      const free = e.target.closest("[data-free-key]"); if (free && building()) { BUILD.prop = free.dataset.freeKey; BUILD.selected = null; draw(); return; }
       const tool = e.target.closest("[data-tool]"); if (tool && building()) { BUILD.tool = tool.dataset.tool; draw(); return; }
       const side = e.target.closest("[data-start-side]"); if (side && building()) { BUILD.side = side.dataset.startSide; draw(); return; }
       const ground = e.target.closest("[data-ground]"); if (ground && building()) { selectGround(ground.dataset.ground); return; }
-      const pal = e.target.closest("[data-paint]"); if (pal && document.body.classList.contains("ed-on")) { BUILD.active = true; BUILD.tile = pal.dataset.paint; if (["e", "i", "p"].includes(BUILD.tool)) BUILD.tool = "b"; draw(); return; }
+      const pal = e.target.closest("[data-paint]"); if (pal && document.body.classList.contains("ed-on")) { BUILD.active = true; BUILD.tile = pal.dataset.paint; if (["e", "i", "p", "o", "h", "k"].includes(BUILD.tool)) BUILD.tool = "b"; draw(); return; }
       const b = e.target.closest("[data-act]"); if (!b) return; e.preventDefault();
       const row = b.closest("tr[data-id]"), t = row ? tok(row.dataset.id) : null, act = b.dataset.act, a = actor();
       if (MUT[act]) snap(MUT[act] + (t ? " – " + t.nazev : a && /^(eco|react2|slot|dash|dis|dodge)/.test(act) ? " – " + a.nazev : ""));
@@ -1029,6 +1280,7 @@
         zi() { S.zoom = Math.min(2.5, (S.zoom || 1) * 1.2); save(); draw(); },
         zo() { S.zoom = Math.max(.4, (S.zoom || 1) / 1.2); save(); draw(); },
         fit() { fitBoard(); save(); },
+        animace() { FX.enabled = !FX.enabled; try { localStorage.setItem("boj-animace", FX.enabled ? "on" : "off"); } catch (e) { } draw(); },
         enc() { (map().stretnuti || []).forEach(x => { const m = A.B.find(mm => mm.nazev === x.nazev); if (m) for (let i = 0; i < x.pocet; i++) addTok(monToken(m, "nepratele")); }); place(); save(); draw(); },
         place() { place(); log("Žetony rozestaveny na startovní pozice."); save(); draw(); },
         addpc() { const e2 = A.P[Number(b.dataset.i)], side = A.host.querySelector('[data-side="pc"]').value, t2 = pcToken(e2); t2.side = side; addTok(t2, startPos(side)); save(); draw(); },
@@ -1037,16 +1289,20 @@
         nopaint() { S.paint = null; draw(); },
         savemap() { const saved = JSON.stringify(A.M); window.MontelienEditor.api("PUT", "soubor", { cesta: "11_Mapy/bojove_mapy.json", obsah: JSON.stringify(A.M, null, 1) }).then(() => { A.mapSaved = saved; log("Mapy uloženy do 11_Mapy/bojove_mapy.json.", { pj: true }); save(); draw(); status("Mapy uloženy do 11_Mapy/bojove_mapy.json."); }).catch(er => alert("Chyba: " + er.message)); },
         newmap() { newMapModal(); },
-        mapjson() { const E = window.MontelienEditor, ta = E.el("textarea", { rows: 26, class: "pf-raw" }); ta.value = JSON.stringify(map(), null, 1); const m = E.modal("Mapa – JSON", ta, [{ text: "Použít", primary: true, click() { try { const parsed = JSON.parse(ta.value); if (!Array.isArray(parsed.mrizka) || !parsed.mrizka.length || !parsed.mrizka.every(r => typeof r === "string" && r.length > 0 && r.length === parsed.mrizka[0].length && [...r].every(c => TILE[c]))) throw Error("Mřížka musí mít stejně dlouhé neprázdné řádky se známými dlaždicemi."); snap("JSON mapy", true); A.M.mapy[S.map] = parsed; log("PJ upravil JSON mapy.", { pj: true }); save(); m.close(); draw(); } catch (er) { alert(er.message); } } }]); },
+        mapjson() { const E = window.MontelienEditor, ta = E.el("textarea", { rows: 26, class: "pf-raw" }); ta.value = JSON.stringify(map(), null, 1); const m = E.modal("Mapa – JSON", ta, [{ text: "Použít", primary: true, click() { try { const parsed = JSON.parse(ta.value); if (!Array.isArray(parsed.mrizka) || !parsed.mrizka.length || !parsed.mrizka.every(r => typeof r === "string" && r.length > 0 && r.length === parsed.mrizka[0].length && [...r].every(c => TILE[c]))) throw Error("Mřížka musí mít stejně dlouhé neprázdné řádky se známými dlaždicemi."); validateMapArt(parsed); snap("JSON mapy", true); A.M.mapy[S.map] = parsed; log("PJ upravil JSON mapy.", { pj: true }); save(); m.close(); draw(); } catch (er) { alert(er.message); } } }]); },
         reset() { if (!confirm("Vyčistit střetnutí (žetony, iniciativu, deník)?")) return; const go2 = () => { S = fresh(S.map); log("Nové střetnutí."); save(); draw(); }; if (S.log.length && confirm("Uložit nejdřív deník do záznamu sezení?")) saveLog().then(go2); else go2(); },
         export() { const blob = new Blob([JSON.stringify(S, null, 1)], { type: "application/json" }), u = document.createElement("a"); u.href = URL.createObjectURL(blob); u.download = "stretnuti.json"; u.click(); },
         import() { const i = document.createElement("input"); i.type = "file"; i.accept = ".json"; i.onchange = () => i.files[0].text().then(t2 => { snap("Import"); S = JSON.parse(t2); load2(); log("Stav střetnutí importován.", { pj: true }); save(); draw(); }); i.click(); }
       }[act] || (() => { }))();
     });
     host.addEventListener("change", e => {
+      if (e.target.matches("[data-erase]")) { BUILD.erase = e.target.checked; return; }
+      if (e.target.matches("[data-light-control]")) { updateLight(e.target.dataset.lightControl, e.target.type === "checkbox" ? e.target.checked : e.target.type === "color" ? e.target.value : Number(e.target.value)); return; }
+      if (e.target.matches("[data-ambient], [data-ambient-color]")) { snap("Okolní osvětlení", true); const m = map(); m.svetlo = { amb: ambient(m), barva: "#080c18", ...m.svetlo }; if (e.target.matches("[data-ambient]")) m.svetlo.amb = Number(e.target.value); else m.svetlo.barva = e.target.value; save(); draw(); return; }
+      if (e.target.matches("[data-weather]")) { if (building()) { snap("Počasí mapy", true); map().pocasi = e.target.value; save(); } else FX.weather[map().id] = e.target.value; draw(); return; }
       if (e.target.matches('[data-setting="podklad"]')) { selectGround(e.target.value); return; }
       if (e.target.matches("[data-build-size]")) { BUILD.size = Number(e.target.value); return; }
-      if (e.target.matches("[data-light-preset]")) { if (e.target.value) host.querySelector('[data-setting="osvetleni"]').value = e.target.value; return; }
+      if (e.target.matches("[data-light-preset]")) { snap("Světelná předvolba", true); const preset = LIGHT_PRESETS.find(p => p[0] === e.target.value); map().osvetleni = preset[0]; map().svetlo = { amb: preset[2], barva: "#080c18" }; save(); draw(); return; }
       if (e.target.matches("[data-build-illustration]")) { S.bezObr = !e.target.checked; builderRefresh(); return; }
       if (e.target.matches("[data-png-grid]")) { BUILD.pngGrid = e.target.checked; return; }
       const f = e.target.dataset.f, row = e.target.closest("tr[data-id]"), t = row ? tok(row.dataset.id) : null;
@@ -1056,7 +1312,7 @@
         else { const c = { n: v }; if (v === "Exhaustion") c.lvl = Number(prompt("Úroveň Exhaustion (1–6)", "1")) || 1; const r = prompt("Trvání v kolech (prázdné = dokud neodebereš)", ""); if (Number(r)) c.r = Number(r); t.cond.push(c); log(esc(t.nazev) + ": " + v); }
         save(); draw();
       }
-      if (f === "map") { snap("Změna mapy"); S.map = Number(e.target.value); log("Mapa: " + esc(map().nazev) + "."); S.tok.forEach(t2 => { t2.x = null; }); place(); save(); draw(); }
+      if (f === "map") { BUILD.selected = null; BUILD.light = null; snap("Změna mapy"); S.map = Number(e.target.value); log("Mapa: " + esc(map().nazev) + "."); S.tok.forEach(t2 => { t2.x = null; }); place(); save(); draw(); }
       if (f === "groups") { S.groups = e.target.checked; save(); }
       const mf = e.target.dataset.meta; if (mf) { S.meta[mf] = e.target.type === "checkbox" ? e.target.checked : e.target.value; if (mf === "kampan" && S.meta.quest && (qById(S.meta.quest) || {}).kampan && qById(S.meta.quest).kampan !== S.meta.kampan) S.meta.quest = ""; if (mf === "quest" && !S.meta.kampan && (qById(e.target.value) || {}).kampan) S.meta.kampan = qById(e.target.value).kampan; save(); if (/kampan|quest/.test(mf)) draw(); }
       const bf = e.target.dataset.bf; if (bf) { A.bf = A.bf || {}; A.bf[bf] = e.target.value; draw(); }
@@ -1069,15 +1325,28 @@
         save(); draw();
       }
     });
-    host.addEventListener("input", e => { if (e.target.dataset.q) search(e.target.dataset.q); if (e.target.dataset.bq != null) { A.bf = A.bf || {}; A.bf.q = e.target.value; const l = host.querySelector(".bj-blist"); if (l) l.innerHTML = bojeList(); } });
+    host.addEventListener("input", e => {
+      if (e.target.matches("[data-gallery-search]")) { const q = e.target.value.toLocaleLowerCase("cs"); e.target.closest(".bj-gallery").querySelectorAll("button").forEach(b => b.hidden = !b.textContent.toLocaleLowerCase("cs").includes(q)); return; }
+      if (e.target.matches("[data-brush]")) { BUILD[e.target.dataset.brush] = Number(e.target.value); return; } if (e.target.dataset.q) search(e.target.dataset.q); if (e.target.dataset.bq != null) { A.bf = A.bf || {}; A.bf.q = e.target.value; const l = host.querySelector(".bj-blist"); if (l) l.innerHTML = bojeList(); } });
     host.addEventListener("pointerleave", () => { if (!BUILD.stroke) { const preview = host.querySelector(".bj-preview"); if (preview) preview.innerHTML = ""; } });
-    host.addEventListener("pointercancel", () => { if (BUILD.stroke) { BUILD.stroke = null; undo(); } });
+    host.addEventListener("pointercancel", () => { if (BUILD.painting || BUILD.lightDrag !== null) { BUILD.painting = null; const changed = BUILD.lightDrag !== false; BUILD.lightDrag = null; if (changed) undo(); } if (BUILD.propDrag) { const moved = BUILD.propDrag.moved; BUILD.propDrag = null; if (moved) undo(); } if (BUILD.stroke) { BUILD.stroke = null; undo(); } });
+    host.addEventListener("wheel", e => {
+      if (building() && BUILD.tool === "h" && BUILD.light != null && e.target.closest(".bj-board")) { const light = (map().svetla || [])[BUILD.light]; if (light) { e.preventDefault(); updateLight("r", clamp(light.r + (e.deltaY < 0 ? .5 : -.5), .5, 20)); } return; }
+      if (!building() || BUILD.tool !== "o" || BUILD.selected == null || !e.target.closest(".bj-board")) return;
+      e.preventDefault();
+      editProp(e.shiftKey ? "Velikost rekvizity" : "Otočení rekvizity", p => { if (e.shiftKey) p.s = clamp(p.s * (e.deltaY < 0 ? 1.1 : 1 / 1.1), .2, 8); else p.r += e.deltaY < 0 ? 15 : -15; });
+    }, { passive: false });
     document.addEventListener("keydown", e => {
       if (!document.getElementById("boj-app") || /INPUT|TEXTAREA|SELECT/.test(e.target.tagName) || e.target.isContentEditable || document.querySelector(".ed-modal-bg")) return;
       const key = e.key.toLowerCase(), ctrl = e.ctrlKey || e.metaKey;
       if (ctrl && (key === "z" || key === "y")) { e.preventDefault(); if (!BUILD.stroke) historyStep(key === "y" || e.shiftKey); return; }
       if (building()) {
-        if (ctrl || e.altKey || BUILD.stroke) return;
+        if (ctrl || e.altKey || BUILD.stroke || BUILD.propDrag || BUILD.painting || BUILD.lightDrag !== null) return;
+        if (BUILD.tool === "h" && BUILD.light != null && ["delete", "backspace"].includes(key)) { e.preventDefault(); e.stopPropagation(); snap("Smazat světlo", true); map().svetla.splice(BUILD.light, 1); BUILD.light = null; save(); draw(); return; }
+        if (BUILD.tool === "o" && BUILD.selected != null && ["q", "e", "+", "=", "-", "delete", "backspace", "d"].includes(key)) {
+          e.preventDefault(); e.stopPropagation();
+          editProp("Upravit rekvizitu", (p, props) => { if (key === "q" || key === "e") p.r += key === "q" ? -15 : 15; else if (["+", "=", "-"].includes(key)) p.s = clamp(p.s * (key === "-" ? 1 / 1.1 : 1.1), .2, 8); else if (key === "d") { props.push({ ...p, x: clamp(p.x + .35, 0, map().mrizka[0].length), y: clamp(p.y + .35, 0, map().mrizka.length) }); BUILD.selected = props.length - 1; } else { props.splice(BUILD.selected, 1); BUILD.selected = null; } }); return;
+        }
         if (BUILD_TOOLS.some(t => t[0] === key)) BUILD.tool = key;
         else if (key === "[" || key === "]") BUILD.size = clamp(BUILD.size + (key === "]" ? 1 : -1), 1, 3);
         else if (/^[0-9]$/.test(key)) { BUILD.tile = PALETTE.map(p => p[1]).join("")[(Number(key) + 9) % 10]; if (["e", "i", "p"].includes(BUILD.tool)) BUILD.tool = "b"; }
