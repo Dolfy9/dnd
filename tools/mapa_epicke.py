@@ -81,11 +81,16 @@ class Scene:
     def enclosure(self, points, gaps=None, typ="wall"):
         for i, (a,b) in enumerate(zip(points, points[1:] + points[:1])):
             if gaps and i in gaps:
-                lo, hi, kind = gaps[i]
                 p = lambda t: (round(a[0]+(b[0]-a[0])*t,3),round(a[1]+(b[1]-a[1])*t,3))
-                self.wall(a, p(lo), typ)
-                self.wall(p(lo), p(hi), kind)
-                self.wall(p(hi), b, typ)
+                openings = gaps[i] if isinstance(gaps[i][0], tuple) else [gaps[i]]
+                end = 0
+                for lo, hi, kind in sorted(openings):
+                    if lo > end:
+                        self.wall(p(end), p(lo), typ)
+                    self.wall(p(lo), p(hi), kind)
+                    end = hi
+                if end < 1:
+                    self.wall(p(end), b, typ)
             else:
                 self.wall(a,b,typ)
 
@@ -130,7 +135,10 @@ def inn():
     s.rect(23,3,9,9,"dlazba")
     s.rect(3.4,3.4,11.2,7.2,"koberec",o=.72,r=0)
     s.interior([(3,3),(32,3),(32,23),(3,23)])
-    s.enclosure([(3,3),(32,3),(32,23),(3,23)],{0:(.38,.45,"window"),1:(.22,.33,"window"),2:(.36,.44,"door"),3:(.38,.50,"window")})
+    s.enclosure([(3,3),(32,3),(32,23),(3,23)],{
+        0:[(2/29,4/29,"window"),(.38,.45,"window"),(15/29,17/29,"window")],
+        1:[(.22,.33,"window"),(.8,.9,"window")],
+        2:(.36,.44,"door"),3:(.38,.50,"window")})
     s.wall((3,11),(8,11));s.wall((8,11),(10,11),"door");s.wall((10,11),(15,11));s.wall((15,3),(15,11))
     s.wall((3,16),(12,16));s.wall((12,11),(12,13));s.wall((12,13),(12,15),"door");s.wall((12,15),(12,16))
     s.wall((23,3),(23,8));s.wall((23,8),(23,10),"door");s.wall((23,10),(23,16))
@@ -138,8 +146,6 @@ def inn():
     s.wall((3,19),(9,19));s.wall((9,19),(11,19),"door");s.wall((11,19),(12,19))
     s.wall((12,16),(12,17));s.wall((12,17),(12,18.5),"door");s.wall((12,18.5),(12,20.5))
     s.wall((12,20.5),(12,22),"door");s.wall((12,22),(12,23))
-    for a,b in [((5,3),(7,3)),((18,3),(20,3)),((32,19),(32,21)),((3,13),(3,15))]:
-        s.wall(a,b,"window")
     s.obj("i-pult",27,14,7,3.5,0,cover=2,difficult=True)
     s.obj("i-regal-lahve",27,15.1,5,.8,180,cover=2)
     s.obj("i-krb",18.7,4.3,3.4,2.4,light={"bright":10,"dim":15})

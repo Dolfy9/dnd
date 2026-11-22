@@ -7,6 +7,18 @@ from mapa_epicke import ROOT, generate, inside, update_store
 
 
 class EpicMapsTest(unittest.TestCase):
+    def test_inn_windows_replace_perimeter_walls(self):
+        walls = generate()[0]["steny"]
+        def on_segment(point, wall):
+            a, b = wall["a"], wall["b"]
+            cross = (point[0]-a[0])*(b[1]-a[1])-(point[1]-a[1])*(b[0]-a[0])
+            return abs(cross) < .001 and all(min(a[i],b[i]) <= point[i] <= max(a[i],b[i]) for i in (0,1))
+        for a,b in [((5,3),(7,3)),((18,3),(20,3)),((32,19),(32,21)),((3,13),(3,15))]:
+            with self.subTest(window=(a,b)):
+                self.assertTrue(any(w["typ"]=="window" and on_segment(a,w) and on_segment(b,w) for w in walls))
+                center = [(a[i]+b[i])/2 for i in (0,1)]
+                self.assertFalse(any(w["typ"]=="wall" and on_segment(center,w) for w in walls))
+
     def test_deterministic_assets_and_dimensions(self):
         maps = generate()
         self.assertEqual(maps, generate())
