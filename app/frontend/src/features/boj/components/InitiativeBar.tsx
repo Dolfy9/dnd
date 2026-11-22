@@ -9,7 +9,7 @@ import { sg } from "../types";
 import { Engraved, emblemFor, dupNumber } from "./emblems";
 import { fokusOf } from "./TokenCoin";
 import { Dices, SkipForward, RotateCcw, RotateCw } from "lucide-react";
-import { publicHpFraction } from "./combatHudModel";
+import { hpDescription, publicHpFraction } from "./combatHudModel";
 
 /** Mini mince pro iniciativní pás (44px SVG). */
 export function MiniCoin({ t, size = 40, active, exact = true }: { t: Token; size?: number; active?: boolean; exact?: boolean }) {
@@ -103,7 +103,7 @@ export default function InitiativeBar({ S, sel, onSelect, onNext, onRoll, onUndo
           return (
             <button key={id} className={`boj-init-item ${i === S.turn ? "on" : ""} ${t.dead ? "dead" : ""} ${sel === id ? "sel" : ""}`}
                     onClick={() => onSelect(id)}
-                    title={`${t.nazev} — init ${t.init ?? "?"}${t.dead ? " (mrtvý)" : ""}`}>
+                    title={`${t.nazev} — init ${t.init ?? "?"} · ${hpDescription(t)}${t.dead ? " (mrtvý)" : ""}`}>
               <MiniCoin t={t} size={34} active={i === S.turn} exact={!!dm} />
               <span className="boj-init-name">{t.nazev}</span>
               <span className="boj-init-meta">

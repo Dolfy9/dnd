@@ -236,9 +236,11 @@ export default function BattleMap(p: Props) {
       if (d === "in") zoomBy(1.3); else if (d === "out") zoomBy(1 / 1.3);
       else if (d === "reset") fitCover(); else if (d === "active") centerActive();
     };
+    const focus = (e: Event) => { const t = byId(S, (e as CustomEvent<string>).detail); if (t?.x != null) centerOn((t.x + t.s / 2) * PX, (t.y! + t.s / 2) * PX); };
+    window.addEventListener("boj-focus", focus);
     window.addEventListener("boj-fit", fit);
     window.addEventListener("boj-zoom", zm);
-    return () => { window.removeEventListener("boj-fit", fit); window.removeEventListener("boj-zoom", zm); };
+    return () => { window.removeEventListener("boj-focus", focus); window.removeEventListener("boj-fit", fit); window.removeEventListener("boj-zoom", zm); };
   });
 
   /* auto-follow: nový tah → centruj, pokud je aktivní mimo obraz */

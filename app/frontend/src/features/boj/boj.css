@@ -581,9 +581,21 @@ body.boj-max .app-topbar, body.boj-max .sb-wrap { display: none !important }
 .battle-tactical-controls button { min-height:30px;padding:4px 10px;border:1px solid #475569;border-radius:6px;background:#182536;color:#cbd5e1;cursor:pointer; }
 .battle-tactical-controls button[aria-pressed="true"] { border-color:#6ee7b7;color:#a7f3d0;background:#13332f; }
 .battle-tactical-controls small { flex-basis:100%;font-size:10px;color:#6ee7b7; }.battle-tactical-controls small span { color:#93c5fd; }
-.battle-hover-odds { position:absolute;top:130px;right:14px;z-index:23;width:220px;padding:10px 12px;border:1px solid #64748b;border-radius:10px;background:#0b1426f5;color:#e2e8f0;font:12px/1.5 system-ui,sans-serif;pointer-events:none; }
+.battle-hover-odds { position:absolute;bottom:124px;right:14px;z-index:23;width:220px;padding:10px 12px;border:1px solid #64748b;border-radius:10px;background:#0b1426f5;color:#e2e8f0;font:12px/1.5 system-ui,sans-serif;pointer-events:none; }
 .battle-hover-odds span,.battle-hover-odds strong { display:block; }.battle-hover-odds span { color:#94a3b8;font-size:11px; }.battle-hover-odds strong { color:#6ee7b7;margin-top:4px; }
 .battle-token-labels { font-family:system-ui,sans-serif; }
+.encounter-cockpit { padding:14px;color:#dce5ed;font:12px/1.5 system-ui,sans-serif; }
+.encounter-cockpit header { border:1px solid #475569;border-radius:12px;padding:14px;background:linear-gradient(135deg,#23332f,#142030);display:grid;gap:5px; }
+.encounter-cockpit header small { color:#e2c481;font-size:9px;letter-spacing:.1em; }.encounter-cockpit h3 { margin:0;font-size:22px; }.encounter-cockpit header span { color:#b2c3cf; }
+.encounter-cockpit button,.encounter-cockpit input,.encounter-cockpit select { color:#e2e8f0;background:#192739;border:1px solid #46576b;border-radius:6px;padding:5px 7px;font:inherit;min-height:28px; }
+.encounter-cockpit button { cursor:pointer; }.encounter-cockpit button:hover { border-color:#d6b775; }.encounter-cockpit button:disabled { opacity:.4;cursor:default; }
+.encounter-cockpit input[type=checkbox] { accent-color:#d6b775;min-height:0; }.encounter-cockpit h4 { font-size:11px;color:#d6b775;margin:16px 0 7px; }
+.encounter-selection { display:flex;align-items:center;gap:8px;margin-top:14px; }.encounter-selection b { margin-right:auto; }
+.encounter-row { display:flex;align-items:center;gap:6px;padding:8px 4px;border-bottom:1px solid #334155; }.encounter-row.selected { background:#d6b77512; }.encounter-row>button:last-child { font-size:9px; }
+.encounter-cockpit .encounter-identity { flex:1;min-width:0;text-align:left;border:0;background:transparent;padding:2px; }.encounter-identity strong,.encounter-identity span,.encounter-identity small { display:block; }.encounter-identity strong { font-size:12px; }.encounter-identity span,.encounter-identity small { font-size:10px;color:#a6b8c6; }.encounter-identity i { display:block;height:4px;background:#334155;border-radius:5px;margin:4px 0;overflow:hidden; }.encounter-identity em { display:block;height:100%;background:#6ee7b7; }
+.encounter-bulk { margin:16px 0 0;border:1px solid #475569;border-radius:10px;padding:10px;display:grid;grid-template-columns:1fr 1fr;gap:7px; }.encounter-bulk legend { color:#d6b775;font-weight:700; }.encounter-bulk label { display:flex;align-items:center;gap:5px; }.encounter-bulk input:not([type=checkbox]) { width:65px;min-width:0;flex:1; }.encounter-bulk select { min-width:0; }.encounter-bulk .encounter-wide { grid-column:1/-1;font-size:10px; }
+.encounter-order article { display:flex;gap:4px;align-items:center;flex-wrap:wrap;border-bottom:1px solid #334155;padding:8px 0; }.encounter-order article>span { flex:1;min-width:90px; }.encounter-order article small { color:#94a3b8; }.encounter-order button { font-size:10px;padding:4px; }.encounter-order>small { color:#94a3b8;font-size:10px; }
+.encounter-effects article { display:grid;gap:4px;background:#142030;border:1px solid #334155;border-radius:8px;padding:10px;margin:6px 0; }.encounter-effects article span,.encounter-effects article small { color:#a6b8c6; }.encounter-effects article button { justify-self:start; }
 .battle-turn-ring { transform-box:fill-box;transform-origin:center;animation:battleTurnRing 2.4s ease-in-out infinite;filter:drop-shadow(0 0 3px #f8d477); }
 .boj-init-item.on { animation:battleTurnChip 2.4s ease-in-out infinite; }
 @keyframes battleTurnRing { 50% { opacity:.6;transform:scale(1.08); } }

@@ -32,6 +32,7 @@ import SettingsPanel from "./SettingsPanel";
 import BattleMap, { type Targeting, type ZonePlace, type MoveAtkPreview } from "./BattleMap";
 import InitiativeBar, { MiniCoin } from "./InitiativeBar";
 import ActorPanel from "./ActorPanel";
+import EncounterPanel from "./EncounterPanel";
 import TokenInspector from "./TokenInspector";
 import AddCombatants, { freeSpot } from "./AddCombatants";
 import CombatLog from "./CombatLog";
@@ -52,7 +53,7 @@ import { difficulty } from "../rules/encounter";
 import { resourceAction } from "../rules/resources";
 import { MousePointer2, Ruler, MapPin, Users, Eraser, ScrollText, ShieldQuestion, X, Sparkles, Globe2, HelpCircle, Settings, Type, PanelRightClose, PanelRightOpen, MoreHorizontal , Maximize, PenLine, Eye} from "lucide-react";
 
-type Panel = "akce" | "efekty" | "prostredi" | "inspektor" | "log";
+type Panel = "akce" | "efekty" | "prostredi" | "inspektor" | "log" | "encounter";
 
 export default function BattlePage() {
   const [params] = useSearchParams();
@@ -562,7 +563,7 @@ export default function BattlePage() {
           <div className="boj-sheet-handle" onPointerDown={sheetDrag} onPointerMove={sheetMove} onPointerUp={sheetEnd} onPointerCancel={sheetEnd} />
           <div className="boj-side-resizer" onPointerDown={sideDrag} onPointerMove={sideMove} onPointerUp={sideEnd} onPointerCancel={sideEnd} />
           <div className={`boj-side-tabs ${sideW < 450 ? "icons" : ""}`}>
-            {panels.map((p) => (
+            {[...panels, ...(hudDm ? [{ id: "encounter" as const, n: "Střetnutí", ico: <ShieldQuestion size={13} /> }] : [])].map((p) => (
               <button key={p.id} className={panel === p.id && !sideMini ? "on" : ""} title={p.n}
                       onClick={() => { setPanel(p.id); setSideMini(false); }}>{p.ico} <span>{p.n}</span></button>
             ))}
@@ -571,7 +572,8 @@ export default function BattlePage() {
             </button>
           </div>
           <div className="boj-side-body">
-            {panel === "akce" && (
+            {hudDm && panel === "encounter" && <EncounterPanel S={S} selected={selSet} onSelection={setSelSet} cmd={cmd} onAdd={() => setAddOpen(true)} onFocus={id => { setSel(id); setSelSet(new Set([id])); window.dispatchEvent(new CustomEvent("boj-focus", { detail: id })); }} />}
+            {(panel === "akce" || panel === "encounter" && !hudDm) && (
               shownTok
                 ? <ActorPanel S={S} t={shownTok} targeting={targeting} onAttack={onAttack} group={actionGroup} onGroup={setActionGroup}
                               onStdAction={(a) => cmd((s) => C.cmdStdAction(s, shownTok.id, a, selTok?.id))}
