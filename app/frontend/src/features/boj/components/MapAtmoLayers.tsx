@@ -88,6 +88,13 @@ export const MapAtmosphereArtwork = memo(function MapAtmosphereArtwork({ map, do
   </svg>;
 });
 
+export function BakedAtmosphere({dark,glow,width,height}:{dark:string;glow:string;width:number;height:number}) {
+  return <>
+    <image href={dark} width={width} height={height} preserveAspectRatio="none" data-atmosphere-darkness />
+    <image href={glow} width={width} height={height} preserveAspectRatio="none" data-atmosphere-glow style={{mixBlendMode:"screen"}} />
+  </>;
+}
+
 export const MapAtmosphereLayer = memo(function MapAtmosphereLayer({ map, doors, animated=true }: { map: MapV2; doors?: Record<string, boolean>; animated?:boolean }) {
   const { assets } = useMapManifests();
   const W = (map.mrizka[0]?.length || 1) * PX, H = map.mrizka.length * PX;
@@ -127,10 +134,7 @@ export const MapAtmosphereLayer = memo(function MapAtmosphereLayer({ map, doors,
   }, [key]);
   if (empty) return null;
   return <g data-map-atmosphere data-atmosphere-baked={!!bitmaps} pointerEvents="none">
-    {bitmaps ? <>
-      <image href={bitmaps.dark} width={W} height={H} preserveAspectRatio="none" data-atmosphere-darkness />
-      <image href={bitmaps.glow} width={W} height={H} preserveAspectRatio="none" data-atmosphere-glow />
-    </> : failed ? <MapAtmosphereArtwork map={map} doors={doors} animated={animated} />
+    {bitmaps ? <BakedAtmosphere {...bitmaps} width={W} height={H} /> : failed ? <MapAtmosphereArtwork map={map} doors={doors} animated={animated} />
       : <rect width={W} height={H} fill={color(map.atmosfera?.barva || "#101522")} opacity={1 - ambient} />}
   </g>;
 });

@@ -3,11 +3,21 @@ import { describe, it, expect } from "vitest";
 import { renderToStaticMarkup } from "react-dom/server";
 import { migrateMap, normalizeLight, type MapV2, type MapPaintStroke } from "./mapV2";
 import { appendPaintPoint, paintStroke } from "../../mapeditor/tools/ops";
-import { MapPaintLayer, MapAtmosphereArtwork, MapAtmosphereLayer, visualLights, GLOW } from "../components/MapAtmoLayers";
+import { MapPaintLayer, MapAtmosphereArtwork, MapAtmosphereLayer, BakedAtmosphere, visualLights, GLOW } from "../components/MapAtmoLayers";
 import { TerenLayer } from "../components/MapLayers";
 import { setManifests } from "../components/MapV2Layers";
 
 const base = (): MapV2 => ({ id: "test", nazev: "Les", podklad: "les", mrizka: ["ggg", "g~g", "grg"] });
+it("screens only the baked glow so colored light cannot darken light terrain", () => {
+  const svg=renderToStaticMarkup(<BakedAtmosphere dark="dark.png" glow="glow.png" width={240} height={240}/>);
+  const images=svg.match(/<image[^>]*>/g)!;
+  expect(images).toHaveLength(2);
+  expect(images[0]).not.toContain("mix-blend-mode");
+  expect(images[1]).toContain("mix-blend-mode:screen");
+  expect(svg).not.toMatch(/<mask|<filter/);
+  const screen=(base:number,glow:number,alpha:number)=>255-(255-base)*(1-alpha*glow/255);
+  for(const base of [0,140,227,255])for(const glow of [0,70,180,255])expect(screen(base,glow,.48)).toBeGreaterThanOrEqual(base);
+});
 const stroke = (p: [number, number][] = [[.1, .2], [2.8, 2.2]]): MapPaintStroke =>
   ({ id: "s", t: "hlina", b: .5, o: .8, h: .4, p });
 
