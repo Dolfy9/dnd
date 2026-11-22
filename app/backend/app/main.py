@@ -85,6 +85,10 @@ async def repo_file(path: str):
         return JSONResponse({"chyba": "nenalezeno"}, 404)
     if config.ROOT not in p.parents or not p.is_file() or p.suffix.lower() not in MEDIA_EXT:
         return JSONResponse({"chyba": "nenalezeno"}, 404)
+    maps = config.ROOT / "11_Mapy"
+    manifests = {maps / "bojove/assets/assety.json", maps / "bojove/textury/textury.json"}
+    if p.suffix.lower() == ".json" and maps in p.parents and p not in manifests:
+        return JSONResponse({"chyba": "nenalezeno"}, 404)
     return FileResponse(p, media_type=mimetypes.guess_type(str(p))[0])
 
 
