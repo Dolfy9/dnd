@@ -1,0 +1,323 @@
+{
+  "input": {
+    "tridy": [
+      {
+        "trida": "Warlock",
+        "uroven": 5
+      },
+      {
+        "trida": "Wizard",
+        "uroven": 3
+      }
+    ],
+    "druh": "Human",
+    "velikost": "Large",
+    "atributy": {
+      "STR": 10,
+      "DEX": 16,
+      "CON": 14,
+      "INT": 16,
+      "WIS": 10,
+      "CHA": 18
+    },
+    "utoky": [
+      {
+        "nazev": "Named artifact",
+        "kostka": "1d8",
+        "atribut": "DEX",
+        "typ": "Piercing",
+        "melee": false,
+        "range": 150,
+        "long": 600
+      }
+    ],
+    "kouzla": [
+      {
+        "nazev": "Fireball",
+        "trida": "Warlock",
+        "pripraveno": true
+      },
+      {
+        "nazev": "Cure Wounds",
+        "trida": "Wizard",
+        "pripraveno": true
+      },
+      {
+        "nazev": "Hex",
+        "trida": "Warlock",
+        "pripraveno": true
+      }
+    ]
+  },
+  "sheet": {
+    "lvl": 8,
+    "casting": [
+      {
+        "trida": "Warlock",
+        "ab": "CHA",
+        "_div": 0,
+        "_uroven": 5,
+        "dc": 15,
+        "atk": 7
+      },
+      {
+        "trida": "Wizard",
+        "ab": "INT",
+        "_div": 1,
+        "_uroven": 3,
+        "dc": 14,
+        "atk": 6
+      }
+    ],
+    "slots": [
+      4,
+      2
+    ],
+    "pact": {
+      "pocet": 2,
+      "uroven": 3
+    },
+    "zranitelnosti": [],
+    "overview": {
+      "titul": "",
+      "druh": "Human",
+      "druh_volby": "",
+      "pozadi": "",
+      "zarovnani": "",
+      "velikost": "Large",
+      "rychlost": 30,
+      "jazyky": [],
+      "smysly": [],
+      "odolnosti": [],
+      "imunity": [],
+      "zranitelnosti": [],
+      "imunity_stavu": [],
+      "nastroje": [],
+      "species_typ": "Humanoid"
+    },
+    "boj": {
+      "ac": 13,
+      "hp_max": 56,
+      "init": 3,
+      "velikost": "Large",
+      "casting": [
+        {
+          "trida": "Warlock",
+          "ab": "CHA",
+          "_div": 0,
+          "_uroven": 5,
+          "dc": 15,
+          "atk": 7
+        },
+        {
+          "trida": "Wizard",
+          "ab": "INT",
+          "_div": 1,
+          "_uroven": 3,
+          "dc": 14,
+          "atk": 6
+        }
+      ],
+      "slots": [
+        4,
+        2
+      ],
+      "pact": {
+        "pocet": 2,
+        "uroven": 3
+      },
+      "rychlosti": {
+        "walk": 30
+      },
+      "zachrany": {
+        "STR": 0,
+        "DEX": 3,
+        "CON": 2,
+        "INT": 3,
+        "WIS": 3,
+        "CHA": 7
+      },
+      "utoky": [
+        {
+          "nazev": "Named artifact",
+          "atk": 6,
+          "dmg": "1d8+3+0",
+          "typ": "Piercing",
+          "mastery": "",
+          "range": 150,
+          "long": 600,
+          "melee": false
+        }
+      ],
+      "dc_kouzel": {
+        "Warlock": 15,
+        "Wizard": 14
+      },
+      "odolnosti": [],
+      "imunity": [],
+      "imunity_stavu": [],
+      "smysly": [],
+      "zdroje": [
+        {
+          "nazev": "Arcane Recovery",
+          "max": 1,
+          "obnova": "long"
+        }
+      ],
+      "pb": 3,
+      "mods": {
+        "STR": 0,
+        "DEX": 3,
+        "CON": 2,
+        "INT": 3,
+        "WIS": 0,
+        "CHA": 4
+      },
+      "utoky_za_akci": 1,
+      "dovednosti": {
+        "Acrobatics": 3,
+        "Animal Handling": 0,
+        "Arcana": 3,
+        "Athletics": 0,
+        "Deception": 4,
+        "History": 3,
+        "Insight": 0,
+        "Intimidation": 4,
+        "Investigation": 3,
+        "Medicine": 0,
+        "Nature": 3,
+        "Perception": 0,
+        "Performance": 4,
+        "Persuasion": 4,
+        "Religion": 3,
+        "Sleight of Hand": 3,
+        "Stealth": 3,
+        "Survival": 0
+      },
+      "featy": [],
+      "rysy": [
+        {
+          "nazev": "Eldritch Invocations",
+          "text": "You have unearthed Eldritch Invocations, pieces of forbidden knowledge that imbue you with an abiding magical ability or other lessons. You gain one invocation of your choice, such as Pact of the Tome",
+          "zdroj": "Warlock",
+          "uroven": 1
+        },
+        {
+          "nazev": "Pact Magic",
+          "text": "Through occult ceremony, you have formed a pact with a mysterious entity to gain magical powers. The entity is a voice in the shadows—its identity unclear—but its boon to you is concrete: the ability ",
+          "zdroj": "Warlock",
+          "uroven": 1
+        },
+        {
+          "nazev": "Arcane Recovery",
+          "text": "You can regain some of your magical energy by studying your spellbook. When you finish a Short Rest, you can choose expended spell slots to recover. The spell slots can have a combined level equal to ",
+          "zdroj": "Wizard",
+          "uroven": 1
+        },
+        {
+          "nazev": "Ritual Adept",
+          "text": "You can cast any spell as a Ritual if that spell has the Ritual tag and the spell is in your spellbook. You needn’t have the spell prepared, but you must read from the book to cast a spell in this way",
+          "zdroj": "Wizard",
+          "uroven": 1
+        },
+        {
+          "nazev": "Spellcasting",
+          "text": "As a student of arcane magic, you have learned to cast spells. See chapter 7 for the rules on spellcasting. The information below details how you use those rules with Wizard spells, which appear in th",
+          "zdroj": "Wizard",
+          "uroven": 1
+        },
+        {
+          "nazev": "Magical Cunning",
+          "text": "You can perform an esoteric rite for 1 minute. At the end of it, you regain expended Pact Magic spell slots but no more than a number equal to half your maximum (round up). Once you use this feature, ",
+          "zdroj": "Warlock",
+          "uroven": 2
+        },
+        {
+          "nazev": "Scholar",
+          "text": "While studying magic, you also specialized in another field of study. Choose one of the following skills in which you have proficiency: Arcana, History, Investigation, Medicine, Nature, or Religion. Y",
+          "zdroj": "Wizard",
+          "uroven": 2
+        },
+        {
+          "nazev": "Warlock Subclass",
+          "text": "You gain a Warlock subclass of your choice. The Archfey Patron, Celestial Patron, Fiend Patron, and Great Old One Patron subclasses are detailed after this class’s description. A subclass is a special",
+          "zdroj": "Warlock",
+          "uroven": 3
+        },
+        {
+          "nazev": "Arcane Tradition",
+          "text": "You gain a Wizard subclass of your choice. The Abjurer, Diviner, Evoker, and Illusionist subclasses are detailed after this class’s description. A subclass is a specialization that grants you features",
+          "zdroj": "Wizard",
+          "uroven": 3
+        },
+        {
+          "nazev": "Ability Score Improvement",
+          "text": "You gain the Ability Score Improvement feat or another feat of your choice for which you qualify. You gain this feature again at Warlock levels 8, 12, and 16.",
+          "zdroj": "Warlock",
+          "uroven": 4
+        },
+        {
+          "nazev": "Resourceful",
+          "text": "Po dokončení Long Rest získáš Heroic Inspiration.",
+          "zdroj": "species",
+          "uroven": 0
+        },
+        {
+          "nazev": "Skillful",
+          "text": "Získáš Proficiency v jedné dovednosti dle svého výběru.",
+          "zdroj": "species",
+          "uroven": 0
+        },
+        {
+          "nazev": "Versatile",
+          "text": "Získáš jeden Origin feat dle svého výběru.",
+          "zdroj": "species",
+          "uroven": 0
+        }
+      ],
+      "kouzla": [
+        {
+          "nazev": "Fireball",
+          "uroven": 3,
+          "pripraveno": true,
+          "ritual": false,
+          "cas": "Action",
+          "trvani": "Instantaneous",
+          "dosah": "150 feet",
+          "text": "A bright streak flashes from you to a point you choose within range and then blossoms with a low roar into a fiery explosion. Each creature in a 20-foot-radius Sphere centered on that point makes a Dexterity saving throw, taking 8d6 Fire damage on a failed save or half as much damage on a successful one.\nFlammable objects in the area that aren’t being worn or carried start burning.\nUsing a Higher-Level Spell Slot. The damage increases by 1d6 for each spell slot level above 3.",
+          "trida": "Warlock",
+          "vzdy": false,
+          "cs": "Z tebe vyšlehne jasná čára do bodu dle tvé volby v dosahu a s tlumeným řevem se rozvine v ohnivý výbuch. Každý tvor v Sphere o poloměru 20 stop se středem v tomto bodě provede Dexterity saving throw; při neúspěchu utrpí 8d6 Fire damage, při úspěchu polovinu.\nHořlavé předměty v oblasti, které nikdo nenese ani nemá na sobě, začnou hořet.\nUsing a Higher-Level Spell Slot. Zranění se zvýší o 1d6 za každou úroveň spell slotu nad 3."
+        },
+        {
+          "nazev": "Cure Wounds",
+          "uroven": 1,
+          "pripraveno": true,
+          "ritual": false,
+          "cas": "Action",
+          "trvani": "Instantaneous",
+          "dosah": "Touch",
+          "text": "A creature you touch regains a number of Hit Points equal to 2d8 plus your spellcasting ability modifier.\nUsing a Higher-Level Spell Slot. The healing increases by 2d8 for each spell slot level above 1.",
+          "trida": "Wizard",
+          "vzdy": false,
+          "cs": "Tvor, kterého se dotkneš, získá zpět Hit Points rovné 2d8 plus modifikátor tvého spellcasting atributu.\nUsing a Higher-Level Spell Slot. Léčení se zvýší o 2d8 za každou úroveň spell slotu nad 1."
+        },
+        {
+          "nazev": "Hex",
+          "uroven": 1,
+          "pripraveno": true,
+          "ritual": false,
+          "cas": "Bonus Action",
+          "trvani": "Concentration, up to 1 hour",
+          "dosah": "90 feet",
+          "text": "You place a curse on a creature that you can see within range. Until the spell ends, you deal an extra 1d6 Necrotic damage to the target whenever you hit it with an attack roll. Also, choose one ability when you cast the spell. The target has Disadvantage on ability checks made with the chosen ability.\nIf the target drops to 0 Hit Points before this spell ends, you can take a Bonus Action on a later turn to curse a new creature.\nUsing a Higher-Level Spell Slot. Your Concentration can last longer with a spell slot of level 2 (up to 4 hours), 3–4 (up to 8 hours), or 5+ (24 hours).",
+          "trida": "Warlock",
+          "vzdy": false,
+          "cs": "Uvalíš kletbu na tvora, kterého vidíš v dosahu. Do konce kouzla mu způsobíš navíc 1d6 Necrotic damage pokaždé, když ho zasáhneš attack rollem. Při sesílání také zvol jeden atribut; cíl má Disadvantage na ability checks s tímto atributem.\nKlesne-li cíl před koncem kouzla na 0 Hit Points, můžeš v pozdějším tahu Bonus Action proklít nového tvora.\nUsing a Higher-Level Spell Slot. Concentration může trvat déle se spell slotem úrovně 2 (až 4 hodiny), 3–4 (až 8 hodin) nebo 5+ (24 hodin)."
+        }
+      ],
+      "vybava": [],
+      "inspirace": false
+    }
+  }
+}

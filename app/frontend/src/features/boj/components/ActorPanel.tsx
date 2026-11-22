@@ -53,7 +53,7 @@ export default function ActorPanel({ S, t, targeting, onAttack, onStdAction, onR
     const pick = () => {
       if (!dm) return;
       if (leveled && !a.lvl) return;
-      if (leveled && (t.slots?.length || t.pact)) { setSlotFor(slotFor === a ? null : a); return; }
+      if (leveled && !a.innate && (t.slots?.length || t.pact)) { setSlotFor(slotFor === a ? null : a); return; }
       onAttack(a, metaSel.length ? { meta: metaSel } : undefined);
     };
     return (
@@ -129,7 +129,7 @@ export default function ActorPanel({ S, t, targeting, onAttack, onStdAction, onR
       )}
 
       {!!actions.length && (
-        <div className="boj-sec"><h4><Sword size={12} /> Útoky</h4>{actions.map((a, i) => <AtkRow key={i} a={a} />)}</div>
+        <div className="boj-sec"><h4><Sword size={12} /> Útoky</h4>{t.multiattack && <p className="combat-muted"><b>Multiattack:</b> {t.multiattack.text}</p>}{actions.map((a, i) => <AtkRow key={i} a={a} />)}</div>
       )}
       {!!spells.length && isSorcerer(t) && (
         <div className="boj-sec"><h4>Metamagic</h4>

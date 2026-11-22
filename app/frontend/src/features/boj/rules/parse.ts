@@ -105,11 +105,9 @@ export function parseMultiattack(text: string): number {
 /** Všechny akce netvora → AttackDef[]. */
 export function monsterAttacks(m: MonsterEntry): AttackDef[] {
   const out: AttackDef[] = [];
-  let multi = 0;
   for (const a of m.akce || []) {
-    if (/^multiattack/i.test(a.nazev)) { multi = parseMultiattack(a.text) || multi; continue; }
+    if (/^multiattack|^spellcasting/i.test(a.nazev)) continue;
     const o = parseMonsterAction(a.nazev, a.text, "action");
-    if (multi > 1 && !o.save && o.bonus != null) o.n = multi;
     out.push(o);
   }
   for (const a of m.bonusove_akce || []) out.push(parseMonsterAction(a.nazev, a.text, "bonus"));
@@ -155,12 +153,14 @@ export function parseSpell(name: string, K: Record<string, SpellEntry>, ctx: {
     ba: /Bonus Action/i.test(k.cas || ""), rea: /Reaction/i.test(k.cas || ""),
     ritual: /Ritual/i.test(k.cas || "") || !!(k as any).obradnik,
     text: txt, durationRounds: spellDurationRounds(k.trvani),
+    range: /touch/i.test(k.dosah) ? 5 : Number(String(k.dosah || "").match(/(\d+)\s*feet/i)?.[1]) || (/self/i.test(k.dosah) ? 0 : undefined),
   };
-  const hm = first.match(/regains?\s+(\d+)?d(\d+)(\s*\+\s*(\d+|your spellcasting ability modifier))?[^.]*hit points/i);
+  const healingText = first.replace(/regains a number of Hit Points equal to ([^.]+)/gi, "regains $1 hit points").replace(/plus your spellcasting ability modifier/gi, "+ your spellcasting ability modifier");
+  const hm = healingText.match(/regains?\s+(\d+)?d(\d+)(\s*\+\s*(\d+|your spellcasting ability modifier))?[^.]*hit points/i);
   if (hm) {
     const up = txt.match(/healing increases? by\s+(\d+d\d+)/i);
     return { ...base, heal: { dice: `${hm[1] || 1}d${hm[2]}`, flat: /modifier/i.test(hm[4] || "") ? 0 : Number(hm[4]) || 0, plusMod: /modifier/i.test(hm[4] || "") },
-             upcast: up ? { dice: up[1] } : undefined } as AttackDef;
+             upcast: up ? { dice: up[1], per: lvl0 } : undefined } as AttackDef;
   }
   const dm = first.match(/(\d+)d(\d+)(?:\s*\+\s*(?:your spellcasting ability modifier|\d+))?\s*(\w+)\s*damage/i);
   const svName = first.match(/(Strength|Dexterity|Constitution|Intelligence|Wisdom|Charisma)\s+saving throw/i);
@@ -195,7 +195,7 @@ export function parseSpell(name: string, K: Record<string, SpellEntry>, ctx: {
     o.half = /half as much damage|half damage/i.test(first);
     // upcast dice "increases by 1d6 for each slot level above 3"
     const up = txt.match(/increases by\s*(\d+d\d+)\s*for each (?:spell )?slot level above\s*(\d+)/i);
-    if (up && dmg) o.pozn = `+${up[1]}/slot >${up[2]}`;
+    if (up && dmg) { o.pozn = `+${up[1]}/slot >${up[2]}`; o.upcast = { dice: up[1], per: Number(up[2]) }; }
   } else if (isAtk || dm) {
     o.bonus = ctx.atk;
     if (o.range <= 5) { o.melee = true; o.reach = 5; }

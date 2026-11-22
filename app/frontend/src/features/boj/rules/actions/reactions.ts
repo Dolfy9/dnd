@@ -25,6 +25,14 @@ const hasFeature = (t: Token, re: RegExp) =>
 const slotsLeft = (t: Token, lvl: number): number =>
   (t.slots?.[lvl - 1] ? t.slots[lvl - 1].max - t.slots[lvl - 1].used : 0) +
   (t.pact && t.pact.lvl >= lvl ? t.pact.max - t.pact.used : 0);
+const spellAvailable = (t: Token, name: string, lvl: number): boolean => {
+  const spell = t.kouzla?.find(k => (k.kouzlo || k.nazev).toLowerCase() === name.toLowerCase());
+  if (!spell?.innate) return slotsLeft(t, lvl) > 0;
+  const pool = t.zdroje.find(z => z.nazev === spell.uses);
+  return !pool || pool.used < pool.max;
+};
+const spellCost = (t: Token, name: string, lvl: number): string =>
+  t.kouzla?.some(k => (k.kouzlo || k.nazev).toLowerCase() === name.toLowerCase() && k.innate) ? "použití kouzla" : `slot ${lvl}`;
 const alive = (t: Token | undefined): t is Token => !!t && !t.dead && !hasCond(t, "Incapacitated") && !hasCond(t, "Stunned");
 
 /** Které reakce jsou pro trigger k dispozici. spent = r v S.eco. */
@@ -39,8 +47,8 @@ export function reactionOptions(S: StavBoje, trig: ReactionTrigger): ReactionOpt
     const isTgt = trig.target && t.id === trig.target.id;
     const isAlly = trig.target && t.side === trig.target.side;
     // Shield (kouzlo): zasažený + dostupný slot 1+
-    if (trig.kind === "hit" && isTgt && knowsSpell(t, "Shield") && slotsLeft(t, 1) > 0)
-      out.push({ id: `shield:${t.id}`, whoId: t.id, who: t.nazev, nazev: "Shield", desc: "+5 AC do začátku tvého tahu — zásah se může stát miss (slot 1, Reaction).", needsSlot: 1 });
+    if (trig.kind === "hit" && isTgt && knowsSpell(t, "Shield") && spellAvailable(t, "Shield", 1))
+      out.push({ id: `shield:${t.id}`, whoId: t.id, who: t.nazev, nazev: "Shield", desc: `+5 AC do začátku tvého tahu — zásah se může stát miss (${spellCost(t, "Shield", 1)}, Reaction).`, needsSlot: 1 });
     // Defensive Duelist: melee hit, finesse zbraň (zjednodušeno: má feat)
     if (trig.kind === "hit" && isTgt && hasFeat(t, /defensive duelist/i) && trig.atk?.melee)
       out.push({ id: `duelist:${t.id}`, whoId: t.id, who: t.nazev, nazev: "Defensive Duelist", desc: `+${t.pb ?? 2} AC proti tomuto melee útoku (Reaction).` });
@@ -54,11 +62,11 @@ export function reactionOptions(S: StavBoje, trig: ReactionTrigger): ReactionOpt
     if (trig.kind === "hit" && isAlly && !isTgt && hasFeat(t, /^protection$/i) && adjFt <= 5)
       out.push({ id: `protect:${t.id}`, whoId: t.id, who: t.nazev, nazev: "Protection", desc: "Disadvantage na tento útok (Reaction, štít)." });
     // Hellish Rebuke po zranění
-    if (trig.kind === "damaged" && isTgt && knowsSpell(t, "Hellish Rebuke") && slotsLeft(t, 1) > 0)
-      out.push({ id: `rebuke:${t.id}`, whoId: t.id, who: t.nazev, nazev: "Hellish Rebuke", desc: "2d10 Fire útočníkovi, DEX save half (slot 1, Reaction).", needsSlot: 1 });
+    if (trig.kind === "damaged" && isTgt && knowsSpell(t, "Hellish Rebuke") && spellAvailable(t, "Hellish Rebuke", 1))
+      out.push({ id: `rebuke:${t.id}`, whoId: t.id, who: t.nazev, nazev: "Hellish Rebuke", desc: `2d10 Fire útočníkovi, DEX save half (${spellCost(t, "Hellish Rebuke", 1)}, Reaction).`, needsSlot: 1 });
     // Counterspell: nepřítel sesílá do 60 ft
-    if (trig.kind === "enemyCasts" && trig.attacker && t.side !== trig.attacker.side && knowsSpell(t, "Counterspell") && slotsLeft(t, 3) > 0 && adjFt <= 60)
-      out.push({ id: `counter:${t.id}`, whoId: t.id, who: t.nazev, nazev: "Counterspell", desc: "Sesilatel CON save vs tvé DC — při neúspěchu kouzlo selže, slot se nespotřebuje (slot 3).", needsSlot: 3 });
+    if (trig.kind === "enemyCasts" && trig.attacker && t.side !== trig.attacker.side && knowsSpell(t, "Counterspell") && spellAvailable(t, "Counterspell", 3) && adjFt <= 60)
+      out.push({ id: `counter:${t.id}`, whoId: t.id, who: t.nazev, nazev: "Counterspell", desc: `Sesilatel CON save vs tvé DC — při neúspěchu kouzlo selže, slot se nespotřebuje (${spellCost(t, "Counterspell", 3)}).`, needsSlot: 3 });
     // OA varianty při odchodu/vstupu z/do dosahu
     if ((trig.kind === "leavesReach" || trig.kind === "entersReach" || trig.kind === "disengageLeave") && trig.attacker && t.side !== trig.attacker.side) {
       if (trig.kind === "leavesReach")
@@ -81,10 +89,14 @@ export function applyReaction(S: StavBoje, opt: ReactionOption, trig: ReactionTr
   const t = S.tok.find((x) => x.id === opt.whoId); if (!t) return { msg: "" };
   const kind = opt.id.split(":")[0];
   const spendR = () => { const e = S.eco[t.id] = S.eco[t.id] || { a: 0, b: 0, r: 0, moved: 0, objInt: 0, spell: 0, baSpell: 0, dash: 0, disengage: 0, extraA: 0 }; e.r = 1; };
-  const spendSlot = (lvl: number) => { const s = t.slots?.[lvl - 1]; if (s && s.used < s.max) { s.used++; return; } if (t.pact && t.pact.lvl >= lvl) t.pact.used++; };
+  const spendSlot = (lvl: number, name: string) => {
+    const spell = t.kouzla?.find(k => (k.kouzlo || k.nazev).toLowerCase() === name.toLowerCase());
+    if (spell?.innate) { const pool = t.zdroje.find(z => z.nazev === spell.uses); if (pool) pool.used++; return; }
+    const s = t.slots?.[lvl - 1]; if (s && s.used < s.max) { s.used++; return; } if (t.pact && t.pact.lvl >= lvl) t.pact.used++;
+  };
   switch (kind) {
     case "shield": {
-      spendSlot(1); spendR();
+      spendSlot(1, "Shield"); spendR();
       t.effects.push({ id: uid(), nazev: "Shield", mods: { acBonus: 5 }, duration: { kind: "startOf", who: t.id } });
       const miss = (trig.hitTotal ?? 99) < t.ac + 5;
       return { msg: `${t.nazev}: Shield (+5 AC)${miss ? " — zásah je miss!" : ""}`, miss };
@@ -98,7 +110,7 @@ export function applyReaction(S: StavBoje, opt: ReactionOption, trig: ReactionTr
     case "uncanny": spendR(); return { msg: `${t.nazev}: Uncanny Dodge — zranění napůl`, dmgMul: 0.5 };
     case "intercept": { spendR(); const red = rollDice("1d10", { rng }).total + (t.pb ?? 2); return { msg: `${t.nazev}: Interception −${red} dmg`, dmgFlat: -red }; }
     case "rebuke": {
-      spendSlot(1); spendR();
+      spendSlot(1, "Hellish Rebuke"); spendR();
       const dmg = rollDice("2d10", { rng }).total;
       const atk = trig.attacker; let taken = dmg;
       if (atk) { const sv = d20(0, rng).r + (atk.saves?.DEX ?? atk.mods.DEX ?? 0); const dc = t.dc || t.casting?.dc || 10; if (sv >= dc) taken = Math.floor(dmg / 2); }
@@ -106,7 +118,7 @@ export function applyReaction(S: StavBoje, opt: ReactionOption, trig: ReactionTr
       return { msg: `${t.nazev}: Hellish Rebuke → ${taken} Fire ${atk ? `na ${atk.nazev}` : ""}` };
     }
     case "counter": {
-      spendSlot(3); spendR();
+      spendSlot(3, "Counterspell"); spendR();
       const c = trig.attacker;
       if (!c) return { msg: `${t.nazev}: Counterspell` };
       const sv = d20(0, rng).r + (c.saves?.CON ?? c.mods.CON ?? 0);

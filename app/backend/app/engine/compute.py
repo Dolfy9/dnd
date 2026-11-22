@@ -29,7 +29,7 @@ SKILLS = {
 # oficiální spellcasting: třída → (dělitel multiclass caster levelu, atribut)
 CASTER = {"Artificer": (2, "INT"), "Bard": (1, "CHA"), "Cleric": (1, "WIS"),
           "Druid": (1, "WIS"), "Sorcerer": (1, "CHA"), "Wizard": (1, "INT"),
-          "Paladin": (2, "CHA"), "Ranger": (2, "WIS")}
+          "Paladin": (2, "CHA"), "Ranger": (2, "WIS"), "Warlock": (0, "CHA")}
 THIRD = {"Eldritch Knight": "INT", "Arcane Trickster": "INT"}
 # PHB 2024 tabulka slotů (single-class i multiclass caster level)
 MULTI = [[], [2], [3], [4, 2], [4, 3], [4, 3, 2], [4, 3, 3], [4, 3, 3, 1],
@@ -129,7 +129,7 @@ def _kouzleni_tridy(cl_data: dict, trida: str) -> tuple[int, str] | None:
         return CASTER[trida]
     kz = (cl_data or {}).get("kouzleni") or {}
     typ = kz.get("typ")
-    if typ in _KOUZLENI_DIV and _KOUZLENI_DIV[typ]:
+    if typ in _KOUZLENI_DIV:
         return (_KOUZLENI_DIV[typ], kz.get("atribut") or "INT")
     return None
 
@@ -581,9 +581,10 @@ def compute(c: dict) -> dict:
         tn, sub = t.get("trida"), t.get("podtrida") or ""
         cl_row = R_tridy.get(tn) or {}
         sc = _kouzleni_tridy(cl_row, tn or "")
-        if sc and sc[0]:
+        if sc:
             div, ab = sc
-            single.append(div)
+            if div:
+                single.append(div)
             d["casting"].append({"trida": tn, "ab": ab, "_div": div,
                                  "_uroven": _int(t.get("uroven"))})
         else:
@@ -595,12 +596,13 @@ def compute(c: dict) -> dict:
                                      "_div": scs[0], "_uroven": _int(t.get("uroven"))})
     if len(single) == 1:
         # úroveň té jediné kouzelnické třídy (ne nutně tridy[0])
-        lvx = d["casting"][0]["_uroven"]
+        lvx = next(x["_uroven"] for x in d["casting"] if x["_div"])
         clx = lvx if single[0] == 1 else (-(-lvx // single[0]))
     else:
         clx = 0
         for x in d["casting"]:
-            clx += x["_uroven"] // x["_div"]
+            if x["_div"]:
+                clx += x["_uroven"] // x["_div"]
     d["slots"] = MULTI[min(clx, 20)] if d["casting"] else []
     dc_bonus = bonus("dc_kouzel")
     atk_bonus = bonus("utok_kouzel")
@@ -677,6 +679,7 @@ def compute(c: dict) -> dict:
             "dmg": (u.get("kostka") or "") + ("" if u.get("bez_modu") else sg(m))
                    + sg(_int(u.get("bonus_zraneni")) + b_zr) if u.get("kostka") else "",
             "typ": u.get("typ") or "", "mastery": u.get("mastery") or "",
+            **{k: u[k] for k in ("range", "long", "reach", "melee", "thrown", "dosah") if k in u},
         })
     for e in utoky_eff:
         at = e.get("atribut") or "STR"
@@ -968,6 +971,8 @@ def compute(c: dict) -> dict:
     # ---------- kompaktní bojový souhrn pro editor bojů ----------
     d["boj"] = {
         "ac": d["ac"], "hp_max": d["hp"], "init": d["init"],
+        "velikost": d["overview"]["velikost"],
+        "casting": d["casting"], "slots": d["slots"], "pact": d.get("pact"),
         "rychlosti": d["rychlosti"], "zachrany": d["saves"],
         "utoky": d["attacks"],
         "dc_kouzel": {x["trida"]: x["dc"] for x in d["casting"]},
@@ -983,7 +988,7 @@ def compute(c: dict) -> dict:
                 [{"nazev": f["nazev"], "text": f["text"][:200], "zdroj": "species", "uroven": 0}
                  for f in d["species_rysy"]],
         "kouzla": [{"nazev": k["nazev"], "uroven": k["uroven"], "pripraveno": k["pripraveno"],
-                    "ritual": k.get("ritual"), "cas": k["cas"], "trvani": k["trvani"],
+                    "ritual": k.get("ritual"), "cas": k["cas"], "trvani": k["trvani"], "dosah": k["dosah"],
                     "text": k["text"], "trida": k["trida"], "vzdy": k["vzdy"], "cs": k.get("cs") or ""}
                    for k in d["kouzla"]],
         "vybava": c.get("vybava") or [],

@@ -11,6 +11,7 @@ import { PORTRAIT_DEFAULT, fokusOf } from "./TokenCoin";
 import EntityPicker from "../../../components/EntityPicker";
 import { get } from "../../../api";
 import { hpDescription } from "./combatHudModel";
+import { loadCombatant } from "../rules/reimport";
 
 type Cmd = (fn: (S: StavBoje) => void) => void;
 import * as C from "../state/commands";
@@ -20,6 +21,13 @@ export default function TokenInspector({ S, t, cmd, dm, onClose }: {
   S: StavBoje; t: Token; cmd: Cmd; dm: boolean; onClose: () => void;
 }) {
   const [dmg, setDmg] = useState("6");
+  const [importing, setImporting] = useState(false), [importError, setImportError] = useState("");
+  const reimport = async () => {
+    setImporting(true); setImportError("");
+    try { const fresh = await loadCombatant(t, get); cmd(s => C.reimportToken(s, t.id, fresh)); }
+    catch (e) { setImportError(e instanceof Error ? e.message : "Import se nezdařil."); }
+    finally { setImporting(false); }
+  };
   const [dtyp, setDtyp] = useState("Slashing");
   const [eff, setEff] = useState(EFFECT_PRESETS[0].id);
   const [pickPath, setPickPath] = useState("");
@@ -47,6 +55,7 @@ export default function TokenInspector({ S, t, cmd, dm, onClose }: {
         <b>{t.nazev}</b>
         <button className="boj-x" onClick={onClose}>✕</button>
       </div>
+      {dm && (t.src?.cesta || t.src?.srd) && <div className="boj-sec"><button className="boj-btn2" disabled={importing} onClick={reimport} title="Obnoví statistiky ze zdroje, ponechá aktuální HP, stavy, pozici a spotřebovaná použití.">{importing ? "Načítám…" : "Obnovit statistiky ze zdroje"}</button>{t.src.edition && <small> {t.src.source || t.src.id} · {t.src.edition}</small>}{importError && <p role="alert">{importError}</p>}</div>}
       <div className="boj-insp-hp">
         {dm ? (
         <>

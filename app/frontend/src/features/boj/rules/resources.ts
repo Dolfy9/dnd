@@ -38,7 +38,7 @@ export function restResources(S: StavBoje, ids: string[], kind: "short" | "long"
     if (!t) continue;
     for (const z of t.zdroje || []) {
       const ob = (z.obnova || "").toLowerCase();
-      const back = kind === "long" || /short|krát|sr|šr/.test(ob) || /long|dlou|lr/.test(ob) || !ob;
+      const back = kind === "long" || /short|krát|sr|šr/.test(ob) || !ob;
       if (back && z.used > 0) {
         z.used = 0;
         msgs.push(`${t.nazev}: ${z.nazev} obnoveno`);

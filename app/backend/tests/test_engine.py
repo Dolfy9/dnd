@@ -114,6 +114,26 @@ def test_warlock_pact():
     assert s["pact"]["uroven"] == 3 and s["pact"]["pocet"] == 2
 
 
+def test_combat_import_contract():
+    s = charsheet.compute(c(
+        tridy=[{"trida": "Warlock", "uroven": 5}, {"trida": "Wizard", "uroven": 3}],
+        atributy=attr(CHA=18, INT=16), velikost="Large",
+        utoky=[{"nazev": "Named artifact", "kostka": "1d8", "atribut": "DEX",
+                "melee": False, "range": 150, "long": 600}],
+        kouzla=[{"nazev": "Fireball", "trida": "Warlock"}],
+    ))
+    b = s["boj"]
+    assert b["slots"] == [4, 2]
+    assert b["pact"] == {"uroven": 3, "pocet": 2}
+    assert b["casting"][0]["trida"] == "Warlock"
+    assert b["casting"][0]["dc"] == 8 + s["pb"] + 4
+    assert b["casting"][1]["dc"] == 8 + s["pb"] + 3
+    assert b["utoky"][0]["range"] == 150 and b["utoky"][0]["long"] == 600
+    assert b["utoky"][0]["melee"] is False
+    assert b["kouzla"][0]["dosah"] == "150 feet"
+    assert b["velikost"] == "Large"
+
+
 def test_prepis_vyhraje():
     s = charsheet.compute(c(tridy=[{"trida": "Fighter", "uroven": 3}],
                             atributy=attr(DEX=14),

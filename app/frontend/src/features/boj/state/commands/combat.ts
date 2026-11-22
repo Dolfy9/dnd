@@ -272,6 +272,9 @@ export const slotsLeft = (t: Token, lvl: number): number =>
 
 /** Kontrola slotu pred seslanim; vrati duvod zamitnuti nebo null. */
 function slotError(t: Token, atk: AttackDef, slot?: number, pact?: boolean): string | null {
+  const resource = t.zdroje.find(z => z.nazev === atk.uses);
+  if (resource && resource.used >= resource.max) return `Došla použití: ${resource.nazev}`;
+  if (atk.innate) return null;
   if (!atk.lvl) return null;
   const use = slot ?? atk.lvl;
   if (pact && t.pact && t.pact.lvl >= use && t.pact.used < t.pact.max) return null;
@@ -282,6 +285,9 @@ function slotError(t: Token, atk: AttackDef, slot?: number, pact?: boolean): str
 }
 
 function consumeSlot(t: Token, atk: AttackDef, slot?: number, pact?: boolean) {
+  const resource = t.zdroje.find(z => z.nazev === atk.uses);
+  if (resource) resource.used += 1;
+  if (atk.innate) return;
   if (!atk.lvl) return;
   const use = slot ?? atk.slot ?? atk.lvl;
   if (pact && t.pact && t.pact.lvl >= use && t.pact.used < t.pact.max) { t.pact.used += 1; return; }

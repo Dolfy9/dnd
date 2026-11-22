@@ -46,7 +46,8 @@ function normToken(o: any): Token {
     xp: o.xp || 0, lvl: o.lvl || o.level, cr: o.cr,
     portret: o.portret, portretFokus: o.portretFokus, src: o.src, poznamka: o.poznamka || o.notes, pj_note: o.pj_note,
     typ: o.typ || o.emblem, velikost: o.velikost, exhaustion: o.exhaustion || 0,
-    rysy: o.rysy,
+    rysy: o.rysy, multiattack: o.multiattack, burrow: o.burrow,
+    skills: o.skills, feats: o.feats, features: o.features, items: o.items, heroicInspiration: o.heroicInspiration,
   } as Token;
   // legacy hp jako [cur,max]
   if (Array.isArray(o.hp)) { t.hp = o.hp[0] ?? 0; t.max = o.hp[1] ?? 1; }

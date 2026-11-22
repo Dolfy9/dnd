@@ -31,7 +31,7 @@ describe("monster actions", () => {
     expect(a.save).toBe("DEX");
     expect(a.area).toEqual({ shape: "cone", size: 30 });
   });
-  it("multiattack count na útocích", () => {
+  it("jednotlivý útok nezahrnuje automaticky celý Multiattack", () => {
     const m = {
       nazev: "X", cr: "1", typ: "beast", velikost: "Large", ac: 10, hp: 10,
       akce: [
@@ -40,7 +40,7 @@ describe("monster actions", () => {
       ],
     } as any;
     const atks = monsterAttacks(m);
-    expect(atks[0].n).toBe(2);
+    expect(atks[0].n).toBe(1);
   });
 });
 

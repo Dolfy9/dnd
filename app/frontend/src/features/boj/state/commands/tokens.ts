@@ -16,6 +16,7 @@ import { resourceAction, restResources } from "../../rules/resources";
 import { canSeeTarget } from "../../rules/lighting";
 import type { BattleMapData } from "../../types";
 import { fx } from "./shared";
+import { refreshedStats } from "../../rules/reimport";
 
 /* ---------- žetony ---------- */
 export const addToken = (S: StavBoje, t: Token, xy?: [number, number]) => {
@@ -34,4 +35,9 @@ export const removeToken = (S: StavBoje, id: string) => {
 };
 export const patchToken = (S: StavBoje, id: string, patch: Partial<Token>) => {
   const t = byId(S, id); if (t) Object.assign(t, patch);
+};
+export const reimportToken = (S: StavBoje, id: string, fresh: Token) => {
+  const t = byId(S, id); if (!t) return;
+  Object.assign(t, refreshedStats(t, fresh));
+  log(S, "system", `${t.nazev}: statistiky obnoveny ze zdroje; HP, stavy a pozice zachovány`, "PJ", undefined, true);
 };

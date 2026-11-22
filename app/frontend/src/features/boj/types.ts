@@ -57,6 +57,8 @@ export interface AttackDef {
   legendaryCost?: number;
   rc?: number;                  // Recharge X–6 (X)
   xd?: number;                  // X/Day (pocet)
+  innate?: boolean;
+  uses?: string;
   lvl?: number;                 // spell level (0 = cantrip)
   conc?: boolean;
   kouzlo?: string;              // název kouzla pro trvání/koncentraci
@@ -193,6 +195,7 @@ export interface Token {
   swim: number;
   fly: number;
   climb: number;
+  burrow?: number;
   saves: Partial<Record<Ability, number>>;
   mods: Partial<Record<Ability, number>>;
   atk: AttackDef[];
@@ -222,7 +225,8 @@ export interface Token {
   smysly: string[];
   portret?: string;
   portretFokus?: { x: number; y: number; zoom: number }; // ořez portrétu na minci (0–1, ≥1)
-  src?: { cesta?: string; srd?: string; owner?: string; kouzlo?: string };
+  src?: { cesta?: string; srd?: string; owner?: string; kouzlo?: string; id?: string; edition?: string; source?: string };
+  multiattack?: { text: string; attacks: { name: string; count: number; alternatives?: string[] }[] };
   poznamka?: string;
   kouzla?: AttackDef[];         // naparsované kouzla coby akce
   pj_note?: string;

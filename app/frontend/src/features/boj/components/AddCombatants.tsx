@@ -4,7 +4,7 @@ import { useMemo, useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { get } from "../../../api";
 import EntityPicker from "../../../components/EntityPicker";
-import type { BattleMapData, MonsterEntry, Side, StavBoje, Token } from "../types";
+import type { BattleMapData, MonsterEntry, Side, StavBoje, Token, SpellEntry } from "../types";
 import { fromCharacter, fromMonster, custom } from "../rules/combatants";
 import { difficulty } from "../rules/encounter";
 import { mapSize, tileDef, tileAt } from "../rules/grid";
@@ -35,6 +35,8 @@ export function freeSpot(S: StavBoje, map: BattleMapData, side: Side, s = 1): [n
 export const useBestiary = () =>
   useQuery({ queryKey: ["bestiar"], queryFn: () => get<MonsterEntry[]>("/repo/web/assets/srd/bestiar.json"), staleTime: 300_000 });
 
+export const useSpellCatalog = () => useQuery({ queryKey: ["battle-spell-catalog"], queryFn: () => get<Record<string, SpellEntry>>("/repo/web/assets/kouzla2024.json"), staleTime: 300_000 });
+
 export default function AddCombatants({ S, map, onAdd, onClose }: {
   S: StavBoje; map: BattleMapData;
   onAdd: (t: Token) => void;
@@ -48,6 +50,7 @@ export default function AddCombatants({ S, map, onAdd, onClose }: {
   const [cN, setCN] = useState(""); const [cHp, setCHp] = useState(10); const [cAc, setCAc] = useState(12);
   const [cS, setCS] = useState(1); const [cColor, setCColor] = useState("#8a6d3b"); const [cImg, setCImg] = useState("");
   const best = useBestiary();
+  const spells = useSpellCatalog();
   const diff = difficulty(S.tok);
 
   const mons = useMemo(() => {
@@ -61,12 +64,12 @@ export default function AddCombatants({ S, map, onAdd, onClose }: {
     const r = await get<any>(`/api/page?path=${encodeURIComponent(path)}`);
     const raw = r.entity?.name || r.entity?.nazev || path.split("/").pop()!.replace(/\.md$/, "").replace(/_/g, " ");
     const name = raw.replace(/^Postava[\s_]+/i, "");
-    const t = fromCharacter(path, name, r.entity?.sheet || r.sheet || {}, side, r.entity?.portret || r.portret);
+    const t = fromCharacter(path, name, r.entity?.sheet || r.sheet || {}, side, r.entity?.portret || r.portret, spells.data);
     onAdd(t);
   };
 
   const addMon = (m: MonsterEntry, n = cnt) => {
-    for (let i = 0; i < n; i++) onAdd(fromMonster(m, side));
+    for (let i = 0; i < n; i++) onAdd(fromMonster(m, side, spells.data));
   };
 
   return (
@@ -85,11 +88,12 @@ export default function AddCombatants({ S, map, onAdd, onClose }: {
         <div className="boj-sidepick">
           {SIDES.map((s) => <button key={s.id} className={`boj-btn2 side-${s.id} ${side === s.id ? "on" : ""}`} onClick={() => setSide(s.id)}>{s.n}</button>)}
         </div>
+        {spells.isError && <p role="alert">Nepodařilo se načíst katalog kouzel. Zavři dialog a zkus to znovu.</p>}
 
         {tab === "postava" && (
           <div className="boj-add-body">
             <EntityPicker target="postava" value={path} onChange={setPath} placeholder="Hledat postavu…" />
-            <button className="boj-btn2 acc" disabled={!path} onClick={addChar}>Přidat postavu</button>
+            <button className="boj-btn2 acc" disabled={!path || !spells.data} onClick={addChar}>Přidat postavu</button>
           </div>
         )}
 
@@ -101,7 +105,7 @@ export default function AddCombatants({ S, map, onAdd, onClose }: {
             </div>
             <div className="boj-monlist">
               {mons.map((m) => (
-                <button key={m.nazev} className="boj-mon" onClick={() => addMon(m)} title={`${m.typ} · AC ${m.ac} · HP ${m.hp} · ${m.xp} XP`}>
+                <button key={m.nazev} className="boj-mon" disabled={!spells.data} onClick={() => addMon(m)} title={`${m.typ} · AC ${m.ac} · HP ${m.hp} · ${m.xp} XP`}>
                   <b>{m.nazev}</b><span>CR {m.cr} · {m.typ}</span><em>{m.xp} XP</em>
                 </button>
               ))}
@@ -117,7 +121,7 @@ export default function AddCombatants({ S, map, onAdd, onClose }: {
               return (
                 <div key={i} className="boj-enc">
                   <b>{s.nazev}</b><span>×{s.pocet}</span>
-                  <button className="boj-btn2 acc" disabled={!m} onClick={() => m && addMon(m, s.pocet)}>
+                  <button className="boj-btn2 acc" disabled={!m || !spells.data} onClick={() => m && addMon(m, s.pocet)}>
                     {m ? `Nasadit (${s.pocet}×)` : "nenalezen v SRD"}
                   </button>
                 </div>

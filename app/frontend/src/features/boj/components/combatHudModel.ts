@@ -35,8 +35,10 @@ export function unusableReason(S: StavBoje, t: Token, a: AttackDef, dm: boolean)
   if (isFree(S)) return;
   const actor = actorReason(t, dm); if (actor) return actor;
   if (a.rc && t.spent?.[a.nazev]) return "Čeká na recharge";
+  const resource = t.zdroje.find(z => z.nazev === a.uses);
+  if (resource && resource.used >= resource.max) return "Došla použití";
   if (a.legendaryCost != null) return legendaryActionError(S, t, a.legendaryCost);
-  if (settingsOf(S).automatizace.sloty === "hlidat" && (a.lvl || 0) > 0 && !a.ritual && !t.slots?.some((s, i) => i + 1 >= a.lvl! && s.used < s.max)
+  if (!a.innate && settingsOf(S).automatizace.sloty === "hlidat" && (a.lvl || 0) > 0 && !a.ritual && !t.slots?.some((s, i) => i + 1 >= a.lvl! && s.used < s.max)
       && !(t.pact && t.pact.lvl >= a.lvl! && t.pact.used < t.pact.max)) return "Došly sloty";
   if (!a.kouzlo && !a.ba && !a.rea && (S.eco[t.id]?.atkLeft || 0) > 0) return;
   return economyReason(S, t, a.ba ? "b" : a.rea ? "r" : "a");
