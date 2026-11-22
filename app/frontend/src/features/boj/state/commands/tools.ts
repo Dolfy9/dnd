@@ -35,7 +35,8 @@ export function cmdFogCells(S: StavBoje, cells: [number, number][], reveal: bool
   S.fog = S.fog || { on: true, revealed: {} };
   for (const [x, y] of cells) {
     const k = `${x},${y}`;
-    if (reveal) S.fog.revealed[k] = 1; else delete S.fog.revealed[k];
+    if (reveal) S.fog.revealed[k] = 1;
+    else { delete S.fog.revealed[k]; if (S.fog.visible) delete S.fog.visible[k]; }
   }
 }
 export function cmdFogParty(S: StavBoje, radiusCells = 8) {

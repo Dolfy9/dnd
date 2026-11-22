@@ -40,3 +40,10 @@ def test_public_illumination_does_not_reveal_unseen_rooms_or_invalid_levels():
     state = {"stav_boje": {"tok": [], "fog": {"on": True, "revealed": {"0,0": 1, "1,0": 1}, "visible": {"0,0": 1}},
                            "lightCells": {"0,0": "bright", "1,0": "dim", "2,0": "dark", "3,0": "invalid"}}}
     assert player_view(state)["stav_boje"]["playerLightCells"] == {"0,0": "bright"}
+
+
+def test_manual_hide_overrides_stale_visible_light_cells():
+    state = {"stav_boje": {"tok": [], "fog": {"on": True, "revealed": {}, "visible": {"0,0": 1}},
+                           "lightCells": {"0,0": "bright"}}}
+    assert player_view(state)["stav_boje"]["playerLightCells"] == {}
+

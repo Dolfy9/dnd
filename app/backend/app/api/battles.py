@@ -97,7 +97,7 @@ def player_view(state: dict) -> dict:
         visible = fog.get("visible", revealed)
         sb["playerLightCells"] = {k: v for k, v in cells.items()
                                   if v in ("bright", "dim", "dark")
-                                  and (not fog_on or k in visible)}
+                                  and (not fog_on or (k in visible and k in revealed and k not in (fog.get("hidden") or {})))}
     s.pop("pj_poznamky", None)
     s.pop("dm_notes", None)
     return s
