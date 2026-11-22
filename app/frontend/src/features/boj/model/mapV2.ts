@@ -55,6 +55,7 @@ export interface MapDrawing {
 }
 
 export interface MapLightV2 {
+  dmOnly?: boolean;
   zap?: boolean;
   id: string;
   x: number; y: number;
