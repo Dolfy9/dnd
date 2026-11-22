@@ -32,7 +32,7 @@ import * as ops from "../tools/ops";
 import { TexturePicker, TilePicker, WallPicker, LightColors, TABS, LAYERS, LayersPanel, LibraryPanel, PropertiesPanel, GeneratorPanel, MapPanel, type TabId } from "./panels";
 import { CommandPalette, ShortcutHelp, ToolRail, EditorMinimap, type EditorCommand } from "./EditorChrome";
 import type { LibraryMode } from "./AssetLibrary";
-import { actOnObjects, canTogglePanel, liveSelection, playerPreviewMap, TOOL_HINTS, readPreference, writePreference, rememberAsset, type ObjectAction } from "../state/editorUx";
+import { actOnObjects, canTogglePanel, liveSelection, panUpdate, playerPreviewMap, TOOL_HINTS, readPreference, writePreference, rememberAsset, type ObjectAction } from "../state/editorUx";
 import { assetUrl } from "../assets/manifest";
 import "../editor.css";
 import "../editorPro.css";
@@ -494,7 +494,7 @@ export default function EditorPage() {
     }
     if (panRef.current) {
       if (Math.hypot(e.clientX - panRef.current.x0,e.clientY - panRef.current.y0) > 4) setContextMenu(null);
-      setV((v) => ({ ...v, x: panRef.current!.vx + e.clientX - panRef.current!.x0, y: panRef.current!.vy + e.clientY - panRef.current!.y0 }));
+      setV(panUpdate(panRef.current,e));
       return;
     }
     const [cx, cy] = cellOf(e), [wx, wy] = snapPt(e); setCur({ x: cx, y: cy, wx, wy });

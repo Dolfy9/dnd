@@ -54,6 +54,11 @@ export function fuzzyScore(label: string, query: string): number {
 }
 
 export type ObjectAction = "duplicate" | "delete" | "rotate-left" | "rotate-right" | "flip" | "front" | "back" | "align-x" | "align-y";
+export function panUpdate(pan: {x0: number; y0: number; vx: number; vy: number}, point: {clientX: number; clientY: number}) {
+  const x = pan.vx + point.clientX - pan.x0, y = pan.vy + point.clientY - pan.y0;
+  return <T extends {x: number; y: number}>(view: T): T => ({...view,x,y});
+}
+
 export function canTogglePanel(target: EventTarget | null): boolean {
   return !(target as Element | null)?.closest?.('button,a[href],input,textarea,select,summary,iframe,audio[controls],video[controls],[tabindex],[contenteditable]:not([contenteditable="false"]),[role="button"],[role="link"],[role="checkbox"],[role="switch"],[role="slider"],[role="combobox"],[role="tab"],[role="menuitem"]');
 }

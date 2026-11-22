@@ -2,7 +2,7 @@ import React from "react";
 import { describe, expect, it, vi, afterEach } from "vitest";
 import { renderToStaticMarkup } from "react-dom/server";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { actOnObjects, canTogglePanel, liveSelection, playerPreviewMap, fuzzyScore, readPreference, rememberAsset, writePreference, TOOL_GROUPS, TOOL_HINTS } from "./editorUx";
+import { actOnObjects, canTogglePanel, liveSelection, panUpdate, playerPreviewMap, fuzzyScore, readPreference, rememberAsset, writePreference, TOOL_GROUPS, TOOL_HINTS } from "./editorUx";
 import { pickAt, pickInRect } from "../tools/ops";
 import type { MapObject, MapV2 } from "../../boj/model/mapV2";
 import { EditorWeather, ShortcutHelp, CommandPalette } from "../components/EditorChrome";
@@ -14,6 +14,17 @@ const object: MapObject = {id:"one",asset:"tree",x:2,y:3,w:1,h:2,v:2,light:{brig
 afterEach(() => vi.unstubAllGlobals());
 
 describe("editor productivity", () => {
+  it("snapshots pan coordinates before pointer-up clears the drag ref", () => {
+    const ref: {current: {x0:number;y0:number;vx:number;vy:number} | null} = {current:{x0:500,y0:400,vx:20,vy:30}};
+    const point = {clientX:530,clientY:430};
+    const update = panUpdate(ref.current!,point);
+    ref.current = null;
+    point.clientX = 0;
+    const view = {x:20,y:30,k:2};
+    expect(update(view)).toEqual({x:50,y:60,k:2});
+    expect(update(view)).toEqual(update(view));
+    expect(view).toEqual({x:20,y:30,k:2});
+  });
   it("reserves panel toggling for non-interactive targets, including control descendants", () => {
     const closest = vi.fn((_selector: string) => ({}));
     expect(canTogglePanel({closest} as unknown as EventTarget)).toBe(false);
