@@ -13,10 +13,22 @@ export function visibilityPolygon(origin: Point, blockers: LightSegment[], width
   if (![...origin,width,height].every(Number.isFinite) || width <= 0 || height <= 0) return [];
   const corners: Point[] = [[0,0],[width,0],[width,height],[0,height]];
   const segments = [...blockers,...corners.map((a,i) => ({a,b:corners[(i+1)%4]}))];
-  const angles = segments.flatMap(s => [s.a,s.b].flatMap(([x,y]) => {
+  const targets=new Map<string,Point>();
+  const target=(p:Point)=>targets.set(p.map(n=>n.toFixed(9)).join(","),p);
+  for(const s of segments){target(s.a);target(s.b);}
+  for(let i=0;i<segments.length;i++)for(let j=i+1;j<segments.length;j++){
+    const a=segments[i],b=segments[j];
+    const rx=a.b[0]-a.a[0],ry=a.b[1]-a.a[1],sx=b.b[0]-b.a[0],sy=b.b[1]-b.a[1];
+    const denominator=cross(rx,ry,sx,sy);
+    if(Math.abs(denominator)<1e-12)continue;
+    const dx=b.a[0]-a.a[0],dy=b.a[1]-a.a[1];
+    const t=cross(dx,dy,sx,sy)/denominator,u=cross(dx,dy,rx,ry)/denominator;
+    if(t>=0 && t<=1 && u>=0 && u<=1)target([a.a[0]+t*rx,a.a[1]+t*ry]);
+  }
+  const angles = [...targets.values()].flatMap(([x,y]) => {
     const angle = Math.atan2(y-origin[1],x-origin[0]);
     return [angle-1e-7,angle,angle+1e-7];
-  })).sort((a,b) => a-b);
+  }).sort((a,b) => a-b);
   return angles.map(angle => {
     const dx = Math.cos(angle), dy = Math.sin(angle);
     let distance = Math.hypot(width,height) + Math.hypot(...origin) + 1;

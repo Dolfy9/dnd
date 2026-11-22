@@ -14,6 +14,13 @@ function contains(poly: Point[], [x,y]: Point) {
 }
 
 describe("light projection", () => {
+  it("reaches the intersection of crossing walls without prematurely closing the visible region", () => {
+    const walls=[{a:[4,2] as Point,b:[8,8] as Point},{a:[4,8] as Point,b:[8,2] as Point}];
+    const poly=visibilityPolygon([2,5],walls,10,10);
+    expect(contains(poly,[5.8,5])).toBe(true);
+    expect(contains(poly,[6.2,5])).toBe(false);
+    expect(poly.some(([x,y])=>Math.abs(x-6)<1e-6 && Math.abs(y-5)<1e-6)).toBe(true);
+  });
   it("blocks a point behind a wall but not one in front", () => {
     const poly=visibilityPolygon([2,3],lightBlockers([wall]),10,10);
     expect(contains(poly,[4,3])).toBe(true);
