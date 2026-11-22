@@ -67,7 +67,7 @@ export function lightAt(S: StavBoje, map: BattleMapData, x: number, y: number): 
     const d = Math.max(Math.abs(x - ax), Math.abs(y - ay)) * 5;
     const inDark = obscuredAt(S, ax, ay); // světlo ve tmě nesvítí (Darkness 2024)
     if (inDark) continue;
-    if (wIdx.size && sightBlocked(idxOr(wIdx), ax, ay, x, y, (S as any).dvere)) continue; // světlo skrz zeď nesvítí
+    if (wIdx.size && sightBlocked(idxOr(wIdx), ax + .5, ay + .5, x + .5, y + .5, (S as any).dvere)) continue; // světlo skrz zeď nesvítí
     if (d <= L.bright) return "bright";
     if (d <= L.bright + L.dim && rank[lvl] < 1) lvl = "dim";
   }
