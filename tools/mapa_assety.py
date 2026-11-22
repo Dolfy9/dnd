@@ -178,6 +178,8 @@ def gen_image(client, prompt: str, transparent: bool) -> bytes | None:
 
 
 def animation_metadata(entry: dict) -> dict:
+    if entry["id"] in ("i-krb", "i-kolebka-lustr", "m-lucerna-sloup"):
+        return {"anim": "ohen"}
     key = "".join(c for c in unicodedata.normalize("NFD", entry["id"]) if not unicodedata.combining(c)).removeprefix("gen2-")
     if "portal" in key:
         return {"anim": "portal"}
@@ -200,7 +202,7 @@ def index_assets(prompts: dict) -> tuple[list[dict], list[dict]]:
             entries.append({"id": a["id"], "nazev": a["nazev"], "kategorie": a["kategorie"],
                             "src": f"bojove/assets/{a['kategorie']}/{a['id']}.webp",
                             "tags": [a["kategorie"]], "custom": False,
-                            **{k: a[k] for k in ("w", "h", "blocks", "cover", "difficult", "light") if k in a}})
+                            **{k: a[k] for k in ("w", "h", "z", "blocks", "cover", "difficult", "light") if k in a}})
         else:
             # ručně vložené png/jpg → konvertovat
             alt = next((kat_dir.glob(f"{a['id']}.*")), None) if kat_dir.is_dir() else None

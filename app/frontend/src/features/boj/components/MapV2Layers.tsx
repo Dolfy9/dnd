@@ -86,11 +86,14 @@ export const MapWallLayer = memo(function MapWallLayer({ map, doors, onDoor, dm,
   { map: MapV2; doors?: Record<string, boolean>; onDoor?: (w: MapWall) => void; dm?: boolean; revealedSecrets?: Record<string, 1> }) {
   const steny = map.steny || [];
   const uid = useId().replace(/:/g, "");
-  const { textures } = useMapManifests();
-  const texture = textures[["jeskyne", "hory", "snih", "les"].includes(map.podklad) ? "teren-skala" : "teren-wall"];
+  const { textures, assets } = useMapManifests();
+  const timber = ["mesto","pristav"].includes(map.podklad) && map.malba?.some(s => s.t === "drevo");
+  const texture = (timber && textures.drevo) || textures[["jeskyne", "hory", "snih", "les"].includes(map.podklad) ? "teren-skala" : "teren-wall"];
+  const door = assets["gen2-dvere"] || assets["dvere"];
   if (!steny.length) return null;
   return (
     <g>
+      <defs><filter id={uid + "ao"} x="-10%" y="-100%" width="120%" height="300%"><feGaussianBlur stdDeviation="2" /></filter></defs>
       {texture && <defs><pattern id={uid + "masonry"} width={PX * 2} height={PX * 2} patternUnits="userSpaceOnUse">
         <image href={assetUrl(texture.src)} width={PX * 2} height={PX * 2} />
       </pattern></defs>}
@@ -100,31 +103,36 @@ export const MapWallLayer = memo(function MapWallLayer({ map, doors, onDoor, dm,
         const open = w.typ === "door" && (doors?.[w.id] ?? w.open);
         const x1 = w.a[0] * PX, y1 = w.a[1] * PX, x2 = w.b[0] * PX, y2 = w.b[1] * PX;
         const mx = (x1 + x2) / 2, my = (y1 + y2) / 2;
+        const length = Math.hypot(x2-x1,y2-y1), angle = Math.atan2(y2-y1,x2-x1)*180/Math.PI;
         return (
           <g key={w.id} data-door={w.typ === "door" ? w.id : undefined}
              onClick={w.typ === "door" && onDoor ? () => onDoor(w) : undefined}
              style={w.typ === "door" && onDoor ? { cursor: "pointer" } : undefined}>
             {w.typ === "door" && <circle cx={mx} cy={my} r={8} fill="transparent" />}
+            {["wall","half","window"].includes(w.typ) && <rect data-wall-ao x={0} y={-4} width={length} height={8} fill="#080a0c" opacity={.65} transform={`translate(${x1},${y1}) rotate(${angle})`} filter={`url(#${uid}ao)`} />}
             <line x1={x1 + 1.2} y1={y1 + 1.6} x2={x2 + 1.2} y2={y2 + 1.6} stroke="#000"
                   strokeWidth={st.w} opacity={.3} strokeLinecap="square" />
             <line x1={x1} y1={y1} x2={x2} y2={y2} stroke={st.color} strokeWidth={st.w}
                   strokeDasharray={st.dash} strokeLinecap="square" opacity={w.typ === "curtain" ? .75 : 1} />
-            {texture && w.typ === "wall" && <>
-              <line x1={x1} y1={y1} x2={x2} y2={y2} stroke="#1c1917" strokeWidth={9} strokeLinecap="square" />
-              <line x1={x1} y1={y1} x2={x2} y2={y2} stroke={`url(#${uid}masonry)`} strokeWidth={7} strokeLinecap="square" />
+            {texture && (w.typ === "wall" || w.typ === "half") && <>
+              <line x1={x1} y1={y1} x2={x2} y2={y2} stroke="#171513" strokeWidth={w.typ === "half" ? 7 : 10.5} strokeLinecap="square" />
+              <line data-wall-texture x1={x1} y1={y1} x2={x2} y2={y2} stroke={`url(#${uid}masonry)`} strokeWidth={w.typ === "half" ? 5 : 7.8} strokeLinecap="square" />
             </>}
             {w.typ === "door" && (
-              <g transform={`translate(${mx},${my}) rotate(${Math.atan2(y2-y1,x2-x1)*180/Math.PI})`}>
+              <g transform={`translate(${mx},${my}) rotate(${angle})`}>
                 {open && <path d="M0 0 A9 9 0 0 1 8.5 -3" fill="none" stroke={st.color} strokeWidth={.9} opacity={.8} />}
                 <rect x={-4.5} y={-1.5} width={9} height={3} rx={1}
                       fill={open ? "#c9b489" : "#6b4f30"} stroke="#292524" strokeWidth={.8}
                       transform={open ? "rotate(-38)" : undefined} />
+                {door && <image data-door-art href={assetUrl(door.src)} x={-length/2} y={-5} width={length} height={10} preserveAspectRatio="none" transform={open ? `rotate(-70 ${-length/2} 0)` : undefined} />}
                 {w.locked && <circle cx={0} cy={0} r={1.6} fill="#fbbf24" stroke="#292524" strokeWidth={.5} />}
               </g>
             )}
-            {w.typ === "window" && <>
-              <line x1={x1} y1={y1} x2={x2} y2={y2} stroke="#0c4a6e" strokeWidth={.7} strokeDasharray="2 2" />
-              <line x1={x1 + (x1 === x2 ? 2 : 0)} y1={y1 + (x1 === x2 ? 0 : 2)} x2={x2 + (x1 === x2 ? 2 : 0)} y2={y2 + (x1 === x2 ? 0 : 2)} stroke={st.color} strokeWidth={.9} opacity={.7} /></>}
+            {w.typ === "window" && <g transform={`translate(${mx},${my}) rotate(${angle})`}>
+              <rect x={-length/2} y={-4} width={length} height={8} fill="#302b27" />
+              <rect x={-length/2+2} y={-2.4} width={Math.max(0,length-4)} height={4.8} fill="#77a7b1" stroke="#b6d8dd" strokeWidth={.7} />
+              {Array.from({length:Math.max(1,Math.floor(length/9))},(_,i) => <line key={i} x1={-length/2+(i+1)*length/(Math.floor(length/9)+1)} y1={-3.5} x2={-length/2+(i+1)*length/(Math.floor(length/9)+1)} y2={3.5} stroke="#3a2c20" strokeWidth={1.5} />)}
+            </g>}
           </g>
         );
       })}
@@ -134,20 +142,24 @@ export const MapWallLayer = memo(function MapWallLayer({ map, doors, onDoor, dm,
 
 export const MapObjectLayer = memo(function MapObjectLayer({ map, dm, staticOnly = false }: { map: MapV2; dm?: boolean; staticOnly?: boolean }) {
   const { assets } = useMapManifests();
-  const objs = (map.objekty || []).slice().sort((a, b) => (a.z ?? 0) - (b.z ?? 0));
+  const uid = useId().replace(/:/g,"");
+  const objs = (map.objekty || []).slice().sort((a, b) => (a.z ?? assets[a.asset]?.z ?? 0) - (b.z ?? assets[b.asset]?.z ?? 0));
   if (!objs.length) return null;
   return (
     <g pointerEvents="none">
-      {objs.map((o: MapObject) => {
+      {objs.map((o: MapObject, i) => {
         if (o.dmOnly && !dm) return null;
         const isImg = o.asset.startsWith("img:");
         const man = assets[o.asset];
         if (staticOnly && resolveAnimation(o, man)) return null;
         const def = isImg || man ? null : stampById(o.asset);
         const src = man ? assetUrl(man.src) : isImg ? `/repo/11_Mapy/bojove/${o.asset.slice(4)}` : null;
+        const tint = /^#[0-9a-f]{6}$/i.test(o.tint || "") ? [1,3,5].map(n => .65+.35*parseInt(o.tint!.slice(n,n+2),16)/255) : null;
+        const shade = o.asset.startsWith("d-") || (o.z ?? 0) < 0 ? "" : "drop-shadow(0px 1px 1px #000b) drop-shadow(0px 2px 3px #0006)";
         return (
           <g key={o.id} transform={`translate(${o.x * PX},${o.y * PX}) rotate(${o.rot || 0}) ${o.flip ? "scale(-1,1)" : ""}`}
              opacity={o.dmOnly ? .55 : 1}>
+            {tint && <defs><filter id={uid+"tone"+i}><feColorMatrix type="matrix" values={`${tint[0]} 0 0 0 0 0 ${tint[1]} 0 0 0 0 0 ${tint[2]} 0 0 0 0 0 1 0`} /></filter></defs>}
             {!staticOnly && ["portal", "ohen", "zare"].includes(resolveAnimation(o, man)) && <g opacity=".35"><image href="/repo/11_Mapy/bojove/ovl/zar.webp"
               x={-o.w*PX*.8} y={-o.h*PX*.8} width={o.w*PX*1.6} height={o.h*PX*1.6}
               style={{ mixBlendMode: "screen", animationDelay: `${animationPhase(o.id)}s`, filter: resolveAnimation(o, man) === "portal" ? "hue-rotate(165deg)" : undefined }} /></g>}
@@ -155,7 +167,7 @@ export const MapObjectLayer = memo(function MapObjectLayer({ map, dm, staticOnly
               <feDropShadow dx="1" dy="2" stdDeviation="1.2" floodColor="#000" floodOpacity="0.45" /></filter></defs>}
             {src ? <image href={src} x={-o.w * PX / 2} y={-o.h * PX / 2} width={o.w * PX} height={o.h * PX}
                           preserveAspectRatio="xMidYMid meet"
-                          style={{ filter: "drop-shadow(1px 2px 2px #0008)", animationDelay: `${animationPhase(o.id)}s` }} />
+                          style={{ filter: [tint ? `url(#${uid}tone${i})` : "",shade].filter(Boolean).join(" ") || undefined, animationDelay: `${animationPhase(o.id)}s` }} />
                  : def ? <g filter="url(#stamp-shade)"><StampSvg def={def} tint={o.tint} /></g>
                  : <rect x={-o.w * PX / 2} y={-o.h * PX / 2} width={o.w * PX} height={o.h * PX} fill="#8a6a44" opacity={.6} />}
           </g>

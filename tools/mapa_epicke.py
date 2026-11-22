@@ -34,7 +34,7 @@ class Scene:
                       popis=description + " Autorská herní scéna; místní názvy zón a zápletky jsou návrhem pro PJ.",
                       osvetleni="Vizuální atmosféra; dosah světel ve stopách.",
                       start={"druzina": [], "nepratele": []}, objekty=[], steny=[], malba=[],
-                      svetla=[], poznamky=[], kresby=[], vyska={}, textury={},
+                      svetla=[], poznamky=[], kresby=[], vyska={}, textury={}, interiery=[],
                       atmosfera={"amb": ambient, "barva": tint},
                       pocasi={"typ": weather, "sila": .32 if weather != "bourka" else .58, "vitr": 112},
                       mrizkaStyl={"typ": "dots", "barva": "#ddd4b1", "opacita": .13})
@@ -46,6 +46,8 @@ class Scene:
         o = dict(id=self.uid("objekty"), asset=asset, x=round(x, 3), y=round(y, 3),
                  w=round(w, 3), h=round(h if h is not None else w, 3), rot=round(rot, 2))
         o.update(options)
+        if asset.startswith("d-"):
+            o.update(z=-20, blocks=False, anim=False)
         self.m["objekty"].append(o)
         return o
 
@@ -66,6 +68,15 @@ class Scene:
 
     def wall(self, a, b, typ="wall", **options):
         self.m["steny"].append(dict(id=self.uid("steny"), a=list(a), b=list(b), typ=typ, **options))
+
+    def interior(self, points):
+        self.m["interiery"].append(dict(id=self.uid("interiery"), poly=[list(p) for p in points]))
+
+    def decals(self, assets, points, size=2):
+        for x,y in points:
+            scale = self.rng.uniform(.75,1.25)*size
+            self.obj(self.rng.choice(assets),x,y,scale,scale*self.rng.uniform(.7,1.1),
+                     self.rng.uniform(0,360),flip=self.rng.choice([True,False]))
 
     def enclosure(self, points, gaps=None, typ="wall"):
         for i, (a,b) in enumerate(zip(points, points[1:] + points[:1])):
@@ -97,7 +108,7 @@ class Scene:
                 raise ValueError("Shluk nemá volné místo")
             s = self.rng.uniform(*size)
             self.obj(self.rng.choice(assets),px,py,s,s*self.rng.uniform(.8,1.2),
-                     self.rng.uniform(0,360),**options)
+                     self.rng.uniform(0,360),flip=self.rng.choice([True,False]),**options)
 
     def starts(self, party, enemies):
         self.m["start"] = {"druzina":[list(p) for p in party],"nepratele":[list(p) for p in enemies]}
@@ -112,48 +123,70 @@ def inn():
               "03_Mesta/Mesto_Octowerin.md",
               "Déšť bubnuje do oken cechovního hostince. Šenk s krbem, kuchyně, soukromý salonek, "
               "tři pokoje a dvůr s vozem tvoří propojenou scénu. Sklepní poklop skrývá pašeráckou chodbu.",
-              301,"dest",.50,"#182237")
+              301,"dest",.63,"#182237")
     s.rect(0,0,36,28,"kocici-hlavy")
     s.paint("hlina",[(0,25),(8,23),(18,24),(30,26),(36,24)],2.8,.65,.25,23)
     s.rect(3,3,29,20,"drevo",r=90)
     s.rect(23,3,9,9,"dlazba")
-    s.rect(3.4,3.4,8,7.6,"koberec",o=.85,r=12)
+    s.rect(3.4,3.4,11.2,7.2,"koberec",o=.72,r=0)
+    s.interior([(3,3),(32,3),(32,23),(3,23)])
     s.enclosure([(3,3),(32,3),(32,23),(3,23)],{0:(.38,.45,"window"),1:(.22,.33,"window"),2:(.36,.44,"door"),3:(.38,.50,"window")})
-    s.wall((3,11),(15,11));s.wall((15,3),(15,11))
-    s.wall((3,16),(12,16));s.wall((12,11),(12,16))
+    s.wall((3,11),(8,11));s.wall((8,11),(10,11),"door");s.wall((10,11),(15,11));s.wall((15,3),(15,11))
+    s.wall((3,16),(12,16));s.wall((12,11),(12,13));s.wall((12,13),(12,15),"door");s.wall((12,15),(12,16))
     s.wall((23,3),(23,8));s.wall((23,8),(23,10),"door");s.wall((23,10),(23,16))
     s.wall((23,16),(29,16));s.wall((29,16),(31,16),"door");s.wall((31,16),(32,16))
     s.wall((3,19),(9,19));s.wall((9,19),(11,19),"door");s.wall((11,19),(12,19))
-    s.wall((12,16),(12,23));s.wall((12,13),(15,13),"door")
+    s.wall((12,16),(12,17));s.wall((12,17),(12,18.5),"door");s.wall((12,18.5),(12,20.5))
+    s.wall((12,20.5),(12,22),"door");s.wall((12,22),(12,23))
     for a,b in [((5,3),(7,3)),((18,3),(20,3)),((32,19),(32,21)),((3,13),(3,15))]:
         s.wall(a,b,"window")
-    s.obj("pult",25,14.3,6,2.2,8,cover=2,difficult=True)
-    s.obj("krb",18.7,4.3,3,2.3,light={"bright":10,"dim":15})
-    s.obj("kotel",29.3,5.5,1.5)
-    s.obj("stolni-deska",27,8.5,3,1.5,4,cover=2)
+    s.obj("i-pult",27,14,7,3.5,0,cover=2,difficult=True)
+    s.obj("i-regal-lahve",27,15.1,5,.8,180,cover=2)
+    s.obj("i-krb",18.7,4.3,3.4,2.4,light={"bright":10,"dim":15})
+    s.obj("i-kuchyn",27.8,5.2,4.5,2.5,0,cover=2,difficult=True)
+    s.obj("kotel",30.5,8.5,1.3)
+    s.obj("stolni-deska",26,9,3.2,1.7,-3,cover=2)
+    s.obj("i-sudy-stoh",30.5,10.6,2.2,1.4,0,cover=2)
     s.obj("p3-padaci-dvere",29,19.6,1.6,rot=7)
     s.obj("gen2-vuz",7,25.2,3.2,2.2,-14,cover=2,difficult=True)
-    for x,y,r in [(16.6,10,12),(17.5,18,-17),(9,13.5,4),(27.6,20,-8),(8.2,6.5,3)]:
-        s.obj("gen2-koberec",x,y,4.5,3.2,r,z=-2)
-        s.obj("stul-kulaty" if x<20 else "stul-obdelnik",x,y,2.2,2.2,r,cover=2,difficult=True)
+    for x,y,r in [(18.5,9.5,8),(17,18,-12),(27.6,20,-6),(8.7,6.8,0),(21.5,14,3)]:
+        s.obj("gen2-koberec",x,y,5.2,3.9,r,z=-2)
+        s.obj("stul-kulaty" if x<22 else "stul-obdelnik",x,y,3,2.7,r,cover=2,difficult=True)
         for a in [0,78,180,265]:
-            t=math.radians(a+r);s.obj("zidle",x+1.6*math.cos(t),y+1.6*math.sin(t),.75,1,a+r-90)
+            t=math.radians(a+r);s.obj("zidle",x+2*math.cos(t),y+1.8*math.sin(t),1,1.15,a+r-90)
         s.obj("svicka",x+.45,y-.3,.3)
-        s.obj("p3-nadobi",x-.3,y+.2,.85,.65,r)
+        s.obj("p3-nadobi",x-.5,y+.15,1.2,.9,r)
+        s.obj("p3-nadobi",x+.55,y-.3,.8,.65,r+130)
         s.light(x,y,bright=4,dim=9,intensity=.6)
-    for x,y,r in [(5.2,18,90),(5.2,21,90),(6,8,0)]:
-        s.obj("postel",x,y,2.4,1.5,r)
-        s.obj("truhel",x+2.5,y,.85,.6,-7,cover=2)
-    for x,y,r in [(11,5,90),(30.3,10,0),(30.4,13,0),(14,21,90)]:
+    for x,y,r in [(5.5,17.6,90),(5.5,21,90),(5.5,13.6,90)]:
+        s.obj("postel",x,y,3,3,r)
+        s.obj("gen2-koberec",8,y,2.5,1.7,0,z=-2)
+        s.obj("truhel",8.8,y-1,1.15,.8,-4,cover=2)
+        s.obj("stul-ctverec",10.5,y,1,1,0)
+        s.obj("svicka",10.5,y,.35)
+        s.light(10.5,y,bright=3,dim=8,intensity=.5)
+    for x,y,r in [(13.8,5.5,90),(30.7,13.2,90),(14,21,90),(4,9,0)]:
         s.obj("skrin" if x<20 else "gen2-regal",x,y,2,1,r,blocks=True,cover=3)
     for x,y in [(4,4),(14,4),(31,17),(23.7,21.8)]:
         s.obj("kandelabr",x,y,.65)
         s.light(x,y)
-    for x,y in [(30,13),(25.8,5),(30,24.8),(4.5,24.5),(11.5,25.3)]:
+    for x,y in [(30,24.8),(4.5,24.5),(11.5,25.3),(24.5,18)]:
         s.cluster(["sud","bedna","pydel"],x,y,7,1.3,1.1,(.55,.95),cover=2,difficult=True)
     for x,y in [(23.8,18),(4.5,10),(31,5),(33.5,9),(1.5,19)]:
         s.cluster(["smiti","kamen","kvetinac"],x,y,5,.8,1,(.3,.65))
     s.paint("teren-rubble",[(24,23),(25,25),(28,26)],1.1,.45,.2,32)
+    for x,y,r in [(13,7,90),(20.5,21.8,0),(30.8,18,90)]:
+        s.obj("i-lavice",x,y,3,.85,r,cover=2)
+    s.obj("i-kolebka-lustr",18.5,13.8,1.5,1.5,light={"bright":5,"dim":10},z=4)
+    s.obj("i-sudy-stoh",26,17.7,2.4,1.6,0,cover=2)
+    s.obj("i-regal-lahve",27.2,3.7,4,.75,0,cover=2)
+    s.decals(["d-kaluz"],[(17,23.7),(24,25),(9,1.5),(34,8),(1.5,15),(33.7,21),(7,26)],2.5)
+    s.decals(["d-seno"],[(5,24),(10,25.8),(24.2,10.8)],1.5)
+    s.decals(["d-prasklina","d-sut"],[(26,7.5),(24,4),(2,8),(33.8,14)],1.2)
+    s.obj("m-dreveny-plot",29,26.5,6,.7,0,cover=2)
+    s.obj("m-lucerna-sloup",2,3,1.1)
+    s.obj("m-lucerna-sloup",33.6,24.5,1.1)
+    s.cluster(["kvetinac","bedna","sud"],2,10,6,.65,4,(.6,1),cover=2)
     s.light(18.7,4.6,"#ff9b42",12,20,.8)
     s.light(20,25,"#9cc4e0",5,12,.35,False)
     s.note(29,19.7,"Sklepní poklop: DC 13 Investigation odhalí čerstvé škrábance. Žebřík do pašeráckého sklepa.")
@@ -170,6 +203,7 @@ def crypt():
             "postranní niky a zatopený relikviář vedou k modrému portálu. Sarkofágy nabízejí kryt, kosti zpomalují.",
             302,"mlha",.45,"#111d35")
     s.rect(0,0,36,28,"teren-bedrock",tile="#")
+    s.interior([(0,0),(36,0),(36,28),(0,28)])
     hall=[(11,6),(15,3),(26,3),(31,7),(31,17),(27,21),(17,21),(11,16)]
     s.area(hall,"teren-krypta")
     corridor=[(3,25),(3,19),(7,15),(11,12),(15,16),(10,20),(8,25)]
@@ -190,7 +224,7 @@ def crypt():
     s.obj("socha",14,8,1.7,2,28,blocks=True,cover=3)
     s.obj("socha",29,16.5,1.7,2,-30,blocks=True,cover=3)
     for x,y,r in [(16,5.6,0),(21,5.2,4),(14,17,42),(18.5,18.8,8),(28,11,90),(5.5,7.2,-8),(8.5,9,9),(30,24,90)]:
-        s.obj("sarkofag",x,y,1.5,2.8,r,cover=2,difficult=True)
+        s.obj("sarkofag",x,y,3.1,3.1,r,cover=2,difficult=True)
         s.cluster(["gen2-kosti","pavouk-web","kamen"],x+.5,y+.5,4,1.5,1.3,(.3,.7))
     for x,y in [(15,10),(15,14.5),(27.8,7.5),(27.5,18),(4.4,10.7),(9.8,6)]:
         s.obj("sloup",x,y,1.1,blocks=True,cover=3)
@@ -198,6 +232,16 @@ def crypt():
         s.obj("brasier",x,y,.8)
         s.light(x,y,c,7,15,.8)
     s.light(24.5,7.2,"#57baff",10,18,.7,False)
+    s.decals(["d-prasklina","d-sut"],[(12,7),(17,4),(28,5),(30,13),(25,20),(14,18),(4,6),(9,11),(7,19),(28,24)],2.5)
+    s.decals(["d-krev"],[(21,16),(8,8),(25,9)],1.6)
+    s.decals(["d-mech"],[(4,10),(10,6),(30,19),(28,25)],1.7)
+    s.obj("svitek-police",32.8,23.5,2.2,1,90,cover=2)
+    s.obj("gen2-truhla",32,25,1.3,.9,-12,cover=2)
+    for x,y,r in [(17.7,8,0),(25,17,22),(6.5,10,90),(23,19.5,0)]:
+        s.obj("kosti-hromada",x,y,1.5,1.2,r,difficult=True)
+        s.obj("svicka",x+.6,y-.5,.5)
+    s.obj("p3-padaci-dvere",5.5,23,2,2,-8)
+    s.obj("gen2-regal",4,8,2.4,1,90,cover=2)
     s.rect(27.6,22.6,5.6,2.8,"melka-voda",tile=",",o=.8)
     s.paint("teren-rubble",[(4.5,23),(6,20),(10,16)],1.4,.7,.3,46)
     s.paint("teren-rubble",[(14,7),(13,12),(16,17)],1.2,.5,.3,32)
@@ -224,8 +268,9 @@ def ruins():
     s.area(river,"teren-voda",tile="~")
     s.paint("teren-melcina",[(23.3,0),(21.7,5),(23.5,9),(20.8,17),(22,22),(19,28)],1.1,.7,.4)
     s.paint("hlina",[(0,23),(7,19),(12,14),(17,12),(22,12),(32,15),(36,17)],2.4,.9,.25,34)
-    s.rect(20,11.2,8,2.3,"drevo",tile="=",r=90)
-    s.wall((20,11.3),(27.8,11.3),"half");s.wall((20,13.4),(27.8,13.4),"half")
+    s.rect(19.5,11.2,9,2.3,"drevo",tile="=",r=90,o=0)
+    s.obj("m-most-drevo",24,12.3,9.5,3.2,0,z=-8,anim=False)
+    s.wall((20.2,11.65),(27.8,11.65),"half");s.wall((20.2,13),(27.8,13),"half")
     temple=[(6,7),(10,3.5),(17,4),(20,8),(18,16),(11,18),(5,13)]
     s.area(temple,"teren-ruiny",r=26)
     s.enclosure(temple,{0:(.4,.8,"window"),2:(.2,.75,"half"),4:(.35,.7,"door"),5:(.2,.65,"half")})
@@ -233,7 +278,7 @@ def ruins():
     s.obj("gen2-oltar",12,7,2.6,1.5,17,blocks=True,cover=3)
     s.obj("gen2-socha",16,7,1.8,2,-20,blocks=True,cover=3)
     for x,y,r in [(7.2,7,20),(18,8.5,-15),(8,14,-32),(16,14,32),(11,4.5,0)]:
-        s.obj("sloup",x,y,1.05,blocks=True,cover=3)
+        s.obj("sloup",x,y,1.4,blocks=True,cover=3)
         s.obj("p3-sloup-ruina",x+.6,y+.9,2,1.2,r,difficult=True,cover=2)
     for pts in [[(5,7),(6,12),(10,15)],[(11,17),(16,16),(18,12)],[(8,5),(12,5),(15,6)]]:
         s.paint("bazina",pts,1.7,.5,.15,48)
@@ -244,12 +289,18 @@ def ruins():
     s.light(30,7,"#a7c6ff",8,14,.55,False)
     s.light(17,24,"#ca9ae7",6,15,.5,False)
     for x,y,n,rx,ry in [(3,4,12,3,3),(3,14,13,3,5),(9,25,12,7,2),(31,23,14,4,4),(32,4,10,3,3),(32,10,8,3,2)]:
-        s.cluster(["strom","gen2-strom","gen2-strom2","strom-velky"],x,y,n,rx,ry,(2,3.5),
+        s.cluster(["strom","gen2-strom","gen2-strom2","gen2-strom3","strom-velky"],x,y,n,rx,ry,(2,3.5),
                   avoid=lambda x,y: abs(y-12)<2 or (5<x<20 and 4<y<18),cover=3)
     for x,y in [(6,7),(6,13),(17,14),(12,17),(27.5,19),(30,6),(15,23)]:
-        s.cluster(["gen2-kapradi","koreny","gen2-houby","vinorost","gen2-ker"],x,y,8,2.2,1.8,(.4,.95))
+        s.cluster(["gen2-kapradi","koreny","gen2-houby","vinorost","gen2-ker","gen2-ker2","pazdrovi","kvety"],x,y,9,2.2,1.8,(.45,1.1))
     for x,y in [(25.8,5),(25,17),(23.5,24)]:
         s.cluster(["gen2-rakos","gen2-lekniny","kamen"],x,y,5,1,2,(.5,.85))
+    s.decals(["d-mech","d-listi"],[(6,6),(8,11),(10,15),(17,15),(18,9),(12,4),(3,18),(30,22),(32,6),(15,24),(28,17),(20,23)],2.8)
+    s.decals(["d-prasklina","d-sut"],[(12,9),(16,6),(8,15),(17,11)],2.2)
+    s.obj("m-kamenna-zidka",9,18.2,4.5,.9,-18,cover=2)
+    s.obj("m-kamenna-zidka",19.3,17.3,3.5,.8,-35,cover=2)
+    s.obj("gen2-parez",3,18,1.6,1.5,34,cover=2)
+    s.obj("gen2-kmen",30,25,4,1.1,-38,cover=2)
     s.note(12,7,"Tirentův oltář: rozbitá mísa odráží nebe bez ohledu na koruny stromů.")
     s.note(24,12,"Most: zábradlí poskytuje poloviční kryt, průchod po prostředku je volný.")
     s.note(30,7,"Runový kámen: lze vyjednat průchod se strážci; kořeny u zdi tvoří těžký terén.")
@@ -266,10 +317,19 @@ def harbor():
     s.rect(0,0,36,28,"teren-voda",tile="~")
     s.rect(0,0,12.5,28,"kocici-hlavy")
     s.rect(2,3,9,9,"drevo",r=90)
+    s.interior([(2,3),(11,3),(11,12),(2,12)])
     s.enclosure([(2,3),(11,3),(11,12),(2,12)],{1:(.55,.82,"door"),2:(.2,.45,"window")})
     s.rect(11,13,18,3.5,"drevo",tile="=",r=90)
     s.rect(14,6,3,17,"drevo",tile="=",r=0)
     s.rect(10,23,12,2,"drevo",tile="=",r=90)
+    for x in (15.5,24.5):
+        s.obj("m-molo",x,14.75,9.7,3.9,0,z=-9,anim=False)
+    for y in (10.2,18.7):
+        s.obj("m-molo",15.5,y,9,3.5,90,z=-10,anim=False)
+    for x in (12,16,20):
+        s.obj("m-molo",x,24,4.7,2,0,z=-8,anim=False)
+    for a,b in [((11,13),(21,13)),((11,16.5),(21,16.5)),((14,6),(14,12.5)),((17,16.8),(17,22.8))]:
+        s.wall(a,b,"half")
     ship=[(26,3),(28,5),(29.5,8),(30,13),(29.5,21),(28,23),(24,23),(22.4,21),(22,8)]
     s.area(ship,"drevo",r=90,o=0)
     s.enclosure(ship,{7:(.45,.70,"door")},typ="half")
@@ -285,12 +345,22 @@ def harbor():
     for x,y in [(3.5,4.5),(8,5),(4,9.5),(10.5,19),(4.5,22),(20,15),(27.5,21),(27.8,6.5)]:
         s.cluster(["bedna","sud","pydel","truhla-lod"],x,y,7,1.5,1.3,(.65,1.15),cover=2,difficult=True)
     for x,y in [(11.5,13.5),(15,6.5),(16,22),(21,23.5),(23,8),(29,22),(7,11.5)]:
-        s.obj("latarnik",x,y,.6)
+        s.obj("m-lucerna-sloup",x,y,1.1)
         s.light(x,y,"#ffd58d",6,16,.7)
     s.paint("teren-rubble",[(1,16),(6,18),(10,22)],1.4,.45,.2,18)
     s.paint("hlina",[(1,25),(5,21),(8,17),(10,13)],1.6,.5,.3,34)
     s.cluster(["smiti","kamen","vrv-kotel"],6,16,18,5,10,(.3,.75))
     s.cluster(["gen2-sudy","bedna","kotva"],6,8,12,4,3,(.45,.8),cover=2)
+    s.obj("i-sudy-stoh",5.2,4.2,3,1.9,0,cover=2)
+    s.obj("i-regal-lahve",3.3,7.8,3,1,90,cover=2)
+    s.obj("m-sit",8,9,3,2.4,-12)
+    s.obj("m-sit",18.7,15,2.6,1.8,7)
+    s.obj("m-kotva-retez",12,19,2.1,2.1,-19)
+    s.obj("m-kotva-retez",27,20,1.8,1.8,24)
+    s.obj("i-lavice",8,17.5,2.5,.85,90,cover=2)
+    s.decals(["d-kaluz"],[(8,15),(4,18),(9,23),(15.5,9),(18,24),(25,16),(27,8),(2,2)],1.8)
+    s.decals(["d-seno","d-sut"],[(4,7),(8.5,4),(6,11)],1.5)
+    s.obj("m-dreveny-plot",1,18,7,.8,90,cover=2)
     s.light(30,14,"#92b9e9",10,25,.35,False)
     s.note(26,13,"Karavela: dubový poklop vede do podpalubí. Můstky spojují otevřenou palubu s nákladním molem.")
     s.note(7,7,"Sklad Zlaté kotvy: celní pečeti na jedné bedně jsou padělané. Stávající městská krčma je místní inspirací.")
@@ -305,14 +375,16 @@ def volcano():
             "Návrh svatyně pod troskami dávné říše: lávová řeka obtéká obřadní ostrov, "
             "šikmý čedičový most vede k runovému oltáři. Pokladnice, zlomené pilíře a dračí ostatky v černém popelu.",
             305,"popel",.52,"#291b22")
-    s.rect(0,0,36,28,"jeskyne")
+    s.rect(0,0,36,28,"teren-bedrock")
     lava=[(17,0),(23,0),(24,5),(21,9),(23,15),(20,20),(22,28),(16,28),(15,22),(17,16),(15,11),(18,6)]
     s.area(lava,"lava",tile="l")
     s.area([(17,16),(25,17),(29,23),(24,27),(17,25),(14,21)],"lava",tile="l")
     island=[(20,9),(25,4),(31,5),(34,11),(32,19),(27,22),(23,18)]
-    s.area(island,"teren-skala")
+    s.area(island,"teren-bedrock")
     bridge=[(11,16),(12,13),(25,11),(25.5,13.5)]
-    s.area(bridge,"dlazba")
+    s.area(bridge,"teren-skala")
+    for x,y in [(13.2,14.4),(18.1,13.55),(23,12.7)]:
+        s.obj("m-most-kamen",x,y,5.7,3,-10,z=-8,anim=False)
     s.wall((11,16),(25.5,13.5),"half")
     s.area([(2,17),(8,13),(13,15),(13,23),(7,26),(2,24)],"teren-ruiny")
     s.enclosure([(24,6),(30,6),(33,11),(31,17),(26,19),(23,15)],{4:(.2,.65,"door"),5:(.12,.46,"door")},typ="half")
@@ -330,12 +402,18 @@ def volcano():
     s.light(28,11,"#ffa13f",8,18,.7)
     s.light(29,7.5,"#bd77fa",7,12,.5,False)
     for x,y,rx,ry in [(4,4,3,3),(31,3,4,2),(33,23,2,4),(4,26,3,1),(13,4,2,3),(3,11,2,3)]:
-        s.cluster(["gen2-balvan","p3-obsidian","gen2-balvan2"],x,y,8,rx,ry,(1,2.2),cover=3)
+        s.cluster(["gen2-balvan","p3-obsidian","gen2-balvan2","balvan","skala","kamen"],x,y,8,rx,ry,(1.2,2),cover=3,tint="#754c4c")
     for x,y in [(8,8),(11,22),(24,16),(31,11),(26,6),(6,20)]:
-        s.cluster(["gen2-kosti","gen2-krystal","kamen","trhlina"],x,y,8,2.2,2,(.4,1.1))
+        s.cluster(["gen2-kosti","gen2-krystal","kamen","trhlina","gen2-balvan2","kosti-hromada"],x,y,8,2.2,2,(.35,.95))
     s.paint("teren-rubble",[(1,23),(7,21),(11,18),(15,14)],2,.7,.25,29)
     s.paint("hlina",[(4,9),(8,10),(13,8)],2.4,.35,.2,-16)
     s.obj("gen2-krev",26,12,1.4,1.9,30,z=-1,anim=False)
+    s.decals(["d-popel","d-spaleniste"],[(3,7),(6,12),(12,6),(9,24),(31,22),(32,9),(26,19),(27,3),(13,26),(1,18)],3)
+    s.decals(["d-prasklina","d-sut"],[(4,18),(10,19),(27,14),(30,17),(23,8)],2)
+    s.decals(["d-krev"],[(25,12),(8,8)],1.8)
+    s.obj("p3-poklad",5,21,1.8,1.5,-36,cover=2)
+    s.obj("gen2-truhla",10,22,1.5,1,15,cover=2)
+    s.obj("p3-obsidian",16,10,1.8,2.2,-13,cover=3)
     s.note(18,17,"Láva: neprůchodné pole l s ohnivým nebezpečím. Kamenný most zůstává průchozí a bez nákladu.")
     s.note(8,8,"Dračí ostatky: pradávný strážce svatyně, herní návrh pro PJ; nikoli nový kanonický drak Montelienu.")
     s.note(7.5,19,"Pokladnice: poloviční kryt. Zápletka i označení svatyně jsou herní návrh.")
@@ -353,7 +431,7 @@ def winter():
     lake=[(17,4),(25,2),(32,6),(34,14),(29,23),(21,26),(14,22),(13,15)]
     s.area(lake,"led",tile="i",r=14)
     s.paint("snih",[(14,23),(13,17),(16,9),(19,5)],1.7,.6,.2,32)
-    s.paint("hlina",[(0,21),(6,19),(10,16),(12,11),(17,9)],2,.65,.2,-23)
+    s.paint("snih",[(0,21),(6,19),(10,16),(12,11),(17,9)],2.6,.85,.25,-23)
     s.area([(25,10),(27,9),(28,13),(25,15),(24,13)],"teren-propast",tile="_")
     s.obj("mag-kruh",25.5,12.2,4.5,4.5,-21,z=-2,anim=False)
     s.obj("rune-kamen",26,8.2,1.6,2,23,cover=2)
@@ -376,6 +454,19 @@ def winter():
     s.wall((2,17),(6,18),"half");s.wall((6,18),(9,17.5),"door")
     s.wall((3,4),(7,2),"half");s.wall((7,2),(12,2.5),"half")
     s.obj("gen2-krev",23,16,.8,1.2,-24,z=-1,anim=False)
+    s.decals(["d-snih-zavej"],[(4,4),(6,5),(3,12),(4,16),(11,3),(12,21),(14,25),(32,22),(30,5),(18,4),(33,12)],3)
+    s.decals(["d-seno"],[(5,7),(4.5,14),(10.5,20)],2)
+    s.decals(["d-krev"],[(23,16),(21.5,18)],1.2)
+    s.decals(["d-spaleniste"],[(9.5,12)],2.8)
+    s.obj("m-dreveny-plot",4,17.8,4.5,.7,12,cover=2)
+    s.obj("i-lavice",7.4,12.8,2.5,.8,65,cover=2)
+    s.obj("i-sudy-stoh",5.6,20.2,2.2,1.5,-8,cover=2)
+    s.obj("gen2-vuz",9,24.5,3.8,2.4,-24,cover=2,difficult=True)
+    s.obj("m-lucerna-sloup",12.8,10,1,1,light={"bright":4,"dim":8})
+    s.obj("m-sit",9.5,17.5,2.2,1.7,-16)
+    s.obj("p3-lana",10.8,18,1.1,1.1,12)
+    s.obj("i-lavice",11.6,12,2.3,.8,-65,cover=2)
+    s.cluster(["pazdrovi","koreny","gen2-parez"],14,5,7,2,2,(.45,.9))
     s.paint("teren-rubble",[(12,25),(14,23),(16,22)],1,.25,.3,22)
     s.note(26,12,"Trhlina: neprůchodná propast. Okolní led je těžký terén; bezpečná cesta obchází západní břeh.")
     s.note(9.5,12,"Hlídka: zásoby vydrží tři noci. Oheň je vidět z protějšího břehu.")

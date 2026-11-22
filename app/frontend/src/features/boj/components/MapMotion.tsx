@@ -1,4 +1,4 @@
-import { memo, useEffect, useId, useRef, useSyncExternalStore } from "react";
+import { memo, useEffect, useId, useMemo, useRef, useSyncExternalStore } from "react";
 import type { CSSProperties } from "react";
 import { normalizeWeather, WEATHER, type MapV2, type MapObject, type MapWeather } from "../model/mapV2";
 import type { AssetEntry } from "../../mapeditor/assets/manifest";
@@ -30,13 +30,29 @@ export function AnimationButton() {
     localStorage.setItem(KEY, on ? "off" : "on"); window.dispatchEvent(new Event("map-animations"));
   }}><img src="/repo/11_Mapy/bojove/ikony/nastaveni.webp" alt="" />Animace</button>;
 }
-export function WeatherPicker({ value, onChange, compact = false }: {
-  value?: MapWeather; onChange: (value: MapWeather) => void; compact?: boolean;
+export function weatherPreviewTexture(map?: MapV2): string {
+  if (!map) return "teren-g";
+  const counts: Record<string,number> = {};
+  map.mrizka.forEach((row,y) => [...row].forEach((c,x) => {
+    const t=map.textury?.[x+","+y] || terrainTexture(c,map.podklad); counts[t]=(counts[t] || 0)+1;
+  }));
+  const base = Object.entries(counts).sort((a,b) => b[1]-a[1])[0]?.[0] || terrainTexture(".",map.podklad);
+  let dominant=base, area=0;
+  for (const s of map.malba || []) {
+    if (!s.poly || s.o < .8) continue;
+    const a=Math.abs(s.p.reduce((sum,p,i) => { const q=s.p[(i+1)%s.p.length]; return sum+p[0]*q[1]-q[0]*p[1]; },0))/2;
+    if (a>area) { area=a; dominant=s.t; }
+  }
+  return dominant;
+}
+
+export function WeatherPicker({ value, onChange, compact = false, map }: {
+  value?: MapWeather; onChange: (value: MapWeather) => void; compact?: boolean; map?: MapV2;
 }) {
   const weather = normalizeWeather(value);
   const cards = <div className="map-weather-cards">{WEATHER.map(([typ, label, fx]) =>
     <button type="button" key={typ} aria-pressed={weather.typ === typ} onClick={() => onChange({ ...weather, typ })}>
-      <span style={{ backgroundImage: `url(/repo/11_Mapy/bojove/textury/teren-g.webp)` }}>
+      <span style={{ backgroundImage: `url(/repo/11_Mapy/bojove/textury/${weatherPreviewTexture(map)}.webp)` }}>
         {fx && <img src={FX + (typ === "dest" ? "dest-svetly" : typ === "mlha" ? "mraky-svetle" : fx) + ".webp"} alt="" style={{filter:"brightness(3) contrast(1.2)"}} />}
       </span>{label}
     </button>)}</div>;
@@ -48,9 +64,17 @@ export function WeatherPicker({ value, onChange, compact = false }: {
     : <section aria-label="Počasí"><h4>Počasí</h4>{cards}{controls}</section>;
 }
 
+export function weatherExposureMask(map: MapV2): string | undefined {
+  if (!map.interiery?.length) return;
+  const W = (map.mrizka[0]?.length || 1)*24, H = map.mrizka.length*24;
+  const roofs = map.interiery.map(r => `<polygon points="${r.poly.map(([x,y]) => `${x*24},${y*24}`).join(" ")}" fill="black"/>`).join("");
+  return 'url("data:image/svg+xml,' + encodeURIComponent(`<svg xmlns="http://www.w3.org/2000/svg" width="${W}" height="${H}"><defs><mask id="sky" maskUnits="userSpaceOnUse" x="0" y="0" width="${W}" height="${H}" style="mask-type:luminance"><rect width="${W}" height="${H}" fill="white"/>${roofs}</mask></defs><rect width="${W}" height="${H}" fill="white" mask="url(#sky)"/></svg>`) + '")';
+}
+
 export const MapWeatherLayer = memo(function MapWeatherLayer({ map }: { map: MapV2 }) {
   const w = normalizeWeather(map.pocasi);
   const lightning = useRef<HTMLDivElement>(null);
+  const exposure = useMemo(() => weatherExposureMask(map), [map.interiery, map.mrizka]);
   useEffect(() => {
     if (w.typ !== "bourka" || !w.sila) return;
     let timer: ReturnType<typeof setTimeout>;
@@ -70,7 +94,7 @@ export const MapWeatherLayer = memo(function MapWeatherLayer({ map }: { map: Map
   const snow = w.typ === "snih" || w.typ === "vanice";
   const fog = w.typ === "mlha";
   const files = rain ? ["dest-svetly", "dest2-svetly"] : snow ? ["snih", "snih2"] : fog ? ["mraky-svetle", "mraky-svetle"] : ["jiskry", "jiskry"];
-  return <div data-map-weather={w.typ} className={`map-weather weather-${w.typ}`} style={{ "--wind": `${w.vitr! - 90}deg`, "--strength": w.sila } as CSSProperties}>
+  return <div data-map-weather={w.typ} className={`map-weather weather-${w.typ}`} style={{ "--wind": `${w.vitr! - 90}deg`, "--strength": w.sila, maskImage: exposure, maskSize: "100% 100%" } as CSSProperties}>
       <div className="map-weather-wind" style={{ width: Math.hypot((map.mrizka[0]?.length || 1)*24,map.mrizka.length*24), height: Math.hypot((map.mrizka[0]?.length || 1)*24,map.mrizka.length*24) }}>{files.map((file, i) => <div key={i} className={`map-weather-sheet sheet-${i}`}
         style={{ backgroundImage: `url(${FX + file}.webp)` }} />)}</div>
       {(w.typ === "bourka" || w.typ === "vanice") && <div className="map-weather-cloud" style={{ backgroundImage: `url(${FX}mraky.webp)` }} />}

@@ -51,13 +51,14 @@ export const MapAnimatedScene = memo(function MapAnimatedScene({ map, view, px =
       return sprite(x+","+y,assetUrl(asset.src),anim,x+.5,y+.5,size,size);
     }))}
     {details && <svg className="map-scene-static" width={W} height={H}>{details}</svg>}
-    {objects && [...(map.objekty || [])].sort((a,b) => (a.z ?? 0)-(b.z ?? 0)).map(o => {
+    {objects && [...(map.objekty || [])].sort((a,b) => (a.z ?? assets[a.asset]?.z ?? 0)-(b.z ?? assets[b.asset]?.z ?? 0)).map(o => {
       if (o.dmOnly && !dm) return null;
       const asset = assets[o.asset], anim = resolveAnimation(o,asset);
       const src = asset ? assetUrl(asset.src) : o.asset.startsWith("img:") ? "/repo/11_Mapy/bojove/"+o.asset.slice(4) : "";
       return anim && src ? sprite(o.id,src,anim,o.x,o.y,o.w,o.h,o.rot,o.flip,o.dmOnly ? .55 : 1)
         : <svg key={o.id} className="map-scene-static" width={W} height={H}><MapObjectLayer map={{...map,objekty:[o]}} dm={dm} /></svg>;
     })}
+    <div className="map-scene-frame" />
     {lights && visualLights(map).filter(l => l.blikani && l.radius > 0).map(l => <div key={l.id} className="map-dom-light" style={{
       left:l.x*24-l.radius,top:l.y*24-l.radius,width:l.radius*2,height:l.radius*2,opacity:l.intenzita*.2,
       "--light-color":l.color,

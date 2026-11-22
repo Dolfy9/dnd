@@ -13,7 +13,8 @@ spec.loader.exec_module(assets)
 class AssetImportTests(unittest.TestCase):
     def test_animation_metadata(self):
         for key, anim in [("gen2-strom", "vitr"), ("keř", "vitr"), ("pochodeň", "ohen"),
-                          ("portal", "portal"), ("rune-kamen", "zare")]:
+                          ("portal", "portal"), ("rune-kamen", "zare"), ("i-krb","ohen"),
+                          ("i-kolebka-lustr","ohen"), ("m-lucerna-sloup","ohen")]:
             self.assertEqual(assets.animation_metadata({"id": key}), {"anim": anim})
         self.assertEqual(assets.animation_metadata({"id": "stul"}), {})
     def test_key_trim_despill_and_empty(self):
@@ -61,6 +62,17 @@ class AssetImportTests(unittest.TestCase):
             with patch.object(assets, "ASSETS", Path(directory)), patch.object(assets, "TEXDIR", Path(directory)):
                 self.assertEqual(assets.index_assets({"assety": []}), ([], []))
                 self.assertEqual(assets.index_textures({"textury": []}), ([], []))
+
+    def test_decal_metadata_survives_index(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root=Path(directory);(root/"Obtisky").mkdir()
+            Image.new("RGBA",(20,20),(80,90,70,160)).save(root/"Obtisky/d-mech.webp")
+            entry={"id":"d-mech","nazev":"Mech","kategorie":"Obtisky","w":2,"h":2,"z":-20,"blocks":False}
+            with patch.object(assets,"ASSETS",root):
+                indexed,missing=assets.index_assets({"assety":[entry]})
+            self.assertEqual(missing,[])
+            self.assertEqual(indexed[0]["z"],-20)
+            self.assertIs(indexed[0]["blocks"],False)
 
 
 if __name__ == "__main__":

@@ -76,9 +76,11 @@ export interface MapNote {
 
 export interface MapKalibrace { cellPx: number; offX: number; offY: number }
 export interface MapMrizkaStyl { typ: "lines" | "dots" | "none"; barva: string; opacita: number }
+export interface MapInterior { id: string; poly: [number, number][] }
 
 /** Plná v2 mapa = BattleMapData + volitelná pole. */
 export interface MapV2 extends BattleMapData {
+  interiery?: MapInterior[];
   pocasi?: MapWeather;
   malba?: MapPaintStroke[];
   atmosfera?: { amb: number; barva: string };
@@ -112,6 +114,15 @@ export function migrateMap(m: BattleMapData | MapV2 | any): MapV2 {
   if (!out.mrizka) out.mrizka = ["...."];
   const finite = (v: unknown, fallback: number, min: number, max: number) =>
     typeof v === "number" && Number.isFinite(v) ? Math.max(min, Math.min(max, v)) : fallback;
+  if (out.interiery !== undefined) {
+    out.interiery = (Array.isArray(out.interiery) ? out.interiery : [])
+      .filter(r => r && Array.isArray(r.poly))
+      .map((r, i) => ({ id: typeof r.id === "string" ? r.id : "interier" + i,
+        poly: r.poly.filter(p => Array.isArray(p) && p.length === 2 && p.every(n => typeof n === "number" && Number.isFinite(n))) }))
+      .filter(r => r.poly.length >= 3 && Math.abs(r.poly.reduce((a, p, i) => {
+        const q = r.poly[(i + 1) % r.poly.length]; return a + p[0] * q[1] - q[0] * p[1];
+      }, 0)) > .001);
+  }
   if (out.malba !== undefined) {
     out.malba = (Array.isArray(out.malba) ? out.malba : []).filter(s => s && typeof s.t === "string" && Array.isArray(s.p))
       .map((s, i) => ({ id: typeof s.id === "string" ? s.id : "malba" + i, t: s.t,

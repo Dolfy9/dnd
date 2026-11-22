@@ -1125,6 +1125,356 @@
    "difficult": true
   },
   {
+   "id": "d-krev",
+   "nazev": "Zaschlá krev",
+   "kategorie": "Obtisky",
+   "src": "bojove/assets/Obtisky/d-krev.webp",
+   "tags": [
+    "Obtisky"
+   ],
+   "custom": false,
+   "w": 2,
+   "h": 2,
+   "z": -20,
+   "blocks": false
+  },
+  {
+   "id": "d-kaluz",
+   "nazev": "Dešťová kaluž",
+   "kategorie": "Obtisky",
+   "src": "bojove/assets/Obtisky/d-kaluz.webp",
+   "tags": [
+    "Obtisky"
+   ],
+   "custom": false,
+   "w": 2.5,
+   "h": 2,
+   "z": -20,
+   "blocks": false
+  },
+  {
+   "id": "d-listi",
+   "nazev": "Napadané listí",
+   "kategorie": "Obtisky",
+   "src": "bojove/assets/Obtisky/d-listi.webp",
+   "tags": [
+    "Obtisky"
+   ],
+   "custom": false,
+   "w": 2.4,
+   "h": 2,
+   "z": -20,
+   "blocks": false
+  },
+  {
+   "id": "d-mech",
+   "nazev": "Ostrůvek mechu",
+   "kategorie": "Obtisky",
+   "src": "bojove/assets/Obtisky/d-mech.webp",
+   "tags": [
+    "Obtisky"
+   ],
+   "custom": false,
+   "w": 2.8,
+   "h": 2.4,
+   "z": -20,
+   "blocks": false
+  },
+  {
+   "id": "d-prasklina",
+   "nazev": "Prasklina v kameni",
+   "kategorie": "Obtisky",
+   "src": "bojove/assets/Obtisky/d-prasklina.webp",
+   "tags": [
+    "Obtisky"
+   ],
+   "custom": false,
+   "w": 2.5,
+   "h": 1.5,
+   "z": -20,
+   "blocks": false
+  },
+  {
+   "id": "d-spaleniste",
+   "nazev": "Spáleniště",
+   "kategorie": "Obtisky",
+   "src": "bojove/assets/Obtisky/d-spaleniste.webp",
+   "tags": [
+    "Obtisky"
+   ],
+   "custom": false,
+   "w": 3,
+   "h": 2.5,
+   "z": -20,
+   "blocks": false
+  },
+  {
+   "id": "d-sut",
+   "nazev": "Drobná suť",
+   "kategorie": "Obtisky",
+   "src": "bojove/assets/Obtisky/d-sut.webp",
+   "tags": [
+    "Obtisky"
+   ],
+   "custom": false,
+   "w": 2,
+   "h": 1.5,
+   "z": -20,
+   "blocks": false
+  },
+  {
+   "id": "d-seno",
+   "nazev": "Rozsypané seno",
+   "kategorie": "Obtisky",
+   "src": "bojove/assets/Obtisky/d-seno.webp",
+   "tags": [
+    "Obtisky"
+   ],
+   "custom": false,
+   "w": 2,
+   "h": 1.5,
+   "z": -20,
+   "blocks": false
+  },
+  {
+   "id": "d-snih-zavej",
+   "nazev": "Sněhová závěj",
+   "kategorie": "Obtisky",
+   "src": "bojove/assets/Obtisky/d-snih-zavej.webp",
+   "tags": [
+    "Obtisky"
+   ],
+   "custom": false,
+   "w": 3,
+   "h": 2,
+   "z": -20,
+   "blocks": false
+  },
+  {
+   "id": "d-popel",
+   "nazev": "Usazený popel",
+   "kategorie": "Obtisky",
+   "src": "bojove/assets/Obtisky/d-popel.webp",
+   "tags": [
+    "Obtisky"
+   ],
+   "custom": false,
+   "w": 3,
+   "h": 2.5,
+   "z": -20,
+   "blocks": false
+  },
+  {
+   "id": "i-pult",
+   "nazev": "Rohový hostinský pult",
+   "kategorie": "Nábytek",
+   "src": "bojove/assets/Nábytek/i-pult.webp",
+   "tags": [
+    "Nábytek"
+   ],
+   "custom": false,
+   "w": 4,
+   "h": 3,
+   "blocks": true
+  },
+  {
+   "id": "i-regal-lahve",
+   "nazev": "Police s lahvemi",
+   "kategorie": "Nábytek",
+   "src": "bojove/assets/Nábytek/i-regal-lahve.webp",
+   "tags": [
+    "Nábytek"
+   ],
+   "custom": false,
+   "w": 3,
+   "h": 1,
+   "blocks": true
+  },
+  {
+   "id": "i-krb",
+   "nazev": "Kamenný krb",
+   "kategorie": "Nábytek",
+   "src": "bojove/assets/Nábytek/i-krb.webp",
+   "tags": [
+    "Nábytek"
+   ],
+   "custom": false,
+   "w": 2,
+   "h": 1.5,
+   "blocks": true,
+   "light": {
+    "bright": 3,
+    "dim": 6
+   },
+   "anim": "ohen"
+  },
+  {
+   "id": "i-lavice",
+   "nazev": "Dubová lavice",
+   "kategorie": "Nábytek",
+   "src": "bojove/assets/Nábytek/i-lavice.webp",
+   "tags": [
+    "Nábytek"
+   ],
+   "custom": false,
+   "w": 2,
+   "h": 0.8,
+   "blocks": true
+  },
+  {
+   "id": "i-sudy-stoh",
+   "nazev": "Stoh pivních sudů",
+   "kategorie": "Nábytek",
+   "src": "bojove/assets/Nábytek/i-sudy-stoh.webp",
+   "tags": [
+    "Nábytek"
+   ],
+   "custom": false,
+   "w": 2,
+   "h": 1.6,
+   "blocks": true
+  },
+  {
+   "id": "i-kuchyn",
+   "nazev": "Hostinská kuchyně",
+   "kategorie": "Nábytek",
+   "src": "bojove/assets/Nábytek/i-kuchyn.webp",
+   "tags": [
+    "Nábytek"
+   ],
+   "custom": false,
+   "w": 3,
+   "h": 2,
+   "blocks": true
+  },
+  {
+   "id": "i-kolebka-lustr",
+   "nazev": "Kovaný svíčkový lustr",
+   "kategorie": "Nábytek",
+   "src": "bojove/assets/Nábytek/i-kolebka-lustr.webp",
+   "tags": [
+    "Nábytek"
+   ],
+   "custom": false,
+   "w": 2,
+   "h": 2,
+   "blocks": false,
+   "light": {
+    "bright": 3,
+    "dim": 6
+   },
+   "anim": "ohen"
+  },
+  {
+   "id": "m-most-kamen",
+   "nazev": "Klenutý kamenný most",
+   "kategorie": "Stavby",
+   "src": "bojove/assets/Stavby/m-most-kamen.webp",
+   "tags": [
+    "Stavby"
+   ],
+   "custom": false,
+   "w": 6,
+   "h": 3,
+   "blocks": false
+  },
+  {
+   "id": "m-most-drevo",
+   "nazev": "Dřevěný říční most",
+   "kategorie": "Stavby",
+   "src": "bojove/assets/Stavby/m-most-drevo.webp",
+   "tags": [
+    "Stavby"
+   ],
+   "custom": false,
+   "w": 6,
+   "h": 2.5,
+   "blocks": false
+  },
+  {
+   "id": "m-molo",
+   "nazev": "Přístavní molo",
+   "kategorie": "Přístav",
+   "src": "bojove/assets/Přístav/m-molo.webp",
+   "tags": [
+    "Přístav"
+   ],
+   "custom": false,
+   "w": 5,
+   "h": 2,
+   "blocks": false
+  },
+  {
+   "id": "m-lucerna-sloup",
+   "nazev": "Lucerna na sloupu",
+   "kategorie": "Přístav",
+   "src": "bojove/assets/Přístav/m-lucerna-sloup.webp",
+   "tags": [
+    "Přístav"
+   ],
+   "custom": false,
+   "w": 1,
+   "h": 1,
+   "blocks": false,
+   "light": {
+    "bright": 3,
+    "dim": 6
+   },
+   "anim": "ohen"
+  },
+  {
+   "id": "m-sit",
+   "nazev": "Rozprostřená rybářská síť",
+   "kategorie": "Přístav",
+   "src": "bojove/assets/Přístav/m-sit.webp",
+   "tags": [
+    "Přístav"
+   ],
+   "custom": false,
+   "w": 2.5,
+   "h": 2,
+   "blocks": false
+  },
+  {
+   "id": "m-kotva-retez",
+   "nazev": "Kotva s řetězem",
+   "kategorie": "Přístav",
+   "src": "bojove/assets/Přístav/m-kotva-retez.webp",
+   "tags": [
+    "Přístav"
+   ],
+   "custom": false,
+   "w": 2,
+   "h": 2,
+   "blocks": false
+  },
+  {
+   "id": "m-dreveny-plot",
+   "nazev": "Dřevěná ohrada",
+   "kategorie": "Stavby",
+   "src": "bojove/assets/Stavby/m-dreveny-plot.webp",
+   "tags": [
+    "Stavby"
+   ],
+   "custom": false,
+   "w": 3,
+   "h": 0.6,
+   "blocks": false
+  },
+  {
+   "id": "m-kamenna-zidka",
+   "nazev": "Zahradní kamenná zídka",
+   "kategorie": "Stavby",
+   "src": "bojove/assets/Stavby/m-kamenna-zidka.webp",
+   "tags": [
+    "Stavby"
+   ],
+   "custom": false,
+   "w": 3,
+   "h": 0.7,
+   "blocks": false
+  },
+  {
    "id": "gen2-strom",
    "nazev": "Dub – realistický",
    "kategorie": "Příroda",

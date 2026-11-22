@@ -5,6 +5,25 @@ import type { GenOut } from "../generators/generators";
 
 export const k2 = (x: number, y: number) => `${x},${y}`;
 
+export function interiorPolygon(m: MapV2, points: [number, number][]) {
+  if (points.length < 3 || points.some(p => p.some(n => !Number.isFinite(n)))) return;
+  const area = points.reduce((a, p, i) => { const q = points[(i + 1) % points.length]; return a + p[0]*q[1] - q[0]*p[1]; }, 0);
+  if (Math.abs(area) < .001) return;
+  m.interiery = [...(m.interiery || []), { id: wallUid(), poly: points.map(p => [...p]) }];
+}
+
+export function removeInteriorAt(m: MapV2, x: number, y: number) {
+  const hit = (p: [number, number][]) => {
+    let inside = false;
+    for (let i=0,j=p.length-1;i<p.length;j=i++) {
+      const a=p[i], b=p[j];
+      if ((a[1]>y)!==(b[1]>y) && x<(b[0]-a[0])*(y-a[1])/(b[1]-a[1])+a[0]) inside=!inside;
+    }
+    return inside;
+  };
+  m.interiery = (m.interiery || []).filter(r => !hit(r.poly));
+}
+
 export function rectanglePoints(a: [number, number], b: [number, number], angle = 0): [number, number][] {
   const cx = (a[0] + b[0]) / 2, cy = (a[1] + b[1]) / 2, r = angle * Math.PI / 180;
   return [a, [b[0], a[1]], b, [a[0], b[1]]].map(([x, y]) =>

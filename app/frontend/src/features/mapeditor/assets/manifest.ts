@@ -5,6 +5,7 @@ import { useQuery } from "@tanstack/react-query";
 export interface AssetEntry {
   id: string; nazev: string; kategorie?: string; src: string;
   w?: number; h?: number;
+  z?: number;
   blocks?: boolean; cover?: 2 | 3; difficult?: boolean;
   light?: { bright: number; dim: number };
   tags?: string[]; custom?: boolean;

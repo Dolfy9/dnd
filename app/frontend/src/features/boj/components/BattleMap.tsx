@@ -617,7 +617,7 @@ export default function BattleMap(p: Props) {
         </g>
       </svg>
       <MapWeatherOverlay map={weatherMap} view={V} px={PX} />
-      <div className="map-live-controls"><AnimationButton />{p.dm && p.onWeather && <WeatherPicker compact value={weatherMap.pocasi} onChange={p.onWeather} />}</div>
+      <div className="map-live-controls"><AnimationButton />{p.dm && p.onWeather && <WeatherPicker compact map={map as MapV2} value={weatherMap.pocasi} onChange={p.onWeather} />}</div>
 
       {/* zoom ovládání */}
       <div className={`boj-zoombar ${pctFlash ? "flash" : ""}`}>

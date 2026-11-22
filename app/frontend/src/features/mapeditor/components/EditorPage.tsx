@@ -31,7 +31,7 @@ import { TexturePicker, TilePicker, WallPicker, LightColors, TABS, LAYERS, Layer
 import "../editor.css";
 
 type Tool = "select" | "teren" | "fill" | "flood" | "textura" | "malba" | "mistnost" | "polygon" | "stena" | "dvere"
-  | "objekt" | "kresba" | "vyska" | "svetlo" | "start" | "poznamka" | "guma" | "kapatko";
+  | "interier" | "objekt" | "kresba" | "vyska" | "svetlo" | "start" | "poznamka" | "guma" | "kapatko";
 
 const TOOLS: { id: Tool; icon: React.ReactElement; nazev: string; key: string }[] = [
   { id: "select", icon: <MousePointer2 size={18} />, nazev: "Výběr / přesun", key: "V" },
@@ -42,6 +42,7 @@ const TOOLS: { id: Tool; icon: React.ReactElement; nazev: string; key: string }[
   { id: "malba", icon: <Brush size={18} />, nazev: "Malovat texturou", key: "K" },
   { id: "mistnost", icon: <DoorOpen size={18} />, nazev: "Místnost", key: "R" },
   { id: "polygon", icon: <Spline size={18} />, nazev: "Polygonální místnost", key: "J" },
+  { id: "interier", icon: <DoorOpen size={18} />, nazev: "Interiér bez počasí", key: "U" },
   { id: "stena", icon: <Spline size={18} />, nazev: "Stěny", key: "W" },
   { id: "dvere", icon: <DoorOpen size={18} />, nazev: "Dveře / okna", key: "D" },
   { id: "objekt", icon: <Package size={18} />, nazev: "Objekt", key: "O" },
@@ -213,6 +214,7 @@ export default function EditorPage() {
     m.objekty = (m.objekty || []).map((o) => ({ ...o, x: o.x + dX, y: o.y + dY }));
     m.svetla = (m.svetla || []).map((l) => ({ ...l, x: l.x + dX, y: l.y + dY }));
     m.malba = m.malba?.map(s => ({ ...s, p: s.p.map(([x, y]) => [x + dX, y + dY]) }));
+    m.interiery = m.interiery?.map(r => ({ ...r, poly: r.poly.map(([x,y]) => [x+dX,y+dY]) }));
     m.poznamky = (m.poznamky || []).map((n) => ({ ...n, x: n.x + dX, y: n.y + dY }));
     if (m.start) for (const kk in m.start) (m.start as any)[kk] = ((m.start as any)[kk] || []).map(([x, y]: number[]) => [x + dX, y + dY]);
   });
@@ -289,11 +291,15 @@ export default function EditorPage() {
       case "flood": push((m) => ops.floodFill(m, cx, cy, brushTile)); break;
       case "fill": setDragPt({ a: [cx, cy], b: [cx, cy] }); break;
       case "mistnost": { const p = snapPt(e); setDragPt({ a: p, b: p }); break; }
-      case "polygon": {
+      case "polygon":
+      case "interier": {
+        if (tool === "interier" && e.altKey) {
+          const [x,y] = toWorld(e); push(m => ops.removeInteriorAt(m,x,y)); setRoomPoints([]); break;
+        }
         if (e.detail > 1) break;
         const p = snapPt(e);
         if (roomPoints.length >= 3 && Math.hypot(p[0] - roomPoints[0][0], p[1] - roomPoints[0][1]) < .25) {
-          push(m => ops.roomPolygon(m, roomPoints, floorFill ? brushTex : undefined, shapeAngle)); setRoomPoints([]);
+          push(m => tool === "interier" ? ops.interiorPolygon(m,roomPoints) : ops.roomPolygon(m, roomPoints, floorFill ? brushTex : undefined, shapeAngle)); setRoomPoints([]);
         } else setRoomPoints(points => [...points, p]);
         break;
       }
@@ -329,6 +335,7 @@ export default function EditorPage() {
             x: fx, y: fy, w: def?.w || 1, h: def?.h || 1, blocks: def?.blocks, cover: def?.cover,
             rot: randomRotation ? Math.random() * 360 : 0,
             difficult: def?.difficult, light: def?.light,
+            z: ASSETS[stampId]?.z,
           }];
         });
         break;
@@ -450,7 +457,7 @@ export default function EditorPage() {
     }
   };
   const onDbl = () => {
-    if (tool === "polygon" && roomPoints.length >= 3) { push(m => ops.roomPolygon(m, roomPoints, floorFill ? brushTex : undefined, shapeAngle)); setRoomPoints([]); }
+    if ((tool === "polygon" || tool === "interier") && roomPoints.length >= 3) { push(m => tool === "interier" ? ops.interiorPolygon(m,roomPoints) : ops.roomPolygon(m, roomPoints, floorFill ? brushTex : undefined, shapeAngle)); setRoomPoints([]); }
     if (tool === "stena") setWallDraft([]);
   };
   const onWheel = (e: React.WheelEvent) => {
@@ -521,6 +528,10 @@ export default function EditorPage() {
               <label><input type="checkbox" checked={paintRandom} onChange={e => setPaintRandom(e.target.checked)} /> Náhodně</label>
               <button className={`me-btn sm ${paintErase ? "on" : ""}`} onClick={() => setPaintErase(!paintErase)}>Guma tahů</button>
               <span className="me-ctx-hint">Alt: mazat celé tahy</span>
+            </>}
+            {tool === "interier" && <>
+              <span className="me-ctx-hint">Vrchol po vrcholu · dvojklik uzavře střechu · Alt+klik odstraní interiér</span>
+              {roomPoints.length >= 3 && <button className="me-btn sm" onClick={() => { push(m => ops.interiorPolygon(m,roomPoints)); setRoomPoints([]); }}>Označit interiér</button>}
             </>}
             {(tool === "mistnost" || tool === "polygon") && (
               <>
@@ -605,6 +616,7 @@ export default function EditorPage() {
                   </g>
                 )}
                 {wallDraft.length > 0 && <polyline points={wallDraft.map(([x, y]) => `${x * PX},${y * PX}`).join(" ")} fill="none" stroke="#f59e0b" strokeWidth={2} strokeDasharray="4 3" />}
+                {tool === "interier" && map.interiery?.map(r => <polygon key={r.id} points={r.poly.map(([x,y]) => `${x*PX},${y*PX}`).join(" ")} fill="#38bdf833" stroke="#38bdf8" strokeWidth={1.5} strokeDasharray="6 3" pointerEvents="none" />)}
                 {roomPoints.length > 0 && <polyline points={roomPoints.map(([x, y]) => `${x * PX},${y * PX}`).join(" ")} fill="#f59e0b22" stroke="#f59e0b" strokeWidth={2} strokeDasharray="4 3" />}
                 {dragPt && tool === "mistnost" && <polygon points={ops.rectanglePoints(dragPt.a, dragPt.b, shapeAngle).map(([x,y]) => `${x*PX},${y*PX}`).join(" ")} fill="#f59e0b22" stroke="#f59e0b" strokeWidth={2} />}
                 {dragPt && tool === "fill" && (

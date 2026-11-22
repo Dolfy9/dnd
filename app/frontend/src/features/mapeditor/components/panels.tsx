@@ -232,7 +232,7 @@ export function MapPanel({ map, push, onResize, onUploadImg, onImportUvtt, onExp
   const W = map.mrizka[0]?.length || 1, H = map.mrizka.length;
   return (
     <div className="me-mapmeta">
-      <WeatherPicker value={map.pocasi} onChange={value => push(m => { m.pocasi = value; })} />
+      <WeatherPicker map={map} value={map.pocasi} onChange={value => push(m => { m.pocasi = value; })} />
       <h4>Atmosféra</h4>
       <div className="me-atmo-presets">
         {ATMOSPHERES.map(a => <button key={a.n} type="button" aria-pressed={(map.atmosfera?.amb ?? 1) === a.amb && (map.atmosfera?.barva || "#101522") === a.barva}

@@ -130,6 +130,7 @@ def test_paint_atmosphere_roundtrip(editor, monkeypatch, tmp_path):
                    "p": [[.1, .2], [1.75, 2.3]]}],
         "atmosfera": {"amb": .15, "barva": "#101522"},
         "pocasi": {"typ": "bourka", "sila": .8, "vitr": 125},
+        "interiery": [{"id": "roof", "poly": [[.5,.5],[3,.5],[3,2],[.5,2]]}],
         "objekty": [{"id": "portal", "asset": "portal", "anim": False, "x": 1, "y": 1, "w": 2, "h": 2}],
         "svetla": [{"id": "l", "x": 1.2, "y": 2.3, "bright": 10, "dim": 15,
                     "intenzita": .7, "blikani": True}],
@@ -142,10 +143,11 @@ def test_paint_atmosphere_roundtrip(editor, monkeypatch, tmp_path):
         for key, value in fields.items():
             assert stored[key] == value
             assert r.json()["mapa"][key] == value
-        r = editor.put(f"/api/map/bojove/{mid}", json={"malba": [], "atmosfera": None})
+        r = editor.put(f"/api/map/bojove/{mid}", json={"malba": [], "atmosfera": None, "interiery": []})
         assert r.status_code == 200, r.text
         stored = json.loads(storage.read_text())["mapy"][0]
         assert stored["malba"] == []
+        assert stored["interiery"] == []
         assert "atmosfera" not in stored
         assert stored["svetla"] == fields["svetla"]
     finally:

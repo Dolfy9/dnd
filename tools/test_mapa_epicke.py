@@ -58,6 +58,25 @@ class EpicMapsTest(unittest.TestCase):
         self.assertFalse(inside(3,1,[(0,0),(2,0),(2,2),(0,2)]))
         self.assertFalse(inside(0,0,[]))
 
+    def test_art_direction_and_roof_metadata(self):
+        maps=generate()
+        used={o["asset"] for m in maps for o in m["objekty"]}
+        supplied={p.stem for p in (ROOT/"11_Mapy/bojove/assets").rglob("*.webp") if p.stem.startswith(("d-","i-","m-"))}
+        self.assertTrue(supplied <= used, supplied-used)
+        self.assertTrue(maps[0]["interiery"])
+        self.assertTrue(maps[1]["interiery"])
+        self.assertTrue(maps[3]["interiery"])
+        for m in maps:
+            for o in m["objekty"]:
+                if o["asset"].startswith("d-"):
+                    self.assertFalse(o["blocks"])
+                    self.assertLess(o["z"],0)
+            for region in m["interiery"]:
+                self.assertGreaterEqual(len(region["poly"]),3)
+        winter=maps[-1]
+        self.assertFalse(any(s["t"]=="hlina" for s in winter["malba"]))
+        self.assertFalse(any(s["t"]=="dlazba" for s in maps[-2]["malba"]))
+
 
 if __name__ == "__main__":
     unittest.main()

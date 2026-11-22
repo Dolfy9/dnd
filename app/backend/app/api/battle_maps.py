@@ -95,7 +95,7 @@ def create_map(b: dict, u: dict = Depends(security.require("editor"))):
         "start": b.get("start", {"druzina": []}),
         "mrizka": b.get("mrizka") or ["." * 20 for _ in range(15)],
     }
-    for k in ("textury", "malba", "atmosfera", "pocasi", "vyska", "steny", "objekty", "kresby", "svetla",
+    for k in ("textury", "malba", "interiery", "atmosfera", "pocasi", "vyska", "steny", "objekty", "kresby", "svetla",
               "poznamky", "mrizkaStyl", "kalibrace", "obrazek", "misto",
               "popis", "stretnuti"):
         if b.get(k) is not None:
