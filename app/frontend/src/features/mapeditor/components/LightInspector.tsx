@@ -1,4 +1,4 @@
-import type { CSSProperties } from "react";
+import {useEffect,useState,type CSSProperties} from "react";
 import { normalizeLight, type MapLightV2 } from "../../boj/model/mapV2";
 import { applyLightPreset, LIGHT_PRESETS } from "../tools/lightEditing";
 import "./lightEditor.css";
@@ -20,10 +20,20 @@ export function LightShapePicker({value,onChange}:{value:MapLightV2;onChange:(ch
 }
 
 const EFFECTS=[["zadny","Žádný"],["mihot","Mihotání"],["plamen","Plamen"],["pulz","Pulz"],["magie","Magie"]] as const;
+export function LightNumberInput({label,value,min,max,step=1,onCommit}:{label:string;value:number;min:number;max:number;step?:number;onCommit:(n:number)=>void}) {
+  const display=(n:number)=>String(Math.round(n*100)/100);
+  const [draft,setDraft]=useState(()=>display(value));
+  useEffect(()=>setDraft(display(value)),[value]);
+  const commit=()=>{
+    const parsed=Number(draft),next=draft.trim()!=="" && Number.isFinite(parsed)?Math.max(min,Math.min(max,parsed)):value;
+    setDraft(display(next));if(next!==value)onCommit(next);
+  };
+  return <label>{label}<input aria-label={label} type="number" min={min} max={max} step={step} value={draft} onChange={e=>setDraft(e.target.value)} onBlur={commit} onKeyDown={e=>{if(e.key==="Enter"){e.preventDefault();e.currentTarget.blur();}}}/></label>;
+}
 export function LightInspector({value,onChange,placement=false,onDelete}:{value:MapLightV2;onChange:(changes:Partial<MapLightV2>)=>void;placement?:boolean;onDelete?:()=>void}) {
   const l=normalizeLight(value);
   const number=(label:string,field:"bright"|"dim"|"smer"|"sirka"|"delka"|"rychlost"|"x"|"y",min:number,max:number,step=1)=>
-    <label>{label}<input aria-label={label} type="number" min={min} max={max} step={step} value={Math.round(l[field]*100)/100} onChange={e=>{if(e.target.value!=="")onChange({[field]:Math.max(min,Math.min(max,+e.target.value))});}}/></label>;
+    <LightNumberInput label={label} value={l[field]} min={min} max={max} step={step} onCommit={n=>onChange({[field]:n})}/>;
   return <div className="me-inspector me-light-inspector">
     <header className="me-inspector-header"><LightIcon shape={l.tvar} color={l.color}/><div><small>{placement?"Nové světlo":"Vybrané světlo"}</small><h3>{l.nazev || "Vlastní světlo"}</h3><span>{placement?"Klikni pro umístění · táhni pro namíření":"Tažením úchytů měň světlo přímo v mapě"}</span></div></header>
     {!placement && <div className="me-light-handle-key"><span>Poloha / směr</span><span>Jasné</span><span>Dosah / tvar</span></div>}
