@@ -7,7 +7,10 @@ import { migrate } from "../rules/migrate";
 
 export interface BattleMeta { id: string; nazev?: string; shared?: boolean; mapa?: string }
 
-export function useBattle(bid: string | undefined) {
+export function useBattle(bid: string | undefined, canWrite = true) {
+  const writable = useRef(canWrite);
+  writable.current = canWrite;
+  const waiters = useRef<{ revision: number; done: (ok: boolean) => void }[]>([]);
   const [doc, setDoc] = useState<BattleStateDoc | null>(null);
   const [S, setS] = useState<StavBoje | null>(null);
   const [version, setVersion] = useState(0);
@@ -34,7 +37,14 @@ export function useBattle(bid: string | undefined) {
     undoRef.current = []; redoRef.current = [];
     if (saveT.current) window.clearTimeout(saveT.current);
     setSaving(false);
+    waiters.current.splice(0).forEach(w => w.done(false));
   }, [bid]);
+  useEffect(() => {
+    if (!canWrite) {
+      if (saveT.current) window.clearTimeout(saveT.current);
+      waiters.current.splice(0).forEach(w => w.done(false));
+    }
+  }, [canWrite]);
 
   const applyRemote = useCallback((d: any) => {
     const sb = migrate(d?.state?.stav_boje ?? d?.stav_boje ?? d ?? {});
@@ -84,7 +94,7 @@ export function useBattle(bid: string | undefined) {
   }, [bid]);
 
   const save = useCallback(async () => {
-    if (!bid || !SRef.current) return;
+    if (!writable.current || !bid || !SRef.current) return;
     if (saveBusy.current) return;
     saveBusy.current = true;
     const savingRevision = revision.current;
@@ -109,6 +119,10 @@ export function useBattle(bid: string | undefined) {
       if (epoch === generation.current) {
         saveBusy.current = false;
         setSaving(false);
+        waiters.current = waiters.current.filter(w => {
+          if (!acknowledged || w.revision <= savedRevision.current) { w.done(acknowledged); return false; }
+          return true;
+        });
         if (revision.current !== savedRevision.current && (acknowledged || revision.current !== savingRevision)) queueSave();
         else if (remoteVersion.current > verRef.current) loadRef.current?.();
       }
@@ -116,6 +130,7 @@ export function useBattle(bid: string | undefined) {
   }, [bid, load]);
 
   const queueSave = useCallback(() => {
+    if (!writable.current) return;
     if (saveT.current) window.clearTimeout(saveT.current);
     saveT.current = window.setTimeout(() => { saveT.current = null; save(); }, 600);
   }, [save]);
@@ -124,7 +139,7 @@ export function useBattle(bid: string | undefined) {
   /** dispatch(mutator): mutace kopie stavu + undo snapshot + queue save. */
   const dispatch = useCallback((fn: (S: StavBoje) => void) => {
     const prev = SRef.current;
-    if (!prev) return;
+    if (!writable.current || !prev) return;
     const next = structuredClone(prev) as StavBoje;
     undoRef.current.push(prev);
     if (undoRef.current.length > 100) undoRef.current.shift();
@@ -137,6 +152,7 @@ export function useBattle(bid: string | undefined) {
   }, [queueSave]);
 
   const undo = useCallback(() => {
+    if (!writable.current) return;
     const prev = undoRef.current.pop();
     if (!prev || !SRef.current) return;
     redoRef.current.push(SRef.current);
@@ -147,6 +163,7 @@ export function useBattle(bid: string | undefined) {
   }, [queueSave]);
 
   const redo = useCallback(() => {
+    if (!writable.current) return;
     const next = redoRef.current.pop();
     if (!next || !SRef.current) return;
     undoRef.current.push(SRef.current);
@@ -158,6 +175,7 @@ export function useBattle(bid: string | undefined) {
 
   useEffect(() => {
     const h = (e: KeyboardEvent) => {
+      if (!writable.current) return;
       if (!(e.ctrlKey || e.metaKey)) return;
       if (e.key === "z" && !e.shiftKey) { e.preventDefault(); undo(); }
       if (e.key === "Z" || (e.key === "z" && e.shiftKey) || e.key === "y") { e.preventDefault(); redo(); }
@@ -173,6 +191,14 @@ export function useBattle(bid: string | undefined) {
     return unseen;
   }, [S?.fx, seenFx]);
   const markFx = useCallback((ids: string[]) => setSeenFx((p) => [...new Set([...p, ...ids])].slice(-200)), []);
-
-  return { doc, S, version, err, saving, load, dispatch, undo, redo, newFx, markFx, applyRemote };
+  const flush = useCallback((): Promise<boolean> => {
+    if (!writable.current) return Promise.resolve(false);
+    if (revision.current === savedRevision.current) return Promise.resolve(true);
+    return new Promise(done => {
+      waiters.current.push({ revision: revision.current, done });
+      if (saveT.current) window.clearTimeout(saveT.current);
+      void save();
+    });
+  }, [save]);
+  return { doc, S, version, err, saving, load, dispatch, undo, redo, newFx, markFx, applyRemote, flush, getState: () => SRef.current };
 }

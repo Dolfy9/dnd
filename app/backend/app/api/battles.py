@@ -41,6 +41,10 @@ def _hp_bucket(t: dict) -> str:
     return "Lehce zraněný" if f > 0.5 else "Těžce zraněný" if f > 0.25 else "Na pokraji"
 
 
+def pending_actor(item: dict):
+    return (item.get("move") or {}).get("ownerId") or item.get("actorId") or item.get("tokenId")
+
+
 def player_view(state: dict, user_id: int | None = None) -> dict:
     """Stav boje pro hráče: bez skrytých žetonů, DM poznámek, pj logů a přesných HP nepřátel."""
     import copy
@@ -48,7 +52,14 @@ def player_view(state: dict, user_id: int | None = None) -> dict:
     sb = s.get("stav_boje")
     if not isinstance(sb, dict):
         return s
-    sb.pop("pendingResolutions", None)
+    owned_ids = {t.get("id") for t in sb.get("tok", [])
+                 if user_id is not None and (t.get("src") or {}).get("owner") == str(user_id)}
+    pending = sb.pop("pendingResolutions", [])
+    own_pending = [{"id": p.get("id"), "kind": p.get("kind"), "actorId": pending_actor(p),
+                    "tokenId": pending_actor(p), "label": "Opportunity Attack" if p.get("kind") == "oa" else "Reakce"}
+                   for p in pending if pending_actor(p) in owned_ids and p.get("kind") in ("oa", "reaction")]
+    if own_pending:
+        sb["pendingResolutions"] = own_pending
     fog = sb.get("fog") or {}
     fog_on = bool(fog.get("on"))
     visible = fog.get("visible") if isinstance(fog.get("visible"), dict) else fog.get("revealed") or {}

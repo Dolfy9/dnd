@@ -16,10 +16,12 @@ function deepSet(o: any, path: string, v: unknown) {
   return c;
 }
 
-export default function SettingsPanel({ S, cmd, onClose }: {
+export default function SettingsPanel({ S, cmd, onClose, autoMove = false, onAutoMove }: {
   S: StavBoje;
   cmd: (fn: (s: StavBoje) => void) => void;
   onClose: () => void;
+  autoMove?: boolean;
+  onAutoMove?: (value: boolean) => void;
 }) {
   const cur = useMemo(() => mergeSettings(S.nastaveni), [S.nastaveni]);
   const [saved, setSaved] = useState(false);
@@ -55,6 +57,7 @@ export default function SettingsPanel({ S, cmd, onClose }: {
   return (
     <OverridePrompt title="Nastavení boje" onClose={onClose} options={[]}>
       <div className="boj-set">
+        {onAutoMove && <div className="boj-set-row"><label><input type="checkbox" checked={autoMove} onChange={e => onAutoMove(e.target.checked)} /> Automaticky schválit bezpečný pohyb hráčů</label><i>Jen legální cesty bez Opportunity Attack. Ostatní žádosti schvaluje PJ.</i></div>}
         {group("Pohyb", POHYB_KEYS)}
         {group("Automatizace", AUTO_KEYS)}
         <div className="boj-set-actions">

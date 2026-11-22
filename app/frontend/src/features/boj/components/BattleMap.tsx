@@ -54,6 +54,8 @@ interface Props {
   sel: string | null;
   selSet?: Set<string>;
   dm: boolean;
+  playerTokenId?: string;
+  intentPreview?: { tokenId: string; path?: [number, number][]; targets?: string[]; area?: { shape: any; size: number; anchor: [number, number]; dir?: number } }[];
   tool: Tool;
   paintTile?: string;
   fogMode?: "reveal" | "hide";
@@ -307,7 +309,7 @@ export default function BattleMap(p: Props) {
   const caught = areaSpec ? tokensInArea(areaSpec, S.tok, srcTok) : [];
   useEffect(() => { if (p.targeting) svgRef.current?.focus({ preventScroll: true }); }, [p.targeting]);
   useEffect(() => {
-    if (!p.targeting || !p.dm) return;
+    if (!p.targeting || (!p.dm && p.targeting.srcId !== p.playerTokenId)) return;
     const handle = (e: KeyboardEvent) => {
       if (isInteractiveTarget(e.target)) return;
       if (p.targeting?.area && (e.key.toLowerCase() === "q" || e.key.toLowerCase() === "e")) { e.preventDefault(); setAreaRotation(v => v + (e.key.toLowerCase() === "q" ? -15 : 15)); }
@@ -382,6 +384,7 @@ export default function BattleMap(p: Props) {
       return;
     }
     if (t) {
+      if (!p.dm && t.id !== p.playerTokenId) { p.onSelect(t.id); return; }
       if (e.shiftKey && p.onSelSet) { p.onSelect(t.id, true); return; }
       setDrag({ id: t.id, to: null, moved: false });
       if (e.pointerType === "touch" && p.onCtxMenu) {
@@ -661,7 +664,7 @@ export default function BattleMap(p: Props) {
                 {isTarget && ev && (
                   <Pill x={(t.x + t.s / 2) * PX} y={(t.y ?? 0) * PX - 8} w={148} h={30}>
                     <text textAnchor="middle" y={-4} fontSize={11.5} fill={ev.canTarget ? "#4ade80" : "#f87171"} fontWeight={800}>
-                      {ev.reason ? ev.beyondRange ? "mimo dostřel" : "bez výhledu" : `${Math.round(ev.hitChance * 100)}% vs AC ${ev.targetAC}${ev.longRange ? " · dlouhý" : ""}`}
+                      {ev.reason ? ev.beyondRange ? "mimo dostřel" : "bez výhledu" : p.dm ? `${Math.round(ev.hitChance * 100)}% vs AC ${ev.targetAC}${ev.longRange ? " · dlouhý" : ""}` : "Cíl v dosahu · určí PJ"}
                     </text>
                     <text textAnchor="middle" y={9} fontSize={10} fill="#cbd5e1">{ev.coverText} · {ev.dist} ft</text>
                   </Pill>
@@ -669,6 +672,16 @@ export default function BattleMap(p: Props) {
               </g>
             );
           })}
+          <g className="intent-ghosts" pointerEvents="none" mask={liveSvgMask}>
+            {(p.intentPreview || []).map((ghost, i) => {
+              const actor = byId(S, ghost.tokenId);
+              return <g key={i} data-intent-preview={ghost.tokenId} stroke="#a5b4fc" fill="#818cf8" strokeDasharray="7 5" strokeWidth={3} opacity={.8}>
+                {ghost.path && <polyline fill="none" points={ghost.path.map(([x, y]) => `${(x + .5) * PX},${(y + .5) * PX}`).join(" ")} />}
+                {actor?.x != null && (ghost.targets || []).map(id => { const target = byId(S, id); return target?.x != null ? <line key={id} x1={(actor.x! + actor.s / 2) * PX} y1={(actor.y! + actor.s / 2) * PX} x2={(target.x + target.s / 2) * PX} y2={(target.y! + target.s / 2) * PX} /> : null; })}
+                {ghost.area && areaCells(ghost.area).map(([x, y]) => <rect key={`${x},${y}`} x={x * PX} y={y * PX} width={PX} height={PX} opacity={.25} strokeWidth={1} />)}
+              </g>;
+            })}
+          </g>
           <g className="battle-token-labels" pointerEvents="none" mask={liveSvgMask}>
             {labels.map(box => {
               const label = labelData.find(l => l.id === box.id)!;

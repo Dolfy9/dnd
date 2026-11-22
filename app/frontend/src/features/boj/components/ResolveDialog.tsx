@@ -15,13 +15,14 @@ export interface ResolveAttack { kind: "attack"; atk: AttackDef; srcId: string; 
 export interface ResolveArea { kind: "area"; atk: AttackDef; srcId: string; spec: { shape: any; size: number; anchor: [number, number]; dir?: number }; tgtIds: string[]; slot?: number; pact?: boolean; force?: boolean; meta?: string[] }
 export type Resolve = ResolveAttack | ResolveArea;
 
-export default function ResolveDialog({ S, map, r, draft, onApply, onAdjust, onCommit, onClose }: {
+export default function ResolveDialog({ S, map, r, draft, onApply, onAdjust, onCommit, onClose, initialOptions }: {
   S: StavBoje; map: BattleMapData; r: Resolve;
   draft?: ResolutionDraft | null;
   onApply: (opts: ResolutionOptions) => void;
   onAdjust: (opts: ResolutionOptions) => void;
   onCommit: () => void;
   onClose: () => void;
+  initialOptions?: ResolutionOptions;
 }) {
   useEffect(() => {
     const k = (e: KeyboardEvent) => { if (e.key === "Escape") { e.stopPropagation(); onClose(); } };
@@ -30,10 +31,10 @@ export default function ResolveDialog({ S, map, r, draft, onApply, onAdjust, onC
   }, [onClose]);
   const [adv, setAdv] = useState<number | null>(null);
   const [slot, setSlot] = useState<number>(r.pact ? -1 : r.slot || r.atk.lvl || 0);
-  const [manual, setManual] = useState(() => settingsOf(S).automatizace.hodUtoku === "rucne");
-  const [d20v, setD20v] = useState("");
-  const [dmgv, setDmgv] = useState("");
-  const [override, setOverride] = useState(false);
+  const [manual, setManual] = useState(() => !!initialOptions?.manualD20 || initialOptions?.manualDmg != null || settingsOf(S).automatizace.hodUtoku === "rucne");
+  const [d20v, setD20v] = useState(String(initialOptions?.manualD20 ?? ""));
+  const [dmgv, setDmgv] = useState(String(initialOptions?.manualDmg ?? ""));
+  const [override, setOverride] = useState(!!initialOptions?.override);
   const [collapsed, setCollapsed] = useState(false);
   const A = byId(S, r.srcId);
   const tgt = r.kind === "attack" ? byId(S, r.tgtId) : undefined;

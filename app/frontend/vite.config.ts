@@ -8,12 +8,12 @@ export default defineConfig({
     port: 5173,
     proxy: {
       "/api": {
-        target: "http://localhost:8001",
+        target: process.env.MONT_PROXY_TARGET || "http://localhost:8001",
         ws: true,
         configure: (proxy) => proxy.on("error", (e: any) => console.warn("proxy /api:", e.code || e.message)),
       },
       "/repo": {
-        target: "http://localhost:8001",
+        target: process.env.MONT_PROXY_TARGET || "http://localhost:8001",
         configure: (proxy) => proxy.on("error", (e: any) => console.warn("proxy /repo:", e.code || e.message)),
       },
     },

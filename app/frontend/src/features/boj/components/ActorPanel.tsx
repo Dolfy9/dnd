@@ -15,7 +15,7 @@ import { isFree } from "../rules/free";
 import { actorReason, attackGroup, economyReason, unusableReason, hpDescription, type ActionGroup } from "./combatHudModel";
 import { resourceAction } from "../rules/resources";
 
-export default function ActorPanel({ S, t, targeting, onAttack, onStdAction, onResource, onUndoMove, onHoverAtk, dm, onCheck, onUseItem, onFeature, group = "all", onGroup }: {
+export default function ActorPanel({ S, t, targeting, onAttack, onStdAction, onResource, onUndoMove, onHoverAtk, dm, playerControl = false, onCheck, onUseItem, onFeature, group = "all", onGroup }: {
   S: StavBoje; t: Token; targeting: Targeting | null;
   onAttack: (atk: AttackDef, opts?: { slot?: number; pact?: boolean; meta?: string[] }) => void;
   onStdAction: (id: string) => void;
@@ -26,6 +26,7 @@ export default function ActorPanel({ S, t, targeting, onAttack, onStdAction, onR
   onUseItem?: (idx: number, asBA?: boolean) => void;
   onFeature?: (key: string) => void;
   dm: boolean;
+  playerControl?: boolean;
   group?: ActionGroup;
   onGroup?: (group: ActionGroup) => void;
 }) {
@@ -34,30 +35,31 @@ export default function ActorPanel({ S, t, targeting, onAttack, onStdAction, onR
   const e = ecoOf(S, t);
   const mv = moveLeft(S, t);
   const side = SIDE_STYLE[t.side];
+  const canAct = dm || playerControl;
   const matches = (a: AttackDef) => group === "all" || attackGroup(a) === group;
   const actions = (t.atk || []).filter((a) => !a.ba && !a.rea && a.legendaryCost == null && matches(a));
   const bonus = (t.atk || []).filter((a) => a.ba && matches(a));
   const reac = (t.atk || []).filter((a) => a.rea && matches(a));
   const legendary = (t.atk || []).filter((a) => a.legendaryCost != null && matches(a));
   const spells = (t.kouzla || []).filter(matches);
-  if (!dm && t.side !== "druzina") return <div className="boj-actor"><h3>{t.nazev}</h3><p>{hpDescription(t)}</p><div className="combat-target-conditions">{t.cond.map((c, i) => <ConditionIcon key={i} n={c.n} lvl={c.lvl} />)}</div><p className="combat-muted">Statistiky a akce tvora spravuje PJ.</p></div>;
+  if (!dm && !playerControl && t.side !== "druzina") return <div className="boj-actor"><h3>{t.nazev}</h3><p>{hpDescription(t)}</p><div className="combat-target-conditions">{t.cond.map((c, i) => <ConditionIcon key={i} n={c.n} lvl={c.lvl} />)}</div><p className="combat-muted">Statistiky a akce tvora spravuje PJ.</p></div>;
 
-  const AtkRow = ({ a }: { a: AttackDef }) => {
+  const attackRow = (a: AttackDef, key: number) => {
     const used = a.rc && t.spent?.[a.nazev];
-    const reason = unusableReason(S, t, a, dm);
+    const reason = unusableReason(S, t, a, canAct);
     const busy = !!reason;
     const ds = dmgStyle(a.typ);
     const active = targeting?.atk === a;
     const leveled = (a.lvl || 0) > 0;
     const noSlots = reason === "Došly sloty";
     const pick = () => {
-      if (!dm) return;
+      if (!canAct) return;
       if (leveled && !a.lvl) return;
       if (leveled && !a.innate && (t.slots?.length || t.pact)) { setSlotFor(slotFor === a ? null : a); return; }
       onAttack(a, metaSel.length ? { meta: metaSel } : undefined);
     };
     return (
-      <div className={`boj-atkwrap ${slotFor === a ? "open" : ""}`}>
+      <div key={key} className={`boj-atkwrap ${slotFor === a ? "open" : ""}`}>
         <button className={`boj-atk ${busy ? "off" : ""} ${active ? "on" : ""}`} onClick={pick}
                 disabled={!!reason}
                 onMouseEnter={() => onHoverAtk?.(a)} onMouseLeave={() => onHoverAtk?.(null)}
@@ -77,7 +79,7 @@ export default function ActorPanel({ S, t, targeting, onAttack, onStdAction, onR
           </span>
           <ChevronRight size={14} />
         </button>
-        {slotFor === a && dm && (
+        {slotFor === a && canAct && (
           <div className="boj-slots-pick">
             {Array.from({ length: t.slots?.length || 0 }, (_, i) => i + 1)
               .filter((l) => l >= (a.lvl || 1))
@@ -129,7 +131,7 @@ export default function ActorPanel({ S, t, targeting, onAttack, onStdAction, onR
       )}
 
       {!!actions.length && (
-        <div className="boj-sec"><h4><Sword size={12} /> Útoky</h4>{t.multiattack && <p className="combat-muted"><b>Multiattack:</b> {t.multiattack.text}</p>}{actions.map((a, i) => <AtkRow key={i} a={a} />)}</div>
+        <div className="boj-sec"><h4><Sword size={12} /> Útoky</h4>{t.multiattack && <p className="combat-muted"><b>Multiattack:</b> {t.multiattack.text}</p>}{actions.map((a, i) => attackRow(a, i))}</div>
       )}
       {!!spells.length && isSorcerer(t) && (
         <div className="boj-sec"><h4>Metamagic</h4>
@@ -153,14 +155,14 @@ export default function ActorPanel({ S, t, targeting, onAttack, onStdAction, onR
                 {lvl > 0 && t.slots?.[lvl - 1] && <em title="Volné sloty"> {t.slots[lvl - 1].max - t.slots[lvl - 1].used}/{t.slots[lvl - 1].max}</em>}
                 {lvl > 0 && t.pact && lvl === t.pact.lvl && <em title="Pact sloty"> P {t.pact.max - t.pact.used}/{t.pact.max}</em>}
               </h5>
-              {spells.filter((a) => (a.lvl || 0) === lvl).map((a, i) => <AtkRow key={i} a={a} />)}
+              {spells.filter((a) => (a.lvl || 0) === lvl).map((a, i) => attackRow(a, i))}
             </div>
           ))}
         </div>
       )}
-      {!!bonus.length && <div className="boj-sec"><h4><Zap size={12} /> Bonus</h4>{bonus.map((a, i) => <AtkRow key={i} a={a} />)}</div>}
-      {!!reac.length && <div className="boj-sec"><h4><Shield size={12} /> Reakce</h4>{reac.map((a, i) => <AtkRow key={i} a={a} />)}</div>}
-      {!!legendary.length && <div className="boj-sec"><h4><Shield size={12} /> Legendární · {Math.max(0, (t.legendary?.max || 0) - (t.legendary?.used || 0))}/{t.legendary?.max || 0}</h4>{legendary.map((a, i) => <AtkRow key={i} a={a} />)}</div>}
+      {!!bonus.length && <div className="boj-sec"><h4><Zap size={12} /> Bonus</h4>{bonus.map((a, i) => attackRow(a, i))}</div>}
+      {!!reac.length && <div className="boj-sec"><h4><Shield size={12} /> Reakce</h4>{reac.map((a, i) => attackRow(a, i))}</div>}
+      {!!legendary.length && <div className="boj-sec"><h4><Shield size={12} /> Legendární · {Math.max(0, (t.legendary?.max || 0) - (t.legendary?.used || 0))}/{t.legendary?.max || 0}</h4>{legendary.map((a, i) => attackRow(a, i))}</div>}
       {!!t.zdroje.length && t.zdroje.some(z => group === "all" || resourceAction(z.nazev, t).eco === group) && (
         <div className="boj-sec"><h4><Hand size={12} /> Zdroje</h4>
           {t.zdroje.map((z, i) => {
@@ -172,17 +174,17 @@ export default function ActorPanel({ S, t, targeting, onAttack, onStdAction, onR
           })}
         </div>
       )}
-      {dm && (group === "all" || group === "a") && (
+      {canAct && (group === "all" || group === "a") && (
         <div className="boj-sec">
           <h4><Hand size={12} /> Standardní akce</h4>
           <div className="boj-std-grid">
             {STD_ACTIONS.filter((x) => ["dash", "dodge", "disengage", "help", "hide", "ready", "grapple", "shove"].includes(x.id)).map((x) => {
-              const reason = !isFree(S) ? actorReason(t, dm) || economyReason(S, t, "a") : undefined;
+              const reason = !isFree(S) ? actorReason(t, canAct) || economyReason(S, t, "a") : undefined;
               return <button key={x.id} className="boj-std-btn" title={reason || x.desc} disabled={!!reason} onClick={() => onStdAction(x.id)}><b>{x.nazev}</b><small>{reason || `A · ${x.desc}`}</small></button>;
             })}
           </div>
           <details className="combat-more-actions"><summary>Pohyb a další akce</summary><div className="boj-std-grid">{STD_ACTIONS.filter(x => !["attack", "dash", "dodge", "disengage", "help", "hide", "ready", "grapple", "shove"].includes(x.id)).map(x => <button key={x.id} className="boj-std-btn" title={x.desc} onClick={() => onStdAction(x.id)}>{x.nazev}<small>{x.desc}</small></button>)}</div></details>
-          {e.moved > 0 && t.startPos && (
+          {dm && e.moved > 0 && t.startPos && (
             <button className="boj-btn2" style={{ marginTop: 6 }} title="Vrátit žeton na začátek tahu"
                     onClick={() => onUndoMove?.()}>↩ Vrátit pohyb ({e.moved} ft)</button>
           )}

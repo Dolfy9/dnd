@@ -8,7 +8,7 @@ from pydantic import BaseModel, ConfigDict, Field, ValidationError
 
 from .. import db, security
 from ..ws import hub
-from .battles import _row_or_404, player_view
+from .battles import _row_or_404, pending_actor, player_view
 
 router = APIRouter(prefix="/api/battles", tags=["battles"])
 MAX_PAYLOAD_BYTES = 16384
@@ -132,6 +132,9 @@ async def create_intent(bid: str, request: Request, u: dict = Depends(security.u
                 raise HTTPException(403, "Nedostatečná oprávnění")
             order, turn = sb.get("ord") or [], sb.get("turn", -1)
             if b.kind not in ("reaction", "roll") and not (isinstance(turn, int) and 0 <= turn < len(order) and order[turn] == b.token_id):
+                _invalid()
+            if b.kind == "reaction" and not any(p.get("id") == b.payload["pending_id"] and pending_actor(p) == b.token_id
+                                                 for p in sb.get("pendingResolutions", [])):
                 _invalid()
         if not con.execute("SELECT 1 FROM users WHERE id=? AND disabled=0", (uid,)).fetchone():
             _invalid()

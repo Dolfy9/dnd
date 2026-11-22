@@ -36,7 +36,7 @@ def encounter():
             {"id": "fogged", "side": "nepratele", "x": 5, "y": 5, "hp": 40},
         ], "ord": ["hero", "other"], "turn": 0,
         "fog": {"on": True, "visible": {"1,0": True}, "revealed": {"1,0": True}},
-        "pendingResolutions": [{"id": "pending", "kind": "reaction"}],
+        "pendingResolutions": [{"id": "pending", "kind": "reaction", "actorId": "other"}],
     }}
     assert gm.put(f"/api/battles/{bid}/state", json={"state": state}).status_code == 200
     assert gm.post(f"/api/battles/{bid}/share", json={"shared": True}).status_code == 200
@@ -51,6 +51,28 @@ def encounter():
 
 def create(e, who="one", **kw):
     return e[who].post(e["url"], json={"token_id": "hero", "kind": "end_turn", "payload": {}, **kw})
+
+
+def test_pending_reactions_are_routed_only_to_the_actor_owner(encounter):
+    e = encounter
+    pending = [
+        {"id": "shield", "kind": "reaction", "actorId": "hero", "label": "secret enemy name", "reactionKey": "private", "dc": 99},
+        {"id": "oa", "kind": "oa", "tokenId": "hero", "move": {"ownerId": "other", "to": [99, 99]}},
+        {"id": "concentration", "kind": "concentration", "tokenId": "hero"},
+        {"id": "unowned", "kind": "reaction", "actorId": "enemy"},
+    ]
+    e["state"]["stav_boje"]["pendingResolutions"] = pending
+    assert e["gm"].put(f"/api/battles/{e['bid']}/state", json={"state": e["state"]}).status_code == 200
+    def items(who):
+        return e[who].get(f"/api/battles/{e['bid']}").json()["state"]["stav_boje"].get("pendingResolutions", [])
+    assert [p["id"] for p in items("one")] == ["shield"]
+    assert [p["id"] for p in items("two")] == ["oa"]
+    assert items("one")[0] == {"id": "shield", "kind": "reaction", "actorId": "hero", "tokenId": "hero", "label": "Reakce"}
+    assert len(items("gm")) == 4
+    assert create(e, kind="reaction", payload={"pending_id": "oa", "accept": True}).status_code == 400
+    assert create(e, kind="reaction", payload={"pending_id": "shield", "accept": True}).status_code == 200
+    assert create(e, "two", token_id="other", kind="reaction", payload={"pending_id": "oa", "accept": False}).status_code == 200
+    assert e["one"].put(f"/api/battles/{e['bid']}/state", json={"state": e["state"]}).status_code == 403
 
 
 def test_create_scope_resolve_cancel_and_unchanged_state(encounter):

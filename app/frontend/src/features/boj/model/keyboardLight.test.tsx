@@ -5,12 +5,13 @@ import { updateLightState } from "./lightState";
 const context = vi.hoisted(() => ({ S: null as any, map: null as any, effects: [] as (() => any)[], states: 0 }));
 vi.mock("react", async original => ({
   ...await original<typeof import("react")>(),
-  useState: (initial: any) => [context.states++ === 0 ? "hero" : typeof initial === "function" ? initial() : initial, vi.fn()],
+  useState: (initial: any) => [context.states++ === 5 ? "hero" : typeof initial === "function" ? initial() : initial, vi.fn()],
   useMemo: (fn: () => any) => fn(),
   useRef: (current: any) => ({ current }),
   useEffect: (fn: () => any) => { context.effects.push(fn); },
 }));
 vi.mock("../state/useBattle", () => ({ useBattle: () => ({ S: context.S, dispatch: (fn: (s: any) => void) => fn(context.S) }) }));
+vi.mock("../state/useIntents", () => ({ useIntents: () => ({ intents: [] }) }));
 vi.mock("../../../store", () => ({ useApp: (selector: any) => selector ? vi.fn() : { user: {}, previewPlayer: false }, isEditor: () => true }));
 vi.mock("react-router-dom", async original => ({ ...await original<typeof import("react-router-dom")>(), useSearchParams: () => [new URLSearchParams("boj=test")], useNavigate: () => vi.fn() }));
 vi.mock("@tanstack/react-query", async original => ({ ...await original<typeof import("@tanstack/react-query")>(), useQuery: () => ({ data: { bojove_mapy: [context.map] } }) }));

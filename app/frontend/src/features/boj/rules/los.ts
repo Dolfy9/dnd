@@ -35,12 +35,6 @@ function lineVal(map: BattleMapData, tokens: Token[], x0: number, y0: number, x1
         const wHit = e ? wIdx.get(edgeKey(e.a, e.b)) : undefined;
         if (wHit) { if (wallBlocksSight(wHit, doors)) { blocked = true; break; } if (wHit.typ === "half") v = Math.max(v, 2); }
         fx = tx; fy = ty;
-        if (!sx && sy) {
-          const e2 = edgeBetween(fx, fy, fx, fy + sy);
-          const w2 = e2 ? wIdx.get(edgeKey(e2.a, e2.b)) : undefined;
-          if (w2) { if (wallBlocksSight(w2, doors)) { blocked = true; break; } if (w2.typ === "half") v = Math.max(v, 2); }
-          fy += sy;
-        }
       }
       if (blocked) return 9;
     }

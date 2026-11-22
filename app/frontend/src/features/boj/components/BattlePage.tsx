@@ -3,7 +3,7 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import { useSearchParams } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
-import { get } from "../../../api";
+import { get, put } from "../../../api";
 import { useApp, isEditor } from "../../../store";
 import { toast, confirmDialog } from "../../../components/ui";
 import { fogPlayerState, mapCells, updateFog } from "../model/fog";
@@ -16,6 +16,10 @@ import {toggleSource} from "../state/commands/sources";
 import { updateLightState } from "../model/lightState";
 import { Link, useNavigate } from "react-router-dom";
 import { useBattle } from "../state/useBattle";
+import { useIntents, type Intent } from "../state/useIntents";
+import { applySimpleIntent, canAutoMove, intentError, intentMovement, intentOptions, intentResolution, intentWasApplied, logIntent, ownsToken, playerTurn, requestForResolution } from "../state/intentModel";
+import PlayerIntents, { PlayerIntentConfirm, type ProposedIntent } from "./PlayerIntents";
+import IntentRequests from "./IntentRequests";
 import "../boj.css";
 import * as C from "../state/commands";
 import { byId, cur, log } from "../rules/turn";
@@ -60,7 +64,16 @@ export default function BattlePage() {
   const bid = params.get("boj") || "";
   const { user, previewPlayer } = useApp();
   const dm = isEditor(user) && !previewPlayer;
-  const b = useBattle(bid);
+  const b = useBattle(bid, dm);
+  const realPlayer = user?.role === "player";
+  const intents = useIntents(bid, !!user && !previewPlayer, dm);
+  const [proposed, setProposed] = useState<ProposedIntent | null>(null);
+  const [intentPreview, setIntentPreview] = useState<Intent | null>(null);
+  const [activeIntent, setActiveIntent] = useState<{ row: Intent; override: boolean } | null>(null);
+  const [intentBusy, setIntentBusy] = useState(false);
+  const applyingIntent = useRef(false);
+  const autoFailures = useRef(new Set<string>());
+  const [autoMove, setAutoMove] = useState(false);
   const [sel, setSel] = useState<string | null>(null);
   const [selSet, setSelSet] = useState<Set<string>>(new Set());
   const [panel, setPanel] = useState<Panel>("akce");
@@ -86,7 +99,7 @@ export default function BattlePage() {
   const [help, setHelp] = useState(false);
   const [dropReq, setDropReq] = useState<DropReq | null>(null);       // MovePopover při dropu
   const [draft, setDraft] = useState<ResolutionDraft | null>(null);
-  useEffect(() => { setDraft(null); }, [resolve]);
+  useEffect(() => { setDraft(resolve && activeIntent && b.S && map ? previewResolution(b.S, map, resolve, { ...intentOptions(activeIntent.row), override: activeIntent.override }) : null); }, [resolve]);
   const [ov, setOv] = useState<{ title: string; reason?: string; options: OverrideOption[]; children?: React.ReactNode } | null>(null); // generický override
   const [moreOpen, setMoreOpen] = useState(false);                   // ⋯ menu v toolbaru (mobil)
   const [loh, setLoh] = useState<{ idx: number; max: number; nazev: string; amt: number } | null>(null); // Lay on Hands input
@@ -104,11 +117,14 @@ export default function BattlePage() {
     queryFn: () => get<{ bojove_mapy: BattleMapData[] }>("/api/map/data"),
     staleTime: 300_000,
   });
+  const players = useQuery({ queryKey: ["battle-players"], enabled: dm, queryFn: () => get<{ players: { id: number; name: string }[] }>("/api/battles/players") });
+  const playerName = (row: Intent) => players.data?.players?.find(p => p.id === row.user_id)?.name || `Hráč #${row.user_id}`;
   const map = useMemo(() => {
     const raw: any = maps.data as any;
     const list = (raw?.bojove_mapy || raw?.data?.bojove_mapy || raw?.mapy || []).map((m: any) => ({ ...(m.data || {}), ...m, data: undefined })) as BattleMapData[];
     return list.find((m) => m.id === b.S?.map) || list[0];
   }, [maps.data, b.S?.map]);
+  useEffect(() => { setAutoMove(!!((b.doc as any)?.state?.auto_pohyb)); }, [b.doc]);
   useEffect(() => {
     if (!dm || !b.S || !map || fogInitialized.current === `${bid}:${map.id}`) return;
     fogInitialized.current = `${bid}:${map.id}`;
@@ -149,6 +165,54 @@ export default function BattlePage() {
   const curTok = S ? cur(S) : undefined;
   const shownTok = selTok || curTok;
   const diff = S ? difficulty(S.tok) : null;
+  const ownedTurn = realPlayer && playerTurn(S, curTok, user?.id);
+  const playerControl = realPlayer && playerTurn(S, shownTok, user?.id);
+  const approveIntent = async (row: Intent, edit = false, override = false) => {
+    if (!hudDm || !map || applyingIntent.current) return;
+    applyingIntent.current = true; setIntentBusy(true);
+    try {
+      const current = (await get<{ intents: Intent[] }>(`/api/battles/${bid}/intents`)).intents.find(i => i.id === row.id);
+      const live = b.getState(); if (!live) return;
+      if (!current || current.status !== "pending") throw new Error("Žádost už není čekající.");
+      if (intentWasApplied(live, row.id)) { if (await b.flush()) await intents.resolve(row.id, "applied"); return; }
+      const reason = intentError(live, map, row);
+      if (reason && !override && !edit) throw new Error(reason);
+      if (row.kind === "reaction") {
+        const item = pendingOf(live).find(p => p.id === row.payload.pending_id);
+        if (item?.reactionKey) {
+          if (!draft || !resolve) throw new Error("Výsledek už není otevřený. PJ musí akci znovu vyhodnotit.");
+          b.dispatch(s => { s.pendingResolutions = pendingOf(s).filter(p => p.id !== item.id); logIntent(s, row, playerName(row)); });
+          setDraft(previewResolution(b.getState()!, map, resolve, draft.options, draft, row.payload.accept ? [...draft.accepted, item.reactionKey] : draft.accepted, row.payload.accept ? draft.skipped : [...draft.skipped, item.reactionKey]));
+          if (await b.flush()) await intents.resolve(row.id, "applied");
+          return;
+        }
+      }
+      const r = row.kind === "action" && intentResolution(live, row);
+      if (r) { setActiveIntent({ row, override }); setResolve(r); setIntentPreview(row); return; }
+      if (reason && !override) throw new Error(reason);
+      let applied = false;
+      b.dispatch(s => { applied = applySimpleIntent(s, map, row, override); if (applied) { logIntent(s, row, playerName(row)); updateLightState(s, map); updateFog(s, map); } });
+      if (!applied) throw new Error("Žádost nelze provést.");
+      if (!await b.flush()) throw new Error("Uložení selhalo. Žádost zůstává čekající; zkuste znovu.");
+      await intents.resolve(row.id, "applied"); setIntentPreview(null);
+    } finally { applyingIntent.current = false; setIntentBusy(false); }
+  };
+  useEffect(() => {
+    if (!hudDm || !autoMove || !S || !map || intentBusy || resolve) return;
+    const row = intents.intents.find(i => i.status === "pending" && !autoFailures.current.has(i.id) && canAutoMove(S, map, i));
+    if (row) void approveIntent(row).catch(e => { autoFailures.current.add(row.id); toast(String(e), "err"); });
+  }, [hudDm, autoMove, S, map, intents.intents, intentBusy, resolve]);
+  useEffect(() => {
+    if (!hudDm || !draft || !resolve || !map || !S) return;
+    const offers = draft.reactions.filter(o => !draft.accepted.includes(o.key) && !draft.skipped.includes(o.key) && !!byId(S, o.option.whoId)?.src?.owner);
+    if (!offers.some(o => !pendingOf(S).some(p => p.reactionKey === o.key))) return;
+    b.dispatch(s => {
+      for (const offer of offers) if (!pendingOf(s).some(p => p.reactionKey === offer.key)) {
+        s.pendingResolutions = [...pendingOf(s), { id: uid(), kind: "reaction", actorId: offer.option.whoId, tokenId: offer.option.whoId, reactionKey: offer.key, label: offer.option.nazev }];
+      }
+    });
+    setDraft(previewResolution(b.getState()!, map, resolve, draft.options, draft));
+  }, [draft, hudDm, S, map, resolve]);
 
   /* ---- klávesové zkratky ---- */
   useEffect(() => {
@@ -227,7 +291,9 @@ export default function BattlePage() {
   const onAttack = (atk: AttackDef, opts?: { slot?: number; pact?: boolean; meta?: string[] }) => {
     const src = shownTok;
     if (!src) { toast("Nejdřív vyber útočníka", "err"); return; }
+    if (!hudDm && !playerControl) return;
     if (atk.utility) { // utility kouzlo — rovnou seslat na sebe/log (bez targetingu)
+      if (realPlayer) { const r: Resolve = { kind: "attack", srcId: src.id, tgtId: src.id, atk, ...opts }; setProposed({ tokenId: src.id, kind: "action", payload: requestForResolution(r), label: atk.nazev }); return; }
       setResolve({ kind: "attack", srcId: src.id, tgtId: src.id, atk, ...opts });
       return;
     }
@@ -240,6 +306,12 @@ export default function BattlePage() {
     const src = byId(S, targeting.srcId), tgt = byId(S, tgtId);
     if (!src || !tgt) return;
     const ev = C.evalUi(S, map, src, tgt, targeting.atk);
+    if (realPlayer) {
+      if (!playerTurn(S, src, user?.id)) return;
+      if (!ev.canTarget) { toast("Cíl není v dosahu nebo výhledu.", "err"); return; }
+      const r: Resolve = { kind: "attack", atk: targeting.atk, srcId: src.id, tgtId, slot: targeting.slot, pact: targeting.pact };
+      setProposed({ tokenId: src.id, kind: "action", payload: requestForResolution(r), label: `${r.atk.nazev} → ${tgt.nazev}` }); setTargeting(null); return;
+    }
     const reason = ev.beyondRange ? "mimo dostřel" : ev.cover === 9 ? "plný kryt" : "nelze zacílit";
     if (!ev.canTarget) {
       // nabídni přesun+útok pro melee
@@ -290,6 +362,11 @@ export default function BattlePage() {
     const spec = targetingArea(src, a, anchor);
     if (dir != null) spec.dir = dir;
     const tgtIds = tokensInArea(spec, S.tok, src).map((t) => t.id);
+    if (realPlayer) {
+      if (!playerTurn(S, src, user?.id)) return;
+      const r: Resolve = { kind: "area", atk: a, srcId: src.id, spec, tgtIds, slot: targeting.slot, pact: targeting.pact };
+      setProposed({ tokenId: src.id, kind: "action", payload: requestForResolution(r), label: `${a.nazev} · oblast (${tgtIds.length})` }); setTargeting(null); return;
+    }
     setResolve({ kind: "area", atk: a, srcId: targeting.srcId, spec, tgtIds, slot: targeting.slot, pact: targeting.pact, meta: targeting.meta });
     setTargeting(null);
   };
@@ -313,7 +390,11 @@ export default function BattlePage() {
   };
   const onDrop = (t: Token, to: [number, number], plan: MovementPlan, wps: [number, number][],
                  pt: { x: number; y: number }, mods: { alt: boolean; shift: boolean }, group?: Set<string>) => {
-    if (!hudDm) return;
+    if (!hudDm) {
+      if (!realPlayer || !playerTurn(S, t, user?.id)) return;
+      if (plan.blocked || plan.overFt > 0) { toast(plan.blocked ? "Cesta není průchozí." : "Nedostatek pohybu.", "err"); return; }
+      setProposed({ tokenId: t.id, kind: "move", payload: { path: plan.path }, label: `Pohyb · ${plan.ft} ft${plan.oaIds.length ? " · hrozí OA" : ""}` }); return;
+    }
     const set = settingsOf(S);
     // Volný režim: přímé přemístění bez plánování/OA/popoverů
     if (isFree(S)) {
@@ -519,6 +600,8 @@ export default function BattlePage() {
           </div>
           <BattleMap
             bid={bid} S={S} map={map} sel={sel} selSet={selSet} dm={dm && !viewAsPlayer} tool={viewAsPlayer ? "select" : tool}
+            playerTokenId={ownedTurn ? curTok?.id : undefined}
+            intentPreview={(hudDm ? intentPreview ? [intentPreview] : [] : intents.intents.filter(i => i.status === "pending")).map(row => ({ tokenId: row.token_id, path: row.payload.path, targets: row.payload.target_ids, area: intentResolution(S, row)?.kind === "area" ? (intentResolution(S, row) as Extract<Resolve, { kind: "area" }>).spec : undefined }))}
             fogOverlay={fogOverlay} fogRoom={fogRoom} onFogRoom={(x,y) => { const room = [...((map as MapV2).interiery || [])].reverse().find(r => pointInPolygon([x,y],r.poly)); setFogRoom(room?.id || null); }}
             paintTile={paintTile} fogMode={fogMode}
             targeting={targeting} zonePlace={zonePlace} moveAtk={moveAtk?.plan}
@@ -551,12 +634,13 @@ export default function BattlePage() {
             onDraw={(pts, stroke) => cmd((s) => { s.kresby = [...(s.kresby || []), { id: uid(), kind: "free", pts, stroke, width: 3, dmOnly: true } as any]; })}
           >
             <TargetHud S={S} t={byId(S, hoverToken || sel)} map={map} dm={hudDm} />
-            {hudDm && <PendingQueue rows={[
-              ...pendingOf(S).map(item => ({ id: item.id, kind: item.kind, label: item.label, resolve: () => cmd(s => { resolvePending(s, item.id, false, map); }), skip: () => cmd(s => { resolvePending(s, item.id, true, map); }) })),
+            {hudDm && <PendingQueue requests={<IntentRequests rows={intents.intents.filter(i => i.status === "pending")} S={S} map={map} busy={intentBusy} onPreview={setIntentPreview} onApprove={approveIntent} onReject={async (row, note) => { await intents.resolve(row.id, "rejected", note); if (activeIntent?.row.id === row.id) { setResolve(null); setActiveIntent(null); } }} />} rows={[
+              ...pendingOf(S).filter(item => !item.reactionKey).map(item => ({ id: item.id, kind: item.kind, label: item.label, resolve: () => cmd(s => { resolvePending(s, item.id, false, map); }), skip: () => cmd(s => { resolvePending(s, item.id, true, map); }) })),
               ...(draft?.reactions || []).filter(offer => !draft!.accepted.includes(offer.key) && !draft!.skipped.includes(offer.key)).map(offer => ({ id: offer.key, kind: "reaction" as const, label: `${offer.option.who} · ${offer.option.nazev}`, detail: offer.option.desc, resolve: () => respondToDraft(offer.key, false), skip: () => respondToDraft(offer.key, true) })),
               ...(S.legendaryWindow ? [{ id: "legendary", kind: "legendary" as const, label: "Okno legendárních akcí", detail: "Konec cizího tahu · vyber legendární akci nebo pokračuj.", resolve: () => { const owner = S.tok.find(t => t.legendary && t.id !== S.legendaryWindow!.actorId && !S.legendaryWindow!.usedBy.includes(t.id) && t.legendary.used < t.legendary.max && !t.dead); if (owner) { setSel(owner.id); setPanel("akce"); setActionGroup("legendary"); setSideMini(false); } }, skip: () => cmd(s => C.nextTurn(s)) }] : []),
             ]} />}
             <TurnHud S={S} dm={hudDm} onEnd={() => cmd(s => C.nextTurn(s))} onGroup={group => { setSel(curTok?.id || null); setActionGroup(group); setPanel("akce"); setSideMini(false); setSheet("half"); }} />
+            {ownedTurn && curTok && <div className="player-turn-controls"><button className="boj-btn2" onClick={() => setProposed({ tokenId: curTok.id, kind: "end_turn", payload: {}, label: "Ukončit tah" })}>Ukončit tah · požádat PJ</button>{curTok.hp <= 0 && <button className="boj-btn2" onClick={() => setProposed({ tokenId: curTok.id, kind: "death_save", payload: {}, label: "Death save" })}>Death save</button>}</div>}
           </BattleMap>
         </div>
         <aside ref={sheetRef} className={`boj-side sheet-${sheet} ${sideMini ? "mini" : ""}`} style={sideMini ? undefined : { width: sideW }}>
@@ -572,16 +656,17 @@ export default function BattlePage() {
             </button>
           </div>
           <div className="boj-side-body">
+            {realPlayer && user && <PlayerIntents S={S} userId={user.id} intents={intents.intents} cancel={intents.cancel} submit={intents.submit} onPreview={setIntentPreview} />}
             {hudDm && panel === "encounter" && <EncounterPanel S={S} selected={selSet} onSelection={setSelSet} cmd={cmd} onAdd={() => setAddOpen(true)} onFocus={id => { setSel(id); setSelSet(new Set([id])); window.dispatchEvent(new CustomEvent("boj-focus", { detail: id })); }} />}
             {(panel === "akce" || panel === "encounter" && !hudDm) && (
               shownTok
                 ? <ActorPanel S={S} t={shownTok} targeting={targeting} onAttack={onAttack} group={actionGroup} onGroup={setActionGroup}
-                              onStdAction={(a) => cmd((s) => C.cmdStdAction(s, shownTok.id, a, selTok?.id))}
-                              onCheck={(n, m, mode) => cmd((s) => C.cmdCheck(s, shownTok.id, n, m, mode))}
+                              onStdAction={(a) => { if (realPlayer && playerControl) setProposed({ tokenId: shownTok.id, kind: "action", payload: { action_id: `std:${a}` }, label: `Standardní akce · ${a}` }); else cmd((s) => C.cmdStdAction(s, shownTok.id, a, selTok?.id)); }}
+                              onCheck={(n, m, mode) => { if (realPlayer && ownsToken(shownTok, user?.id)) void intents.submit(shownTok.id, "roll", { type: "check", name: n }); else cmd((s) => C.cmdCheck(s, shownTok.id, n, m, mode)); }}
                               onUseItem={(i, ba) => cmd((s) => C.cmdUseItem(s, shownTok.id, i, undefined, ba))}
                               onFeature={(key) => cmd((s) => { const res = C.cmdFeature(s, shownTok.id, key, selTok?.id !== shownTok.id ? selTok?.id : undefined); if (!res.ok) toast(res.reason || "Nejde", "err"); })}
-                              onResource={onResource} onUndoMove={() => cmd((s) => C.undoTurnMovement(s, shownTok.id))} dm={hudDm}
-                              onHoverAtk={setHoverAtk} />
+                              onResource={onResource} onUndoMove={() => cmd((s) => C.undoTurnMovement(s, shownTok.id))} dm={hudDm} playerControl={playerControl}
+                              onHoverAtk={hudDm ? setHoverAtk : undefined} />
                 : <i className="boj-none">Vyber žeton na mapě</i>
             )}
             {panel === "efekty" && (
@@ -626,12 +711,26 @@ export default function BattlePage() {
         />
       )}
       {resolve && hudDm && (
-        <ResolveDialog S={S} map={map} r={resolve} draft={draft} onApply={o => stageResolve(o)} onAdjust={o => stageResolve(o, true)} onCommit={() => { if (draft) cmd(s => { if (applyResolution(s, draft)) setResolve(null); else toast("Boj se změnil. Vyhodnoť akci znovu.", "err"); }); }} onClose={() => setResolve(null)} />
+        <ResolveDialog key={activeIntent?.row.id || "gm"} initialOptions={activeIntent ? { ...intentOptions(activeIntent.row), override: activeIntent.override } : undefined} S={S} map={map} r={resolve} draft={draft} onApply={o => stageResolve(o)} onAdjust={o => stageResolve(o, true)} onCommit={() => { void (async () => {
+          if (!draft || intentBusy) return;
+          const row = activeIntent?.row;
+          if (row) {
+            const current = (await get<{ intents: Intent[] }>(`/api/battles/${bid}/intents`)).intents.find(i => i.id === row.id);
+            if (current?.status !== "pending") { toast("Žádost už není čekající.", "err"); return; }
+            const reason = intentError(b.getState()!, map, row); if (reason && !draft.options.override) { toast(reason, "err"); return; }
+          }
+          let applied = false;
+          cmd(s => { applied = applyResolution(s, draft); if (applied) { s.pendingResolutions = pendingOf(s).filter(p => !p.reactionKey || !draft.reactions.some(o => o.key === p.reactionKey)); if (row) logIntent(s, row, playerName(row)); } });
+          if (!applied) { toast("Boj se změnil. Vyhodnoť akci znovu.", "err"); return; }
+          setResolve(null); setActiveIntent(null);
+          if (row) { setIntentBusy(true); try { if (await b.flush()) await intents.resolve(row.id, "applied"); else toast("Uložení selhalo; žádost je stále čekající.", "err"); } finally { setIntentBusy(false); } }
+        })().catch(e => toast(String(e), "err")); }} onClose={() => { setResolve(null); setActiveIntent(null); }} />
       )}
+      {proposed && realPlayer && <PlayerIntentConfirm key={`${proposed.tokenId}:${proposed.kind}:${proposed.label}`} proposed={proposed} S={S} submit={intents.submit} onClose={() => setProposed(null)} />}
       {ctxMenu && <CtxMenu t={ctxMenu.t} x={ctxMenu.x} y={ctxMenu.y} dm={dm} onClose={() => setCtxMenu(null)} onAction={onCtxAction} />}
       {help && <HelpOverlay onClose={() => setHelp(false)} />}
       {dropReq && dm && <MovePopover S={S} map={map} req={dropReq} cmd={cmd} onClose={() => setDropReq(null)} />}
-      {setOpen && dm && <SettingsPanel S={S} cmd={cmd} onClose={() => setSetOpen(false)} />}
+      {setOpen && dm && <SettingsPanel S={S} cmd={cmd} autoMove={autoMove} onAutoMove={value => { void put(`/api/battles/${bid}/meta`, { auto_pohyb: value }).then(() => setAutoMove(value)).catch(e => toast(String(e), "err")); }} onClose={() => setSetOpen(false)} />}
       {ov && <OverridePrompt title={ov.title} reason={ov.reason} options={ov.options} onClose={() => setOv(null)}>{ov.children}</OverridePrompt>}
       {loh && (
         <OverridePrompt title={loh.nazev} reason={`Kolik HP z poolu? (${loh.max} volných)`} onClose={() => setLoh(null)}

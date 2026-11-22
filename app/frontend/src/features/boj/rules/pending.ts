@@ -4,7 +4,9 @@ import { uid } from "../types";
 export type PendingKind = "oa" | "concentration" | "reaction" | "legendary" | "saveEnd";
 export interface PendingDecision {
   id: string;
-  kind: "oa" | "concentration" | "saveEnd";
+  kind: "oa" | "concentration" | "saveEnd" | "reaction";
+  actorId?: string;
+  reactionKey?: string;
   tokenId: string;
   label: string;
   dc?: number;

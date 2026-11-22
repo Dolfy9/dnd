@@ -27,7 +27,7 @@ const fixture = () => ({ version: 1, state: { stav_boje: {
 } } });
 let battle: ReturnType<typeof useBattle>;
 let root: ReactTestRenderer;
-function Harness({ bid = "test" }: { bid?: string }) { battle = useBattle(bid); return null; }
+function Harness({ bid = "test", canWrite = true }: { bid?: string; canWrite?: boolean }) { battle = useBattle(bid, canWrite); return null; }
 const flush = async (fn: () => void | Promise<unknown>) => { await act(async () => { await fn(); }); };
 async function mount() {
   await flush(() => { root = create(<Harness />); });
@@ -48,6 +48,26 @@ beforeEach(() => {
 });
 afterEach(async () => { await flush(() => root?.unmount()); vi.useRealTimers(); vi.unstubAllGlobals(); });
 describe("battle command and state-hook persistence integration", () => {
+  it("never mutates or saves player state, including undo shortcuts and queued role changes", async () => {
+    const listeners: Record<string, (e: any) => void> = {};
+    vi.stubGlobal("window", { addEventListener: (n: string, f: any) => { listeners[n] = f; }, removeEventListener() {}, setTimeout, clearTimeout });
+    await mount();
+    await flush(() => battle.dispatch(s => { s.tok[0].hp = 90; }));
+    await flush(() => { root.update(<Harness canWrite={false} />); });
+    const state = structuredClone(battle.S);
+    const mutate = vi.fn();
+    await flush(() => { battle.dispatch(mutate); battle.undo(); battle.redo(); listeners.keydown?.({ ctrlKey: true, key: "z", preventDefault: vi.fn() }); });
+    await flush(() => vi.advanceTimersByTimeAsync(2000));
+    expect(mutate).not.toHaveBeenCalled(); expect(api.put).not.toHaveBeenCalled(); expect(battle.S).toEqual(state);
+    expect(await battle.flush()).toBe(false);
+  });
+  it("flush waits for the latest queued revision to persist", async () => {
+    await mount();
+    await flush(() => battle.dispatch(s => { s.tok[0].hp = 91; }));
+    let ok = false;
+    await flush(async () => { ok = await battle.flush(); });
+    expect(ok).toBe(true); expect(api.put.mock.calls[0][1].state.stav_boje.tok[0].hp).toBe(91);
+  });
   it("preserves Fireball when an earlier save broadcasts before its HTTP acknowledgement", async () => {
     await mount();
     const first = deferred<{ version: number }>(); api.put.mockReturnValueOnce(first.promise).mockResolvedValue({ version: 3 });
