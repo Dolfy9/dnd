@@ -7,7 +7,7 @@ import { rollInitiative, advanceTurn, byId, log, useEco, ecoFree, ecoOf, moveLef
 import { evaluateAttack, resolveAttack, type AttackCtx } from "../../rules/attack";
 import { applyDamage, applyHealing, setTempHp, deathSave } from "../../rules/damage";
 import { resolveSave } from "../../rules/saves";
-import { zonesOn, dropConcentration, makeEffect, presetById, sumMods } from "../../rules/effects";
+import { zonesOn, dropConcentration, makeEffect, presetById, sumMods, untilNextTurn } from "../../rules/effects";
 import { reachable, gapFt, hostile, cellsOf, meleeReach, oaAlong } from "../../rules/grid";
 import { coverOf } from "../../rules/los";
 import { tokensInArea, areaCells, type AreaSpec } from "../../rules/areas";
@@ -283,9 +283,9 @@ function applyMastery(S: StavBoje, A: Token, B: Token, atk: AttackDef, hit: bool
       }
       break;
     case "push": if (hit) log(S, "cond", `${B.nazev}: odtlačen o 10 ft (Push)`, A.nazev); break;
-    case "sap": if (hit && !B.effects.some((e) => e.nazev === "Sap")) { B.effects.push({ id: uid(), nazev: "Sap", mods: { sap: true }, duration: { kind: "startOf", who: B.id } }); log(S, "effect", `${B.nazev}: Sap — dis na příští útok`, A.nazev); } break;
-    case "slow": if (hit && !B.effects.some((e) => e.nazev === "Slow")) { B.effects.push({ id: uid(), nazev: "Slow", mods: { slowFt: 10 }, duration: { kind: "startOf", who: B.id } }); log(S, "effect", `${B.nazev}: Slow −10 ft`, A.nazev); } break;
-    case "vex": if (hit && !A.effects.some((e) => e.nazev === "Vex")) { A.effects.push({ id: uid(), nazev: "Vex", mods: { vex: true }, duration: { kind: "endOf", who: A.id } }); log(S, "effect", `${A.nazev}: Vex — adv na příští útok`, A.nazev); } break;
+    case "sap": if (hit && !B.effects.some((e) => e.nazev === "Sap")) { B.effects.push({ id: uid(), nazev: "Sap", src: A.id, mods: { sap: true }, duration: untilNextTurn(S, A.id, "start") }); log(S, "effect", `${B.nazev}: Sap — dis na příští útok`, A.nazev); } break;
+    case "slow": if (hit && !B.effects.some((e) => e.nazev === "Slow")) { B.effects.push({ id: uid(), nazev: "Slow", src: A.id, mods: { slowFt: 10 }, duration: untilNextTurn(S, A.id, "start") }); log(S, "effect", `${B.nazev}: Slow −10 ft`, A.nazev); } break;
+    case "vex": if (hit && !A.effects.some((e) => e.nazev === "Vex")) { A.effects.push({ id: uid(), nazev: "Vex", mods: { vex: true }, duration: untilNextTurn(S, A.id, "end") }); log(S, "effect", `${A.nazev}: Vex — adv na příští útok`, A.nazev); } break;
     case "topple": if (hit) log(S, "cond", `${B.nazev}: CON save vs Topple (DC 8+mod+PB)`, A.nazev); break;
     default: break;
   }

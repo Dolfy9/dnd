@@ -89,7 +89,7 @@ export function migrate(o: any): StavBoje {
       id: z.id || uid(), nazev: z.nazev || "zóna", style: z.style || "fire",
       shape: z.shape || { kind: "rect", size: 5, w: 1, h: 1 },
       anchor: z.anchor || [0, 0], dir: z.dir, tokenId: z.tokenId,
-      src: z.src, conc: z.conc, trigger: z.trigger, difficult: z.difficult, blocksLos: z.blocksLos,
+      src: z.src, conc: z.conc, duration: z.duration, trigger: z.trigger, difficult: z.difficult, blocksLos: z.blocksLos,
     })),
     fx: src.fx || [],
   };

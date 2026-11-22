@@ -4,7 +4,7 @@ import { alertInit } from "./actions/features";
 import type { StavBoje, Token, LogEntry, EcoState } from "../types";
 import { uid } from "../types";
 import { hasCond, isIncap, speedOf, flySpeedOf } from "./conditions";
-import { sumMods, tickEffects, dropConcentration } from "./effects";
+import { sumMods, tickEffects, tickDuration, dropConcentration } from "./effects";
 import { d20, die, type Rng, defaultRng } from "./dice";
 import { settingsOf } from "./settings";
 import { deathSave } from "./damage";
@@ -83,6 +83,17 @@ export function useLegendaryAction(S: StavBoje, t: Token, cost: number): boolean
   return true;
 }
 
+function tickTurnEffects(S: StavBoje, t: Token, phase: "start" | "end"): string[] {
+  const messages: string[] = [];
+  for (const owner of S.tok)
+    for (const name of tickEffects(owner, phase, t.id)) messages.push(`${owner.nazev}: efekt ${name} skončil`);
+  S.zones = (S.zones || []).filter(zone => {
+    if (!tickDuration(zone.duration, phase, t.id, zone.src)) return true;
+    messages.push(`Zóna ${zone.nazev} skončila`); return false;
+  });
+  return messages;
+}
+
 /** Záchrany "save na konci tahu" + tick efektů; vrací hlášky. */
 export function endOfTurnProcess(S: StavBoje, t: Token, rng: Rng = defaultRng): string[] {
   const out: string[] = [];
@@ -104,7 +115,7 @@ export function endOfTurnProcess(S: StavBoje, t: Token, rng: Rng = defaultRng): 
       } else out.push(`${t.nazev}: ${e.saveEnd.ab} save ${r.r}${bonus >= 0 ? "+" : ""}${bonus} < ${e.saveEnd.dc} — ${e.nazev} trvá`);
     }
   }
-  for (const n of tickEffects(t, "end", t.id)) out.push(`${t.nazev}: efekt ${n} skončil`);
+  out.push(...tickTurnEffects(S, t, "end"));
   return out;
 }
 
@@ -112,7 +123,7 @@ export function startOfTurnProcess(S: StavBoje, t: Token, rng: Rng = defaultRng)
   const out: string[] = [];
   resetEconomy(S, t);
   if (t.legendary) t.legendary.used = 0;
-  for (const n of tickEffects(t, "start", t.id)) out.push(`${t.nazev}: efekt ${n} skončil`);
+  out.push(...tickTurnEffects(S, t, "start"));
   for (const u of t.atk || []) {
     if (u.rc && t.spent?.[u.nazev] && settingsOf(S).automatizace.recharge === "auto") {
       if (die(6, rng) >= u.rc) { delete t.spent[u.nazev]; out.push(`${t.nazev}: ${u.nazev} recharged`); }

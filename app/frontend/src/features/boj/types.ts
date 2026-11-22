@@ -163,7 +163,7 @@ export interface Zone {
     cond?: string;
     once?: boolean;
   };
-  duration?: { kind: "rounds" | "endOf"; rounds?: number; who?: string };
+  duration?: ActiveEffect["duration"];
   conc?: string;
   src?: string;
   pj?: boolean;

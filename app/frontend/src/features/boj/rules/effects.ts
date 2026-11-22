@@ -1,5 +1,5 @@
 /* Agregace aktivních efektů a presetová knihovna (Phase A jádro, Phase B rozšíří data). */
-import type { Token, ActiveEffect, Zone, EffectMods, Ability, DmgType, EffectPreset } from "../types";
+import type { Token, ActiveEffect, Zone, EffectMods, Ability, DmgType, EffectPreset, StavBoje } from "../types";
 import { EFFECT_PRESETS } from "./presets";
 import { uid } from "../types";
 import { cellsOf } from "./grid";
@@ -50,21 +50,33 @@ export const effectiveAc = (t: Token): number => {
   return base + (m.acBonus || 0);
 };
 
+export function tickDuration(d: ActiveEffect["duration"], phase: "start" | "end", actorId?: string, ownerId?: string): boolean {
+  if (!d) return false;
+  const matches = d.kind === "rounds"
+    ? phase === "start" && (!actorId || actorId === ownerId)
+    : d.who === actorId && d.kind === (phase === "start" ? "startOf" : "endOf");
+  if (!matches) return false;
+  d.rounds = (d.rounds ?? 1) - 1;
+  return d.rounds <= 0;
+}
+
+export function untilNextTurn(S: StavBoje, sourceId: string, phase: "start" | "end"): NonNullable<ActiveEffect["duration"]> {
+  return { kind: phase === "start" ? "startOf" : "endOf", who: sourceId,
+    rounds: phase === "end" && S.ord[S.turn] === sourceId && !S.legendaryWindow ? 2 : 1 };
+}
+
 /** Ticky duration efektů; vrátí názvy expirovaných. */
 export function tickEffects(t: Token, phase: "start" | "end", actorId?: string): string[] {
-  const gone: string[] = [];
+  const gone: ActiveEffect[] = [];
   t.effects = (t.effects || []).filter((e) => {
-    const d = e.duration;
-    if (!d) return true;
-    if (d.kind === "rounds" && phase === "start") {
-      d.rounds = (d.rounds ?? 1) - 1;
-      if (d.rounds <= 0) { gone.push(e.nazev); return false; }
-    }
-    if (d.kind === "endOf" && phase === "end" && d.who === actorId) { gone.push(e.nazev); return false; }
-    if (d.kind === "startOf" && phase === "start" && d.who === actorId) { gone.push(e.nazev); return false; }
-    return true;
+    if (!tickDuration(e.duration, phase, actorId, t.id)) return true;
+    gone.push(e); return false;
   });
-  return gone;
+  for (const e of gone) {
+    if (e.mods.grantsCond && !t.effects.some(other => other.src === e.src && other.mods.grantsCond === e.mods.grantsCond))
+      t.cond = t.cond.filter(c => c.n !== e.mods.grantsCond || c.src !== e.src);
+  }
+  return gone.map(e => e.nazev);
 }
 
 /** Odpojení efektů/zón vázaných na Concentration `spell` od zdroje `srcId`. */
