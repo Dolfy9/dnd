@@ -147,7 +147,7 @@ export function migrateMap(m: BattleMapData | MapV2 | any, assets?: Record<strin
     (out[k] as any[] | undefined)?.forEach((o: any, i: number) => { if (!o.id) o.id = `${k[0]}${i}`; });
   }
   if (out.objekty) out.objekty = out.objekty.map(o => o.v === undefined ? o : {
-    ...o, v: normalizeVariant(o.v, assets ? assets[o.asset]?.varianty?.length || 0 : undefined),
+    ...o, v: normalizeVariant(o.v, assets?.[o.asset] ? assets[o.asset].varianty?.length || 0 : undefined),
   });
   // normalizace zdí na unit segmenty
   if (out.svetla) out.svetla = out.svetla.filter(l => l && typeof l === "object").map(l => ({

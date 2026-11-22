@@ -42,8 +42,17 @@ describe("asset variant resolution and migration", () => {
       const input = {...base(),objekty:[{...object,v:value}]};
       expect(migrateMap(input,{tree}).objekty![0].v).toBe(0);
     }
-    expect(migrateMap({...base(),objekty:[object]},{}).objekty![0].v).toBe(0);
+    expect(migrateMap({...base(),objekty:[object]},{}).objekty![0].v).toBe(2);
     expect(object.v).toBe(2);
+  });
+  it("preserves saved variants through unavailable catalogs and unknown assets", () => {
+    for (const catalog of [undefined, {}, {other: tree}]) {
+      const loaded = migrateMap({...base(),objekty:[object]},catalog);
+      expect(loaded.objekty![0].v).toBe(2);
+      const saved = JSON.parse(JSON.stringify(loaded));
+      expect(migrateMap(saved,{tree}).objekty![0].v).toBe(2);
+      expect(assetSrc({src:"fallback.webp"},saved.objekty[0].v)).toBe("fallback.webp");
+    }
   });
 });
 
