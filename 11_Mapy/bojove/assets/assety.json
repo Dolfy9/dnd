@@ -3757,6 +3757,85 @@
     "plachta"
    ],
    "custom": false
+  },
+  {
+   "id": "zahrada-zahon-porost-a",
+   "nazev": "Zarostlý růžový záhon",
+   "kategorie": "Zahrada",
+   "src": "bojove/assets/Zahrada/zahrada-zahon-porost-a.webp",
+   "varianty": [
+    "bojove/assets/Zahrada/varianty/zahrada-zahon-porost-a-v1.webp",
+    "bojove/assets/Zahrada/varianty/zahrada-zahon-porost-a-v2.webp"
+   ],
+   "w": 6,
+   "h": 4,
+   "vyska": 0.4,
+   "custom": false,
+   "tags": [
+    "Zahrada",
+    "gen11"
+   ],
+   "z": -1,
+   "blocks": false
+  },
+  {
+   "id": "zahrada-zahon-porost-b",
+   "nazev": "Divoký podrost s kapradím",
+   "kategorie": "Zahrada",
+   "src": "bojove/assets/Zahrada/zahrada-zahon-porost-b.webp",
+   "varianty": [
+    "bojove/assets/Zahrada/varianty/zahrada-zahon-porost-b-v1.webp",
+    "bojove/assets/Zahrada/varianty/zahrada-zahon-porost-b-v2.webp"
+   ],
+   "w": 3,
+   "h": 3,
+   "vyska": 0.6,
+   "custom": false,
+   "tags": [
+    "Zahrada",
+    "gen11"
+   ],
+   "z": -1,
+   "blocks": false
+  },
+  {
+   "id": "zahrada-vysoka-trava",
+   "nazev": "Vysoká tráva a plevel",
+   "kategorie": "Zahrada",
+   "src": "bojove/assets/Zahrada/zahrada-vysoka-trava.webp",
+   "varianty": [
+    "bojove/assets/Zahrada/varianty/zahrada-vysoka-trava-v1.webp",
+    "bojove/assets/Zahrada/varianty/zahrada-vysoka-trava-v2.webp"
+   ],
+   "w": 1.4,
+   "h": 1.4,
+   "vyska": 0.8,
+   "custom": false,
+   "tags": [
+    "Zahrada",
+    "gen11"
+   ],
+   "z": -1,
+   "blocks": false
+  },
+  {
+   "id": "zahrada-socha-podstavec",
+   "nazev": "Zahalená socha na mechovém podstavci",
+   "kategorie": "Zahrada",
+   "src": "bojove/assets/Zahrada/zahrada-socha-podstavec.webp",
+   "varianty": [
+    "bojove/assets/Zahrada/varianty/zahrada-socha-podstavec-v1.webp",
+    "bojove/assets/Zahrada/varianty/zahrada-socha-podstavec-v2.webp"
+   ],
+   "w": 2.8,
+   "h": 2.8,
+   "vyska": 3,
+   "custom": false,
+   "tags": [
+    "Zahrada",
+    "gen11"
+   ],
+   "cover": 3
   }
  ]
 }

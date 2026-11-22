@@ -12,6 +12,13 @@ import type {AssetEntry} from "./manifest";
 
 const entries=manifest.assety as AssetEntry[];
 const assets=Object.fromEntries(entries.map(e=>[e.id,e]));
+it("imports gen11 garden cutouts with contiguous variants and physical metadata",()=>{
+ for(const id of ["zahrada-zahon-porost-a","zahrada-zahon-porost-b","zahrada-vysoka-trava","zahrada-socha-podstavec"]){
+  const a=assets[id];expect(a.varianty).toHaveLength(2);expect(a.vyska).toBeGreaterThan(0);
+  a.varianty?.forEach((src,i)=>expect(src).toContain(`${id}-v${i+1}.webp`));
+  expect(castsShadow({id:"o",asset:id,x:1,y:1,w:a.w ?? 1,h:a.h ?? 1},a)).toBe(id==="zahrada-socha-podstavec");
+ }
+});
 it("imports stable contiguous reference variants, intact replacement slots and solid metadata",()=>{
  const added=entries.filter(e=>/^(p-|z-)/.test(e.id));expect(added).toHaveLength(21);
  for(const a of added){

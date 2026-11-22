@@ -82,15 +82,16 @@ class ReferenceMapsTest(unittest.TestCase):
         self.assertTrue(all(l["intenzita"] == 1 and l["dim"] <= 9 for l in amber))
         self.assertTrue(all(m["atmosfera"]["barva"] == "#010102" for m in (harbor, garden)))
         self.assertTrue(any(o["asset"] == "m-kamenna-zidka" for o in harbor["objekty"]))
-        self.assertGreater(len(garden["objekty"]), 700)
+        self.assertGreater(len(garden["objekty"]), 250)
         self.assertTrue({"t-zahrada-trava-stin", "t-zahrada-mech-listi", "t-zahrada-hlina-koreny"} <= {p["t"] for p in garden["malba"]})
         self.assertFalse(any(r.get("t")=="t-hlina-pesina" and all(p[0]==21 for p in r["pts"]) for r in garden["trasy"]))
-        groundcover=[o for o in garden["objekty"] if o["asset"]=="gen2-kapradi"]
-        self.assertGreater(len(groundcover),80)
-        bed=[o for o in garden["objekty"] if o["asset"] in {"gen2-kapradi","z-brectan-previs","gen2-ker2"}]
-        for y,left,right in [(4.6,2,40),(23.8,2,40),(9.6,8,33),(21.5,8,33)]:
-            for x in range(left,right):
-                self.assertTrue(any(abs(o["x"]-x)<1.5 and abs(o["y"]-y)<1.4 for o in bed))
+        bed=[o for o in garden["objekty"] if o["asset"].startswith("zahrada-zahon-porost-")]
+        self.assertEqual(len(bed),84)
+        self.assertGreater(len({round(o["rot"]) for o in bed}),60)
+        self.assertGreater(len({round(o["y"],1) for o in bed}),50)
+        grass=[o for o in garden["objekty"] if o["asset"]=="zahrada-vysoka-trava"]
+        self.assertGreater(len(grass),90)
+        self.assertFalse(any(14.8<o["x"]<27 and 11.2<o["y"]<17 for o in grass))
         hedges = [r for r in garden["trasy"] if r["druh"] == "plot"]
         self.assertEqual(len(hedges), 4)
         self.assertTrue(all(r["hladke"] and r["sirka"] >= 1.25 for r in hedges))
@@ -99,7 +100,9 @@ class ReferenceMapsTest(unittest.TestCase):
             self.assertEqual(len(bands), 2)
             self.assertEqual(min(p[0] for r in bands for p in r["pts"]), 1)
             self.assertEqual(max(p[0] for r in bands for p in r["pts"]), 41)
-        self.assertEqual(sum(o["asset"] == "z-socha-kral" for o in garden["objekty"]), 8)
+        self.assertEqual(sum(o["asset"] == "z-socha-kral" for o in garden["objekty"]), 4)
+        corners=[o for o in garden["objekty"] if o["asset"]=="zahrada-socha-podstavec"]
+        self.assertEqual({(o["x"],o["y"]) for o in corners},{(x,y) for x in (11.3,31) for y in (8,20.1)})
         for asset in ["z-rotunda-ruina", "z-jezirko-fontana", "ov-svetlusky", "ov-mesic-odlesk"]:
             self.assertTrue(any(o["asset"] == asset for o in garden["objekty"]))
         self.assertEqual(garden["mrizka"][14][20], "~")

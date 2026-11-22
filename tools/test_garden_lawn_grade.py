@@ -13,7 +13,9 @@ class NightLawnTest(unittest.TestCase):
         result = night_lawn(source)
         self.assertEqual(result.size, source.size)
         rgb = result.getpixel((0, 0))
-        self.assertLess(max(rgb)-min(rgb), 120*.5)
+        self.assertLess(max(rgb)-min(rgb), 120*.85)
+        self.assertGreater(rgb[1], rgb[0]+25)
+        self.assertGreater(rgb[1], rgb[2]+30)
         self.assertLess(np.mean(rgb), np.mean(source.getpixel((0, 0))))
         self.assertEqual(night_lawn(Image.new("RGB", (1, 1))).getpixel((0, 0)), (0, 0, 0))
 

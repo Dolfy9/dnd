@@ -162,7 +162,10 @@ def garden():
     s.obj("z-jezirko-fontana",20.9,14.1,13,13*251/512,0,z=-3,stin=False)["v"]=1
     for y in (8,20.1):
         for x in (11.3,16,26.2,31):
-            s.obj("z-socha-kral",x,y,2.3,3.6,s.rng.uniform(-3,3),cover=3)
+            if x in (11.3,31):
+                s.obj("zahrada-socha-podstavec",x,y,3.4,3.4,s.rng.uniform(-3,3),cover=3)
+            else:
+                s.obj("z-socha-kral",x,y,2.3,3.6,s.rng.uniform(-3,3),cover=3)
             s.obj("z-brectan-previs",x-.4,y+1.1,1.5,1,-15,z=-1,stin=False)
     s.obj("z-rotunda-ruina",36.5,14.1,8.1,8.1,-15,cover=2,difficult=True)
     for x,y,r in [(8.2,10.8,25),(27.6,9.8,25),(14.1,4.3,0),(27.5,4.2,0),(31.5,23,0)]:
@@ -171,30 +174,32 @@ def garden():
         s.obj("z-strom-koruna",x,y,5.2,5.2,s.rng.uniform(0,360),cover=3)
     for x,y in [(1,6),(41,8),(1,25),(14,27),(24,27),(41,20),(30,1)]:
         s.obj("z-strom-koruna",x,y,3.7,4,s.rng.uniform(0,360),cover=3)
-    for x,y in [(8,5),(17,5),(25,5),(34,5),(8,23),(17,23),(25,23),(34,23),(3,17),(38,20)]:
-        s.cluster(["gen2-ker2","z-brectan-previs","z-ruze-ker","kvety"],x,y,15,2.2,1.5,(.3,.8),stin=False,z=-2)
-    for x,y in [(5,3.8),(12,3.8),(29,3.8),(37,3.8),(5,24.5),(12,24.5),(29,24.5),(37,24.5),
-                (10,8.8),(17,8.8),(26,8.8),(31,8.8),(10,21.4),(17,21.4),(26,21.4),(31,21.4)]:
-        s.cluster(["gen2-ker","z-brectan-previs"],x,y,3,1.1,.7,(.8,1.4),z=-1,stin=False)
     for x,y in [(8,16.8),(17,3.2),(28,3.1),(31,17.8),(5,22)]:
         s.obj("z-urna-kamen",x,y,.8,.8,0,cover=2)
     s.obj("z-sloup-zlomeny",32.8,17.8,1.8,1.2,24,cover=2)
-    for x,y in [(10,3.4),(32,3.5),(10,25),(32,25),(2.5,10),(3,18),(39.5,9),(39,22),
-                (13.3,10.7),(29.1,10.7),(13.2,17.6),(28.5,17.9),(20.8,9.8),(21.1,18.5)]:
-        s.cluster(["gen2-ker","z-brectan-previs","kvety","z-ruze-ker"],x,y,10,2.1,.9,(.3,.8),stin=False,z=-2)
     for x,y in [(8,9),(17,9),(26,9),(31,9),(8,21),(17,21),(26,21),(31,21)]:
         s.obj("z-brectan-previs",x,y,1.7,1.2,s.rng.uniform(-30,30),z=-1,stin=False)
     for x,y in [(2,8),(4,19),(9,25),(17,19),(24,8),(30,23),(38,7),(33,18)]:
         s.obj("ov-svetlusky",x,y,2,2,0,z=2,anim=False,stin=False)
     s.obj("ov-mesic-odlesk",18.1,14.1,2.2,3.9,0,z=-1,opacity=.75,anim="voda",stin=False)
-    undergrowth(s,[(x,y) for y in (3.6,8.8,21.2,24.8) for x in (5,10,16,26,31,37)],18,1.8)
-    for y,left,right in [(4.6,2,40),(23.8,2,40),(9.6,8,33),(21.5,8,33)]:
-        s.paint("t-zahrada-mech-listi",[(x,y+.5*math.sin(x*.45)) for x in range(left,right+1,2)],b=2.8,o=.35,h=0)
-        for i in range(round((right-left)/.75)+1):
-            x=left+i*.75
-            py=y+.5*math.sin(x*.45)
-            s.obj("d-mech",x,py+s.rng.uniform(-.4,.4),s.rng.uniform(1.6,2.4),s.rng.uniform(.8,1.4),s.rng.uniform(0,360),opacity=.65,z=-2,stin=False)
-            s.cluster(["gen2-kapradi","z-brectan-previs","gen2-ker2"],x,py,3,.5,.5,(.7,1.15),opacity=.85,z=-2,stin=False)
+    beds=[(x+s.rng.uniform(-.8,.8),y+s.rng.uniform(-.9,.9),s.rng.uniform(5,7))
+          for y in (5,23.3) for x in (2.5,7,12,17,24,29,34,39)]
+    beds += [(x+s.rng.uniform(-1,1),y+1.3,s.rng.uniform(3.1,4.3))
+             for y in (8,20.1) for x in (11.3,16,26.2,31)]
+    beds += [(s.rng.choice((3,39))+s.rng.uniform(-1,1),y,s.rng.uniform(3.5,5))
+             for y in (8,10.5,18,20.5)]
+    for x,y,w in beds:
+        angle=s.rng.uniform(-35,35) if y<7 or y>22 else s.rng.uniform(-90,90)
+        s.obj("zahrada-zahon-porost-a",x,y,w,w*2/3,angle,z=-2,stin=False)
+        for _ in range(2):
+            size=s.rng.uniform(1.3,2.7)
+            s.obj("zahrada-zahon-porost-b",x+s.rng.uniform(-w*.45,w*.45),y+s.rng.uniform(-1.1,1.1),size,size,s.rng.uniform(0,360),z=-2,stin=False)
+    for _ in range(110):
+        x,y=s.rng.uniform(2,40),s.rng.uniform(4,25)
+        if 11.3<y<17.2 or math.dist((x,y),(36.5,14.1))<4.8:
+            continue
+        size=s.rng.uniform(.9,1.8)
+        s.obj("zahrada-vysoka-trava",x,y,size,size,s.rng.uniform(0,360),z=-1,stin=False)
     for x in range(1,42):
         for y in (12.7,15.3):
             if 14<x<28:
@@ -202,14 +207,15 @@ def garden():
             s.obj("d-mech",x+s.rng.uniform(-.3,.3),y+s.rng.uniform(-.3,.3),s.rng.uniform(1,2),s.rng.uniform(.6,1.2),s.rng.uniform(0,360),opacity=.8)
             s.cluster(["d-listi","d-prasklina"],x,y,1,.8,.4,(.5,1),opacity=.5)
             s.obj("kvety",x+s.rng.uniform(-.4,.4),y,.5,.5,s.rng.uniform(0,360),z=-1,stin=False)
-            s.cluster(["gen2-ker2","z-brectan-previs"],x,y,3,.7,.35,(.25,.6),z=-1,stin=False)
+            size=s.rng.uniform(.8,1.4)
+            s.obj("zahrada-vysoka-trava",x+s.rng.uniform(-.4,.4),y+s.rng.uniform(-.35,.35),size,size,s.rng.uniform(0,360),z=-1,stin=False)
     for x,y in [(11.3,8),(16,8),(26.2,8),(31,8),(11.3,20.1),(16,20.1),(26.2,20.1),(31,20.1)]:
         s.obj("d-mech",x,y+1.1,2.2,1.5,s.rng.uniform(0,360),opacity=.8)
     for x,y,w in [(0,5,11),(1,11,12),(0,18,11),(2,24,12),(7,27,13),(16,28,13),(26,27,12),(36,28,11)]:
         s.obj("ov-mlha-chuchvalec",x,y,w,w*.6,s.rng.uniform(-25,25),
               opacity=s.rng.uniform(.5,.65),z=12,anim="voda",stin=False)
     s.obj("ov-paprsky",6,3.5,11,9,0,z=9,opacity=.12,anim=False,stin=False)
-    s.light(6,2,"#b9cde8",28,95,.65,False)
+    s.light(6,2,"#c7d0c0",28,95,.65,False)
     for x,y in [(13.7,8),(28.6,8),(13.7,20),(28.6,20)]:
         s.light(x,y,"#d4d6dc",12,42,.32,False)
     s.light(19,14,"#bfcddb",7,22,.2,False)

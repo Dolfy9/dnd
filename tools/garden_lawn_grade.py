@@ -10,7 +10,7 @@ ID = "t-zahrada-trava-stin"
 
 
 def night_lawn(image):
-    return ImageEnhance.Brightness(ImageEnhance.Color(image.convert("RGB")).enhance(.45)).enhance(.78)
+    return ImageEnhance.Brightness(ImageEnhance.Color(image.convert("RGB")).enhance(.8)).enhance(.76)
 
 
 def main():

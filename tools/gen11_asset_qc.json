@@ -1,0 +1,65 @@
+{
+ "source": "gen11",
+ "sprites": {
+  "zahrada-zahon-porost-a": {
+   "source_sha256": "8052914071061ab5fb18952de4c7e37b2ead5041fc9fe8fb8f5e201672c14657",
+   "magenta_pixels": 0,
+   "alpha_coverage": 0.65146
+  },
+  "zahrada-zahon-porost-a-v1": {
+   "source_sha256": "8052914071061ab5fb18952de4c7e37b2ead5041fc9fe8fb8f5e201672c14657",
+   "magenta_pixels": 0,
+   "alpha_coverage": 0.65146
+  },
+  "zahrada-zahon-porost-a-v2": {
+   "source_sha256": "8052914071061ab5fb18952de4c7e37b2ead5041fc9fe8fb8f5e201672c14657",
+   "magenta_pixels": 0,
+   "alpha_coverage": 0.65146
+  },
+  "zahrada-zahon-porost-b": {
+   "source_sha256": "5e8efc6956b6ae62eeea081f512799647edb348ff8c661b75c039f51cf2cbeb4",
+   "magenta_pixels": 0,
+   "alpha_coverage": 0.63179
+  },
+  "zahrada-zahon-porost-b-v1": {
+   "source_sha256": "5e8efc6956b6ae62eeea081f512799647edb348ff8c661b75c039f51cf2cbeb4",
+   "magenta_pixels": 0,
+   "alpha_coverage": 0.63179
+  },
+  "zahrada-zahon-porost-b-v2": {
+   "source_sha256": "5e8efc6956b6ae62eeea081f512799647edb348ff8c661b75c039f51cf2cbeb4",
+   "magenta_pixels": 0,
+   "alpha_coverage": 0.63179
+  },
+  "zahrada-vysoka-trava": {
+   "source_sha256": "638cd9929291fb80616e311209d1f87cc59bbabf2b7bbf9b0dc98a8ff0aa454c",
+   "magenta_pixels": 0,
+   "alpha_coverage": 0.53341
+  },
+  "zahrada-vysoka-trava-v1": {
+   "source_sha256": "638cd9929291fb80616e311209d1f87cc59bbabf2b7bbf9b0dc98a8ff0aa454c",
+   "magenta_pixels": 0,
+   "alpha_coverage": 0.53341
+  },
+  "zahrada-vysoka-trava-v2": {
+   "source_sha256": "638cd9929291fb80616e311209d1f87cc59bbabf2b7bbf9b0dc98a8ff0aa454c",
+   "magenta_pixels": 0,
+   "alpha_coverage": 0.53341
+  },
+  "zahrada-socha-podstavec": {
+   "source_sha256": "eea6fc3ad54505a1d41b54f6af56a7f72d397e738c547db01e74ba76f432541a",
+   "magenta_pixels": 0,
+   "alpha_coverage": 0.47267
+  },
+  "zahrada-socha-podstavec-v1": {
+   "source_sha256": "eea6fc3ad54505a1d41b54f6af56a7f72d397e738c547db01e74ba76f432541a",
+   "magenta_pixels": 0,
+   "alpha_coverage": 0.47267
+  },
+  "zahrada-socha-podstavec-v2": {
+   "source_sha256": "eea6fc3ad54505a1d41b54f6af56a7f72d397e738c547db01e74ba76f432541a",
+   "magenta_pixels": 0,
+   "alpha_coverage": 0.47267
+  }
+ }
+}
