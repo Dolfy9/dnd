@@ -41,7 +41,7 @@ export const MapPaintLayer = memo(function MapPaintLayer({ map, preview }: { map
 export function visualLights(map: MapV2) {
   return [...(map.svetla || []), ...(map.objekty || []).filter(o => o.light && !o.dmOnly).map(o => ({
     id: "object-" + o.id, x: o.x, y: o.y, bright: o.light!.bright, dim: o.light!.dim,
-    color: "#ffac52", intenzita: 1, blikani: true,
+    color: "#ffac52", intenzita: 1, blikani: o.anim !== false,
   }))].map(l => ({ ...l, color: color(l.color), intenzita: clamp(l.intenzita ?? 1, 1),
     bright: clamp(l.bright, 0, 500) / 5 * PX,
     radius: (clamp(l.bright, 0, 500) + clamp(l.dim, 0, 500)) / 5 * PX }));

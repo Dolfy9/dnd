@@ -19,6 +19,7 @@ export interface MapWall {
 
 /** Objekt na mapě (stamp / vlastní obrázek). x,y = střed v buňkách (float). */
 export interface MapObject {
+  anim?: string | false;
   id: string;
   asset: string;             // id z knihovny nebo "img:<cesta>"
   x: number; y: number;
@@ -78,6 +79,7 @@ export interface MapMrizkaStyl { typ: "lines" | "dots" | "none"; barva: string; 
 
 /** Plná v2 mapa = BattleMapData + volitelná pole. */
 export interface MapV2 extends BattleMapData {
+  pocasi?: MapWeather;
   malba?: MapPaintStroke[];
   atmosfera?: { amb: number; barva: string };
   textury?: Record<string, string>;          // "x,y" → textureId
@@ -91,11 +93,22 @@ export interface MapV2 extends BattleMapData {
   kalibrace?: MapKalibrace;
 }
 
+export const WEATHER = [["", "Jasno", ""], ["dest", "Déšť", "dest"], ["bourka", "Bouřka", "mraky"],
+  ["snih", "Sníh", "snih"], ["mlha", "Mlha", "mraky"], ["popel", "Popel", "jiskry"], ["vanice", "Vánice", "snih2"]] as const;
+export interface MapWeather { typ: typeof WEATHER[number][0]; sila?: number; vitr?: number }
+export function normalizeWeather(input: unknown): MapWeather {
+  const value = (typeof input === "string" ? { typ: input } : input) as {typ?: unknown; sila?: unknown; vitr?: unknown} | null;
+  return { typ: WEATHER.find(w => w[0] === value?.typ)?.[0] ?? "",
+    sila: typeof value?.sila === "number" && Number.isFinite(value.sila) ? Math.max(0, Math.min(1, value.sila)) : .65,
+    vitr: typeof value?.vitr === "number" && Number.isFinite(value.vitr) ? ((value.vitr % 360) + 360) % 360 : 90 };
+}
+
 export const wallUid = () => "w" + Math.random().toString(36).slice(2, 9);
 
 /** Převede libovolný vstup na MapV2 s vyplněnými defaulty. Staré mapy projdou beze změny mechaniky. */
 export function migrateMap(m: BattleMapData | MapV2 | any): MapV2 {
   const out: MapV2 = { ...(m as MapV2) };
+  if (out.pocasi !== undefined) out.pocasi = normalizeWeather(out.pocasi);
   if (!out.mrizka) out.mrizka = ["...."];
   const finite = (v: unknown, fallback: number, min: number, max: number) =>
     typeof v === "number" && Number.isFinite(v) ? Math.max(min, Math.min(max, v)) : fallback;

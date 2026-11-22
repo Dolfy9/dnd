@@ -21,6 +21,7 @@ import math
 import os
 import shutil
 import sys
+import unicodedata
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
@@ -174,6 +175,19 @@ def gen_image(client, prompt: str, transparent: bool) -> bytes | None:
         return None
 
 
+def animation_metadata(entry: dict) -> dict:
+    key = "".join(c for c in unicodedata.normalize("NFD", entry["id"]) if not unicodedata.combining(c)).removeprefix("gen2-")
+    if "portal" in key:
+        return {"anim": "portal"}
+    if key.startswith(("strom", "smrk", "borovice", "ker", "kapradi", "rakos")):
+        return {"anim": "vitr"}
+    if key.startswith(("ohen", "ohne", "ohniste", "ohriste", "krb", "brasier", "kandelabr", "pochoden", "lucerna", "svic", "taborak")):
+        return {"anim": "ohen"}
+    if key.startswith(("krystal", "houby", "run", "svitici-runa", "keltsky")):
+        return {"anim": "zare"}
+    return {}
+
+
 def index_assets(prompts: dict) -> tuple[list[dict], list[dict]]:
     """Přeindexuj složku assets → manifest entries + seznam chybějících."""
     entries, missing = [], []
@@ -200,7 +214,7 @@ def index_assets(prompts: dict) -> tuple[list[dict], list[dict]]:
                     print(f"  ! konverze {alt.name}: {e}")
             if "prompt" in a:
                 missing.append(a)
-    return entries, missing
+    return [{**e, **animation_metadata(e)} for e in entries], missing
 
 
 def index_textures(prompts: dict) -> tuple[list[dict], list[dict]]:

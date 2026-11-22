@@ -7,6 +7,7 @@ import type { BattleMapData } from "../types";
 import { assetUrl } from "../../mapeditor/assets/manifest";
 import { useMapManifests } from "./MapV2Layers";
 import { terrainTexture, terrainProp, interiorWall } from "../model/terrainArt";
+import { resolveAnimation, animationPhase } from "./MapMotion";
 import { memo, useId } from "react";
 
 export const ZONES_STYLE: Record<string, { fill: string; stroke: string; tint?: string; op?: number }> = {
@@ -195,7 +196,8 @@ export const TerenLayer = memo(function TerenLayer({ S, map, px, illustration = 
     const key = terrainProp(c, map.podklad, x, y), prop = key && assets["gen2-" + key];
     if (prop) {
       const size = c === "T" ? px * 1.3 : px;
-      props.push(<image key={`${x},${y}`} href={assetUrl(prop.src)}
+      props.push(<image key={`${x},${y}`} href={assetUrl(prop.src)} className={`map-anim-${resolveAnimation({}, prop)}`}
+        style={{ animationDelay: `${animationPhase(x+","+y)}s` }}
         x={x * px + (px - size) / 2} y={y * px + (px - size) / 2}
         width={size} height={size} preserveAspectRatio="xMidYMid meet" />);
     }

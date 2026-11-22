@@ -11,6 +11,11 @@ spec.loader.exec_module(assets)
 
 
 class AssetImportTests(unittest.TestCase):
+    def test_animation_metadata(self):
+        for key, anim in [("gen2-strom", "vitr"), ("keř", "vitr"), ("pochodeň", "ohen"),
+                          ("portal", "portal"), ("rune-kamen", "zare")]:
+            self.assertEqual(assets.animation_metadata({"id": key}), {"anim": anim})
+        self.assertEqual(assets.animation_metadata({"id": "stul"}), {})
     def test_key_trim_despill_and_empty(self):
         image = Image.new("RGB", (20, 20), "#ff00ff")
         image.paste((20, 180, 30), (5, 5, 15, 15))

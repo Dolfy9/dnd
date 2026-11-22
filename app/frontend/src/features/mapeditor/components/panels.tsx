@@ -6,6 +6,32 @@ import { STAMPS, KATEGORIE, stampById, StampSvg, type StampDef } from "../assets
 import { TEXTURES } from "../assets/textures";
 import { GENERATORS, type GenOut } from "../generators/generators";
 import { assetUrl, useTextureManifest, type AssetEntry } from "../assets/manifest";
+import { WeatherPicker } from "../../boj/components/MapMotion";
+import { MapPreview } from "./MapPreview";
+import { TILES } from "../../boj/types";
+import { terrainTexture, terrainProp } from "../../boj/model/terrainArt";
+import { useMapManifests, MapGridLayer } from "../../boj/components/MapV2Layers";
+
+export function TilePicker({ value, onChange, ground }: { value: string; onChange: (v: string) => void; ground: string }) {
+  const { textures, assets } = useMapManifests();
+  const [query, setQuery] = React.useState("");
+  return <details className="me-texture-picker"><summary>Terén · {TILES[value]?.nazev}</summary><div className="me-visual-grid me-tile-cards">
+    <input placeholder="Hledat terén…" value={query} onChange={e => setQuery(e.target.value)} />
+    {Object.entries(TILES).filter(([,d]) => d.nazev.toLocaleLowerCase("cs").includes(query.toLocaleLowerCase("cs"))).map(([c,d]) => {
+      const tex = textures[terrainTexture(c, ground)], prop = assets["gen2-"+terrainProp(c,ground,0,0)];
+      return <button key={c} aria-pressed={c === value} onClick={e => { onChange(c); e.currentTarget.closest("details")?.removeAttribute("open"); }}>
+        <span style={{ backgroundImage: tex ? `url(${assetUrl(tex.src)})` : undefined }}>{prop && <img src={assetUrl(prop.src)} alt="" />}</span>{d.nazev}
+      </button>;
+    })}
+  </div></details>;
+}
+export function WallPicker({ value, onChange }: { value: MapWall["typ"]; onChange: (v: MapWall["typ"]) => void }) {
+  return <div className="me-visual-grid me-wall-cards">{WALL_TYPS.map(typ => <button key={typ} aria-pressed={value === typ} onClick={() => onChange(typ)}>
+    <svg viewBox="0 0 70 24" aria-hidden="true"><path d="M4 12H66" stroke={typ === "door" ? "#8d5430" : "#60533d"} strokeWidth={typ === "half" ? 3 : 6} strokeDasharray={typ === "window" ? "8 5" : typ === "curtain" ? "2 3" : undefined} />
+      {typ === "door" && <image href="/repo/11_Mapy/bojove/ikony/plus.webp" x="27" y="3" width="18" height="18" />}
+      {typ === "secret" && <text x="35" y="17" textAnchor="middle" fill="#e9dcbf" fontSize="14">?</text>}</svg>{WALL_NAZVY[typ]}
+  </button>)}</div>;
+}
 
 export function TexturePicker({ value, onChange }: { value: string; onChange: (id: string) => void }) {
   const { data = {} } = useTextureManifest();
@@ -80,11 +106,14 @@ export function LibraryPanel({ q, setQ, kat, setKat, stampId, onPick, ASSETS, on
   return (
     <div className="me-lib">
       <input placeholder="Hledat…" value={q} onChange={(e) => setQ(e.target.value)} />
-      <select value={kat} onChange={(e) => setKat(e.target.value)}>
-        <option value="">Vše</option>
-        {[...new Set([...KATEGORIE, ...Object.values(ASSETS).map(a => a.kategorie).filter((k): k is string => !!k)])].map((kk) => <option key={kk} value={kk}>{kk}</option>)}
-        <option value="__custom">Vlastní</option>
-      </select>
+      <div className="me-category-chips" aria-label="Kategorie knihovny">
+        {["", ...new Set([...KATEGORIE, ...Object.values(ASSETS).map(a => a.kategorie).filter((k): k is string => !!k)]), "__custom"].map(kk => {
+          const rep = Object.values(ASSETS).find(a => !kk || (kk === "__custom" ? a.custom : a.kategorie === kk));
+          return <button key={kk} aria-pressed={kat === kk} onClick={() => setKat(kk)}>
+            <img src={rep ? assetUrl(rep.src) : "/repo/11_Mapy/bojove/ikony/plus.webp"} alt="" />{kk === "" ? "Vše" : kk === "__custom" ? "Vlastní" : kk}
+          </button>;
+        })}
+      </div>
       <div className="me-lib-grid">
         {(kat === "__custom" ? [] : filtered).map((s) => {
           const man = ASSETS[s.id];
@@ -121,6 +150,9 @@ export function PropertiesPanel({ map, selObj, push, onDelete }: {
       {selObject && (
         <>
           <h4>Objekt — {stampById(selObject.asset)?.nazev || selObject.asset}</h4>
+          <div className="me-visual-grid">{([[undefined,"Automaticky"],[false,"Bez pohybu"],["vitr","Vítr"],["portal","Portál"],["ohen","Oheň"],["zare","Záře"],["voda","Voda"]] as const).map(([anim,label]) =>
+            <button key={label} aria-pressed={selObject.anim === anim} onClick={() => push(m => { m.objekty!.find(o => o.id === selObj.id)!.anim = anim; })}>
+              <img width="24" height="24" src="/repo/11_Mapy/bojove/ikony/nastaveni.webp" alt="" />{label}</button>)}</div>
           {(["x", "y", "w", "h", "rot", "z"] as const).map((f) => (
             <label key={f}>{{x:"Poloha X",y:"Poloha Y",w:"Šířka",h:"Výška",rot:"Úhel (°)",z:"Pořadí"}[f]}<input aria-label={f === "rot" ? "Úhel objektu" : f} type="number" step={f === "rot" ? 1 : .1} value={(selObject as any)[f] ?? 0}
               onChange={(e) => push((m) => { const o = m.objekty!.find((o) => o.id === selObj.id)!; (o as any)[f] = +e.target.value; })} /></label>))}
@@ -128,8 +160,10 @@ export function PropertiesPanel({ map, selObj, push, onDelete }: {
           {(["blocks", "difficult", "flip", "dmOnly"] as const).map((f) => (
             <label key={f} className="me-ctx-chk"><input type="checkbox" checked={!!selObject[f]}
               onChange={(e) => push((m) => { (m.objekty!.find((o) => o.id === selObj.id) as any)[f] = e.target.checked; })} /> {f}</label>))}
-          <label>cover<select value={selObject.cover || 0} onChange={(e) => push((m) => { const o = m.objekty!.find((o) => o.id === selObj.id)!; o.cover = (+e.target.value || undefined) as any; })}>
-            <option value={0}>žádné</option><option value={2}>half</option><option value={3}>¾</option></select></label>
+          <h4>Krytí</h4><div className="me-visual-grid">{([0,2,3] as const).map(cover => <button key={cover} aria-pressed={(selObject.cover || 0) === cover}
+            onClick={() => push(m => { m.objekty!.find(o => o.id === selObj.id)!.cover = cover || undefined; })}>
+            <svg viewBox="0 0 50 24"><rect x="5" y="2" width="40" height="20" rx="3" fill="#e1d2af" /><rect x="5" y={22-cover*6} width="40" height={cover*6} fill="#796647" /></svg>
+            {cover === 0 ? "Žádné" : cover === 2 ? "Poloviční" : "Tříčtvrteční"}</button>)}</div>
           <label className="me-ctx-chk"><input type="checkbox" checked={!!selObject.light}
             onChange={(e) => push((m) => { const o = m.objekty!.find((o) => o.id === selObj.id)!; o.light = e.target.checked ? { bright: 10, dim: 10 } : undefined; })} /> světlo</label>
         </>
@@ -137,8 +171,7 @@ export function PropertiesPanel({ map, selObj, push, onDelete }: {
       {selWall && (
         <>
           <h4>Zeď</h4>
-          <label>typ<select value={selWall.typ} onChange={(e) => push((m) => { m.steny!.find((w) => w.id === selObj.id)!.typ = e.target.value as any; })}>
-            {WALL_TYPS.map((t) => <option key={t} value={t}>{WALL_NAZVY[t]}</option>)}</select></label>
+          <WallPicker value={selWall.typ} onChange={typ => push(m => { m.steny!.find(w => w.id === selObj.id)!.typ = typ; })} />
           <label className="me-ctx-chk"><input type="checkbox" checked={!!selWall.open} onChange={(e) => push((m) => { m.steny!.find((w) => w.id === selObj.id)!.open = e.target.checked; })} /> otevřené</label>
           <label className="me-ctx-chk"><input type="checkbox" checked={!!selWall.locked} onChange={(e) => push((m) => { m.steny!.find((w) => w.id === selObj.id)!.locked = e.target.checked; })} /> zamčené</label>
         </>
@@ -169,10 +202,12 @@ export function GeneratorPanel({ genId, setGenId, seed, setSeed, onPreview, genP
   genId: string; setGenId: (v: string) => void; seed: number; setSeed: (v: number) => void;
   onPreview: () => void; genPrev: GenOut | null; onApply: () => void; onDiscard: () => void;
 }) {
+  const previews = React.useMemo(() => GENERATORS.map(g => ({ ...g, map: { id: g.id, nazev: g.nazev,
+    podklad: g.id === "cave" ? "jeskyne" : g.id === "outdoor" ? "les" : "krypta", ...g.fn(24, 18, seed) } as MapV2 })), [seed]);
   return (
     <div className="me-gen">
-      <label>Typ<select value={genId} onChange={(e) => setGenId(e.target.value)}>
-        {GENERATORS.map((g) => <option key={g.id} value={g.id}>{g.nazev}</option>)}</select></label>
+      <div className="me-visual-grid me-generator-cards">{previews.map(g => <button key={g.id} aria-pressed={genId === g.id} onClick={() => setGenId(g.id)}>
+        <MapPreview map={g.map} />{g.nazev}</button>)}</div>
       <label>Seed<input type="number" value={seed} onChange={(e) => setSeed(+e.target.value)} /></label>
       <button className="me-btn" onClick={onPreview}><Wand2 size={14} /> Náhled do mapy</button>
       {genPrev && (
@@ -197,6 +232,7 @@ export function MapPanel({ map, push, onResize, onUploadImg, onImportUvtt, onExp
   const W = map.mrizka[0]?.length || 1, H = map.mrizka.length;
   return (
     <div className="me-mapmeta">
+      <WeatherPicker value={map.pocasi} onChange={value => push(m => { m.pocasi = value; })} />
       <h4>Atmosféra</h4>
       <div className="me-atmo-presets">
         {ATMOSPHERES.map(a => <button key={a.n} type="button" aria-pressed={(map.atmosfera?.amb ?? 1) === a.amb && (map.atmosfera?.barva || "#101522") === a.barva}
@@ -237,8 +273,11 @@ export function MapPanel({ map, push, onResize, onUploadImg, onImportUvtt, onExp
         {calib && <p className="me-ctx-hint">Klikni 2 protilehlé rohy mřížky na obrázku, pak zadej počet buněk mezi nimi.</p>}
       </>}
       <h4>Mřížka</h4>
-      <label>typ<select value={map.mrizkaStyl?.typ || "lines"} onChange={(e) => push((m) => { m.mrizkaStyl = { ...(m.mrizkaStyl || { barva: "#000000", opacita: .18 }), typ: e.target.value as any }; })}>
-        <option value="lines">čáry</option><option value="dots">tečky</option><option value="none">žádná</option></select></label>
+      <div className="me-visual-grid">{(["lines", "dots", "none"] as const).map(typ => <button key={typ} aria-pressed={(map.mrizkaStyl?.typ || "lines") === typ}
+        onClick={() => push(m => { m.mrizkaStyl = { ...(m.mrizkaStyl || { barva: "#000000", opacita: .18 }), typ }; })}>
+        <svg viewBox="0 0 96 48" style={{ background: "url(/repo/11_Mapy/bojove/textury/teren-les.webp) center/cover" }}>
+          <MapGridLayer map={{ ...map, mrizkaStyl: { typ, barva: "#ffffff", opacita: .8 } }} W={4} H={2} />
+        </svg>{{lines:"Čáry",dots:"Tečky",none:"Bez mřížky"}[typ]}</button>)}</div>
       <label>barva<input type="color" value={map.mrizkaStyl?.barva || "#000000"} onChange={(e) => push((m) => { m.mrizkaStyl = { ...(m.mrizkaStyl || { typ: "lines", opacita: .18 }), barva: e.target.value }; })} /></label>
       <label>krytí<input type="range" min={0} max={.6} step={.02} value={map.mrizkaStyl?.opacita ?? .18} onChange={(e) => push((m) => { m.mrizkaStyl = { ...(m.mrizkaStyl || { typ: "lines", barva: "#000000" }), opacita: +e.target.value }; })} /></label>
       <h4>Import / export</h4>

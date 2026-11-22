@@ -8,6 +8,7 @@ export interface AssetEntry {
   blocks?: boolean; cover?: 2 | 3; difficult?: boolean;
   light?: { bright: number; dim: number };
   tags?: string[]; custom?: boolean;
+  anim?: "voda" | "portal" | "vitr" | "ohen" | "zare";
 }
 export interface TextureEntry { id: string; nazev: string; src: string; cells: number }
 

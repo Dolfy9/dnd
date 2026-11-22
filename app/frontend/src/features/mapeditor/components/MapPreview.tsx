@@ -1,0 +1,15 @@
+import { memo } from "react";
+import type { MapV2 } from "../../boj/model/mapV2";
+import { TerenLayer } from "../../boj/components/MapLayers";
+import { MapObjectLayer, MapTextureLayer, MapWallLayer } from "../../boj/components/MapV2Layers";
+import { MapPaintLayer, MapAtmosphereLayer } from "../../boj/components/MapAtmoLayers";
+
+export const MapPreview = memo(function MapPreview({ map }: { map: MapV2 }) {
+  const W = (map.mrizka[0]?.length || 1)*24, H = map.mrizka.length*24;
+  return <svg className="me-map-preview" viewBox={`0 0 ${W} ${H}`} aria-label={map.nazev}>
+    {map.obrazek && <image href={`/repo/11_Mapy/${map.obrazek}`} width={W} height={H} preserveAspectRatio="none" />}
+    <TerenLayer map={map} px={24} illustration={!!map.obrazek} />
+    <MapTextureLayer map={map} /><MapPaintLayer map={map} /><MapWallLayer map={map} />
+    <MapObjectLayer map={map} /><MapAtmosphereLayer map={map} />
+  </svg>;
+});

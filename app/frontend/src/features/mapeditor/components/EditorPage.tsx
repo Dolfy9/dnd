@@ -18,6 +18,7 @@ import {
 } from "../../boj/components/MapV2Layers";
 import { TerenLayer } from "../../boj/components/MapLayers";
 import { MapPaintLayer, MapAtmosphereLayer } from "../../boj/components/MapAtmoLayers";
+import { AnimationButton, MapWeatherOverlay, MapWaterLayer } from "../../boj/components/MapMotion";
 import { TEXTURES, textureById } from "../assets/textures";
 import { stampById } from "../assets/stamps";
 import { useAssetManifest, useTextureManifest } from "../assets/manifest";
@@ -25,7 +26,7 @@ import { GENERATORS, type GenOut } from "../generators/generators";
 import { importUvtt, exportUvtt, exportPng } from "../io/uvtt";
 import { useEditorDoc } from "../state/useEditorDoc";
 import * as ops from "../tools/ops";
-import { TexturePicker, LightColors, TABS, LAYERS, WALL_TYPS, WALL_NAZVY, LayersPanel, LibraryPanel, PropertiesPanel, GeneratorPanel, MapPanel, type TabId } from "./panels";
+import { TexturePicker, TilePicker, WallPicker, LightColors, TABS, LAYERS, LayersPanel, LibraryPanel, PropertiesPanel, GeneratorPanel, MapPanel, type TabId } from "./panels";
 import "../editor.css";
 
 type Tool = "select" | "teren" | "fill" | "flood" | "textura" | "malba" | "mistnost" | "polygon" | "stena" | "dvere"
@@ -476,6 +477,7 @@ export default function EditorPage() {
         <button className="me-btn sm" title="Fullscreen" onClick={() => fs ? document.exitFullscreen() : document.documentElement.requestFullscreen()}>
           {fs ? <Minimize size={15} /> : <Maximize size={15} />}</button>
         <span className="me-sp" />
+        <AnimationButton />
         <button className="me-btn primary" onClick={doc.save} title="Ctrl+S"><Save size={15} /> Uložit</button>
         <button className="me-btn" onClick={async () => { await doc.save(); nav("/boj"); }} title="Uložit a otevřít boj"><Swords size={15} /> Otevřít v boji</button>
       </header>
@@ -495,9 +497,7 @@ export default function EditorPage() {
             {tool === "teren" || tool === "fill" || tool === "flood" ? (
               <>
                 <span className="me-ctx-lab">Dlaždice:</span>
-                <select value={brushTile} onChange={(e) => setBrushTile(e.target.value)}>
-                  {Object.entries(TILES).map(([c, d]) => <option key={c} value={c}>{d.nazev}</option>)}
-                </select>
+                <TilePicker value={brushTile} onChange={setBrushTile} ground={map.podklad} />
               </>
             ) : null}
             {(tool === "teren" || tool === "textura") && (
@@ -533,7 +533,7 @@ export default function EditorPage() {
             )}
             {tool === "stena" && (
               <>
-                {WALL_TYPS.map((t) => <button key={t} className={`me-btn sm ${wallTyp === t ? "on" : ""}`} onClick={() => setWallTyp(t)}>{WALL_NAZVY[t]}</button>)}
+                <WallPicker value={wallTyp} onChange={setWallTyp} />
                 <label className="me-ctx-chk"><input type="checkbox" checked={wallLocked} onChange={(e) => setWallLocked(e.target.checked)} /> zamčené</label>
                 {wallDraft.length > 0 && <button className="me-btn sm" onClick={() => { push((m) => ops.wallChain(m, wallDraft, wallTyp, wallLocked, true)); setWallDraft([]); }}>Uzavřít ({wallDraft.length})</button>}
               </>
@@ -580,6 +580,7 @@ export default function EditorPage() {
                 {layerVis.teren && <TerenLayer map={map} px={PX} illustration={!!(layerVis.obrazek && map.obrazek)} />}
                 {layerVis.textury && <MapTextureLayer map={map} />}
                 {layerVis.malba && <MapPaintLayer map={map} preview={paintPreview || undefined} />}
+                <MapWaterLayer map={map} />
                 {layerVis.mrizka && <MapGridLayer map={map} W={W} H={H} />}
                 {layerVis.vyska && <MapElevationLayer map={map} />}
                 {layerVis.kresby && <MapDrawingLayer map={map} dm />}
@@ -639,6 +640,7 @@ export default function EditorPage() {
                 {calib && calib.pts.map((p, i) => <circle key={i} cx={p[0] * PX} cy={p[1] * PX} r={5} fill="#f59e0b" stroke="#fff" strokeWidth={1.5} />)}
               </g>
             </svg>
+            <MapWeatherOverlay map={map} view={V} />
             <svg className="me-minimap" viewBox={`0 0 ${W * PX} ${H * PX}`}
                  onClick={(e) => {
                    const r = (e.currentTarget as SVGSVGElement).getBoundingClientRect();

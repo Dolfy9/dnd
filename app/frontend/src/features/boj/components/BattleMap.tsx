@@ -18,6 +18,8 @@ import { areaCells } from "../rules/areas";
 import { dmgStyle } from "./visual";
 import { ZoneShape, ZonePatterns, TerenLayer, LightingLayer, FogLayer } from "./MapLayers";
 import { MapPaintLayer, MapAtmosphereLayer } from "./MapAtmoLayers";
+import { AnimationButton, WeatherPicker, MapWeatherOverlay, MapWaterLayer } from "./MapMotion";
+import type { MapWeather } from "../model/mapV2";
 import { ZoomIn, ZoomOut, Maximize2, Crosshair, X } from "lucide-react";
 
 export type Tool = "select" | "measure" | "zone" | "paint" | "fog" | "light" | "kresba";
@@ -70,6 +72,7 @@ interface Props {
   onSelSet?: (ids: Set<string>) => void;
   onCancelMode?: () => void;
   onDoor?: (w: MapWall) => void;             // DM klik na dveře v mapě
+  onWeather?: (weather: MapWeather) => void;
   onDraw?: (pts: [number, number][], stroke: string) => void;
   drawColor?: string;
 }
@@ -79,6 +82,7 @@ const clamp = (v: number, a: number, b: number) => Math.min(b, Math.max(a, v));
 
 export default function BattleMap(p: Props) {
   const { S, map } = p;
+  const weatherMap = useMemo(() => ({ ...map, pocasi: S.pocasi ?? (map as MapV2).pocasi } as MapV2), [map,S.pocasi]);
   const { W, H } = mapSize(map);
   const PX = 48;
   const svgRef = useRef<SVGSVGElement>(null);
@@ -474,6 +478,7 @@ export default function BattleMap(p: Props) {
           <TerenLayer S={S} map={map} px={24} illustration={!!img} />
           <MapTextureLayer map={map as MapV2} />
           <MapPaintLayer map={map as MapV2} />
+          <MapWaterLayer map={map as MapV2} />
           <MapElevationLayer map={map as MapV2} />
           <MapGridLayer map={map as MapV2} W={W} H={H} />
           <MapDrawingLayer map={map as MapV2} dm={p.dm} />
@@ -610,6 +615,8 @@ export default function BattleMap(p: Props) {
           <FxLayer events={p.fx} px={PX} k={V.k} onDone={p.onFxDone} shakingIds={new Set()} />
         </g>
       </svg>
+      <MapWeatherOverlay map={weatherMap} view={V} px={PX} />
+      <div className="map-live-controls"><AnimationButton />{p.dm && p.onWeather && <WeatherPicker compact value={weatherMap.pocasi} onChange={p.onWeather} />}</div>
 
       {/* zoom ovládání */}
       <div className={`boj-zoombar ${pctFlash ? "flash" : ""}`}>

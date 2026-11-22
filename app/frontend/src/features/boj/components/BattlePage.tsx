@@ -617,6 +617,7 @@ export default function BattlePage() {
             onLightPlace={(x, y) => { if (pendingLight) { cmd((s) => C.cmdAddLight(s, { ...pendingLight, anchor: [x, y] })); setPendingLight(null); setTool("select"); } }}
             onCtxMenu={(t, pt) => setCtxMenu({ t, x: pt.x, y: pt.y })}
             onDoor={onDoor}
+            onWeather={weather => cmd(s => { s.pocasi = weather; })}
             drawColor={drawColor}
             onDraw={(pts, stroke) => cmd((s) => { s.kresby = [...(s.kresby || []), { id: uid(), kind: "free", pts, stroke, width: 3, dmOnly: true } as any]; })}
           />

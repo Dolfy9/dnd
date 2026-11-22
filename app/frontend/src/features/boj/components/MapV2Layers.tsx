@@ -6,6 +6,7 @@ import { edgeKey } from "../model/mapV2";
 import { TextureDefs, texUrl, textureById } from "../../mapeditor/assets/textures";
 import { stampById, StampSvg } from "../../mapeditor/assets/stamps";
 import { assetUrl, type AssetEntry, type TextureEntry } from "../../mapeditor/assets/manifest";
+import { resolveAnimation, animationPhase } from "./MapMotion";
 
 /** Synchronní cache manifestů — plní ji useAssetManifest/useTextureManifest;
     v editoru i boji se volá dřív, než se renderují vrstvy. */
@@ -136,11 +137,15 @@ export const MapObjectLayer = memo(function MapObjectLayer({ map, dm }: { map: M
         return (
           <g key={o.id} transform={`translate(${o.x * PX},${o.y * PX}) rotate(${o.rot || 0}) ${o.flip ? "scale(-1,1)" : ""}`}
              opacity={o.dmOnly ? .55 : 1}>
+            {["portal", "ohen", "zare"].includes(resolveAnimation(o, man)) && <g opacity=".35"><image href="/repo/11_Mapy/bojove/ovl/zar.webp"
+              x={-o.w*PX*.8} y={-o.h*PX*.8} width={o.w*PX*1.6} height={o.h*PX*1.6}
+              className={`map-anim-${resolveAnimation(o, man) === "ohen" ? "ohen" : "zare"}`}
+              style={{ mixBlendMode: "screen", animationDelay: `${animationPhase(o.id)}s`, filter: resolveAnimation(o, man) === "portal" ? "hue-rotate(165deg)" : undefined }} /></g>}
             {def && <defs><filter id="stamp-shade" x="-30%" y="-30%" width="160%" height="160%">
               <feDropShadow dx="1" dy="2" stdDeviation="1.2" floodColor="#000" floodOpacity="0.45" /></filter></defs>}
-            {src ? <image href={src} x={-o.w * PX / 2} y={-o.h * PX / 2} width={o.w * PX} height={o.h * PX}
+            {src ? <image className={`map-anim-${resolveAnimation(o, man)}`} href={src} x={-o.w * PX / 2} y={-o.h * PX / 2} width={o.w * PX} height={o.h * PX}
                           preserveAspectRatio="xMidYMid meet"
-                          style={{ filter: "drop-shadow(1px 2px 2px #0008)" }} />
+                          style={{ filter: "drop-shadow(1px 2px 2px #0008)", animationDelay: `${animationPhase(o.id)}s` }} />
                  : def ? <g filter="url(#stamp-shade)"><StampSvg def={def} tint={o.tint} /></g>
                  : <rect x={-o.w * PX / 2} y={-o.h * PX / 2} width={o.w * PX} height={o.h * PX} fill="#8a6a44" opacity={.6} />}
           </g>
