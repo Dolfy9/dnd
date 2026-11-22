@@ -14,7 +14,7 @@ it("renders battle-painted walls over opaque saved paint without changing collis
   for (const illustration of [false,true]) {
     const html = renderToStaticMarkup(<svg><BattleTerrain map={map} S={S} illustration={illustration} /></svg>);
     expect(html.lastIndexOf("teren-wall.webp")).toBeGreaterThan(html.indexOf("data-map-paint"));
-    expect(tileDef(tileAt(map,1,0,S.teren)).blocks).toBeTruthy();
+    expect(tileDef(tileAt(map,1,0,S.teren)).cost).toBe(0);
   }
   const empty = renderToStaticMarkup(<svg><BattleTerrain map={map} S={{}} illustration={false} /></svg>);
   expect(empty.lastIndexOf("data-terrain-art")).toBeLessThan(empty.indexOf("data-map-paint"));

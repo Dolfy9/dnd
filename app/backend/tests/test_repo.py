@@ -26,8 +26,7 @@ def test_anonymous_repo_cannot_read_map_data(repo, path):
     file = repo / path
     file.parent.mkdir(parents=True, exist_ok=True)
     file.write_text('{"poznamky":[{"text":"Tajné informace PJ"}]}')
-    with TestClient(app) as client:
-        response = client.get("/repo/" + path)
+    response = TestClient(app).get("/repo/" + path)
     assert response.status_code == 404
     assert "Tajné informace PJ" not in response.text
 
