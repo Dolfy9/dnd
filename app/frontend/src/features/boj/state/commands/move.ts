@@ -1,4 +1,5 @@
 /* move.ts */
+import { applyBattleDamage } from "../../rules/battleDamage";
 import type { StavBoje, Token, Zone, AttackDef, FxEvent } from "../../types";
 import { uid } from "../../types";
 import { rollInitiative, advanceTurn, byId, log, useEco, ecoFree, ecoOf, moveLeft, resetEconomy } from "../../rules/turn";
@@ -73,7 +74,7 @@ export function triggerZone(S: StavBoje, t: Token, z: Zone, on: NonNullable<Zone
     else if (tr.cond && !hasCond(t, tr.cond)) { t.cond.push({ n: tr.cond }); log(S, "cond", `${t.nazev}: ${tr.cond} (${z.nazev})`, "PJ"); }
   } else if (tr.cond && !hasCond(t, tr.cond)) { t.cond.push({ n: tr.cond }); log(S, "cond", `${t.nazev}: ${tr.cond} (${z.nazev})`, "PJ"); }
   if (dmg) {
-    const r = applyDamage(t, [{ amount: dmg, type: tr.dmg!.typ }]);
+    const r = applyBattleDamage(S, t, [{ amount: dmg, type: tr.dmg!.typ }]);
     fx(S, "dmg", { to: [t.x ?? 0, t.y ?? 0], text: String(r.applied), dmgType: String(tr.dmg!.typ), tokenId: t.id });
     log(S, "damage", `${t.nazev}: ${r.applied} ${tr.dmg!.typ} (${z.nazev})`, "PJ");
     for (const m of r.messages) log(S, "system", m, "PJ");

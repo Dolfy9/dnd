@@ -1,4 +1,5 @@
 /* Čisté reakce 2024: detekce možností + aplikace (bez UI). */
+import { applyBattleDamage } from "../battleDamage";
 import type { StavBoje, Token, AttackDef } from "../../types";
 import { hasCond } from "../conditions";
 import { rollDice, d20, type Rng } from "../dice";
@@ -101,7 +102,7 @@ export function applyReaction(S: StavBoje, opt: ReactionOption, trig: ReactionTr
       const dmg = rollDice("2d10", { rng }).total;
       const atk = trig.attacker; let taken = dmg;
       if (atk) { const sv = d20(0, rng).r + (atk.saves?.DEX ?? atk.mods.DEX ?? 0); const dc = t.dc || t.casting?.dc || 10; if (sv >= dc) taken = Math.floor(dmg / 2); }
-      if (atk) applyDamage(atk, [{ amount: taken, type: "Fire" }]);
+      if (atk) applyBattleDamage(S, atk, [{ amount: taken, type: "Fire" }], {}, rng);
       return { msg: `${t.nazev}: Hellish Rebuke → ${taken} Fire ${atk ? `na ${atk.nazev}` : ""}` };
     }
     case "counter": {

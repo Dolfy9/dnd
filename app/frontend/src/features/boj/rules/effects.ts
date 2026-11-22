@@ -71,6 +71,10 @@ export function tickEffects(t: Token, phase: "start" | "end", actorId?: string):
 export const dropConcentration = (tokens: Token[], zones: Zone[], srcId: string, spell: string) => {
   const messages: string[] = [];
   for (const t of tokens) {
+    for (const e of t.effects || []) {
+      if (e.conc === spell && e.src === srcId && e.mods?.grantsCond)
+        t.cond = t.cond.filter(c => c.n !== e.mods.grantsCond || c.src !== srcId);
+    }
     const keep = (t.effects || []).filter((e) => !(e.conc === spell && e.src === srcId));
     if (keep.length !== (t.effects || []).length) {
       const src = tokens.find((x) => x.id === srcId);

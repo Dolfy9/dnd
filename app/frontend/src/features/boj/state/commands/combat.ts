@@ -1,4 +1,5 @@
 /* combat.ts */
+import { applyBattleDamage } from "../../rules/battleDamage";
 import type { StavBoje, Token, Zone, AttackDef, FxEvent } from "../../types";
 import { uid } from "../../types";
 import { rollInitiative, advanceTurn, byId, log, useEco, ecoFree, ecoOf, moveLeft, resetEconomy } from "../../rules/turn";
@@ -164,7 +165,7 @@ export function cmdAttack(S: StavBoje, a: AtkArgs, ctx: CmdCtx): { ok: boolean; 
     if (again > rolled) { parts[0].amount += again - rolled; log(S, "damage", `${A.nazev}: Savage Attacker — přehozeno ${rolled} → ${again}`, A.nazev); }
   }
   let dmgRes: ReturnType<typeof applyDamage> | null = null;
-  if (r.hit) dmgRes = applyDamage(B, parts, { crit: r.crit, ignoreResist: parts.filter((p) => elementalAdeptFor(A, p.type)).map((p) => p.type) });
+  if (r.hit) dmgRes = applyBattleDamage(S, B, parts, { crit: r.crit, ignoreResist: parts.filter((p) => elementalAdeptFor(A, p.type)).map((p) => p.type) });
   const txt = `${A.nazev} → ${B.nazev}: ${a.atk.nazev}${n > 1 ? ` ×${n}` : ""} ` +
     `d20(${r.d20s.join("/")})${r.bonus >= 0 ? "+" : ""}${r.bonus} = ${r.total} vs ${ev.acBreak}` +
     (r.hit ? ` → ${r.crit ? "CRIT " : ""}${dmgRes ? dmgRes.applied : 0} ${a.atk.typ || ""}` : " — mina");
@@ -183,7 +184,6 @@ export function cmdAttack(S: StavBoje, a: AtkArgs, ctx: CmdCtx): { ok: boolean; 
   }
   if (dmgRes) {
     for (const m of dmgRes.messages) log(S, "system", m, A.nazev);
-    if (dmgRes.concDc && B.conc) log(S, "system", `${B.nazev}: Concentration DC ${dmgRes.concDc}`, "PJ", `dc:${dmgRes.concDc}`);
   }
   if (r.hit && a.atk.condOnHit) for (const c of a.atk.condOnHit) {
     if (!hasCond(B, c.n)) { B.cond.push({ n: c.n, src: A.id }); log(S, "cond", `${B.nazev}: ${c.n}${c.dc ? ` (DC ${c.dc})` : ""}`, A.nazev); }
@@ -193,7 +193,7 @@ export function cmdAttack(S: StavBoje, a: AtkArgs, ctx: CmdCtx): { ok: boolean; 
   if (r.hit && e2 && hasGWM(A) && a.atk.melee && !a.atk.kouzlo && !(e2 as any).gwm) {
     (e2 as any).gwm = 1;
     const bonus = A.pb ?? 2;
-    applyDamage(B, [{ amount: bonus, type: a.atk.typ || "Bludgeoning" }]);
+    applyBattleDamage(S, B, [{ amount: bonus, type: a.atk.typ || "Bludgeoning" }]);
     log(S, "damage", `${A.nazev}: Great Weapon Master +${bonus} dmg`, A.nazev);
   }
   applyMastery(S, A, B, a.atk, r.hit);
@@ -270,7 +270,7 @@ function applyMastery(S: StavBoje, A: Token, B: Token, atk: AttackDef, hit: bool
     case "graze":
       if (!hit) {
         const m = Math.max(0, A.mods?.STR ?? 0);
-        if (m) { const r = applyDamage(B, [{ amount: m, type: atk.typ || "Slashing" }]); log(S, "attack", `Graze: ${r.applied} ${atk.typ} (${B.nazev})`, A.nazev); }
+        if (m) { const r = applyBattleDamage(S, B, [{ amount: m, type: atk.typ || "Slashing" }]); log(S, "attack", `Graze: ${r.applied} ${atk.typ} (${B.nazev})`, A.nazev); }
       }
       break;
     case "push": if (hit) log(S, "cond", `${B.nazev}: odtlačen o 10 ft (Push)`, A.nazev); break;
@@ -330,10 +330,9 @@ export function cmdArea(S: StavBoje, a: AreaArgs, ctx: CmdCtx): { ok: boolean; t
       log(S, "save", `${T.nazev}: ${a.atk.save} save ${sr.rolled}${sr.bonus >= 0 ? "+" : ""}${sr.bonus} vs DC ${a.atk.dc} → ${sr.success ? "úspěch" : "neúspěch"}${sr.legendaryUsed ? " (Legendary Resistance)" : ""}`, T.nazev, `d20:${sr.rolls.join("/")}`);
     }
     if (dmg > 0 || (!a.atk.save && dmg > 0)) {
-      const r = applyDamage(T, [{ amount: dmg, type: a.atk.typ || "Force" }]);
+      const r = applyBattleDamage(S, T, [{ amount: dmg, type: a.atk.typ || "Force" }]);
       fx(S, "dmg", { to: [T.x ?? 0, T.y ?? 0], text: String(r.applied), dmgType: a.atk.typ, tokenId: T.id });
       for (const m of r.messages) log(S, "system", m, T.nazev);
-      if (r.concDc && T.conc) log(S, "system", `${T.nazev}: Concentration DC ${r.concDc}`, "PJ");
     }
     if (applies && a.atk.condOnHit) for (const c of a.atk.condOnHit)
       if (!hasCond(T, c.n)) { T.cond.push({ n: c.n, src: A.id }); log(S, "cond", `${T.nazev}: ${c.n}`, A.nazev); }
@@ -348,11 +347,10 @@ export function cmdArea(S: StavBoje, a: AreaArgs, ctx: CmdCtx): { ok: boolean; t
 /* ---------- damage/heal/temp/death ---------- */
 export function cmdDamage(S: StavBoje, id: string, amount: number, type: string) {
   const t = byId(S, id); if (!t) return;
-  const r = applyDamage(t, [{ amount, type }]);
+  const r = applyBattleDamage(S, t, [{ amount, type }]);
   fx(S, "dmg", { to: [t.x ?? 0, t.y ?? 0], text: String(r.applied), dmgType: type, tokenId: t.id });
   log(S, "damage", `${t.nazev}: −${r.applied} HP (${type}${r.parts.some((p) => p.mod) ? "; " + r.parts.map((p) => p.mod).filter(Boolean).join(", ") : ""})`, "PJ");
   for (const m of r.messages) log(S, "system", m, "PJ");
-  if (r.concDc && t.conc) log(S, "system", `${t.nazev}: Concentration DC ${r.concDc}`, "PJ");
 }
 export function cmdHeal(S: StavBoje, id: string, amount: number) {
   const t = byId(S, id); if (!t) return;

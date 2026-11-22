@@ -1,4 +1,5 @@
 /* Příkazy pro class features / featy (economy + zdroje + log). */
+import { applyBattleDamage } from "../../rules/battleDamage";
 import type { StavBoje, Token } from "../../types";
 import { byId, log, useEco, ecoOf } from "../../rules/turn";
 import { uid } from "../../types";
@@ -35,7 +36,7 @@ export function cmdFeature(S: StavBoje, id: string, key: string, tgtId?: string)
         const d = rollDice(amt, { rng: defaultRng }).total;
         const sv = rollDice("1d20", { rng: defaultRng }).total + (tgt.saves?.CON ?? tgt.mods.CON ?? 0);
         const taken = sv >= (t.dc || 10) ? Math.floor(d / 2) : d;
-        applyDamage(tgt, [{ amount: taken, type: "Radiant" }]);
+        applyBattleDamage(S, tgt, [{ amount: taken, type: "Radiant" }]);
         fx(S, "bolt", { from: [t.x ?? 0, t.y ?? 0], to: [tgt.x ?? 0, tgt.y ?? 0], dmgType: "Radiant", tokenId: tgt.id });
         log(S, "damage", `${t.nazev}: Divine Spark → ${tgt.nazev} ${taken} Radiant (CON ${sv} vs ${t.dc || 10})`, t.nazev);
       }
