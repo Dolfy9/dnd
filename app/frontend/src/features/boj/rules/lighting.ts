@@ -69,9 +69,9 @@ export function lightAt(S: StavBoje, map: BattleMapData, x: number, y: number): 
     if (ax == null || ay == null) continue;
     if (![ax,ay].every(Number.isFinite)) continue;
     const shape=normalizeLight({...L,x:ax,y:ay});
-    const shaped=shape.tvar!=="bod",offset=shaped && src ? (src.s || 1)/2 : 0;
+    const shaped=shape.tvar!=="bod",exact=!src && L.anchorExact,offset=shaped && src ? (src.s || 1)/2 : 0;
     const ox=ax+offset,oy=ay+offset;
-    const dx=x+(shaped ? .5 : 0)-ox,dy=y+(shaped ? .5 : 0)-oy,radians=shape.smer*Math.PI/180;
+    const dx=x+(shaped || exact ? .5 : 0)-ox,dy=y+(shaped || exact ? .5 : 0)-oy,radians=shape.smer*Math.PI/180;
     const along=dx*Math.cos(radians)+dy*Math.sin(radians);
     const across=-dx*Math.sin(radians)+dy*Math.cos(radians);
     if(shape.tvar==="kuzel" && Math.hypot(dx,dy)>1e-9 && Math.abs((Math.atan2(dy,dx)*180/Math.PI-shape.smer+540)%360-180)>shape.sirka/2+1e-9) continue;
@@ -79,7 +79,7 @@ export function lightAt(S: StavBoje, map: BattleMapData, x: number, y: number): 
       : shape.tvar==="kuzel" ? Math.hypot(dx,dy) : Math.max(Math.abs(dx),Math.abs(dy))) * 5;
     const inDark = obscuredAt(S, ax, ay); // světlo ve tmě nesvítí (Darkness 2024)
     if (inDark) continue;
-    if (wIdx.size && sightBlocked(idxOr(wIdx), ox + (shaped?0:.5), oy + (shaped?0:.5), x + .5, y + .5, (S as any).dvere)) continue; // světlo skrz zeď nesvítí
+    if (wIdx.size && sightBlocked(idxOr(wIdx), ox + (shaped || exact?0:.5), oy + (shaped || exact?0:.5), x + .5, y + .5, (S as any).dvere)) continue; // světlo skrz zeď nesvítí
     if (d <= L.bright) return "bright";
     if (d <= L.bright + L.dim && rank[lvl] < 1) lvl = "dim";
   }

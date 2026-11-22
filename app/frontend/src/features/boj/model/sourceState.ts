@@ -19,7 +19,7 @@ export function objectLights(map:Pick<MapV2,"objekty">,assets:Record<string,Asse
 }
 
 export function mechanicalLights(S:StavBoje,map:BattleMapData):LightSource[] {
-  const fromMap=[...(map.svetla || []),...objectLights(map)].map(l=>({...l,nazev:l.nazev || "Světlo",anchor:[l.x,l.y] as [number,number]}));
+  const fromMap=[...(map.svetla || []),...objectLights(map)].map(l=>({...l,nazev:l.nazev || "Světlo",anchor:[l.x,l.y] as [number,number],anchorExact:true}));
   const sources=new Map(fromMap.map(l=>[l.id,l as LightSource]));
   for(const l of S.lights || [])sources.set(l.id,{...sources.get(l.id),...l});
   return [...sources.values()].filter(l=>sourceOn(l,S.zdroje) && l.intenzita!==0);

@@ -140,6 +140,7 @@ export interface LightSource extends Pick<MapLightV2, "zap" | "tvar" | "smer" | 
   bright: number;               // ft jasného světla
   dim: number;                  // ft slabého světla (navíc k bright)
   anchor?: [number, number];    // buňka (fixní)
+  anchorExact?: boolean;
   tokenId?: string;             // neseno žetonem
   conc?: string;
 }
