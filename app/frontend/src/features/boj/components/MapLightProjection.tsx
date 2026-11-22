@@ -2,6 +2,7 @@ import { memo, useMemo, type CSSProperties } from "react";
 import { normalizeLight } from "../model/mapV2";
 import { conePath, visibilityPolygon, type LightSegment } from "../model/lightGeometry";
 import { animationPhase } from "./MapMotion";
+import { coneFeatherLayers } from "../model/lightAnimationPolicy";
 
 export const GLOW = "/repo/11_Mapy/bojove/ovl/zar.webp";
 export type VisualLight = ReturnType<typeof normalizeLight> & {radius: number};
@@ -37,8 +38,8 @@ export const LightDefinition = memo(function LightDefinition({ id, light: l, blo
     {l.tvar === "kuzel" && <>
       <filter id={id+"feather"} filterUnits="userSpaceOnUse" {...bounds} colorInterpolationFilters="sRGB"><feGaussianBlur stdDeviation={Math.max(.4,r*.006)} /></filter>
       <mask id={id+"cone"} maskUnits="userSpaceOnUse" {...bounds} style={{maskType:"alpha"}}>
-        <g filter={`url(#${id}feather)`} data-cone-feather="0.18">{Array.from({length:24},(_,i) =>
-          <path key={i} d={conePath(r*1.3,l.sirka*(1-.36*i/23))} fill="white" opacity={1/(24-i)} />
+        <g filter={`url(#${id}feather)`} data-cone-feather="0.30">{coneFeatherLayers().map((layer,i) =>
+          <path key={i} d={conePath(r*1.3,l.sirka*layer.scale)} fill="white" opacity={layer.opacity} />
         )}</g>
       </mask>
       <radialGradient id={id+"apex"} gradientUnits="userSpaceOnUse" cx="0" cy="0" r={r}>

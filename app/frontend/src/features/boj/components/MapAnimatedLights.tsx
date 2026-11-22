@@ -1,10 +1,18 @@
-import { memo, useEffect, useId, useMemo, useState, type ReactElement } from "react";
+import { memo, useEffect, useId, useMemo, useState, useSyncExternalStore, type ReactElement } from "react";
 import { renderToStaticMarkup } from "react-dom/server";
 import type { MapV2 } from "../model/mapV2";
 import { lightBlockers, visibilityPolygon, type LightSegment } from "../model/lightGeometry";
 import { useMapManifests } from "./MapV2Layers";
 import { visualLights } from "./MapAtmoLayers";
 import { GLOW, LightDefinition, lightAnimationStyle, type VisualLight } from "./MapLightProjection";
+import { LIGHT_CAPS, nearestLights, nextLightAnimationCap, type LightAnimationCap } from "../model/lightAnimationPolicy";
+
+const CAP_KEY="montelien-light-animation-cap";
+let sessionCap:LightAnimationCap=12;
+try { const stored=Number(sessionStorage.getItem(CAP_KEY)); if(LIGHT_CAPS.includes(stored as LightAnimationCap)) sessionCap=stored as LightAnimationCap; } catch {}
+const budgetListeners=new Set<()=>void>();
+const subscribeBudget=(listener:()=>void)=>{budgetListeners.add(listener);return()=>{budgetListeners.delete(listener);};};
+const getBudget=()=>sessionCap;
 
 const rasters=new Map<string,Promise<string>>();
 let glowData:Promise<string> | undefined;
@@ -88,16 +96,43 @@ const AnimatedLight = memo(function AnimatedLight({light:l,blockers,wallKey,widt
   </div>;
 });
 
-export const MapAnimatedLights = memo(function MapAnimatedLights({map,view,px,doors}: {
-  map:MapV2;view:{x:number;y:number;k:number};px:number;doors?:Record<string,boolean>;
+export const MapAnimatedLights = memo(function MapAnimatedLights({map,view,px,doors,viewport}: {
+  map:MapV2;view:{x:number;y:number;k:number};px:number;doors?:Record<string,boolean>;viewport?:{width:number;height:number};
 }) {
+  const cap=useSyncExternalStore(subscribeBudget,getBudget,()=>12 as const);
+  const [meanMs,setMeanMs]=useState<number>();
+  const [epoch,setEpoch]=useState(0);
   const {assets}=useMapManifests();
   const blockers=useMemo(()=>lightBlockers(map.steny,doors),[map.steny,doors]);
   const wallKey=blockers.map(w=>[...w.a,...w.b].join(",")).join(";");
   const width=map.mrizka[0]?.length || 1,height=map.mrizka.length;
-  const vw=typeof window === "undefined" ? width*px*view.k : window.innerWidth;
-  const vh=typeof window === "undefined" ? height*px*view.k : window.innerHeight;
-  return <>{visualLights(map,assets).filter(l=>l.efekt !== "zadny" && l.radius > 0 && l.intenzita > 0 && visibleLight(l,view,px,vw,vh)).slice(0,2).map(l=>
+  const vw=viewport?.width ?? (typeof window === "undefined" ? width*px*view.k : window.innerWidth);
+  const vh=viewport?.height ?? (typeof window === "undefined" ? height*px*view.k : window.innerHeight);
+  const candidates=visualLights(map,assets).filter(l=>l.efekt !== "zadny" && l.radius > 0 && l.intenzita > 0 && visibleLight(l,view,px,vw,vh));
+  const scale=view.k*px/24;
+  const active=nearestLights(candidates,[(vw/2-view.x)/scale/24,(vh/2-view.y)/scale/24],cap);
+  const sampleKey=JSON.stringify([candidates,wallKey,view,vw,vh]);
+  useEffect(()=>{
+    const changed=()=>setEpoch(n=>n+1), motion=matchMedia("(prefers-reduced-motion: reduce)");
+    window.addEventListener("map-animations",changed); motion.addEventListener("change",changed);
+    return()=>{window.removeEventListener("map-animations",changed);motion.removeEventListener("change",changed);};
+  },[]);
+  useEffect(()=>{
+    if(!active.length || document.documentElement.dataset.mapAnimations === "off" || matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    let frame=0,first=0,last=0,total=0,count=0;
+    const sample=(now:number)=>{
+      if(document.visibilityState !== "visible") {first=last=0;total=count=0;frame=requestAnimationFrame(sample);return;}
+      if(!first) first=now;
+      if(last) {total+=now-last;count++;} last=now;
+      if(now-first<2000) {frame=requestAnimationFrame(sample);return;}
+      const mean=total/Math.max(1,count);setMeanMs(mean);
+      const next=nextLightAnimationCap(sessionCap,mean);
+      if(next !== sessionCap) {sessionCap=next;try{sessionStorage.setItem(CAP_KEY,String(next));}catch{};budgetListeners.forEach(listener=>listener());}
+    };
+    frame=requestAnimationFrame(sample);
+    return()=>cancelAnimationFrame(frame);
+  },[sampleKey,cap,epoch]);
+  return <div style={{display:"contents"}} data-light-animation-cap={cap} data-light-mean-ms={meanMs?.toFixed(2)}>{active.map(l=>
     <AnimatedLight key={l.id} light={l} blockers={blockers} wallKey={wallKey} width={width} height={height} animate />
-  )}</>;
+  )}</div>;
 });

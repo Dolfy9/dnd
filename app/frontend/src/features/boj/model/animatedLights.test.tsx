@@ -34,8 +34,8 @@ describe("bounded light compositor",()=>{
   });
   it("caps simultaneous effects while retaining the remaining static lights",()=>{
     const html=renderToStaticMarkup(<MapAnimatedScene map={{...base,svetla:Array.from({length:16},(_,i)=>({...light,id:"l"+i}))}} view={view}>{null}</MapAnimatedScene>);
-    expect((html.match(/data-animated-light=/g)||[])).toHaveLength(2);
-    expect((html.match(/map-light-effect /g)||[])).toHaveLength(2);
+    expect((html.match(/data-animated-light=/g)||[])).toHaveLength(12);
+    expect((html.match(/map-light-effect /g)||[])).toHaveLength(12);
     expect(visualLights({...base,svetla:Array.from({length:16},(_,i)=>({...light,id:"l"+i}))})).toHaveLength(16);
   });
   it("rasterizes once, reuses cached PNGs and evicts failed results",async()=>{

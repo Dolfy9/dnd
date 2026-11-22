@@ -99,7 +99,7 @@ describe("shared image compositing", () => {
     expect(svg).toContain('data-light-shape="kuzel"'); expect(svg).toContain('data-light-shape="pruh"');
     expect(svg).toContain('rotate(90)'); expect(svg).toContain('rotate(45)');
     expect(svg).toContain('feGaussianBlur'); expect(svg).toContain('linearGradient');
-    expect(svg).toContain('data-cone-feather="0.18"'); expect(svg).toContain('apexMask');
+    expect(svg).toContain('data-cone-feather="0.30"'); expect(svg).toContain('apexMask');
     expect(svg).not.toContain('animation-duration');
     expect((svg.match(/<polygon /g)||[])).toHaveLength(1);
     expect((svg.match(/<use /g)||[])).toHaveLength(4);

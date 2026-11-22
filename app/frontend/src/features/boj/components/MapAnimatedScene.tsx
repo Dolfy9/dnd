@@ -1,4 +1,4 @@
-import { memo, useMemo, type CSSProperties, type ReactNode } from "react";
+import { memo, useEffect, useMemo, useRef, useState, type ReactNode } from "react";
 import type { MapV2 } from "../model/mapV2";
 import type { StavBoje } from "../types";
 import { assetUrl, assetSrc } from "../../mapeditor/assets/manifest";
@@ -28,6 +28,9 @@ export const MapAnimatedScene = memo(function MapAnimatedScene({ map, view, px =
   terrain?: boolean; objects?: boolean; lights?: boolean; illustration?: boolean; overrides?: StavBoje["teren"]; doors?:Record<string,boolean>;
 }) {
   const { assets } = useMapManifests();
+  const sceneRef=useRef<HTMLDivElement>(null);
+  const [viewport,setViewport]=useState<{width:number;height:number}>();
+  useEffect(()=>{const node=sceneRef.current;if(!node)return;const observer=new ResizeObserver(()=>setViewport({width:node.clientWidth,height:node.clientHeight}));observer.observe(node);return()=>observer.disconnect();},[]);
   const mask = useMemo(() => waterMask(map), [map.mrizka,map.textury,map.malba,map.podklad]);
   const W = (map.mrizka[0]?.length || 1)*24, H = map.mrizka.length*24;
   const sprite = (id: string, src: string, anim: string, x: number, y: number, w: number, h: number, rot = 0, flip = false, opacity = 1) =>
@@ -35,7 +38,7 @@ export const MapAnimatedScene = memo(function MapAnimatedScene({ map, view, px =
       {["portal","ohen","zare"].includes(anim) && <img className={`map-dom-glow map-anim-${anim === "ohen" ? "ohen" : "zare"}`} src="/repo/11_Mapy/bojove/ovl/zar.webp" alt="" />}
       <img src={src} alt="" className={`map-anim-${anim}`} style={{animationDelay:`${animationPhase(id)}s`}} />
     </div>;
-  return <div className="map-animated-scene" aria-hidden="true"><div className="map-scene-board" style={{
+  return <div ref={sceneRef} className="map-animated-scene" aria-hidden="true"><div className="map-scene-board" style={{
     width:W,height:H,transform:`translate(${view.x}px,${view.y}px) scale(${view.k*px/24})`,
   }}>
     <svg className="map-scene-static" width={W} height={H}>{children}</svg>
@@ -59,6 +62,6 @@ export const MapAnimatedScene = memo(function MapAnimatedScene({ map, view, px =
         : <svg key={o.id} className="map-scene-static" width={W} height={H}><MapObjectLayer map={{...map,objekty:[o]}} dm={dm} /></svg>;
     })}
     <div className="map-scene-frame" />
-    {lights && <MapAnimatedLights map={map} view={view} px={px} doors={doors} />}
+    {lights && <MapAnimatedLights map={map} view={view} px={px} doors={doors} viewport={viewport} />}
   </div></div>;
 });
