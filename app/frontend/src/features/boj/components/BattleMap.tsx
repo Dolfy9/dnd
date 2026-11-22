@@ -12,12 +12,13 @@ import { planMovement, cumFt, type MovementPlan } from "../rules/movement";
 import { settingsOf } from "../rules/settings";
 import { mapSize, tileAt, tileDef } from "../rules/grid";
 import type { MapV2, MapWall } from "../model/mapV2";
-import { MapTextureLayer, MapElevationLayer, MapWallLayer, MapDrawingLayer, MapLightLayer, MapNoteLayer, MapGridLayer } from "./MapV2Layers";
+import { MapElevationLayer, MapWallLayer, MapDrawingLayer, MapLightLayer, MapNoteLayer, MapGridLayer } from "./MapV2Layers";
 import { BASE_COLORS } from "../types";
 import { areaCells } from "../rules/areas";
 import { dmgStyle } from "./visual";
-import { ZoneShape, ZonePatterns, TerenLayer, LightingLayer, FogLayer } from "./MapLayers";
-import { MapPaintLayer, MapAtmosphereLayer } from "./MapAtmoLayers";
+import { ZoneShape, ZonePatterns, LightingLayer, FogLayer } from "./MapLayers";
+import { MapAtmosphereLayer } from "./MapAtmoLayers";
+import { BattleTerrain } from "./BattleTerrain";
 import { AnimationButton, WeatherPicker, MapWeatherOverlay } from "./MapMotion";
 import { MapAnimatedScene } from "./MapAnimatedScene";
 import type { MapWeather } from "../model/mapV2";
@@ -475,9 +476,7 @@ export default function BattleMap(p: Props) {
       </>}>
         <rect width={W*24} height={H*24} fill={base} />
         {img && <image href={img} width={W*24} height={H*24} preserveAspectRatio="none" opacity={.92} />}
-        <TerenLayer staticOnly S={S} map={map} px={24} illustration={!!img} />
-        <MapTextureLayer map={map as MapV2} />
-        <MapPaintLayer map={map as MapV2} />
+        <BattleTerrain S={S} map={map as MapV2} illustration={!!img} />
       </MapAnimatedScene>
       <svg ref={svgRef} className={`boj-map ${cursorCls}`} onWheel={onWheel} onPointerDown={down} onPointerMove={move}
            onPointerUp={up} onDoubleClick={dbl} onPointerLeave={leave} onContextMenu={ctx} style={{ touchAction: "none" }}>
