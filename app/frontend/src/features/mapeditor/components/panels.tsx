@@ -1,13 +1,14 @@
 /* Pravé panely editoru: Vrstvy / Knihovna / Vlastnosti / Generátor / Mapa. */
 import React from "react";
-import { Layers, Library, Settings2, Wand2, Map as MapIcon, Upload, Download, FileUp, Trash2 } from "lucide-react";
+import { Layers, Library, Settings2, Wand2, Map as MapIcon, Upload, Download, FileUp, Trash2, Eye, EyeOff, MousePointer2 } from "lucide-react";
 import type { MapV2, MapWall, MapObject, MapLightV2, MapNote } from "../../boj/model/mapV2";
-import { STAMPS, KATEGORIE, stampById, StampSvg, type StampDef } from "../assets/stamps";
 import { TEXTURES } from "../assets/textures";
 import { GENERATORS, type GenOut } from "../generators/generators";
-import { assetUrl, assetSrc, useTextureManifest, type AssetEntry } from "../assets/manifest";
-import { VariantStrip } from "./VariantStrip";
-import { WeatherPicker } from "../../boj/components/MapMotion";
+import { assetUrl, useTextureManifest, type AssetEntry } from "../assets/manifest";
+import { EditorWeather as WeatherPicker } from "./EditorChrome";
+import { ObjectInspector } from "./ObjectInspector";
+import type { ObjectAction } from "../state/editorUx";
+export { AssetLibrary as LibraryPanel } from "./AssetLibrary";
 import { MapPreview } from "./MapPreview";
 import { TILES } from "../../boj/types";
 import { terrainTexture, terrainProp } from "../../boj/model/terrainArt";
@@ -67,9 +68,8 @@ const ATMOSPHERES = [
   { n: "Magie", amb: .25, barva: "#281043" },
 ];
 
-export const TABS = [["vrstvy", <Layers size={14} />, "Vrstvy"], ["knihovna", <Library size={14} />, "Knihovna"],
-  ["vlastnosti", <Settings2 size={14} />, "Vlastnosti"], ["generator", <Wand2 size={14} />, "Generátor"],
-  ["mapa", <MapIcon size={14} />, "Mapa"]] as const;
+export const TABS = [["knihovna", <Library size={16} />, "Knihovna"], ["vlastnosti", <Settings2 size={16} />, "Vlastnosti"],
+  ["vrstvy", <Layers size={16} />, "Vrstvy"], ["mapa", <MapIcon size={16} />, "Mapa"], ["generator", <Wand2 size={16} />, "Generátor"]] as const;
 export type TabId = typeof TABS[number][0];
 export const LAYERS: [string, string][] = [["obrazek", "Podklad"], ["textury", "Textury"], ["teren", "Terén"],
   ["malba", "Volná malba"], ["vyska", "Výška"], ["steny", "Stěny"], ["objekty", "Objekty"], ["kresby", "Kresby"], ["svetla", "Světla a atmosféra"],
@@ -85,109 +85,32 @@ export function LayersPanel({ map, layerVis, setLayerVis }: {
     svetla: (map.svetla || []).length, poznamky: (map.poznamky || []).length, textury: Object.keys(map.textury || {}).length,
   };
   return (
-    <ul className="me-layers">
+    <><h3>Vrstvy mapy</h3><div className="me-action-pair"><button className="me-btn" onClick={() => setLayerVis(() => Object.fromEntries(LAYERS.map(([l]) => [l,true])))}><Eye size={15} /> Zobrazit vše</button><button className="me-btn" onClick={() => setLayerVis(() => Object.fromEntries(LAYERS.map(([l]) => [l,false])))}><EyeOff size={15} /> Skrýt vše</button></div><ul className="me-layers">
       {LAYERS.map(([l, n]) => (
         <li key={l}>
-          <button className={`me-eye ${layerVis[l] ? "on" : ""}`} onClick={() => setLayerVis((s) => ({ ...s, [l]: !s[l] }))} title={layerVis[l] ? "Skrýt" : "Zobrazit"}>👁</button>
+          <button className={`me-eye ${layerVis[l] ? "on" : ""}`} aria-label={`${layerVis[l] ? "Skrýt" : "Zobrazit"} ${n}`} aria-pressed={layerVis[l]} onClick={() => setLayerVis((s) => ({ ...s, [l]: !s[l] }))}>{layerVis[l] ? <Eye size={16} /> : <EyeOff size={16} />}</button>
           <span>{n}</span>
           <span className="me-layers-n">{counts[l] ?? ""}</span>
         </li>
       ))}
-    </ul>
+    </ul></>
   );
 }
 
-export function LibraryPanel({ q, setQ, kat, setKat, stampId, onPick, ASSETS, onUpload, variant, onVariant }: {
-  q: string; setQ: (v: string) => void; kat: string; setKat: (v: string) => void;
-  stampId: string; onPick: (id: string) => void; ASSETS: Record<string, AssetEntry>;
-  onUpload: (f: File) => void;
-  variant: number; onVariant: (value: number) => void;
-}) {
-  const filtered = STAMPS.filter((s) => (!kat || s.kat === kat) && (!q || s.nazev.toLowerCase().includes(q.toLowerCase())));
-  const extras = Object.values(ASSETS).filter((a) => !stampById(a.id) && (!q || a.nazev.toLowerCase().includes(q.toLowerCase())) && (!kat || (kat === "__custom" ? a.custom : a.kategorie === kat)));
-  return (
-    <div className="me-lib">
-      <input placeholder="Hledat…" value={q} onChange={(e) => setQ(e.target.value)} />
-      {ASSETS[stampId] && <section className="me-variant-section"><strong>{ASSETS[stampId].nazev} · varianty</strong>
-        <VariantStrip entry={ASSETS[stampId]} value={variant} onChange={onVariant} />
-      </section>}
-      <div className="me-category-chips" aria-label="Kategorie knihovny">
-        {["", ...new Set([...KATEGORIE, ...Object.values(ASSETS).map(a => a.kategorie).filter((k): k is string => !!k)]), "__custom"].map(kk => {
-          const rep = Object.values(ASSETS).find(a => !kk || (kk === "__custom" ? a.custom : a.kategorie === kk));
-          return <button key={kk} aria-pressed={kat === kk} onClick={() => setKat(kk)}>
-            <img src={rep ? assetUrl(assetSrc(rep)) : "/repo/11_Mapy/bojove/ikony/plus.webp"} alt="" />{kk === "" ? "Vše" : kk === "__custom" ? "Vlastní" : kk}
-          </button>;
-        })}
-      </div>
-      <div className="me-lib-grid">
-        {(kat === "__custom" ? [] : filtered).map((s) => {
-          const man = ASSETS[s.id];
-          return (
-            <button key={s.id} className={`me-stamp ${stampId === s.id ? "on" : ""}`} title={`${s.nazev} (${s.w}×${s.h})`} onClick={() => onPick(s.id)}>
-              {man ? <img src={assetUrl(assetSrc(man, s.id === stampId ? variant : 0))} alt={s.nazev} loading="lazy" />
-                   : <><svg viewBox="-13 -13 26 26"><StampSvg def={s} /></svg><span className="me-missing" title="Základní náhled — vygeneruj obrázek pomocí tools/mapa_assety.py">náhled</span></>}
-              {!!man?.varianty?.length && <small className="me-variant-count" title={"Základ + " + man.varianty.length + " varianty"}>+{man.varianty.length}</small>}
-            </button>
-          );
-        })}
-        {extras.map((a) => (
-          <button key={a.id} className={`me-stamp ${stampId === a.id ? "on" : ""}`} title={a.nazev} onClick={() => onPick(a.id)}>
-            <img src={assetUrl(assetSrc(a, a.id === stampId ? variant : 0))} alt={a.nazev} loading="lazy" />
-            {!!a.varianty?.length && <small className="me-variant-count" title={"Základ + " + a.varianty.length + " varianty"}>+{a.varianty.length}</small>}
-          </button>
-        ))}
-      </div>
-      <label className="me-btn sm"><Upload size={14} /> Nahrát obrázek
-        <input type="file" accept="image/*" hidden onChange={(e) => e.target.files?.[0] && onUpload(e.target.files[0])} /></label>
-    </div>
-  );
-}
-
-export function PropertiesPanel({ map, selObj, push, onDelete, objects, assets, onVariant }: {
+export function PropertiesPanel({ map, selObj, push, onDelete, objects, assets, onVariant, onAction }: {
   map: MapV2; selObj: { kind: string; id: string } | null;
   push: (f: (m: MapV2) => void) => void; onDelete: () => void;
   objects: MapObject[]; assets: Record<string, AssetEntry>;
   onVariant: (action: number | "next" | "random", asset?: string) => void;
+  onAction: (action: ObjectAction) => void;
 }) {
-  const variants = objects.length ? <section className="me-variant-section">
-    <h4>Varianty · {objects.length} objektů</h4>
-    {[...new Set(objects.map(o => o.asset))].map(id => assets[id] && <div key={id}>
-      <strong>{assets[id].nazev}</strong>
-      <VariantStrip entry={assets[id]} value={objects.find(o => o.asset === id)?.v}
-        onChange={v => onVariant(v, id)} />
-    </div>)}
-    <button className="me-btn sm" title="Další varianta (A)" onClick={() => onVariant("next")}>Další (A)</button>
-    <button className="me-btn sm" title="Náhodná varianta (Shift+A)" onClick={() => onVariant("random")}>Náhodně</button>
-  </section> : null;
-  if (!selObj) return variants || <p className="me-none">Vyber objekt / zeď / světlo / poznámku nástrojem Výběr.</p>;
-  const selObject = selObj.kind === "objekt" ? (map.objekty || []).find((o) => o.id === selObj.id) : null;
+  if (objects.length) return <ObjectInspector objects={objects} assets={assets} push={push} onVariant={onVariant} onAction={onAction} onDelete={onDelete} />;
+  if (!selObj) return <div className="me-empty"><MousePointer2 size={36} /><h3>Všechno začíná výběrem</h3><p>Klikni na objekt, stěnu, světlo nebo poznámku v mapě.</p><p><kbd>V</kbd> Výběr a přesun<br /><kbd>Shift + klik</kbd> Přidat do výběru<br /><kbd>Táhni</kbd> Vybrat více prvků</p></div>;
   const selWall = selObj.kind === "stena" ? (map.steny || []).find((w) => w.id === selObj.id) : null;
   const selLight = selObj.kind === "svetlo" ? (map.svetla || []).find((l) => l.id === selObj.id) : null;
   const selNote = selObj.kind === "poznamka" ? (map.poznamky || []).find((n) => n.id === selObj.id) : null;
   return (
     <div className="me-props">
-      {variants}
-      {selObject && (
-        <>
-          <h4>Objekt — {stampById(selObject.asset)?.nazev || selObject.asset}</h4>
-          <div className="me-visual-grid">{([[undefined,"Automaticky"],[false,"Bez pohybu"],["vitr","Vítr"],["portal","Portál"],["ohen","Oheň"],["zare","Záře"],["voda","Voda"]] as const).map(([anim,label]) =>
-            <button key={label} aria-pressed={selObject.anim === anim} onClick={() => push(m => { m.objekty!.find(o => o.id === selObj.id)!.anim = anim; })}>
-              <img width="24" height="24" src="/repo/11_Mapy/bojove/ikony/nastaveni.webp" alt="" />{label}</button>)}</div>
-          {(["x", "y", "w", "h", "rot", "z"] as const).map((f) => (
-            <label key={f}>{{x:"Poloha X",y:"Poloha Y",w:"Šířka",h:"Výška",rot:"Úhel (°)",z:"Pořadí"}[f]}<input aria-label={f === "rot" ? "Úhel objektu" : f} type="number" step={f === "rot" ? 1 : .1} value={(selObject as any)[f] ?? 0}
-              onChange={(e) => push((m) => { const o = m.objekty!.find((o) => o.id === selObj.id)!; (o as any)[f] = +e.target.value; })} /></label>))}
-          <label>tint<input type="color" value={selObject.tint || "#ffffff"} onChange={(e) => push((m) => { m.objekty!.find((o) => o.id === selObj.id)!.tint = e.target.value; })} /></label>
-          {(["blocks", "difficult", "flip", "dmOnly"] as const).map((f) => (
-            <label key={f} className="me-ctx-chk"><input type="checkbox" checked={!!selObject[f]}
-              onChange={(e) => push((m) => { (m.objekty!.find((o) => o.id === selObj.id) as any)[f] = e.target.checked; })} /> {f}</label>))}
-          <h4>Krytí</h4><div className="me-visual-grid">{([0,2,3] as const).map(cover => <button key={cover} aria-pressed={(selObject.cover || 0) === cover}
-            onClick={() => push(m => { m.objekty!.find(o => o.id === selObj.id)!.cover = cover || undefined; })}>
-            <svg viewBox="0 0 50 24"><rect x="5" y="2" width="40" height="20" rx="3" fill="#e1d2af" /><rect x="5" y={22-cover*6} width="40" height={cover*6} fill="#796647" /></svg>
-            {cover === 0 ? "Žádné" : cover === 2 ? "Poloviční" : "Tříčtvrteční"}</button>)}</div>
-          <label className="me-ctx-chk"><input type="checkbox" checked={!!selObject.light}
-            onChange={(e) => push((m) => { const o = m.objekty!.find((o) => o.id === selObj.id)!; o.light = e.target.checked ? { bright: 10, dim: 10 } : undefined; })} /> světlo</label>
-        </>
-      )}
       {selWall && (
         <>
           <h4>Zeď</h4>
@@ -252,8 +175,28 @@ export function MapPanel({ map, push, onResize, onUploadImg, onImportUvtt, onExp
   const W = map.mrizka[0]?.length || 1, H = map.mrizka.length;
   return (
     <div className="me-mapmeta">
+      <details className="me-section"><summary>Rozměry a mřížka · {W} × {H}</summary>
+      <h4>Rozměr {W}×{H}</h4>
+      <div className="me-resize">
+        <button className="me-btn sm" onClick={() => onResize(0, 0, 1, 0)}>← +</button>
+        <button className="me-btn sm" onClick={() => onResize(0, 0, -1, 0)}>← −</button>
+        <button className="me-btn sm" onClick={() => onResize(1, 0, 0, 0)}>+ →</button>
+        <button className="me-btn sm" onClick={() => onResize(-1, 0, 0, 0)}>− →</button>
+        <button className="me-btn sm" onClick={() => onResize(0, 0, 0, 1)}>↑ +</button>
+        <button className="me-btn sm" onClick={() => onResize(0, 0, 0, -1)}>↑ −</button>
+        <button className="me-btn sm" onClick={() => onResize(0, 1, 0, 0)}>+ ↓</button>
+        <button className="me-btn sm" onClick={() => onResize(0, -1, 0, 0)}>− ↓</button>
+      </div>
+      <div className="me-visual-grid">{(["lines", "dots", "none"] as const).map(typ => <button key={typ} aria-pressed={(map.mrizkaStyl?.typ || "lines") === typ}
+        onClick={() => push(m => { m.mrizkaStyl = { ...(m.mrizkaStyl || { barva: "#000000", opacita: .18 }), typ }; })}>
+        <svg viewBox="0 0 96 48" style={{ background: "url(/repo/11_Mapy/bojove/textury/teren-les.webp) center/cover" }}>
+          <MapGridLayer map={{ ...map, mrizkaStyl: { typ, barva: "#ffffff", opacita: .8 } }} W={4} H={2} />
+        </svg>{{lines:"Čáry",dots:"Tečky",none:"Bez mřížky"}[typ]}</button>)}</div>
+      <label>barva<input type="color" value={map.mrizkaStyl?.barva || "#000000"} onChange={(e) => push((m) => { m.mrizkaStyl = { ...(m.mrizkaStyl || { typ: "lines", opacita: .18 }), barva: e.target.value }; })} /></label>
+      <label>krytí<input type="range" min={0} max={.6} step={.02} value={map.mrizkaStyl?.opacita ?? .18} onChange={(e) => push((m) => { m.mrizkaStyl = { ...(m.mrizkaStyl || { typ: "lines", barva: "#000000" }), opacita: +e.target.value }; })} /></label>
+      </details>
       <WeatherPicker map={map} value={map.pocasi} onChange={value => push(m => { m.pocasi = value; })} />
-      <h4>Atmosféra</h4>
+      <details className="me-section" open><summary>Atmosféra a světlo</summary>
       <div className="me-atmo-presets">
         {ATMOSPHERES.map(a => <button key={a.n} type="button" aria-pressed={(map.atmosfera?.amb ?? 1) === a.amb && (map.atmosfera?.barva || "#101522") === a.barva}
           onClick={() => push(m => { m.atmosfera = { amb: a.amb, barva: a.barva }; })}>
@@ -268,21 +211,13 @@ export function MapPanel({ map, push, onResize, onUploadImg, onImportUvtt, onExp
       </label>
       <label>Odstín prostředí<input aria-label="Odstín prostředí" type="color" value={map.atmosfera?.barva || "#101522"}
         onChange={e => push(m => { m.atmosfera = { amb: m.atmosfera?.amb ?? 1, barva: e.target.value }; })} /></label>
+      </details>
+      <details className="me-section"><summary>Popis a místo</summary>
       <label>Místo<input value={map.misto || ""} onChange={(e) => push((m) => { m.misto = e.target.value; })} /></label>
       <label>Osvětlení<input value={map.osvetleni || ""} onChange={(e) => push((m) => { m.osvetleni = e.target.value; })} /></label>
       <label>Popis<textarea value={map.popis || ""} onChange={(e) => push((m) => { m.popis = e.target.value; })} /></label>
-      <h4>Rozměr {W}×{H}</h4>
-      <div className="me-resize">
-        <button className="me-btn sm" onClick={() => onResize(0, 0, 1, 0)}>← +</button>
-        <button className="me-btn sm" onClick={() => onResize(0, 0, -1, 0)}>← −</button>
-        <button className="me-btn sm" onClick={() => onResize(1, 0, 0, 0)}>+ →</button>
-        <button className="me-btn sm" onClick={() => onResize(-1, 0, 0, 0)}>− →</button>
-        <button className="me-btn sm" onClick={() => onResize(0, 0, 0, 1)}>↑ +</button>
-        <button className="me-btn sm" onClick={() => onResize(0, 0, 0, -1)}>↑ −</button>
-        <button className="me-btn sm" onClick={() => onResize(0, 1, 0, 0)}>+ ↓</button>
-        <button className="me-btn sm" onClick={() => onResize(0, -1, 0, 0)}>− ↓</button>
-      </div>
-      <h4>Podkladový obrázek</h4>
+      </details>
+      <details className="me-section"><summary>Podklad / import / export</summary>
       <label className="me-btn sm"><Upload size={14} /> Nahrát<input type="file" accept="image/*" hidden onChange={(e) => e.target.files?.[0] && onUploadImg(e.target.files[0])} /></label>
       {map.obrazek && <>
         <label>cellPx<input type="number" value={map.kalibrace?.cellPx || 150} onChange={(e) => push((m) => { m.kalibrace = { ...(m.kalibrace || { offX: 0, offY: 0 }), cellPx: +e.target.value }; })} /></label>
@@ -292,20 +227,12 @@ export function MapPanel({ map, push, onResize, onUploadImg, onImportUvtt, onExp
           Kalibrovat 2 body</button>
         {calib && <p className="me-ctx-hint">Klikni 2 protilehlé rohy mřížky na obrázku, pak zadej počet buněk mezi nimi.</p>}
       </>}
-      <h4>Mřížka</h4>
-      <div className="me-visual-grid">{(["lines", "dots", "none"] as const).map(typ => <button key={typ} aria-pressed={(map.mrizkaStyl?.typ || "lines") === typ}
-        onClick={() => push(m => { m.mrizkaStyl = { ...(m.mrizkaStyl || { barva: "#000000", opacita: .18 }), typ }; })}>
-        <svg viewBox="0 0 96 48" style={{ background: "url(/repo/11_Mapy/bojove/textury/teren-les.webp) center/cover" }}>
-          <MapGridLayer map={{ ...map, mrizkaStyl: { typ, barva: "#ffffff", opacita: .8 } }} W={4} H={2} />
-        </svg>{{lines:"Čáry",dots:"Tečky",none:"Bez mřížky"}[typ]}</button>)}</div>
-      <label>barva<input type="color" value={map.mrizkaStyl?.barva || "#000000"} onChange={(e) => push((m) => { m.mrizkaStyl = { ...(m.mrizkaStyl || { typ: "lines", opacita: .18 }), barva: e.target.value }; })} /></label>
-      <label>krytí<input type="range" min={0} max={.6} step={.02} value={map.mrizkaStyl?.opacita ?? .18} onChange={(e) => push((m) => { m.mrizkaStyl = { ...(m.mrizkaStyl || { typ: "lines", barva: "#000000" }), opacita: +e.target.value }; })} /></label>
-      <h4>Import / export</h4>
       <label className="me-btn sm"><FileUp size={14} /> UVTT import<input type="file" accept=".uvtt,.dd2vtt,.df2vtt,.json" hidden onChange={(e) => e.target.files?.[0] && onImportUvtt(e.target.files[0])} /></label>
       <button className="me-btn sm" onClick={onExportUvtt}><Download size={14} /> UVTT export</button>
       <button className="me-btn sm" onClick={onExportJson}><Download size={14} /> JSON export</button>
       <label className="me-btn sm"><FileUp size={14} /> JSON import<input type="file" accept=".json" hidden onChange={(e) => { const f = e.target.files?.[0]; if (f) onImportJson(f); }} /></label>
       <button className="me-btn sm" onClick={onExportPng}><Download size={14} /> PNG export</button>
+      </details>
     </div>
   );
 }

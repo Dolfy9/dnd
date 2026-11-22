@@ -6,13 +6,14 @@ import {
   ArrowLeft, Undo2, Redo2, Save, Maximize, Minimize, Swords, MousePointer2, Brush,
   PaintBucket, Layers3, DoorOpen, Square, Spline, Package, PenLine,
   Mountain, Lightbulb, Flag, StickyNote, Eraser, Pipette, Upload, Library,
+  PaintRoller, House, Pentagon, BrickWall, Umbrella, Grid2X2, Eye, PanelRightClose, PanelRightOpen, Pin, PinOff, Keyboard, MoreHorizontal, Minus, Plus, X, Info, Search, Command, Copy, Trash2, ArrowUp, ArrowDown,
 } from "lucide-react";
 import { post, upload } from "../../../api";
 import { toast } from "../../../components/ui";
 import { TILES } from "../../boj/types";
 import type { MapV2, MapWall, MapDrawing, MapPaintStroke, MapObject } from "../../boj/model/mapV2";
 import { placementVariant, variantEdits } from "../../boj/model/assetVariants";
-import { migrateMap, wallUid } from "../../boj/model/mapV2";
+import { migrateMap, wallUid, WEATHER } from "../../boj/model/mapV2";
 import {
   MapTextureLayer, MapElevationLayer, MapWallLayer, MapDrawingLayer,
   MapLightLayer, MapNoteLayer, MapGridLayer, MapObjectLayer, PX, setManifests,
@@ -29,7 +30,12 @@ import { importUvtt, exportUvtt, exportPng } from "../io/uvtt";
 import { useEditorDoc } from "../state/useEditorDoc";
 import * as ops from "../tools/ops";
 import { TexturePicker, TilePicker, WallPicker, LightColors, TABS, LAYERS, LayersPanel, LibraryPanel, PropertiesPanel, GeneratorPanel, MapPanel, type TabId } from "./panels";
+import { CommandPalette, ShortcutHelp, ToolRail, EditorMinimap, type EditorCommand } from "./EditorChrome";
+import type { LibraryMode } from "./AssetLibrary";
+import { actOnObjects, liveSelection, TOOL_HINTS, readPreference, writePreference, rememberAsset, type ObjectAction } from "../state/editorUx";
+import { assetUrl } from "../assets/manifest";
 import "../editor.css";
+import "../editorPro.css";
 
 type Tool = "select" | "teren" | "fill" | "flood" | "textura" | "malba" | "mistnost" | "polygon" | "stena" | "dvere"
   | "interier" | "objekt" | "kresba" | "vyska" | "svetlo" | "start" | "poznamka" | "guma" | "kapatko";
@@ -40,11 +46,11 @@ const TOOLS: { id: Tool; icon: React.ReactElement; nazev: string; key: string }[
   { id: "fill", icon: <Square size={18} />, nazev: "Výplň obdélníkem", key: "Shift+B" },
   { id: "flood", icon: <PaintBucket size={18} />, nazev: "Flood fill", key: "G" },
   { id: "textura", icon: <Layers3 size={18} />, nazev: "Textura", key: "X" },
-  { id: "malba", icon: <Brush size={18} />, nazev: "Malovat texturou", key: "K" },
-  { id: "mistnost", icon: <DoorOpen size={18} />, nazev: "Místnost", key: "R" },
-  { id: "polygon", icon: <Spline size={18} />, nazev: "Polygonální místnost", key: "J" },
-  { id: "interier", icon: <DoorOpen size={18} />, nazev: "Interiér bez počasí", key: "U" },
-  { id: "stena", icon: <Spline size={18} />, nazev: "Stěny", key: "W" },
+  { id: "malba", icon: <PaintRoller size={18} />, nazev: "Malovat texturou", key: "K" },
+  { id: "mistnost", icon: <House size={18} />, nazev: "Místnost", key: "R" },
+  { id: "polygon", icon: <Pentagon size={18} />, nazev: "Polygonální místnost", key: "J" },
+  { id: "interier", icon: <Umbrella size={18} />, nazev: "Interiér bez počasí", key: "U" },
+  { id: "stena", icon: <BrickWall size={18} />, nazev: "Stěny", key: "W" },
   { id: "dvere", icon: <DoorOpen size={18} />, nazev: "Dveře / okna", key: "D" },
   { id: "objekt", icon: <Package size={18} />, nazev: "Objekt", key: "O" },
   { id: "kresba", icon: <PenLine size={18} />, nazev: "Kreslení", key: "P" },
@@ -116,8 +122,18 @@ export default function EditorPage() {
   const [startTyp, setStartTyp] = useState<"druzina" | "nepratele" | "neutral">("druzina");
   const [snap, setSnap] = useState<1 | 0.5 | 0>(1);
   const [sel, setSel] = useState<Sel[]>([]);
-  const [tab, setTab] = useState<TabId>("vrstvy");
-  const [panelOpen, setPanelOpen] = useState(false);
+  const [tab, setTab] = useState<TabId>("knihovna");
+  const [panelOpen, setPanelOpen] = useState(() => window.innerWidth >= 1100);
+  const [panelPinned, setPanelPinned] = useState(false);
+  const [panelWidth, setPanelWidth] = useState(340);
+  const [sheetHeight, setSheetHeight] = useState(50);
+  const [libraryMode, setLibraryMode] = useState<LibraryMode>("objects");
+  const [helpOpen, setHelpOpen] = useState(false);
+  const [paletteOpen, setPaletteOpen] = useState(false);
+  const [playerPreview, setPlayerPreview] = useState(false);
+  const [firstHint, setFirstHint] = useState(() => !readPreference("me-welcome-dismissed", false));
+  const [contextMenu, setContextMenu] = useState<{ x: number; y: number } | null>(null);
+  const [canvasSize, setCanvasSize] = useState({ width: 800, height: 600 });
   const [layerVis, setLayerVis] = useState<Record<string, boolean>>(Object.fromEntries(LAYERS.map(([l]) => [l, true])));
   const [genId, setGenId] = useState("dungeon");
   const [genSeed, setGenSeed] = useState(12345);
@@ -142,6 +158,33 @@ export default function EditorPage() {
   const clipboardRef = useRef<MapObject[]>([]);
   const [panning, setPanning] = useState(false);
   const [space, setSpace] = useState(false);
+  useEffect(() => { if (map) setSel(current => liveSelection(map,current)); }, [map]);
+  useEffect(() => {
+    if (panelPinned) return;
+    if (tool === "objekt") { setTab("knihovna"); setLibraryMode("objects"); }
+    else if (["teren","fill","flood","textura","malba"].includes(tool)) { setTab("knihovna"); setLibraryMode(["textura","malba"].includes(tool) ? "textures" : "terrain"); }
+  }, [tool, panelPinned]);
+  useEffect(() => { if (sel.length && !panelPinned) { setTab("vlastnosti"); if (window.innerWidth >= 1100) setPanelOpen(true); } }, [sel, panelPinned]);
+  useEffect(() => {
+    const node = wrapRef.current; if (!node) return;
+    const observer = new ResizeObserver(() => {
+      setCanvasSize({ width: node.clientWidth, height: node.clientHeight });
+      if (!userZoomRef.current) fit();
+    });
+    observer.observe(node); return () => observer.disconnect();
+  }, [!!map]);
+
+  const runObjectAction = (action: ObjectAction) => {
+    const m = doc.mapRef.current; if (!m) return;
+    const ids = sel.filter(s => s.kind === "objekt").map(s => s.id);
+    const next = actOnObjects(m.objekty || [],ids,action,m.mrizka[0]?.length || 1,m.mrizka.length);
+    if (JSON.stringify(next) !== JSON.stringify(m.objekty || [])) {
+      push(d => { d.objekty = next; });
+      if (action === "delete") setSel([]);
+      if (action === "duplicate") setSel(next.filter(o => !m.objekty?.some(old => old.id === o.id)).map(o => ({kind:"objekt",id:o.id})));
+    }
+    setContextMenu(null);
+  };
 
   const W = map?.mrizka?.[0]?.length || 1, H = map?.mrizka?.length || 1;
   const rerollPlacement = () => {
@@ -149,13 +192,13 @@ export default function EditorPage() {
     refreshVariant(v => v + 1);
   };
   const nextPlacementVariant = placementVariant(ASSETS[stampId], randomVariants, chosenVariant, () => variantRoll.current);
-  const makeObject = (x: number, y: number): MapObject => {
-    const def = stampById(stampId) || ASSETS[stampId];
+  const makeObject = (x: number, y: number, assetId = stampId): MapObject => {
+    const def = stampById(assetId) || ASSETS[assetId];
     const object: MapObject = {
-      id: wallUid(), asset: stampId, x, y, w: def?.w || 1, h: def?.h || 1,
+      id: wallUid(), asset: assetId, x, y, w: def?.w || 1, h: def?.h || 1,
       blocks: def?.blocks, cover: def?.cover, difficult: def?.difficult, light: def?.light,
-      z: ASSETS[stampId]?.z, rot: randomRotation ? rotationRoll.current * 360 : 0,
-      v: placementVariant(ASSETS[stampId], randomVariants, chosenVariant, () => variantRoll.current),
+      z: ASSETS[assetId]?.z, rot: randomRotation ? rotationRoll.current * 360 : 0,
+      v: placementVariant(ASSETS[assetId], randomVariants, assetId === stampId ? chosenVariant : 0, () => variantRoll.current),
     };
     rerollPlacement();
     return object;
@@ -270,12 +313,19 @@ export default function EditorPage() {
   /* ---------- klávesy ---------- */
   useEffect(() => {
     const dn = (e: KeyboardEvent) => {
+      if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === "k") { e.preventDefault(); setHelpOpen(false); setPaletteOpen(v => !v); return; }
+      if ((e.target as HTMLElement)?.closest('[role="dialog"], [role="menu"]')) return;
+      if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === "s") { e.preventDefault(); doc.save(); return; }
       const tag = (e.target as HTMLElement)?.tagName;
       if (tag === "INPUT" || tag === "TEXTAREA" || tag === "SELECT") return;
+      if ((tag === "BUTTON" || tag === "SUMMARY") && (e.key === " " || e.key === "Enter")) return;
+      if (e.key === "?") { e.preventDefault(); setHelpOpen(true); return; }
+      if (e.key === "Tab") { e.preventDefault(); setPanelOpen(v => !v); return; }
+      if (e.key === "/") { e.preventDefault(); setTab("knihovna"); setPanelOpen(true); requestAnimationFrame(() => document.querySelector<HTMLInputElement>("[data-library-search]")?.focus()); return; }
+      if (e.key === "Escape" && contextMenu) { setContextMenu(null); return; }
       if (e.key === " ") { setSpace(true); e.preventDefault(); return; }
       if (e.ctrlKey && e.key.toLowerCase() === "z") { e.preventDefault(); e.shiftKey ? doc.redo() : doc.undo(); return; }
       if (e.ctrlKey && e.key.toLowerCase() === "y") { e.preventDefault(); doc.redo(); return; }
-      if (e.ctrlKey && e.key.toLowerCase() === "s") { e.preventDefault(); doc.save(); return; }
       if (e.key === "Escape") { setWallDraft([]); setRoomPoints([]); setDragPt(null); setMarquee(null); setSel([]); setCalib(null); return; }
       if (!e.ctrlKey && !e.metaKey && !e.altKey && e.key.toLowerCase() === "a") {
         e.preventDefault(); changeVariants(e.shiftKey ? "random" : "next"); return;
@@ -312,7 +362,7 @@ export default function EditorPage() {
         push((m) => ops.moveSel(m, sel, d[0], d[1]));
         return;
       }
-      const t = !e.ctrlKey && !e.metaKey && TOOLS.find((tt) => tt.key === e.key.toUpperCase() || tt.key === (e.shiftKey ? "Shift+" : "") + e.key.toUpperCase());
+      const t = !e.ctrlKey && !e.metaKey && (TOOLS.find(tt => tt.key === (e.shiftKey ? "Shift+" : "") + e.key.toUpperCase()) || TOOLS.find(tt => tt.key === e.key.toUpperCase()));
       if (t) setTool(t.id);
       if (e.key === "+" || e.key === "=") zoomAt(1.25);
       if (e.key === "-") zoomAt(0.8);
@@ -323,11 +373,12 @@ export default function EditorPage() {
     const onFs = () => setFs(!!document.fullscreenElement);
     document.addEventListener("fullscreenchange", onFs);
     return () => { window.removeEventListener("keydown", dn); window.removeEventListener("keyup", up2); document.removeEventListener("fullscreenchange", onFs); };
-  }, [doc.undo, doc.redo, doc.save, sel, push, fit, zoomAt, changeVariants]);
+  }, [doc.undo, doc.redo, doc.save, sel, push, fit, zoomAt, changeVariants, contextMenu]);
 
   /* ---------- pointer ---------- */
   const onDown = (e: React.PointerEvent) => {
-    if (e.button === 1 || space || e.button === 2) { panRef.current = { x0: e.clientX, y0: e.clientY, vx: V.x, vy: V.y }; setPanning(true); userZoomRef.current = true; return; }
+    if (e.button === 1 || space || e.button === 2) { panRef.current = { x0: e.clientX, y0: e.clientY, vx: V.x, vy: V.y }; e.currentTarget.setPointerCapture(e.pointerId); setPanning(true); userZoomRef.current = true; return; }
+    setContextMenu(null);
     const [cx, cy] = cellOf(e);
     if (tool === "malba") {
       e.preventDefault(); e.currentTarget.setPointerCapture(e.pointerId);
@@ -442,6 +493,7 @@ export default function EditorPage() {
       return;
     }
     if (panRef.current) {
+      if (Math.hypot(e.clientX - panRef.current.x0,e.clientY - panRef.current.y0) > 4) setContextMenu(null);
       setV((v) => ({ ...v, x: panRef.current!.vx + e.clientX - panRef.current!.x0, y: panRef.current!.vy + e.clientY - panRef.current!.y0 }));
       return;
     }
@@ -497,6 +549,7 @@ export default function EditorPage() {
       if (e.currentTarget.hasPointerCapture(e.pointerId)) e.currentTarget.releasePointerCapture(e.pointerId);
       return;
     }
+    if (panRef.current && e.currentTarget.hasPointerCapture(e.pointerId)) e.currentTarget.releasePointerCapture(e.pointerId);
     panRef.current = null; setPanning(false); paintRef.current = false;
     if (moveRef.current || handleDrag || placementRef.current) {
       moveRef.current = null; placementRef.current = null; setHandleDrag(null);
@@ -538,39 +591,47 @@ export default function EditorPage() {
     zoomAt(e.deltaY < 0 ? 1.15 : 1 / 1.15, e.clientX - r.left, e.clientY - r.top);
   };
 
+  const playerMap = React.useMemo(() => map && playerPreview ? {...map,objekty:map.objekty?.filter(o => !o.dmOnly),kresby:map.kresby?.filter(o => !o.dmOnly),poznamky:[]} : map,[map,playerPreview]);
   /* ---------- render ---------- */
   if (!map) return <div className="me-ed me-loading">Načítám mapu…</div>;
   const selObject = sel.length === 1 && sel[0].kind === "objekt" ? (map.objekty || []).find((o) => o.id === sel[0].id) : null;
   const toolInfo = TOOLS.find((t) => t.id === tool)!;
+  const previewMap = playerMap!;
+  const commands: EditorCommand[] = [
+    ...TOOLS.map(t => ({id:"tool-"+t.id,label:t.nazev,group:"Nástroje · "+t.key,icon:t.icon,run:() => setTool(t.id)})),
+    ...TABS.map(([id,icon,label]) => ({id:"panel-"+id,label,group:"Panely",icon,run:() => {setTab(id);setPanelOpen(true);}})),
+    ...Object.values(ASSETS).map(a => ({id:"asset-"+a.id,label:a.nazev,group:"Objekty · "+(a.kategorie || "Vlastní"),image:assetUrl(a.src),run:() => {setStampId(a.id);setChosenVariant(0);rerollPlacement();setTool("objekt");rememberAsset(a.id);}})),
+    ...Object.values(texQ.data || {}).map(t => ({id:"texture-"+t.id,label:t.nazev,group:"Textury",image:assetUrl(t.src),run:() => {setBrushTex(t.id);setTool("malba");}})),
+    ...WEATHER.map(([typ,label]) => ({id:"weather-"+typ,label,group:"Počasí",run:() => {push(m => {m.pocasi={...m.pocasi,typ};});setTab("mapa");setPanelOpen(true);}})),
+  ];
 
   return (
-    <div className="me-ed">
+    <div className="me-ed" style={{"--panel-width":`${panelWidth}px`,"--sheet-height":`${sheetHeight}dvh`} as React.CSSProperties}>
       <header className="me-ed-head">
-        <Link to="/boj/mapy" className="me-btn ghost"><ArrowLeft size={15} /> Zpět</Link>
-        <input className="me-name" value={map.nazev} onChange={(e) => push((m) => { m.nazev = e.target.value; })} />
+        <Link to="/boj/mapy" className="me-btn ghost me-back" onClick={e => {if(doc.dirty && !confirm("Neuložené změny. Opravdu opustit editor?")) e.preventDefault();}}><ArrowLeft size={15} /><span>Zpět</span></Link>
+        <input className="me-name" aria-label="Název mapy" value={map.nazev} onChange={(e) => push((m) => { m.nazev = e.target.value; })} />
         <span className={`me-savestate ${doc.dirty ? "dirty" : ""}`}>{doc.saving ? "Ukládám…" : doc.dirty ? "Neuloženo" : "Uloženo"}</span>
-        <button className="me-btn sm" onClick={doc.undo} title="Zpět (Ctrl+Z)" disabled={!doc.canUndo()}><Undo2 size={15} /></button>
-        <button className="me-btn sm" onClick={doc.redo} title="Znovu (Ctrl+Y)" disabled={!doc.canRedo()}><Redo2 size={15} /></button>
-        <button className="me-btn sm" title="Fullscreen" onClick={() => fs ? document.exitFullscreen() : document.documentElement.requestFullscreen()}>
-          {fs ? <Minimize size={15} /> : <Maximize size={15} />}</button>
-        <span className="me-sp" />
-        <AnimationButton />
-        <button className="me-btn primary" onClick={doc.save} title="Ctrl+S"><Save size={15} /> Uložit</button>
-        <button className="me-btn" onClick={async () => { await doc.save(); nav("/boj"); }} title="Uložit a otevřít boj"><Swords size={15} /> Otevřít v boji</button>
+        <div className="me-history"><button className="me-btn sm" onClick={doc.undo} title="Zpět (Ctrl+Z)" disabled={!doc.canUndo()}><Undo2 size={15} /></button>
+        <button className="me-btn sm" onClick={doc.redo} title="Znovu (Ctrl+Y)" disabled={!doc.canRedo()}><Redo2 size={15} /></button></div>
+        <div className="me-view-controls me-segments"><button aria-pressed={layerVis.mrizka} onClick={() => setLayerVis(s => ({...s,mrizka:!s.mrizka}))}><Grid2X2 size={15} /> Mřížka</button><AnimationButton /><button aria-pressed={playerPreview} onClick={() => setPlayerPreview(!playerPreview)}><Eye size={15} /> Náhled hráče</button></div>
+        <div className="me-head-actions"><button className="me-btn me-keys" onClick={() => setHelpOpen(true)}><Keyboard size={15} /> Klávesy <kbd>?</kbd></button>
+        <button className="me-btn primary" onClick={doc.save} title="Ctrl+S"><Save size={15} /> Uložit <kbd>Ctrl S</kbd></button>
+        <button className="me-btn me-battle-link" onClick={async () => { await doc.save(); nav("/boj"); }} title="Uložit a otevřít boj"><Swords size={15} /><span>Otevřít v boji</span></button>
+        <button className="me-btn sm me-panel-toggle" onClick={() => setPanelOpen(!panelOpen)} aria-label="Panely" title="Panely (Tab)">{panelOpen ? <PanelRightClose size={17} /> : <PanelRightOpen size={17} />}<span>Panely</span></button></div>
+        <details className="me-overflow-menu"><summary className="me-btn" aria-label="Další akce"><MoreHorizontal size={18} /></summary><div>
+          <button className="me-btn" onClick={() => setHelpOpen(true)}><Keyboard size={16} /> Klávesy (?)</button><button className="me-btn" onClick={() => setPaletteOpen(true)}><Command size={16} /> Rychlé příkazy</button>
+          <button className="me-btn" onClick={doc.undo} disabled={!doc.canUndo()}><Undo2 size={16} /> Zpět</button><button className="me-btn" onClick={doc.redo} disabled={!doc.canRedo()}><Redo2 size={16} /> Znovu</button>
+          <button className="me-btn" onClick={() => setLayerVis(s => ({...s,mrizka:!s.mrizka}))}><Grid2X2 size={16} /> Mřížka</button><AnimationButton /><button className="me-btn" onClick={() => setPlayerPreview(!playerPreview)}><Eye size={16} /> Náhled hráče</button>
+          <button className="me-btn" onClick={() => fs ? document.exitFullscreen() : document.documentElement.requestFullscreen()}>{fs ? <Minimize size={16} /> : <Maximize size={16} />} Celá obrazovka</button>
+          <button className="me-btn" onClick={async () => {await doc.save();nav("/boj");}}><Swords size={16} /> Otevřít v boji</button></div></details>
       </header>
 
       <div className="me-ed-body">
-        <nav className="me-rail">
-          <button className={`me-tool me-sheetbtn ${panelOpen ? "on" : ""}`} title="Panely" onClick={() => setPanelOpen(!panelOpen)}><Library size={18} /></button>
-          {TOOLS.map((t) => (
-            <button key={t.id} className={`me-tool ${tool === t.id ? "on" : ""}`}
-                    title={`${t.nazev} (${t.key})`} onClick={() => setTool(t.id)}>{t.icon}</button>
-          ))}
-        </nav>
+        <ToolRail tools={TOOLS} active={tool} onPick={id => setTool(id as Tool)} />
 
         <div className="me-center">
           <div className="me-ctx">
-            <span className="me-ctx-tool">{toolInfo.nazev}</span>
+            <span className="me-ctx-tool">{toolInfo.icon}{toolInfo.nazev}</span><details className="me-info"><summary aria-label="Nápověda nástroje"><Info size={16} /></summary><div><strong>{toolInfo.nazev} <kbd>{toolInfo.key}</kbd></strong><p>{TOOL_HINTS[tool]}</p><p>Mezerník + tažení: posun · kolečko: zoom<br />Q / E: otočení · A / Shift+A: varianty</p></div></details>
             {tool === "teren" || tool === "fill" || tool === "flood" ? (
               <>
                 <span className="me-ctx-lab">Dlaždice:</span>
@@ -631,7 +692,7 @@ export default function EditorPage() {
                 {drawKind === "rect" && <label>Úhel (°)<input aria-label="Úhel kresby" type="number" value={shapeAngle} onChange={e => setShapeAngle(+e.target.value)} style={{ width: 60 }} /></label>}
                 <input type="color" value={drawColor} onChange={(e) => setDrawColor(e.target.value)} title="Barva" />
                 <input type="color" value={drawFill || "#000000"} onChange={(e) => setDrawFill(e.target.value)} title="Výplň" />
-                <input type="range" min={0.05} max={0.5} step={0.05} value={drawW} onChange={(e) => setDrawW(+e.target.value)} />
+                <label>Tloušťka {drawW}<input aria-label="Tloušťka kresby" type="range" min={0.05} max={0.5} step={0.05} value={drawW} onChange={(e) => setDrawW(+e.target.value)} /></label>
                 <label className="me-ctx-chk"><input type="checkbox" checked={drawDm} onChange={(e) => setDrawDm(e.target.checked)} /> Jen DM</label>
               </>
             )}
@@ -642,23 +703,20 @@ export default function EditorPage() {
                 <span className="me-ctx-lab">Přítmí navíc (ft)</span><input aria-label="Přítmí navíc" type="number" min="0" value={lightD} onChange={(e) => setLightD(Math.max(0, +e.target.value))} style={{ width: 48 }} />
                 <LightColors value={lightColor} onChange={setLightColor} />
                 <input type="color" value={lightColor} onChange={(e) => setLightColor(e.target.value)} />
-                <label>Intenzita<input aria-label="Intenzita světla" type="range" min="0" max="1" step=".05" value={lightIntensity} onChange={e => setLightIntensity(+e.target.value)} /></label>
+                <label>Intenzita {Math.round(lightIntensity * 100)} %<input aria-label="Intenzita světla" type="range" min="0" max="1" step=".05" value={lightIntensity} onChange={e => setLightIntensity(+e.target.value)} /></label>
                 <label><input type="checkbox" checked={lightFlicker} onChange={e => setLightFlicker(e.target.checked)} /> Blikání</label>
               </>
             )}
             {tool === "start" && START_TYPY.map(([v, n]) => <button key={v} className={`me-btn sm ${startTyp === v ? "on" : ""}`} onClick={() => setStartTyp(v as any)}>{n}</button>)}
-            <span className="me-sp" />
-            <span className="me-ctx-lab me-snaplab">Snap:</span>
-            {([1, 0.5, 0] as const).map((s) => <button key={s} className={`me-btn sm ${snap === s ? "on" : ""}`} onClick={() => setSnap(s)}>{s === 0 ? "vyp" : s}</button>)}
-            <button className="me-btn sm" onClick={fit} title="Přizpůsobit (0)"><Maximize size={14} /></button>
           </div>
 
-          <div ref={wrapRef} className="me-canvas-wrap">
-            <MapAnimatedScene map={map} view={V} dm terrain={layerVis.teren} objects={layerVis.objekty} lights={layerVis.svetla} illustration={!!(layerVis.obrazek && map.obrazek)} details={<>
+          <div ref={wrapRef} className="me-canvas-wrap" onDragOver={e => {if(e.dataTransfer.types.includes("application/x-montelien-asset")){e.preventDefault();e.dataTransfer.dropEffect="copy";}}}
+            onDrop={e => { const aid = e.dataTransfer.getData("application/x-montelien-asset"); if(!ASSETS[aid] && !stampById(aid)) return; e.preventDefault(); const [wx,wy] = toWorld(e); if(wx < 0 || wy < 0 || wx >= W || wy >= H) return; const object = makeObject(snap ? Math.round(wx/snap)*snap : wx,snap ? Math.round(wy/snap)*snap : wy,aid); push(m => {m.objekty=[...(m.objekty || []),object];}); rememberAsset(aid); setSel([{kind:"objekt",id:object.id}]); }}>
+            <MapAnimatedScene map={previewMap} view={V} dm={!playerPreview} terrain={layerVis.teren} objects={layerVis.objekty} lights={layerVis.svetla} illustration={!!(layerVis.obrazek && map.obrazek)} details={<>
               {layerVis.mrizka && <MapGridLayer map={map} W={W} H={H} />}
               {layerVis.vyska && <MapElevationLayer map={map} />}
-              {layerVis.kresby && <MapDrawingLayer map={map} dm />}
-              {layerVis.steny && <MapWallLayer map={map} dm />}
+              {layerVis.kresby && <MapDrawingLayer map={previewMap} dm={!playerPreview} />}
+              {layerVis.steny && <MapWallLayer map={map} dm={!playerPreview} />}
             </>}>
               <rect width={W * PX} height={H * PX} fill="#4a453e" />
               {layerVis.obrazek && map.obrazek && <image href={`/repo/11_Mapy/${map.obrazek}`} width={W * PX} height={H * PX} preserveAspectRatio="none" opacity={0.9} />}
@@ -669,12 +727,12 @@ export default function EditorPage() {
             <svg ref={svgRef} className={`me-canvas tool-${tool}`} onWheel={onWheel}
                  onPointerDown={onDown} onPointerMove={onMove} onPointerUp={onUp} onDoubleClick={onDbl}
                  onPointerCancel={() => { strokeRef.current = null; placementRef.current = null; setPaintPreview(null); paintRef.current = false; if (transformStart.current) doc.setMap(transformStart.current); transformStart.current = null; moveRef.current = null; setHandleDrag(null); }}
-                 onPointerLeave={() => setCur(null)} onContextMenu={(e) => e.preventDefault()}
+                 onPointerLeave={() => setCur(null)} onContextMenu={(e) => { e.preventDefault(); const [x,y] = toWorld(e); const hit = ops.pickAt(map,x,y,true); if(hit?.kind === "objekt"){if(!sel.some(s => s.id === hit.id)) setSel([hit]);setContextMenu({x:Math.max(8,Math.min(window.innerWidth-240,e.clientX)),y:Math.max(8,Math.min(window.innerHeight-380,e.clientY))});} }}
                  style={{ touchAction: "none", width: "100%", height: "100%", display: "block" }}>
               <g transform={`translate(${V.x},${V.y}) scale(${V.k})`}>
-                {layerVis.svetla && <MapAtmosphereLayer map={map} />}
-                {layerVis.poznamky && <MapNoteLayer map={map} />}
-                {layerVis.starty && START_TYPY.map(([typ]) =>
+                {layerVis.svetla && <MapAtmosphereLayer map={previewMap} />}
+                {layerVis.poznamky && !playerPreview && <MapNoteLayer map={map} />}
+                {layerVis.starty && !playerPreview && START_TYPY.map(([typ]) =>
                   ((map.start as any)?.[typ] || []).map(([x, y]: [number, number], i: number) => (
                     <g key={typ + i} transform={`translate(${x * PX + PX / 2},${y * PX + PX / 2})`}>
                       <circle r={8} fill={typ === "druzina" ? "#22c55e" : typ === "nepratele" ? "#ef4444" : "#a8a29e"} opacity={.75} />
@@ -705,20 +763,20 @@ export default function EditorPage() {
                   <polyline points={freePts.map(([x, y]) => `${x * PX},${y * PX}`).join(" ")} fill="none" stroke={drawColor} strokeWidth={drawW * PX} />)}
                 {marquee && <rect x={Math.min(marquee.a[0], marquee.b[0]) * PX} y={Math.min(marquee.a[1], marquee.b[1]) * PX}
                                   width={Math.abs(marquee.b[0] - marquee.a[0]) * PX} height={Math.abs(marquee.b[1] - marquee.a[1]) * PX}
-                                  fill="#3b82f6" opacity={.12} stroke="#3b82f6" strokeWidth={1} strokeDasharray="3 3" />}
+                                  fill="#d4a24c" opacity={.12} stroke="#d4a24c" strokeWidth={1} strokeDasharray="3 3" />}
                 {/* výběr + úchyty */}
                 {sel.map((s) => {
-                  const o = s.kind === "objekt" ? (map.objekty || []).find((o) => o.id === s.id) : null;
+                  const o = s.kind === "objekt" ? (previewMap.objekty || []).find((o) => o.id === s.id) : null;
                   if (!o) return null;
                   const w = o.w * PX, h = o.h * PX;
                   return (
                     <g key={s.id} transform={`translate(${o.x * PX},${o.y * PX}) rotate(${o.rot || 0})`}>
-                      <rect x={-w / 2} y={-h / 2} width={w} height={h} fill="none" stroke="#3b82f6" strokeWidth={1.4} strokeDasharray="4 2" />
-                      {[-1, 1].flatMap(sx => [-1, 1].map(sy => <rect key={sx+","+sy} aria-label="Změnit velikost" x={sx*w / 2 - 4} y={sy*h / 2 - 4} width={8} height={8} fill="#3b82f6" stroke="#fff" strokeWidth={1}
+                      <rect x={-w / 2} y={-h / 2} width={w} height={h} fill="none" stroke="#d4a24c" strokeWidth={1.4} strokeDasharray="4 2" />
+                      {[-1, 1].flatMap(sx => [-1, 1].map(sy => <rect key={sx+","+sy} aria-label="Změnit velikost" x={sx*w / 2 - 4} y={sy*h / 2 - 4} width={8} height={8} fill="#d4a24c" stroke="#fff" strokeWidth={1}
                             style={{ cursor: "nwse-resize" }} onPointerDown={(e) => { e.stopPropagation(); transformStart.current = structuredClone(map); svgRef.current!.setPointerCapture(e.pointerId); setHandleDrag("scale"); }} />))}
-                      <circle cx={0} cy={-h / 2 - 10} r={5} fill="#3b82f6" stroke="#fff" strokeWidth={1}
+                      <circle cx={0} cy={-h / 2 - 10} r={5} fill="#d4a24c" stroke="#fff" strokeWidth={1}
                               aria-label="Otočit objekt" style={{ cursor: "grab" }} onPointerDown={(e) => { e.stopPropagation(); transformStart.current = structuredClone(map); svgRef.current!.setPointerCapture(e.pointerId); setHandleDrag("rot"); }} />
-                      <line pointerEvents="none" x1={0} y1={-h / 2} x2={0} y2={-h / 2 - 10} stroke="#3b82f6" strokeWidth={1} />
+                      <line pointerEvents="none" x1={0} y1={-h / 2} x2={0} y2={-h / 2 - 10} stroke="#d4a24c" strokeWidth={1} />
                     </g>
                   );
                 })}
@@ -736,31 +794,30 @@ export default function EditorPage() {
               </g>
             </svg>
             <MapWeatherOverlay map={map} view={V} />
-            <svg className="me-minimap" viewBox={`0 0 ${W * PX} ${H * PX}`}
-                 onClick={(e) => {
-                   const r = (e.currentTarget as SVGSVGElement).getBoundingClientRect();
-                   const mx = (e.clientX - r.left) / r.width * W * PX, my = (e.clientY - r.top) / r.height * H * PX;
-                   const cw = wrapRef.current!.clientWidth, ch = wrapRef.current!.clientHeight;
-                   setV((v) => ({ ...v, x: cw / 2 - mx * v.k, y: ch / 2 - my * v.k }));
-                 }}>
-              <MapTextureLayer map={map} />
-              {(map.steny || []).map((w) => <line key={w.id} x1={w.a[0] * PX} y1={w.a[1] * PX} x2={w.b[0] * PX} y2={w.b[1] * PX} stroke="#292524" strokeWidth={2} />)}
-            </svg>
+            <EditorMinimap map={previewMap} view={V} width={canvasSize.width} height={canvasSize.height} onCenter={(x,y) => setV(v => ({...v,x:canvasSize.width/2-x*v.k,y:canvasSize.height/2-y*v.k}))} />
+            {firstHint && <aside className="me-welcome"><button className="me-btn sm" aria-label="Skrýt úvodní tip" onClick={() => {setFirstHint(false);writePreference("me-welcome-dismissed",true);}}><X size={15} /></button><small>VÁŠ SVĚT, VAŠE PRAVIDLA</small><h3>Od prvního tahu k dobrodružství</h3><ol><li>Vyber nástroj vlevo a uprav terén.</li><li>Z knihovny přetáhni objekty do mapy.</li><li>Vyber objekt a dolaď jej ve Vlastnostech.</li></ol><button className="me-btn ghost" onClick={() => setHelpOpen(true)}><Keyboard size={14} /> Prohlédnout zkratky</button></aside>}
           </div>
 
           <footer className="me-status">
-            {cur && <span>cell {cur.x},{cur.y}</span>}
-            {cur && <span>tile {TILES[map.mrizka[cur.y]?.[cur.x]]?.nazev || map.mrizka[cur.y]?.[cur.x] || "—"}</span>}
+            <span className="me-cursor-status">{cur ? `Pole ${cur.x}, ${cur.y}` : "Připraveno"}</span>
+            {cur && <span className="me-tile-status">{TILES[map.mrizka[cur.y]?.[cur.x]]?.nazev || map.mrizka[cur.y]?.[cur.x] || "—"}</span>}
             {cur && map.textury?.[k2(cur.x, cur.y)] && <span>tex {textureById(map.textury[k2(cur.x, cur.y)])?.nazev}</span>}
             {cur && map.vyska?.[k2(cur.x, cur.y)] != null && <span>elev {map.vyska[k2(cur.x, cur.y)]} ft</span>}
             <span className="me-sp" />
-            <span>{Math.round(V.k * 100)} %</span>
-            <span>snap {snap === 0 ? "vyp" : snap}</span>
-            <span>{W}×{H}</span>
+            <span>{sel.length} vybráno</span><span className="me-status-snap">Přichytit</span><div className="me-segments" aria-label="Přichytávání">{([1,.5,0] as const).map(s => <button key={s} aria-pressed={snap === s} onClick={() => setSnap(s)}>{s || "vyp"}</button>)}</div>
+            <button className={`me-btn sm ${layerVis.mrizka ? "on" : ""}`} aria-label="Mřížka" aria-pressed={layerVis.mrizka} onClick={() => setLayerVis(s => ({...s,mrizka:!s.mrizka}))}><Grid2X2 size={14} /></button>
+            <div className="me-zoom"><button className="me-btn sm" aria-label="Oddálit" onClick={() => zoomAt(.8)}><Minus size={14} /></button><select aria-label="Přiblížení" value={String(Math.round(V.k*100))} onChange={e => zoomAt(+e.target.value / (V.k*100))}>{[...new Set([25,50,75,100,125,150,200,300,400,Math.round(V.k*100)])].sort((a,b) => a-b).map(z => <option key={z} value={z}>{z} %</option>)}</select><button className="me-btn sm" aria-label="Přiblížit" onClick={() => zoomAt(1.25)}><Plus size={14} /></button></div><button className="me-btn sm me-fit" onClick={fit} title="Přizpůsobit (0)"><Maximize size={14} /><span>Přizpůsobit</span></button>
           </footer>
         </div>
 
-        <aside className={`me-right ${panelOpen ? "open" : ""}`}>
+        {panelOpen && <button className="me-panel-backdrop" aria-label="Zavřít panely" onClick={() => setPanelOpen(false)} />}
+        <aside className={`me-right ${panelOpen ? "open" : ""}`} aria-label="Panely editoru">
+          <div className="me-panel-resize" role="separator" tabIndex={0} aria-label="Šířka panelu" aria-orientation="vertical" aria-valuemin={280} aria-valuemax={480} aria-valuenow={panelWidth}
+            onKeyDown={e => {if(e.key === "ArrowLeft" || e.key === "ArrowRight"){e.preventDefault();e.stopPropagation();setPanelWidth(w => Math.max(280,Math.min(480,w+(e.key === "ArrowLeft" ? 16 : -16))));}}}
+            onPointerDown={e => e.currentTarget.setPointerCapture(e.pointerId)} onPointerMove={e => {if(e.currentTarget.hasPointerCapture(e.pointerId)) setPanelWidth(Math.max(280,Math.min(480,window.innerWidth-e.clientX)));}} />
+          <div className="me-panel-heading"><div className="me-sheet-handle" role="slider" tabIndex={0} aria-label="Výška panelů" aria-valuemin={30} aria-valuemax={85} aria-valuenow={sheetHeight}
+            onKeyDown={e => {if(e.key === "ArrowUp" || e.key === "ArrowDown"){e.preventDefault();e.stopPropagation();setSheetHeight(h => Math.max(30,Math.min(85,h+(e.key === "ArrowUp" ? 5 : -5))));}}}
+            onPointerDown={e => e.currentTarget.setPointerCapture(e.pointerId)} onPointerMove={e => {if(e.currentTarget.hasPointerCapture(e.pointerId)) setSheetHeight(Math.max(30,Math.min(85,(window.innerHeight-e.clientY)/window.innerHeight*100)));}}><span /></div><strong>Pracovní prostor</strong><button className={`me-btn sm ${panelPinned ? "on" : ""}`} aria-label={panelPinned ? "Odepnout panel" : "Připnout panel"} aria-pressed={panelPinned} onClick={() => setPanelPinned(!panelPinned)} title="Připnutí vypne automatické přepínání">{panelPinned ? <PinOff size={15} /> : <Pin size={15} />}</button><button className="me-btn sm" aria-label="Zavřít panel" title="Skrýt (Tab)" onClick={() => setPanelOpen(false)}><X size={16} /></button></div>
           <div className="me-tabs">
             {TABS.map(([t, ic, n]) => (
               <button key={t} className={tab === t ? "on" : ""} onClick={() => setTab(t)} title={n}>{ic}<span className="me-tab-n">{n}</span></button>
@@ -769,12 +826,14 @@ export default function EditorPage() {
           <div className="me-right-body">
             {tab === "vrstvy" && <LayersPanel map={map} layerVis={layerVis} setLayerVis={setLayerVis} />}
             {tab === "knihovna" && <LibraryPanel q={stampQ} setQ={setStampQ} kat={stampKat} setKat={setStampKat}
+              mode={libraryMode} onMode={setLibraryMode} ground={map.podklad} tile={brushTile} texture={brushTex}
+              onTile={id => {setBrushTile(id); if(!["teren","fill","flood"].includes(tool)) setTool("teren");}} onTexture={id => {setBrushTex(id);if(!["textura","malba","mistnost","polygon"].includes(tool)) setTool("malba");}}
               stampId={stampId} ASSETS={ASSETS} onUpload={uploadAsset} variant={chosenVariant}
               onVariant={v => { setChosenVariant(v); setRandomVariants(false); }}
               onPick={(sid) => { setStampId(sid); setChosenVariant(0); rerollPlacement(); setTool("objekt"); }} />}
             {tab === "vlastnosti" && <PropertiesPanel map={map} selObj={sel.length === 1 ? sel[0] : null} push={push}
               objects={(map.objekty || []).filter(o => sel.some(s => s.kind === "objekt" && s.id === o.id))}
-              assets={ASSETS} onVariant={changeVariants}
+              assets={ASSETS} onVariant={changeVariants} onAction={runObjectAction}
               onDelete={() => { if (sel.length) { push((m) => { for (const s of sel) { const n = s.kind === "objekt" ? "objekty" : s.kind === "kresba" ? "kresby" : s.kind === "stena" ? "steny" : s.kind === "svetlo" ? "svetla" : "poznamky"; (m as any)[n] = ((m as any)[n] || []).filter((o: any) => o.id !== s.id); } }); setSel([]); } }} />}
             {tab === "generator" && <GeneratorPanel genId={genId} setGenId={setGenId} seed={genSeed} setSeed={setGenSeed}
               genPrev={genPrev} onPreview={() => { const g = GENERATORS.find((x) => x.id === genId)!; setGenPrev(g.fn(W, H, genSeed)); }}
@@ -800,6 +859,11 @@ export default function EditorPage() {
           </div>
         </aside>
       </div>
+      {paletteOpen && <CommandPalette commands={commands} onClose={() => setPaletteOpen(false)} />}
+      {helpOpen && <ShortcutHelp tools={TOOLS} onClose={() => setHelpOpen(false)} />}
+      {contextMenu && <><div className="me-menu-dismiss" onPointerDown={() => setContextMenu(null)} /><div className="me-object-menu" role="menu" aria-label="Akce objektu" style={{left:contextMenu.x,top:contextMenu.y}} onKeyDown={e => {if(e.key === "Escape") setContextMenu(null);if(e.key === "ArrowDown" || e.key === "ArrowUp"){e.preventDefault();const buttons=[...e.currentTarget.querySelectorAll("button")];const i=buttons.indexOf(document.activeElement as HTMLButtonElement);buttons[(i+(e.key === "ArrowDown" ? 1 : -1)+buttons.length)%buttons.length]?.focus();}}}>
+        <small>VÝBĚR · {sel.length}</small>{([["duplicate","Duplikovat",<Copy size={15} />],["rotate-left","Otočit −15°",<Undo2 size={15} />],["rotate-right","Otočit +15°",<Redo2 size={15} />],["flip","Překlopit",<Layers3 size={15} />],["front","Dopředu",<ArrowUp size={15} />],["back","Dozadu",<ArrowDown size={15} />]] as const).map(([action,label,icon],i) => <button key={action} autoFocus={i===0} role="menuitem" onClick={() => runObjectAction(action)}>{icon}{label}</button>)}<hr /><button role="menuitem" onClick={() => {changeVariants("next");setContextMenu(null);}}>Další varianta<kbd>A</kbd></button><button role="menuitem" onClick={() => {changeVariants("random");setContextMenu(null);}}>Náhodná varianta<kbd>⇧ A</kbd></button><hr /><button className="danger" role="menuitem" onClick={() => runObjectAction("delete")}><Trash2 size={15} /> Smazat<kbd>Del</kbd></button>
+      </div></>}
 
       {noteDraft && (
         <div className="me-modal-back" onClick={() => setNoteDraft(null)}>
