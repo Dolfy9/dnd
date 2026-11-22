@@ -32,7 +32,7 @@ import * as ops from "../tools/ops";
 import { TexturePicker, TilePicker, WallPicker, TABS, LAYERS, LayersPanel, LibraryPanel, PropertiesPanel, GeneratorPanel, MapPanel, type TabId } from "./panels";
 import { LightInspector, LightShapePicker } from "./LightInspector";
 import { LightHandles } from "./LightHandles";
-import { LIGHT_PRESETS, editedLight, updateLight, aimPlacedLight, dragLightHandle, lightRotationDelta, type LightHandle } from "../tools/lightEditing";
+import { LIGHT_PRESETS, editedLight, updateLight, aimPlacedLight, dragLightHandle, lightRotationDelta, lightHandlesEnabled, type LightHandle } from "../tools/lightEditing";
 import { CommandPalette, ShortcutHelp, ToolRail, EditorMinimap, type EditorCommand } from "./EditorChrome";
 import type { LibraryMode } from "./AssetLibrary";
 import { actOnObjects, canTogglePanel, liveSelection, panUpdate, playerPreviewMap, TOOL_HINTS, readPreference, writePreference, rememberAsset, type ObjectAction } from "../state/editorUx";
@@ -813,7 +813,7 @@ export default function EditorPage() {
                     </g>
                   );
                 })}
-                {selectedLight && layerVis.svetla && <LightHandles light={selectedLight} zoom={V.k} onBegin={(e,handle)=>{
+                {selectedLight && layerVis.svetla && lightHandlesEnabled(tool) && <LightHandles light={selectedLight} zoom={V.k} onBegin={(e,handle)=>{
                   if(e.button!==0)return;
                   e.preventDefault();e.stopPropagation();
                   const light=doc.mapRef.current?.svetla?.find(l=>l.id===selectedLight.id);

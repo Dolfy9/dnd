@@ -2,12 +2,16 @@ import React from "react";
 import { describe, expect, it } from "vitest";
 import { renderToStaticMarkup } from "react-dom/server";
 import { migrateMap, normalizeLight, type MapLightV2 } from "../../boj/model/mapV2";
-import { LIGHT_PRESETS, applyLightPreset, editedLight, updateLight, dragLightHandle, aimPlacedLight, lightHandlePoints, lightRotationDelta } from "./lightEditing";
+import { LIGHT_PRESETS, applyLightPreset, editedLight, updateLight, dragLightHandle, aimPlacedLight, lightHandlePoints, lightRotationDelta, lightHandlesEnabled } from "./lightEditing";
 import { LightInspector } from "../components/LightInspector";
 import { LightHandles } from "../components/LightHandles";
 
 const light:MapLightV2={id:"a",x:8,y:8,bright:10,dim:10};
 describe("light editing operations",()=>{
+  it("does not let selected light handles intercept a different drawing tool",()=>{
+    expect(lightHandlesEnabled("select")).toBe(true);expect(lightHandlesEnabled("svetlo")).toBe(true);
+    for(const tool of ["malba","kresba","teren","objekt","guma"])expect(lightHandlesEnabled(tool)).toBe(false);
+  });
   it("applies every preset without replacing identity or position",()=>{
     expect(LIGHT_PRESETS).toHaveLength(12);
     for(const preset of LIGHT_PRESETS){
