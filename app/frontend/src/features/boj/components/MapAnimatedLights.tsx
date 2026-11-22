@@ -85,13 +85,15 @@ const AnimatedLight = memo(function AnimatedLight({light:l,blockers,shadows,obje
   light:VisualLight;blockers:LightSegment[];shadows:ObjectLightShadow[];objects:MapObject[];assets:Record<string,AssetEntry>;width:number;height:number;animate:boolean;
 }) {
   const id=useId().replace(/:/g,"");
+  const [entered,setEntered]=useState(false);
+  useEffect(()=>{const frame=requestAnimationFrame(()=>setEntered(true));return()=>cancelAnimationFrame(frame);},[]);
   const b=lightBounds(l);
   const nearby=l.stiny ? nearbyLightBlockers([l.x,l.y],lightReach(l),blockers) : [];
   const blockerKey=nearby.map(w=>[...w.a,...w.b].join(",")).join(";");
   const polygon=useMemo(()=>nearby.length ? visibilityPolygon([l.x,l.y],nearby,width,height) : [],[l.x,l.y,blockerKey,width,height]);
   const clipPath=polygon.length ? `polygon(${polygon.map(([x,y])=>`${x*24-b.left}px ${y*24-b.top}px`).join(",")})` : undefined;
   const [rasterMask,setRasterMask]=useState<{key:string;src:string}>();
-  const maskKey=JSON.stringify([polygon,shadows,objects.map(o=>[o.asset,o.x,o.y,o.w,o.h,o.rot,o.flip,o.v,assets[o.asset] && assetSrc(assets[o.asset],o.v)]),b.left,b.top,b.width,b.height]);
+  const maskKey=JSON.stringify([polygon,shadows,objects.map(o=>[o.asset,o.x,o.y,o.w,o.h,o.rot,o.flip,o.v,o.zap,assets[o.asset] && (o.zap===false?assets[o.asset].srcVyp:assetSrc(assets[o.asset],o.v))]),b.left,b.top,b.width,b.height]);
   const mask=rasterMask?.key===maskKey?rasterMask.src:undefined,needsMask=!!(polygon.length || shadows.length || objects.length);
   useEffect(()=>{
     let active=true;
@@ -114,7 +116,7 @@ const AnimatedLight = memo(function AnimatedLight({light:l,blockers,shadows,obje
   };
   const base=useMemo(()=>sprite(false),[l.tvar,l.sirka,l.delka,l.radius,l.bright,l.smer,l.color,b.width,b.height]);
   const alternate=useMemo(()=>shimmer ? sprite(true) : null,[base,l.efekt]);
-  return <div className="map-light-clip" style={{left:b.left,top:b.top,width:b.width,height:b.height,clipPath:mask?undefined:clipPath,maskImage:mask?`url("${mask}")`:undefined,maskSize:"100% 100%",opacity:needsMask&&!mask?0:l.intenzita*.2}} data-animated-light={l.id}>
+  return <div className="map-light-clip" data-source-state={l.zap===false?"off":"on"} style={{left:b.left,top:b.top,width:b.width,height:b.height,clipPath:mask?undefined:clipPath,maskImage:mask?`url("${mask}")`:undefined,maskSize:"100% 100%",opacity:!entered || l.zap===false || needsMask&&!mask?0:l.intenzita*.2}} data-animated-light={l.id}>
     <div className={`map-light-raster${animate ? ` map-light-effect map-light-${l.efekt}` : ""}`} style={lightAnimationStyle(l)}>
       <LightRaster art={base} width={b.width} height={b.height} />
       {alternate && <div className={`map-light-alternate${animate ? " map-light-crossfade" : ""}`} style={lightAnimationStyle(l)}><LightRaster art={alternate} width={b.width} height={b.height} /></div>}
@@ -137,6 +139,14 @@ export const MapAnimatedLights = memo(function MapAnimatedLights({map,view,px,do
   const candidates=visualLights(map,assets).filter(l=>l.efekt !== "zadny" && l.radius > 0 && l.intenzita > 0 && visibleLight(l,view,px,vw,vh));
   const scale=view.k*px/24;
   const active=nearestLights(candidates,[(vw/2-view.x)/scale/24,(vh/2-view.y)/scale/24],cap);
+  const [visible,setVisible]=useState(active);
+  const activeKey=JSON.stringify(active);
+  useEffect(()=>{
+    const ids=new Set(active.map(l=>l.id));
+    setVisible(current=>[...active,...current.filter(l=>!ids.has(l.id)).map(l=>({...l,zap:false}))]);
+    const timer=setTimeout(()=>setVisible(active),450);
+    return()=>clearTimeout(timer);
+  },[activeKey]);
   const sampleKey=JSON.stringify([candidates,wallKey,view,vw,vh]);
   useEffect(()=>{
     const changed=()=>setEpoch(n=>n+1), motion=matchMedia("(prefers-reduced-motion: reduce)");
@@ -158,7 +168,7 @@ export const MapAnimatedLights = memo(function MapAnimatedLights({map,view,px,do
     frame=requestAnimationFrame(sample);
     return()=>cancelAnimationFrame(frame);
   },[sampleKey,cap,epoch]);
-  return <div style={{display:"contents"}} data-light-animation-cap={cap} data-light-mean-ms={meanMs?.toFixed(2)}>{active.map(l=>
-    <AnimatedLight key={l.id} light={l} blockers={blockers} shadows={finiteLightShadows({...l,bright:l.bright/24*5},map.objekty,assets,blockers)} objects={(map.objekty || []).filter(o=>!o.dmOnly && Math.hypot(o.x-l.x,o.y-l.y)<lightReach(l)+Math.max(o.w,o.h))} assets={assets} width={width} height={height} animate />
+  return <div style={{display:"contents"}} data-light-animation-cap={cap} data-light-mean-ms={meanMs?.toFixed(2)}>{visible.map(l=>
+    <AnimatedLight key={l.id} light={l} blockers={blockers} shadows={finiteLightShadows({...l,bright:l.bright/24*5},map.objekty,assets,blockers)} objects={(map.objekty || []).filter(o=>!o.dmOnly && Math.hypot(o.x-l.x,o.y-l.y)<lightReach(l)+Math.max(o.w,o.h))} assets={assets} width={width} height={height} animate={l.zap!==false} />
   )}</div>;
 });

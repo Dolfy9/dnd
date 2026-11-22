@@ -8,6 +8,7 @@ import { edgeBlocksSight, wallIndex, crossedFreeWalls, wallBlocksSight } from ".
 import { mapWalls } from "../model/mapRoutes";
 import { hasCond, isIncap } from "./conditions";
 import { normalizeLight } from "../model/mapV2";
+import { mechanicalLights } from "../model/sourceState";
 
 export type LightLevel = "bright" | "dim" | "dark";
 
@@ -61,7 +62,7 @@ export function lightAt(S: StavBoje, map: BattleMapData, x: number, y: number): 
   let lvl: LightLevel = global;
   const rank = { dark: 0, dim: 1, bright: 2 };
   const wIdx = wallIndex(mapWalls(map));
-  for (const L of S.lights || []) {
+  for (const L of mechanicalLights(S,map)) {
     const src = L.tokenId ? S.tok.find((t) => t.id === L.tokenId) : undefined;
     const ax = src ? src.x! : L.anchor?.[0];
     const ay = src ? src.y! : L.anchor?.[1];

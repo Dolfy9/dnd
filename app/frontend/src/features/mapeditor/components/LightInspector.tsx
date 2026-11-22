@@ -37,6 +37,7 @@ export function LightInspector({value,onChange,placement=false,onDelete}:{value:
   return <div className="me-inspector me-light-inspector">
     <header className="me-inspector-header"><LightIcon shape={l.tvar} color={l.color}/><div><small>{placement?"Nové světlo":"Vybrané světlo"}</small><h3>{l.nazev || "Vlastní světlo"}</h3><span>{placement?"Klikni pro umístění · táhni pro namíření":"Tažením úchytů měň světlo přímo v mapě"}</span></div></header>
     {!placement && <div className="me-light-handle-key"><span>Poloha / směr</span><span>Jasné</span><span>Dosah / tvar</span></div>}
+    <label className="me-switch"><input aria-label="Světlo zapnuto" type="checkbox" checked={l.zap!==false} onChange={e=>onChange({zap:e.target.checked})}/><span/>Světlo zapnuto</label>
     <details className="me-section" open={placement}><summary>Předlohy světel <span>12</span></summary><div className="me-light-presets">{LIGHT_PRESETS.map(p=>{
       const selected=["bright","dim","color","tvar","efekt","delka","sirka","intenzita"].every(k=>l[k as keyof typeof l]===p.light[k as keyof typeof p.light]);
       return <button type="button" key={p.id} aria-label={`Předloha ${p.name}`} aria-pressed={selected} onClick={()=>onChange(applyLightPreset(l,p.id))}><LightIcon shape={p.light.tvar} color={p.light.color} effect={p.light.efekt}/><span>{p.name}</span><small>{p.light.bright} + {p.light.dim} ft</small></button>;

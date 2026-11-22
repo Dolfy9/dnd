@@ -6,6 +6,8 @@ export { assetSrc, normalizeVariant, placementVariant, nextVariant } from "../..
 export interface AssetEntry {
   id: string; nazev: string; kategorie?: string; src: string;
   varianty?: string[];
+  srcVyp?: string;
+  prepinatelny?: boolean;
   w?: number; h?: number;
   z?: number;
   blend?: "screen";

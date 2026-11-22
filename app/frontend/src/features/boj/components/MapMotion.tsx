@@ -7,7 +7,8 @@ import "./mapAtmo.css";
 
 export const FX = "/repo/11_Mapy/bojove/fx/";
 const animationTypes = new Set(["voda", "portal", "vitr", "ohen", "zare"]);
-export function resolveAnimation(object: Pick<MapObject, "anim">, asset?: AssetEntry): string {
+export function resolveAnimation(object: Pick<MapObject, "anim" | "zap">, asset?: AssetEntry): string {
+  if(object.zap===false)return "";
   const value = object.anim !== undefined ? object.anim : asset?.anim ||
     asset?.tags?.find(t => animationTypes.has(t)) || (asset?.id.includes("portal") ? "portal" : "");
   return typeof value === "string" && animationTypes.has(value) ? value : "";

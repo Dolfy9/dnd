@@ -23,6 +23,7 @@ import { AnimationButton, WeatherPicker, MapWeatherOverlay } from "./MapMotion";
 import { MapAnimatedScene } from "./MapAnimatedScene";
 import type { MapWeather } from "../model/mapV2";
 import { ZoomIn, ZoomOut, Maximize2, Crosshair, X } from "lucide-react";
+import {sourceAt,sourceMap,sourceOn} from "../model/sourceState";
 
 export type Tool = "select" | "measure" | "zone" | "paint" | "fog" | "light" | "kresba";
 
@@ -74,6 +75,7 @@ interface Props {
   onSelSet?: (ids: Set<string>) => void;
   onCancelMode?: () => void;
   onDoor?: (w: MapWall) => void;             // DM klik na dveře v mapě
+  onSource?: (id:string)=>void;
   onWeather?: (weather: MapWeather) => void;
   onDraw?: (pts: [number, number][], stroke: string) => void;
   drawColor?: string;
@@ -83,7 +85,10 @@ const viewKey = (bid: string) => `boj-view:${bid}`;
 const clamp = (v: number, a: number, b: number) => Math.min(b, Math.max(a, v));
 
 export default function BattleMap(p: Props) {
-  const { S, map } = p;
+  const { S } = p;
+  const map=useMemo(()=>sourceMap(p.map,S.zdroje),[p.map,S.zdroje]);
+  const [hoverSource,setHoverSource]=useState<string|null>(null);
+  const [sourceMenu,setSourceMenu]=useState<{id:string;x:number;y:number}|null>(null);
   const weatherMap = useMemo(() => ({ ...map, pocasi: S.pocasi ?? (map as MapV2).pocasi } as MapV2), [map,S.pocasi]);
   const { W, H } = mapSize(map);
   const PX = 48;
@@ -295,6 +300,7 @@ export default function BattleMap(p: Props) {
 
   /* ---- pointer handling: drag žetonu, pan, pinch, box select ---- */
   const down = (e: React.PointerEvent) => {
+    if(e.button!==0)return;
     (e.currentTarget as Element).setPointerCapture?.(e.pointerId);
     ptrs.current.set(e.pointerId, { x: e.clientX, y: e.clientY });
     if (ptrs.current.size === 2) { // začni pinch — zruš probíhající drag/pan
@@ -337,6 +343,7 @@ export default function BattleMap(p: Props) {
     } else setDrag({ id: "", to: null, pan: { sx: e.clientX, sy: e.clientY, ox: V.x, oy: V.y }, moved: false });
   };
   const move = (e: React.PointerEvent) => {
+    if(p.dm && p.tool==="select" && !p.targeting){const {gx,gy}=toGrid(e);setHoverSource(sourceAt(map,gx,gy)?.id ?? null);}
     if (ptrs.current.has(e.pointerId)) ptrs.current.set(e.pointerId, { x: e.clientX, y: e.clientY });
     if (pinch.current && ptrs.current.size === 2) {
       const [a, b] = [...ptrs.current.values()];
@@ -390,6 +397,10 @@ export default function BattleMap(p: Props) {
       const wasPan = drag.moved; setDrag(null);
       if (!wasPan) {
         // DM klik na dveře (svg má pointer capture → onClick na <g> nespustí)
+        if(p.dm && p.onSource && p.tool==="select"){
+          const {gx,gy}=toGrid(e),source=sourceAt(map,gx,gy);
+          if(source){p.onSource(source.id);return;}
+        }
         if (p.dm && p.onDoor) {
           const { gx, gy } = toGrid(e);
           const door = ((map as MapV2).steny || []).filter((w) => w.typ === "door")
@@ -427,9 +438,10 @@ export default function BattleMap(p: Props) {
     const { cx, cy } = toGrid(e);
     if (drag?.id) { e.preventDefault(); setDrag({ ...drag, wps: [...(drag.wps || []), [cx, cy]] }); return; }
     const t = tokAt(cx, cy);
+    if(!t && p.dm && p.onSource){const {gx,gy}=toGrid(e),source=sourceAt(map,gx,gy);if(source){e.preventDefault();setSourceMenu({id:source.id,x:e.clientX,y:e.clientY});return;}}
     if (t && p.onCtxMenu) { e.preventDefault(); p.onCtxMenu(t, { x: e.clientX, y: e.clientY }); }
   };
-  const leave = () => { setHoverCell(null); setHoverTok(null); };
+  const leave = () => { setHoverCell(null); setHoverTok(null);setHoverSource(null); };
 
   const img = map.obrazek ? `/repo/11_Mapy/${map.obrazek}` : null;
   const base = BASE_COLORS[map.podklad] || "#57524d";
@@ -613,9 +625,11 @@ export default function BattleMap(p: Props) {
             </g>
           )}
           <FxLayer events={p.fx} px={PX} k={V.k} onDone={p.onFxDone} shakingIds={new Set()} />
+          {p.dm && hoverSource && (()=>{const source=map.objekty?.find(o=>o.id===hoverSource) || map.svetla?.find(l=>l.id===hoverSource);return source?<g className="source-marker" data-source-hover={source.id} pointerEvents="none" transform={`translate(${source.x*PX},${source.y*PX}) scale(${1/V.k})`}><circle r={12}/><text y={3}>{sourceOn(source)?"◉":"○"}</text></g>:null;})()}
         </g>
       </svg>
       <MapWeatherOverlay map={weatherMap} view={V} px={PX} />
+      {p.dm && sourceMenu && <><div style={{position:"fixed",inset:0,zIndex:100}} onPointerDown={()=>setSourceMenu(null)}/><div role="menu" aria-label="Stav zdroje" className="boj-ctx" style={{position:"fixed",left:Math.min(sourceMenu.x,window.innerWidth-240),top:Math.min(sourceMenu.y,window.innerHeight-80),zIndex:101}} onKeyDown={e=>{if(e.key==="Escape")setSourceMenu(null);}}><button role="menuitem" autoFocus onClick={()=>{p.onSource?.(sourceMenu.id);setSourceMenu(null);}}>Zapnout / vypnout zdroj</button></div></>}
       <div className="map-live-controls"><AnimationButton />{p.dm && p.onWeather && <WeatherPicker compact map={map as MapV2} value={weatherMap.pocasi} onChange={p.onWeather} />}</div>
 
       {/* zoom ovládání */}

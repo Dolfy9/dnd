@@ -9,6 +9,8 @@ import { assetUrl, assetSrc, type AssetEntry, type TextureEntry } from "../../ma
 import { resolveAnimation, animationPhase } from "./MapMotion";
 import {contactShadowPlan,MapContactShadows,type ContactShadowPlan} from "./MapContactShadows";
 import {castsShadow} from "../model/objectShadows";
+import {toggleable} from "../model/sourceState";
+import {SourceArtwork} from "./SourceArtwork";
 
 /** Synchronní cache manifestů — plní ji useAssetManifest/useTextureManifest;
     v editoru i boji se volá dřív, než se renderují vrstvy. */
@@ -112,22 +114,22 @@ export const MapWallLayer = memo(function MapWallLayer({ map, doors, onDoor, dm,
              style={w.typ === "door" && onDoor ? { cursor: "pointer" } : undefined}>
             {w.typ === "door" && <circle cx={mx} cy={my} r={8} fill="transparent" />}
             {["wall","half","window"].includes(w.typ) && <rect data-wall-ao x={0} y={-4} width={length} height={8} fill="#080a0c" opacity={.65} transform={`translate(${x1},${y1}) rotate(${angle})`} filter={`url(#${uid}ao)`} />}
-            <line x1={x1 + 1.2} y1={y1 + 1.6} x2={x2 + 1.2} y2={y2 + 1.6} stroke="#000"
+            {w.typ!=="door" && <><line x1={x1 + 1.2} y1={y1 + 1.6} x2={x2 + 1.2} y2={y2 + 1.6} stroke="#000"
                   strokeWidth={st.w} opacity={.3} strokeLinecap="square" />
             <line x1={x1} y1={y1} x2={x2} y2={y2} stroke={st.color} strokeWidth={st.w}
-                  strokeDasharray={st.dash} strokeLinecap="square" opacity={w.typ === "curtain" ? .75 : 1} />
+                  strokeDasharray={st.dash} strokeLinecap="square" opacity={w.typ === "curtain" ? .75 : 1} /></>}
             {texture && (w.typ === "wall" || w.typ === "half") && <>
               <line x1={x1} y1={y1} x2={x2} y2={y2} stroke="#171513" strokeWidth={w.typ === "half" ? 7 : 10.5} strokeLinecap="square" />
               <line data-wall-texture x1={x1} y1={y1} x2={x2} y2={y2} stroke={`url(#${uid}masonry)`} strokeWidth={w.typ === "half" ? 5 : 7.8} strokeLinecap="square" />
             </>}
             {w.typ === "door" && (
-              <g transform={`translate(${mx},${my}) rotate(${angle})`}>
-                {open && <path d="M0 0 A9 9 0 0 1 8.5 -3" fill="none" stroke={st.color} strokeWidth={.9} opacity={.8} />}
-                <rect x={-4.5} y={-1.5} width={9} height={3} rx={1}
-                      fill={open ? "#c9b489" : "#6b4f30"} stroke="#292524" strokeWidth={.8}
-                      transform={open ? "rotate(-38)" : undefined} />
-                {door && <image data-door-art href={assetUrl(door.src)} x={-length/2} y={-5} width={length} height={10} preserveAspectRatio="none" transform={open ? `rotate(-70 ${-length/2} 0)` : undefined} />}
-                {w.locked && <circle cx={0} cy={0} r={1.6} fill="#fbbf24" stroke="#292524" strokeWidth={.5} />}
+              <g transform={`translate(${x1},${y1}) rotate(${angle})`}>
+                <g className="source-door-leaf" data-door-open={!!open} style={{transform:`rotate(${open?-85:0}deg)`,transformOrigin:"0px 0px"}}>
+                  <rect x={0} y={-2} width={length} height={4} rx={1} fill="#6b4f30" stroke="#292524" strokeWidth={.8}/>
+                  {door && <image data-door-art href={assetUrl(door.src)} x={0} y={-5} width={length} height={10} preserveAspectRatio="none"/>}
+                  <circle cx={Math.max(0,length-3)} cy={0} r={1.3} fill={w.locked?"#fbbf24":"#d6bd7d"}/>
+                </g>
+                <circle r={2.1} fill="#252328" stroke="#b19a70" strokeWidth={.6}/>
               </g>
             )}
             {w.typ === "window" && <g transform={`translate(${mx},${my}) rotate(${angle})`}>
@@ -170,7 +172,7 @@ export const MapObjectLayer = memo(function MapObjectLayer({ map, dm, staticOnly
               style={{ mixBlendMode: "screen", animationDelay: `${animationPhase(o.id)}s`, filter: resolveAnimation(o, man) === "portal" ? "hue-rotate(165deg)" : undefined }} /></g>}
             {def && shade && <defs><filter id="stamp-shade" x="-30%" y="-30%" width="160%" height="160%">
               <feDropShadow dx="1" dy="2" stdDeviation="1.2" floodColor="#000" floodOpacity="0.45" /></filter></defs>}
-            {src ? <image href={src} x={-o.w * PX / 2} y={-o.h * PX / 2} width={o.w * PX} height={o.h * PX}
+            {src && toggleable(o,man) ? <SourceArtwork object={o} asset={man} src={src} svg style={{filter:[tint ? `url(#${uid}tone${i})`:"",shade].filter(Boolean).join(" ") || undefined}}/> : src ? <image href={src} x={-o.w * PX / 2} y={-o.h * PX / 2} width={o.w * PX} height={o.h * PX}
                           preserveAspectRatio="xMidYMid meet"
                           style={{ filter: [tint ? `url(#${uid}tone${i})` : "",shade].filter(Boolean).join(" ") || undefined, animationDelay: `${animationPhase(o.id)}s` }} />
                  : def ? <g filter={shade?"url(#stamp-shade)":undefined}><StampSvg def={def} tint={o.tint} /></g>

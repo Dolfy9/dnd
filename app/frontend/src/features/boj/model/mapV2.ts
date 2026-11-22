@@ -22,6 +22,7 @@ export interface MapWall {
 
 /** Objekt na mapě (stamp / vlastní obrázek). x,y = střed v buňkách (float). */
 export interface MapObject {
+  zap?: boolean;
   v?: number;
   anim?: string | false;
   id: string;
@@ -54,6 +55,7 @@ export interface MapDrawing {
 }
 
 export interface MapLightV2 {
+  zap?: boolean;
   id: string;
   x: number; y: number;
   bright: number; dim: number;

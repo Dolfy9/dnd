@@ -66,7 +66,7 @@ def test_seed_shaped_map_lights(editor, monkeypatch):
     shaped = {"id": "shaped", "x": 3.5, "y": 4.5, "bright": 10, "dim": 20,
               "tvar": "pruh", "smer": 90, "sirka": 70, "delka": 6,
               "color": "#ff8800", "intenzita": .7, "efekt": "pulz",
-              "rychlost": .8, "stiny": False, "blikani": False}
+              "rychlost": .8, "stiny": False, "blikani": False, "zap": False}
     bid = None
     try:
         con.execute("INSERT INTO battle_maps(id,name,data) VALUES(?,?,?)", (mid, "Shaped seed test", db.jdump({"svetla": [shaped, {"id": "old", "bright": 5}]})))
@@ -147,6 +147,24 @@ def test_player_view_fog_large_token_partially_revealed():
 
 
 # ---------- integrace ----------
+
+def test_source_states_sync_to_players_but_only_editors_can_write(editor, player, monkeypatch):
+    monkeypatch.setattr(battles_mod, "_mirror", lambda *args: None)
+    bid = _mk_battle(editor)
+    try:
+        state = _mk_state()
+        state["stav_boje"]["zdroje"] = {"torch": False, "portal": True}
+        state["stav_boje"]["log"].append({"typ": "system", "kdo": "PJ", "t": "Pochodeň: vypnuto"})
+        response = editor.put(f"/api/battles/{bid}/state", json={"state": state, "version": 0})
+        assert response.status_code == 200, response.text
+        assert editor.post(f"/api/battles/{bid}/share", json={"shared": True}).status_code == 200
+        shared = player.get(f"/api/battles/{bid}").json()["state"]["stav_boje"]
+        assert shared["zdroje"] == {"torch": False, "portal": True}
+        assert shared["log"][-1]["t"] == "Pochodeň: vypnuto"
+        denied = player.put(f"/api/battles/{bid}/state", json={"state": state, "version": 1})
+        assert denied.status_code == 403
+    finally:
+        editor.delete(f"/api/battles/{bid}")
 
 def test_get_detail_player_filtered(editor, player):
     bid = _mk_battle(editor)

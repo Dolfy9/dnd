@@ -54,7 +54,7 @@ export function fuzzyScore(label: string, query: string): number {
   return score;
 }
 
-export type ObjectAction = "duplicate" | "delete" | "rotate-left" | "rotate-right" | "flip" | "front" | "back" | "align-x" | "align-y";
+export type ObjectAction = "toggle-source" | "duplicate" | "delete" | "rotate-left" | "rotate-right" | "flip" | "front" | "back" | "align-x" | "align-y";
 export function panUpdate(pan: {x0: number; y0: number; vx: number; vy: number}, point: {clientX: number; clientY: number}) {
   const x = pan.vx + point.clientX - pan.x0, y = pan.vy + point.clientY - pan.y0;
   return <T extends {x: number; y: number}>(view: T): T => ({...view,x,y});

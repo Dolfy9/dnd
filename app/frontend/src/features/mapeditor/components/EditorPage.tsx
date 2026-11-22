@@ -34,6 +34,7 @@ import { useEditorDoc } from "../state/useEditorDoc";
 import * as ops from "../tools/ops";
 import { TexturePicker, TilePicker, WallPicker, TABS, LAYERS, LayersPanel, LibraryPanel, PropertiesPanel, GeneratorPanel, MapPanel, type TabId } from "./panels";
 import { LightInspector, LightShapePicker } from "./LightInspector";
+import {toggleSources,toggleable} from "../../boj/model/sourceState";
 import { LightHandles } from "./LightHandles";
 import { LIGHT_PRESETS, editedLight, updateLight, aimPlacedLight, dragLightHandle, lightRotationDelta, lightHandlesEnabled, lightPlacementTab, type LightHandle } from "../tools/lightEditing";
 import { CommandPalette, ShortcutHelp, ToolRail, EditorMinimap, type EditorCommand } from "./EditorChrome";
@@ -186,6 +187,11 @@ export default function EditorPage() {
   }, [!!map]);
 
   const runObjectAction = (action: ObjectAction) => {
+    if(action==="toggle-source"){
+      const current=doc.mapRef.current,ids=new Set(sel.map(s=>s.id));
+      if(current && (current.objekty?.some(o=>ids.has(o.id)&&toggleable(o,ASSETS[o.asset])) || current.svetla?.some(l=>ids.has(l.id))))push(m=>toggleSources(m,ids,ASSETS));
+      setContextMenu(null);return;
+    }
     if(sel.some(s=>s.kind==="trasa")){
       if(action==="delete"){deleteSelection();return;}
       if(action==="duplicate"){const current=doc.mapRef.current!,copies=ops.duplicateRoutes(current.trasy?.filter(r=>sel.some(s=>s.id===r.id))||[]),objects=ops.duplicateObjects(current.objekty?.filter(o=>sel.some(s=>s.id===o.id))||[],current.mrizka[0]?.length,current.mrizka.length);push(m=>{m.trasy=[...(m.trasy||[]),...copies];m.objekty=[...(m.objekty||[]),...objects];});setSel([...copies.map(r=>({kind:"trasa" as const,id:r.id})),...objects.map(o=>({kind:"objekt" as const,id:o.id}))]);setRoutePoint(null);setContextMenu(null);return;}
@@ -340,6 +346,7 @@ export default function EditorPage() {
       if (e.key === "Tab") { if (canTogglePanel(e.target)) { e.preventDefault(); setPanelOpen(v => !v); } return; }
       if (e.key === "/") { e.preventDefault(); setTab("knihovna"); setPanelOpen(true); requestAnimationFrame(() => document.querySelector<HTMLInputElement>("[data-library-search]")?.focus()); return; }
       if (e.key === "Escape" && contextMenu) { setContextMenu(null); return; }
+      if(e.shiftKey && !e.ctrlKey && !e.metaKey && !e.altKey && e.key.toLowerCase()==="l"){e.preventDefault();runObjectAction("toggle-source");return;}
       if (e.key === " ") { setSpace(true); e.preventDefault(); return; }
       if (e.ctrlKey && e.key.toLowerCase() === "z") { e.preventDefault(); e.shiftKey ? doc.redo() : doc.undo(); return; }
       if (e.ctrlKey && e.key.toLowerCase() === "y") { e.preventDefault(); doc.redo(); return; }
@@ -796,7 +803,7 @@ export default function EditorPage() {
             <svg ref={svgRef} className={`me-canvas tool-${tool}`} onWheel={onWheel}
                  onPointerDown={onDown} onPointerMove={onMove} onPointerUp={onUp} onDoubleClick={onDbl}
                  onPointerCancel={() => { lightGesture.current=null;setLightPreview(null);strokeRef.current = null; placementRef.current = null; setPaintPreview(null); paintRef.current = false; if (transformStart.current) doc.setMap(transformStart.current); transformStart.current = null; moveRef.current = null; setHandleDrag(null); }}
-                 onPointerLeave={() => setCur(null)} onContextMenu={(e) => { e.preventDefault(); const [x,y] = toWorld(e); const hit = ops.pickAt({...previewMap,trasy:layerVis.trasy?previewMap.trasy:[]},x,y,true); if(hit?.kind === "objekt"||hit?.kind === "trasa"){if(!sel.some(s => s.id === hit.id)) setSel([hit]);setRoutePoint(null);setContextMenu({x:Math.max(8,Math.min(window.innerWidth-240,e.clientX)),y:Math.max(8,Math.min(window.innerHeight-380,e.clientY))});} }}
+                 onPointerLeave={() => setCur(null)} onContextMenu={(e) => { e.preventDefault(); const [x,y] = toWorld(e); const hit = ops.pickAt({...previewMap,trasy:layerVis.trasy?previewMap.trasy:[]},x,y,true); if(hit?.kind === "objekt"||hit?.kind === "trasa"||hit?.kind==="svetlo"){if(!sel.some(s => s.id === hit.id)) setSel([hit]);setRoutePoint(null);setContextMenu({x:Math.max(8,Math.min(window.innerWidth-240,e.clientX)),y:Math.max(8,Math.min(window.innerHeight-380,e.clientY))});} }}
                  style={{ touchAction: "none", width: "100%", height: "100%", display: "block" }}>
               <g transform={`translate(${V.x},${V.y}) scale(${V.k})`}>
                 {layerVis.svetla && <MapAtmosphereLayer map={previewMap} />}
@@ -941,6 +948,7 @@ export default function EditorPage() {
       {paletteOpen && <CommandPalette commands={commands} onClose={() => setPaletteOpen(false)} />}
       {helpOpen && <ShortcutHelp tools={TOOLS} onClose={() => setHelpOpen(false)} />}
       {contextMenu && <><div className="me-menu-dismiss" onPointerDown={() => setContextMenu(null)} /><div className="me-object-menu" role="menu" aria-label={sel.some(s=>s.kind==="trasa")?"Akce trasy":"Akce objektu"} style={{left:contextMenu.x,top:contextMenu.y}} onKeyDown={e => {if(e.key === "Escape") setContextMenu(null);if(e.key === "ArrowDown" || e.key === "ArrowUp"){e.preventDefault();const buttons=[...e.currentTarget.querySelectorAll("button")];const i=buttons.indexOf(document.activeElement as HTMLButtonElement);buttons[(i+(e.key === "ArrowDown" ? 1 : -1)+buttons.length)%buttons.length]?.focus();}}}>
+        {(map.objekty?.some(o=>sel.some(s=>s.id===o.id)&&toggleable(o,ASSETS[o.asset])) || map.svetla?.some(l=>sel.some(s=>s.id===l.id))) && <button role="menuitem" onClick={()=>runObjectAction("toggle-source")}>Zapnout / vypnout zdroj<kbd>⇧ L</kbd></button>}
         <small>VÝBĚR · {sel.length}</small>{([["duplicate","Duplikovat",<Copy size={15} />],["rotate-left","Otočit −15°",<Undo2 size={15} />],["rotate-right","Otočit +15°",<Redo2 size={15} />],["flip","Překlopit",<Layers3 size={15} />],["front","Dopředu",<ArrowUp size={15} />],["back","Dozadu",<ArrowDown size={15} />]] as const).filter(([action])=>!sel.some(s=>s.kind==="trasa")||action==="duplicate").map(([action,label,icon],i) => <button key={action} autoFocus={i===0} role="menuitem" onClick={() => runObjectAction(action)}>{icon}{label}</button>)}{!sel.some(s=>s.kind==="trasa")&&<><hr /><button role="menuitem" onClick={() => {changeVariants("next");setContextMenu(null);}}>Další varianta<kbd>A</kbd></button><button role="menuitem" onClick={() => {changeVariants("random");setContextMenu(null);}}>Náhodná varianta<kbd>⇧ A</kbd></button></>}<hr /><button className="danger" role="menuitem" onClick={() => runObjectAction("delete")}><Trash2 size={15} /> Smazat<kbd>Del</kbd></button>
       </div></>}
 

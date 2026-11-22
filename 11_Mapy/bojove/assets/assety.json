@@ -220,7 +220,9 @@
     "bojove/assets/Nábytek/varianty/krb-v3.webp",
     "bojove/assets/Nábytek/varianty/krb-v4.webp"
    ],
-   "vyska": 1.2
+   "vyska": 1.2,
+   "srcVyp": "bojove/assets/Nábytek/krb-vyp.webp",
+   "prepinatelny": true
   },
   {
    "id": "pult",
@@ -646,7 +648,8 @@
     "bojove/assets/Příroda/varianty/strom-v3.webp",
     "bojove/assets/Příroda/varianty/strom-v4.webp"
    ],
-   "vyska": 3
+   "vyska": 3,
+   "prepinatelny": true
   },
   {
    "id": "strom-velky",
@@ -664,7 +667,8 @@
     "bojove/assets/Příroda/varianty/strom-velky-v3.webp",
     "bojove/assets/Příroda/varianty/strom-velky-v4.webp"
    ],
-   "vyska": 3
+   "vyska": 3,
+   "prepinatelny": true
   },
   {
    "id": "smrk",
@@ -682,7 +686,8 @@
     "bojove/assets/Příroda/varianty/smrk-v3.webp",
     "bojove/assets/Příroda/varianty/smrk-v4.webp"
    ],
-   "vyska": 3
+   "vyska": 3,
+   "prepinatelny": true
   },
   {
    "id": "keř",
@@ -700,7 +705,8 @@
     "bojove/assets/Příroda/varianty/keř-v3.webp",
     "bojove/assets/Příroda/varianty/keř-v4.webp"
    ],
-   "vyska": 0.6
+   "vyska": 0.6,
+   "prepinatelny": true
   },
   {
    "id": "kamen",
@@ -786,7 +792,8 @@
     "bojove/assets/Příroda/varianty/houby-v3.webp",
     "bojove/assets/Příroda/varianty/houby-v4.webp"
    ],
-   "vyska": 0.6
+   "vyska": 0.6,
+   "prepinatelny": true
   },
   {
    "id": "houby-svitici",
@@ -804,7 +811,8 @@
     "bojove/assets/Příroda/varianty/houby-svitici-v3.webp",
     "bojove/assets/Příroda/varianty/houby-svitici-v4.webp"
    ],
-   "vyska": 0.6
+   "vyska": 0.6,
+   "prepinatelny": true
   },
   {
    "id": "vinorost",
@@ -1196,7 +1204,9 @@
     "bojove/assets/Magie/varianty/portal-v3.webp",
     "bojove/assets/Magie/varianty/portal-v4.webp"
    ],
-   "vyska": 0
+   "vyska": 0,
+   "srcVyp": "bojove/assets/Magie/portal-vyp.webp",
+   "prepinatelny": true
   },
   {
    "id": "rune-kamen",
@@ -1214,7 +1224,8 @@
     "bojove/assets/Magie/varianty/rune-kamen-v3.webp",
     "bojove/assets/Magie/varianty/rune-kamen-v4.webp"
    ],
-   "vyska": 0.6
+   "vyska": 0.6,
+   "prepinatelny": true
   },
   {
    "id": "krystal",
@@ -1232,7 +1243,8 @@
     "bojove/assets/Magie/varianty/krystal-v3.webp",
     "bojove/assets/Magie/varianty/krystal-v4.webp"
    ],
-   "vyska": 0
+   "vyska": 0,
+   "prepinatelny": true
   },
   {
    "id": "kotel",
@@ -1352,7 +1364,9 @@
     "bojove/assets/Pasti a nebezpečí/varianty/ohen-past-v3.webp",
     "bojove/assets/Pasti a nebezpečí/varianty/ohen-past-v4.webp"
    ],
-   "vyska": 0
+   "vyska": 0,
+   "srcVyp": "bojove/assets/Pasti a nebezpečí/ohen-past-vyp.webp",
+   "prepinatelny": true
   },
   {
    "id": "lano-past",
@@ -1438,7 +1452,9 @@
     "bojove/assets/Světla/varianty/pochodeň-v3.webp",
     "bojove/assets/Světla/varianty/pochodeň-v4.webp"
    ],
-   "vyska": 0
+   "vyska": 0,
+   "srcVyp": "bojove/assets/Světla/pochodeň-vyp.webp",
+   "prepinatelny": true
   },
   {
    "id": "ohriste",
@@ -1456,7 +1472,9 @@
     "bojove/assets/Světla/varianty/ohriste-v3.webp",
     "bojove/assets/Světla/varianty/ohriste-v4.webp"
    ],
-   "vyska": 0
+   "vyska": 0,
+   "srcVyp": "bojove/assets/Světla/ohriste-vyp.webp",
+   "prepinatelny": true
   },
   {
    "id": "brasier",
@@ -1474,7 +1492,9 @@
     "bojove/assets/Světla/varianty/brasier-v3.webp",
     "bojove/assets/Světla/varianty/brasier-v4.webp"
    ],
-   "vyska": 0
+   "vyska": 0,
+   "srcVyp": "bojove/assets/Světla/brasier-vyp.webp",
+   "prepinatelny": true
   },
   {
    "id": "svicka",
@@ -1492,7 +1512,9 @@
     "bojove/assets/Světla/varianty/svicka-v3.webp",
     "bojove/assets/Světla/varianty/svicka-v4.webp"
    ],
-   "vyska": 0
+   "vyska": 0,
+   "srcVyp": "bojove/assets/Světla/svicka-vyp.webp",
+   "prepinatelny": true
   },
   {
    "id": "lucerna",
@@ -1510,7 +1532,9 @@
     "bojove/assets/Světla/varianty/lucerna-v3.webp",
     "bojove/assets/Světla/varianty/lucerna-v4.webp"
    ],
-   "vyska": 0
+   "vyska": 0,
+   "srcVyp": "bojove/assets/Světla/lucerna-vyp.webp",
+   "prepinatelny": true
   },
   {
    "id": "kandelabr",
@@ -1528,7 +1552,9 @@
     "bojove/assets/Světla/varianty/kandelabr-v3.webp",
     "bojove/assets/Světla/varianty/kandelabr-v4.webp"
    ],
-   "vyska": 0
+   "vyska": 0,
+   "srcVyp": "bojove/assets/Světla/kandelabr-vyp.webp",
+   "prepinatelny": true
   },
   {
    "id": "svitici-runa",
@@ -1546,7 +1572,8 @@
     "bojove/assets/Světla/varianty/svitici-runa-v3.webp",
     "bojove/assets/Světla/varianty/svitici-runa-v4.webp"
    ],
-   "vyska": 0
+   "vyska": 0,
+   "prepinatelny": true
   },
   {
    "id": "krb-vapka",
@@ -1564,7 +1591,9 @@
     "bojove/assets/Světla/varianty/krb-vapka-v3.webp",
     "bojove/assets/Světla/varianty/krb-vapka-v4.webp"
    ],
-   "vyska": 0
+   "vyska": 0,
+   "srcVyp": "bojove/assets/Světla/krb-vapka-vyp.webp",
+   "prepinatelny": true
   },
   {
    "id": "stan",
@@ -1616,7 +1645,9 @@
     "bojove/assets/Tábor/bitva/varianty/ohne-tabor-v3.webp",
     "bojove/assets/Tábor/bitva/varianty/ohne-tabor-v4.webp"
    ],
-   "vyska": 0
+   "vyska": 0,
+   "srcVyp": "bojove/assets/Tábor/bitva/ohne-tabor-vyp.webp",
+   "prepinatelny": true
   },
   {
    "id": "barikada",
@@ -2153,7 +2184,9 @@
     "bojove/assets/Nábytek/varianty/i-krb-v3.webp",
     "bojove/assets/Nábytek/varianty/i-krb-v4.webp"
    ],
-   "vyska": 0.6
+   "vyska": 0.6,
+   "srcVyp": "bojove/assets/Nábytek/i-krb-vyp.webp",
+   "prepinatelny": true
   },
   {
    "id": "i-lavice",
@@ -2238,7 +2271,9 @@
     "bojove/assets/Nábytek/varianty/i-kolebka-lustr-v3.webp",
     "bojove/assets/Nábytek/varianty/i-kolebka-lustr-v4.webp"
    ],
-   "vyska": 1.2
+   "vyska": 1.2,
+   "srcVyp": "bojove/assets/Nábytek/i-kolebka-lustr-vyp.webp",
+   "prepinatelny": true
   },
   {
    "id": "m-most-kamen",
@@ -2323,7 +2358,9 @@
     "bojove/assets/Přístav/varianty/m-lucerna-sloup-v3.webp",
     "bojove/assets/Přístav/varianty/m-lucerna-sloup-v4.webp"
    ],
-   "vyska": 3
+   "vyska": 3,
+   "srcVyp": "bojove/assets/Přístav/m-lucerna-sloup-vyp.webp",
+   "prepinatelny": true
   },
   {
    "id": "m-sit",
@@ -2425,7 +2462,8 @@
     "bojove/assets/Příroda/varianty/gen2-strom-v3.webp",
     "bojove/assets/Příroda/varianty/gen2-strom-v4.webp"
    ],
-   "vyska": 3
+   "vyska": 3,
+   "prepinatelny": true
   },
   {
    "id": "gen2-strom2",
@@ -2447,7 +2485,8 @@
     "bojove/assets/Příroda/varianty/gen2-strom2-v3.webp",
     "bojove/assets/Příroda/varianty/gen2-strom2-v4.webp"
    ],
-   "vyska": 3
+   "vyska": 3,
+   "prepinatelny": true
   },
   {
    "id": "gen2-strom3",
@@ -2469,7 +2508,8 @@
     "bojove/assets/Příroda/varianty/gen2-strom3-v3.webp",
     "bojove/assets/Příroda/varianty/gen2-strom3-v4.webp"
    ],
-   "vyska": 3
+   "vyska": 3,
+   "prepinatelny": true
   },
   {
    "id": "gen2-ker",
@@ -2490,7 +2530,8 @@
     "bojove/assets/Příroda/varianty/gen2-ker-v3.webp",
     "bojove/assets/Příroda/varianty/gen2-ker-v4.webp"
    ],
-   "vyska": 0.6
+   "vyska": 0.6,
+   "prepinatelny": true
   },
   {
    "id": "gen2-ker2",
@@ -2511,7 +2552,8 @@
     "bojove/assets/Příroda/varianty/gen2-ker2-v3.webp",
     "bojove/assets/Příroda/varianty/gen2-ker2-v4.webp"
    ],
-   "vyska": 0.6
+   "vyska": 0.6,
+   "prepinatelny": true
   },
   {
    "id": "gen2-balvan",
@@ -2640,7 +2682,9 @@
     "bojove/assets/Rekvizity/varianty/gen2-ohen-v3.webp",
     "bojove/assets/Rekvizity/varianty/gen2-ohen-v4.webp"
    ],
-   "vyska": 0
+   "vyska": 0,
+   "srcVyp": "bojove/assets/Rekvizity/gen2-ohen-vyp.webp",
+   "prepinatelny": true
   },
   {
    "id": "gen2-dvere",
@@ -2719,7 +2763,9 @@
     "bojove/assets/Magie/varianty/gen2-portal-v3.webp",
     "bojove/assets/Magie/varianty/gen2-portal-v4.webp"
    ],
-   "vyska": 0
+   "vyska": 0,
+   "srcVyp": "bojove/assets/Magie/gen2-portal-vyp.webp",
+   "prepinatelny": true
   },
   {
    "id": "gen2-portal2",
@@ -2739,7 +2785,9 @@
     "bojove/assets/Magie/varianty/gen2-portal2-v3.webp",
     "bojove/assets/Magie/varianty/gen2-portal2-v4.webp"
    ],
-   "vyska": 0
+   "vyska": 0,
+   "srcVyp": "bojove/assets/Magie/gen2-portal2-vyp.webp",
+   "prepinatelny": true
   },
   {
    "id": "gen2-lucerna",
@@ -2763,7 +2811,9 @@
     "bojove/assets/Rekvizity/varianty/gen2-lucerna-v3.webp",
     "bojove/assets/Rekvizity/varianty/gen2-lucerna-v4.webp"
    ],
-   "vyska": 0
+   "vyska": 0,
+   "srcVyp": "bojove/assets/Rekvizity/gen2-lucerna-vyp.webp",
+   "prepinatelny": true
   },
   {
    "id": "gen2-pochoden",
@@ -2787,7 +2837,9 @@
     "bojove/assets/Rekvizity/varianty/gen2-pochoden-v3.webp",
     "bojove/assets/Rekvizity/varianty/gen2-pochoden-v4.webp"
    ],
-   "vyska": 0
+   "vyska": 0,
+   "srcVyp": "bojove/assets/Rekvizity/gen2-pochoden-vyp.webp",
+   "prepinatelny": true
   },
   {
    "id": "gen2-stul",
@@ -2971,7 +3023,8 @@
     "bojove/assets/Příroda/varianty/gen2-houby-v3.webp",
     "bojove/assets/Příroda/varianty/gen2-houby-v4.webp"
    ],
-   "vyska": 0.6
+   "vyska": 0.6,
+   "prepinatelny": true
   },
   {
    "id": "gen2-lekniny",
@@ -3011,7 +3064,8 @@
     "bojove/assets/Příroda/varianty/gen2-rakos-v3.webp",
     "bojove/assets/Příroda/varianty/gen2-rakos-v4.webp"
    ],
-   "vyska": 0.6
+   "vyska": 0.6,
+   "prepinatelny": true
   },
   {
    "id": "gen2-stan",
@@ -3132,7 +3186,8 @@
     "bojove/assets/Příroda/varianty/gen2-krystal-v3.webp",
     "bojove/assets/Příroda/varianty/gen2-krystal-v4.webp"
    ],
-   "vyska": 0.6
+   "vyska": 0.6,
+   "prepinatelny": true
   },
   {
    "id": "gen2-hrob",
@@ -3172,7 +3227,8 @@
     "bojove/assets/Příroda/varianty/gen2-kapradi-v3.webp",
     "bojove/assets/Příroda/varianty/gen2-kapradi-v4.webp"
    ],
-   "vyska": 0.6
+   "vyska": 0.6,
+   "prepinatelny": true
   },
   {
    "id": "gen2-keltsky_kamen",
@@ -3192,7 +3248,8 @@
     "bojove/assets/Rekvizity/varianty/gen2-keltsky_kamen-v3.webp",
     "bojove/assets/Rekvizity/varianty/gen2-keltsky_kamen-v4.webp"
    ],
-   "vyska": 0.6
+   "vyska": 0.6,
+   "prepinatelny": true
   },
   {
    "id": "p-hromada-ryb",
@@ -3295,7 +3352,9 @@
     "bojove/assets/Přístav/varianty/p-nastenna-lucerna-v2.webp",
     "bojove/assets/Přístav/varianty/p-nastenna-lucerna-v3.webp"
    ],
-   "vyska": 0
+   "vyska": 0,
+   "srcVyp": "bojove/assets/Přístav/p-nastenna-lucerna-vyp.webp",
+   "prepinatelny": true
   },
   {
    "id": "p-site",

@@ -4,6 +4,7 @@ import type { MapV2, MapObject } from "../../boj/model/mapV2";
 import { assetSrc, assetUrl, type AssetEntry } from "../assets/manifest";
 import type { ObjectAction } from "../state/editorUx";
 import { VariantStrip } from "./VariantStrip";
+import {toggleable} from "../../boj/model/sourceState";
 
 export function ObjectInspector({ objects, assets, push, onVariant, onAction, onDelete }: {
   objects: MapObject[]; assets: Record<string, AssetEntry>; push: (f: (m: MapV2) => void) => void;
@@ -16,6 +17,7 @@ export function ObjectInspector({ objects, assets, push, onVariant, onAction, on
   const check = (field: "flip" | "blocks" | "difficult" | "dmOnly", label: string) => <label className="me-switch"><input type="checkbox" checked={!!shared(field)} onChange={e => edit({[field]:e.target.checked})} /><span />{label}</label>;
   return <div className="me-inspector">
     <header className="me-inspector-header">{entry && <img src={assetUrl(assetSrc(entry,first.v))} alt="" />}<div><small>{objects.length > 1 ? "Hromadný výběr" : "Objekt"}</small><h3>{objects.length > 1 ? `${objects.length} vybraných objektů` : entry?.nazev || first.asset}</h3><span>{objects.length > 1 ? "Změny platí pro celý výběr" : `${first.w} × ${first.h} polí`}</span></div></header>
+    {objects.some(o=>toggleable(o,assets[o.asset])) && <details className="me-section" open><summary>Stav zdroje</summary><button className="me-btn" aria-label="Zapnout / vypnout zdroj" aria-pressed={objects.filter(o=>toggleable(o,assets[o.asset])).every(o=>o.zap!==false)} onClick={()=>onAction("toggle-source")}>{objects.some(o=>o.zap===false)?"Zapnout":"Náhled: zhasnuto"}<kbd>⇧ L</kbd></button><p className="me-muted">{objects.every(o=>o.zap===false)?"Vypnuto · bez světla a animace":"Zapnuto · přepnutí platí pro celý výběr zdrojů"}</p></details>}
     <details className="me-section" open><summary>Umístění</summary><div className="me-field-grid">
       {([["x","X"],["y","Y"],["w","Šířka"],["h","Výška"],["rot","Úhel (°)"],["z","Pořadí"]] as const).map(([field,label]) => <label key={field}>{label}<input aria-label={field === "rot" ? "Úhel objektu" : label} type="number" step={field === "rot" || field === "z" ? 1 : .1} min={field === "w" || field === "h" ? .1 : undefined} value={shared(field) ?? ""} placeholder={objects.length > 1 ? "Různé" : "0"} onChange={e => { if (e.target.value !== "") edit({[field]:field === "w" || field === "h" ? Math.max(.1,+e.target.value) : +e.target.value}); }} /></label>)}
     </div><label className="me-angle-control"><span className="me-angle-dial" style={{ transform: `rotate(${shared("rot") || 0}deg)` }}>↑</span>Úhel<input aria-label="Otočení výběru" type="range" min="0" max="360" value={shared("rot") || 0} onChange={e => edit({rot:+e.target.value})} /><output>{shared("rot") ?? "—"}°</output></label>

@@ -1,4 +1,4 @@
-import { memo, useEffect, useId, useMemo, useState } from "react";
+import { memo, useEffect, useId, useMemo, useRef, useState } from "react";
 import { renderToStaticMarkup } from "react-dom/server";
 import { mapWalls } from "../model/mapRoutes";
 import type { MapV2, MapPaintStroke } from "../model/mapV2";
@@ -11,6 +11,7 @@ import { resolveAnimation } from "./MapMotion";
 import { LightDefinition, LightProjection } from "./MapLightProjection";
 import { bakeAtmosphere } from "../model/atmosphereRaster";
 import { ObjectArtworkMask, ObjectShadowMask } from "./ObjectLightMask";
+import {objectLights} from "../model/sourceState";
 import "./mapAtmo.css";
 
 export { GLOW } from "./MapLightProjection";
@@ -50,11 +51,11 @@ export const MapPaintLayer = memo(function MapPaintLayer({ map, preview }: { map
 });
 
 export function visualLights(map: MapV2, assets: Record<string, AssetEntry> = {}) {
-  return [...(map.svetla || []), ...(map.objekty || []).filter(o => o.light && !o.dmOnly).map(o => ({
-    id: "object-" + o.id, x: o.x, y: o.y, bright: o.light!.bright, dim: o.light!.dim,
-    color: "#ffac52", intenzita: 1, blikani: o.anim !== false,
-    efekt: o.anim === false ? "zadny" as const : resolveAnimation(o,assets[o.asset]) === "ohen" ? "plamen" as const : "mihot" as const,
-  }))].filter(l => Number.isFinite(l.x) && Number.isFinite(l.y)).map(normalizeLight).map(l => ({ ...l, color: color(l.color), intenzita: clamp(l.intenzita ?? 1, 1),
+  return [...(map.svetla || []), ...objectLights(map,assets).map(o => ({
+    id: "object-" + o.id, x: o.x, y: o.y, bright: o.bright, dim: o.dim, zap:o.zap,
+    color: resolveAnimation({...o,zap:true},assets[o.asset])==="portal"?"#789bff":"#ffac52", intenzita: 1, blikani: o.anim!==false,
+    efekt: o.anim===false?"zadny" as const:resolveAnimation(o,assets[o.asset])==="ohen"?"plamen" as const:"mihot" as const,
+  }))].filter(l => l.zap!==false && Number.isFinite(l.x) && Number.isFinite(l.y)).map(normalizeLight).map(l => ({ ...l, color: color(l.color), intenzita: clamp(l.intenzita ?? 1, 1),
     bright: clamp(l.bright, 0, 500) / 5 * PX,
     radius: (clamp(l.bright, 0, 500) + clamp(l.dim, 0, 500)) / 5 * PX }));
 }
@@ -111,22 +112,30 @@ export const MapAtmosphereLayer = memo(function MapAtmosphereLayer({ map, doors,
     window.addEventListener("resize", resize);
     return () => window.removeEventListener("resize", resize);
   }, []);
-  const key = JSON.stringify([W, H, lights, lightBlockers(mapWalls(map), doors), map.objekty?.map(o=>[o.id,o.asset,o.x,o.y,o.w,o.h,o.v,o.rot,o.flip,o.stin,o.dmOnly,objectHeight(o,assets[o.asset])]), ambient, map.atmosfera?.barva, animated, dpr]);
+  const key = JSON.stringify([W, H, lights, lightBlockers(mapWalls(map), doors), map.objekty?.map(o=>[o.id,o.asset,o.x,o.y,o.w,o.h,o.v,o.rot,o.flip,o.stin,o.dmOnly,o.zap,objectHeight(o,assets[o.asset])]), ambient, map.atmosfera?.barva, animated, dpr]);
   const [bitmaps, setBitmaps] = useState<{ dark: string; glow: string;key:string }>();
+  const [previous,setPrevious]=useState<typeof bitmaps>();
+  const current=useRef<typeof bitmaps>(),urls=useRef(new Set<string>());
   const [failed, setFailed] = useState(false);
   const empty = ambient === 1 && !lights.length;
-  useEffect(() => () => {
-    if (bitmaps) { URL.revokeObjectURL(bitmaps.dark); URL.revokeObjectURL(bitmaps.glow); }
-  }, [bitmaps]);
+  useEffect(()=>()=>{urls.current.forEach(url=>URL.revokeObjectURL(url));urls.current.clear();},[]);
+  useEffect(()=>{
+    if(!previous)return;
+    const timer=setTimeout(()=>setPrevious(undefined),450);
+    return()=>{clearTimeout(timer);for(const url of [previous.dark,previous.glow]){URL.revokeObjectURL(url);urls.current.delete(url);}};
+  },[previous]);
   useEffect(() => {
     let active = true;
-    if (empty) { setBitmaps(undefined); setFailed(false); return; }
+    if (empty) { setPrevious(current.current);current.current=undefined;setBitmaps(undefined); setFailed(false); return; }
     const timer = setTimeout(async () => {
       try {
         const dark = renderToStaticMarkup(<MapAtmosphereArtwork map={map} doors={doors} animated={animated} layer="darkness" />);
         const glow = renderToStaticMarkup(<MapAtmosphereArtwork map={map} doors={doors} animated={animated} layer="glow" />);
         const result = await bakeAtmosphere(dark, glow, W, H, dpr, !animated);
-        if (active) { setBitmaps({...result,key}); setFailed(false); }
+        if (active) {
+          urls.current.add(result.dark);urls.current.add(result.glow);
+          setPrevious(current.current);current.current={...result,key};setBitmaps(current.current);setFailed(false);
+        }
         else { URL.revokeObjectURL(result.dark); URL.revokeObjectURL(result.glow); }
       } catch {
         if (active) setFailed(true);
@@ -137,9 +146,10 @@ export const MapAtmosphereLayer = memo(function MapAtmosphereLayer({ map, doors,
       clearTimeout(timer);
     };
   }, [key]);
-  if (empty) return null;
+  if (empty && !previous) return null;
   return <g data-map-atmosphere data-atmosphere-baked={!!bitmaps} pointerEvents="none">
-    {bitmaps ? <BakedAtmosphere dark={bitmaps.dark} glow={bitmaps.key===key?bitmaps.glow:undefined} width={W} height={H} /> : failed ? <MapAtmosphereArtwork map={map} doors={doors} animated={animated} />
-      : <rect width={W} height={H} fill={color(map.atmosfera?.barva || "#101522")} opacity={1 - ambient} />}
+    {previous && <g key={previous.dark} className="source-raster-leave"><BakedAtmosphere dark={previous.dark} glow={previous.glow} width={W} height={H}/></g>}
+    {bitmaps ? <g key={bitmaps.dark} className="source-raster-enter"><BakedAtmosphere dark={bitmaps.dark} glow={bitmaps.glow} width={W} height={H} /></g> : failed ? <MapAtmosphereArtwork map={map} doors={doors} animated={animated} />
+      : !previous && <rect width={W} height={H} fill={color(map.atmosfera?.barva || "#101522")} opacity={1 - ambient} />}
   </g>;
 });

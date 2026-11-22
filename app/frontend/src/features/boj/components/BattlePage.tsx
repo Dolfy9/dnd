@@ -12,6 +12,7 @@ import { useAssetManifest, useTextureManifest } from "../../mapeditor/assets/man
 import { setManifests } from "./MapV2Layers";
 import { wallIndex, type MapWall } from "../model/mapV2";
 import { mapWalls } from "../model/mapRoutes";
+import {toggleSource} from "../state/commands/sources";
 import { Link, useNavigate } from "react-router-dom";
 import { useBattle } from "../state/useBattle";
 import "../boj.css";
@@ -617,7 +618,7 @@ export default function BattlePage() {
             onFogPaint={(cells, reveal) => cmd((s) => C.cmdFogCells(s, cells, reveal))}
             onLightPlace={(x, y) => { if (pendingLight) { cmd((s) => C.cmdAddLight(s, { ...pendingLight, anchor: [x, y] })); setPendingLight(null); setTool("select"); } }}
             onCtxMenu={(t, pt) => setCtxMenu({ t, x: pt.x, y: pt.y })}
-            onDoor={onDoor}
+            onDoor={onDoor} onSource={id=>{if(dm)cmd(s=>toggleSource(s,map,id,dm));}}
             onWeather={weather => cmd(s => { s.pocasi = weather; })}
             drawColor={drawColor}
             onDraw={(pts, stroke) => cmd((s) => { s.kresby = [...(s.kresby || []), { id: uid(), kind: "free", pts, stroke, width: 3, dmOnly: true } as any]; })}
