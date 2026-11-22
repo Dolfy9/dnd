@@ -166,7 +166,7 @@ export const MapObjectLayer = memo(function MapObjectLayer({ map, dm, staticOnly
         return (
           <g key={o.id} transform={`translate(${o.x * PX},${o.y * PX}) rotate(${o.rot || 0}) ${o.flip ? "scale(-1,1)" : ""}`}
              style={{mixBlendMode:man?.blend}}
-             opacity={o.dmOnly ? .55 : 1}>
+             opacity={(o.opacity ?? 1)*(o.dmOnly ? .55 : 1)}>
             {tint && <defs><filter id={uid+"tone"+i}><feColorMatrix type="matrix" values={`${tint[0]} 0 0 0 0 0 ${tint[1]} 0 0 0 0 0 ${tint[2]} 0 0 0 0 0 1 0`} /></filter></defs>}
             {!staticOnly && ["portal", "ohen", "zare"].includes(resolveAnimation(o, man)) && <g opacity=".35"><image href="/repo/11_Mapy/bojove/ovl/zar.webp"
               x={-o.w*PX*.8} y={-o.h*PX*.8} width={o.w*PX*1.6} height={o.h*PX*1.6}

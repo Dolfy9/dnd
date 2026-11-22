@@ -33,6 +33,7 @@ export interface MapObject {
   flip?: boolean;
   z?: number;
   tint?: string;
+  opacity?: number;
   blocks?: boolean;          // blokuje pohyb
   cover?: 2 | 3;             // krytí, které poskytuje
   stin?: boolean;
@@ -113,7 +114,7 @@ export interface MapV2 extends BattleMapData {
   interiery?: MapInterior[];
   pocasi?: MapWeather;
   malba?: MapPaintStroke[];
-  atmosfera?: { amb: number; barva: string };
+  atmosfera?: { amb: number; barva: string; vineta?: number };
   textury?: Record<string, string>;          // "x,y" → textureId
   vyska?: Record<string, number>;            // "x,y" → ft
   steny?: MapWall[];
@@ -167,7 +168,8 @@ export function migrateMap(m: BattleMapData | MapV2 | any, assets?: Record<strin
   if (out.atmosfera !== undefined) {
     const a = out.atmosfera;
     out.atmosfera = { amb: finite(a?.amb, 1, 0, 1),
-      barva: typeof a?.barva === "string" && /^#[0-9a-f]{6}$/i.test(a.barva) ? a.barva : "#101522" };
+      barva: typeof a?.barva === "string" && /^#[0-9a-f]{6}$/i.test(a.barva) ? a.barva : "#101522",
+      ...(a?.vineta !== undefined ? {vineta:finite(a.vineta,0,0,1)} : {}) };
   }
   if (out.textury && typeof out.textury !== "object") delete out.textury;
   if (out.vyska && typeof out.vyska !== "object") delete out.vyska;
@@ -176,9 +178,10 @@ export function migrateMap(m: BattleMapData | MapV2 | any, assets?: Record<strin
     if (out[k] && !Array.isArray(out[k])) delete out[k];
     (out[k] as any[] | undefined)?.forEach((o: any, i: number) => { if (!o.id) o.id = `${k[0]}${i}`; });
   }
-  if (out.objekty) out.objekty = out.objekty.map(o => o.v === undefined ? o : {
-    ...o, v: normalizeVariant(o.v, assets?.[o.asset] ? assets[o.asset].varianty?.length || 0 : undefined),
-  });
+  if (out.objekty) out.objekty = out.objekty.map(o => ({...o,
+    ...(o.opacity !== undefined ? {opacity:finite(o.opacity,1,0,1)} : {}),
+    ...(o.v !== undefined ? {v:normalizeVariant(o.v, assets?.[o.asset] ? assets[o.asset].varianty?.length || 0 : undefined)} : {}),
+  }));
   // normalizace zdí na unit segmenty
   if (out.svetla) out.svetla = out.svetla.filter(l => l && typeof l === "object").map(normalizeLight);
   if (out.steny) {

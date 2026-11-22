@@ -67,7 +67,8 @@ export const MapAnimatedScene = memo(function MapAnimatedScene({ map, view, px =
       if (o.dmOnly && !dm) return null;
       const asset = assets[o.asset], anim = resolveAnimation(o,asset);
       const src = asset ? assetUrl(assetSrc(asset, o.v)) : o.asset.startsWith("img:") ? "/repo/11_Mapy/bojove/"+o.asset.slice(4) : "";
-      return src && resolveAnimation({...o,zap:true},asset) && toggleable(o,asset) ? sprite(o.id,src,anim,o.x,o.y,o.w,o.h,o.rot,o.flip,o.dmOnly ? .55 : 1,asset?.blend,o) : anim && src ? sprite(o.id,src,anim,o.x,o.y,o.w,o.h,o.rot,o.flip,o.dmOnly ? .55 : 1,asset?.blend)
+      const opacity=(o.opacity ?? 1)*(o.dmOnly ? .55 : 1);
+      return src && resolveAnimation({...o,zap:true},asset) && toggleable(o,asset) ? sprite(o.id,src,anim,o.x,o.y,o.w,o.h,o.rot,o.flip,opacity,asset?.blend,o) : anim && src ? sprite(o.id,src,anim,o.x,o.y,o.w,o.h,o.rot,o.flip,opacity,asset?.blend)
         : <svg key={o.id} className="map-scene-static" width={W} height={H} style={{mixBlendMode:asset?.blend}}><MapObjectLayer map={{...map,objekty:[o]}} dm={dm} contactShadows={false} contactPlan={contactPlan} /></svg>;
     })}
     <div className="map-scene-frame" />

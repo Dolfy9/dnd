@@ -73,7 +73,7 @@ class EpicMapsTest(unittest.TestCase):
     def test_art_direction_and_roof_metadata(self):
         maps=generate()
         used={o["asset"] for m in maps for o in m["objekty"]}
-        supplied={p.stem for p in (ROOT/"11_Mapy/bojove/assets").rglob("*.webp") if p.parent.name != "varianty" and p.stem.startswith(("d-","i-","m-"))}
+        supplied={p.stem for p in (ROOT/"11_Mapy/bojove/assets").rglob("*.webp") if p.parent.name != "varianty" and not p.stem.endswith("-vyp") and p.stem.startswith(("d-","i-","m-"))}
         self.assertTrue(supplied <= used, supplied-used)
         self.assertTrue(maps[0]["interiery"])
         self.assertTrue(maps[1]["interiery"])

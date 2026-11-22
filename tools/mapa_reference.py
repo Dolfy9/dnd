@@ -9,6 +9,7 @@ from __future__ import annotations
 import argparse
 import copy
 import json
+import math
 import subprocess
 
 from mapa_epicke import ROOT, STORE, Scene, update_store
@@ -23,6 +24,7 @@ def scene(slug, name, ground, seed, ambient, tint):
     s.m["pocasi"]["sila"] = .13
     s.m["trasy"] = []
     s.m["mrizkaStyl"]["opacita"] = .06
+    s.m["atmosfera"]["vineta"] = .5
     return s
 
 
@@ -35,16 +37,44 @@ def route(s, kind, pts, width, texture=None, **options):
     s.m["trasy"].append(r)
 
 
+def mist(s, points, size):
+    for x,y in points:
+        s.obj("ov-mlha-chuchvalec",x,y,size,size*.55,s.rng.uniform(-35,35),
+              opacity=s.rng.uniform(.12,.22),z=12,anim=False,stin=False)
+
+
+def undergrowth(s, points, count=14, radius=1.5):
+    for x,y in points:
+        s.cluster(["gen2-ker2","gen2-ker","z-kvetinovy-zahon","z-brectan-previs","koreny"],
+                  x,y,count,radius,radius*.65,(.45,1.1),z=-1,stin=False)
+        s.cluster(["d-mech","d-mech","d-listi"],x,y,4,radius,radius*.7,(.6,1.2),opacity=.4)
+
+
+def masonry(s, pts):
+    for a,b in zip(pts,pts[1:]):
+        length=math.dist(a,b)
+        count=math.ceil(length/2.6)
+        for i in range(count):
+            t=(i+.5)/count
+            s.obj("m-kamenna-zidka",a[0]+(b[0]-a[0])*t,a[1]+(b[1]-a[1])*t,
+                  length/count+.4,1.5,math.degrees(math.atan2(b[1]-a[1],b[0]-a[0])),
+                  stin=False)
+
+
 def harbor():
-    s = scene("reference-pristav-tri-mola", "Tři mola – Noční přístav", "pristav", 811, .46, "#162732")
+    s = scene("reference-pristav-tri-mola", "Tři mola – Noční přístav", "pristav", 811, .26, "#06101e")
     s.rect(0, 0, 42, 28, "hluboka-voda", tile="~")
     s.rect(0, 0, 42, 14, "t-ulice-dlazba")
     for x in (0, 28):
         s.rect(x+.3, .2, 13.1, 6.8, "drevo", r=0)
         s.interior([(x+.3, 0), (x+13.4, 0), (x+13.4, 7), (x+.3, 7)])
         gate = 7.8 if x == 0 else 5
-        route(s, "zidka", [(x+.25, 0), (x+.25, 7), (x+gate-1, 7)], 1.05, "t-pristavni-kamen", brectan=True)
-        route(s, "zidka", [(x+gate+1, 7), (x+13.5, 7), (x+13.5, 0)], 1.05, "t-pristavni-kamen", brectan=True)
+        left=[(x+.25, 0), (x+.25, 7), (x+gate-1, 7)]
+        right=[(x+gate+1, 7), (x+13.5, 7), (x+13.5, 0)]
+        route(s, "zidka", left, 1.65, "t-pristavni-kamen", brectan=True)
+        route(s, "zidka", right, 1.65, "t-pristavni-kamen", brectan=True)
+        masonry(s,left)
+        masonry(s,right)
         s.enclosure([(x+.25,0),(x+13.5,0),(x+13.5,7),(x+.25,7)],
                     gaps={2:[((13.5-gate-1)/13.25,(13.5-gate+1)/13.25,"door")]})
         s.paint("t-pristavni-kamen",[(x+gate,6.5),(x+gate,9.5)],b=1.9,o=.5,h=.2)
@@ -62,6 +92,7 @@ def harbor():
         s.light(x,y,"#ffc878",5,14,.7)
     s.obj("p3-lodni-paluba",26.5,20.6,6.5,10.1,-7,cover=2)
     s.obj("m-sit",26.5,22,3.2,3.8,-7,stin=False)
+    s.obj("stan",26.6,21,5.5,6.2,-7,z=3,stin=False)
     for x,y,w in [(4,1.5,1.5),(5.5,2.2,1.4),(10.5,4.8,1.5),(11.3,6,1.2),
                   (36.4,1.8,1.5),(38.1,2,1.5),(39,3.5,1.4),(30,5.8,1.3),
                   (7.6,10.2,1.2),(6.4,12,1.2),(17.3,11.4,1.3),(20.4,10.3,1.5),
@@ -88,17 +119,30 @@ def harbor():
         s.obj("p-sud-ryby",x,y,1.3,1.2,10,cover=2)
     for x,y in [(1,9.7),(13,10.2),(26,4.2),(37,12.6)]:
         s.paint("teren-les",[(x,y),(x+2,y+.3)],b=1.7,o=.32,h=0)
-    s.light(2,17,"#a3c7d7",12,35,.35,False)
+    undergrowth(s,[(1,8),(13,7.8),(15,2),(27,3),(29,8),(40,8),(1,12),(40,12)],10)
+    for x,y in [(3,10),(11,10),(17,12),(25,9),(36,12)]:
+        s.obj("d-prasklina",x,y,1.7,1.5,s.rng.uniform(0,360),opacity=.6)
+    for x,y in [(2,19),(28,20),(20,4)]:
+        s.light(x,y,"#9ebfdf",12,40,.35,False)
+        s.m["svetla"][-1]["stiny"]=False
+    s.obj("ov-mesic-odlesk",2.5,20.7,5,12,0,z=8,opacity=.45,anim=False,stin=False)
+    s.obj("ov-paprsky",5,18.8,12,10,8,z=9,opacity=.10,anim=False,stin=False)
+    mist(s,[(1,18),(12,26),(29,27),(41,20)],11)
     s.starts([(14,9),(17,9),(20,9),(23,9),(14,12),(20,12)],
              [(5,17),(8,17),(19,17),(22,17),(33,17),(36,17)])
     s.note(20,10,"Náklad na nábřeží poskytuje kryt; všechna tři mola jsou průchozí nad vodou.")
-    s.note(26,21,"Karavela u prostředního mola. Knihovna nabízí palubu bez velké plachty z předlohy.")
+    s.note(26,21,"Karavela u prostředního mola. Plátěná stříška je samostatný editovatelný stanový asset.")
     return s.finish()
 
 
 def garden():
-    s = scene("reference-zahrada-mesic", "Zahrada osmi králů – Měsíční ticho", "les", 812, .36, "#162634")
+    s = scene("reference-zahrada-mesic", "Zahrada osmi králů – Měsíční ticho", "les", 812, .26, "#081421")
     s.rect(0,0,42,28,"t-zahradni-travnik")
+    for texture,opacity in [("trava",.55),("teren-les",.6),("hlina",.3)]:
+        for _ in range(14):
+            x,y=s.rng.uniform(1,40),s.rng.uniform(1,27)
+            s.paint(texture,[(x,y),(x+s.rng.uniform(-2,2),y+s.rng.uniform(-2,2))],
+                    b=s.rng.uniform(2,5),o=opacity,h=0,r=s.rng.uniform(0,360))
     for pts in [[(2,4),(8,7),(7,11)],[(33,2),(31,6),(36,10)],
                 [(4,18),(8,22),(13,26)],[(23,23),(29,24),(37,21)],[(16,5),(22,8),(27,6)]]:
         s.paint("teren-les",pts,b=5,o=.58,h=0)
@@ -143,9 +187,22 @@ def garden():
     for x,y in [(2,8),(4,19),(9,25),(17,19),(24,8),(30,23),(38,7),(33,18)]:
         s.obj("ov-svetlusky",x,y,2,2,0,z=2,anim=False,stin=False)
     s.obj("ov-mesic-odlesk",18.7,13.8,3.1,3.3,0,z=-1,anim=False,stin=False)
-    s.light(6,2,"#bdd9f2",40,105,.55,False)
-    s.light(19,14,"#9fc7dc",7,22,.25,False)
-    s.light(21,26,"#a5bccc",15,45,.35,False)
+    undergrowth(s,[(x,y) for y in (3.6,8.8,21.2,24.8) for x in (5,10,16,26,31,37)],18,1.8)
+    for x in range(2,41,2):
+        for y in (12.7,15.3):
+            if 14<x<28:
+                continue
+            s.cluster(["d-mech","d-listi","d-prasklina"],x,y,3,.9,.4,(.6,1.3),opacity=.65)
+            s.cluster(["gen2-ker2","z-brectan-previs"],x,y,3,.7,.35,(.25,.6),z=-1,stin=False)
+    for x,y in [(11.3,8),(16,8),(26.2,8),(31,8),(11.3,20.1),(16,20.1),(26.2,20.1),(31,20.1)]:
+        s.obj("d-mech",x,y+1.1,2.2,1.5,s.rng.uniform(0,360),opacity=.8)
+    mist(s,[(1,3),(17,0),(34,1),(42,9),(42,24),(25,28),(5,28),(0,17)],11)
+    s.obj("ov-paprsky",6,3.5,11,9,0,z=9,opacity=.12,anim=False,stin=False)
+    s.light(6,2,"#9bbde1",22,75,.4,False)
+    for x,y in [(11,10),(28,10),(20,21)]:
+        s.light(x,y,"#a2bdd6",12,40,.36,False)
+    s.light(19,14,"#9fc7dc",7,22,.23,False)
+    s.light(21,26,"#a5bccc",10,35,.15,False)
     for light in s.m["svetla"]:
         light.update(stiny=False, nazev="Rozptýlené měsíční světlo")
     s.starts([(1,10),(4,10),(7,10),(1,13),(4,13),(7,13)],

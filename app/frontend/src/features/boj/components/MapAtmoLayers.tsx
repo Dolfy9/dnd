@@ -68,9 +68,11 @@ export const MapAtmosphereArtwork = memo(function MapAtmosphereArtwork({ map, do
   const blockers = useMemo(() => lightBlockers(mapWalls(map),doors),[map.steny,map.trasy,doors]);
   const shadows=lights.map(l=>finiteLightShadows({...l,bright:l.bright/PX*5},map.objekty,assets,blockers));
   const amb = clamp(map.atmosfera?.amb ?? 1, 1);
-  if (amb === 1 && !lights.length) return null;
+  const vignette = clamp(map.atmosfera?.vineta ?? 0, 0);
+  if (amb === 1 && !lights.length && !vignette) return null;
   return <svg xmlns="http://www.w3.org/2000/svg" width={W} height={H} viewBox={`0 0 ${W} ${H}`} overflow="hidden" pointerEvents="none">
     <defs>
+      <radialGradient id={uid+"vignette"} cx="50%" cy="48%" r="70%"><stop offset=".3" stopColor="#020711" stopOpacity="0"/><stop offset="1" stopColor="#020711" stopOpacity={vignette}/></radialGradient>
       {lights.map((l,i)=><ObjectShadowMask key={l.id} id={uid+"shadow"+i} shadows={shadows[i]} width={W} height={H}/>)}
       {layer!=="darkness" && <ObjectArtworkMask id={uid+"artwork"} objects={map.objekty || []} assets={assets} width={W} height={H}/>}
       {lights.map((l,i) => <LightDefinition key={l.id} id={uid+"light"+i} light={l} blockers={blockers} width={W} height={H} />)}
@@ -91,6 +93,7 @@ export const MapAtmosphereArtwork = memo(function MapAtmosphereArtwork({ map, do
     {layer !== "darkness" && <g mask={`url(#${uid}artwork)`} style={{mixBlendMode:"screen"}}>{lights.map((l, i) => <g key={l.id} opacity={l.intenzita * .48} style={{mixBlendMode:"screen"}}>
       <LightProjection id={uid+"light"+i} light={l} filter={uid+"tint"+i} shadowMask={uid+"shadow"+i} />
     </g>)}</g>}
+    {layer !== "glow" && vignette > 0 && <rect data-map-vignette width={W} height={H} fill={`url(#${uid}vignette)`}/>}
   </svg>;
 });
 
@@ -126,12 +129,12 @@ export const MapAtmosphereLayer = memo(function MapAtmosphereLayer({ map, doors,
     window.addEventListener("resize", resize);
     return () => window.removeEventListener("resize", resize);
   }, []);
-  const key = JSON.stringify([W, H, lights, lightBlockers(mapWalls(map), doors), map.objekty?.map(o=>[o.id,o.asset,o.x,o.y,o.w,o.h,o.v,o.rot,o.flip,o.stin,o.dmOnly,o.zap,objectHeight(o,assets[o.asset])]), ambient, map.atmosfera?.barva, animated, dpr]);
+  const key = JSON.stringify([W, H, lights, lightBlockers(mapWalls(map), doors), map.objekty?.map(o=>[o.id,o.asset,o.x,o.y,o.w,o.h,o.v,o.rot,o.flip,o.stin,o.dmOnly,o.zap,o.opacity,objectHeight(o,assets[o.asset])]), ambient, map.atmosfera?.barva, map.atmosfera?.vineta, animated, dpr]);
   const [bitmaps, setBitmaps] = useState<{ dark: string; glow: string;key:string }>();
   const [previous,setPrevious]=useState<typeof bitmaps>();
   const current=useRef<typeof bitmaps>(),urls=useRef(new Set<string>());
   const [failed, setFailed] = useState(false);
-  const empty = ambient === 1 && !lights.length;
+  const empty = ambient === 1 && !lights.length && !map.atmosfera?.vineta;
   useEffect(()=>()=>{urls.current.forEach(url=>URL.revokeObjectURL(url));urls.current.clear();},[]);
   useEffect(()=>{
     if(!previous)return;

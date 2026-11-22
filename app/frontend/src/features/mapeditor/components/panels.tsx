@@ -195,7 +195,7 @@ export function MapPanel({ map, push, onResize, onUploadImg, onImportUvtt, onExp
       <details className="me-section" open><summary>Atmosféra a světlo</summary>
       <div className="me-atmo-presets">
         {ATMOSPHERES.map(a => <button key={a.n} type="button" aria-pressed={(map.atmosfera?.amb ?? 1) === a.amb && (map.atmosfera?.barva || "#101522") === a.barva}
-          onClick={() => push(m => { m.atmosfera = { amb: a.amb, barva: a.barva }; })}>
+          onClick={() => push(m => { m.atmosfera = { ...m.atmosfera, amb: a.amb, barva: a.barva }; })}>
           <span style={{ backgroundImage: "url(/repo/11_Mapy/bojove/textury/teren-les.webp)" }}>
             <i style={{ background: a.barva, opacity: 1 - a.amb }} />
           </span>{a.n}
@@ -203,10 +203,12 @@ export function MapPanel({ map, push, onResize, onUploadImg, onImportUvtt, onExp
       </div>
       <label>Okolní světlo {Math.round((map.atmosfera?.amb ?? 1) * 100)} %
         <input aria-label="Okolní světlo" type="range" min="0" max="1" step=".01" value={map.atmosfera?.amb ?? 1}
-          onChange={e => push(m => { m.atmosfera = { barva: m.atmosfera?.barva || "#101522", amb: +e.target.value }; })} />
+          onChange={e => push(m => { m.atmosfera = { ...m.atmosfera, barva: m.atmosfera?.barva || "#101522", amb: +e.target.value }; })} />
       </label>
       <label>Odstín prostředí<input aria-label="Odstín prostředí" type="color" value={map.atmosfera?.barva || "#101522"}
-        onChange={e => push(m => { m.atmosfera = { amb: m.atmosfera?.amb ?? 1, barva: e.target.value }; })} /></label>
+        onChange={e => push(m => { m.atmosfera = { ...m.atmosfera, amb: m.atmosfera?.amb ?? 1, barva: e.target.value }; })} /></label>
+      <label>Vinětace<input aria-label="Vinětace" type="range" min="0" max="1" step=".01" value={map.atmosfera?.vineta ?? 0}
+        onChange={e => push(m => { m.atmosfera = {amb:1,barva:"#101522",...m.atmosfera,vineta:+e.target.value}; })} /></label>
       </details>
       <details className="me-section"><summary>Popis a místo</summary>
       <label>Místo<input value={map.misto || ""} onChange={(e) => push((m) => { m.misto = e.target.value; })} /></label>

@@ -25,6 +25,9 @@ class ReferenceMapsTest(unittest.TestCase):
                 self.assertNotIn("obrazek", m)
                 self.assertTrue((ROOT / m["misto"]).is_file())
                 self.assertGreater(len(m["objekty"]), 100)
+                self.assertLess(m["atmosfera"]["amb"], .3)
+                self.assertGreater(m["atmosfera"]["vineta"], 0)
+                self.assertTrue(any(o["asset"] == "ov-mlha-chuchvalec" and 0 < o["opacity"] < .3 for o in m["objekty"]))
                 self.assertTrue(m["malba"] and m["svetla"] and m["trasy"])
                 for o in m["objekty"]:
                     self.assertIn(o["asset"], assets)
@@ -57,6 +60,10 @@ class ReferenceMapsTest(unittest.TestCase):
         self.assertEqual(harbor["mrizka"][20][12], "~")
         self.assertEqual(harbor["mrizka"][9][12], ".")
         self.assertTrue(any(o["asset"] == "p3-lodni-paluba" for o in harbor["objekty"]))
+        self.assertTrue(any(o["asset"] == "stan" for o in harbor["objekty"]))
+        self.assertTrue(any(o["asset"] == "m-kamenna-zidka" for o in harbor["objekty"]))
+        self.assertGreater(len(garden["objekty"]), 700)
+        self.assertTrue({"trava", "teren-les", "hlina"} <= {p["t"] for p in garden["malba"] if p["h"] == 0})
         self.assertEqual(sum(o["asset"] == "z-socha-kral" for o in garden["objekty"]), 8)
         for asset in ["z-rotunda-ruina", "z-jezirko-fontana", "ov-svetlusky", "ov-mesic-odlesk"]:
             self.assertTrue(any(o["asset"] == asset for o in garden["objekty"]))
