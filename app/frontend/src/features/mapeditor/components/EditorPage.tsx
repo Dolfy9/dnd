@@ -32,7 +32,7 @@ import * as ops from "../tools/ops";
 import { TexturePicker, TilePicker, WallPicker, TABS, LAYERS, LayersPanel, LibraryPanel, PropertiesPanel, GeneratorPanel, MapPanel, type TabId } from "./panels";
 import { LightInspector, LightShapePicker } from "./LightInspector";
 import { LightHandles } from "./LightHandles";
-import { LIGHT_PRESETS, editedLight, updateLight, aimPlacedLight, dragLightHandle, lightRotationDelta, lightHandlesEnabled, type LightHandle } from "../tools/lightEditing";
+import { LIGHT_PRESETS, editedLight, updateLight, aimPlacedLight, dragLightHandle, lightRotationDelta, lightHandlesEnabled, lightPlacementTab, type LightHandle } from "../tools/lightEditing";
 import { CommandPalette, ShortcutHelp, ToolRail, EditorMinimap, type EditorCommand } from "./EditorChrome";
 import type { LibraryMode } from "./AssetLibrary";
 import { actOnObjects, canTogglePanel, liveSelection, panUpdate, playerPreviewMap, TOOL_HINTS, readPreference, writePreference, rememberAsset, type ObjectAction } from "../state/editorUx";
@@ -566,7 +566,7 @@ export default function EditorPage() {
     if(lightGesture.current){
       const gesture=lightGesture.current, final=lightGestureValue(e);
       lightGesture.current=null;setLightPreview(null);paintRef.current=false;
-      if(!gesture.handle){push(m=>{m.svetla=[...(m.svetla || []),final];});setSel([{kind:"svetlo",id:final.id}]);setTool("select");setTab("vlastnosti");setPanelOpen(true);}
+      if(!gesture.handle){push(m=>{m.svetla=[...(m.svetla || []),final];});setSel([{kind:"svetlo",id:final.id}]);setTool("select");setTab(current=>lightPlacementTab(panelPinned,current));if(!panelPinned)setPanelOpen(true);}
       else if(final!==gesture.light)push(m=>{updateLight(m,final.id,final);});
       if(e.currentTarget.hasPointerCapture(e.pointerId))e.currentTarget.releasePointerCapture(e.pointerId);
       return;

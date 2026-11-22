@@ -46,6 +46,7 @@ export function updateLight(map:MapV2,id:string,patch:Partial<MapLightV2>):boole
 
 export type LightHandle="origin"|"direction"|"bright"|"dim"|"edge"|"end-a"|"end-b";
 export const lightHandlesEnabled=(tool:string)=>tool==="select" || tool==="svetlo";
+export const lightPlacementTab=<T extends string>(pinned:boolean,current:T):T|"vlastnosti"=>pinned?current:"vlastnosti";
 type Point=[number,number];
 export function lightHandlePoints(light:MapLightV2):{kind:LightHandle;point:Point;label:string}[] {
   const l=normalizeLight(light), r=(l.bright+l.dim)/5;
