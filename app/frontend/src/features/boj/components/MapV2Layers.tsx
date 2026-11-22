@@ -11,6 +11,7 @@ import {contactShadowPlan,MapContactShadows,type ContactShadowPlan} from "./MapC
 import {castsShadow} from "../model/objectShadows";
 import {toggleable} from "../model/sourceState";
 import {SourceArtwork} from "./SourceArtwork";
+import { DOOR_OPEN_ANGLE } from "../model/doorHit";
 
 /** Synchronní cache manifestů — plní ji useAssetManifest/useTextureManifest;
     v editoru i boji se volá dřív, než se renderují vrstvy. */
@@ -124,7 +125,7 @@ export const MapWallLayer = memo(function MapWallLayer({ map, doors, onDoor, dm,
             </>}
             {w.typ === "door" && (
               <g transform={`translate(${x1},${y1}) rotate(${angle})`}>
-                <g className="source-door-leaf" data-door-open={!!open} style={{transform:`rotate(${open?-85:0}deg)`,transformOrigin:"0px 0px"}}>
+                <g className="source-door-leaf" data-door-open={!!open} style={{transform:`rotate(${open?DOOR_OPEN_ANGLE:0}deg)`,transformOrigin:"0px 0px"}}>
                   <rect x={0} y={-2} width={length} height={4} rx={1} fill="#6b4f30" stroke="#292524" strokeWidth={.8}/>
                   {door && <image data-door-art href={assetUrl(door.src)} x={0} y={-5} width={length} height={10} preserveAspectRatio="none"/>}
                   <circle cx={Math.max(0,length-3)} cy={0} r={1.3} fill={w.locked?"#fbbf24":"#d6bd7d"}/>

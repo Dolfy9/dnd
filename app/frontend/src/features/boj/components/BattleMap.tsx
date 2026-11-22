@@ -24,6 +24,7 @@ import { MapAnimatedScene } from "./MapAnimatedScene";
 import type { MapWeather } from "../model/mapV2";
 import { ZoomIn, ZoomOut, Maximize2, Crosshair, X } from "lucide-react";
 import {sourceAt,sourceMap,sourceOn} from "../model/sourceState";
+import {doorAt} from "../model/doorHit";
 
 export type Tool = "select" | "measure" | "zone" | "paint" | "fog" | "light" | "kresba";
 
@@ -403,12 +404,7 @@ export default function BattleMap(p: Props) {
         }
         if (p.dm && p.onDoor) {
           const { gx, gy } = toGrid(e);
-          const door = ((map as MapV2).steny || []).filter((w) => w.typ === "door")
-            .find((w) => {
-              const dx = w.b[0] - w.a[0], dy = w.b[1] - w.a[1], l2 = dx * dx + dy * dy || 1;
-              const tt = Math.max(0, Math.min(1, ((gx - w.a[0]) * dx + (gy - w.a[1]) * dy) / l2));
-              return Math.hypot(gx - (w.a[0] + tt * dx), gy - (w.a[1] + tt * dy)) < .5;
-            });
+          const door = doorAt(map.steny || [], gx, gy, S.dvere);
           if (door) { p.onDoor(door); return; }
         }
         p.onSelect(null);
