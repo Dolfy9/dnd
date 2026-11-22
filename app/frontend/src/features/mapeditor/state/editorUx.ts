@@ -54,6 +54,10 @@ export function fuzzyScore(label: string, query: string): number {
 }
 
 export type ObjectAction = "duplicate" | "delete" | "rotate-left" | "rotate-right" | "flip" | "front" | "back" | "align-x" | "align-y";
+export function canTogglePanel(target: EventTarget | null): boolean {
+  return !(target as Element | null)?.closest?.('button,a[href],input,textarea,select,summary,iframe,audio[controls],video[controls],[tabindex],[contenteditable]:not([contenteditable="false"]),[role="button"],[role="link"],[role="checkbox"],[role="switch"],[role="slider"],[role="combobox"],[role="tab"],[role="menuitem"]');
+}
+
 export function playerPreviewMap(map: MapV2, enabled: boolean): MapV2 {
   return enabled ? {...map,objekty:map.objekty?.filter(o => !o.dmOnly),kresby:map.kresby?.filter(o => !o.dmOnly),poznamky:[]} : map;
 }

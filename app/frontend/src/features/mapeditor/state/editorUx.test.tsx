@@ -2,7 +2,7 @@ import React from "react";
 import { describe, expect, it, vi, afterEach } from "vitest";
 import { renderToStaticMarkup } from "react-dom/server";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { actOnObjects, liveSelection, playerPreviewMap, fuzzyScore, readPreference, rememberAsset, writePreference, TOOL_GROUPS, TOOL_HINTS } from "./editorUx";
+import { actOnObjects, canTogglePanel, liveSelection, playerPreviewMap, fuzzyScore, readPreference, rememberAsset, writePreference, TOOL_GROUPS, TOOL_HINTS } from "./editorUx";
 import { pickAt, pickInRect } from "../tools/ops";
 import type { MapObject, MapV2 } from "../../boj/model/mapV2";
 import { EditorWeather, ShortcutHelp, CommandPalette } from "../components/EditorChrome";
@@ -14,6 +14,14 @@ const object: MapObject = {id:"one",asset:"tree",x:2,y:3,w:1,h:2,v:2,light:{brig
 afterEach(() => vi.unstubAllGlobals());
 
 describe("editor productivity", () => {
+  it("reserves panel toggling for non-interactive targets, including control descendants", () => {
+    const closest = vi.fn((_selector: string) => ({}));
+    expect(canTogglePanel({closest} as unknown as EventTarget)).toBe(false);
+    const selector = closest.mock.calls[0][0];
+    for (const control of ["button","a[href]","summary","[tabindex]","[contenteditable]"]) expect(selector).toContain(control);
+    expect(canTogglePanel({closest:() => null} as unknown as EventTarget)).toBe(true);
+    expect(canTogglePanel(null)).toBe(true);
+  });
   it("picks only rendered objects in player preview, including overlapping objects", () => {
     const hidden = {...object,id:"hidden",dmOnly:true};
     const map = {objekty:[object,hidden]} as MapV2;

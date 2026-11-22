@@ -32,7 +32,7 @@ import * as ops from "../tools/ops";
 import { TexturePicker, TilePicker, WallPicker, LightColors, TABS, LAYERS, LayersPanel, LibraryPanel, PropertiesPanel, GeneratorPanel, MapPanel, type TabId } from "./panels";
 import { CommandPalette, ShortcutHelp, ToolRail, EditorMinimap, type EditorCommand } from "./EditorChrome";
 import type { LibraryMode } from "./AssetLibrary";
-import { actOnObjects, liveSelection, playerPreviewMap, TOOL_HINTS, readPreference, writePreference, rememberAsset, type ObjectAction } from "../state/editorUx";
+import { actOnObjects, canTogglePanel, liveSelection, playerPreviewMap, TOOL_HINTS, readPreference, writePreference, rememberAsset, type ObjectAction } from "../state/editorUx";
 import { assetUrl } from "../assets/manifest";
 import "../editor.css";
 import "../editorPro.css";
@@ -320,7 +320,7 @@ export default function EditorPage() {
       if (tag === "INPUT" || tag === "TEXTAREA" || tag === "SELECT") return;
       if ((tag === "BUTTON" || tag === "SUMMARY") && (e.key === " " || e.key === "Enter")) return;
       if (e.key === "?") { e.preventDefault(); setHelpOpen(true); return; }
-      if (e.key === "Tab") { e.preventDefault(); setPanelOpen(v => !v); return; }
+      if (e.key === "Tab") { if (canTogglePanel(e.target)) { e.preventDefault(); setPanelOpen(v => !v); } return; }
       if (e.key === "/") { e.preventDefault(); setTab("knihovna"); setPanelOpen(true); requestAnimationFrame(() => document.querySelector<HTMLInputElement>("[data-library-search]")?.focus()); return; }
       if (e.key === "Escape" && contextMenu) { setContextMenu(null); return; }
       if (e.key === " ") { setSpace(true); e.preventDefault(); return; }
