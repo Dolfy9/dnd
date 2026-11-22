@@ -6,6 +6,7 @@ import { useMapManifests } from "./MapV2Layers";
 import { visualLights } from "./MapAtmoLayers";
 import { GLOW, LightDefinition, lightAnimationStyle, type VisualLight } from "./MapLightProjection";
 import { LIGHT_CAPS, nearestLights, nextLightAnimationCap, type LightAnimationCap } from "../model/lightAnimationPolicy";
+import { objectBlockers } from "../model/objectShadows";
 
 const CAP_KEY="montelien-light-animation-cap";
 let sessionCap:LightAnimationCap=12;
@@ -103,7 +104,8 @@ export const MapAnimatedLights = memo(function MapAnimatedLights({map,view,px,do
   const [meanMs,setMeanMs]=useState<number>();
   const [epoch,setEpoch]=useState(0);
   const {assets}=useMapManifests();
-  const blockers=useMemo(()=>lightBlockers(map.steny,doors),[map.steny,doors]);
+  const objects=objectBlockers(map.objekty,assets);
+  const blockers=useMemo(()=>[...lightBlockers(map.steny,doors),...objects],[map.steny,doors,objects]);
   const wallKey=blockers.map(w=>[...w.a,...w.b].join(",")).join(";");
   const width=map.mrizka[0]?.length || 1,height=map.mrizka.length;
   const vw=viewport?.width ?? (typeof window === "undefined" ? width*px*view.k : window.innerWidth);

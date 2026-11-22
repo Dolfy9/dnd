@@ -32,6 +32,7 @@ export interface MapObject {
   tint?: string;
   blocks?: boolean;          // blokuje pohyb
   cover?: 2 | 3;             // krytí, které poskytuje
+  stin?: boolean;
   difficult?: boolean;       // těžký terén
   light?: { bright: number; dim: number };
   dmOnly?: boolean;

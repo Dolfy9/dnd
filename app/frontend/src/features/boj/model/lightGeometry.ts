@@ -1,7 +1,16 @@
 import { wallBlocksSight, type MapWall } from "./mapV2";
 
 export type Point = [number, number];
-export type LightSegment = {a: Point; b: Point};
+export type LightSegment = {a: Point; b: Point; polygon?:Point[]};
+
+export function pointInPolygon([x,y]:Point,polygon:Point[]):boolean {
+  let inside=false;
+  for(let i=0,j=polygon.length-1;i<polygon.length;j=i++){
+    const [ax,ay]=polygon[i],[bx,by]=polygon[j];
+    if((ay>y)!==(by>y) && x<(bx-ax)*(y-ay)/(by-ay)+ax)inside=!inside;
+  }
+  return inside;
+}
 
 export function lightBlockers(walls: MapWall[] = [], doors?: Record<string, boolean>): LightSegment[] {
   return walls.filter(w => w && wallBlocksSight(w,doors) && [...w.a,...w.b].every(Number.isFinite) && (w.a[0] !== w.b[0] || w.a[1] !== w.b[1]));
@@ -12,7 +21,7 @@ const cross = (ax: number, ay: number, bx: number, by: number) => ax * by - ay *
 export function visibilityPolygon(origin: Point, blockers: LightSegment[], width: number, height: number): Point[] {
   if (![...origin,width,height].every(Number.isFinite) || width <= 0 || height <= 0) return [];
   const corners: Point[] = [[0,0],[width,0],[width,height],[0,height]];
-  const segments = [...blockers,...corners.map((a,i) => ({a,b:corners[(i+1)%4]}))];
+  const segments = [...blockers.filter(s=>!s.polygon || !pointInPolygon(origin,s.polygon)),...corners.map((a,i) => ({a,b:corners[(i+1)%4]}))];
   const targets=new Map<string,Point>();
   const target=(p:Point)=>targets.set(p.map(n=>n.toFixed(9)).join(","),p);
   for(const s of segments){target(s.a);target(s.b);}
