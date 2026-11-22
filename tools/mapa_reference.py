@@ -1,0 +1,188 @@
+#!/usr/bin/env python3
+"""Dvě editovatelné scény podle přístavní a zahradní obrazové předlohy.
+
+--zapsat aktualizuje pouze vlastní ID v pracovním souboru map.
+--stage-store vloží do indexu pouze HEAD + tyto dvě mapy, nikoli cizí úpravy.
+"""
+from __future__ import annotations
+
+import argparse
+import copy
+import json
+import subprocess
+
+from mapa_epicke import ROOT, STORE, Scene, update_store
+
+
+def scene(slug, name, ground, seed, ambient, tint):
+    s = Scene(slug, name, ground, "03_Mesta/Mesto_Menkant.md",
+              "Rekonstrukce obrazové předlohy z editovatelných vrstev knihovny.",
+              seed, "mlha", ambient, tint)
+    s.w, s.h = 42, 28
+    s.grid = [["."] * s.w for _ in range(s.h)]
+    s.m["pocasi"]["sila"] = .13
+    s.m["trasy"] = []
+    s.m["mrizkaStyl"]["opacita"] = .06
+    return s
+
+
+def route(s, kind, pts, width, texture=None, **options):
+    r = dict(id=f"trasa{len(s.m['trasy'])}", druh=kind, pts=[list(p) for p in pts],
+             sirka=width, hladke=False, seed=741 + len(s.m["trasy"]))
+    if texture:
+        r["t"] = texture
+    r.update(options)
+    s.m["trasy"].append(r)
+
+
+def harbor():
+    s = scene("reference-pristav-tri-mola", "Tři mola – Noční přístav", "pristav", 811, .46, "#162732")
+    s.rect(0, 0, 42, 28, "hluboka-voda", tile="~")
+    s.rect(0, 0, 42, 14, "t-ulice-dlazba")
+    for x in (0, 28):
+        s.rect(x+.3, .2, 13.1, 6.8, "drevo", r=0)
+        s.interior([(x+.3, 0), (x+13.4, 0), (x+13.4, 7), (x+.3, 7)])
+        gate = 7.8 if x == 0 else 5
+        route(s, "zidka", [(x+.25, 0), (x+.25, 7), (x+gate-1, 7)], 1.05, "t-pristavni-kamen", brectan=True)
+        route(s, "zidka", [(x+gate+1, 7), (x+13.5, 7), (x+13.5, 0)], 1.05, "t-pristavni-kamen", brectan=True)
+        s.enclosure([(x+.25,0),(x+13.5,0),(x+13.5,7),(x+.25,7)],
+                    gaps={2:[((13.5-gate-1)/13.25,(13.5-gate+1)/13.25,"door")]})
+        s.paint("t-pristavni-kamen",[(x+gate,6.5),(x+gate,9.5)],b=1.9,o=.5,h=.2)
+    route(s, "zidka", [(0, 14), (42, 14)], .65, "t-pristavni-kamen")
+    for x in (6.3, 20.5, 34.7):
+        route(s, "molo", [(x, 13.7), (x, 26.3)], 3.8)
+        for y in (14.4, 24.5):
+            s.obj("p-site",x+.6,y,1.6,1.4,18,stin=False)
+        s.obj("sud",x+.7,20.9,.85,.85,12,cover=2)
+        for side in (-1,1):
+            s.obj("m-lucerna-sloup",x+side*2,14,.65,.65)
+            s.light(x+side*2,14,"#ffc878",4,12,.75)
+    for x,y in [(7.8,7.8),(33,7.8),(8,25.4)]:
+        s.obj("m-lucerna-sloup",x,y,.65,.65)
+        s.light(x,y,"#ffc878",5,14,.7)
+    s.obj("p3-lodni-paluba",26.5,20.6,6.5,10.1,-7,cover=2)
+    s.obj("m-sit",26.5,22,3.2,3.8,-7,stin=False)
+    for x,y,w in [(4,1.5,1.5),(5.5,2.2,1.4),(10.5,4.8,1.5),(11.3,6,1.2),
+                  (36.4,1.8,1.5),(38.1,2,1.5),(39,3.5,1.4),(30,5.8,1.3),
+                  (7.6,10.2,1.2),(6.4,12,1.2),(17.3,11.4,1.3),(20.4,10.3,1.5),
+                  (23.4,10.8,1.2),(25.7,8.8,1.4),(32.2,11.7,1.3)]:
+        s.obj("gen2-bedny",x,y,w*1.25,w*1.25,s.rng.choice([0,0,6,-8]),cover=2)
+    for x,y in [(12,1),(12,4.2),(23.5,7.2),(22,12.7),(29,12.3),(39,10.8),(38.5,3.8)]:
+        s.obj("sud",x,y,1.2,1.2,s.rng.uniform(0,90),cover=2)
+        s.obj("p-lana-svitek",x+.65,y+.4,.9,.9,-20,stin=False)
+    s.obj("m-sit",30.7,3.6,5.2,3.4,23,stin=False)
+    s.obj("m-sit",28,10.5,4,3,-28,stin=False)
+    for x,y in [(1,1),(40,1),(1,9),(40,8),(15.1,2),(26.6,1)]:
+        s.cluster(["gen2-ker","z-ruze-ker"],x,y,4,1,1,(.6,1.1),z=-2,stin=False)
+    for x,y in [(1,1),(41,1)]:
+        s.obj("z-strom-koruna",x,y,6,5,30,cover=3)
+    for x,y in [(1.5,7.6),(11,7.6),(14,2),(27,2),(29,7.6),(40,7.6),(1,12.4),(40.5,12.7)]:
+        s.cluster(["gen2-ker","z-ruze-ker"],x,y,4,1.4,.7,(.8,1.35),z=-2,stin=False)
+    for x,y in [(3,1.5),(9.7,5.8),(11.8,5.8),(36.5,1.5),(38,1.5),(40,1.5),(36.8,3)]:
+        s.obj("gen2-bedny",x,y,1.8,1.8,0,cover=2)
+    for x in (6.3,20.5,34.7):
+        for y in (17,22.5,26):
+            s.obj("p-lodni-kolik",x-2,y,.65,.65,0)
+            s.obj("p-lana-svitek",x+1.55,y-.2,.9,.9,20,stin=False)
+    for x,y in [(4.6,18.4),(21.7,23.7),(33.6,18),(8.2,4.8),(38.5,6.1)]:
+        s.obj("p-sud-ryby",x,y,1.3,1.2,10,cover=2)
+    for x,y in [(1,9.7),(13,10.2),(26,4.2),(37,12.6)]:
+        s.paint("teren-les",[(x,y),(x+2,y+.3)],b=1.7,o=.32,h=0)
+    s.light(2,17,"#a3c7d7",12,35,.35,False)
+    s.starts([(14,9),(17,9),(20,9),(23,9),(14,12),(20,12)],
+             [(5,17),(8,17),(19,17),(22,17),(33,17),(36,17)])
+    s.note(20,10,"Náklad na nábřeží poskytuje kryt; všechna tři mola jsou průchozí nad vodou.")
+    s.note(26,21,"Karavela u prostředního mola. Knihovna nabízí palubu bez velké plachty z předlohy.")
+    return s.finish()
+
+
+def garden():
+    s = scene("reference-zahrada-mesic", "Zahrada osmi králů – Měsíční ticho", "les", 812, .36, "#162634")
+    s.rect(0,0,42,28,"t-zahradni-travnik")
+    for pts in [[(2,4),(8,7),(7,11)],[(33,2),(31,6),(36,10)],
+                [(4,18),(8,22),(13,26)],[(23,23),(29,24),(37,21)],[(16,5),(22,8),(27,6)]]:
+        s.paint("teren-les",pts,b=5,o=.58,h=0)
+    route(s,"cesta",[(0,14),(42,14)],2.1,"t-zahradni-cesta")
+    route(s,"cesta",[(21,0),(21,10.7)],1.7,"t-hlina-pesina",hladke=True)
+    route(s,"cesta",[(21,17),(21,28)],1.7,"t-hlina-pesina",hladke=True)
+    for pts in [[(3,1),(5,6),(10,10),(10,12)],[(17,1),(15,6),(15,10)],
+                [(39,1),(37,7),(32,10),(32,12)],[(26,1),(28,6),(28,10)],
+                [(3,27),(5,22),(10,18),(10,16)],[(17,28),(15,23),(15,20)],
+                [(39,28),(37,22),(32,18),(32,16)],[(26,28),(28,23),(28,20)]]:
+        route(s,"cesta",pts,.7,"t-hlina-pesina",hladke=True)
+    for y in (3.5,25):
+        for a,b in ((3,13),(28,39)):
+            route(s,"plot",[(a,y),(b,y)],1)
+    s.rect(14.4,12,13,4.2,"teren-voda",tile="~")
+    route(s,"zidka",[(14.4,12),(27.4,12),(27.4,16.2),(14.4,16.2),(14.4,12)],.4,"t-pristavni-kamen",brectan=True)
+    s.obj("z-jezirko-fontana",20.9,14.1,13.4,4.7,0,z=-3,stin=False)
+    for y in (8,20.1):
+        for x in (11.3,16,26.2,31):
+            s.obj("z-socha-kral",x,y,2.3,3.6,s.rng.uniform(-3,3),cover=3)
+            s.obj("z-brectan-previs",x-.4,y+1.1,1.5,1,-15,z=-1,stin=False)
+    s.obj("z-rotunda-ruina",36.5,14.1,8.1,8.1,-15,cover=2,difficult=True)
+    for x,y,r in [(8.2,10.8,25),(27.6,9.8,25),(14.1,4.3,0),(27.5,4.2,0),(31.5,23,0)]:
+        s.obj("z-lavicka-kamen",x,y,1.7,.8,r,cover=2)
+    for x,y in [(4,1),(40,2),(1,20),(40,26),(4,26)]:
+        s.obj("z-strom-koruna",x,y,5.2,5.2,s.rng.uniform(0,360),cover=3)
+    for x,y in [(1,6),(41,8),(1,25),(14,27),(24,27),(41,20),(30,1)]:
+        s.obj("z-strom-koruna",x,y,3.7,4,s.rng.uniform(0,360),cover=3)
+    for x,y in [(8,5),(17,5),(25,5),(34,5),(8,23),(17,23),(25,23),(34,23),(3,17),(38,20)]:
+        s.cluster(["z-ruze-ker","z-kvetinovy-zahon"],x,y,8,2.2,1.5,(.9,1.65),stin=False,z=-2)
+    for x,y in [(5,3.8),(12,3.8),(29,3.8),(37,3.8),(5,24.5),(12,24.5),(29,24.5),(37,24.5),
+                (10,8.8),(17,8.8),(26,8.8),(31,8.8),(10,21.4),(17,21.4),(26,21.4),(31,21.4)]:
+        s.cluster(["gen2-ker","z-brectan-previs"],x,y,3,1.1,.7,(.8,1.4),z=-1,stin=False)
+    for x,y in [(8,16.8),(17,3.2),(28,3.1),(31,17.8),(5,22)]:
+        s.obj("z-urna-kamen",x,y,.8,.8,0,cover=2)
+    s.obj("z-sloup-zlomeny",32.8,17.8,1.8,1.2,24,cover=2)
+    for x,y in [(10,3.4),(32,3.5),(10,25),(32,25),(2.5,10),(3,18),(39.5,9),(39,22),
+                (13.3,10.7),(29.1,10.7),(13.2,17.6),(28.5,17.9),(20.8,9.8),(21.1,18.5)]:
+        s.cluster(["z-kvetinovy-zahon","z-ruze-ker"],x,y,5,2.1,.9,(1,1.65),stin=False,z=-2)
+    for x,y in [(8,9),(17,9),(26,9),(31,9),(8,21),(17,21),(26,21),(31,21)]:
+        s.obj("z-brectan-previs",x,y,1.7,1.2,s.rng.uniform(-30,30),z=-1,stin=False)
+    for x,y in [(2,8),(4,19),(9,25),(17,19),(24,8),(30,23),(38,7),(33,18)]:
+        s.obj("ov-svetlusky",x,y,2,2,0,z=2,anim=False,stin=False)
+    s.obj("ov-mesic-odlesk",18.7,13.8,3.1,3.3,0,z=-1,anim=False,stin=False)
+    s.light(6,2,"#bdd9f2",40,105,.55,False)
+    s.light(19,14,"#9fc7dc",7,22,.25,False)
+    s.light(21,26,"#a5bccc",15,45,.35,False)
+    for light in s.m["svetla"]:
+        light.update(stiny=False, nazev="Rozptýlené měsíční světlo")
+    s.starts([(1,10),(4,10),(7,10),(1,13),(4,13),(7,13)],
+             [(31,6),(34,6),(37,6),(40,6),(31,9),(34,9)])
+    s.note(21,14,"Zapuštěná nádrž není průchozí. Cesta ji obchází na severu a jihu.")
+    s.note(36,14,"Zřícená rotunda poskytuje poloviční kryt a těžký terén.")
+    return s.finish()
+
+
+def generate():
+    return [harbor(),garden()]
+
+
+def isolated_store(committed, maps):
+    result = copy.deepcopy(committed)
+    ids = {m["id"] for m in maps}
+    result["mapy"] = [m for m in result.get("mapy",[]) if m["id"] not in ids] + maps
+    return result
+
+
+def main():
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("--zapsat",action="store_true")
+    parser.add_argument("--stage-store",action="store_true")
+    args = parser.parse_args()
+    maps = generate()
+    if args.zapsat:
+        update_store(STORE,maps)
+    if args.stage_store:
+        path = str(STORE.relative_to(ROOT))
+        committed = json.loads(subprocess.check_output(["git","show",f"HEAD:{path}"],cwd=ROOT))
+        payload = json.dumps(isolated_store(committed,maps),ensure_ascii=False,indent=1).encode()
+        blob = subprocess.check_output(["git","hash-object","-w","--stdin"],input=payload,cwd=ROOT).decode().strip()
+        subprocess.run(["git","update-index","--cacheinfo",f"100644,{blob},{path}"],cwd=ROOT,check=True)
+    for m in maps:
+        print(m["id"],len(m["objekty"]),"objects",len(m["trasy"]),"routes")
+
+
+if __name__ == "__main__":
+    main()

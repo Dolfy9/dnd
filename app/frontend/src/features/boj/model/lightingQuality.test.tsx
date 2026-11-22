@@ -79,3 +79,11 @@ it("removes glow by sprite alpha without excluding objects from ambient darkness
  expect(html).toContain('aria-label="Výška pro stíny"');expect(html).toContain('Nízké · krátký měkký stín');
  expect(migrateMap(JSON.parse(JSON.stringify({...map,objekty:[{...object,vyska:3}]}))).objekty![0].vyska).toBe(3);
 });
+
+it("does not cut rectangular holes in ground illumination for blended effect artwork",()=>{
+ const objects=[object,...["ov-svetlusky","ov-mesic-odlesk"].map(asset=>({...object,id:asset,asset}))];
+ const html=renderToStaticMarkup(<ObjectArtworkMask id="effects" objects={objects} assets={assets} width={240} height={240}/>);
+ expect(html).toContain('data-glow-exclusion="o"');
+ expect(html).not.toContain('data-glow-exclusion="ov-svetlusky"');
+ expect(html).not.toContain('data-glow-exclusion="ov-mesic-odlesk"');
+});

@@ -17995,6 +17995,6361 @@
     "....................",
     "...................."
    ]
+  },
+  {
+   "id": "reference-pristav-tri-mola",
+   "nazev": "Tři mola – Noční přístav",
+   "podklad": "pristav",
+   "misto": "03_Mesta/Mesto_Menkant.md",
+   "popis": "Rekonstrukce obrazové předlohy z editovatelných vrstev knihovny. Autorská herní scéna; místní názvy zón a zápletky jsou návrhem pro PJ.",
+   "osvetleni": "Vizuální atmosféra; dosah světel ve stopách.",
+   "start": {
+    "druzina": [
+     [
+      14,
+      9
+     ],
+     [
+      17,
+      9
+     ],
+     [
+      20,
+      9
+     ],
+     [
+      23,
+      9
+     ],
+     [
+      14,
+      12
+     ],
+     [
+      20,
+      12
+     ]
+    ],
+    "nepratele": [
+     [
+      5,
+      17
+     ],
+     [
+      8,
+      17
+     ],
+     [
+      19,
+      17
+     ],
+     [
+      22,
+      17
+     ],
+     [
+      33,
+      17
+     ],
+     [
+      36,
+      17
+     ]
+    ]
+   },
+   "objekty": [
+    {
+     "id": "objekty0",
+     "asset": "p-site",
+     "x": 6.9,
+     "y": 14.4,
+     "w": 1.6,
+     "h": 1.4,
+     "rot": 18,
+     "stin": false,
+     "v": 2
+    },
+    {
+     "id": "objekty1",
+     "asset": "p-site",
+     "x": 6.9,
+     "y": 24.5,
+     "w": 1.6,
+     "h": 1.4,
+     "rot": 18,
+     "stin": false,
+     "v": 0
+    },
+    {
+     "id": "objekty2",
+     "asset": "sud",
+     "x": 7.0,
+     "y": 20.9,
+     "w": 0.85,
+     "h": 0.85,
+     "rot": 12,
+     "cover": 2,
+     "v": 2
+    },
+    {
+     "id": "objekty3",
+     "asset": "m-lucerna-sloup",
+     "x": 4.3,
+     "y": 14,
+     "w": 0.65,
+     "h": 0.65,
+     "rot": 0,
+     "v": 4
+    },
+    {
+     "id": "objekty4",
+     "asset": "m-lucerna-sloup",
+     "x": 8.3,
+     "y": 14,
+     "w": 0.65,
+     "h": 0.65,
+     "rot": 0,
+     "v": 4
+    },
+    {
+     "id": "objekty5",
+     "asset": "p-site",
+     "x": 21.1,
+     "y": 14.4,
+     "w": 1.6,
+     "h": 1.4,
+     "rot": 18,
+     "stin": false,
+     "v": 2
+    },
+    {
+     "id": "objekty6",
+     "asset": "p-site",
+     "x": 21.1,
+     "y": 24.5,
+     "w": 1.6,
+     "h": 1.4,
+     "rot": 18,
+     "stin": false,
+     "v": 0
+    },
+    {
+     "id": "objekty7",
+     "asset": "sud",
+     "x": 21.2,
+     "y": 20.9,
+     "w": 0.85,
+     "h": 0.85,
+     "rot": 12,
+     "cover": 2,
+     "v": 2
+    },
+    {
+     "id": "objekty8",
+     "asset": "m-lucerna-sloup",
+     "x": 18.5,
+     "y": 14,
+     "w": 0.65,
+     "h": 0.65,
+     "rot": 0,
+     "v": 4
+    },
+    {
+     "id": "objekty9",
+     "asset": "m-lucerna-sloup",
+     "x": 22.5,
+     "y": 14,
+     "w": 0.65,
+     "h": 0.65,
+     "rot": 0,
+     "v": 3
+    },
+    {
+     "id": "objekty10",
+     "asset": "p-site",
+     "x": 35.3,
+     "y": 14.4,
+     "w": 1.6,
+     "h": 1.4,
+     "rot": 18,
+     "stin": false,
+     "v": 3
+    },
+    {
+     "id": "objekty11",
+     "asset": "p-site",
+     "x": 35.3,
+     "y": 24.5,
+     "w": 1.6,
+     "h": 1.4,
+     "rot": 18,
+     "stin": false,
+     "v": 2
+    },
+    {
+     "id": "objekty12",
+     "asset": "sud",
+     "x": 35.4,
+     "y": 20.9,
+     "w": 0.85,
+     "h": 0.85,
+     "rot": 12,
+     "cover": 2,
+     "v": 1
+    },
+    {
+     "id": "objekty13",
+     "asset": "m-lucerna-sloup",
+     "x": 32.7,
+     "y": 14,
+     "w": 0.65,
+     "h": 0.65,
+     "rot": 0,
+     "v": 3
+    },
+    {
+     "id": "objekty14",
+     "asset": "m-lucerna-sloup",
+     "x": 36.7,
+     "y": 14,
+     "w": 0.65,
+     "h": 0.65,
+     "rot": 0,
+     "v": 0
+    },
+    {
+     "id": "objekty15",
+     "asset": "m-lucerna-sloup",
+     "x": 7.8,
+     "y": 7.8,
+     "w": 0.65,
+     "h": 0.65,
+     "rot": 0,
+     "v": 3
+    },
+    {
+     "id": "objekty16",
+     "asset": "m-lucerna-sloup",
+     "x": 33,
+     "y": 7.8,
+     "w": 0.65,
+     "h": 0.65,
+     "rot": 0,
+     "v": 3
+    },
+    {
+     "id": "objekty17",
+     "asset": "m-lucerna-sloup",
+     "x": 8,
+     "y": 25.4,
+     "w": 0.65,
+     "h": 0.65,
+     "rot": 0,
+     "v": 3
+    },
+    {
+     "id": "objekty18",
+     "asset": "p3-lodni-paluba",
+     "x": 26.5,
+     "y": 20.6,
+     "w": 6.5,
+     "h": 10.1,
+     "rot": -7,
+     "cover": 2,
+     "v": 4
+    },
+    {
+     "id": "objekty19",
+     "asset": "m-sit",
+     "x": 26.5,
+     "y": 22,
+     "w": 3.2,
+     "h": 3.8,
+     "rot": -7,
+     "stin": false,
+     "v": 1
+    },
+    {
+     "id": "objekty20",
+     "asset": "gen2-bedny",
+     "x": 4,
+     "y": 1.5,
+     "w": 1.875,
+     "h": 1.875,
+     "rot": 0,
+     "cover": 2,
+     "v": 0
+    },
+    {
+     "id": "objekty21",
+     "asset": "gen2-bedny",
+     "x": 5.5,
+     "y": 2.2,
+     "w": 1.75,
+     "h": 1.75,
+     "rot": 0,
+     "cover": 2,
+     "v": 0
+    },
+    {
+     "id": "objekty22",
+     "asset": "gen2-bedny",
+     "x": 10.5,
+     "y": 4.8,
+     "w": 1.875,
+     "h": 1.875,
+     "rot": -8,
+     "cover": 2,
+     "v": 4
+    },
+    {
+     "id": "objekty23",
+     "asset": "gen2-bedny",
+     "x": 11.3,
+     "y": 6,
+     "w": 1.5,
+     "h": 1.5,
+     "rot": 0,
+     "cover": 2,
+     "v": 0
+    },
+    {
+     "id": "objekty24",
+     "asset": "gen2-bedny",
+     "x": 36.4,
+     "y": 1.8,
+     "w": 1.875,
+     "h": 1.875,
+     "rot": 0,
+     "cover": 2,
+     "v": 2
+    },
+    {
+     "id": "objekty25",
+     "asset": "gen2-bedny",
+     "x": 38.1,
+     "y": 2,
+     "w": 1.875,
+     "h": 1.875,
+     "rot": 0,
+     "cover": 2,
+     "v": 2
+    },
+    {
+     "id": "objekty26",
+     "asset": "gen2-bedny",
+     "x": 39,
+     "y": 3.5,
+     "w": 1.75,
+     "h": 1.75,
+     "rot": 0,
+     "cover": 2,
+     "v": 2
+    },
+    {
+     "id": "objekty27",
+     "asset": "gen2-bedny",
+     "x": 30,
+     "y": 5.8,
+     "w": 1.625,
+     "h": 1.625,
+     "rot": 6,
+     "cover": 2,
+     "v": 4
+    },
+    {
+     "id": "objekty28",
+     "asset": "gen2-bedny",
+     "x": 7.6,
+     "y": 10.2,
+     "w": 1.5,
+     "h": 1.5,
+     "rot": 6,
+     "cover": 2,
+     "v": 3
+    },
+    {
+     "id": "objekty29",
+     "asset": "gen2-bedny",
+     "x": 6.4,
+     "y": 12,
+     "w": 1.5,
+     "h": 1.5,
+     "rot": -8,
+     "cover": 2,
+     "v": 1
+    },
+    {
+     "id": "objekty30",
+     "asset": "gen2-bedny",
+     "x": 17.3,
+     "y": 11.4,
+     "w": 1.625,
+     "h": 1.625,
+     "rot": 6,
+     "cover": 2,
+     "v": 2
+    },
+    {
+     "id": "objekty31",
+     "asset": "gen2-bedny",
+     "x": 20.4,
+     "y": 10.3,
+     "w": 1.875,
+     "h": 1.875,
+     "rot": 6,
+     "cover": 2,
+     "v": 1
+    },
+    {
+     "id": "objekty32",
+     "asset": "gen2-bedny",
+     "x": 23.4,
+     "y": 10.8,
+     "w": 1.5,
+     "h": 1.5,
+     "rot": 0,
+     "cover": 2,
+     "v": 4
+    },
+    {
+     "id": "objekty33",
+     "asset": "gen2-bedny",
+     "x": 25.7,
+     "y": 8.8,
+     "w": 1.75,
+     "h": 1.75,
+     "rot": 0,
+     "cover": 2,
+     "v": 2
+    },
+    {
+     "id": "objekty34",
+     "asset": "gen2-bedny",
+     "x": 32.2,
+     "y": 11.7,
+     "w": 1.625,
+     "h": 1.625,
+     "rot": 0,
+     "cover": 2,
+     "v": 1
+    },
+    {
+     "id": "objekty35",
+     "asset": "sud",
+     "x": 12,
+     "y": 1,
+     "w": 1.2,
+     "h": 1.2,
+     "rot": 33.89,
+     "cover": 2,
+     "v": 2
+    },
+    {
+     "id": "objekty36",
+     "asset": "p-lana-svitek",
+     "x": 12.65,
+     "y": 1.4,
+     "w": 0.9,
+     "h": 0.9,
+     "rot": -20,
+     "stin": false,
+     "v": 3
+    },
+    {
+     "id": "objekty37",
+     "asset": "sud",
+     "x": 12,
+     "y": 4.2,
+     "w": 1.2,
+     "h": 1.2,
+     "rot": 37.11,
+     "cover": 2,
+     "v": 0
+    },
+    {
+     "id": "objekty38",
+     "asset": "p-lana-svitek",
+     "x": 12.65,
+     "y": 4.6,
+     "w": 0.9,
+     "h": 0.9,
+     "rot": -20,
+     "stin": false,
+     "v": 3
+    },
+    {
+     "id": "objekty39",
+     "asset": "sud",
+     "x": 23.5,
+     "y": 7.2,
+     "w": 1.2,
+     "h": 1.2,
+     "rot": 59.17,
+     "cover": 2,
+     "v": 2
+    },
+    {
+     "id": "objekty40",
+     "asset": "p-lana-svitek",
+     "x": 24.15,
+     "y": 7.6,
+     "w": 0.9,
+     "h": 0.9,
+     "rot": -20,
+     "stin": false,
+     "v": 2
+    },
+    {
+     "id": "objekty41",
+     "asset": "sud",
+     "x": 22,
+     "y": 12.7,
+     "w": 1.2,
+     "h": 1.2,
+     "rot": 2.98,
+     "cover": 2,
+     "v": 2
+    },
+    {
+     "id": "objekty42",
+     "asset": "p-lana-svitek",
+     "x": 22.65,
+     "y": 13.1,
+     "w": 0.9,
+     "h": 0.9,
+     "rot": -20,
+     "stin": false,
+     "v": 2
+    },
+    {
+     "id": "objekty43",
+     "asset": "sud",
+     "x": 29,
+     "y": 12.3,
+     "w": 1.2,
+     "h": 1.2,
+     "rot": 26.31,
+     "cover": 2,
+     "v": 2
+    },
+    {
+     "id": "objekty44",
+     "asset": "p-lana-svitek",
+     "x": 29.65,
+     "y": 12.7,
+     "w": 0.9,
+     "h": 0.9,
+     "rot": -20,
+     "stin": false,
+     "v": 1
+    },
+    {
+     "id": "objekty45",
+     "asset": "sud",
+     "x": 39,
+     "y": 10.8,
+     "w": 1.2,
+     "h": 1.2,
+     "rot": 46.17,
+     "cover": 2,
+     "v": 3
+    },
+    {
+     "id": "objekty46",
+     "asset": "p-lana-svitek",
+     "x": 39.65,
+     "y": 11.2,
+     "w": 0.9,
+     "h": 0.9,
+     "rot": -20,
+     "stin": false,
+     "v": 0
+    },
+    {
+     "id": "objekty47",
+     "asset": "sud",
+     "x": 38.5,
+     "y": 3.8,
+     "w": 1.2,
+     "h": 1.2,
+     "rot": 43.65,
+     "cover": 2,
+     "v": 1
+    },
+    {
+     "id": "objekty48",
+     "asset": "p-lana-svitek",
+     "x": 39.15,
+     "y": 4.2,
+     "w": 0.9,
+     "h": 0.9,
+     "rot": -20,
+     "stin": false,
+     "v": 0
+    },
+    {
+     "id": "objekty49",
+     "asset": "m-sit",
+     "x": 30.7,
+     "y": 3.6,
+     "w": 5.2,
+     "h": 3.4,
+     "rot": 23,
+     "stin": false,
+     "v": 2
+    },
+    {
+     "id": "objekty50",
+     "asset": "m-sit",
+     "x": 28,
+     "y": 10.5,
+     "w": 4,
+     "h": 3,
+     "rot": -28,
+     "stin": false,
+     "v": 0
+    },
+    {
+     "id": "objekty51",
+     "asset": "gen2-ker",
+     "x": 0.801,
+     "y": 1.758,
+     "w": 0.875,
+     "h": 0.981,
+     "rot": 191.41,
+     "flip": true,
+     "z": -2,
+     "stin": false,
+     "v": 0
+    },
+    {
+     "id": "objekty52",
+     "asset": "gen2-ker",
+     "x": 1.732,
+     "y": 1.096,
+     "w": 0.733,
+     "h": 0.658,
+     "rot": 336.72,
+     "flip": false,
+     "z": -2,
+     "stin": false,
+     "v": 4
+    },
+    {
+     "id": "objekty53",
+     "asset": "z-ruze-ker",
+     "x": 1.651,
+     "y": 1.01,
+     "w": 0.92,
+     "h": 1.041,
+     "rot": 320.12,
+     "flip": true,
+     "z": -2,
+     "stin": false,
+     "v": 2
+    },
+    {
+     "id": "objekty54",
+     "asset": "gen2-ker",
+     "x": 1.67,
+     "y": 1.638,
+     "w": 0.685,
+     "h": 0.656,
+     "rot": 187.5,
+     "flip": false,
+     "z": -2,
+     "stin": false,
+     "v": 2
+    },
+    {
+     "id": "objekty55",
+     "asset": "gen2-ker",
+     "x": 39.389,
+     "y": 0.84,
+     "w": 0.727,
+     "h": 0.694,
+     "rot": 110.94,
+     "flip": true,
+     "z": -2,
+     "stin": false,
+     "v": 4
+    },
+    {
+     "id": "objekty56",
+     "asset": "z-ruze-ker",
+     "x": 39.74,
+     "y": 0.916,
+     "w": 0.879,
+     "h": 1.007,
+     "rot": 13.88,
+     "flip": true,
+     "z": -2,
+     "stin": false,
+     "v": 0
+    },
+    {
+     "id": "objekty57",
+     "asset": "z-ruze-ker",
+     "x": 39.667,
+     "y": 0.873,
+     "w": 0.83,
+     "h": 0.809,
+     "rot": 149.37,
+     "flip": true,
+     "z": -2,
+     "stin": false,
+     "v": 3
+    },
+    {
+     "id": "objekty58",
+     "asset": "gen2-ker",
+     "x": 39.397,
+     "y": 1.43,
+     "w": 0.714,
+     "h": 0.732,
+     "rot": 34.07,
+     "flip": false,
+     "z": -2,
+     "stin": false,
+     "v": 3
+    },
+    {
+     "id": "objekty59",
+     "asset": "gen2-ker",
+     "x": 0.749,
+     "y": 8.407,
+     "w": 0.646,
+     "h": 0.742,
+     "rot": 81.92,
+     "flip": true,
+     "z": -2,
+     "stin": false,
+     "v": 4
+    },
+    {
+     "id": "objekty60",
+     "asset": "z-ruze-ker",
+     "x": 0.846,
+     "y": 8.521,
+     "w": 0.944,
+     "h": 0.774,
+     "rot": 32.05,
+     "flip": false,
+     "z": -2,
+     "stin": false,
+     "v": 2
+    },
+    {
+     "id": "objekty61",
+     "asset": "z-ruze-ker",
+     "x": 1.306,
+     "y": 8.499,
+     "w": 0.898,
+     "h": 0.987,
+     "rot": 238.74,
+     "flip": true,
+     "z": -2,
+     "stin": false,
+     "v": 3
+    },
+    {
+     "id": "objekty62",
+     "asset": "z-ruze-ker",
+     "x": 1.694,
+     "y": 9.211,
+     "w": 0.992,
+     "h": 1.077,
+     "rot": 165.62,
+     "flip": true,
+     "z": -2,
+     "stin": false,
+     "v": 0
+    },
+    {
+     "id": "objekty63",
+     "asset": "gen2-ker",
+     "x": 40.244,
+     "y": 7.274,
+     "w": 0.831,
+     "h": 0.767,
+     "rot": 61.73,
+     "flip": false,
+     "z": -2,
+     "stin": false,
+     "v": 1
+    },
+    {
+     "id": "objekty64",
+     "asset": "z-ruze-ker",
+     "x": 40.443,
+     "y": 8.505,
+     "w": 0.907,
+     "h": 1.083,
+     "rot": 179.73,
+     "flip": false,
+     "z": -2,
+     "stin": false,
+     "v": 0
+    },
+    {
+     "id": "objekty65",
+     "asset": "gen2-ker",
+     "x": 39.665,
+     "y": 8.179,
+     "w": 0.883,
+     "h": 0.74,
+     "rot": 175.79,
+     "flip": true,
+     "z": -2,
+     "stin": false,
+     "v": 3
+    },
+    {
+     "id": "objekty66",
+     "asset": "gen2-ker",
+     "x": 40.398,
+     "y": 8.109,
+     "w": 0.964,
+     "h": 0.973,
+     "rot": 170.65,
+     "flip": true,
+     "z": -2,
+     "stin": false,
+     "v": 0
+    },
+    {
+     "id": "objekty67",
+     "asset": "gen2-ker",
+     "x": 14.555,
+     "y": 1.329,
+     "w": 1.044,
+     "h": 1.221,
+     "rot": 70.84,
+     "flip": false,
+     "z": -2,
+     "stin": false,
+     "v": 1
+    },
+    {
+     "id": "objekty68",
+     "asset": "gen2-ker",
+     "x": 14.47,
+     "y": 2.119,
+     "w": 0.619,
+     "h": 0.721,
+     "rot": 169.1,
+     "flip": false,
+     "z": -2,
+     "stin": false,
+     "v": 1
+    },
+    {
+     "id": "objekty69",
+     "asset": "gen2-ker",
+     "x": 14.983,
+     "y": 1.113,
+     "w": 0.932,
+     "h": 1.07,
+     "rot": 312.01,
+     "flip": false,
+     "z": -2,
+     "stin": false,
+     "v": 3
+    },
+    {
+     "id": "objekty70",
+     "asset": "gen2-ker",
+     "x": 15.552,
+     "y": 1.858,
+     "w": 0.862,
+     "h": 0.985,
+     "rot": 108.81,
+     "flip": true,
+     "z": -2,
+     "stin": false,
+     "v": 4
+    },
+    {
+     "id": "objekty71",
+     "asset": "z-ruze-ker",
+     "x": 26.021,
+     "y": 1.023,
+     "w": 1.047,
+     "h": 1.086,
+     "rot": 231.12,
+     "flip": false,
+     "z": -2,
+     "stin": false,
+     "v": 1
+    },
+    {
+     "id": "objekty72",
+     "asset": "z-ruze-ker",
+     "x": 25.718,
+     "y": 1.122,
+     "w": 1.088,
+     "h": 1.266,
+     "rot": 113.76,
+     "flip": false,
+     "z": -2,
+     "stin": false,
+     "v": 2
+    },
+    {
+     "id": "objekty73",
+     "asset": "z-ruze-ker",
+     "x": 25.923,
+     "y": 1.484,
+     "w": 1.037,
+     "h": 1.194,
+     "rot": 25.7,
+     "flip": false,
+     "z": -2,
+     "stin": false,
+     "v": 3
+    },
+    {
+     "id": "objekty74",
+     "asset": "z-ruze-ker",
+     "x": 27.524,
+     "y": 0.725,
+     "w": 0.912,
+     "h": 0.902,
+     "rot": 342.77,
+     "flip": true,
+     "z": -2,
+     "stin": false,
+     "v": 0
+    },
+    {
+     "id": "objekty75",
+     "asset": "z-strom-koruna",
+     "x": 1,
+     "y": 1,
+     "w": 6,
+     "h": 5,
+     "rot": 30,
+     "cover": 3,
+     "v": 0
+    },
+    {
+     "id": "objekty76",
+     "asset": "z-strom-koruna",
+     "x": 41,
+     "y": 1,
+     "w": 6,
+     "h": 5,
+     "rot": 30,
+     "cover": 3,
+     "v": 2
+    },
+    {
+     "id": "objekty77",
+     "asset": "z-ruze-ker",
+     "x": 1.87,
+     "y": 7.238,
+     "w": 1.231,
+     "h": 1.261,
+     "rot": 136.31,
+     "flip": false,
+     "z": -2,
+     "stin": false,
+     "v": 1
+    },
+    {
+     "id": "objekty78",
+     "asset": "z-ruze-ker",
+     "x": 1.736,
+     "y": 7.456,
+     "w": 0.86,
+     "h": 0.865,
+     "rot": 234.24,
+     "flip": false,
+     "z": -2,
+     "stin": false,
+     "v": 3
+    },
+    {
+     "id": "objekty79",
+     "asset": "gen2-ker",
+     "x": 1.972,
+     "y": 8.057,
+     "w": 1.215,
+     "h": 1.046,
+     "rot": 19.25,
+     "flip": true,
+     "z": -2,
+     "stin": false,
+     "v": 4
+    },
+    {
+     "id": "objekty80",
+     "asset": "gen2-ker",
+     "x": 1.259,
+     "y": 7.012,
+     "w": 1.154,
+     "h": 0.965,
+     "rot": 54.0,
+     "flip": false,
+     "z": -2,
+     "stin": false,
+     "v": 1
+    },
+    {
+     "id": "objekty81",
+     "asset": "z-ruze-ker",
+     "x": 10.518,
+     "y": 7.777,
+     "w": 1.121,
+     "h": 1.337,
+     "rot": 227.73,
+     "flip": false,
+     "z": -2,
+     "stin": false,
+     "v": 3
+    },
+    {
+     "id": "objekty82",
+     "asset": "z-ruze-ker",
+     "x": 11.447,
+     "y": 7.93,
+     "w": 1.173,
+     "h": 1.315,
+     "rot": 358.68,
+     "flip": true,
+     "z": -2,
+     "stin": false,
+     "v": 1
+    },
+    {
+     "id": "objekty83",
+     "asset": "z-ruze-ker",
+     "x": 10.868,
+     "y": 7.064,
+     "w": 0.899,
+     "h": 0.976,
+     "rot": 267.97,
+     "flip": false,
+     "z": -2,
+     "stin": false,
+     "v": 0
+    },
+    {
+     "id": "objekty84",
+     "asset": "gen2-ker",
+     "x": 10.12,
+     "y": 8.1,
+     "w": 0.823,
+     "h": 0.899,
+     "rot": 179.01,
+     "flip": true,
+     "z": -2,
+     "stin": false,
+     "v": 2
+    },
+    {
+     "id": "objekty85",
+     "asset": "z-ruze-ker",
+     "x": 14.451,
+     "y": 2.076,
+     "w": 0.978,
+     "h": 0.797,
+     "rot": 326.07,
+     "flip": true,
+     "z": -2,
+     "stin": false,
+     "v": 0
+    },
+    {
+     "id": "objekty86",
+     "asset": "gen2-ker",
+     "x": 14.664,
+     "y": 1.398,
+     "w": 0.825,
+     "h": 0.864,
+     "rot": 293.84,
+     "flip": true,
+     "z": -2,
+     "stin": false,
+     "v": 0
+    },
+    {
+     "id": "objekty87",
+     "asset": "z-ruze-ker",
+     "x": 14.644,
+     "y": 1.8,
+     "w": 1.129,
+     "h": 1.016,
+     "rot": 246.91,
+     "flip": false,
+     "z": -2,
+     "stin": false,
+     "v": 0
+    },
+    {
+     "id": "objekty88",
+     "asset": "z-ruze-ker",
+     "x": 13.834,
+     "y": 1.424,
+     "w": 1.215,
+     "h": 1.067,
+     "rot": 205.02,
+     "flip": false,
+     "z": -2,
+     "stin": false,
+     "v": 0
+    },
+    {
+     "id": "objekty89",
+     "asset": "z-ruze-ker",
+     "x": 26.474,
+     "y": 2.033,
+     "w": 0.978,
+     "h": 0.883,
+     "rot": 257.56,
+     "flip": false,
+     "z": -2,
+     "stin": false,
+     "v": 2
+    },
+    {
+     "id": "objekty90",
+     "asset": "gen2-ker",
+     "x": 25.951,
+     "y": 2.461,
+     "w": 0.851,
+     "h": 0.933,
+     "rot": 5.51,
+     "flip": true,
+     "z": -2,
+     "stin": false,
+     "v": 1
+    },
+    {
+     "id": "objekty91",
+     "asset": "z-ruze-ker",
+     "x": 26.357,
+     "y": 1.412,
+     "w": 1.207,
+     "h": 1.408,
+     "rot": 60.31,
+     "flip": false,
+     "z": -2,
+     "stin": false,
+     "v": 1
+    },
+    {
+     "id": "objekty92",
+     "asset": "gen2-ker",
+     "x": 27.532,
+     "y": 1.389,
+     "w": 1.266,
+     "h": 1.239,
+     "rot": 22.99,
+     "flip": false,
+     "z": -2,
+     "stin": false,
+     "v": 1
+    },
+    {
+     "id": "objekty93",
+     "asset": "z-ruze-ker",
+     "x": 28.123,
+     "y": 7.517,
+     "w": 1.181,
+     "h": 1.067,
+     "rot": 271.56,
+     "flip": false,
+     "z": -2,
+     "stin": false,
+     "v": 1
+    },
+    {
+     "id": "objekty94",
+     "asset": "gen2-ker",
+     "x": 30.155,
+     "y": 7.962,
+     "w": 1.249,
+     "h": 1.201,
+     "rot": 175.6,
+     "flip": false,
+     "z": -2,
+     "stin": false,
+     "v": 3
+    },
+    {
+     "id": "objekty95",
+     "asset": "gen2-ker",
+     "x": 28.128,
+     "y": 7.76,
+     "w": 1.09,
+     "h": 0.955,
+     "rot": 153.84,
+     "flip": true,
+     "z": -2,
+     "stin": false,
+     "v": 4
+    },
+    {
+     "id": "objekty96",
+     "asset": "gen2-ker",
+     "x": 29.607,
+     "y": 7.599,
+     "w": 1.211,
+     "h": 1.205,
+     "rot": 165.83,
+     "flip": true,
+     "z": -2,
+     "stin": false,
+     "v": 2
+    },
+    {
+     "id": "objekty97",
+     "asset": "z-ruze-ker",
+     "x": 38.902,
+     "y": 7.345,
+     "w": 1.205,
+     "h": 1.2,
+     "rot": 271.16,
+     "flip": true,
+     "z": -2,
+     "stin": false,
+     "v": 0
+    },
+    {
+     "id": "objekty98",
+     "asset": "gen2-ker",
+     "x": 40.852,
+     "y": 7.888,
+     "w": 1.124,
+     "h": 1.105,
+     "rot": 43.93,
+     "flip": true,
+     "z": -2,
+     "stin": false,
+     "v": 3
+    },
+    {
+     "id": "objekty99",
+     "asset": "gen2-ker",
+     "x": 40.19,
+     "y": 7.2,
+     "w": 1.128,
+     "h": 1.21,
+     "rot": 4.06,
+     "flip": true,
+     "z": -2,
+     "stin": false,
+     "v": 4
+    },
+    {
+     "id": "objekty100",
+     "asset": "z-ruze-ker",
+     "x": 39.288,
+     "y": 7.691,
+     "w": 1.188,
+     "h": 0.961,
+     "rot": 204.78,
+     "flip": false,
+     "z": -2,
+     "stin": false,
+     "v": 3
+    },
+    {
+     "id": "objekty101",
+     "asset": "gen2-ker",
+     "x": 1.595,
+     "y": 12.145,
+     "w": 1.032,
+     "h": 0.962,
+     "rot": 260.3,
+     "flip": true,
+     "z": -2,
+     "stin": false,
+     "v": 0
+    },
+    {
+     "id": "objekty102",
+     "asset": "gen2-ker",
+     "x": 1.485,
+     "y": 12.621,
+     "w": 0.965,
+     "h": 0.845,
+     "rot": 298.22,
+     "flip": true,
+     "z": -2,
+     "stin": false,
+     "v": 3
+    },
+    {
+     "id": "objekty103",
+     "asset": "gen2-ker",
+     "x": 1.67,
+     "y": 12.138,
+     "w": 1.005,
+     "h": 1.103,
+     "rot": 94.23,
+     "flip": true,
+     "z": -2,
+     "stin": false,
+     "v": 1
+    },
+    {
+     "id": "objekty104",
+     "asset": "gen2-ker",
+     "x": 0.673,
+     "y": 12.441,
+     "w": 0.976,
+     "h": 1.166,
+     "rot": 303.95,
+     "flip": false,
+     "z": -2,
+     "stin": false,
+     "v": 3
+    },
+    {
+     "id": "objekty105",
+     "asset": "z-ruze-ker",
+     "x": 40.886,
+     "y": 12.929,
+     "w": 0.9,
+     "h": 0.744,
+     "rot": 216.18,
+     "flip": false,
+     "z": -2,
+     "stin": false,
+     "v": 0
+    },
+    {
+     "id": "objekty106",
+     "asset": "gen2-ker",
+     "x": 40.163,
+     "y": 13.053,
+     "w": 1.025,
+     "h": 0.993,
+     "rot": 194.56,
+     "flip": false,
+     "z": -2,
+     "stin": false,
+     "v": 4
+    },
+    {
+     "id": "objekty107",
+     "asset": "z-ruze-ker",
+     "x": 40.37,
+     "y": 12.192,
+     "w": 1.164,
+     "h": 1.21,
+     "rot": 223.82,
+     "flip": true,
+     "z": -2,
+     "stin": false,
+     "v": 1
+    },
+    {
+     "id": "objekty108",
+     "asset": "z-ruze-ker",
+     "x": 40.545,
+     "y": 12.344,
+     "w": 1.24,
+     "h": 1.073,
+     "rot": 248.97,
+     "flip": false,
+     "z": -2,
+     "stin": false,
+     "v": 3
+    },
+    {
+     "id": "objekty109",
+     "asset": "gen2-bedny",
+     "x": 3,
+     "y": 1.5,
+     "w": 1.8,
+     "h": 1.8,
+     "rot": 0,
+     "cover": 2,
+     "v": 2
+    },
+    {
+     "id": "objekty110",
+     "asset": "gen2-bedny",
+     "x": 9.7,
+     "y": 5.8,
+     "w": 1.8,
+     "h": 1.8,
+     "rot": 0,
+     "cover": 2,
+     "v": 1
+    },
+    {
+     "id": "objekty111",
+     "asset": "gen2-bedny",
+     "x": 11.8,
+     "y": 5.8,
+     "w": 1.8,
+     "h": 1.8,
+     "rot": 0,
+     "cover": 2,
+     "v": 1
+    },
+    {
+     "id": "objekty112",
+     "asset": "gen2-bedny",
+     "x": 36.5,
+     "y": 1.5,
+     "w": 1.8,
+     "h": 1.8,
+     "rot": 0,
+     "cover": 2,
+     "v": 0
+    },
+    {
+     "id": "objekty113",
+     "asset": "gen2-bedny",
+     "x": 38,
+     "y": 1.5,
+     "w": 1.8,
+     "h": 1.8,
+     "rot": 0,
+     "cover": 2,
+     "v": 3
+    },
+    {
+     "id": "objekty114",
+     "asset": "gen2-bedny",
+     "x": 40,
+     "y": 1.5,
+     "w": 1.8,
+     "h": 1.8,
+     "rot": 0,
+     "cover": 2,
+     "v": 2
+    },
+    {
+     "id": "objekty115",
+     "asset": "gen2-bedny",
+     "x": 36.8,
+     "y": 3,
+     "w": 1.8,
+     "h": 1.8,
+     "rot": 0,
+     "cover": 2,
+     "v": 1
+    },
+    {
+     "id": "objekty116",
+     "asset": "p-lodni-kolik",
+     "x": 4.3,
+     "y": 17,
+     "w": 0.65,
+     "h": 0.65,
+     "rot": 0,
+     "v": 1
+    },
+    {
+     "id": "objekty117",
+     "asset": "p-lana-svitek",
+     "x": 7.85,
+     "y": 16.8,
+     "w": 0.9,
+     "h": 0.9,
+     "rot": 20,
+     "stin": false,
+     "v": 1
+    },
+    {
+     "id": "objekty118",
+     "asset": "p-lodni-kolik",
+     "x": 4.3,
+     "y": 22.5,
+     "w": 0.65,
+     "h": 0.65,
+     "rot": 0,
+     "v": 2
+    },
+    {
+     "id": "objekty119",
+     "asset": "p-lana-svitek",
+     "x": 7.85,
+     "y": 22.3,
+     "w": 0.9,
+     "h": 0.9,
+     "rot": 20,
+     "stin": false,
+     "v": 2
+    },
+    {
+     "id": "objekty120",
+     "asset": "p-lodni-kolik",
+     "x": 4.3,
+     "y": 26,
+     "w": 0.65,
+     "h": 0.65,
+     "rot": 0,
+     "v": 3
+    },
+    {
+     "id": "objekty121",
+     "asset": "p-lana-svitek",
+     "x": 7.85,
+     "y": 25.8,
+     "w": 0.9,
+     "h": 0.9,
+     "rot": 20,
+     "stin": false,
+     "v": 0
+    },
+    {
+     "id": "objekty122",
+     "asset": "p-lodni-kolik",
+     "x": 18.5,
+     "y": 17,
+     "w": 0.65,
+     "h": 0.65,
+     "rot": 0,
+     "v": 1
+    },
+    {
+     "id": "objekty123",
+     "asset": "p-lana-svitek",
+     "x": 22.05,
+     "y": 16.8,
+     "w": 0.9,
+     "h": 0.9,
+     "rot": 20,
+     "stin": false,
+     "v": 3
+    },
+    {
+     "id": "objekty124",
+     "asset": "p-lodni-kolik",
+     "x": 18.5,
+     "y": 22.5,
+     "w": 0.65,
+     "h": 0.65,
+     "rot": 0,
+     "v": 0
+    },
+    {
+     "id": "objekty125",
+     "asset": "p-lana-svitek",
+     "x": 22.05,
+     "y": 22.3,
+     "w": 0.9,
+     "h": 0.9,
+     "rot": 20,
+     "stin": false,
+     "v": 1
+    },
+    {
+     "id": "objekty126",
+     "asset": "p-lodni-kolik",
+     "x": 18.5,
+     "y": 26,
+     "w": 0.65,
+     "h": 0.65,
+     "rot": 0,
+     "v": 1
+    },
+    {
+     "id": "objekty127",
+     "asset": "p-lana-svitek",
+     "x": 22.05,
+     "y": 25.8,
+     "w": 0.9,
+     "h": 0.9,
+     "rot": 20,
+     "stin": false,
+     "v": 3
+    },
+    {
+     "id": "objekty128",
+     "asset": "p-lodni-kolik",
+     "x": 32.7,
+     "y": 17,
+     "w": 0.65,
+     "h": 0.65,
+     "rot": 0,
+     "v": 3
+    },
+    {
+     "id": "objekty129",
+     "asset": "p-lana-svitek",
+     "x": 36.25,
+     "y": 16.8,
+     "w": 0.9,
+     "h": 0.9,
+     "rot": 20,
+     "stin": false,
+     "v": 0
+    },
+    {
+     "id": "objekty130",
+     "asset": "p-lodni-kolik",
+     "x": 32.7,
+     "y": 22.5,
+     "w": 0.65,
+     "h": 0.65,
+     "rot": 0,
+     "v": 1
+    },
+    {
+     "id": "objekty131",
+     "asset": "p-lana-svitek",
+     "x": 36.25,
+     "y": 22.3,
+     "w": 0.9,
+     "h": 0.9,
+     "rot": 20,
+     "stin": false,
+     "v": 3
+    },
+    {
+     "id": "objekty132",
+     "asset": "p-lodni-kolik",
+     "x": 32.7,
+     "y": 26,
+     "w": 0.65,
+     "h": 0.65,
+     "rot": 0,
+     "v": 1
+    },
+    {
+     "id": "objekty133",
+     "asset": "p-lana-svitek",
+     "x": 36.25,
+     "y": 25.8,
+     "w": 0.9,
+     "h": 0.9,
+     "rot": 20,
+     "stin": false,
+     "v": 2
+    },
+    {
+     "id": "objekty134",
+     "asset": "p-sud-ryby",
+     "x": 4.6,
+     "y": 18.4,
+     "w": 1.3,
+     "h": 1.2,
+     "rot": 10,
+     "cover": 2,
+     "v": 0
+    },
+    {
+     "id": "objekty135",
+     "asset": "p-sud-ryby",
+     "x": 21.7,
+     "y": 23.7,
+     "w": 1.3,
+     "h": 1.2,
+     "rot": 10,
+     "cover": 2,
+     "v": 0
+    },
+    {
+     "id": "objekty136",
+     "asset": "p-sud-ryby",
+     "x": 33.6,
+     "y": 18,
+     "w": 1.3,
+     "h": 1.2,
+     "rot": 10,
+     "cover": 2,
+     "v": 0
+    },
+    {
+     "id": "objekty137",
+     "asset": "p-sud-ryby",
+     "x": 8.2,
+     "y": 4.8,
+     "w": 1.3,
+     "h": 1.2,
+     "rot": 10,
+     "cover": 2,
+     "v": 0
+    },
+    {
+     "id": "objekty138",
+     "asset": "p-sud-ryby",
+     "x": 38.5,
+     "y": 6.1,
+     "w": 1.3,
+     "h": 1.2,
+     "rot": 10,
+     "cover": 2,
+     "v": 0
+    }
+   ],
+   "steny": [
+    {
+     "id": "steny0",
+     "a": [
+      0.25,
+      0
+     ],
+     "b": [
+      13.5,
+      0
+     ],
+     "typ": "wall"
+    },
+    {
+     "id": "steny1",
+     "a": [
+      13.5,
+      0
+     ],
+     "b": [
+      13.5,
+      7
+     ],
+     "typ": "wall"
+    },
+    {
+     "id": "steny2",
+     "a": [
+      13.5,
+      7
+     ],
+     "b": [
+      8.8,
+      7.0
+     ],
+     "typ": "wall"
+    },
+    {
+     "id": "steny3",
+     "a": [
+      8.8,
+      7.0
+     ],
+     "b": [
+      6.8,
+      7.0
+     ],
+     "typ": "door"
+    },
+    {
+     "id": "steny4",
+     "a": [
+      6.8,
+      7.0
+     ],
+     "b": [
+      0.25,
+      7
+     ],
+     "typ": "wall"
+    },
+    {
+     "id": "steny5",
+     "a": [
+      0.25,
+      7
+     ],
+     "b": [
+      0.25,
+      0
+     ],
+     "typ": "wall"
+    },
+    {
+     "id": "steny6",
+     "a": [
+      28.25,
+      0
+     ],
+     "b": [
+      41.5,
+      0
+     ],
+     "typ": "wall"
+    },
+    {
+     "id": "steny7",
+     "a": [
+      41.5,
+      0
+     ],
+     "b": [
+      41.5,
+      7
+     ],
+     "typ": "wall"
+    },
+    {
+     "id": "steny8",
+     "a": [
+      41.5,
+      7
+     ],
+     "b": [
+      34.0,
+      7.0
+     ],
+     "typ": "wall"
+    },
+    {
+     "id": "steny9",
+     "a": [
+      34.0,
+      7.0
+     ],
+     "b": [
+      32.0,
+      7.0
+     ],
+     "typ": "door"
+    },
+    {
+     "id": "steny10",
+     "a": [
+      32.0,
+      7.0
+     ],
+     "b": [
+      28.25,
+      7
+     ],
+     "typ": "wall"
+    },
+    {
+     "id": "steny11",
+     "a": [
+      28.25,
+      7
+     ],
+     "b": [
+      28.25,
+      0
+     ],
+     "typ": "wall"
+    }
+   ],
+   "malba": [
+    {
+     "id": "malba0",
+     "t": "hluboka-voda",
+     "b": 1,
+     "o": 1,
+     "h": 1,
+     "r": 0,
+     "poly": true,
+     "p": [
+      [
+       0,
+       0
+      ],
+      [
+       42,
+       0
+      ],
+      [
+       42,
+       28
+      ],
+      [
+       0,
+       28
+      ]
+     ]
+    },
+    {
+     "id": "malba1",
+     "t": "t-ulice-dlazba",
+     "b": 1,
+     "o": 1,
+     "h": 1,
+     "r": 0,
+     "poly": true,
+     "p": [
+      [
+       0,
+       0
+      ],
+      [
+       42,
+       0
+      ],
+      [
+       42,
+       14
+      ],
+      [
+       0,
+       14
+      ]
+     ]
+    },
+    {
+     "id": "malba2",
+     "t": "drevo",
+     "b": 1,
+     "o": 1,
+     "h": 1,
+     "r": 0,
+     "poly": true,
+     "p": [
+      [
+       0.3,
+       0.2
+      ],
+      [
+       13.4,
+       0.2
+      ],
+      [
+       13.4,
+       7.0
+      ],
+      [
+       0.3,
+       7.0
+      ]
+     ]
+    },
+    {
+     "id": "malba3",
+     "t": "t-pristavni-kamen",
+     "b": 1.9,
+     "o": 0.5,
+     "h": 0.2,
+     "r": 0,
+     "poly": false,
+     "p": [
+      [
+       7.8,
+       6.5
+      ],
+      [
+       7.8,
+       9.5
+      ]
+     ]
+    },
+    {
+     "id": "malba4",
+     "t": "drevo",
+     "b": 1,
+     "o": 1,
+     "h": 1,
+     "r": 0,
+     "poly": true,
+     "p": [
+      [
+       28.3,
+       0.2
+      ],
+      [
+       41.4,
+       0.2
+      ],
+      [
+       41.4,
+       7.0
+      ],
+      [
+       28.3,
+       7.0
+      ]
+     ]
+    },
+    {
+     "id": "malba5",
+     "t": "t-pristavni-kamen",
+     "b": 1.9,
+     "o": 0.5,
+     "h": 0.2,
+     "r": 0,
+     "poly": false,
+     "p": [
+      [
+       33,
+       6.5
+      ],
+      [
+       33,
+       9.5
+      ]
+     ]
+    },
+    {
+     "id": "malba6",
+     "t": "teren-les",
+     "b": 1.7,
+     "o": 0.32,
+     "h": 0,
+     "r": 0,
+     "poly": false,
+     "p": [
+      [
+       1,
+       9.7
+      ],
+      [
+       3,
+       10.0
+      ]
+     ]
+    },
+    {
+     "id": "malba7",
+     "t": "teren-les",
+     "b": 1.7,
+     "o": 0.32,
+     "h": 0,
+     "r": 0,
+     "poly": false,
+     "p": [
+      [
+       13,
+       10.2
+      ],
+      [
+       15,
+       10.5
+      ]
+     ]
+    },
+    {
+     "id": "malba8",
+     "t": "teren-les",
+     "b": 1.7,
+     "o": 0.32,
+     "h": 0,
+     "r": 0,
+     "poly": false,
+     "p": [
+      [
+       26,
+       4.2
+      ],
+      [
+       28,
+       4.5
+      ]
+     ]
+    },
+    {
+     "id": "malba9",
+     "t": "teren-les",
+     "b": 1.7,
+     "o": 0.32,
+     "h": 0,
+     "r": 0,
+     "poly": false,
+     "p": [
+      [
+       37,
+       12.6
+      ],
+      [
+       39,
+       12.9
+      ]
+     ]
+    }
+   ],
+   "svetla": [
+    {
+     "id": "svetla0",
+     "x": 4.3,
+     "y": 14,
+     "bright": 4,
+     "dim": 12,
+     "color": "#ffc878",
+     "intenzita": 0.75,
+     "blikani": true
+    },
+    {
+     "id": "svetla1",
+     "x": 8.3,
+     "y": 14,
+     "bright": 4,
+     "dim": 12,
+     "color": "#ffc878",
+     "intenzita": 0.75,
+     "blikani": true
+    },
+    {
+     "id": "svetla2",
+     "x": 18.5,
+     "y": 14,
+     "bright": 4,
+     "dim": 12,
+     "color": "#ffc878",
+     "intenzita": 0.75,
+     "blikani": true
+    },
+    {
+     "id": "svetla3",
+     "x": 22.5,
+     "y": 14,
+     "bright": 4,
+     "dim": 12,
+     "color": "#ffc878",
+     "intenzita": 0.75,
+     "blikani": true
+    },
+    {
+     "id": "svetla4",
+     "x": 32.7,
+     "y": 14,
+     "bright": 4,
+     "dim": 12,
+     "color": "#ffc878",
+     "intenzita": 0.75,
+     "blikani": true
+    },
+    {
+     "id": "svetla5",
+     "x": 36.7,
+     "y": 14,
+     "bright": 4,
+     "dim": 12,
+     "color": "#ffc878",
+     "intenzita": 0.75,
+     "blikani": true
+    },
+    {
+     "id": "svetla6",
+     "x": 7.8,
+     "y": 7.8,
+     "bright": 5,
+     "dim": 14,
+     "color": "#ffc878",
+     "intenzita": 0.7,
+     "blikani": true
+    },
+    {
+     "id": "svetla7",
+     "x": 33,
+     "y": 7.8,
+     "bright": 5,
+     "dim": 14,
+     "color": "#ffc878",
+     "intenzita": 0.7,
+     "blikani": true
+    },
+    {
+     "id": "svetla8",
+     "x": 8,
+     "y": 25.4,
+     "bright": 5,
+     "dim": 14,
+     "color": "#ffc878",
+     "intenzita": 0.7,
+     "blikani": true
+    },
+    {
+     "id": "svetla9",
+     "x": 2,
+     "y": 17,
+     "bright": 12,
+     "dim": 35,
+     "color": "#a3c7d7",
+     "intenzita": 0.35,
+     "blikani": false
+    }
+   ],
+   "poznamky": [
+    {
+     "id": "poznamky0",
+     "x": 20,
+     "y": 10,
+     "text": "Náklad na nábřeží poskytuje kryt; všechna tři mola jsou průchozí nad vodou."
+    },
+    {
+     "id": "poznamky1",
+     "x": 26,
+     "y": 21,
+     "text": "Karavela u prostředního mola. Knihovna nabízí palubu bez velké plachty z předlohy."
+    }
+   ],
+   "kresby": [],
+   "vyska": {},
+   "textury": {},
+   "interiery": [
+    {
+     "id": "interiery0",
+     "poly": [
+      [
+       0.3,
+       0
+      ],
+      [
+       13.4,
+       0
+      ],
+      [
+       13.4,
+       7
+      ],
+      [
+       0.3,
+       7
+      ]
+     ]
+    },
+    {
+     "id": "interiery1",
+     "poly": [
+      [
+       28.3,
+       0
+      ],
+      [
+       41.4,
+       0
+      ],
+      [
+       41.4,
+       7
+      ],
+      [
+       28.3,
+       7
+      ]
+     ]
+    }
+   ],
+   "atmosfera": {
+    "amb": 0.46,
+    "barva": "#162732"
+   },
+   "pocasi": {
+    "typ": "mlha",
+    "sila": 0.13,
+    "vitr": 112
+   },
+   "mrizkaStyl": {
+    "typ": "dots",
+    "barva": "#ddd4b1",
+    "opacita": 0.06
+   },
+   "trasy": [
+    {
+     "id": "trasa0",
+     "druh": "zidka",
+     "pts": [
+      [
+       0.25,
+       0
+      ],
+      [
+       0.25,
+       7
+      ],
+      [
+       6.8,
+       7
+      ]
+     ],
+     "sirka": 1.05,
+     "hladke": false,
+     "seed": 741,
+     "t": "t-pristavni-kamen",
+     "brectan": true
+    },
+    {
+     "id": "trasa1",
+     "druh": "zidka",
+     "pts": [
+      [
+       8.8,
+       7
+      ],
+      [
+       13.5,
+       7
+      ],
+      [
+       13.5,
+       0
+      ]
+     ],
+     "sirka": 1.05,
+     "hladke": false,
+     "seed": 742,
+     "t": "t-pristavni-kamen",
+     "brectan": true
+    },
+    {
+     "id": "trasa2",
+     "druh": "zidka",
+     "pts": [
+      [
+       28.25,
+       0
+      ],
+      [
+       28.25,
+       7
+      ],
+      [
+       32,
+       7
+      ]
+     ],
+     "sirka": 1.05,
+     "hladke": false,
+     "seed": 743,
+     "t": "t-pristavni-kamen",
+     "brectan": true
+    },
+    {
+     "id": "trasa3",
+     "druh": "zidka",
+     "pts": [
+      [
+       34,
+       7
+      ],
+      [
+       41.5,
+       7
+      ],
+      [
+       41.5,
+       0
+      ]
+     ],
+     "sirka": 1.05,
+     "hladke": false,
+     "seed": 744,
+     "t": "t-pristavni-kamen",
+     "brectan": true
+    },
+    {
+     "id": "trasa4",
+     "druh": "zidka",
+     "pts": [
+      [
+       0,
+       14
+      ],
+      [
+       42,
+       14
+      ]
+     ],
+     "sirka": 0.65,
+     "hladke": false,
+     "seed": 745,
+     "t": "t-pristavni-kamen"
+    },
+    {
+     "id": "trasa5",
+     "druh": "molo",
+     "pts": [
+      [
+       6.3,
+       13.7
+      ],
+      [
+       6.3,
+       26.3
+      ]
+     ],
+     "sirka": 3.8,
+     "hladke": false,
+     "seed": 746
+    },
+    {
+     "id": "trasa6",
+     "druh": "molo",
+     "pts": [
+      [
+       20.5,
+       13.7
+      ],
+      [
+       20.5,
+       26.3
+      ]
+     ],
+     "sirka": 3.8,
+     "hladke": false,
+     "seed": 747
+    },
+    {
+     "id": "trasa7",
+     "druh": "molo",
+     "pts": [
+      [
+       34.7,
+       13.7
+      ],
+      [
+       34.7,
+       26.3
+      ]
+     ],
+     "sirka": 3.8,
+     "hladke": false,
+     "seed": 748
+    }
+   ],
+   "mrizka": [
+    "..........................................",
+    "..........................................",
+    "..........................................",
+    "..........................................",
+    "..........................................",
+    "..........................................",
+    "..........................................",
+    "..........................................",
+    "..........................................",
+    "..........................................",
+    "..........................................",
+    "..........................................",
+    "..........................................",
+    "..........................................",
+    "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~",
+    "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~",
+    "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~",
+    "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~",
+    "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~",
+    "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~",
+    "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~",
+    "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~",
+    "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~",
+    "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~",
+    "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~",
+    "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~",
+    "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~",
+    "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"
+   ]
+  },
+  {
+   "id": "reference-zahrada-mesic",
+   "nazev": "Zahrada osmi králů – Měsíční ticho",
+   "podklad": "les",
+   "misto": "03_Mesta/Mesto_Menkant.md",
+   "popis": "Rekonstrukce obrazové předlohy z editovatelných vrstev knihovny. Autorská herní scéna; místní názvy zón a zápletky jsou návrhem pro PJ.",
+   "osvetleni": "Vizuální atmosféra; dosah světel ve stopách.",
+   "start": {
+    "druzina": [
+     [
+      1,
+      10
+     ],
+     [
+      4,
+      10
+     ],
+     [
+      7,
+      10
+     ],
+     [
+      1,
+      13
+     ],
+     [
+      4,
+      13
+     ],
+     [
+      7,
+      13
+     ]
+    ],
+    "nepratele": [
+     [
+      31,
+      6
+     ],
+     [
+      34,
+      6
+     ],
+     [
+      37,
+      6
+     ],
+     [
+      40,
+      6
+     ],
+     [
+      31,
+      9
+     ],
+     [
+      34,
+      9
+     ]
+    ]
+   },
+   "objekty": [
+    {
+     "id": "objekty0",
+     "asset": "z-jezirko-fontana",
+     "x": 20.9,
+     "y": 14.1,
+     "w": 13.4,
+     "h": 4.7,
+     "rot": 0,
+     "z": -3,
+     "stin": false
+    },
+    {
+     "id": "objekty1",
+     "asset": "z-socha-kral",
+     "x": 11.3,
+     "y": 8,
+     "w": 2.3,
+     "h": 3.6,
+     "rot": -2.81,
+     "cover": 3,
+     "v": 0
+    },
+    {
+     "id": "objekty2",
+     "asset": "z-brectan-previs",
+     "x": 10.9,
+     "y": 9.1,
+     "w": 1.5,
+     "h": 1,
+     "rot": -15,
+     "z": -1,
+     "stin": false,
+     "v": 3
+    },
+    {
+     "id": "objekty3",
+     "asset": "z-socha-kral",
+     "x": 16,
+     "y": 8,
+     "w": 2.3,
+     "h": 3.6,
+     "rot": 0.68,
+     "cover": 3,
+     "v": 2
+    },
+    {
+     "id": "objekty4",
+     "asset": "z-brectan-previs",
+     "x": 15.6,
+     "y": 9.1,
+     "w": 1.5,
+     "h": 1,
+     "rot": -15,
+     "z": -1,
+     "stin": false,
+     "v": 3
+    },
+    {
+     "id": "objekty5",
+     "asset": "z-socha-kral",
+     "x": 26.2,
+     "y": 8,
+     "w": 2.3,
+     "h": 3.6,
+     "rot": 1.29,
+     "cover": 3,
+     "v": 0
+    },
+    {
+     "id": "objekty6",
+     "asset": "z-brectan-previs",
+     "x": 25.8,
+     "y": 9.1,
+     "w": 1.5,
+     "h": 1,
+     "rot": -15,
+     "z": -1,
+     "stin": false,
+     "v": 3
+    },
+    {
+     "id": "objekty7",
+     "asset": "z-socha-kral",
+     "x": 31,
+     "y": 8,
+     "w": 2.3,
+     "h": 3.6,
+     "rot": -0.89,
+     "cover": 3,
+     "v": 1
+    },
+    {
+     "id": "objekty8",
+     "asset": "z-brectan-previs",
+     "x": 30.6,
+     "y": 9.1,
+     "w": 1.5,
+     "h": 1,
+     "rot": -15,
+     "z": -1,
+     "stin": false,
+     "v": 0
+    },
+    {
+     "id": "objekty9",
+     "asset": "z-socha-kral",
+     "x": 11.3,
+     "y": 20.1,
+     "w": 2.3,
+     "h": 3.6,
+     "rot": 0.87,
+     "cover": 3,
+     "v": 0
+    },
+    {
+     "id": "objekty10",
+     "asset": "z-brectan-previs",
+     "x": 10.9,
+     "y": 21.2,
+     "w": 1.5,
+     "h": 1,
+     "rot": -15,
+     "z": -1,
+     "stin": false,
+     "v": 3
+    },
+    {
+     "id": "objekty11",
+     "asset": "z-socha-kral",
+     "x": 16,
+     "y": 20.1,
+     "w": 2.3,
+     "h": 3.6,
+     "rot": 1.9,
+     "cover": 3,
+     "v": 1
+    },
+    {
+     "id": "objekty12",
+     "asset": "z-brectan-previs",
+     "x": 15.6,
+     "y": 21.2,
+     "w": 1.5,
+     "h": 1,
+     "rot": -15,
+     "z": -1,
+     "stin": false,
+     "v": 2
+    },
+    {
+     "id": "objekty13",
+     "asset": "z-socha-kral",
+     "x": 26.2,
+     "y": 20.1,
+     "w": 2.3,
+     "h": 3.6,
+     "rot": 2.96,
+     "cover": 3,
+     "v": 2
+    },
+    {
+     "id": "objekty14",
+     "asset": "z-brectan-previs",
+     "x": 25.8,
+     "y": 21.2,
+     "w": 1.5,
+     "h": 1,
+     "rot": -15,
+     "z": -1,
+     "stin": false,
+     "v": 3
+    },
+    {
+     "id": "objekty15",
+     "asset": "z-socha-kral",
+     "x": 31,
+     "y": 20.1,
+     "w": 2.3,
+     "h": 3.6,
+     "rot": -1.71,
+     "cover": 3,
+     "v": 0
+    },
+    {
+     "id": "objekty16",
+     "asset": "z-brectan-previs",
+     "x": 30.6,
+     "y": 21.2,
+     "w": 1.5,
+     "h": 1,
+     "rot": -15,
+     "z": -1,
+     "stin": false,
+     "v": 1
+    },
+    {
+     "id": "objekty17",
+     "asset": "z-rotunda-ruina",
+     "x": 36.5,
+     "y": 14.1,
+     "w": 8.1,
+     "h": 8.1,
+     "rot": -15,
+     "cover": 2,
+     "difficult": true
+    },
+    {
+     "id": "objekty18",
+     "asset": "z-lavicka-kamen",
+     "x": 8.2,
+     "y": 10.8,
+     "w": 1.7,
+     "h": 0.8,
+     "rot": 25,
+     "cover": 2,
+     "v": 2
+    },
+    {
+     "id": "objekty19",
+     "asset": "z-lavicka-kamen",
+     "x": 27.6,
+     "y": 9.8,
+     "w": 1.7,
+     "h": 0.8,
+     "rot": 25,
+     "cover": 2,
+     "v": 3
+    },
+    {
+     "id": "objekty20",
+     "asset": "z-lavicka-kamen",
+     "x": 14.1,
+     "y": 4.3,
+     "w": 1.7,
+     "h": 0.8,
+     "rot": 0,
+     "cover": 2,
+     "v": 0
+    },
+    {
+     "id": "objekty21",
+     "asset": "z-lavicka-kamen",
+     "x": 27.5,
+     "y": 4.2,
+     "w": 1.7,
+     "h": 0.8,
+     "rot": 0,
+     "cover": 2,
+     "v": 0
+    },
+    {
+     "id": "objekty22",
+     "asset": "z-lavicka-kamen",
+     "x": 31.5,
+     "y": 23,
+     "w": 1.7,
+     "h": 0.8,
+     "rot": 0,
+     "cover": 2,
+     "v": 0
+    },
+    {
+     "id": "objekty23",
+     "asset": "z-strom-koruna",
+     "x": 4,
+     "y": 1,
+     "w": 5.2,
+     "h": 5.2,
+     "rot": 70.56,
+     "cover": 3,
+     "v": 3
+    },
+    {
+     "id": "objekty24",
+     "asset": "z-strom-koruna",
+     "x": 40,
+     "y": 2,
+     "w": 5.2,
+     "h": 5.2,
+     "rot": 250.62,
+     "cover": 3,
+     "v": 2
+    },
+    {
+     "id": "objekty25",
+     "asset": "z-strom-koruna",
+     "x": 1,
+     "y": 20,
+     "w": 5.2,
+     "h": 5.2,
+     "rot": 149.94,
+     "cover": 3,
+     "v": 1
+    },
+    {
+     "id": "objekty26",
+     "asset": "z-strom-koruna",
+     "x": 40,
+     "y": 26,
+     "w": 5.2,
+     "h": 5.2,
+     "rot": 25.33,
+     "cover": 3,
+     "v": 0
+    },
+    {
+     "id": "objekty27",
+     "asset": "z-strom-koruna",
+     "x": 4,
+     "y": 26,
+     "w": 5.2,
+     "h": 5.2,
+     "rot": 129.66,
+     "cover": 3,
+     "v": 0
+    },
+    {
+     "id": "objekty28",
+     "asset": "z-strom-koruna",
+     "x": 1,
+     "y": 6,
+     "w": 3.7,
+     "h": 4,
+     "rot": 327.96,
+     "cover": 3,
+     "v": 1
+    },
+    {
+     "id": "objekty29",
+     "asset": "z-strom-koruna",
+     "x": 41,
+     "y": 8,
+     "w": 3.7,
+     "h": 4,
+     "rot": 119.82,
+     "cover": 3,
+     "v": 0
+    },
+    {
+     "id": "objekty30",
+     "asset": "z-strom-koruna",
+     "x": 1,
+     "y": 25,
+     "w": 3.7,
+     "h": 4,
+     "rot": 130.86,
+     "cover": 3,
+     "v": 2
+    },
+    {
+     "id": "objekty31",
+     "asset": "z-strom-koruna",
+     "x": 14,
+     "y": 27,
+     "w": 3.7,
+     "h": 4,
+     "rot": 195.93,
+     "cover": 3,
+     "v": 2
+    },
+    {
+     "id": "objekty32",
+     "asset": "z-strom-koruna",
+     "x": 24,
+     "y": 27,
+     "w": 3.7,
+     "h": 4,
+     "rot": 114.8,
+     "cover": 3,
+     "v": 3
+    },
+    {
+     "id": "objekty33",
+     "asset": "z-strom-koruna",
+     "x": 41,
+     "y": 20,
+     "w": 3.7,
+     "h": 4,
+     "rot": 102.42,
+     "cover": 3,
+     "v": 3
+    },
+    {
+     "id": "objekty34",
+     "asset": "z-strom-koruna",
+     "x": 30,
+     "y": 1,
+     "w": 3.7,
+     "h": 4,
+     "rot": 275.71,
+     "cover": 3,
+     "v": 0
+    },
+    {
+     "id": "objekty35",
+     "asset": "z-kvetinovy-zahon",
+     "x": 8.397,
+     "y": 5.687,
+     "w": 1.125,
+     "h": 1.13,
+     "rot": 59.75,
+     "flip": false,
+     "stin": false,
+     "z": -2,
+     "v": 0
+    },
+    {
+     "id": "objekty36",
+     "asset": "z-kvetinovy-zahon",
+     "x": 6.67,
+     "y": 5.837,
+     "w": 1.031,
+     "h": 1.184,
+     "rot": 134.99,
+     "flip": true,
+     "stin": false,
+     "z": -2,
+     "v": 2
+    },
+    {
+     "id": "objekty37",
+     "asset": "z-ruze-ker",
+     "x": 8.294,
+     "y": 4.557,
+     "w": 1.566,
+     "h": 1.549,
+     "rot": 234.57,
+     "flip": false,
+     "stin": false,
+     "z": -2,
+     "v": 0
+    },
+    {
+     "id": "objekty38",
+     "asset": "z-ruze-ker",
+     "x": 6.323,
+     "y": 5.912,
+     "w": 1.583,
+     "h": 1.325,
+     "rot": 279.98,
+     "flip": true,
+     "stin": false,
+     "z": -2,
+     "v": 0
+    },
+    {
+     "id": "objekty39",
+     "asset": "z-kvetinovy-zahon",
+     "x": 8.382,
+     "y": 3.823,
+     "w": 1.172,
+     "h": 1.397,
+     "rot": 53.34,
+     "flip": true,
+     "stin": false,
+     "z": -2,
+     "v": 3
+    },
+    {
+     "id": "objekty40",
+     "asset": "z-ruze-ker",
+     "x": 6.271,
+     "y": 4.93,
+     "w": 1.574,
+     "h": 1.738,
+     "rot": 312.49,
+     "flip": true,
+     "stin": false,
+     "z": -2,
+     "v": 0
+    },
+    {
+     "id": "objekty41",
+     "asset": "z-kvetinovy-zahon",
+     "x": 7.06,
+     "y": 3.837,
+     "w": 1.298,
+     "h": 1.237,
+     "rot": 164.98,
+     "flip": true,
+     "stin": false,
+     "z": -2,
+     "v": 2
+    },
+    {
+     "id": "objekty42",
+     "asset": "z-kvetinovy-zahon",
+     "x": 9.055,
+     "y": 4.512,
+     "w": 1.251,
+     "h": 1.421,
+     "rot": 208.79,
+     "flip": true,
+     "stin": false,
+     "z": -2,
+     "v": 2
+    },
+    {
+     "id": "objekty43",
+     "asset": "z-ruze-ker",
+     "x": 18.052,
+     "y": 3.783,
+     "w": 1.496,
+     "h": 1.461,
+     "rot": 303.0,
+     "flip": false,
+     "stin": false,
+     "z": -2,
+     "v": 3
+    },
+    {
+     "id": "objekty44",
+     "asset": "z-ruze-ker",
+     "x": 18.125,
+     "y": 3.848,
+     "w": 1.008,
+     "h": 1.108,
+     "rot": 91.89,
+     "flip": false,
+     "stin": false,
+     "z": -2,
+     "v": 2
+    },
+    {
+     "id": "objekty45",
+     "asset": "z-kvetinovy-zahon",
+     "x": 17.75,
+     "y": 4.694,
+     "w": 0.905,
+     "h": 0.821,
+     "rot": 286.4,
+     "flip": false,
+     "stin": false,
+     "z": -2,
+     "v": 1
+    },
+    {
+     "id": "objekty46",
+     "asset": "z-ruze-ker",
+     "x": 15.846,
+     "y": 4.168,
+     "w": 1.455,
+     "h": 1.292,
+     "rot": 198.87,
+     "flip": true,
+     "stin": false,
+     "z": -2,
+     "v": 0
+    },
+    {
+     "id": "objekty47",
+     "asset": "z-kvetinovy-zahon",
+     "x": 17.538,
+     "y": 3.851,
+     "w": 1.632,
+     "h": 1.544,
+     "rot": 160.98,
+     "flip": false,
+     "stin": false,
+     "z": -2,
+     "v": 0
+    },
+    {
+     "id": "objekty48",
+     "asset": "z-kvetinovy-zahon",
+     "x": 18.531,
+     "y": 5.165,
+     "w": 1.45,
+     "h": 1.567,
+     "rot": 19.11,
+     "flip": true,
+     "stin": false,
+     "z": -2,
+     "v": 2
+    },
+    {
+     "id": "objekty49",
+     "asset": "z-ruze-ker",
+     "x": 16.2,
+     "y": 5.998,
+     "w": 1.198,
+     "h": 1.001,
+     "rot": 131.54,
+     "flip": false,
+     "stin": false,
+     "z": -2,
+     "v": 0
+    },
+    {
+     "id": "objekty50",
+     "asset": "z-kvetinovy-zahon",
+     "x": 17.096,
+     "y": 4.545,
+     "w": 1.519,
+     "h": 1.697,
+     "rot": 212.46,
+     "flip": true,
+     "stin": false,
+     "z": -2,
+     "v": 2
+    },
+    {
+     "id": "objekty51",
+     "asset": "z-kvetinovy-zahon",
+     "x": 25.823,
+     "y": 5.334,
+     "w": 1.179,
+     "h": 1.22,
+     "rot": 235.77,
+     "flip": true,
+     "stin": false,
+     "z": -2,
+     "v": 0
+    },
+    {
+     "id": "objekty52",
+     "asset": "z-kvetinovy-zahon",
+     "x": 25.633,
+     "y": 3.824,
+     "w": 1.079,
+     "h": 1.267,
+     "rot": 111.96,
+     "flip": true,
+     "stin": false,
+     "z": -2,
+     "v": 2
+    },
+    {
+     "id": "objekty53",
+     "asset": "z-ruze-ker",
+     "x": 25.202,
+     "y": 4.542,
+     "w": 1.498,
+     "h": 1.362,
+     "rot": 311.05,
+     "flip": false,
+     "stin": false,
+     "z": -2,
+     "v": 0
+    },
+    {
+     "id": "objekty54",
+     "asset": "z-ruze-ker",
+     "x": 24.939,
+     "y": 6.284,
+     "w": 1.298,
+     "h": 1.522,
+     "rot": 90.06,
+     "flip": true,
+     "stin": false,
+     "z": -2,
+     "v": 3
+    },
+    {
+     "id": "objekty55",
+     "asset": "z-kvetinovy-zahon",
+     "x": 24.772,
+     "y": 4.376,
+     "w": 0.929,
+     "h": 0.783,
+     "rot": 327.11,
+     "flip": false,
+     "stin": false,
+     "z": -2,
+     "v": 1
+    },
+    {
+     "id": "objekty56",
+     "asset": "z-kvetinovy-zahon",
+     "x": 25.298,
+     "y": 5.679,
+     "w": 0.998,
+     "h": 1.092,
+     "rot": 125.21,
+     "flip": false,
+     "stin": false,
+     "z": -2,
+     "v": 0
+    },
+    {
+     "id": "objekty57",
+     "asset": "z-ruze-ker",
+     "x": 23.981,
+     "y": 4.401,
+     "w": 1.179,
+     "h": 1.247,
+     "rot": 123.81,
+     "flip": false,
+     "stin": false,
+     "z": -2,
+     "v": 3
+    },
+    {
+     "id": "objekty58",
+     "asset": "z-ruze-ker",
+     "x": 24.437,
+     "y": 3.732,
+     "w": 1.102,
+     "h": 1.278,
+     "rot": 216.31,
+     "flip": false,
+     "stin": false,
+     "z": -2,
+     "v": 3
+    },
+    {
+     "id": "objekty59",
+     "asset": "z-kvetinovy-zahon",
+     "x": 34.559,
+     "y": 6.257,
+     "w": 1.119,
+     "h": 0.993,
+     "rot": 134.29,
+     "flip": true,
+     "stin": false,
+     "z": -2,
+     "v": 2
+    },
+    {
+     "id": "objekty60",
+     "asset": "z-kvetinovy-zahon",
+     "x": 34.931,
+     "y": 4.423,
+     "w": 1.006,
+     "h": 1.058,
+     "rot": 54.67,
+     "flip": false,
+     "stin": false,
+     "z": -2,
+     "v": 3
+    },
+    {
+     "id": "objekty61",
+     "asset": "z-ruze-ker",
+     "x": 33.634,
+     "y": 3.637,
+     "w": 1.358,
+     "h": 1.472,
+     "rot": 217.29,
+     "flip": true,
+     "stin": false,
+     "z": -2,
+     "v": 3
+    },
+    {
+     "id": "objekty62",
+     "asset": "z-ruze-ker",
+     "x": 33.863,
+     "y": 4.101,
+     "w": 1.47,
+     "h": 1.485,
+     "rot": 357.15,
+     "flip": false,
+     "stin": false,
+     "z": -2,
+     "v": 0
+    },
+    {
+     "id": "objekty63",
+     "asset": "z-kvetinovy-zahon",
+     "x": 32.929,
+     "y": 5.053,
+     "w": 1.579,
+     "h": 1.848,
+     "rot": 147.79,
+     "flip": false,
+     "stin": false,
+     "z": -2,
+     "v": 0
+    },
+    {
+     "id": "objekty64",
+     "asset": "z-ruze-ker",
+     "x": 35.463,
+     "y": 5.529,
+     "w": 1.445,
+     "h": 1.332,
+     "rot": 333.36,
+     "flip": true,
+     "stin": false,
+     "z": -2,
+     "v": 3
+    },
+    {
+     "id": "objekty65",
+     "asset": "z-ruze-ker",
+     "x": 33.567,
+     "y": 5.228,
+     "w": 1.38,
+     "h": 1.413,
+     "rot": 167.11,
+     "flip": true,
+     "stin": false,
+     "z": -2,
+     "v": 0
+    },
+    {
+     "id": "objekty66",
+     "asset": "z-kvetinovy-zahon",
+     "x": 31.915,
+     "y": 5.385,
+     "w": 1.489,
+     "h": 1.774,
+     "rot": 292.46,
+     "flip": false,
+     "stin": false,
+     "z": -2,
+     "v": 2
+    },
+    {
+     "id": "objekty67",
+     "asset": "z-kvetinovy-zahon",
+     "x": 6.556,
+     "y": 23.792,
+     "w": 1.02,
+     "h": 1.1,
+     "rot": 147.29,
+     "flip": true,
+     "stin": false,
+     "z": -2,
+     "v": 1
+    },
+    {
+     "id": "objekty68",
+     "asset": "z-kvetinovy-zahon",
+     "x": 8.176,
+     "y": 22.814,
+     "w": 1.446,
+     "h": 1.23,
+     "rot": 289.86,
+     "flip": true,
+     "stin": false,
+     "z": -2,
+     "v": 1
+    },
+    {
+     "id": "objekty69",
+     "asset": "z-ruze-ker",
+     "x": 8.785,
+     "y": 21.687,
+     "w": 0.996,
+     "h": 0.863,
+     "rot": 256.07,
+     "flip": false,
+     "stin": false,
+     "z": -2,
+     "v": 0
+    },
+    {
+     "id": "objekty70",
+     "asset": "z-kvetinovy-zahon",
+     "x": 9.627,
+     "y": 22.204,
+     "w": 1.178,
+     "h": 1.228,
+     "rot": 241.55,
+     "flip": true,
+     "stin": false,
+     "z": -2,
+     "v": 0
+    },
+    {
+     "id": "objekty71",
+     "asset": "z-ruze-ker",
+     "x": 6.164,
+     "y": 23.463,
+     "w": 0.997,
+     "h": 1.001,
+     "rot": 242.81,
+     "flip": false,
+     "stin": false,
+     "z": -2,
+     "v": 1
+    },
+    {
+     "id": "objekty72",
+     "asset": "z-ruze-ker",
+     "x": 9.882,
+     "y": 22.952,
+     "w": 1.285,
+     "h": 1.142,
+     "rot": 142.45,
+     "flip": false,
+     "stin": false,
+     "z": -2,
+     "v": 1
+    },
+    {
+     "id": "objekty73",
+     "asset": "z-ruze-ker",
+     "x": 8.984,
+     "y": 24.248,
+     "w": 1.439,
+     "h": 1.55,
+     "rot": 117.46,
+     "flip": true,
+     "stin": false,
+     "z": -2,
+     "v": 3
+    },
+    {
+     "id": "objekty74",
+     "asset": "z-ruze-ker",
+     "x": 6.46,
+     "y": 23.711,
+     "w": 1.598,
+     "h": 1.905,
+     "rot": 264.0,
+     "flip": true,
+     "stin": false,
+     "z": -2,
+     "v": 0
+    },
+    {
+     "id": "objekty75",
+     "asset": "z-ruze-ker",
+     "x": 16.47,
+     "y": 22.655,
+     "w": 1.637,
+     "h": 1.411,
+     "rot": 329.14,
+     "flip": false,
+     "stin": false,
+     "z": -2,
+     "v": 3
+    },
+    {
+     "id": "objekty76",
+     "asset": "z-ruze-ker",
+     "x": 16.795,
+     "y": 21.546,
+     "w": 1.378,
+     "h": 1.492,
+     "rot": 205.2,
+     "flip": true,
+     "stin": false,
+     "z": -2,
+     "v": 3
+    },
+    {
+     "id": "objekty77",
+     "asset": "z-ruze-ker",
+     "x": 18.66,
+     "y": 23.383,
+     "w": 1.268,
+     "h": 1.325,
+     "rot": 275.41,
+     "flip": false,
+     "stin": false,
+     "z": -2,
+     "v": 1
+    },
+    {
+     "id": "objekty78",
+     "asset": "z-kvetinovy-zahon",
+     "x": 18.222,
+     "y": 23.233,
+     "w": 0.953,
+     "h": 0.782,
+     "rot": 138.43,
+     "flip": false,
+     "stin": false,
+     "z": -2,
+     "v": 2
+    },
+    {
+     "id": "objekty79",
+     "asset": "z-ruze-ker",
+     "x": 16.489,
+     "y": 22.944,
+     "w": 0.97,
+     "h": 1.117,
+     "rot": 250.91,
+     "flip": false,
+     "stin": false,
+     "z": -2,
+     "v": 0
+    },
+    {
+     "id": "objekty80",
+     "asset": "z-ruze-ker",
+     "x": 16.075,
+     "y": 24.24,
+     "w": 1.559,
+     "h": 1.706,
+     "rot": 320.65,
+     "flip": true,
+     "stin": false,
+     "z": -2,
+     "v": 1
+    },
+    {
+     "id": "objekty81",
+     "asset": "z-kvetinovy-zahon",
+     "x": 15.313,
+     "y": 23.346,
+     "w": 1.574,
+     "h": 1.602,
+     "rot": 180.38,
+     "flip": false,
+     "stin": false,
+     "z": -2,
+     "v": 2
+    },
+    {
+     "id": "objekty82",
+     "asset": "z-ruze-ker",
+     "x": 18.867,
+     "y": 22.749,
+     "w": 1.06,
+     "h": 1.23,
+     "rot": 64.57,
+     "flip": false,
+     "stin": false,
+     "z": -2,
+     "v": 0
+    },
+    {
+     "id": "objekty83",
+     "asset": "z-ruze-ker",
+     "x": 25.006,
+     "y": 23.143,
+     "w": 1.417,
+     "h": 1.162,
+     "rot": 247.94,
+     "flip": false,
+     "stin": false,
+     "z": -2,
+     "v": 3
+    },
+    {
+     "id": "objekty84",
+     "asset": "z-ruze-ker",
+     "x": 24.678,
+     "y": 22.441,
+     "w": 1.443,
+     "h": 1.211,
+     "rot": 131.49,
+     "flip": false,
+     "stin": false,
+     "z": -2,
+     "v": 3
+    },
+    {
+     "id": "objekty85",
+     "asset": "z-kvetinovy-zahon",
+     "x": 26.203,
+     "y": 22.276,
+     "w": 1.111,
+     "h": 1.148,
+     "rot": 338.61,
+     "flip": false,
+     "stin": false,
+     "z": -2,
+     "v": 2
+    },
+    {
+     "id": "objekty86",
+     "asset": "z-kvetinovy-zahon",
+     "x": 25.953,
+     "y": 22.13,
+     "w": 1.309,
+     "h": 1.445,
+     "rot": 355.4,
+     "flip": true,
+     "stin": false,
+     "z": -2,
+     "v": 1
+    },
+    {
+     "id": "objekty87",
+     "asset": "z-ruze-ker",
+     "x": 25.295,
+     "y": 22.889,
+     "w": 1.112,
+     "h": 1.263,
+     "rot": 336.42,
+     "flip": false,
+     "stin": false,
+     "z": -2,
+     "v": 1
+    },
+    {
+     "id": "objekty88",
+     "asset": "z-kvetinovy-zahon",
+     "x": 25.917,
+     "y": 21.984,
+     "w": 0.937,
+     "h": 0.81,
+     "rot": 17.66,
+     "flip": true,
+     "stin": false,
+     "z": -2,
+     "v": 0
+    },
+    {
+     "id": "objekty89",
+     "asset": "z-kvetinovy-zahon",
+     "x": 25.336,
+     "y": 21.94,
+     "w": 1.175,
+     "h": 1.145,
+     "rot": 294.51,
+     "flip": true,
+     "stin": false,
+     "z": -2,
+     "v": 2
+    },
+    {
+     "id": "objekty90",
+     "asset": "z-kvetinovy-zahon",
+     "x": 26.824,
+     "y": 22.626,
+     "w": 0.926,
+     "h": 0.885,
+     "rot": 172.57,
+     "flip": false,
+     "stin": false,
+     "z": -2,
+     "v": 0
+    },
+    {
+     "id": "objekty91",
+     "asset": "z-ruze-ker",
+     "x": 33.195,
+     "y": 23.112,
+     "w": 1.347,
+     "h": 1.144,
+     "rot": 80.65,
+     "flip": true,
+     "stin": false,
+     "z": -2,
+     "v": 2
+    },
+    {
+     "id": "objekty92",
+     "asset": "z-kvetinovy-zahon",
+     "x": 34.071,
+     "y": 23.068,
+     "w": 0.917,
+     "h": 0.965,
+     "rot": 295.49,
+     "flip": false,
+     "stin": false,
+     "z": -2,
+     "v": 0
+    },
+    {
+     "id": "objekty93",
+     "asset": "z-kvetinovy-zahon",
+     "x": 35.277,
+     "y": 22.783,
+     "w": 1.292,
+     "h": 1.082,
+     "rot": 342.69,
+     "flip": false,
+     "stin": false,
+     "z": -2,
+     "v": 3
+    },
+    {
+     "id": "objekty94",
+     "asset": "z-ruze-ker",
+     "x": 32.437,
+     "y": 23.799,
+     "w": 1.495,
+     "h": 1.406,
+     "rot": 87.3,
+     "flip": false,
+     "stin": false,
+     "z": -2,
+     "v": 3
+    },
+    {
+     "id": "objekty95",
+     "asset": "z-ruze-ker",
+     "x": 33.318,
+     "y": 24.049,
+     "w": 0.957,
+     "h": 0.903,
+     "rot": 8.51,
+     "flip": false,
+     "stin": false,
+     "z": -2,
+     "v": 3
+    },
+    {
+     "id": "objekty96",
+     "asset": "z-ruze-ker",
+     "x": 33.351,
+     "y": 22.304,
+     "w": 1.482,
+     "h": 1.369,
+     "rot": 14.73,
+     "flip": false,
+     "stin": false,
+     "z": -2,
+     "v": 2
+    },
+    {
+     "id": "objekty97",
+     "asset": "z-ruze-ker",
+     "x": 35.266,
+     "y": 22.9,
+     "w": 0.903,
+     "h": 0.766,
+     "rot": 187.73,
+     "flip": false,
+     "stin": false,
+     "z": -2,
+     "v": 2
+    },
+    {
+     "id": "objekty98",
+     "asset": "z-ruze-ker",
+     "x": 32.222,
+     "y": 23.769,
+     "w": 1.456,
+     "h": 1.233,
+     "rot": 213.15,
+     "flip": false,
+     "stin": false,
+     "z": -2,
+     "v": 1
+    },
+    {
+     "id": "objekty99",
+     "asset": "z-ruze-ker",
+     "x": 2.021,
+     "y": 17.85,
+     "w": 1.287,
+     "h": 1.541,
+     "rot": 179.93,
+     "flip": false,
+     "stin": false,
+     "z": -2,
+     "v": 1
+    },
+    {
+     "id": "objekty100",
+     "asset": "z-kvetinovy-zahon",
+     "x": 2.645,
+     "y": 16.477,
+     "w": 1.641,
+     "h": 1.923,
+     "rot": 271.87,
+     "flip": false,
+     "stin": false,
+     "z": -2,
+     "v": 2
+    },
+    {
+     "id": "objekty101",
+     "asset": "z-kvetinovy-zahon",
+     "x": 1.189,
+     "y": 16.229,
+     "w": 1.262,
+     "h": 1.309,
+     "rot": 153.06,
+     "flip": true,
+     "stin": false,
+     "z": -2,
+     "v": 2
+    },
+    {
+     "id": "objekty102",
+     "asset": "z-kvetinovy-zahon",
+     "x": 2.725,
+     "y": 18.212,
+     "w": 1.071,
+     "h": 0.946,
+     "rot": 78.22,
+     "flip": true,
+     "stin": false,
+     "z": -2,
+     "v": 2
+    },
+    {
+     "id": "objekty103",
+     "asset": "z-ruze-ker",
+     "x": 4.017,
+     "y": 15.788,
+     "w": 1.153,
+     "h": 1.117,
+     "rot": 121.2,
+     "flip": true,
+     "stin": false,
+     "z": -2,
+     "v": 2
+    },
+    {
+     "id": "objekty104",
+     "asset": "z-kvetinovy-zahon",
+     "x": 1.748,
+     "y": 16.673,
+     "w": 1.646,
+     "h": 1.62,
+     "rot": 279.53,
+     "flip": true,
+     "stin": false,
+     "z": -2,
+     "v": 3
+    },
+    {
+     "id": "objekty105",
+     "asset": "z-kvetinovy-zahon",
+     "x": 1.858,
+     "y": 17.294,
+     "w": 1.614,
+     "h": 1.43,
+     "rot": 143.97,
+     "flip": false,
+     "stin": false,
+     "z": -2,
+     "v": 3
+    },
+    {
+     "id": "objekty106",
+     "asset": "z-kvetinovy-zahon",
+     "x": 4.567,
+     "y": 16.314,
+     "w": 1.115,
+     "h": 1.149,
+     "rot": 287.1,
+     "flip": true,
+     "stin": false,
+     "z": -2,
+     "v": 0
+    },
+    {
+     "id": "objekty107",
+     "asset": "z-kvetinovy-zahon",
+     "x": 39.631,
+     "y": 20.968,
+     "w": 1.113,
+     "h": 1.131,
+     "rot": 260.86,
+     "flip": false,
+     "stin": false,
+     "z": -2,
+     "v": 2
+    },
+    {
+     "id": "objekty108",
+     "asset": "z-ruze-ker",
+     "x": 38.963,
+     "y": 19.698,
+     "w": 1.376,
+     "h": 1.308,
+     "rot": 117.96,
+     "flip": true,
+     "stin": false,
+     "z": -2,
+     "v": 0
+    },
+    {
+     "id": "objekty109",
+     "asset": "z-kvetinovy-zahon",
+     "x": 38.324,
+     "y": 20.847,
+     "w": 1.257,
+     "h": 1.02,
+     "rot": 288.51,
+     "flip": false,
+     "stin": false,
+     "z": -2,
+     "v": 2
+    },
+    {
+     "id": "objekty110",
+     "asset": "z-ruze-ker",
+     "x": 36.29,
+     "y": 20.627,
+     "w": 1.05,
+     "h": 1.026,
+     "rot": 228.83,
+     "flip": true,
+     "stin": false,
+     "z": -2,
+     "v": 2
+    },
+    {
+     "id": "objekty111",
+     "asset": "z-kvetinovy-zahon",
+     "x": 36.673,
+     "y": 19.017,
+     "w": 1.256,
+     "h": 1.259,
+     "rot": 195.87,
+     "flip": false,
+     "stin": false,
+     "z": -2,
+     "v": 2
+    },
+    {
+     "id": "objekty112",
+     "asset": "z-ruze-ker",
+     "x": 37.989,
+     "y": 20.85,
+     "w": 1.281,
+     "h": 1.09,
+     "rot": 252.6,
+     "flip": false,
+     "stin": false,
+     "z": -2,
+     "v": 1
+    },
+    {
+     "id": "objekty113",
+     "asset": "z-kvetinovy-zahon",
+     "x": 37.936,
+     "y": 18.988,
+     "w": 1.158,
+     "h": 1.224,
+     "rot": 340.39,
+     "flip": true,
+     "stin": false,
+     "z": -2,
+     "v": 2
+    },
+    {
+     "id": "objekty114",
+     "asset": "z-ruze-ker",
+     "x": 36.557,
+     "y": 19.596,
+     "w": 1.172,
+     "h": 1.144,
+     "rot": 241.25,
+     "flip": true,
+     "stin": false,
+     "z": -2,
+     "v": 2
+    },
+    {
+     "id": "objekty115",
+     "asset": "z-brectan-previs",
+     "x": 4.907,
+     "y": 4.294,
+     "w": 1.357,
+     "h": 1.348,
+     "rot": 152.77,
+     "flip": true,
+     "z": -1,
+     "stin": false,
+     "v": 0
+    },
+    {
+     "id": "objekty116",
+     "asset": "gen2-ker",
+     "x": 4.904,
+     "y": 3.775,
+     "w": 0.884,
+     "h": 0.967,
+     "rot": 347.41,
+     "flip": false,
+     "z": -1,
+     "stin": false,
+     "v": 1
+    },
+    {
+     "id": "objekty117",
+     "asset": "gen2-ker",
+     "x": 5.132,
+     "y": 3.883,
+     "w": 1.313,
+     "h": 1.186,
+     "rot": 207.43,
+     "flip": false,
+     "z": -1,
+     "stin": false,
+     "v": 0
+    },
+    {
+     "id": "objekty118",
+     "asset": "z-brectan-previs",
+     "x": 11.563,
+     "y": 4.364,
+     "w": 0.88,
+     "h": 0.863,
+     "rot": 190.06,
+     "flip": true,
+     "z": -1,
+     "stin": false,
+     "v": 0
+    },
+    {
+     "id": "objekty119",
+     "asset": "gen2-ker",
+     "x": 11.13,
+     "y": 3.902,
+     "w": 1.302,
+     "h": 1.093,
+     "rot": 141.59,
+     "flip": false,
+     "z": -1,
+     "stin": false,
+     "v": 4
+    },
+    {
+     "id": "objekty120",
+     "asset": "z-brectan-previs",
+     "x": 12.034,
+     "y": 4.16,
+     "w": 1.174,
+     "h": 0.947,
+     "rot": 138.06,
+     "flip": false,
+     "z": -1,
+     "stin": false,
+     "v": 1
+    },
+    {
+     "id": "objekty121",
+     "asset": "z-brectan-previs",
+     "x": 29.352,
+     "y": 3.81,
+     "w": 0.943,
+     "h": 0.846,
+     "rot": 282.53,
+     "flip": true,
+     "z": -1,
+     "stin": false,
+     "v": 3
+    },
+    {
+     "id": "objekty122",
+     "asset": "z-brectan-previs",
+     "x": 28.087,
+     "y": 3.804,
+     "w": 1.081,
+     "h": 0.953,
+     "rot": 239.43,
+     "flip": true,
+     "z": -1,
+     "stin": false,
+     "v": 1
+    },
+    {
+     "id": "objekty123",
+     "asset": "z-brectan-previs",
+     "x": 30.006,
+     "y": 3.889,
+     "w": 0.958,
+     "h": 0.997,
+     "rot": 133.38,
+     "flip": true,
+     "z": -1,
+     "stin": false,
+     "v": 2
+    },
+    {
+     "id": "objekty124",
+     "asset": "z-brectan-previs",
+     "x": 36.419,
+     "y": 3.952,
+     "w": 0.912,
+     "h": 1.028,
+     "rot": 321.96,
+     "flip": true,
+     "z": -1,
+     "stin": false,
+     "v": 0
+    },
+    {
+     "id": "objekty125",
+     "asset": "gen2-ker",
+     "x": 36.718,
+     "y": 3.486,
+     "w": 1.097,
+     "h": 0.887,
+     "rot": 257.41,
+     "flip": true,
+     "z": -1,
+     "stin": false,
+     "v": 0
+    },
+    {
+     "id": "objekty126",
+     "asset": "gen2-ker",
+     "x": 36.809,
+     "y": 3.463,
+     "w": 1.374,
+     "h": 1.366,
+     "rot": 35.97,
+     "flip": true,
+     "z": -1,
+     "stin": false,
+     "v": 3
+    },
+    {
+     "id": "objekty127",
+     "asset": "z-brectan-previs",
+     "x": 4.541,
+     "y": 24.815,
+     "w": 1.186,
+     "h": 1.031,
+     "rot": 39.96,
+     "flip": true,
+     "z": -1,
+     "stin": false,
+     "v": 3
+    },
+    {
+     "id": "objekty128",
+     "asset": "z-brectan-previs",
+     "x": 4.568,
+     "y": 24.256,
+     "w": 1.315,
+     "h": 1.465,
+     "rot": 222.27,
+     "flip": true,
+     "z": -1,
+     "stin": false,
+     "v": 1
+    },
+    {
+     "id": "objekty129",
+     "asset": "gen2-ker",
+     "x": 5.128,
+     "y": 24.697,
+     "w": 1.084,
+     "h": 1.095,
+     "rot": 296.1,
+     "flip": true,
+     "z": -1,
+     "stin": false,
+     "v": 3
+    },
+    {
+     "id": "objekty130",
+     "asset": "z-brectan-previs",
+     "x": 11.698,
+     "y": 24.171,
+     "w": 1.35,
+     "h": 1.103,
+     "rot": 53.87,
+     "flip": false,
+     "z": -1,
+     "stin": false,
+     "v": 2
+    },
+    {
+     "id": "objekty131",
+     "asset": "z-brectan-previs",
+     "x": 12.018,
+     "y": 24.131,
+     "w": 0.989,
+     "h": 1.1,
+     "rot": 75.61,
+     "flip": false,
+     "z": -1,
+     "stin": false,
+     "v": 0
+    },
+    {
+     "id": "objekty132",
+     "asset": "z-brectan-previs",
+     "x": 12.473,
+     "y": 24.257,
+     "w": 1.27,
+     "h": 1.504,
+     "rot": 226.7,
+     "flip": false,
+     "z": -1,
+     "stin": false,
+     "v": 2
+    },
+    {
+     "id": "objekty133",
+     "asset": "z-brectan-previs",
+     "x": 29.251,
+     "y": 24.24,
+     "w": 0.91,
+     "h": 0.766,
+     "rot": 185.4,
+     "flip": false,
+     "z": -1,
+     "stin": false,
+     "v": 1
+    },
+    {
+     "id": "objekty134",
+     "asset": "z-brectan-previs",
+     "x": 28.74,
+     "y": 24.538,
+     "w": 1.196,
+     "h": 0.982,
+     "rot": 248.29,
+     "flip": false,
+     "z": -1,
+     "stin": false,
+     "v": 3
+    },
+    {
+     "id": "objekty135",
+     "asset": "z-brectan-previs",
+     "x": 29.084,
+     "y": 24.591,
+     "w": 1.008,
+     "h": 1.026,
+     "rot": 262.23,
+     "flip": false,
+     "z": -1,
+     "stin": false,
+     "v": 1
+    },
+    {
+     "id": "objekty136",
+     "asset": "gen2-ker",
+     "x": 37.225,
+     "y": 24.238,
+     "w": 1.145,
+     "h": 1.129,
+     "rot": 177.4,
+     "flip": true,
+     "z": -1,
+     "stin": false,
+     "v": 0
+    },
+    {
+     "id": "objekty137",
+     "asset": "gen2-ker",
+     "x": 36.92,
+     "y": 24.774,
+     "w": 0.876,
+     "h": 1.046,
+     "rot": 156.49,
+     "flip": false,
+     "z": -1,
+     "stin": false,
+     "v": 3
+    },
+    {
+     "id": "objekty138",
+     "asset": "gen2-ker",
+     "x": 37.313,
+     "y": 24.188,
+     "w": 1.174,
+     "h": 1.191,
+     "rot": 47.34,
+     "flip": true,
+     "z": -1,
+     "stin": false,
+     "v": 0
+    },
+    {
+     "id": "objekty139",
+     "asset": "z-brectan-previs",
+     "x": 9.21,
+     "y": 8.9,
+     "w": 1.167,
+     "h": 0.96,
+     "rot": 234.67,
+     "flip": false,
+     "z": -1,
+     "stin": false,
+     "v": 0
+    },
+    {
+     "id": "objekty140",
+     "asset": "z-brectan-previs",
+     "x": 9.273,
+     "y": 9.143,
+     "w": 0.867,
+     "h": 0.969,
+     "rot": 150.2,
+     "flip": true,
+     "z": -1,
+     "stin": false,
+     "v": 0
+    },
+    {
+     "id": "objekty141",
+     "asset": "gen2-ker",
+     "x": 9.988,
+     "y": 8.508,
+     "w": 1.396,
+     "h": 1.272,
+     "rot": 254.31,
+     "flip": true,
+     "z": -1,
+     "stin": false,
+     "v": 1
+    },
+    {
+     "id": "objekty142",
+     "asset": "gen2-ker",
+     "x": 17.155,
+     "y": 8.59,
+     "w": 0.924,
+     "h": 0.943,
+     "rot": 6.58,
+     "flip": true,
+     "z": -1,
+     "stin": false,
+     "v": 3
+    },
+    {
+     "id": "objekty143",
+     "asset": "z-brectan-previs",
+     "x": 17.606,
+     "y": 8.854,
+     "w": 1.298,
+     "h": 1.156,
+     "rot": 87.28,
+     "flip": true,
+     "z": -1,
+     "stin": false,
+     "v": 1
+    },
+    {
+     "id": "objekty144",
+     "asset": "gen2-ker",
+     "x": 17.273,
+     "y": 9.04,
+     "w": 1.065,
+     "h": 1.056,
+     "rot": 276.67,
+     "flip": false,
+     "z": -1,
+     "stin": false,
+     "v": 4
+    },
+    {
+     "id": "objekty145",
+     "asset": "z-brectan-previs",
+     "x": 25.462,
+     "y": 8.586,
+     "w": 1.032,
+     "h": 1.112,
+     "rot": 203.19,
+     "flip": false,
+     "z": -1,
+     "stin": false,
+     "v": 3
+    },
+    {
+     "id": "objekty146",
+     "asset": "gen2-ker",
+     "x": 26.954,
+     "y": 8.707,
+     "w": 0.918,
+     "h": 0.959,
+     "rot": 331.95,
+     "flip": true,
+     "z": -1,
+     "stin": false,
+     "v": 3
+    },
+    {
+     "id": "objekty147",
+     "asset": "gen2-ker",
+     "x": 26.568,
+     "y": 8.544,
+     "w": 1.17,
+     "h": 1.025,
+     "rot": 44.88,
+     "flip": false,
+     "z": -1,
+     "stin": false,
+     "v": 0
+    },
+    {
+     "id": "objekty148",
+     "asset": "z-brectan-previs",
+     "x": 31.899,
+     "y": 8.646,
+     "w": 1.358,
+     "h": 1.211,
+     "rot": 147.95,
+     "flip": true,
+     "z": -1,
+     "stin": false,
+     "v": 0
+    },
+    {
+     "id": "objekty149",
+     "asset": "gen2-ker",
+     "x": 30.824,
+     "y": 9.149,
+     "w": 1.161,
+     "h": 1.193,
+     "rot": 324.44,
+     "flip": true,
+     "z": -1,
+     "stin": false,
+     "v": 2
+    },
+    {
+     "id": "objekty150",
+     "asset": "z-brectan-previs",
+     "x": 31.286,
+     "y": 9.344,
+     "w": 1.049,
+     "h": 1.143,
+     "rot": 276.89,
+     "flip": true,
+     "z": -1,
+     "stin": false,
+     "v": 1
+    },
+    {
+     "id": "objekty151",
+     "asset": "gen2-ker",
+     "x": 10.395,
+     "y": 21.645,
+     "w": 1.374,
+     "h": 1.102,
+     "rot": 152.38,
+     "flip": true,
+     "z": -1,
+     "stin": false,
+     "v": 2
+    },
+    {
+     "id": "objekty152",
+     "asset": "z-brectan-previs",
+     "x": 9.913,
+     "y": 20.871,
+     "w": 0.946,
+     "h": 0.863,
+     "rot": 133.25,
+     "flip": false,
+     "z": -1,
+     "stin": false,
+     "v": 3
+    },
+    {
+     "id": "objekty153",
+     "asset": "z-brectan-previs",
+     "x": 10.067,
+     "y": 21.011,
+     "w": 0.877,
+     "h": 0.703,
+     "rot": 275.9,
+     "flip": true,
+     "z": -1,
+     "stin": false,
+     "v": 0
+    },
+    {
+     "id": "objekty154",
+     "asset": "z-brectan-previs",
+     "x": 17.57,
+     "y": 21.221,
+     "w": 0.861,
+     "h": 0.776,
+     "rot": 340.22,
+     "flip": true,
+     "z": -1,
+     "stin": false,
+     "v": 0
+    },
+    {
+     "id": "objekty155",
+     "asset": "gen2-ker",
+     "x": 16.917,
+     "y": 21.25,
+     "w": 0.975,
+     "h": 1.002,
+     "rot": 291.69,
+     "flip": true,
+     "z": -1,
+     "stin": false,
+     "v": 3
+    },
+    {
+     "id": "objekty156",
+     "asset": "gen2-ker",
+     "x": 16.179,
+     "y": 21.106,
+     "w": 1.072,
+     "h": 0.967,
+     "rot": 159.86,
+     "flip": false,
+     "z": -1,
+     "stin": false,
+     "v": 2
+    },
+    {
+     "id": "objekty157",
+     "asset": "z-brectan-previs",
+     "x": 26.172,
+     "y": 21.139,
+     "w": 1.221,
+     "h": 1.095,
+     "rot": 313.4,
+     "flip": true,
+     "z": -1,
+     "stin": false,
+     "v": 1
+    },
+    {
+     "id": "objekty158",
+     "asset": "gen2-ker",
+     "x": 25.57,
+     "y": 21.249,
+     "w": 1.122,
+     "h": 1.097,
+     "rot": 49.13,
+     "flip": true,
+     "z": -1,
+     "stin": false,
+     "v": 1
+    },
+    {
+     "id": "objekty159",
+     "asset": "gen2-ker",
+     "x": 26.005,
+     "y": 21.878,
+     "w": 1.162,
+     "h": 1.077,
+     "rot": 62.29,
+     "flip": true,
+     "z": -1,
+     "stin": false,
+     "v": 3
+    },
+    {
+     "id": "objekty160",
+     "asset": "z-brectan-previs",
+     "x": 31.351,
+     "y": 21.128,
+     "w": 1.216,
+     "h": 1.068,
+     "rot": 86.56,
+     "flip": true,
+     "z": -1,
+     "stin": false,
+     "v": 2
+    },
+    {
+     "id": "objekty161",
+     "asset": "gen2-ker",
+     "x": 31.148,
+     "y": 21.939,
+     "w": 0.959,
+     "h": 1.017,
+     "rot": 115.15,
+     "flip": false,
+     "z": -1,
+     "stin": false,
+     "v": 4
+    },
+    {
+     "id": "objekty162",
+     "asset": "z-brectan-previs",
+     "x": 30.472,
+     "y": 21.864,
+     "w": 1.281,
+     "h": 1.168,
+     "rot": 254.16,
+     "flip": true,
+     "z": -1,
+     "stin": false,
+     "v": 3
+    },
+    {
+     "id": "objekty163",
+     "asset": "z-urna-kamen",
+     "x": 8,
+     "y": 16.8,
+     "w": 0.8,
+     "h": 0.8,
+     "rot": 0,
+     "cover": 2,
+     "v": 1
+    },
+    {
+     "id": "objekty164",
+     "asset": "z-urna-kamen",
+     "x": 17,
+     "y": 3.2,
+     "w": 0.8,
+     "h": 0.8,
+     "rot": 0,
+     "cover": 2,
+     "v": 1
+    },
+    {
+     "id": "objekty165",
+     "asset": "z-urna-kamen",
+     "x": 28,
+     "y": 3.1,
+     "w": 0.8,
+     "h": 0.8,
+     "rot": 0,
+     "cover": 2,
+     "v": 2
+    },
+    {
+     "id": "objekty166",
+     "asset": "z-urna-kamen",
+     "x": 31,
+     "y": 17.8,
+     "w": 0.8,
+     "h": 0.8,
+     "rot": 0,
+     "cover": 2,
+     "v": 2
+    },
+    {
+     "id": "objekty167",
+     "asset": "z-urna-kamen",
+     "x": 5,
+     "y": 22,
+     "w": 0.8,
+     "h": 0.8,
+     "rot": 0,
+     "cover": 2,
+     "v": 2
+    },
+    {
+     "id": "objekty168",
+     "asset": "z-sloup-zlomeny",
+     "x": 32.8,
+     "y": 17.8,
+     "w": 1.8,
+     "h": 1.2,
+     "rot": 24,
+     "cover": 2,
+     "v": 0
+    },
+    {
+     "id": "objekty169",
+     "asset": "z-ruze-ker",
+     "x": 9.83,
+     "y": 2.553,
+     "w": 1.44,
+     "h": 1.242,
+     "rot": 106.69,
+     "flip": false,
+     "stin": false,
+     "z": -2,
+     "v": 1
+    },
+    {
+     "id": "objekty170",
+     "asset": "z-ruze-ker",
+     "x": 9.975,
+     "y": 2.55,
+     "w": 1.134,
+     "h": 1.221,
+     "rot": 29.56,
+     "flip": false,
+     "stin": false,
+     "z": -2,
+     "v": 0
+    },
+    {
+     "id": "objekty171",
+     "asset": "z-ruze-ker",
+     "x": 10.846,
+     "y": 3.159,
+     "w": 1.504,
+     "h": 1.232,
+     "rot": 293.36,
+     "flip": false,
+     "stin": false,
+     "z": -2,
+     "v": 2
+    },
+    {
+     "id": "objekty172",
+     "asset": "z-ruze-ker",
+     "x": 8.358,
+     "y": 2.946,
+     "w": 1.252,
+     "h": 1.398,
+     "rot": 230.76,
+     "flip": true,
+     "stin": false,
+     "z": -2,
+     "v": 0
+    },
+    {
+     "id": "objekty173",
+     "asset": "z-kvetinovy-zahon",
+     "x": 11.392,
+     "y": 3.077,
+     "w": 1.284,
+     "h": 1.291,
+     "rot": 341.04,
+     "flip": true,
+     "stin": false,
+     "z": -2,
+     "v": 1
+    },
+    {
+     "id": "objekty174",
+     "asset": "z-ruze-ker",
+     "x": 33.613,
+     "y": 3.071,
+     "w": 1.433,
+     "h": 1.368,
+     "rot": 152.57,
+     "flip": true,
+     "stin": false,
+     "z": -2,
+     "v": 2
+    },
+    {
+     "id": "objekty175",
+     "asset": "z-ruze-ker",
+     "x": 32.683,
+     "y": 3.384,
+     "w": 1.614,
+     "h": 1.431,
+     "rot": 89.52,
+     "flip": true,
+     "stin": false,
+     "z": -2,
+     "v": 0
+    },
+    {
+     "id": "objekty176",
+     "asset": "z-kvetinovy-zahon",
+     "x": 30.156,
+     "y": 3.142,
+     "w": 1.263,
+     "h": 1.373,
+     "rot": 247.45,
+     "flip": false,
+     "stin": false,
+     "z": -2,
+     "v": 2
+    },
+    {
+     "id": "objekty177",
+     "asset": "z-kvetinovy-zahon",
+     "x": 31.141,
+     "y": 2.738,
+     "w": 1.628,
+     "h": 1.914,
+     "rot": 277.04,
+     "flip": false,
+     "stin": false,
+     "z": -2,
+     "v": 3
+    },
+    {
+     "id": "objekty178",
+     "asset": "z-kvetinovy-zahon",
+     "x": 32.025,
+     "y": 3.141,
+     "w": 1.316,
+     "h": 1.324,
+     "rot": 285.09,
+     "flip": true,
+     "stin": false,
+     "z": -2,
+     "v": 0
+    },
+    {
+     "id": "objekty179",
+     "asset": "z-kvetinovy-zahon",
+     "x": 9.963,
+     "y": 25.797,
+     "w": 1.093,
+     "h": 1.24,
+     "rot": 123.51,
+     "flip": true,
+     "stin": false,
+     "z": -2,
+     "v": 0
+    },
+    {
+     "id": "objekty180",
+     "asset": "z-ruze-ker",
+     "x": 11.728,
+     "y": 24.978,
+     "w": 1.629,
+     "h": 1.622,
+     "rot": 75.66,
+     "flip": true,
+     "stin": false,
+     "z": -2,
+     "v": 0
+    },
+    {
+     "id": "objekty181",
+     "asset": "z-ruze-ker",
+     "x": 9.985,
+     "y": 25.687,
+     "w": 1.429,
+     "h": 1.429,
+     "rot": 85.43,
+     "flip": true,
+     "stin": false,
+     "z": -2,
+     "v": 0
+    },
+    {
+     "id": "objekty182",
+     "asset": "z-kvetinovy-zahon",
+     "x": 10.296,
+     "y": 24.808,
+     "w": 1.118,
+     "h": 0.899,
+     "rot": 88.39,
+     "flip": true,
+     "stin": false,
+     "z": -2,
+     "v": 3
+    },
+    {
+     "id": "objekty183",
+     "asset": "z-kvetinovy-zahon",
+     "x": 9.325,
+     "y": 24.655,
+     "w": 1.341,
+     "h": 1.29,
+     "rot": 294.35,
+     "flip": true,
+     "stin": false,
+     "z": -2,
+     "v": 2
+    },
+    {
+     "id": "objekty184",
+     "asset": "z-kvetinovy-zahon",
+     "x": 30.88,
+     "y": 24.631,
+     "w": 1.255,
+     "h": 1.054,
+     "rot": 37.77,
+     "flip": false,
+     "stin": false,
+     "z": -2,
+     "v": 1
+    },
+    {
+     "id": "objekty185",
+     "asset": "z-kvetinovy-zahon",
+     "x": 31.801,
+     "y": 24.305,
+     "w": 1.319,
+     "h": 1.389,
+     "rot": 197.1,
+     "flip": true,
+     "stin": false,
+     "z": -2,
+     "v": 3
+    },
+    {
+     "id": "objekty186",
+     "asset": "z-kvetinovy-zahon",
+     "x": 32.182,
+     "y": 25.755,
+     "w": 1.037,
+     "h": 0.899,
+     "rot": 123.13,
+     "flip": true,
+     "stin": false,
+     "z": -2,
+     "v": 3
+    },
+    {
+     "id": "objekty187",
+     "asset": "z-kvetinovy-zahon",
+     "x": 31.866,
+     "y": 24.748,
+     "w": 1.489,
+     "h": 1.736,
+     "rot": 181.17,
+     "flip": false,
+     "stin": false,
+     "z": -2,
+     "v": 3
+    },
+    {
+     "id": "objekty188",
+     "asset": "z-kvetinovy-zahon",
+     "x": 30.982,
+     "y": 24.892,
+     "w": 1.187,
+     "h": 1.105,
+     "rot": 209.18,
+     "flip": false,
+     "stin": false,
+     "z": -2,
+     "v": 2
+    },
+    {
+     "id": "objekty189",
+     "asset": "z-kvetinovy-zahon",
+     "x": 3.872,
+     "y": 9.651,
+     "w": 1.046,
+     "h": 1.038,
+     "rot": 190.49,
+     "flip": false,
+     "stin": false,
+     "z": -2,
+     "v": 1
+    },
+    {
+     "id": "objekty190",
+     "asset": "z-kvetinovy-zahon",
+     "x": 2.565,
+     "y": 9.939,
+     "w": 1.595,
+     "h": 1.851,
+     "rot": 245.5,
+     "flip": true,
+     "stin": false,
+     "z": -2,
+     "v": 0
+    },
+    {
+     "id": "objekty191",
+     "asset": "z-ruze-ker",
+     "x": 1.583,
+     "y": 10.169,
+     "w": 1.487,
+     "h": 1.68,
+     "rot": 91.07,
+     "flip": false,
+     "stin": false,
+     "z": -2,
+     "v": 3
+    },
+    {
+     "id": "objekty192",
+     "asset": "z-ruze-ker",
+     "x": 1.651,
+     "y": 10.447,
+     "w": 1.298,
+     "h": 1.441,
+     "rot": 190.62,
+     "flip": false,
+     "stin": false,
+     "z": -2,
+     "v": 2
+    },
+    {
+     "id": "objekty193",
+     "asset": "z-ruze-ker",
+     "x": 3.626,
+     "y": 9.812,
+     "w": 1.394,
+     "h": 1.453,
+     "rot": 258.81,
+     "flip": false,
+     "stin": false,
+     "z": -2,
+     "v": 3
+    },
+    {
+     "id": "objekty194",
+     "asset": "z-kvetinovy-zahon",
+     "x": 4.356,
+     "y": 18.276,
+     "w": 1.278,
+     "h": 1.443,
+     "rot": 160.52,
+     "flip": false,
+     "stin": false,
+     "z": -2,
+     "v": 2
+    },
+    {
+     "id": "objekty195",
+     "asset": "z-kvetinovy-zahon",
+     "x": 3.569,
+     "y": 17.223,
+     "w": 1.326,
+     "h": 1.297,
+     "rot": 96.99,
+     "flip": false,
+     "stin": false,
+     "z": -2,
+     "v": 2
+    },
+    {
+     "id": "objekty196",
+     "asset": "z-ruze-ker",
+     "x": 3.38,
+     "y": 18.797,
+     "w": 1.055,
+     "h": 1.011,
+     "rot": 96.73,
+     "flip": true,
+     "stin": false,
+     "z": -2,
+     "v": 0
+    },
+    {
+     "id": "objekty197",
+     "asset": "z-ruze-ker",
+     "x": 2.876,
+     "y": 17.908,
+     "w": 1.087,
+     "h": 1.082,
+     "rot": 164.64,
+     "flip": false,
+     "stin": false,
+     "z": -2,
+     "v": 2
+    },
+    {
+     "id": "objekty198",
+     "asset": "z-kvetinovy-zahon",
+     "x": 4.945,
+     "y": 17.696,
+     "w": 1.457,
+     "h": 1.462,
+     "rot": 47.83,
+     "flip": false,
+     "stin": false,
+     "z": -2,
+     "v": 2
+    },
+    {
+     "id": "objekty199",
+     "asset": "z-kvetinovy-zahon",
+     "x": 38.462,
+     "y": 9.658,
+     "w": 1.115,
+     "h": 0.985,
+     "rot": 165.41,
+     "flip": false,
+     "stin": false,
+     "z": -2,
+     "v": 0
+    },
+    {
+     "id": "objekty200",
+     "asset": "z-kvetinovy-zahon",
+     "x": 38.945,
+     "y": 9.689,
+     "w": 1.487,
+     "h": 1.287,
+     "rot": 141.68,
+     "flip": false,
+     "stin": false,
+     "z": -2,
+     "v": 3
+    },
+    {
+     "id": "objekty201",
+     "asset": "z-kvetinovy-zahon",
+     "x": 39.584,
+     "y": 9.568,
+     "w": 1.079,
+     "h": 0.895,
+     "rot": 129.34,
+     "flip": true,
+     "stin": false,
+     "z": -2,
+     "v": 3
+    },
+    {
+     "id": "objekty202",
+     "asset": "z-ruze-ker",
+     "x": 38.553,
+     "y": 8.961,
+     "w": 1.227,
+     "h": 1.189,
+     "rot": 269.02,
+     "flip": false,
+     "stin": false,
+     "z": -2,
+     "v": 1
+    },
+    {
+     "id": "objekty203",
+     "asset": "z-kvetinovy-zahon",
+     "x": 37.533,
+     "y": 8.849,
+     "w": 1.388,
+     "h": 1.461,
+     "rot": 219.96,
+     "flip": false,
+     "stin": false,
+     "z": -2,
+     "v": 1
+    },
+    {
+     "id": "objekty204",
+     "asset": "z-ruze-ker",
+     "x": 38.295,
+     "y": 21.64,
+     "w": 1.255,
+     "h": 1.301,
+     "rot": 329.17,
+     "flip": true,
+     "stin": false,
+     "z": -2,
+     "v": 3
+    },
+    {
+     "id": "objekty205",
+     "asset": "z-kvetinovy-zahon",
+     "x": 38.927,
+     "y": 22.032,
+     "w": 1.468,
+     "h": 1.303,
+     "rot": 283.51,
+     "flip": true,
+     "stin": false,
+     "z": -2,
+     "v": 3
+    },
+    {
+     "id": "objekty206",
+     "asset": "z-kvetinovy-zahon",
+     "x": 39.208,
+     "y": 21.387,
+     "w": 1.487,
+     "h": 1.385,
+     "rot": 107.12,
+     "flip": false,
+     "stin": false,
+     "z": -2,
+     "v": 0
+    },
+    {
+     "id": "objekty207",
+     "asset": "z-kvetinovy-zahon",
+     "x": 40.178,
+     "y": 21.258,
+     "w": 1.165,
+     "h": 1.097,
+     "rot": 211.69,
+     "flip": true,
+     "stin": false,
+     "z": -2,
+     "v": 0
+    },
+    {
+     "id": "objekty208",
+     "asset": "z-kvetinovy-zahon",
+     "x": 40.977,
+     "y": 21.99,
+     "w": 1.537,
+     "h": 1.819,
+     "rot": 139.99,
+     "flip": true,
+     "stin": false,
+     "z": -2,
+     "v": 1
+    },
+    {
+     "id": "objekty209",
+     "asset": "z-kvetinovy-zahon",
+     "x": 13.906,
+     "y": 11.174,
+     "w": 1.204,
+     "h": 1.38,
+     "rot": 92.37,
+     "flip": false,
+     "stin": false,
+     "z": -2,
+     "v": 2
+    },
+    {
+     "id": "objekty210",
+     "asset": "z-ruze-ker",
+     "x": 14.446,
+     "y": 10.592,
+     "w": 1.002,
+     "h": 0.964,
+     "rot": 60.72,
+     "flip": false,
+     "stin": false,
+     "z": -2,
+     "v": 0
+    },
+    {
+     "id": "objekty211",
+     "asset": "z-ruze-ker",
+     "x": 13.97,
+     "y": 11.496,
+     "w": 1.118,
+     "h": 1.285,
+     "rot": 266.05,
+     "flip": true,
+     "stin": false,
+     "z": -2,
+     "v": 2
+    },
+    {
+     "id": "objekty212",
+     "asset": "z-kvetinovy-zahon",
+     "x": 13.616,
+     "y": 11.288,
+     "w": 1.389,
+     "h": 1.225,
+     "rot": 57.09,
+     "flip": false,
+     "stin": false,
+     "z": -2,
+     "v": 1
+    },
+    {
+     "id": "objekty213",
+     "asset": "z-ruze-ker",
+     "x": 14.249,
+     "y": 11.023,
+     "w": 1.318,
+     "h": 1.408,
+     "rot": 144.85,
+     "flip": false,
+     "stin": false,
+     "z": -2,
+     "v": 0
+    },
+    {
+     "id": "objekty214",
+     "asset": "z-ruze-ker",
+     "x": 29.658,
+     "y": 11.447,
+     "w": 1.024,
+     "h": 0.838,
+     "rot": 20.36,
+     "flip": true,
+     "stin": false,
+     "z": -2,
+     "v": 3
+    },
+    {
+     "id": "objekty215",
+     "asset": "z-ruze-ker",
+     "x": 28.755,
+     "y": 11.301,
+     "w": 1.591,
+     "h": 1.344,
+     "rot": 56.97,
+     "flip": false,
+     "stin": false,
+     "z": -2,
+     "v": 2
+    },
+    {
+     "id": "objekty216",
+     "asset": "z-ruze-ker",
+     "x": 27.667,
+     "y": 11.335,
+     "w": 1.289,
+     "h": 1.46,
+     "rot": 146.99,
+     "flip": true,
+     "stin": false,
+     "z": -2,
+     "v": 0
+    },
+    {
+     "id": "objekty217",
+     "asset": "z-ruze-ker",
+     "x": 28.951,
+     "y": 11.162,
+     "w": 1.301,
+     "h": 1.249,
+     "rot": 118.82,
+     "flip": true,
+     "stin": false,
+     "z": -2,
+     "v": 0
+    },
+    {
+     "id": "objekty218",
+     "asset": "z-ruze-ker",
+     "x": 29.244,
+     "y": 9.984,
+     "w": 1.109,
+     "h": 1.181,
+     "rot": 214.77,
+     "flip": false,
+     "stin": false,
+     "z": -2,
+     "v": 0
+    },
+    {
+     "id": "objekty219",
+     "asset": "z-kvetinovy-zahon",
+     "x": 11.727,
+     "y": 17.993,
+     "w": 1.09,
+     "h": 1.256,
+     "rot": 75.89,
+     "flip": false,
+     "stin": false,
+     "z": -2,
+     "v": 0
+    },
+    {
+     "id": "objekty220",
+     "asset": "z-ruze-ker",
+     "x": 13.929,
+     "y": 17.161,
+     "w": 1.317,
+     "h": 1.507,
+     "rot": 3.76,
+     "flip": false,
+     "stin": false,
+     "z": -2,
+     "v": 1
+    },
+    {
+     "id": "objekty221",
+     "asset": "z-ruze-ker",
+     "x": 12.31,
+     "y": 17.683,
+     "w": 1.512,
+     "h": 1.488,
+     "rot": 331.81,
+     "flip": false,
+     "stin": false,
+     "z": -2,
+     "v": 3
+    },
+    {
+     "id": "objekty222",
+     "asset": "z-ruze-ker",
+     "x": 13.863,
+     "y": 17.725,
+     "w": 1.263,
+     "h": 1.471,
+     "rot": 167.72,
+     "flip": true,
+     "stin": false,
+     "z": -2,
+     "v": 0
+    },
+    {
+     "id": "objekty223",
+     "asset": "z-kvetinovy-zahon",
+     "x": 13.811,
+     "y": 17.017,
+     "w": 1.057,
+     "h": 1.094,
+     "rot": 105.21,
+     "flip": false,
+     "stin": false,
+     "z": -2,
+     "v": 2
+    },
+    {
+     "id": "objekty224",
+     "asset": "z-ruze-ker",
+     "x": 27.432,
+     "y": 17.638,
+     "w": 1.333,
+     "h": 1.378,
+     "rot": 62.79,
+     "flip": false,
+     "stin": false,
+     "z": -2,
+     "v": 1
+    },
+    {
+     "id": "objekty225",
+     "asset": "z-ruze-ker",
+     "x": 28.882,
+     "y": 17.964,
+     "w": 1.518,
+     "h": 1.215,
+     "rot": 188.25,
+     "flip": false,
+     "stin": false,
+     "z": -2,
+     "v": 0
+    },
+    {
+     "id": "objekty226",
+     "asset": "z-ruze-ker",
+     "x": 28.188,
+     "y": 17.031,
+     "w": 1.609,
+     "h": 1.884,
+     "rot": 327.95,
+     "flip": false,
+     "stin": false,
+     "z": -2,
+     "v": 2
+    },
+    {
+     "id": "objekty227",
+     "asset": "z-ruze-ker",
+     "x": 28.562,
+     "y": 17.86,
+     "w": 1.242,
+     "h": 1.28,
+     "rot": 202.49,
+     "flip": true,
+     "stin": false,
+     "z": -2,
+     "v": 0
+    },
+    {
+     "id": "objekty228",
+     "asset": "z-ruze-ker",
+     "x": 28.657,
+     "y": 18.38,
+     "w": 1.58,
+     "h": 1.687,
+     "rot": 267.86,
+     "flip": false,
+     "stin": false,
+     "z": -2,
+     "v": 0
+    },
+    {
+     "id": "objekty229",
+     "asset": "z-ruze-ker",
+     "x": 22.755,
+     "y": 9.707,
+     "w": 1.128,
+     "h": 1.287,
+     "rot": 239.21,
+     "flip": false,
+     "stin": false,
+     "z": -2,
+     "v": 0
+    },
+    {
+     "id": "objekty230",
+     "asset": "z-ruze-ker",
+     "x": 21.488,
+     "y": 9.067,
+     "w": 1.409,
+     "h": 1.187,
+     "rot": 280.84,
+     "flip": true,
+     "stin": false,
+     "z": -2,
+     "v": 0
+    },
+    {
+     "id": "objekty231",
+     "asset": "z-kvetinovy-zahon",
+     "x": 19.901,
+     "y": 9.574,
+     "w": 1.007,
+     "h": 1.169,
+     "rot": 96.23,
+     "flip": false,
+     "stin": false,
+     "z": -2,
+     "v": 2
+    },
+    {
+     "id": "objekty232",
+     "asset": "z-ruze-ker",
+     "x": 20.802,
+     "y": 9.677,
+     "w": 1.24,
+     "h": 1.16,
+     "rot": 143.9,
+     "flip": false,
+     "stin": false,
+     "z": -2,
+     "v": 3
+    },
+    {
+     "id": "objekty233",
+     "asset": "z-kvetinovy-zahon",
+     "x": 20.716,
+     "y": 9.884,
+     "w": 1.278,
+     "h": 1.137,
+     "rot": 293.4,
+     "flip": false,
+     "stin": false,
+     "z": -2,
+     "v": 0
+    },
+    {
+     "id": "objekty234",
+     "asset": "z-kvetinovy-zahon",
+     "x": 20.053,
+     "y": 17.726,
+     "w": 1.409,
+     "h": 1.445,
+     "rot": 183.85,
+     "flip": true,
+     "stin": false,
+     "z": -2,
+     "v": 2
+    },
+    {
+     "id": "objekty235",
+     "asset": "z-ruze-ker",
+     "x": 22.28,
+     "y": 17.817,
+     "w": 1.184,
+     "h": 1.347,
+     "rot": 185.99,
+     "flip": true,
+     "stin": false,
+     "z": -2,
+     "v": 0
+    },
+    {
+     "id": "objekty236",
+     "asset": "z-kvetinovy-zahon",
+     "x": 20.304,
+     "y": 18.35,
+     "w": 1.439,
+     "h": 1.502,
+     "rot": 1.28,
+     "flip": false,
+     "stin": false,
+     "z": -2,
+     "v": 0
+    },
+    {
+     "id": "objekty237",
+     "asset": "z-kvetinovy-zahon",
+     "x": 20.824,
+     "y": 19.121,
+     "w": 1.509,
+     "h": 1.545,
+     "rot": 53.31,
+     "flip": false,
+     "stin": false,
+     "z": -2,
+     "v": 3
+    },
+    {
+     "id": "objekty238",
+     "asset": "z-kvetinovy-zahon",
+     "x": 21.845,
+     "y": 19.128,
+     "w": 1.411,
+     "h": 1.588,
+     "rot": 149.24,
+     "flip": true,
+     "stin": false,
+     "z": -2,
+     "v": 1
+    },
+    {
+     "id": "objekty239",
+     "asset": "z-brectan-previs",
+     "x": 8,
+     "y": 9,
+     "w": 1.7,
+     "h": 1.2,
+     "rot": 1.38,
+     "z": -1,
+     "stin": false,
+     "v": 1
+    },
+    {
+     "id": "objekty240",
+     "asset": "z-brectan-previs",
+     "x": 17,
+     "y": 9,
+     "w": 1.7,
+     "h": 1.2,
+     "rot": -10.67,
+     "z": -1,
+     "stin": false,
+     "v": 2
+    },
+    {
+     "id": "objekty241",
+     "asset": "z-brectan-previs",
+     "x": 26,
+     "y": 9,
+     "w": 1.7,
+     "h": 1.2,
+     "rot": 13.43,
+     "z": -1,
+     "stin": false,
+     "v": 0
+    },
+    {
+     "id": "objekty242",
+     "asset": "z-brectan-previs",
+     "x": 31,
+     "y": 9,
+     "w": 1.7,
+     "h": 1.2,
+     "rot": -8.47,
+     "z": -1,
+     "stin": false,
+     "v": 1
+    },
+    {
+     "id": "objekty243",
+     "asset": "z-brectan-previs",
+     "x": 8,
+     "y": 21,
+     "w": 1.7,
+     "h": 1.2,
+     "rot": -1.8,
+     "z": -1,
+     "stin": false,
+     "v": 3
+    },
+    {
+     "id": "objekty244",
+     "asset": "z-brectan-previs",
+     "x": 17,
+     "y": 21,
+     "w": 1.7,
+     "h": 1.2,
+     "rot": 11.13,
+     "z": -1,
+     "stin": false,
+     "v": 0
+    },
+    {
+     "id": "objekty245",
+     "asset": "z-brectan-previs",
+     "x": 26,
+     "y": 21,
+     "w": 1.7,
+     "h": 1.2,
+     "rot": 20.99,
+     "z": -1,
+     "stin": false,
+     "v": 3
+    },
+    {
+     "id": "objekty246",
+     "asset": "z-brectan-previs",
+     "x": 31,
+     "y": 21,
+     "w": 1.7,
+     "h": 1.2,
+     "rot": 22.05,
+     "z": -1,
+     "stin": false,
+     "v": 0
+    },
+    {
+     "id": "objekty247",
+     "asset": "ov-svetlusky",
+     "x": 2,
+     "y": 8,
+     "w": 2,
+     "h": 2,
+     "rot": 0,
+     "z": 2,
+     "anim": false,
+     "stin": false,
+     "v": 2
+    },
+    {
+     "id": "objekty248",
+     "asset": "ov-svetlusky",
+     "x": 4,
+     "y": 19,
+     "w": 2,
+     "h": 2,
+     "rot": 0,
+     "z": 2,
+     "anim": false,
+     "stin": false,
+     "v": 1
+    },
+    {
+     "id": "objekty249",
+     "asset": "ov-svetlusky",
+     "x": 9,
+     "y": 25,
+     "w": 2,
+     "h": 2,
+     "rot": 0,
+     "z": 2,
+     "anim": false,
+     "stin": false,
+     "v": 1
+    },
+    {
+     "id": "objekty250",
+     "asset": "ov-svetlusky",
+     "x": 17,
+     "y": 19,
+     "w": 2,
+     "h": 2,
+     "rot": 0,
+     "z": 2,
+     "anim": false,
+     "stin": false,
+     "v": 2
+    },
+    {
+     "id": "objekty251",
+     "asset": "ov-svetlusky",
+     "x": 24,
+     "y": 8,
+     "w": 2,
+     "h": 2,
+     "rot": 0,
+     "z": 2,
+     "anim": false,
+     "stin": false,
+     "v": 0
+    },
+    {
+     "id": "objekty252",
+     "asset": "ov-svetlusky",
+     "x": 30,
+     "y": 23,
+     "w": 2,
+     "h": 2,
+     "rot": 0,
+     "z": 2,
+     "anim": false,
+     "stin": false,
+     "v": 2
+    },
+    {
+     "id": "objekty253",
+     "asset": "ov-svetlusky",
+     "x": 38,
+     "y": 7,
+     "w": 2,
+     "h": 2,
+     "rot": 0,
+     "z": 2,
+     "anim": false,
+     "stin": false,
+     "v": 2
+    },
+    {
+     "id": "objekty254",
+     "asset": "ov-svetlusky",
+     "x": 33,
+     "y": 18,
+     "w": 2,
+     "h": 2,
+     "rot": 0,
+     "z": 2,
+     "anim": false,
+     "stin": false,
+     "v": 0
+    },
+    {
+     "id": "objekty255",
+     "asset": "ov-mesic-odlesk",
+     "x": 18.7,
+     "y": 13.8,
+     "w": 3.1,
+     "h": 3.3,
+     "rot": 0,
+     "z": -1,
+     "anim": false,
+     "stin": false
+    }
+   ],
+   "steny": [],
+   "malba": [
+    {
+     "id": "malba0",
+     "t": "t-zahradni-travnik",
+     "b": 1,
+     "o": 1,
+     "h": 1,
+     "r": 0,
+     "poly": true,
+     "p": [
+      [
+       0,
+       0
+      ],
+      [
+       42,
+       0
+      ],
+      [
+       42,
+       28
+      ],
+      [
+       0,
+       28
+      ]
+     ]
+    },
+    {
+     "id": "malba1",
+     "t": "teren-les",
+     "b": 5,
+     "o": 0.58,
+     "h": 0,
+     "r": 0,
+     "poly": false,
+     "p": [
+      [
+       2,
+       4
+      ],
+      [
+       8,
+       7
+      ],
+      [
+       7,
+       11
+      ]
+     ]
+    },
+    {
+     "id": "malba2",
+     "t": "teren-les",
+     "b": 5,
+     "o": 0.58,
+     "h": 0,
+     "r": 0,
+     "poly": false,
+     "p": [
+      [
+       33,
+       2
+      ],
+      [
+       31,
+       6
+      ],
+      [
+       36,
+       10
+      ]
+     ]
+    },
+    {
+     "id": "malba3",
+     "t": "teren-les",
+     "b": 5,
+     "o": 0.58,
+     "h": 0,
+     "r": 0,
+     "poly": false,
+     "p": [
+      [
+       4,
+       18
+      ],
+      [
+       8,
+       22
+      ],
+      [
+       13,
+       26
+      ]
+     ]
+    },
+    {
+     "id": "malba4",
+     "t": "teren-les",
+     "b": 5,
+     "o": 0.58,
+     "h": 0,
+     "r": 0,
+     "poly": false,
+     "p": [
+      [
+       23,
+       23
+      ],
+      [
+       29,
+       24
+      ],
+      [
+       37,
+       21
+      ]
+     ]
+    },
+    {
+     "id": "malba5",
+     "t": "teren-les",
+     "b": 5,
+     "o": 0.58,
+     "h": 0,
+     "r": 0,
+     "poly": false,
+     "p": [
+      [
+       16,
+       5
+      ],
+      [
+       22,
+       8
+      ],
+      [
+       27,
+       6
+      ]
+     ]
+    },
+    {
+     "id": "malba6",
+     "t": "teren-voda",
+     "b": 1.5,
+     "o": 1,
+     "h": 0.3,
+     "r": 0,
+     "poly": true,
+     "p": [
+      [
+       14.4,
+       12
+      ],
+      [
+       27.4,
+       12
+      ],
+      [
+       27.4,
+       16.2
+      ],
+      [
+       14.4,
+       16.2
+      ]
+     ]
+    }
+   ],
+   "svetla": [
+    {
+     "id": "svetla0",
+     "x": 6,
+     "y": 2,
+     "bright": 40,
+     "dim": 105,
+     "color": "#bdd9f2",
+     "intenzita": 0.55,
+     "blikani": false,
+     "stiny": false,
+     "nazev": "Rozptýlené měsíční světlo"
+    },
+    {
+     "id": "svetla1",
+     "x": 19,
+     "y": 14,
+     "bright": 7,
+     "dim": 22,
+     "color": "#9fc7dc",
+     "intenzita": 0.25,
+     "blikani": false,
+     "stiny": false,
+     "nazev": "Rozptýlené měsíční světlo"
+    },
+    {
+     "id": "svetla2",
+     "x": 21,
+     "y": 26,
+     "bright": 15,
+     "dim": 45,
+     "color": "#a5bccc",
+     "intenzita": 0.35,
+     "blikani": false,
+     "stiny": false,
+     "nazev": "Rozptýlené měsíční světlo"
+    }
+   ],
+   "poznamky": [
+    {
+     "id": "poznamky0",
+     "x": 21,
+     "y": 14,
+     "text": "Zapuštěná nádrž není průchozí. Cesta ji obchází na severu a jihu."
+    },
+    {
+     "id": "poznamky1",
+     "x": 36,
+     "y": 14,
+     "text": "Zřícená rotunda poskytuje poloviční kryt a těžký terén."
+    }
+   ],
+   "kresby": [],
+   "vyska": {},
+   "textury": {},
+   "interiery": [],
+   "atmosfera": {
+    "amb": 0.36,
+    "barva": "#162634"
+   },
+   "pocasi": {
+    "typ": "mlha",
+    "sila": 0.13,
+    "vitr": 112
+   },
+   "mrizkaStyl": {
+    "typ": "dots",
+    "barva": "#ddd4b1",
+    "opacita": 0.06
+   },
+   "trasy": [
+    {
+     "id": "trasa0",
+     "druh": "cesta",
+     "pts": [
+      [
+       0,
+       14
+      ],
+      [
+       42,
+       14
+      ]
+     ],
+     "sirka": 2.1,
+     "hladke": false,
+     "seed": 741,
+     "t": "t-zahradni-cesta"
+    },
+    {
+     "id": "trasa1",
+     "druh": "cesta",
+     "pts": [
+      [
+       21,
+       0
+      ],
+      [
+       21,
+       10.7
+      ]
+     ],
+     "sirka": 1.7,
+     "hladke": true,
+     "seed": 742,
+     "t": "t-hlina-pesina"
+    },
+    {
+     "id": "trasa2",
+     "druh": "cesta",
+     "pts": [
+      [
+       21,
+       17
+      ],
+      [
+       21,
+       28
+      ]
+     ],
+     "sirka": 1.7,
+     "hladke": true,
+     "seed": 743,
+     "t": "t-hlina-pesina"
+    },
+    {
+     "id": "trasa3",
+     "druh": "cesta",
+     "pts": [
+      [
+       3,
+       1
+      ],
+      [
+       5,
+       6
+      ],
+      [
+       10,
+       10
+      ],
+      [
+       10,
+       12
+      ]
+     ],
+     "sirka": 0.7,
+     "hladke": true,
+     "seed": 744,
+     "t": "t-hlina-pesina"
+    },
+    {
+     "id": "trasa4",
+     "druh": "cesta",
+     "pts": [
+      [
+       17,
+       1
+      ],
+      [
+       15,
+       6
+      ],
+      [
+       15,
+       10
+      ]
+     ],
+     "sirka": 0.7,
+     "hladke": true,
+     "seed": 745,
+     "t": "t-hlina-pesina"
+    },
+    {
+     "id": "trasa5",
+     "druh": "cesta",
+     "pts": [
+      [
+       39,
+       1
+      ],
+      [
+       37,
+       7
+      ],
+      [
+       32,
+       10
+      ],
+      [
+       32,
+       12
+      ]
+     ],
+     "sirka": 0.7,
+     "hladke": true,
+     "seed": 746,
+     "t": "t-hlina-pesina"
+    },
+    {
+     "id": "trasa6",
+     "druh": "cesta",
+     "pts": [
+      [
+       26,
+       1
+      ],
+      [
+       28,
+       6
+      ],
+      [
+       28,
+       10
+      ]
+     ],
+     "sirka": 0.7,
+     "hladke": true,
+     "seed": 747,
+     "t": "t-hlina-pesina"
+    },
+    {
+     "id": "trasa7",
+     "druh": "cesta",
+     "pts": [
+      [
+       3,
+       27
+      ],
+      [
+       5,
+       22
+      ],
+      [
+       10,
+       18
+      ],
+      [
+       10,
+       16
+      ]
+     ],
+     "sirka": 0.7,
+     "hladke": true,
+     "seed": 748,
+     "t": "t-hlina-pesina"
+    },
+    {
+     "id": "trasa8",
+     "druh": "cesta",
+     "pts": [
+      [
+       17,
+       28
+      ],
+      [
+       15,
+       23
+      ],
+      [
+       15,
+       20
+      ]
+     ],
+     "sirka": 0.7,
+     "hladke": true,
+     "seed": 749,
+     "t": "t-hlina-pesina"
+    },
+    {
+     "id": "trasa9",
+     "druh": "cesta",
+     "pts": [
+      [
+       39,
+       28
+      ],
+      [
+       37,
+       22
+      ],
+      [
+       32,
+       18
+      ],
+      [
+       32,
+       16
+      ]
+     ],
+     "sirka": 0.7,
+     "hladke": true,
+     "seed": 750,
+     "t": "t-hlina-pesina"
+    },
+    {
+     "id": "trasa10",
+     "druh": "cesta",
+     "pts": [
+      [
+       26,
+       28
+      ],
+      [
+       28,
+       23
+      ],
+      [
+       28,
+       20
+      ]
+     ],
+     "sirka": 0.7,
+     "hladke": true,
+     "seed": 751,
+     "t": "t-hlina-pesina"
+    },
+    {
+     "id": "trasa11",
+     "druh": "plot",
+     "pts": [
+      [
+       3,
+       3.5
+      ],
+      [
+       13,
+       3.5
+      ]
+     ],
+     "sirka": 1,
+     "hladke": false,
+     "seed": 752
+    },
+    {
+     "id": "trasa12",
+     "druh": "plot",
+     "pts": [
+      [
+       28,
+       3.5
+      ],
+      [
+       39,
+       3.5
+      ]
+     ],
+     "sirka": 1,
+     "hladke": false,
+     "seed": 753
+    },
+    {
+     "id": "trasa13",
+     "druh": "plot",
+     "pts": [
+      [
+       3,
+       25
+      ],
+      [
+       13,
+       25
+      ]
+     ],
+     "sirka": 1,
+     "hladke": false,
+     "seed": 754
+    },
+    {
+     "id": "trasa14",
+     "druh": "plot",
+     "pts": [
+      [
+       28,
+       25
+      ],
+      [
+       39,
+       25
+      ]
+     ],
+     "sirka": 1,
+     "hladke": false,
+     "seed": 755
+    },
+    {
+     "id": "trasa15",
+     "druh": "zidka",
+     "pts": [
+      [
+       14.4,
+       12
+      ],
+      [
+       27.4,
+       12
+      ],
+      [
+       27.4,
+       16.2
+      ],
+      [
+       14.4,
+       16.2
+      ],
+      [
+       14.4,
+       12
+      ]
+     ],
+     "sirka": 0.4,
+     "hladke": false,
+     "seed": 756,
+     "t": "t-pristavni-kamen",
+     "brectan": true
+    }
+   ],
+   "mrizka": [
+    "..........................................",
+    "..........................................",
+    "..........................................",
+    "..........................................",
+    "..........................................",
+    "..........................................",
+    "..........................................",
+    "..........................................",
+    "..........................................",
+    "..........................................",
+    "..........................................",
+    "..........................................",
+    "..............~~~~~~~~~~~~~...............",
+    "..............~~~~~~~~~~~~~...............",
+    "..............~~~~~~~~~~~~~...............",
+    "..............~~~~~~~~~~~~~...............",
+    "..........................................",
+    "..........................................",
+    "..........................................",
+    "..........................................",
+    "..........................................",
+    "..........................................",
+    "..........................................",
+    "..........................................",
+    "..........................................",
+    "..........................................",
+    "..........................................",
+    ".........................................."
+   ]
   }
  ]
 }

@@ -19,7 +19,7 @@ export function ObjectArtworkMask({id,objects,assets,width,height}:{id:string;ob
   return <mask id={id} maskUnits="userSpaceOnUse" x={0} y={0} width={width} height={height} style={{maskType:"luminance"}}>
     <defs><filter id={id+"alpha"}><feColorMatrix values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 1 0"/></filter></defs>
     <rect width={width} height={height} fill="white"/>
-    {objects.filter(o=>!o.dmOnly).map(o=>{
+    {objects.filter(o=>!o.dmOnly && !assets[o.asset]?.blend).map(o=>{
       const a=assets[o.asset],src=a?assetUrl(o.zap===false&&a.srcVyp?a.srcVyp:assetSrc(a,o.v)):o.asset.startsWith("img:")?"/repo/11_Mapy/bojove/"+o.asset.slice(4):undefined;
       return src?<image key={o.id} data-glow-exclusion={o.id} href={src} x={-o.w*12} y={-o.h*12} width={o.w*24} height={o.h*24} preserveAspectRatio="xMidYMid meet" transform={`translate(${o.x*24},${o.y*24}) rotate(${o.rot || 0}) scale(${o.flip?-1:1},1)`} filter={`url(#${id}alpha)`}/>:null;
     })}
