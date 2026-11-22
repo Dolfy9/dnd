@@ -138,8 +138,8 @@ def harbor():
 
 def garden():
     s = scene("reference-zahrada-mesic", "Zahrada osmi králů – Měsíční ticho", "les", 812, .26, "#010102")
-    s.rect(0,0,42,28,"t-zahrada-trava-kvety")
-    for texture,opacity in [("t-zahrada-trava-kvety",.4),("t-zahrada-hlina-koreny",.4)]:
+    s.rect(0,0,42,28,"t-zahrada-trava-stin")
+    for texture,opacity in [("t-zahrada-trava-stin",.4),("t-zahrada-hlina-koreny",.4),("t-zahrada-mech-listi",.35)]:
         for _ in range(12):
             x,y=s.rng.uniform(1,40),s.rng.uniform(1,27)
             points=[(x+math.cos(i*math.tau/7)*s.rng.uniform(1,3.5),
@@ -149,8 +149,6 @@ def garden():
         for x in (5,12,29,37):
             s.paint("t-zahrada-mech-listi",[(x,y)],b=2.8,o=.3,h=0)
     route(s,"cesta",[(0,14),(42,14)],2.1,"t-zahradni-cesta")
-    route(s,"cesta",[(21,0),(21,10.7)],1.7,"t-hlina-pesina",hladke=True)
-    route(s,"cesta",[(21,17),(21,28)],1.7,"t-hlina-pesina",hladke=True)
     for pts in [[(3,1),(5,6),(10,10),(10,12)],[(17,1),(15,6),(15,10)],
                 [(39,1),(37,7),(32,10),(32,12)],[(26,1),(28,6),(28,10)],
                 [(3,27),(5,22),(10,18),(10,16)],[(17,28),(15,23),(15,20)],
@@ -190,6 +188,13 @@ def garden():
         s.obj("ov-svetlusky",x,y,2,2,0,z=2,anim=False,stin=False)
     s.obj("ov-mesic-odlesk",18.1,14.1,2.2,3.9,0,z=-1,opacity=.75,anim="voda",stin=False)
     undergrowth(s,[(x,y) for y in (3.6,8.8,21.2,24.8) for x in (5,10,16,26,31,37)],18,1.8)
+    for y,left,right in [(4.6,2,40),(23.8,2,40),(9.6,8,33),(21.5,8,33)]:
+        s.paint("t-zahrada-mech-listi",[(x,y+.5*math.sin(x*.45)) for x in range(left,right+1,2)],b=2.8,o=.35,h=0)
+        for i in range(round((right-left)/.75)+1):
+            x=left+i*.75
+            py=y+.5*math.sin(x*.45)
+            s.obj("d-mech",x,py+s.rng.uniform(-.4,.4),s.rng.uniform(1.6,2.4),s.rng.uniform(.8,1.4),s.rng.uniform(0,360),opacity=.65,z=-2,stin=False)
+            s.cluster(["gen2-kapradi","z-brectan-previs","gen2-ker2"],x,py,3,.5,.5,(.7,1.15),opacity=.85,z=-2,stin=False)
     for x in range(1,42):
         for y in (12.7,15.3):
             if 14<x<28:

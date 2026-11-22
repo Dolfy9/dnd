@@ -299,6 +299,12 @@
    "nazev": "Zahrada – vlhká hlína s kořeny",
    "src": "bojove/textury/t-zahrada-hlina-koreny.webp",
    "cells": 4
+  },
+  {
+   "id": "t-zahrada-trava-stin",
+   "nazev": "Zahrada – zastíněný jetel a květy",
+   "src": "bojove/textury/t-zahrada-trava-stin.webp",
+   "cells": 4
   }
  ]
 }

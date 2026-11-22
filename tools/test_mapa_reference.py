@@ -60,7 +60,7 @@ class ReferenceMapsTest(unittest.TestCase):
         self.assertGreaterEqual(len([o for o in harbor["objekty"] if o["asset"]=="ov-mesic-odlesk" and o.get("anim")=="voda"]),4)
         self.assertTrue(all(o.get("anim")=="voda" for m in (harbor,garden) for o in m["objekty"] if o["asset"]=="ov-mlha-chuchvalec"))
         patches=[p for p in garden["malba"] if p["poly"] and len(p["p"])==7]
-        self.assertEqual(len(patches),24)
+        self.assertEqual(len(patches),36)
         self.assertTrue(all(p["h"]==0 and p["o"]<=.4 for p in patches))
         pond=next(o for o in garden["objekty"] if o["asset"]=="z-jezirko-fontana")
         self.assertEqual(pond["v"],1)
@@ -83,7 +83,14 @@ class ReferenceMapsTest(unittest.TestCase):
         self.assertTrue(all(m["atmosfera"]["barva"] == "#010102" for m in (harbor, garden)))
         self.assertTrue(any(o["asset"] == "m-kamenna-zidka" for o in harbor["objekty"]))
         self.assertGreater(len(garden["objekty"]), 700)
-        self.assertTrue({"t-zahrada-trava-kvety", "t-zahrada-mech-listi", "t-zahrada-hlina-koreny"} <= {p["t"] for p in garden["malba"]})
+        self.assertTrue({"t-zahrada-trava-stin", "t-zahrada-mech-listi", "t-zahrada-hlina-koreny"} <= {p["t"] for p in garden["malba"]})
+        self.assertFalse(any(r.get("t")=="t-hlina-pesina" and all(p[0]==21 for p in r["pts"]) for r in garden["trasy"]))
+        groundcover=[o for o in garden["objekty"] if o["asset"]=="gen2-kapradi"]
+        self.assertGreater(len(groundcover),80)
+        bed=[o for o in garden["objekty"] if o["asset"] in {"gen2-kapradi","z-brectan-previs","gen2-ker2"}]
+        for y,left,right in [(4.6,2,40),(23.8,2,40),(9.6,8,33),(21.5,8,33)]:
+            for x in range(left,right):
+                self.assertTrue(any(abs(o["x"]-x)<1.5 and abs(o["y"]-y)<1.4 for o in bed))
         hedges = [r for r in garden["trasy"] if r["druh"] == "plot"]
         self.assertEqual(len(hedges), 4)
         self.assertTrue(all(r["hladke"] and r["sirka"] >= 1.25 for r in hedges))
