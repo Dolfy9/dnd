@@ -5,7 +5,7 @@ import { assetUrl, assetSrc } from "../../mapeditor/assets/manifest";
 import { terrainProp, terrainTexture } from "../model/terrainArt";
 import { MapObjectLayer, useMapManifests } from "./MapV2Layers";
 import { animationPhase, FX, resolveAnimation } from "./MapMotion";
-import { visualLights } from "./MapAtmoLayers";
+import { MapAnimatedLights } from "./MapAnimatedLights";
 
 const water = (id: string) => /voda|melcina|more|vlny/.test(id);
 export function waterMask(map: MapV2) {
@@ -23,9 +23,9 @@ export function waterMask(map: MapV2) {
   return "url(\"data:image/svg+xml," + encodeURIComponent(`<svg xmlns="http://www.w3.org/2000/svg" width="${W}" height="${H}"><mask id="m"><rect width="100%" height="100%" fill="black"/>${shapes.join("")}</mask><rect width="100%" height="100%" fill="white" mask="url(#m)"/></svg>`) + "\")";
 }
 
-export const MapAnimatedScene = memo(function MapAnimatedScene({ map, view, px = 24, children, details, dm, terrain = true, objects = true, lights = true, illustration = false, overrides }: {
+export const MapAnimatedScene = memo(function MapAnimatedScene({ map, view, px = 24, children, details, dm, terrain = true, objects = true, lights = true, illustration = false, overrides, doors }: {
   map: MapV2; view: {x:number;y:number;k:number}; px?: number; children: ReactNode; details?: ReactNode; dm?: boolean;
-  terrain?: boolean; objects?: boolean; lights?: boolean; illustration?: boolean; overrides?: StavBoje["teren"];
+  terrain?: boolean; objects?: boolean; lights?: boolean; illustration?: boolean; overrides?: StavBoje["teren"]; doors?:Record<string,boolean>;
 }) {
   const { assets } = useMapManifests();
   const mask = useMemo(() => waterMask(map), [map.mrizka,map.textury,map.malba,map.podklad]);
@@ -59,9 +59,6 @@ export const MapAnimatedScene = memo(function MapAnimatedScene({ map, view, px =
         : <svg key={o.id} className="map-scene-static" width={W} height={H}><MapObjectLayer map={{...map,objekty:[o]}} dm={dm} /></svg>;
     })}
     <div className="map-scene-frame" />
-    {lights && visualLights(map).filter(l => l.blikani && l.radius > 0).map(l => <div key={l.id} className="map-dom-light" style={{
-      left:l.x*24-l.radius,top:l.y*24-l.radius,width:l.radius*2,height:l.radius*2,opacity:l.intenzita*.2,
-      "--light-color":l.color,
-    } as CSSProperties}><img className="map-light-flicker" src="/repo/11_Mapy/bojove/ovl/zar.webp" alt="" /></div>)}
+    {lights && <MapAnimatedLights map={map} view={view} px={px} doors={doors} />}
   </div></div>;
 });

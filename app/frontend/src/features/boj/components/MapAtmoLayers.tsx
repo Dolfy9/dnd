@@ -1,10 +1,16 @@
-import { memo, useId } from "react";
+import { memo, useEffect, useId, useMemo, useState } from "react";
+import { renderToStaticMarkup } from "react-dom/server";
 import type { MapV2, MapPaintStroke } from "../model/mapV2";
-import { assetUrl } from "../../mapeditor/assets/manifest";
+import { normalizeLight } from "../model/mapV2";
+import { lightBlockers } from "../model/lightGeometry";
+import { assetUrl, type AssetEntry } from "../../mapeditor/assets/manifest";
 import { useMapManifests, PX } from "./MapV2Layers";
+import { resolveAnimation } from "./MapMotion";
+import { LightDefinition, LightProjection } from "./MapLightProjection";
+import { bakeAtmosphere } from "../model/atmosphereRaster";
 import "./mapAtmo.css";
 
-export const GLOW = "/repo/11_Mapy/bojove/ovl/zar.webp";
+export { GLOW } from "./MapLightProjection";
 const color = (value?: string) => value && /^#[0-9a-f]{6}$/i.test(value) ? value : "#ffb85c";
 const clamp = (n: number, fallback: number, max = 1) => Number.isFinite(n) ? Math.max(0, Math.min(max, n)) : fallback;
 
@@ -40,26 +46,28 @@ export const MapPaintLayer = memo(function MapPaintLayer({ map, preview }: { map
   </svg>;
 });
 
-export function visualLights(map: MapV2) {
+export function visualLights(map: MapV2, assets: Record<string, AssetEntry> = {}) {
   return [...(map.svetla || []), ...(map.objekty || []).filter(o => o.light && !o.dmOnly).map(o => ({
     id: "object-" + o.id, x: o.x, y: o.y, bright: o.light!.bright, dim: o.light!.dim,
     color: "#ffac52", intenzita: 1, blikani: o.anim !== false,
-  }))].map(l => ({ ...l, color: color(l.color), intenzita: clamp(l.intenzita ?? 1, 1),
+    efekt: o.anim === false ? "zadny" as const : resolveAnimation(o,assets[o.asset]) === "ohen" ? "plamen" as const : "mihot" as const,
+  }))].filter(l => Number.isFinite(l.x) && Number.isFinite(l.y)).map(normalizeLight).map(l => ({ ...l, color: color(l.color), intenzita: clamp(l.intenzita ?? 1, 1),
     bright: clamp(l.bright, 0, 500) / 5 * PX,
     radius: (clamp(l.bright, 0, 500) + clamp(l.dim, 0, 500)) / 5 * PX }));
 }
 
-export const MapAtmosphereLayer = memo(function MapAtmosphereLayer({ map }: { map: MapV2 }) {
+export const MapAtmosphereArtwork = memo(function MapAtmosphereArtwork({ map, doors, animated=true, layer="both" }: { map: MapV2; doors?: Record<string, boolean>; animated?:boolean; layer?: "darkness" | "glow" | "both" }) {
   const uid = useId().replace(/:/g, "");
   const W = (map.mrizka[0]?.length || 1) * PX, H = map.mrizka.length * PX;
-  const lights = visualLights(map).filter(l => l.radius > 0 && l.intenzita > 0);
+  const {assets} = useMapManifests();
+  const lights = visualLights(map,assets).filter(l => l.radius > 0 && l.intenzita > 0);
+  const blockers = useMemo(() => lightBlockers(map.steny,doors),[map.steny,doors]);
+  const wallKey = blockers.map(w => [...w.a,...w.b].join(",")).join(";");
   const amb = clamp(map.atmosfera?.amb ?? 1, 1);
   if (amb === 1 && !lights.length) return null;
-  const sprite = (l: typeof lights[number], radius: number) => ({
-    href: GLOW, x: l.x * PX - radius, y: l.y * PX - radius, width: radius * 2, height: radius * 2,
-  });
-  return <svg width={W} height={H} overflow="hidden" pointerEvents="none" data-map-atmosphere>
+  return <svg xmlns="http://www.w3.org/2000/svg" width={W} height={H} viewBox={`0 0 ${W} ${H}`} overflow="hidden" pointerEvents="none">
     <defs>
+      {lights.map((l,i) => <LightDefinition key={l.id} id={uid+"light"+i} light={l} blockers={blockers} wallKey={wallKey} width={W} height={H} />)}
       <filter id={uid + "black"} colorInterpolationFilters="sRGB"><feColorMatrix type="matrix"
         values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 1 0" /></filter>
       {lights.map((l, i) => <filter key={l.id} id={uid + "tint" + i} colorInterpolationFilters="sRGB">
@@ -68,19 +76,61 @@ export const MapAtmosphereLayer = memo(function MapAtmosphereLayer({ map }: { ma
       <mask id={uid + "dark"} maskUnits="userSpaceOnUse" x={0} y={0} width={W} height={H}>
         <rect width={W} height={H} fill="white" />
         {lights.map((l, i) => <g key={l.id} opacity={l.intenzita}>
-          <g>
-          <image {...sprite(l, l.radius)} filter={`url(#${uid}black)`} />
-          {l.bright > 0 && <image {...sprite(l, l.bright)} filter={`url(#${uid}black)`} />}
-          </g>
+          <LightProjection id={uid+"light"+i} light={l} filter={uid+"black"} />
         </g>)}
       </mask>
     </defs>
-    <rect width={W} height={H} fill={color(map.atmosfera?.barva || "#101522")}
-      opacity={1 - amb} mask={`url(#${uid}dark)`} />
-    {lights.map((l, i) => <g key={l.id} opacity={l.intenzita * .48} style={{ mixBlendMode: "screen" }}>
-      <g>
-      <image {...sprite(l, l.radius)} filter={`url(#${uid}tint${i})`} />
-      </g>
+    {layer !== "glow" && <rect width={W} height={H} fill={color(map.atmosfera?.barva || "#101522")}
+      opacity={1 - amb} mask={`url(#${uid}dark)`} />}
+    {layer !== "darkness" && lights.map((l, i) => <g key={l.id} opacity={l.intenzita * .48} style={{mixBlendMode:"screen"}}>
+      <LightProjection id={uid+"light"+i} light={l} filter={uid+"tint"+i} />
     </g>)}
   </svg>;
+});
+
+export const MapAtmosphereLayer = memo(function MapAtmosphereLayer({ map, doors, animated=true }: { map: MapV2; doors?: Record<string, boolean>; animated?:boolean }) {
+  const { assets } = useMapManifests();
+  const W = (map.mrizka[0]?.length || 1) * PX, H = map.mrizka.length * PX;
+  const lights = visualLights(map, assets).filter(l => l.radius > 0 && l.intenzita > 0);
+  const ambient = clamp(map.atmosfera?.amb ?? 1, 1);
+  const [dpr, setDpr] = useState(() => typeof window === "undefined" ? 1 : window.devicePixelRatio || 1);
+  useEffect(() => {
+    const resize = () => setDpr(window.devicePixelRatio || 1);
+    window.addEventListener("resize", resize);
+    return () => window.removeEventListener("resize", resize);
+  }, []);
+  const key = JSON.stringify([W, H, lights, lightBlockers(map.steny, doors), ambient, map.atmosfera?.barva, animated, dpr]);
+  const [bitmaps, setBitmaps] = useState<{ dark: string; glow: string }>();
+  const [failed, setFailed] = useState(false);
+  const empty = ambient === 1 && !lights.length;
+  useEffect(() => () => {
+    if (bitmaps) { URL.revokeObjectURL(bitmaps.dark); URL.revokeObjectURL(bitmaps.glow); }
+  }, [bitmaps]);
+  useEffect(() => {
+    let active = true;
+    if (empty) { setBitmaps(undefined); setFailed(false); return; }
+    const timer = setTimeout(async () => {
+      try {
+        const dark = renderToStaticMarkup(<MapAtmosphereArtwork map={map} doors={doors} animated={animated} layer="darkness" />);
+        const glow = renderToStaticMarkup(<MapAtmosphereArtwork map={map} doors={doors} animated={animated} layer="glow" />);
+        const result = await bakeAtmosphere(dark, glow, W, H, dpr, !animated);
+        if (active) { setBitmaps(result); setFailed(false); }
+        else { URL.revokeObjectURL(result.dark); URL.revokeObjectURL(result.glow); }
+      } catch {
+        if (active) setFailed(true);
+      }
+    }, 150);
+    return () => {
+      active = false;
+      clearTimeout(timer);
+    };
+  }, [key]);
+  if (empty) return null;
+  return <g data-map-atmosphere data-atmosphere-baked={!!bitmaps} pointerEvents="none">
+    {bitmaps ? <>
+      <image href={bitmaps.dark} width={W} height={H} preserveAspectRatio="none" data-atmosphere-darkness />
+      <image href={bitmaps.glow} width={W} height={H} preserveAspectRatio="none" data-atmosphere-glow />
+    </> : failed ? <MapAtmosphereArtwork map={map} doors={doors} animated={animated} />
+      : <rect width={W} height={H} fill={color(map.atmosfera?.barva || "#101522")} opacity={1 - ambient} />}
+  </g>;
 });

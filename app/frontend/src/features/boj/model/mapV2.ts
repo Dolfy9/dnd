@@ -57,6 +57,26 @@ export interface MapLightV2 {
   color?: string;
   intenzita?: number;
   blikani?: boolean;
+  tvar?: "bod" | "kuzel" | "pruh";
+  smer?: number;
+  sirka?: number;
+  delka?: number;
+  efekt?: "zadny" | "mihot" | "plamen" | "pulz" | "magie";
+  rychlost?: number;
+  stiny?: boolean;
+}
+
+export function normalizeLight(light: MapLightV2) {
+  const finite = (v: unknown, fallback: number, min: number, max: number) =>
+    typeof v === "number" && Number.isFinite(v) ? Math.max(min, Math.min(max, v)) : fallback;
+  return {...light,
+    intenzita:finite(light.intenzita,1,0,1), blikani:light.blikani === true,
+    tvar:(["bod","kuzel","pruh"] as const).find(v => v === light.tvar) ?? "bod",
+    smer:typeof light.smer === "number" && Number.isFinite(light.smer) ? (light.smer % 360 + 360) % 360 : 0,
+    sirka:finite(light.sirka,60,10,180), delka:finite(light.delka,3,.1,200),
+    efekt:(["zadny","mihot","plamen","pulz","magie"] as const).find(v => v === light.efekt) ?? (light.efekt === undefined && light.blikani === true ? "mihot" : "zadny"),
+    rychlost:finite(light.rychlost,1,.25,3), stiny:light.stiny !== false,
+  };
 }
 
 export interface MapPaintStroke {
@@ -150,9 +170,7 @@ export function migrateMap(m: BattleMapData | MapV2 | any, assets?: Record<strin
     ...o, v: normalizeVariant(o.v, assets?.[o.asset] ? assets[o.asset].varianty?.length || 0 : undefined),
   });
   // normalizace zdí na unit segmenty
-  if (out.svetla) out.svetla = out.svetla.filter(l => l && typeof l === "object").map(l => ({
-    ...l, intenzita: finite(l.intenzita, 1, 0, 1), blikani: l.blikani === true,
-  }));
+  if (out.svetla) out.svetla = out.svetla.filter(l => l && typeof l === "object").map(normalizeLight);
   if (out.steny) {
     const norm: MapWall[] = [];
     for (const w of out.steny) {

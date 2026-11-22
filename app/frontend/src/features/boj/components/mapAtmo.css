@@ -5,6 +5,22 @@
   71% { opacity: .86; }
 }
 .map-light-flicker { animation: map-light-flicker 3.7s ease-in-out infinite; }
+.map-light-effect,.map-light-crossfade{animation-timing-function:ease-in-out;animation-iteration-count:infinite;will-change:opacity,transform;contain:layout paint}
+.map-light-clip{position:absolute;pointer-events:none;contain:layout paint}
+.map-light-raster{position:absolute;inset:0;transform-origin:center;contain:layout paint}
+.map-light-raster>img,.map-light-alternate{position:absolute;inset:0;width:100%;height:100%}
+.map-light-alternate>img{width:100%;height:100%}
+.map-light-alternate{opacity:.35;contain:layout paint}
+.map-light-crossfade{animation-name:light-crossfade}
+.map-light-mihot{animation-name:light-candle}
+.map-light-plamen{animation-name:light-flame}
+.map-light-pulz{animation-name:light-breathe}
+.map-light-magie{animation-name:light-magic}
+@keyframes light-candle{0%,100%{opacity:1;transform:scale(1)}19%{opacity:.92;transform:scale(.98)}31%{opacity:.98;transform:scale(1.02)}54%{opacity:.88;transform:scale(.97)}73%{opacity:.97;transform:scale(1.01)}}
+@keyframes light-flame{0%,100%{opacity:.95;transform:scale(1)}11%{opacity:.84;transform:scale(.91)}23%{opacity:1;transform:scale(1.1)}37%{opacity:.9;transform:scale(.97)}43%{opacity:.82;transform:scale(.89)}59%{opacity:.99;transform:scale(1.08)}76%{opacity:.87;transform:scale(.94)}89%{opacity:1;transform:scale(1.11)}}
+@keyframes light-crossfade{0%,100%{opacity:.05}23%{opacity:.7}43%{opacity:.25}76%{opacity:.9}}
+@keyframes light-breathe{0%,100%{opacity:.65;transform:scale(.96)}50%{opacity:1;transform:scale(1.05)}}
+@keyframes light-magic{0%,100%{opacity:.75;transform:scale(.97)}50%{opacity:1;transform:scale(1.06)}}
 .map-anim-vitr { transform-box: fill-box; transform-origin: center; animation: map-sway 6s ease-in-out infinite; }
 .map-anim-portal { transform-box: fill-box; transform-origin: center; animation: map-portal 32s linear infinite; }
 .map-anim-ohen { transform-box: fill-box; transform-origin: center; animation: map-fire 2.7s ease-in-out infinite; }
@@ -59,9 +75,9 @@
 .map-weather-quick[open] { width: 250px; }
 .map-weather-quick label { display: flex; justify-content: space-between; margin: 8px 0; }
 .map-live-controls { position: absolute; right: 12px; top: 12px; display: flex; gap: 6px; align-items: flex-start; z-index: 3; }
-html[data-map-animations="off"] :is([class*="map-anim-"], .map-light-flicker, .map-water-drift, .map-weather-sheet, .map-weather-cloud) { animation: none !important; }
+html[data-map-animations="off"] :is([class*="map-anim-"], .map-light-effect, .map-light-crossfade, .map-light-flicker, .map-water-drift, .map-weather-sheet, .map-weather-cloud) { animation: none !important; }
 html[data-map-animations="off"] .map-lightning { display: none; }
 @media (prefers-reduced-motion: reduce) {
-  :is([class*="map-anim-"], .map-light-flicker, .map-water-drift, .map-weather-sheet, .map-weather-cloud) { animation: none !important; }
+  :is([class*="map-anim-"], .map-light-effect, .map-light-crossfade, .map-light-flicker, .map-water-drift, .map-weather-sheet, .map-weather-cloud) { animation: none !important; }
   .map-lightning { display: none; }
 }

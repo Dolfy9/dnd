@@ -5,6 +5,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { actOnObjects, canTogglePanel, liveSelection, panUpdate, playerPreviewMap, fuzzyScore, readPreference, rememberAsset, writePreference, TOOL_GROUPS, TOOL_HINTS } from "./editorUx";
 import { pickAt, pickInRect } from "../tools/ops";
 import type { MapObject, MapV2 } from "../../boj/model/mapV2";
+import { migrateMap } from "../../boj/model/mapV2";
 import { EditorWeather, ShortcutHelp, CommandPalette } from "../components/EditorChrome";
 import { ObjectInspector } from "../components/ObjectInspector";
 import { AssetLibrary } from "../components/AssetLibrary";
@@ -14,6 +15,24 @@ const object: MapObject = {id:"one",asset:"tree",x:2,y:3,w:1,h:2,v:2,light:{brig
 afterEach(() => vi.unstubAllGlobals());
 
 describe("editor productivity", () => {
+  it("keeps the existing flicker checkbox effective after legacy light migration", () => {
+    const map=migrateMap({id:"m",nazev:"M",mrizka:[".."],svetla:[{id:"l",x:1,y:1,bright:5,dim:5,blikani:true}]});
+    const panel=PropertiesPanel({map,selObj:{kind:"svetlo",id:"l"},objects:[],assets:{},push:f=>f(map),onVariant:()=>{},onAction:()=>{},onDelete:()=>{}});
+    const inputs: React.ReactElement<any>[]=[];
+    function visit(node: React.ReactNode) {
+      React.Children.forEach(node,child=>{
+        if (!React.isValidElement<{children?:React.ReactNode;type?:string}>(child)) return;
+        if (child.type === "input" && child.props.type === "checkbox") inputs.push(child);
+        visit(child.props.children);
+      });
+    }
+    visit(panel);
+    expect(map.svetla![0].efekt).toBe("mihot");
+    inputs[0].props.onChange({target:{checked:false}});
+    expect(migrateMap(map).svetla![0]).toMatchObject({efekt:"zadny",blikani:false});
+    inputs[0].props.onChange({target:{checked:true}});
+    expect(migrateMap(map).svetla![0]).toMatchObject({efekt:"mihot",blikani:true});
+  });
   it("snapshots pan coordinates before pointer-up clears the drag ref", () => {
     const ref: {current: {x0:number;y0:number;vx:number;vy:number} | null} = {current:{x0:500,y0:400,vx:20,vy:30}};
     const point = {clientX:530,clientY:430};

@@ -10,6 +10,6 @@ export const MapPreview = memo(function MapPreview({ map }: { map: MapV2 }) {
     {map.obrazek && <image href={`/repo/11_Mapy/${map.obrazek}`} width={W} height={H} preserveAspectRatio="none" />}
     <TerenLayer map={map} px={24} illustration={!!map.obrazek} />
     <MapTextureLayer map={map} /><MapPaintLayer map={map} /><MapWallLayer map={map} />
-    <MapObjectLayer map={map} /><MapAtmosphereLayer map={map} />
+    <MapObjectLayer map={map} /><MapAtmosphereLayer map={map} animated={false} />
   </svg>;
 });

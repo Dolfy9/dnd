@@ -127,7 +127,7 @@ export function PropertiesPanel({ map, selObj, push, onDelete, objects, assets, 
           <LightColors value={selLight.color || "#fbbf24"} onChange={v => push(m => { m.svetla!.find(l => l.id === selObj.id)!.color = v; })} />
           <label>barva<input type="color" value={selLight.color || "#fbbf24"} onChange={(e) => push((m) => { m.svetla!.find((l) => l.id === selObj.id)!.color = e.target.value; })} /></label>
           <label>Intenzita<input type="range" min="0" max="1" step=".05" value={selLight.intenzita ?? 1} onChange={e => push(m => { m.svetla!.find(l => l.id === selObj.id)!.intenzita = +e.target.value; })} /></label>
-          <label><input type="checkbox" checked={!!selLight.blikani} onChange={e => push(m => { m.svetla!.find(l => l.id === selObj.id)!.blikani = e.target.checked; })} /> Blikání</label>
+          <label><input type="checkbox" checked={!!selLight.blikani} onChange={e => push(m => { const l=m.svetla!.find(l => l.id === selObj.id)!; l.blikani=e.target.checked; l.efekt=e.target.checked ? "mihot" : "zadny"; })} /> Blikání</label>
         </>
       )}
       {selNote && (

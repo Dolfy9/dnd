@@ -468,7 +468,7 @@ export default function BattleMap(p: Props) {
 
   return (
     <div className="boj-maparea">
-      <MapAnimatedScene map={map as MapV2} view={V} px={PX} dm={p.dm} illustration={!!img} overrides={S.teren} details={<>
+      <MapAnimatedScene map={map as MapV2} view={V} px={PX} dm={p.dm} illustration={!!img} overrides={S.teren} doors={S.dvere} details={<>
         <MapElevationLayer map={map as MapV2} />
         <MapGridLayer map={map as MapV2} W={W} H={H} />
         <MapDrawingLayer map={map as MapV2} dm={p.dm} />
@@ -598,7 +598,7 @@ export default function BattleMap(p: Props) {
               </g>
             );
           })}
-          <g transform={`scale(${PX / 24})`}><MapAtmosphereLayer map={map as MapV2} /></g>
+          <g transform={`scale(${PX / 24})`}><MapAtmosphereLayer map={map as MapV2} doors={S.dvere} /></g>
           <LightingLayer S={S} map={map} px={PX} W={W} H={H} dm={p.dm} />
           <FogLayer S={S} px={PX} W={W} H={H} dm={p.dm} />
           {measure && (
