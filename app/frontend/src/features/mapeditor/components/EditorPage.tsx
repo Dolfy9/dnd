@@ -235,7 +235,7 @@ export default function EditorPage() {
       if (e.key === "Escape") { setWallDraft([]); setRoomPoints([]); setDragPt(null); setMarquee(null); setSel([]); setCalib(null); return; }
       if (!e.ctrlKey && sel.length === 1 && sel[0].kind === "objekt" && ["q", "e"].includes(e.key.toLowerCase())) {
         e.preventDefault();
-        push(m => { const o = m.objekty!.find(o => o.id === sel[0].id)!; o.rot = (o.rot || 0) + (e.key.toLowerCase() === "q" ? -1 : 1) * (e.altKey ? 1 : 15); });
+        push(m => ops.rotateSel(m, sel, (e.key.toLowerCase() === "q" ? -1 : 1) * (e.altKey ? 1 : 15)));
         return;
       }
       if ((e.key === "Delete" || e.key === "Backspace") && sel.length) {
@@ -462,7 +462,7 @@ export default function EditorPage() {
   };
   const onWheel = (e: React.WheelEvent) => {
     if (e.ctrlKey && sel.length === 1 && sel[0].kind === "objekt") {
-      push(m => { const o = m.objekty!.find(o => o.id === sel[0].id)!; o.rot = (o.rot || 0) + (e.deltaY < 0 ? 15 : -15); });
+      push(m => ops.rotateSel(m, sel, e.deltaY < 0 ? 15 : -15));
       return;
     }
     const r = svgRef.current!.getBoundingClientRect();

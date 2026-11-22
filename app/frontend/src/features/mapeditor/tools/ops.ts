@@ -208,6 +208,14 @@ export function pickInRect(m: MapV2, a: [number, number], b: [number, number]) {
 }
 
 /** Posun výběru o (dx,dy) buňek. */
+export function rotateSel(m: MapV2, sel: { kind: string; id: string }[], angle: number) {
+  for (const s of sel) {
+    if (s.kind !== "objekt") continue;
+    const o = m.objekty?.find(o => o.id === s.id);
+    if (o) o.rot = (o.rot || 0) + angle;
+  }
+}
+
 export function moveSel(m: MapV2, sel: { kind: string; id: string }[], dx: number, dy: number) {
   const ids = new Set(sel.map((s) => s.id));
   for (const o of m.objekty || []) if (ids.has(o.id)) { o.x += dx; o.y += dy; }
