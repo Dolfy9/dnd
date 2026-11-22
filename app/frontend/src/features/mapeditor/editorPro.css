@@ -4,6 +4,9 @@
   --accent-hover:#edbd69;--accent-soft:#d4a24c1a;--accent-ink:#16171b;--danger:#ff9292;
   color-scheme:dark;font:13px/1.45 Inter,"Segoe UI",sans-serif;background:var(--bg);color:var(--ink);
 }
+.me-ed.me-error{min-height:100dvh;display:grid;place-items:center;padding:24px}
+.me-ed.me-error section{max-width:560px;padding:32px;background:var(--panel);border:1px solid var(--line);border-radius:8px}
+.me-ed.me-error section>div{display:flex;gap:8px;flex-wrap:wrap;margin-top:24px}
 .me-ed *{box-sizing:border-box;scrollbar-width:thin;scrollbar-color:#4a4d57 transparent}
 .me-ed :is(button,input,select,textarea,summary,a){font-family:inherit;font-size:inherit}
 .me-ed :is(button,input,select,textarea,summary,a,[tabindex]):focus-visible{outline:2px solid var(--accent);outline-offset:3px;box-shadow:0 0 0 4px #16171b}
