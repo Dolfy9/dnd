@@ -18,6 +18,15 @@ export const tileAt = (map: BattleMapData, x: number, y: number, teren?: TerenMa
 
 export const tileDef = (c: string) => TILES[c] || TILES["."];
 
+export function diagonalCornerBlocked(t:Token,x:number,y:number,dx:number,dy:number,map:BattleMapData,teren?:TerenMap):boolean {
+  if(!dx || !dy)return false;
+  return cellsOf(t,x,y).some(([cx,cy])=>{
+    const sides=[tileAt(map,cx+dx,cy,teren),tileAt(map,cx,cy+dy,teren)];
+    if(sides.some(c=>tileDef(c).cost))return false;
+    return !sides.every(c=>c==="_" || c==="~") || !deckCoversStep(map,cx,cy,cx+dx,cy+dy);
+  });
+}
+
 export const mapSize = (map: BattleMapData) => ({
   W: map.mrizka[0]?.length || 0,
   H: map.mrizka.length || 0,
@@ -120,7 +129,7 @@ export function reachable(t: Token, limitFt: number, map: BattleMapData, tokens:
       if (!dx && !dy) continue;
       const nx = x + dx, ny = y + dy;
       if (nx < 0 || ny < 0 || nx + t.s > W || ny + t.s > H) continue;
-      if (dx && dy && !tileDef(tileAt(map, x + dx, y, teren)).cost && !tileDef(tileAt(map, x, y + dy, teren)).cost && !cellsOf(t,x,y).every(([cx,cy])=>deckCoversStep(map,cx,cy,cx+dx,cy+dy))) continue;
+      if (diagonalCornerBlocked(t,x,y,dx,dy,map,teren)) continue;
       if (wIdx.size && edgeBlocked(wIdx, x, y, nx, ny, doors)) continue;   // hranová zeď/dveře
       const sc = stepCost(t, nx, ny, map, tokens, zones, teren);
       if (sc === Infinity) continue;

@@ -8,6 +8,13 @@ import {deckCoversStep} from "./mapRoutes";
 
 const token={id:"t",s:1,x:0,y:0,speed:30,side:"druzina",cond:[],effects:[],spent:{},atk:[]} as unknown as Token;
 const state={tok:[token],zones:[],eco:{},turn:0,ord:["t"]} as unknown as StavBoje;
+it("does not use a diagonal deck to squeeze between solid terrain corners",()=>{
+ for(const rows of [[".#","#."],["._","#."]]){
+  const map:MapV2={id:"m",nazev:"M",podklad:"jine",mrizka:rows,trasy:[{id:"pier",druh:"molo",pts:[[.5,.5],[1.5,1.5]],sirka:.5,hladke:false}]};
+  expect(planMovement(state,map,token,[],[1,1],"pravidla",defaultSettings()).blocked).not.toBeNull();
+  expect(reachable(token,30,map,[token]).dist["1,1"]).toBeUndefined();
+ }
+});
 it("does not enter a hedge from the same side of its axis",()=>{
  const t={...token,x:2,y:1},map:MapV2={id:"m",nazev:"M",podklad:"jine",mrizka:Array(4).fill("...."),trasy:[{id:"hedge",druh:"plot",pts:[[1,0],[1,4]],sirka:2,hladke:false}]};
  expect(reachable(t,30,map,[t]).dist["1,1"]).toBeUndefined();
