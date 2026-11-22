@@ -3,6 +3,7 @@
    nuceny (forced move — bez pohybu, bez OA, ne projde zdí), teleport.
    Úhlopříčky 5 ft (2024) nebo střídavě 5/10 ft (DMG varianta). */
 import type { StavBoje, Token, BattleMapData, BattleSettings, MoveMode, Zone } from "../types";
+import { mapWalls } from "../model/mapRoutes";
 import { mapSize, tileAt, tileDef, cellsOf, occupantAt, hostile, zoneCovers, oaAlong } from "./grid";
 import { isIncap } from "./conditions";
 import { moveLeft, ecoOf } from "./turn";
@@ -67,7 +68,7 @@ function dijkstra(t: Token, from: [number, number], map: BattleMapData, S: StavB
   const start = key(from[0], from[1], 0);
   dist.set(start, 0);
   const q: [number, number, number, number][] = [[0, from[0], from[1], 0]];
-  const wIdx = wallIndex((map as any).steny);
+  const wIdx = wallIndex(mapWalls(map));
   const doors = (S as any).dvere as DoorStates;
   while (q.length) {
     q.sort((a, b) => a[0] - b[0]);

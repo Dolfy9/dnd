@@ -2,6 +2,7 @@
    Dijkstra pohyb (těžký terén ×2, zóny, letectví/plavání), Opportunity Attacks. */
 import { TILES, type Token, type Zone, type BattleMapData } from "../types";
 import { isIncap } from "./conditions";
+import { deckAt, mapWalls } from "../model/mapRoutes";
 import { cellInfo, edgeBlocked, wallIndex, type DoorStates } from "../model/mapV2";
 
 export type TerenMap = Record<string, string> | undefined | null;
@@ -9,9 +10,10 @@ export type TerenMap = Record<string, string> | undefined | null;
 /** Efektivní dlaždice: override z `teren` (namalované) předchází `mrizka`. */
 export const tileAt = (map: BattleMapData, x: number, y: number, teren?: TerenMap): string => {
   const o = teren?.[`${x},${y}`];
-  if (o) return o;
+  if (o) return "~_".includes(o)&&deckAt(map,x,y)?".":o;
   const m = map.mrizka;
-  return m && y >= 0 && y < m.length && x >= 0 && x < m[y].length ? m[y][x] : "#";
+  const c=m && y >= 0 && y < m.length && x >= 0 && x < m[y].length ? m[y][x] : "#";
+  return "~_".includes(c)&&deckAt(map,x,y)?".":c;
 };
 
 export const tileDef = (c: string) => TILES[c] || TILES["."];
@@ -103,7 +105,7 @@ export interface ReachResult {
 
 /** Dijkstra po buňkách; limit ve ft. */
 export function reachable(t: Token, limitFt: number, map: BattleMapData, tokens: Token[], zones: Zone[] = [], teren?: TerenMap, doors?: DoorStates): ReachResult {
-  const wIdx = wallIndex((map as any).steny);
+  const wIdx = wallIndex(mapWalls(map));
   const { W, H } = mapSize(map);
   const dist: Record<string, number> = {}, prev: Record<string, string> = {};
   const key = (x: number, y: number) => `${x},${y}`;

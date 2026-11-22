@@ -1,5 +1,6 @@
 import { memo, useEffect, useId, useMemo, useState } from "react";
 import { renderToStaticMarkup } from "react-dom/server";
+import { mapWalls } from "../model/mapRoutes";
 import type { MapV2, MapPaintStroke } from "../model/mapV2";
 import { normalizeLight } from "../model/mapV2";
 import { lightBlockers } from "../model/lightGeometry";
@@ -63,7 +64,7 @@ export const MapAtmosphereArtwork = memo(function MapAtmosphereArtwork({ map, do
   const {assets} = useMapManifests();
   const lights = visualLights(map,assets).filter(l => l.radius > 0 && l.intenzita > 0);
   const objects=objectBlockers(map.objekty,assets);
-  const blockers = useMemo(() => [...lightBlockers(map.steny,doors),...objects],[map.steny,doors,objects]);
+  const blockers = useMemo(() => [...lightBlockers(mapWalls(map),doors),...objects],[map.steny,map.trasy,doors,objects]);
   const amb = clamp(map.atmosfera?.amb ?? 1, 1);
   if (amb === 1 && !lights.length) return null;
   return <svg xmlns="http://www.w3.org/2000/svg" width={W} height={H} viewBox={`0 0 ${W} ${H}`} overflow="hidden" pointerEvents="none">
@@ -108,7 +109,7 @@ export const MapAtmosphereLayer = memo(function MapAtmosphereLayer({ map, doors,
     window.addEventListener("resize", resize);
     return () => window.removeEventListener("resize", resize);
   }, []);
-  const key = JSON.stringify([W, H, lights, lightBlockers(map.steny, doors), objectBlockers(map.objekty,assets), ambient, map.atmosfera?.barva, animated, dpr]);
+  const key = JSON.stringify([W, H, lights, lightBlockers(mapWalls(map), doors), objectBlockers(map.objekty,assets), ambient, map.atmosfera?.barva, animated, dpr]);
   const [bitmaps, setBitmaps] = useState<{ dark: string; glow: string }>();
   const [failed, setFailed] = useState(false);
   const empty = ambient === 1 && !lights.length;

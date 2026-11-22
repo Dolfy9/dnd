@@ -1,4 +1,5 @@
 import { memo } from "react";
+import {MapRouteLayer} from "../../boj/components/MapRouteLayer";
 import type { MapV2 } from "../../boj/model/mapV2";
 import { TerenLayer } from "../../boj/components/MapLayers";
 import { MapObjectLayer, MapTextureLayer, MapWallLayer } from "../../boj/components/MapV2Layers";
@@ -10,6 +11,6 @@ export const MapPreview = memo(function MapPreview({ map, staticLighting=false }
     {map.obrazek && <image href={`/repo/11_Mapy/${map.obrazek}`} width={W} height={H} preserveAspectRatio="none" />}
     <TerenLayer map={map} px={24} illustration={!!map.obrazek} />
     <MapTextureLayer map={map} /><MapPaintLayer map={map} /><MapWallLayer map={map} />
-    <MapObjectLayer map={map} />{staticLighting ? <MapAtmosphereArtwork map={map} animated={false}/> : <MapAtmosphereLayer map={map} animated={false} />}
+    <MapRouteLayer map={map}/><MapObjectLayer map={map} />{staticLighting ? <MapAtmosphereArtwork map={map} animated={false}/> : <MapAtmosphereLayer map={map} animated={false} />}
   </svg>;
 });

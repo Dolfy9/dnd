@@ -5,6 +5,7 @@ import type { BattleMapData, LightSource, StavBoje, Token, Zone } from "../types
 import { cellsOf, gapFt } from "./grid";
 import { coverOf } from "./los";
 import { edgeBlocksSight, wallIndex, crossedFreeWalls, wallBlocksSight } from "../model/mapV2";
+import { mapWalls } from "../model/mapRoutes";
 import { hasCond, isIncap } from "./conditions";
 import { normalizeLight } from "../model/mapV2";
 
@@ -59,7 +60,7 @@ export function lightAt(S: StavBoje, map: BattleMapData, x: number, y: number): 
   const global = S.lightLevel || parseLightLevel(map.osvetleni);
   let lvl: LightLevel = global;
   const rank = { dark: 0, dim: 1, bright: 2 };
-  const wIdx = wallIndex((map as any).steny);
+  const wIdx = wallIndex(mapWalls(map));
   for (const L of S.lights || []) {
     const src = L.tokenId ? S.tok.find((t) => t.id === L.tokenId) : undefined;
     const ax = src ? src.x! : L.anchor?.[0];

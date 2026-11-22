@@ -11,6 +11,7 @@ import { isInteractiveTarget } from "./shortcuts";
 import { useAssetManifest, useTextureManifest } from "../../mapeditor/assets/manifest";
 import { setManifests } from "./MapV2Layers";
 import { wallIndex, type MapWall } from "../model/mapV2";
+import { mapWalls } from "../model/mapRoutes";
 import { Link, useNavigate } from "react-router-dom";
 import { useBattle } from "../state/useBattle";
 import "../boj.css";
@@ -192,7 +193,7 @@ export default function BattlePage() {
   };
   // přepočet viditelnosti družiny do fog stavu `s` (volá se ručně i kontinuálně při fog.auto)
   const applyAutoFog = (s: any) => {
-    const wIdx = wallIndex((map as any).steny);
+    const wIdx = wallIndex(mapWalls(map));
     const party = s.tok.filter((t: Token) => !t.dead && t.x != null && t.side !== "nepratele" && !t.skryty);
     const vis: Record<string, 1> = {}, rev: Record<string, 1> = { ...(s.fog?.revealed || {}) };
     const R = 12; // 60 ft

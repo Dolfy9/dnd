@@ -1,7 +1,8 @@
 /* Operace nástrojů editoru — čisté funkce nad MapV2 (volá EditorPage). */
-import type { MapV2, MapWall, MapPaintStroke, MapObject } from "../../boj/model/mapV2";
+import type { MapV2, MapWall, MapPaintStroke, MapObject, MapRoute } from "../../boj/model/mapV2";
 import { wallUid } from "../../boj/model/mapV2";
 import type { GenOut } from "../generators/generators";
+import { routeContains } from "../../boj/model/mapRoutes";
 
 export const k2 = (x: number, y: number) => `${x},${y}`;
 
@@ -158,6 +159,7 @@ export function eraseAt(m: MapV2, cx: number, cy: number) {
   i = (m.objekty || []).findIndex(P); if (i >= 0) { m.objekty!.splice(i, 1); return; }
   i = (m.steny || []).findIndex((w) => pointToSeg(cx + .5, cy + .5, w.a, w.b) < .35);
   if (i >= 0) { m.steny!.splice(i, 1); return; }
+  i=(m.trasy||[]).findIndex(r=>routeContains(r,cx+.5,cy+.5));if(i>=0){m.trasy!.splice(i,1);return;}
   if (m.vyska?.[k2(cx, cy)] != null) { delete m.vyska[k2(cx, cy)]; return; }
   if (m.textury?.[k2(cx, cy)]) { delete m.textury[k2(cx, cy)]; return; }
 }
@@ -189,6 +191,8 @@ export function pickAt(m: MapV2, cx: number, cy: number, exact = false) {
   if (w) return { kind: "stena" as const, id: w.id };
   const d = (m.kresby || []).find((k) => k.pts.some(([x, y]) => Math.hypot(x - px, y - py) < .4));
   if (d) return { kind: "kresba" as const, id: d.id };
+  const route=[...(m.trasy||[])].reverse().find(r=>routeContains(r,px,py));
+  if(route)return {kind:"trasa" as const,id:route.id};
   return null;
 }
 
@@ -196,7 +200,8 @@ export function pickAt(m: MapV2, cx: number, cy: number, exact = false) {
 export function pickInRect(m: MapV2, a: [number, number], b: [number, number]) {
   const [x0, x1] = [Math.min(a[0], b[0]), Math.max(a[0], b[0])];
   const [y0, y1] = [Math.min(a[1], b[1]), Math.max(a[1], b[1])];
-  const out: { kind: "objekt" | "svetlo" | "poznamka" | "kresba" | "stena"; id: string }[] = [];
+  const out: { kind: "objekt" | "svetlo" | "poznamka" | "kresba" | "stena" | "trasa"; id: string }[] = [];
+  for(const r of m.trasy||[])if(r.pts.every(([x,y])=>x>=x0&&x<=x1&&y>=y0&&y<=y1))out.push({kind:"trasa",id:r.id});
   for (const o of m.objekty || []) if (o.x >= x0 && o.x <= x1 && o.y >= y0 && o.y <= y1) out.push({ kind: "objekt", id: o.id });
   for (const l of m.svetla || []) if (l.x >= x0 && l.x <= x1 && l.y >= y0 && l.y <= y1) out.push({ kind: "svetlo", id: l.id });
   for (const n of m.poznamky || []) if (n.x >= x0 && n.x <= x1 && n.y >= y0 && n.y <= y1) out.push({ kind: "poznamka", id: n.id });
@@ -216,6 +221,10 @@ export function duplicateObjects(objects: MapObject[], width = Infinity, height 
   });
 }
 
+export function duplicateRoutes(routes:MapRoute[]) {
+  return routes.map(r=>({...structuredClone(r),id:wallUid(),pts:r.pts.map(([x,y])=>[x+1,y+1] as [number,number])}));
+}
+
 export function rotateSel(m: MapV2, sel: { kind: string; id: string }[], angle: number) {
   for (const s of sel) {
     if (s.kind !== "objekt") continue;
@@ -227,6 +236,7 @@ export function rotateSel(m: MapV2, sel: { kind: string; id: string }[], angle: 
 /** Posun výběru o (dx,dy) buňek. */
 export function moveSel(m: MapV2, sel: { kind: string; id: string }[], dx: number, dy: number) {
   const ids = new Set(sel.map((s) => s.id));
+  for(const r of m.trasy||[])if(ids.has(r.id))r.pts=r.pts.map(([x,y])=>[x+dx,y+dy]);
   for (const o of m.objekty || []) if (ids.has(o.id)) { o.x += dx; o.y += dy; }
   for (const l of m.svetla || []) if (ids.has(l.id)) { l.x += dx; l.y += dy; }
   for (const n of m.poznamky || []) if (ids.has(n.id)) { n.x += dx; n.y += dy; }

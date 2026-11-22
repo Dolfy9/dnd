@@ -152,3 +152,27 @@ def test_paint_atmosphere_roundtrip(editor, monkeypatch, tmp_path):
         assert stored["svetla"] == fields["svetla"]
     finally:
         editor.delete(f"/api/map/bojove/{mid}")
+
+
+def test_routes_roundtrip(editor, monkeypatch, tmp_path):
+    from app.api import battle_maps
+
+    storage = tmp_path / "routes.json"
+    monkeypatch.setattr(battle_maps, "JSON_F", storage)
+    routes = [{"id": k, "druh": k, "pts": [[.2, .3], [3.4, 4.5]],
+               "sirka": .75, "hladke": True, "seed": 42}
+              for k in ("cesta", "molo", "plot", "zidka")]
+    r = editor.post("/api/map/bojove", json={"nazev": "Route Roundtrip Tmp", "trasy": routes})
+    assert r.status_code == 200, r.text
+    mid = r.json()["id"]
+    try:
+        assert r.json()["mapa"]["trasy"] == routes
+        assert json.loads(storage.read_text())["mapy"][0]["trasy"] == routes
+        assert battle_maps.strip_for_player(r.json()["mapa"])["trasy"] == routes
+        updated = [{**routes[0], "pts": [[1.25, 2.5], [4, 5], [7, 6]]}]
+        r = editor.put(f"/api/map/bojove/{mid}", json={"trasy": updated})
+        assert r.status_code == 200, r.text
+        assert json.loads(storage.read_text())["mapy"][0]["trasy"] == updated
+        assert editor.put(f"/api/map/bojove/{mid}", json={"trasy": []}).json()["mapa"]["trasy"] == []
+    finally:
+        editor.delete(f"/api/map/bojove/{mid}")

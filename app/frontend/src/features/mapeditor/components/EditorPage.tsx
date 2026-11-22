@@ -11,7 +11,10 @@ import {
 import { post, upload } from "../../../api";
 import { toast } from "../../../components/ui";
 import { TILES } from "../../boj/types";
-import type { MapV2, MapWall, MapDrawing, MapPaintStroke, MapObject, MapLightV2 } from "../../boj/model/mapV2";
+import type { MapV2, MapWall, MapDrawing, MapPaintStroke, MapObject, MapLightV2, MapRoute } from "../../boj/model/mapV2";
+import {routeDistance, normalizeRoutes} from "../../boj/model/mapRoutes";
+import {MapRouteLayer} from "../../boj/components/MapRouteLayer";
+import {RouteInspector} from "./RouteInspector";
 import { placementVariant, variantEdits } from "../../boj/model/assetVariants";
 import { migrateMap, wallUid, WEATHER } from "../../boj/model/mapV2";
 import {
@@ -41,9 +44,10 @@ import "../editor.css";
 import "../editorPro.css";
 
 type Tool = "select" | "teren" | "fill" | "flood" | "textura" | "malba" | "mistnost" | "polygon" | "stena" | "dvere"
-  | "interier" | "objekt" | "kresba" | "vyska" | "svetlo" | "start" | "poznamka" | "guma" | "kapatko";
+  | "interier" | "objekt" | "kresba" | "vyska" | "svetlo" | "start" | "poznamka" | "guma" | "kapatko" | "trasa";
 
 const TOOLS: { id: Tool; icon: React.ReactElement; nazev: string; key: string }[] = [
+  {id:"trasa",icon:<Spline size={18}/>,nazev:"Trasa",key:"T"},
   { id: "select", icon: <MousePointer2 size={18} />, nazev: "Výběr / přesun", key: "V" },
   { id: "teren", icon: <Brush size={18} />, nazev: "Terén", key: "B" },
   { id: "fill", icon: <Square size={18} />, nazev: "Výplň obdélníkem", key: "Shift+B" },
@@ -67,7 +71,7 @@ const TOOLS: { id: Tool; icon: React.ReactElement; nazev: string; key: string }[
 
 const START_TYPY = [["druzina", "Družina"], ["nepratele", "Nepřátelé"], ["neutral", "Neutrál"]] as const;
 const k2 = (x: number, y: number) => `${x},${y}`;
-type Sel = { kind: "objekt" | "kresba" | "stena" | "svetlo" | "poznamka"; id: string };
+type Sel = { kind: "objekt" | "kresba" | "stena" | "svetlo" | "poznamka" | "trasa"; id: string };
 
 export default function EditorPage() {
   const { id } = useParams();
@@ -80,6 +84,11 @@ export default function EditorPage() {
   useEffect(() => { setManifests(assetsQ.data || {}, texQ.data || {}); }, [assetsQ.data, texQ.data]);
 
   const [tool, setTool] = useState<Tool>("select");
+  const [routeSettings,setRouteSettings]=useState<MapRoute>({id:"draft",druh:"cesta",pts:[],sirka:1.5,t:"t-zahradni-cesta",hladke:true,seed:17});
+  const [routePoints,setRoutePoints]=useState<[number,number][]>([]);
+  const [routePoint,setRoutePoint]=useState<number|null>(null);
+  const routeDrag=useRef<{id:string;point:number}|null>(null);
+  const routeClipboard=useRef<MapRoute[]>([]);
   const [brushTile, setBrushTile] = useState("#");
   const [brushTex, setBrushTex] = useState(TEXTURES[0].id);
   const [paintSize, setPaintSize] = useState(2);
@@ -163,7 +172,7 @@ export default function EditorPage() {
   useEffect(() => {
     if (panelPinned) return;
     if (tool === "objekt") { setTab("knihovna"); setLibraryMode("objects"); }
-    else if (tool === "svetlo") { setTab("vlastnosti"); setPanelOpen(true); }
+    else if (tool === "svetlo"||tool === "trasa") { setTab("vlastnosti"); setPanelOpen(true); }
     else if (["teren","fill","flood","textura","malba"].includes(tool)) { setTab("knihovna"); setLibraryMode(["textura","malba"].includes(tool) ? "textures" : "terrain"); }
   }, [tool, panelPinned]);
   useEffect(() => { if (sel.length && !panelPinned) { setTab("vlastnosti"); if (window.innerWidth >= 1100) setPanelOpen(true); } }, [sel, panelPinned]);
@@ -177,6 +186,11 @@ export default function EditorPage() {
   }, [!!map]);
 
   const runObjectAction = (action: ObjectAction) => {
+    if(sel.some(s=>s.kind==="trasa")){
+      if(action==="delete"){deleteSelection();return;}
+      if(action==="duplicate"){const current=doc.mapRef.current!,copies=ops.duplicateRoutes(current.trasy?.filter(r=>sel.some(s=>s.id===r.id))||[]),objects=ops.duplicateObjects(current.objekty?.filter(o=>sel.some(s=>s.id===o.id))||[],current.mrizka[0]?.length,current.mrizka.length);push(m=>{m.trasy=[...(m.trasy||[]),...copies];m.objekty=[...(m.objekty||[]),...objects];});setSel([...copies.map(r=>({kind:"trasa" as const,id:r.id})),...objects.map(o=>({kind:"objekt" as const,id:o.id}))]);setRoutePoint(null);setContextMenu(null);return;}
+      setContextMenu(null);return;
+    }
     const m = doc.mapRef.current; if (!m) return;
     const ids = sel.filter(s => s.kind === "objekt").map(s => s.id);
     const next = actOnObjects(m.objekty || [],ids,action,m.mrizka[0]?.length || 1,m.mrizka.length);
@@ -304,6 +318,7 @@ export default function EditorPage() {
     m.svetla = (m.svetla || []).map((l) => ({ ...l, x: l.x + dX, y: l.y + dY }));
     m.malba = m.malba?.map(s => ({ ...s, p: s.p.map(([x, y]) => [x + dX, y + dY]) }));
     m.interiery = m.interiery?.map(r => ({ ...r, poly: r.poly.map(([x,y]) => [x+dX,y+dY]) }));
+    m.trasy=m.trasy?.map(r=>({...r,pts:r.pts.map(([x,y])=>[x+dX,y+dY])}));
     m.poznamky = (m.poznamky || []).map((n) => ({ ...n, x: n.x + dX, y: n.y + dY }));
     if (m.start) for (const kk in m.start) (m.start as any)[kk] = ((m.start as any)[kk] || []).map(([x, y]: number[]) => [x + dX, y + dY]);
   });
@@ -328,7 +343,10 @@ export default function EditorPage() {
       if (e.key === " ") { setSpace(true); e.preventDefault(); return; }
       if (e.ctrlKey && e.key.toLowerCase() === "z") { e.preventDefault(); e.shiftKey ? doc.redo() : doc.undo(); return; }
       if (e.ctrlKey && e.key.toLowerCase() === "y") { e.preventDefault(); doc.redo(); return; }
-      if (e.key === "Escape") { lightGesture.current=null;setLightPreview(null);setWallDraft([]); setRoomPoints([]); setDragPt(null); setMarquee(null); setSel([]); setCalib(null); return; }
+      if (e.key === "Escape") { setRoutePoints([]);setRoutePoint(null);lightGesture.current=null;setLightPreview(null);setWallDraft([]); setRoomPoints([]); setDragPt(null); setMarquee(null); setSel([]); setCalib(null); return; }
+      if(tool==="trasa"&&e.key==="Enter"){e.preventDefault();finishRoute();return;}
+      if(tool==="trasa"&&e.key==="Backspace"){e.preventDefault();setRoutePoints(p=>p.slice(0,-1));return;}
+      if((e.key==="Delete"||e.key==="Backspace")&&routePoint!==null&&sel[0]?.kind==="trasa"){e.preventDefault();deleteRoutePoint();return;}
       const lightTurn=lightRotationDelta(e);
       if(lightTurn && sel.length===1 && sel[0].kind==="svetlo"){
         const light=doc.mapRef.current?.svetla?.find(l=>l.id===sel[0].id);
@@ -339,19 +357,22 @@ export default function EditorPage() {
         e.preventDefault(); changeVariants(e.shiftKey ? "random" : "next"); return;
       }
       if ((e.ctrlKey || e.metaKey) && ["c", "v", "d"].includes(e.key.toLowerCase())) {
+        const selectedRoutes=doc.mapRef.current?.trasy?.filter(r=>sel.some(s=>s.kind==="trasa"&&s.id===r.id))||[];
         const selected = (doc.mapRef.current?.objekty || []).filter(o => sel.some(s => s.kind === "objekt" && s.id === o.id));
         const key = e.key.toLowerCase();
         if (key === "c") {
-          if (selected.length) { e.preventDefault(); clipboardRef.current = structuredClone(selected); }
+          if (selected.length||selectedRoutes.length) { e.preventDefault(); clipboardRef.current = structuredClone(selected);routeClipboard.current=structuredClone(selectedRoutes); }
           return;
         }
         const source = key === "v" ? clipboardRef.current : selected;
-        if (!source.length) return;
+        const routeSource=key==="v"?routeClipboard.current:selectedRoutes;
+        if (!source.length&&!routeSource.length) return;
         e.preventDefault();
         const current = doc.mapRef.current!;
         const copies = ops.duplicateObjects(source, current.mrizka[0]?.length || 1, current.mrizka.length);
-        push(m => { m.objekty = [...(m.objekty || []), ...copies]; });
-        setSel(copies.map(o => ({kind:"objekt",id:o.id})));
+        const routeCopies=ops.duplicateRoutes(routeSource);
+        push(m => { m.objekty = [...(m.objekty || []), ...copies];m.trasy=[...(m.trasy||[]),...routeCopies]; });
+        setSel([...copies.map(o => ({kind:"objekt" as const,id:o.id})),...routeCopies.map(r=>({kind:"trasa" as const,id:r.id}))]);setRoutePoint(null);
         return;
       }
       if (!e.ctrlKey && sel.length === 1 && sel[0].kind === "objekt" && ["q", "e"].includes(e.key.toLowerCase())) {
@@ -361,7 +382,7 @@ export default function EditorPage() {
         return;
       }
       if ((e.key === "Delete" || e.key === "Backspace") && sel.length) {
-        push((m) => { for (const s of sel) { const n = s.kind === "objekt" ? "objekty" : s.kind === "kresba" ? "kresby" : s.kind === "stena" ? "steny" : s.kind === "svetlo" ? "svetla" : "poznamky"; (m as any)[n] = ((m as any)[n] || []).filter((o: any) => o.id !== s.id); } });
+        e.preventDefault();deleteSelection();
         setSel([]); return;
       }
       if (sel.length && e.key.startsWith("Arrow")) {
@@ -381,7 +402,15 @@ export default function EditorPage() {
     const onFs = () => setFs(!!document.fullscreenElement);
     document.addEventListener("fullscreenchange", onFs);
     return () => { window.removeEventListener("keydown", dn); window.removeEventListener("keyup", up2); document.removeEventListener("fullscreenchange", onFs); };
-  }, [doc.undo, doc.redo, doc.save, sel, push, fit, zoomAt, changeVariants, contextMenu]);
+  }, [doc.undo, doc.redo, doc.save, sel, push, fit, zoomAt, changeVariants, contextMenu,tool,routePoints,routeSettings,routePoint]);
+
+  const deleteSelection=()=>{push(m=>{for(const s of sel){const field={trasa:"trasy",objekt:"objekty",kresba:"kresby",stena:"steny",svetlo:"svetla",poznamka:"poznamky"}[s.kind];(m as any)[field]=((m as any)[field]||[]).filter((o:{id:string})=>o.id!==s.id);}});setSel([]);setRoutePoint(null);setContextMenu(null);};
+  const finishRoute=()=>{
+    const routes=normalizeRoutes([{...routeSettings,id:wallUid(),pts:routePoints}]);
+    if(routes.length){push(m=>{m.trasy=[...(m.trasy||[]),routes[0]];});setSel([{kind:"trasa",id:routes[0].id}]);setTool("select");setRoutePoint(null);}
+    setRoutePoints([]);
+  };
+  const deleteRoutePoint=()=>{const route=doc.mapRef.current?.trasy?.find(r=>r.id===sel[0]?.id);if(route&&routePoint!==null&&route.pts.length>2){push(m=>{m.trasy=m.trasy?.map(r=>r.id===route.id?{...r,pts:r.pts.filter((_,i)=>i!==routePoint)}:r);});setRoutePoint(null);}};
 
   /* ---------- pointer ---------- */
   const lightGestureValue=(e:React.PointerEvent):MapLightV2=>{
@@ -395,6 +424,7 @@ export default function EditorPage() {
     if (e.button === 1 || space || e.button === 2) { panRef.current = { x0: e.clientX, y0: e.clientY, vx: V.x, vy: V.y }; e.currentTarget.setPointerCapture(e.pointerId); setPanning(true); userZoomRef.current = true; return; }
     setContextMenu(null);
     const [cx, cy] = cellOf(e);
+    if(tool==="trasa"){e.preventDefault();if(e.detail<=1)setRoutePoints(p=>{const n=snapPt(e),last=p[p.length-1];return last&&Math.hypot(n[0]-last[0],n[1]-last[1])<.01?p:[...p,n];});return;}
     if (tool === "malba") {
       e.preventDefault(); e.currentTarget.setPointerCapture(e.pointerId);
       const stroke: MapPaintStroke = { id: wallUid(), t: brushTex, b: paintSize, o: paintOpacity, h: paintHardness, r: paintRandom ? Math.random() * 360 : paintAngle, p: [toWorld(e)] };
@@ -490,8 +520,10 @@ export default function EditorPage() {
       }
       case "select": {
         if (!map) break;
+        setRoutePoint(null);
         const [wx, wy] = toWorld(e);
-        const hit = ops.pickAt(playerMap!, wx, wy, true);
+        const hit = ops.pickAt({...playerMap!,trasy:layerVis.trasy?playerMap!.trasy:[]}, wx, wy, true);
+        if(hit?.kind==="trasa"&&e.altKey){const route=map.trasy!.find(r=>r.id===hit.id)!;let at=1,d=Infinity;route.pts.slice(1).forEach((b,i)=>{const next=routeDistance([wx,wy],route.pts[i],b);if(next<d){d=next;at=i+1;}});push(m=>{m.trasy=m.trasy?.map(r=>r.id===hit.id?{...r,pts:[...r.pts.slice(0,at),[wx,wy],...r.pts.slice(at)]}:r);});setSel([hit]);setRoutePoint(at);return;}
         if (hit) {
           const ns = e.shiftKey ? (sel.some((s) => s.id === hit.id) ? sel.filter((s) => s.id !== hit.id) : [...sel, hit]) : [hit];
           setSel(ns);
@@ -507,6 +539,7 @@ export default function EditorPage() {
     }
   };
   const onMove = (e: React.PointerEvent) => {
+    if(routeDrag.current){const drag=routeDrag.current,p=snapPt(e);live(m=>{m.trasy=m.trasy?.map(r=>r.id===drag.id?{...r,pts:r.pts.map((q,i)=>i===drag.point?p:q)}:r);});return;}
     if(lightGesture.current){setLightPreview(lightGestureValue(e));return;}
     if (strokeRef.current) {
       const s = strokeRef.current;
@@ -563,6 +596,7 @@ export default function EditorPage() {
     else if (tool === "guma") push((m) => ops.eraseAt(m, cx, cy));
   };
   const onUp = (e: React.PointerEvent) => {
+    if(routeDrag.current){routeDrag.current=null;const start=transformStart.current;transformStart.current=null;if(start){const final=structuredClone(doc.mapRef.current!);doc.setMap(start);if(JSON.stringify(start)!==JSON.stringify(final))push(m=>Object.assign(m,final));}if(e.currentTarget.hasPointerCapture(e.pointerId))e.currentTarget.releasePointerCapture(e.pointerId);return;}
     if(lightGesture.current){
       const gesture=lightGesture.current, final=lightGestureValue(e);
       lightGesture.current=null;setLightPreview(null);paintRef.current=false;
@@ -593,7 +627,7 @@ export default function EditorPage() {
       return;
     }
     if (marquee) {
-      const s = ops.pickInRect(playerMap!, marquee.a, marquee.b);
+      const s = ops.pickInRect({...playerMap!,trasy:layerVis.trasy?playerMap!.trasy:[]}, marquee.a, marquee.b);
       setSel(s); setMarquee(null); return;
     }
     if (dragPt) {
@@ -608,6 +642,7 @@ export default function EditorPage() {
     }
   };
   const onDbl = () => {
+    if(tool==="trasa"){finishRoute();return;}
     if ((tool === "polygon" || tool === "interier") && roomPoints.length >= 3) { push(m => tool === "interier" ? ops.interiorPolygon(m,roomPoints) : ops.roomPolygon(m, roomPoints, floorFill ? brushTex : undefined, shapeAngle)); setRoomPoints([]); }
     if (tool === "stena") setWallDraft([]);
   };
@@ -632,6 +667,7 @@ export default function EditorPage() {
   const toolInfo = TOOLS.find((t) => t.id === tool)!;
   const previewMap = playerMap!;
   const selectedLight=(previewMap.svetla || []).find(l=>l.id===(lightPreview?.id || (sel.length===1 && sel[0].kind==="svetlo"?sel[0].id:null)));
+  const selectedRoute=sel.length===1&&sel[0].kind==="trasa"?map.trasy?.find(r=>r.id===sel[0].id):undefined;
   const commands: EditorCommand[] = [
     ...TOOLS.map(t => ({id:"tool-"+t.id,label:t.nazev,group:"Nástroje · "+t.key,icon:t.icon,run:() => setTool(t.id)})),
     ...TABS.map(([id,icon,label]) => ({id:"panel-"+id,label,group:"Panely",icon,run:() => {setTab(id);setPanelOpen(true);}})),
@@ -745,7 +781,7 @@ export default function EditorPage() {
 
           <div ref={wrapRef} className="me-canvas-wrap" onDragOver={e => {if(e.dataTransfer.types.includes("application/x-montelien-asset")){e.preventDefault();e.dataTransfer.dropEffect="copy";}}}
             onDrop={e => { const aid = e.dataTransfer.getData("application/x-montelien-asset"); if(!ASSETS[aid] && !stampById(aid)) return; e.preventDefault(); const [wx,wy] = toWorld(e); if(wx < 0 || wy < 0 || wx >= W || wy >= H) return; const object = makeObject(snap ? Math.round(wx/snap)*snap : wx,snap ? Math.round(wy/snap)*snap : wy,aid); push(m => {m.objekty=[...(m.objekty || []),object];}); rememberAsset(aid); setSel([{kind:"objekt",id:object.id}]); }}>
-            <MapAnimatedScene map={previewMap} view={V} dm={!playerPreview} terrain={layerVis.teren} objects={layerVis.objekty} lights={layerVis.svetla} illustration={!!(layerVis.obrazek && map.obrazek)} details={<>
+            <MapAnimatedScene map={previewMap} view={V} dm={!playerPreview} terrain={layerVis.teren} objects={layerVis.objekty} lights={layerVis.svetla} routes={layerVis.trasy} illustration={!!(layerVis.obrazek && map.obrazek)} details={<>
               {layerVis.mrizka && <MapGridLayer map={map} W={W} H={H} />}
               {layerVis.vyska && <MapElevationLayer map={map} />}
               {layerVis.kresby && <MapDrawingLayer map={previewMap} dm={!playerPreview} />}
@@ -760,7 +796,7 @@ export default function EditorPage() {
             <svg ref={svgRef} className={`me-canvas tool-${tool}`} onWheel={onWheel}
                  onPointerDown={onDown} onPointerMove={onMove} onPointerUp={onUp} onDoubleClick={onDbl}
                  onPointerCancel={() => { lightGesture.current=null;setLightPreview(null);strokeRef.current = null; placementRef.current = null; setPaintPreview(null); paintRef.current = false; if (transformStart.current) doc.setMap(transformStart.current); transformStart.current = null; moveRef.current = null; setHandleDrag(null); }}
-                 onPointerLeave={() => setCur(null)} onContextMenu={(e) => { e.preventDefault(); const [x,y] = toWorld(e); const hit = ops.pickAt(previewMap,x,y,true); if(hit?.kind === "objekt"){if(!sel.some(s => s.id === hit.id)) setSel([hit]);setContextMenu({x:Math.max(8,Math.min(window.innerWidth-240,e.clientX)),y:Math.max(8,Math.min(window.innerHeight-380,e.clientY))});} }}
+                 onPointerLeave={() => setCur(null)} onContextMenu={(e) => { e.preventDefault(); const [x,y] = toWorld(e); const hit = ops.pickAt({...previewMap,trasy:layerVis.trasy?previewMap.trasy:[]},x,y,true); if(hit?.kind === "objekt"||hit?.kind === "trasa"){if(!sel.some(s => s.id === hit.id)) setSel([hit]);setRoutePoint(null);setContextMenu({x:Math.max(8,Math.min(window.innerWidth-240,e.clientX)),y:Math.max(8,Math.min(window.innerHeight-380,e.clientY))});} }}
                  style={{ touchAction: "none", width: "100%", height: "100%", display: "block" }}>
               <g transform={`translate(${V.x},${V.y}) scale(${V.k})`}>
                 {layerVis.svetla && <MapAtmosphereLayer map={previewMap} />}
@@ -813,6 +849,8 @@ export default function EditorPage() {
                     </g>
                   );
                 })}
+                {tool==="trasa"&&routePoints.length>0&&<g opacity=".8"><MapRouteLayer map={{trasy:[{...routeSettings,pts:[...routePoints,...(cur?[[cur.wx??cur.x,cur.wy??cur.y] as [number,number]]:[])]}]}}/><polyline points={routePoints.map(p=>p.map(n=>n*PX).join(",")).join(" ")} fill="none" stroke="#ecc578" strokeWidth={1/V.k} strokeDasharray="4 4"/>{routePoints.map(([x,y],i)=><circle key={i} cx={x*PX} cy={y*PX} r={3/V.k} fill="#ecc578"/>)}</g>}
+                {selectedRoute&&layerVis.trasy&&tool==="select"&&<g data-route-handles={selectedRoute.id}><polyline points={selectedRoute.pts.map(p=>p.map(n=>n*PX).join(",")).join(" ")} fill="none" stroke="#e6be6a" strokeWidth={1/V.k} strokeDasharray="4 3" pointerEvents="none"/>{selectedRoute.pts.map(([x,y],i)=><circle key={i} data-route-point={i} aria-label={`Uzel trasy ${i+1}`} cx={x*PX} cy={y*PX} r={5/V.k} fill={routePoint===i?"#fff0ba":"#cc9b43"} stroke="#211e17" strokeWidth={1.5/V.k} style={{cursor:"grab"}} onPointerDown={e=>{if(e.button!==0)return;e.stopPropagation();e.preventDefault();setRoutePoint(i);routeDrag.current={id:selectedRoute.id,point:i};transformStart.current=structuredClone(map);svgRef.current?.setPointerCapture(e.pointerId);}}/>)}</g>}
                 {selectedLight && layerVis.svetla && lightHandlesEnabled(tool) && <LightHandles light={selectedLight} zoom={V.k} onBegin={(e,handle)=>{
                   if(e.button!==0)return;
                   e.preventDefault();e.stopPropagation();
@@ -872,10 +910,10 @@ export default function EditorPage() {
               stampId={stampId} ASSETS={ASSETS} onUpload={uploadAsset} variant={chosenVariant}
               onVariant={v => { setChosenVariant(v); setRandomVariants(false); }}
               onPick={(sid) => { setStampId(sid); setChosenVariant(0); rerollPlacement(); setTool("objekt"); }} />}
-            {tab === "vlastnosti" && (tool==="svetlo"?<LightInspector placement value={lightSettings} onChange={patch=>setLightSettings(l=>editedLight(l,patch))}/>:<PropertiesPanel map={map} selObj={sel.length === 1 ? sel[0] : null} push={push}
+            {tab === "vlastnosti" && (tool==="trasa"?<><RouteInspector value={routeSettings} onChange={p=>setRouteSettings(r=>({...r,...p}))}/><button className="me-btn" disabled={routePoints.length<2} onClick={finishRoute}>Dokončit trasu</button></>:selectedRoute?<RouteInspector value={selectedRoute} point={routePoint} onDeletePoint={deleteRoutePoint} onDelete={deleteSelection} onChange={p=>push(m=>{m.trasy=m.trasy?.map(r=>r.id===selectedRoute.id?{...r,...p}:r);})}/>:tool==="svetlo"?<LightInspector placement value={lightSettings} onChange={patch=>setLightSettings(l=>editedLight(l,patch))}/>:<PropertiesPanel map={map} selObj={sel.length === 1 ? sel[0] : null} push={push}
               objects={(map.objekty || []).filter(o => sel.some(s => s.kind === "objekt" && s.id === o.id))}
               assets={ASSETS} onVariant={changeVariants} onAction={runObjectAction}
-              onDelete={() => { if (sel.length) { push((m) => { for (const s of sel) { const n = s.kind === "objekt" ? "objekty" : s.kind === "kresba" ? "kresby" : s.kind === "stena" ? "steny" : s.kind === "svetlo" ? "svetla" : "poznamky"; (m as any)[n] = ((m as any)[n] || []).filter((o: any) => o.id !== s.id); } }); setSel([]); } }} />)}
+              onDelete={deleteSelection} />)}
             {tab === "generator" && <GeneratorPanel genId={genId} setGenId={setGenId} seed={genSeed} setSeed={setGenSeed}
               genPrev={genPrev} onPreview={() => { const g = GENERATORS.find((x) => x.id === genId)!; setGenPrev(g.fn(W, H, genSeed)); }}
               onApply={() => { push((m) => ops.applyGen(m, {...genPrev!,objekty:genPrev?.objekty?.map(o => ({
@@ -902,8 +940,8 @@ export default function EditorPage() {
       </div>
       {paletteOpen && <CommandPalette commands={commands} onClose={() => setPaletteOpen(false)} />}
       {helpOpen && <ShortcutHelp tools={TOOLS} onClose={() => setHelpOpen(false)} />}
-      {contextMenu && <><div className="me-menu-dismiss" onPointerDown={() => setContextMenu(null)} /><div className="me-object-menu" role="menu" aria-label="Akce objektu" style={{left:contextMenu.x,top:contextMenu.y}} onKeyDown={e => {if(e.key === "Escape") setContextMenu(null);if(e.key === "ArrowDown" || e.key === "ArrowUp"){e.preventDefault();const buttons=[...e.currentTarget.querySelectorAll("button")];const i=buttons.indexOf(document.activeElement as HTMLButtonElement);buttons[(i+(e.key === "ArrowDown" ? 1 : -1)+buttons.length)%buttons.length]?.focus();}}}>
-        <small>VÝBĚR · {sel.length}</small>{([["duplicate","Duplikovat",<Copy size={15} />],["rotate-left","Otočit −15°",<Undo2 size={15} />],["rotate-right","Otočit +15°",<Redo2 size={15} />],["flip","Překlopit",<Layers3 size={15} />],["front","Dopředu",<ArrowUp size={15} />],["back","Dozadu",<ArrowDown size={15} />]] as const).map(([action,label,icon],i) => <button key={action} autoFocus={i===0} role="menuitem" onClick={() => runObjectAction(action)}>{icon}{label}</button>)}<hr /><button role="menuitem" onClick={() => {changeVariants("next");setContextMenu(null);}}>Další varianta<kbd>A</kbd></button><button role="menuitem" onClick={() => {changeVariants("random");setContextMenu(null);}}>Náhodná varianta<kbd>⇧ A</kbd></button><hr /><button className="danger" role="menuitem" onClick={() => runObjectAction("delete")}><Trash2 size={15} /> Smazat<kbd>Del</kbd></button>
+      {contextMenu && <><div className="me-menu-dismiss" onPointerDown={() => setContextMenu(null)} /><div className="me-object-menu" role="menu" aria-label={sel.some(s=>s.kind==="trasa")?"Akce trasy":"Akce objektu"} style={{left:contextMenu.x,top:contextMenu.y}} onKeyDown={e => {if(e.key === "Escape") setContextMenu(null);if(e.key === "ArrowDown" || e.key === "ArrowUp"){e.preventDefault();const buttons=[...e.currentTarget.querySelectorAll("button")];const i=buttons.indexOf(document.activeElement as HTMLButtonElement);buttons[(i+(e.key === "ArrowDown" ? 1 : -1)+buttons.length)%buttons.length]?.focus();}}}>
+        <small>VÝBĚR · {sel.length}</small>{([["duplicate","Duplikovat",<Copy size={15} />],["rotate-left","Otočit −15°",<Undo2 size={15} />],["rotate-right","Otočit +15°",<Redo2 size={15} />],["flip","Překlopit",<Layers3 size={15} />],["front","Dopředu",<ArrowUp size={15} />],["back","Dozadu",<ArrowDown size={15} />]] as const).filter(([action])=>!sel.some(s=>s.kind==="trasa")||action==="duplicate").map(([action,label,icon],i) => <button key={action} autoFocus={i===0} role="menuitem" onClick={() => runObjectAction(action)}>{icon}{label}</button>)}{!sel.some(s=>s.kind==="trasa")&&<><hr /><button role="menuitem" onClick={() => {changeVariants("next");setContextMenu(null);}}>Další varianta<kbd>A</kbd></button><button role="menuitem" onClick={() => {changeVariants("random");setContextMenu(null);}}>Náhodná varianta<kbd>⇧ A</kbd></button></>}<hr /><button className="danger" role="menuitem" onClick={() => runObjectAction("delete")}><Trash2 size={15} /> Smazat<kbd>Del</kbd></button>
       </div></>}
 
       {noteDraft && (

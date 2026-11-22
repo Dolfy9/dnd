@@ -3,12 +3,13 @@ import { duplicateObjects } from "../tools/ops";
 
 export const TOOL_GROUPS = [
   ["Výběr", ["select"]], ["Terén", ["teren", "fill", "flood", "textura", "malba"]],
-  ["Stavby", ["mistnost", "polygon", "stena", "dvere", "interier"]],
+  ["Stavby", ["mistnost", "polygon", "stena", "dvere", "interier", "trasa"]],
   ["Obsah", ["objekt", "svetlo", "kresba", "vyska"]],
   ["Hra", ["start", "poznamka"]], ["Nástroje", ["guma", "kapatko"]],
 ] as const;
 
 export const TOOL_HINTS: Record<string, string> = {
+  trasa:"Klikáním kresli trasu. Enter / dvojklik dokončí, Esc zruší, Backspace odebere poslední bod. Alt vypne přichycení. Ve výběru Alt + klik na úsek vloží uzel.",
   select: "Klikni pro výběr, táhni pro přesun. Shift přidává do výběru.",
   teren: "Maluj průchodný terén nebo překážky tažením štětce.",
   fill: "Tažením vyplň obdélníkovou oblast terénem.", flood: "Vyplň souvislou oblast stejným terénem.",
@@ -68,7 +69,7 @@ export function playerPreviewMap(map: MapV2, enabled: boolean): MapV2 {
 }
 
 export function liveSelection<T extends {kind: string; id: string}>(map: MapV2, selection: T[]): T[] {
-  const items: Record<string, {id: string}[] | undefined> = {objekt:map.objekty,stena:map.steny,svetlo:map.svetla,kresba:map.kresby,poznamka:map.poznamky};
+  const items: Record<string, {id: string}[] | undefined> = {trasa:map.trasy,objekt:map.objekty,stena:map.steny,svetlo:map.svetla,kresba:map.kresby,poznamka:map.poznamky};
   const next = selection.filter(s => items[s.kind]?.some(item => item.id === s.id));
   return next.length === selection.length ? selection : next;
 }

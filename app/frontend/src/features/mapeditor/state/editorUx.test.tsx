@@ -95,7 +95,8 @@ describe("editor productivity", () => {
   });
   it("describes every grouped tool exactly once", () => {
     const ids = TOOL_GROUPS.flatMap(([,ids]) => [...ids]);
-    expect(new Set(ids).size).toBe(19);
+    expect(new Set(ids).size).toBe(20);
+    expect(ids).toContain("trasa");
     expect(ids.every(id => !!TOOL_HINTS[id])).toBe(true);
   });
   it("edits selected objects only, retains variants and has no-op-safe alignment", () => {

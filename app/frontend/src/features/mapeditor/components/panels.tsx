@@ -74,7 +74,7 @@ export const TABS = [["knihovna", <Library size={16} />, "Knihovna"], ["vlastnos
   ["vrstvy", <Layers size={16} />, "Vrstvy"], ["mapa", <MapIcon size={16} />, "Mapa"], ["generator", <Wand2 size={16} />, "Generátor"]] as const;
 export type TabId = typeof TABS[number][0];
 export const LAYERS: [string, string][] = [["obrazek", "Podklad"], ["textury", "Textury"], ["teren", "Terén"],
-  ["malba", "Volná malba"], ["vyska", "Výška"], ["steny", "Stěny"], ["objekty", "Objekty"], ["kresby", "Kresby"], ["svetla", "Světla a atmosféra"],
+  ["malba", "Volná malba"], ["trasy","Trasy"], ["vyska", "Výška"], ["steny", "Stěny"], ["objekty", "Objekty"], ["kresby", "Kresby"], ["svetla", "Světla a atmosféra"],
   ["poznamky", "Poznámky"], ["mrizka", "Mřížka"], ["starty", "Starty"]];
 export const WALL_TYPS: MapWall["typ"][] = ["wall", "door", "window", "secret", "half", "curtain"];
 export const WALL_NAZVY: Record<string, string> = { wall: "Zeď", door: "Dveře", window: "Okno", secret: "Tajné", half: "Nízká", curtain: "Curtina" };
@@ -83,6 +83,7 @@ export function LayersPanel({ map, layerVis, setLayerVis }: {
   map: MapV2; layerVis: Record<string, boolean>; setLayerVis: (f: (s: Record<string, boolean>) => Record<string, boolean>) => void;
 }) {
   const counts: Record<string, number | string> = {
+    trasy:map.trasy?.length||0,
     steny: (map.steny || []).length, objekty: (map.objekty || []).length, kresby: (map.kresby || []).length,
     svetla: (map.svetla || []).length, poznamky: (map.poznamky || []).length, textury: Object.keys(map.textury || {}).length,
   };

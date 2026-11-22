@@ -6,10 +6,11 @@ import {lightBlockers} from "../model/lightGeometry";
 import {rasterizeAtmosphere} from "../model/atmosphereRaster";
 import type {AssetEntry} from "../../mapeditor/assets/manifest";
 import {visualLights} from "./MapAtmoLayers";
+import {mapWalls} from "../model/mapRoutes";
 
 const plans=new Map<string,ContactShadowPlan>();
 export function contactShadowPlan(map:MapV2,assets:Record<string,AssetEntry>,doors?:Record<string,boolean>) {
-  const lights=visualLights(map,assets).map(l=>({...l,bright:l.bright/24*5})),walls=lightBlockers(map.steny,doors);
+  const lights=visualLights(map,assets).map(l=>({...l,bright:l.bright/24*5})),walls=lightBlockers(mapWalls(map),doors);
   const objects=(map.objekty || []).filter(o=>!o.dmOnly && o.stin!==false && !o.asset.startsWith("d-") && (o.z ?? assets[o.asset]?.z ?? 0)>=0 && [o.x,o.y,o.w,o.h].every(Number.isFinite));
   const key=JSON.stringify([lights,walls,objects.map(o=>[o.id,o.x,o.y,o.w,o.h,o.rot])]),existing=plans.get(key);
   if(existing)return existing;

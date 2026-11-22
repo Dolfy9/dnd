@@ -7,6 +7,7 @@ import { MapObjectLayer, useMapManifests } from "./MapV2Layers";
 import { animationPhase, FX, resolveAnimation } from "./MapMotion";
 import { MapAnimatedLights } from "./MapAnimatedLights";
 import {contactShadowPlan,MapContactShadows} from "./MapContactShadows";
+import {MapRouteLayer} from "./MapRouteLayer";
 
 const water = (id: string) => /voda|melcina|more|vlny/.test(id);
 export function waterMask(map: MapV2) {
@@ -24,9 +25,9 @@ export function waterMask(map: MapV2) {
   return "url(\"data:image/svg+xml," + encodeURIComponent(`<svg xmlns="http://www.w3.org/2000/svg" width="${W}" height="${H}"><mask id="m"><rect width="100%" height="100%" fill="black"/>${shapes.join("")}</mask><rect width="100%" height="100%" fill="white" mask="url(#m)"/></svg>`) + "\")";
 }
 
-export const MapAnimatedScene = memo(function MapAnimatedScene({ map, view, px = 24, children, details, dm, terrain = true, objects = true, lights = true, illustration = false, overrides, doors }: {
+export const MapAnimatedScene = memo(function MapAnimatedScene({ map, view, px = 24, children, details, dm, terrain = true, objects = true, lights = true, routes = true, illustration = false, overrides, doors }: {
   map: MapV2; view: {x:number;y:number;k:number}; px?: number; children: ReactNode; details?: ReactNode; dm?: boolean;
-  terrain?: boolean; objects?: boolean; lights?: boolean; illustration?: boolean; overrides?: StavBoje["teren"]; doors?:Record<string,boolean>;
+  terrain?: boolean; objects?: boolean; lights?: boolean; routes?:boolean; illustration?: boolean; overrides?: StavBoje["teren"]; doors?:Record<string,boolean>;
 }) {
   const { assets } = useMapManifests();
   const sceneRef=useRef<HTMLDivElement>(null);
@@ -55,6 +56,7 @@ export const MapAnimatedScene = memo(function MapAnimatedScene({ map, view, px =
       const size = (override ?? c) === "T" ? 1.3 : 1;
       return sprite(x+","+y,assetUrl(asset.src),anim,x+.5,y+.5,size,size);
     }))}
+    {routes && <svg className="map-scene-static" width={W} height={H}><MapRouteLayer map={map}/></svg>}
     {objects && <svg className="map-scene-static" width={W} height={H}><MapContactShadows plan={contactPlan} width={W} height={H}/></svg>}
     {details && <svg className="map-scene-static" width={W} height={H}>{details}</svg>}
     {objects && [...(map.objekty || [])].sort((a,b) => (a.z ?? assets[a.asset]?.z ?? 0)-(b.z ?? assets[b.asset]?.z ?? 0)).map(o => {

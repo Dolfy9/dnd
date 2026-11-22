@@ -3,6 +3,8 @@
    `migrateMap()` jen doplní výchozí struktury, mechanika se nemění. */
 import type { BattleMapData } from "../types";
 import { normalizeVariant, type VariantAsset } from "./assetVariants";
+import { normalizeRoutes, routeContains, type MapRoute } from "./mapRoutes";
+export type { MapRoute } from "./mapRoutes";
 
 /* ---------- v2 rozšíření ---------- */
 
@@ -103,6 +105,7 @@ export interface MapInterior { id: string; poly: [number, number][] }
 
 /** Plná v2 mapa = BattleMapData + volitelná pole. */
 export interface MapV2 extends BattleMapData {
+  trasy?:MapRoute[];
   interiery?: MapInterior[];
   pocasi?: MapWeather;
   malba?: MapPaintStroke[];
@@ -133,6 +136,7 @@ export const wallUid = () => "w" + Math.random().toString(36).slice(2, 9);
 /** Převede libovolný vstup na MapV2 s vyplněnými defaulty. Staré mapy projdou beze změny mechaniky. */
 export function migrateMap(m: BattleMapData | MapV2 | any, assets?: Record<string, VariantAsset>): MapV2 {
   const out: MapV2 = { ...(m as MapV2) };
+  if(out.trasy!==undefined)out.trasy=normalizeRoutes(out.trasy);
   if (out.pocasi !== undefined) out.pocasi = normalizeWeather(out.pocasi);
   if (!out.mrizka) out.mrizka = ["...."];
   const finite = (v: unknown, fallback: number, min: number, max: number) =>
@@ -334,6 +338,10 @@ export function cellInfo(map: MapV2, x: number, y: number, teren?: Record<string
   const objs = objectsAt(map, x, y);
   let cost = def.cost, cover = def.cover || 0, difficult = !!def.difficult, blocksMove = !def.cost;
   let blocksSight = !!def.blocksSight;
+  for(const r of map.trasy||[])if(routeContains(r,x+.5,y+.5)){
+    if(r.druh==="plot"){blocksMove=true;blocksSight=true;}
+    if(r.druh==="zidka")cover=Math.max(cover,2);
+  }
   for (const o of objs) {
     if (o.blocks) blocksMove = true;
     if (o.cover) cover = Math.max(cover, o.cover);
