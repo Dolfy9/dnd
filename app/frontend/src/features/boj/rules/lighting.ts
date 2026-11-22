@@ -4,7 +4,7 @@
 import type { BattleMapData, LightSource, StavBoje, Token, Zone } from "../types";
 import { cellsOf, gapFt } from "./grid";
 import { coverOf } from "./los";
-import { edgeBlocksSight, wallIndex } from "../model/mapV2";
+import { edgeBlocksSight, wallIndex, crossedFreeWalls, wallBlocksSight } from "../model/mapV2";
 import { hasCond, isIncap } from "./conditions";
 
 export type LightLevel = "bright" | "dim" | "dark";
@@ -77,12 +77,13 @@ export function lightAt(S: StavBoje, map: BattleMapData, x: number, y: number): 
 const idxOr = (i: Map<string, any>) => i;
 /** Zjednodušená kontrola, zda přímka A(x,y)→B(x,y) kříží zdi blokující výhled (po buňkách). */
 export function sightBlocked(wIdx: Map<string, import("../model/mapV2").MapWall>, ax: number, ay: number, bx: number, by: number, doors?: Record<string, boolean>): boolean {
+  if (crossedFreeWalls(wIdx, [ax, ay], [bx, by]).some(w => wallBlocksSight(w, doors))) return true;
   const n = Math.max(2, Math.ceil(Math.hypot(bx - ax, by - ay) * 4));
   let px = Math.floor(ax), py = Math.floor(ay);
   for (let i = 1; i <= n; i++) {
     const cx = Math.floor(ax + (bx - ax) * i / n), cy = Math.floor(ay + (by - ay) * i / n);
     if (cx === px && cy === py) continue;
-    if (edgeBlocksSight(wIdx, px, py, cx, cy, doors)) return true;
+    if (edgeBlocksSight(wIdx, px, py, cx, cy, doors, true)) return true;
     px = cx; py = cy;
   }
   return false;

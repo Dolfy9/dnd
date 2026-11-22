@@ -5,6 +5,21 @@ import type { GenOut } from "../generators/generators";
 
 export const k2 = (x: number, y: number) => `${x},${y}`;
 
+export function rectanglePoints(a: [number, number], b: [number, number], angle = 0): [number, number][] {
+  const cx = (a[0] + b[0]) / 2, cy = (a[1] + b[1]) / 2, r = angle * Math.PI / 180;
+  return [a, [b[0], a[1]], b, [a[0], b[1]]].map(([x, y]) =>
+    [cx + (x - cx) * Math.cos(r) - (y - cy) * Math.sin(r), cy + (x - cx) * Math.sin(r) + (y - cy) * Math.cos(r)]);
+}
+
+export function roomPolygon(m: MapV2, points: [number, number][], tex?: string, angle = 0) {
+  const p = points.filter((v, i) => !i || Math.hypot(v[0] - points[i - 1][0], v[1] - points[i - 1][1]) > .001);
+  if (p.length < 3 || Math.abs(p.reduce((sum, v, i) => {
+    const next = p[(i + 1) % p.length]; return sum + v[0] * next[1] - next[0] * v[1];
+  }, 0)) < .001) return;
+  wallChain(m, p, "wall", false, true);
+  if (tex) paintStroke(m, { id: wallUid(), t: tex, b: .25, o: 1, h: 1, r: angle, poly: true, p });
+}
+
 export function appendPaintPoint(points: [number, number][], point: [number, number], spacing = .05) {
   const last = points[points.length - 1];
   if (!last || Math.hypot(last[0] - point[0], last[1] - point[1]) >= spacing) points.push(point);
@@ -23,8 +38,17 @@ export function paintStroke(m: MapV2, stroke: MapPaintStroke, erase = false) {
   if (!stroke.p.length) return;
   if (!erase) { m.malba = [...(m.malba || []), stroke]; return; }
   const segments = (p: [number, number][]) => p.map((v, i) => [p[Math.max(0, i - 1)], v] as const);
-  m.malba = (m.malba || []).filter(s => !segments(s.p).some(([a, b]) =>
-    segments(stroke.p).some(([c, d]) => segmentDistance(a, b, c, d) <= (s.b + stroke.b) / 2)));
+  const inside = ([x,y]: [number, number], p: [number,number][]) => {
+    let hit = false;
+    for (let i = 0, j = p.length-1; i < p.length; j = i++) {
+      const [ax,ay] = p[i], [bx,by] = p[j];
+      if ((ay > y) !== (by > y) && x < (bx-ax)*(y-ay)/(by-ay)+ax) hit = !hit;
+    }
+    return hit;
+  };
+  m.malba = (m.malba || []).filter(s => !(s.poly && stroke.p.some(p => inside(p, s.p))) &&
+    !segments(s.poly ? [...s.p,s.p[0]] : s.p).some(([a, b]) =>
+      segments(stroke.p).some(([c, d]) => segmentDistance(a, b, c, d) <= ((s.poly ? 0 : s.b) + stroke.b) / 2)));
 }
 
 export function pointToSeg(px: number, py: number, a: [number, number], b: [number, number]) {
@@ -120,9 +144,13 @@ export function applyGen(m: MapV2, g: GenOut) {
 }
 
 /** Hit-test prvky v bodě (buňky) pro select nástroj. */
-export function pickAt(m: MapV2, cx: number, cy: number) {
-  const px = cx + .5, py = cy + .5;
-  const o = (m.objekty || []).find((o) => Math.abs(o.x - px) < Math.max(o.w, 1) / 2 && Math.abs(o.y - py) < Math.max(o.h, 1) / 2);
+export function pickAt(m: MapV2, cx: number, cy: number, exact = false) {
+  const px = cx + (exact ? 0 : .5), py = cy + (exact ? 0 : .5);
+  const o = [...(m.objekty || [])].reverse().find((o) => {
+    const r = (o.rot || 0) * Math.PI / 180, dx = px - o.x, dy = py - o.y;
+    return Math.abs(dx * Math.cos(r) + dy * Math.sin(r)) <= o.w / 2 &&
+      Math.abs(-dx * Math.sin(r) + dy * Math.cos(r)) <= o.h / 2;
+  });
   if (o) return { kind: "objekt" as const, id: o.id };
   const n = (m.poznamky || []).find((n) => Math.hypot(n.x - px, n.y - py) < .5);
   if (n) return { kind: "poznamka" as const, id: n.id };

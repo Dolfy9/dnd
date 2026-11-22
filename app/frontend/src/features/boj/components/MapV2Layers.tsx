@@ -103,7 +103,7 @@ export const MapWallLayer = memo(function MapWallLayer({ map, doors, onDoor, dm,
             <line x1={x1} y1={y1} x2={x2} y2={y2} stroke={st.color} strokeWidth={st.w}
                   strokeDasharray={st.dash} strokeLinecap="square" opacity={w.typ === "curtain" ? .75 : 1} />
             {w.typ === "door" && (
-              <g transform={`translate(${mx},${my}) rotate(${x1 === x2 ? 90 : 0})`}>
+              <g transform={`translate(${mx},${my}) rotate(${Math.atan2(y2-y1,x2-x1)*180/Math.PI})`}>
                 {open && <path d="M0 0 A9 9 0 0 1 8.5 -3" fill="none" stroke={st.color} strokeWidth={.9} opacity={.8} />}
                 <rect x={-4.5} y={-1.5} width={9} height={3} rx={1}
                       fill={open ? "#c9b489" : "#6b4f30"} stroke="#292524" strokeWidth={.8}

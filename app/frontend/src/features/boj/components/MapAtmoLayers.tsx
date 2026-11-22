@@ -18,17 +18,17 @@ export const MapPaintLayer = memo(function MapPaintLayer({ map, preview }: { map
       if (!t || !s.p.length) return null;
       const id = uid + "-" + i, blur = (1 - s.h) * s.b * PX * .18;
       const d = s.p.map(([x, y], j) => `${j ? "L" : "M"}${x * PX},${y * PX}`).join(" ")
-        + (s.p.length === 1 ? "l.001,0" : "");
+        + (s.poly ? "Z" : s.p.length === 1 ? "l.001,0" : "");
       return <g key={s.id}>
         <defs>
-          <pattern id={id + "tex"} width={t.cells * PX} height={t.cells * PX} patternUnits="userSpaceOnUse">
+          <pattern id={id + "tex"} width={t.cells * PX} height={t.cells * PX} patternUnits="userSpaceOnUse" patternTransform={s.r ? `rotate(${s.r})` : undefined}>
             <image href={assetUrl(t.src)} width={t.cells * PX} height={t.cells * PX} />
           </pattern>
           <filter id={id + "blur"} filterUnits="userSpaceOnUse" x={-PX * 8} y={-PX * 8} width={W + PX * 16} height={H + PX * 16} colorInterpolationFilters="sRGB">
             <feGaussianBlur stdDeviation={blur} />
           </filter>
           <mask id={id + "mask"} maskUnits="userSpaceOnUse" x={0} y={0} width={W} height={H}>
-            <path d={d} fill="none" stroke="white" strokeWidth={s.b * PX} strokeLinecap="round" strokeLinejoin="round"
+            <path d={d} fill={s.poly ? "white" : "none"} stroke={s.poly ? "none" : "white"} strokeWidth={s.b * PX} strokeLinecap="round" strokeLinejoin="round"
               filter={blur ? `url(#${id}blur)` : undefined} />
           </mask>
         </defs>

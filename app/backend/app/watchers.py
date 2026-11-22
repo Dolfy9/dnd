@@ -45,7 +45,7 @@ class _Handler(FileSystemEventHandler):
         return None
 
     def on_any_event(self, event):
-        if event.is_directory:
+        if event.is_directory or event.event_type not in {"modified", "created", "moved", "deleted"}:
             return
         for src in ({event.src_path} | ({getattr(event, "dest_path", "")} if getattr(event, "dest_path", "") else set())):
             rel = self._accept(src)

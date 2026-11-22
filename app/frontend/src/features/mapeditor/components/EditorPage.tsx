@@ -28,7 +28,7 @@ import * as ops from "../tools/ops";
 import { TexturePicker, LightColors, TABS, LAYERS, WALL_TYPS, WALL_NAZVY, LayersPanel, LibraryPanel, PropertiesPanel, GeneratorPanel, MapPanel, type TabId } from "./panels";
 import "../editor.css";
 
-type Tool = "select" | "teren" | "fill" | "flood" | "textura" | "malba" | "mistnost" | "stena" | "dvere"
+type Tool = "select" | "teren" | "fill" | "flood" | "textura" | "malba" | "mistnost" | "polygon" | "stena" | "dvere"
   | "objekt" | "kresba" | "vyska" | "svetlo" | "start" | "poznamka" | "guma" | "kapatko";
 
 const TOOLS: { id: Tool; icon: React.ReactElement; nazev: string; key: string }[] = [
@@ -39,6 +39,7 @@ const TOOLS: { id: Tool; icon: React.ReactElement; nazev: string; key: string }[
   { id: "textura", icon: <Layers3 size={18} />, nazev: "Textura", key: "X" },
   { id: "malba", icon: <Brush size={18} />, nazev: "Malovat texturou", key: "K" },
   { id: "mistnost", icon: <DoorOpen size={18} />, nazev: "Místnost", key: "R" },
+  { id: "polygon", icon: <Spline size={18} />, nazev: "Polygonální místnost", key: "J" },
   { id: "stena", icon: <Spline size={18} />, nazev: "Stěny", key: "W" },
   { id: "dvere", icon: <DoorOpen size={18} />, nazev: "Dveře / okna", key: "D" },
   { id: "objekt", icon: <Package size={18} />, nazev: "Objekt", key: "O" },
@@ -72,6 +73,13 @@ export default function EditorPage() {
   const [paintOpacity, setPaintOpacity] = useState(.85);
   const [paintHardness, setPaintHardness] = useState(.4);
   const [paintErase, setPaintErase] = useState(false);
+  const [paintAngle, setPaintAngle] = useState(0);
+  const [paintRandom, setPaintRandom] = useState(false);
+  const [randomRotation, setRandomRotation] = useState(false);
+  const [shapeAngle, setShapeAngle] = useState(0);
+  const [floorFill, setFloorFill] = useState(true);
+  const [roomPoints, setRoomPoints] = useState<[number, number][]>([]);
+  const transformStart = useRef<MapV2 | null>(null);
   const [paintPreview, setPaintPreview] = useState<MapPaintStroke | null>(null);
   const strokeRef = useRef<{ stroke: MapPaintStroke; erase: boolean } | null>(null);
   const [brushSize, setBrushSize] = useState(1);
@@ -138,6 +146,13 @@ export default function EditorPage() {
     window.addEventListener("resize", onR);
     return () => window.removeEventListener("resize", onR);
   }, [fit]);
+  useEffect(() => {
+    const svg = svgRef.current;
+    if (!svg) return;
+    const preventZoom = (e: WheelEvent) => { if (e.ctrlKey) e.preventDefault(); };
+    svg.addEventListener("wheel", preventZoom, { passive: false });
+    return () => svg.removeEventListener("wheel", preventZoom);
+  }, [map !== null]);
 
   const zoomAt = useCallback((f: number, cx?: number, cy?: number) => {
     userZoomRef.current = true;
@@ -156,10 +171,10 @@ export default function EditorPage() {
     const [wx, wy] = toWorld(e);
     return [Math.floor(wx), Math.floor(wy)];
   };
-  const snapPt = (e: { clientX: number; clientY: number }): [number, number] => {
+  const snapPt = (e: { clientX: number; clientY: number; altKey?: boolean }): [number, number] => {
     const [wx, wy] = toWorld(e);
     const s = snap || 1;
-    return snap === 0 ? [wx, wy] : [Math.round(wx / s) * s, Math.round(wy / s) * s];
+    return snap === 0 || e.altKey ? [wx, wy] : [Math.round(wx / s) * s, Math.round(wy / s) * s];
   };
 
   /* ---------- IO ---------- */
@@ -213,7 +228,12 @@ export default function EditorPage() {
       if (e.ctrlKey && e.key.toLowerCase() === "z") { e.preventDefault(); e.shiftKey ? doc.redo() : doc.undo(); return; }
       if (e.ctrlKey && e.key.toLowerCase() === "y") { e.preventDefault(); doc.redo(); return; }
       if (e.ctrlKey && e.key.toLowerCase() === "s") { e.preventDefault(); doc.save(); return; }
-      if (e.key === "Escape") { setWallDraft([]); setDragPt(null); setMarquee(null); setSel([]); setCalib(null); return; }
+      if (e.key === "Escape") { setWallDraft([]); setRoomPoints([]); setDragPt(null); setMarquee(null); setSel([]); setCalib(null); return; }
+      if (!e.ctrlKey && sel.length === 1 && sel[0].kind === "objekt" && ["q", "e"].includes(e.key.toLowerCase())) {
+        e.preventDefault();
+        push(m => { const o = m.objekty!.find(o => o.id === sel[0].id)!; o.rot = (o.rot || 0) + (e.key.toLowerCase() === "q" ? -1 : 1) * (e.altKey ? 1 : 15); });
+        return;
+      }
       if ((e.key === "Delete" || e.key === "Backspace") && sel.length) {
         push((m) => { for (const s of sel) { const n = s.kind === "objekt" ? "objekty" : s.kind === "kresba" ? "kresby" : s.kind === "stena" ? "steny" : s.kind === "svetlo" ? "svetla" : "poznamky"; (m as any)[n] = ((m as any)[n] || []).filter((o: any) => o.id !== s.id); } });
         setSel([]); return;
@@ -243,7 +263,7 @@ export default function EditorPage() {
     const [cx, cy] = cellOf(e);
     if (tool === "malba") {
       e.preventDefault(); e.currentTarget.setPointerCapture(e.pointerId);
-      const stroke: MapPaintStroke = { id: wallUid(), t: brushTex, b: paintSize, o: paintOpacity, h: paintHardness, p: [toWorld(e)] };
+      const stroke: MapPaintStroke = { id: wallUid(), t: brushTex, b: paintSize, o: paintOpacity, h: paintHardness, r: paintRandom ? Math.random() * 360 : paintAngle, p: [toWorld(e)] };
       strokeRef.current = { stroke, erase: paintErase || e.altKey };
       setPaintPreview(strokeRef.current.erase ? null : stroke);
       return;
@@ -265,7 +285,16 @@ export default function EditorPage() {
       case "teren": push((m) => ops.brushCells(cx, cy, brushSize, brushShape).forEach(([x, y]) => ops.setTile(m, x, y, brushTile))); break;
       case "textura": push((m) => { m.textury = { ...(m.textury || {}) }; ops.brushCells(cx, cy, brushSize, brushShape).forEach(([x, y]) => { m.textury![k2(x, y)] = brushTex; }); }); break;
       case "flood": push((m) => ops.floodFill(m, cx, cy, brushTile)); break;
-      case "fill": case "mistnost": setDragPt({ a: [cx, cy], b: [cx, cy] }); break;
+      case "fill": setDragPt({ a: [cx, cy], b: [cx, cy] }); break;
+      case "mistnost": { const p = snapPt(e); setDragPt({ a: p, b: p }); break; }
+      case "polygon": {
+        if (e.detail > 1) break;
+        const p = snapPt(e);
+        if (roomPoints.length >= 3 && Math.hypot(p[0] - roomPoints[0][0], p[1] - roomPoints[0][1]) < .25) {
+          push(m => ops.roomPolygon(m, roomPoints, floorFill ? brushTex : undefined, shapeAngle)); setRoomPoints([]);
+        } else setRoomPoints(points => [...points, p]);
+        break;
+      }
       case "stena": {
         const c = snapPt(e);
         setWallDraft((d) => {
@@ -277,7 +306,8 @@ export default function EditorPage() {
       }
       case "dvere": {
         push((m) => {
-          const i = (m.steny || []).findIndex((w) => ops.pointToSeg(cx + .5, cy + .5, w.a, w.b) < .4);
+          const [wx, wy] = toWorld(e);
+          const i = (m.steny || []).findIndex((w) => ops.pointToSeg(wx, wy, w.a, w.b) < .4);
           if (i >= 0) {
             const order: MapWall["typ"][] = ["wall", "door", "window", "half", "curtain", "secret"];
             m.steny![i].typ = order[(order.indexOf(m.steny![i].typ) + 1) % order.length];
@@ -295,6 +325,7 @@ export default function EditorPage() {
           m.objekty = [...(m.objekty || []), {
             id: "o" + Date.now() % 1e6 + Math.floor(Math.random() * 99), asset: stampId,
             x: fx, y: fy, w: def?.w || 1, h: def?.h || 1, blocks: def?.blocks, cover: def?.cover,
+            rot: randomRotation ? Math.random() * 360 : 0,
             difficult: def?.difficult, light: def?.light,
           }];
         });
@@ -319,11 +350,14 @@ export default function EditorPage() {
       }
       case "select": {
         if (!map) break;
-        const hit = ops.pickAt(map, cx, cy);
+        const [wx, wy] = toWorld(e);
+        const hit = ops.pickAt(map, wx, wy, true);
         if (hit) {
           const ns = e.shiftKey ? (sel.some((s) => s.id === hit.id) ? sel.filter((s) => s.id !== hit.id) : [...sel, hit]) : [hit];
           setSel(ns);
-          moveRef.current = { anchor: [cx, cy] };
+          transformStart.current = structuredClone(map);
+          e.currentTarget.setPointerCapture(e.pointerId);
+          moveRef.current = { anchor: snapPt(e) };
         } else {
           setSel([]);
           setMarquee({ a: [cx, cy], b: [cx, cy] });
@@ -347,20 +381,30 @@ export default function EditorPage() {
     if (handleDrag && sel.length === 1 && sel[0].kind === "objekt") {
       const [wx, wy] = toWorld(e);
       live((m) => {
+        m.objekty = m.objekty?.map(o => ({ ...o }));
         const o = m.objekty!.find((o) => o.id === sel[0].id)!;
-        if (handleDrag === "rot") o.rot = Math.round(Math.atan2(wy - o.y, wx - o.x) * 180 / Math.PI + 90);
-        else { o.w = Math.max(.25, Math.abs(wx - o.x) * 2); o.h = Math.max(.25, Math.abs(wy - o.y) * 2); }
+        if (handleDrag === "rot") {
+          const angle = Math.atan2(wy - o.y, wx - o.x) * 180 / Math.PI + 90;
+          o.rot = e.shiftKey ? Math.round(angle / 15) * 15 : angle;
+        } else {
+          const r = (o.rot || 0) * Math.PI / 180, dx = wx - o.x, dy = wy - o.y;
+          const w = Math.max(.25, Math.abs(dx * Math.cos(r) + dy * Math.sin(r)) * 2);
+          const h = Math.max(.25, Math.abs(-dx * Math.sin(r) + dy * Math.cos(r)) * 2);
+          const original = transformStart.current!.objekty!.find(v => v.id === o.id)!;
+          const scale = Math.max(w / original.w, h / original.h);
+          o.w = e.shiftKey ? original.w * scale : w; o.h = e.shiftKey ? original.h * scale : h;
+        }
       });
       return;
     }
     if (moveRef.current && sel.length && map) {
       const [ax, ay] = moveRef.current.anchor;
-      const dx = cx - ax, dy = cy - ay;
-      if (dx || dy) { live((m) => ops.moveSel(m, sel, dx, dy)); moveRef.current = { anchor: [cx, cy] }; }
+      const p = snapPt(e), dx = p[0] - ax, dy = p[1] - ay;
+      if (dx || dy) { live((m) => { Object.assign(m, structuredClone(m)); ops.moveSel(m, sel, dx, dy); }); moveRef.current = { anchor: p }; }
       return;
     }
     if (marquee) { setMarquee({ a: marquee.a, b: [cx, cy] }); return; }
-    if (dragPt) setDragPt({ a: dragPt.a, b: tool === "kresba" ? snapPt(e) : [cx, cy] });
+    if (dragPt) setDragPt({ a: dragPt.a, b: tool === "kresba" || tool === "mistnost" ? snapPt(e) : [cx, cy] });
     if (!paintRef.current) return;
     if (tool === "teren") push((m) => ops.brushCells(cx, cy, brushSize, brushShape).forEach(([x, y]) => ops.setTile(m, x, y, brushTile)));
     else if (tool === "textura") push((m) => { m.textury = { ...(m.textury || {}) }; ops.brushCells(cx, cy, brushSize, brushShape).forEach(([x, y]) => { m.textury![k2(x, y)] = brushTex; }); });
@@ -377,8 +421,17 @@ export default function EditorPage() {
       return;
     }
     panRef.current = null; setPanning(false); paintRef.current = false;
-    if (moveRef.current) { moveRef.current = null; return; }
-    if (handleDrag) { setHandleDrag(null); push(() => {}); return; }
+    if (moveRef.current || handleDrag) {
+      moveRef.current = null; setHandleDrag(null);
+      const start = transformStart.current; transformStart.current = null;
+      if (start) {
+        const final = structuredClone(doc.mapRef.current!);
+        doc.setMap(start);
+        if (JSON.stringify(start) !== JSON.stringify(final)) push(m => Object.assign(m, final));
+      }
+      if (e.currentTarget.hasPointerCapture(e.pointerId)) e.currentTarget.releasePointerCapture(e.pointerId);
+      return;
+    }
     if (marquee) {
       const s = ops.pickInRect(map!, marquee.a, marquee.b);
       setSel(s); setMarquee(null); return;
@@ -386,16 +439,23 @@ export default function EditorPage() {
     if (dragPt) {
       const { a, b } = dragPt; setDragPt(null);
       if (tool === "fill") push((m) => ops.fillRect(m, a, b, brushTile));
-      else if (tool === "mistnost") push((m) => ops.roomRect(m, a, b, brushTex));
+      else if (tool === "mistnost") push((m) => ops.roomPolygon(m, ops.rectanglePoints(a, b, shapeAngle), floorFill ? brushTex : undefined, shapeAngle));
       else if (tool === "kresba") {
-        const pts = drawKind === "free" ? freePts : [a, b];
-        if (pts.length >= 2) push((m) => { m.kresby = [...(m.kresby || []), { id: "k" + Date.now() % 1e6, kind: drawKind, pts, stroke: drawColor, fill: drawFill || undefined, width: drawW, dmOnly: drawDm }]; });
+        const pts = drawKind === "free" ? freePts : drawKind === "rect" ? ops.rectanglePoints(a, b, shapeAngle) : [a, b];
+        if (pts.length >= 2) push((m) => { m.kresby = [...(m.kresby || []), { id: "k" + Date.now() % 1e6, kind: drawKind === "rect" ? "poly" : drawKind, pts, stroke: drawColor, fill: drawFill || undefined, width: drawW, dmOnly: drawDm }]; });
         setFreePts([]);
       }
     }
   };
-  const onDbl = () => { if (tool === "stena" && wallDraft.length > 1) { push((m) => ops.wallChain(m, wallDraft, wallTyp, wallLocked, false)); setWallDraft([]); } };
+  const onDbl = () => {
+    if (tool === "polygon" && roomPoints.length >= 3) { push(m => ops.roomPolygon(m, roomPoints, floorFill ? brushTex : undefined, shapeAngle)); setRoomPoints([]); }
+    if (tool === "stena") setWallDraft([]);
+  };
   const onWheel = (e: React.WheelEvent) => {
+    if (e.ctrlKey && sel.length === 1 && sel[0].kind === "objekt") {
+      push(m => { const o = m.objekty!.find(o => o.id === sel[0].id)!; o.rot = (o.rot || 0) + (e.deltaY < 0 ? 15 : -15); });
+      return;
+    }
     const r = svgRef.current!.getBoundingClientRect();
     zoomAt(e.deltaY < 0 ? 1.15 : 1 / 1.15, e.clientX - r.left, e.clientY - r.top);
   };
@@ -456,14 +516,19 @@ export default function EditorPage() {
               <label>Průměr {paintSize}<input aria-label="Průměr štětce" type="range" min=".25" max="8" step=".25" value={paintSize} onChange={e => setPaintSize(+e.target.value)} /></label>
               <label>Krytí {Math.round(paintOpacity * 100)} %<input aria-label="Krytí malby" type="range" min="0" max="1" step=".05" value={paintOpacity} onChange={e => setPaintOpacity(+e.target.value)} /></label>
               <label>Tvrdost {Math.round(paintHardness * 100)} %<input aria-label="Tvrdost štětce" type="range" min="0" max="1" step=".05" value={paintHardness} onChange={e => setPaintHardness(+e.target.value)} /></label>
+              <label>Natočení {paintAngle}°<input aria-label="Natočení textury" type="range" min="-180" max="180" step="1" value={paintAngle} onChange={e => setPaintAngle(+e.target.value)} /></label>
+              <label><input type="checkbox" checked={paintRandom} onChange={e => setPaintRandom(e.target.checked)} /> Náhodně</label>
               <button className={`me-btn sm ${paintErase ? "on" : ""}`} onClick={() => setPaintErase(!paintErase)}>Guma tahů</button>
               <span className="me-ctx-hint">Alt: mazat celé tahy</span>
             </>}
-            {tool === "mistnost" && (
+            {(tool === "mistnost" || tool === "polygon") && (
               <>
                 <span className="me-ctx-lab">Textura:</span>
                 <TexturePicker value={brushTex} onChange={setBrushTex} />
-                <span className="me-ctx-hint">táhni → podlaha + zdi</span>
+                <label>Úhel (°)<input aria-label="Úhel místnosti" type="number" value={shapeAngle} onChange={e => setShapeAngle(+e.target.value)} style={{ width: 60 }} /></label>
+                <label><input type="checkbox" checked={floorFill} onChange={e => setFloorFill(e.target.checked)} /> Podlaha</label>
+                <span className="me-ctx-hint">{tool === "polygon" ? "Klikáním vrcholy, dvojklik uzavře · Alt bez přichytávání" : "Táhni → natočená podlaha a zdi"}</span>
+                {tool === "polygon" && roomPoints.length >= 3 && <button onClick={() => { push(m => ops.roomPolygon(m, roomPoints, floorFill ? brushTex : undefined, shapeAngle)); setRoomPoints([]); }}>Uzavřít místnost</button>}
               </>
             )}
             {tool === "stena" && (
@@ -473,15 +538,16 @@ export default function EditorPage() {
                 {wallDraft.length > 0 && <button className="me-btn sm" onClick={() => { push((m) => ops.wallChain(m, wallDraft, wallTyp, wallLocked, true)); setWallDraft([]); }}>Uzavřít ({wallDraft.length})</button>}
               </>
             )}
-            {tool === "objekt" && <span className="me-ctx-hint">klik = umístit · výběr v Knihovně · V + táhni za úchyty = rotace/škála</span>}
+            {tool === "objekt" && <><label><input type="checkbox" checked={randomRotation} onChange={e => setRandomRotation(e.target.checked)} /> Náhodné natočení</label><span className="me-ctx-hint">V: přesun a úchyty · Q/E ±15° · Alt+Q/E ±1° · Ctrl+kolečko: otočit</span></>}
             {tool === "kresba" && (
               <>
                 {(["free", "line", "rect", "ellipse", "poly", "text"] as const).map((kd) => (
-                  <button key={kd} className={`me-btn sm ${drawKind === kd ? "on" : ""}`} onClick={() => setDrawKind(kd)}>{kd}</button>))}
+                  <button key={kd} className={`me-btn sm ${drawKind === kd ? "on" : ""}`} onClick={() => setDrawKind(kd)}>{{free:"Volně",line:"Čára",rect:"Obdélník",ellipse:"Elipsa",poly:"Polygon",text:"Text"}[kd]}</button>))}
+                {drawKind === "rect" && <label>Úhel (°)<input aria-label="Úhel kresby" type="number" value={shapeAngle} onChange={e => setShapeAngle(+e.target.value)} style={{ width: 60 }} /></label>}
                 <input type="color" value={drawColor} onChange={(e) => setDrawColor(e.target.value)} title="Barva" />
                 <input type="color" value={drawFill || "#000000"} onChange={(e) => setDrawFill(e.target.value)} title="Výplň" />
                 <input type="range" min={0.05} max={0.5} step={0.05} value={drawW} onChange={(e) => setDrawW(+e.target.value)} />
-                <label className="me-ctx-chk"><input type="checkbox" checked={drawDm} onChange={(e) => setDrawDm(e.target.checked)} /> DM only</label>
+                <label className="me-ctx-chk"><input type="checkbox" checked={drawDm} onChange={(e) => setDrawDm(e.target.checked)} /> Jen DM</label>
               </>
             )}
             {tool === "vyska" && <><span className="me-ctx-lab">Krok:</span>{[5, 10, 20].map((s) => <button key={s} className={`me-btn sm ${elevStep === s ? "on" : ""}`} onClick={() => setElevStep(s)}>{s} ft</button>)}<span className="me-ctx-hint">klik +, Alt+klik −</span></>}
@@ -505,7 +571,7 @@ export default function EditorPage() {
           <div ref={wrapRef} className="me-canvas-wrap">
             <svg ref={svgRef} className={`me-canvas tool-${tool}`} onWheel={onWheel}
                  onPointerDown={onDown} onPointerMove={onMove} onPointerUp={onUp} onDoubleClick={onDbl}
-                 onPointerCancel={() => { strokeRef.current = null; setPaintPreview(null); paintRef.current = false; }}
+                 onPointerCancel={() => { strokeRef.current = null; setPaintPreview(null); paintRef.current = false; if (transformStart.current) doc.setMap(transformStart.current); transformStart.current = null; moveRef.current = null; setHandleDrag(null); }}
                  onPointerLeave={() => setCur(null)} onContextMenu={(e) => e.preventDefault()}
                  style={{ touchAction: "none", width: "100%", height: "100%", display: "block" }}>
               <g transform={`translate(${V.x},${V.y}) scale(${V.k})`}>
@@ -536,11 +602,14 @@ export default function EditorPage() {
                   </g>
                 )}
                 {wallDraft.length > 0 && <polyline points={wallDraft.map(([x, y]) => `${x * PX},${y * PX}`).join(" ")} fill="none" stroke="#f59e0b" strokeWidth={2} strokeDasharray="4 3" />}
-                {dragPt && (tool === "fill" || tool === "mistnost") && (
+                {roomPoints.length > 0 && <polyline points={roomPoints.map(([x, y]) => `${x * PX},${y * PX}`).join(" ")} fill="#f59e0b22" stroke="#f59e0b" strokeWidth={2} strokeDasharray="4 3" />}
+                {dragPt && tool === "mistnost" && <polygon points={ops.rectanglePoints(dragPt.a, dragPt.b, shapeAngle).map(([x,y]) => `${x*PX},${y*PX}`).join(" ")} fill="#f59e0b22" stroke="#f59e0b" strokeWidth={2} />}
+                {dragPt && tool === "fill" && (
                   <rect x={Math.min(dragPt.a[0], dragPt.b[0]) * PX} y={Math.min(dragPt.a[1], dragPt.b[1]) * PX}
                         width={(Math.abs(dragPt.b[0] - dragPt.a[0]) + 1) * PX} height={(Math.abs(dragPt.b[1] - dragPt.a[1]) + 1) * PX}
                         fill="#f59e0b" opacity={0.2} stroke="#f59e0b" strokeWidth={1.5} />)}
-                {dragPt && tool === "kresba" && drawKind !== "free" && (
+                {dragPt && tool === "kresba" && drawKind === "rect" && <polygon points={ops.rectanglePoints(dragPt.a,dragPt.b,shapeAngle).map(([x,y]) => `${x*PX},${y*PX}`).join(" ")} fill={drawFill || "none"} stroke={drawColor} strokeWidth={drawW*PX} opacity={.8} />}
+                {dragPt && tool === "kresba" && drawKind !== "free" && drawKind !== "rect" && (
                   <rect x={Math.min(dragPt.a[0], dragPt.b[0]) * PX} y={Math.min(dragPt.a[1], dragPt.b[1]) * PX}
                         width={Math.abs(dragPt.b[0] - dragPt.a[0]) * PX} height={Math.abs(dragPt.b[1] - dragPt.a[1]) * PX}
                         fill={drawFill || "none"} stroke={drawColor} strokeWidth={drawW * PX} opacity={.8} />)}
@@ -557,11 +626,11 @@ export default function EditorPage() {
                   return (
                     <g key={s.id} transform={`translate(${o.x * PX},${o.y * PX}) rotate(${o.rot || 0})`}>
                       <rect x={-w / 2} y={-h / 2} width={w} height={h} fill="none" stroke="#3b82f6" strokeWidth={1.4} strokeDasharray="4 2" />
-                      <rect x={w / 2 - 4} y={h / 2 - 4} width={8} height={8} fill="#3b82f6" stroke="#fff" strokeWidth={1}
-                            style={{ cursor: "nwse-resize" }} onPointerDown={(e) => { e.stopPropagation(); setHandleDrag("scale"); }} />
+                      {[-1, 1].flatMap(sx => [-1, 1].map(sy => <rect key={sx+","+sy} aria-label="Změnit velikost" x={sx*w / 2 - 4} y={sy*h / 2 - 4} width={8} height={8} fill="#3b82f6" stroke="#fff" strokeWidth={1}
+                            style={{ cursor: "nwse-resize" }} onPointerDown={(e) => { e.stopPropagation(); transformStart.current = structuredClone(map); svgRef.current!.setPointerCapture(e.pointerId); setHandleDrag("scale"); }} />))}
                       <circle cx={0} cy={-h / 2 - 10} r={5} fill="#3b82f6" stroke="#fff" strokeWidth={1}
-                              style={{ cursor: "grab" }} onPointerDown={(e) => { e.stopPropagation(); setHandleDrag("rot"); }} />
-                      <line x1={0} y1={-h / 2} x2={0} y2={-h / 2 - 10} stroke="#3b82f6" strokeWidth={1} />
+                              aria-label="Otočit objekt" style={{ cursor: "grab" }} onPointerDown={(e) => { e.stopPropagation(); transformStart.current = structuredClone(map); svgRef.current!.setPointerCapture(e.pointerId); setHandleDrag("rot"); }} />
+                      <line pointerEvents="none" x1={0} y1={-h / 2} x2={0} y2={-h / 2 - 10} stroke="#3b82f6" strokeWidth={1} />
                     </g>
                   );
                 })}

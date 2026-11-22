@@ -2,7 +2,7 @@
    Port coverOf z boj.js s čistými vstupy. */
 import type { BattleMapData, Token } from "../types";
 import { cellsOf, occupantAt, tileAt, tileDef, type TerenMap } from "./grid";
-import { cellInfo, wallIndex, wallBlocksSight, edgeBetween, edgeKey, type DoorStates } from "../model/mapV2";
+import { cellInfo, wallIndex, wallBlocksSight, edgeBetween, edgeKey, crossedFreeWalls, type DoorStates } from "../model/mapV2";
 
 export type Cover = 0 | 2 | 3 | 9;
 export const COVER_BONUS: Record<Cover, number> = { 0: 0, 2: 2, 3: 5, 9: 0 };
@@ -14,6 +14,10 @@ function lineVal(map: BattleMapData, tokens: Token[], x0: number, y0: number, x1
   const len = Math.hypot(x1 - x0, y1 - y0), n = Math.max(2, Math.ceil(len * 8));
   const wIdx = wallIndex((map as any).steny);
   let v = 0, pcx = Math.floor(x0), pcy = Math.floor(y0);
+  for (const wall of crossedFreeWalls(wIdx, [x0,y0], [x1,y1])) {
+    if (wallBlocksSight(wall, doors)) return 9;
+    if (wall.typ === "half") v = 2;
+  }
   for (let i = 1; i < n; i++) {
     const px = x0 + ((x1 - x0) * i) / n, py = y0 + ((y1 - y0) * i) / n;
     const cx = Math.floor(px), cy = Math.floor(py), key = `${cx},${cy}`;

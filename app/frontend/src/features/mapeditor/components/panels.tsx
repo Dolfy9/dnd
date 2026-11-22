@@ -122,7 +122,7 @@ export function PropertiesPanel({ map, selObj, push, onDelete }: {
         <>
           <h4>Objekt — {stampById(selObject.asset)?.nazev || selObject.asset}</h4>
           {(["x", "y", "w", "h", "rot", "z"] as const).map((f) => (
-            <label key={f}>{f}<input type="number" step={f === "rot" ? 15 : .5} value={(selObject as any)[f] ?? 0}
+            <label key={f}>{{x:"Poloha X",y:"Poloha Y",w:"Šířka",h:"Výška",rot:"Úhel (°)",z:"Pořadí"}[f]}<input aria-label={f === "rot" ? "Úhel objektu" : f} type="number" step={f === "rot" ? 1 : .1} value={(selObject as any)[f] ?? 0}
               onChange={(e) => push((m) => { const o = m.objekty!.find((o) => o.id === selObj.id)!; (o as any)[f] = +e.target.value; })} /></label>))}
           <label>tint<input type="color" value={selObject.tint || "#ffffff"} onChange={(e) => push((m) => { m.objekty!.find((o) => o.id === selObj.id)!.tint = e.target.value; })} /></label>
           {(["blocks", "difficult", "flip", "dmOnly"] as const).map((f) => (
