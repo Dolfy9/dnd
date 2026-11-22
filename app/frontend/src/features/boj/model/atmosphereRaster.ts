@@ -1,5 +1,4 @@
-const GLOW = "/repo/11_Mapy/bojove/ovl/zar.webp";
-let glowData: Promise<string> | undefined;
+const embeddedImages = new Map<string, Promise<string>>();
 
 export function atmosphereBitmapSize(width: number, height: number, dpr: number, cap: number) {
   const w = Number.isFinite(width) ? Math.max(1, width) : 1;
@@ -9,8 +8,10 @@ export function atmosphereBitmapSize(width: number, height: number, dpr: number,
   return { width: Math.max(1, Math.round(w * scale)), height: Math.max(1, Math.round(h * scale)) };
 }
 
-function embeddedGlow() {
-  glowData ??= fetch(GLOW).then(response => {
+function embeddedImage(url:string) {
+  const cached=embeddedImages.get(url);
+  if(cached)return cached;
+  const result=fetch(url).then(response => {
     if (!response.ok) throw new Error("Light image unavailable");
     return response.blob();
   }).then(blob => new Promise<string>((resolve, reject) => {
@@ -18,13 +19,22 @@ function embeddedGlow() {
     reader.onload = () => resolve(reader.result as string);
     reader.onerror = () => reject(reader.error);
     reader.readAsDataURL(blob);
-  })).catch(error => { glowData = undefined; throw error; });
-  return glowData;
+  })).catch(error => { embeddedImages.delete(url); throw error; });
+  embeddedImages.set(url,result);
+  if(embeddedImages.size>128)embeddedImages.delete(embeddedImages.keys().next().value!);
+  return result;
+}
+
+export async function embedSvgImages(svg:string) {
+  const urls=[...new Set([...svg.matchAll(/href="(\/repo\/[^\"]+)"/g)].map(match=>match[1]))];
+  const data=await Promise.all(urls.map(async url=>[url,await embeddedImage(url.replace(/&amp;/g,"&"))]));
+  for(const [url,image] of data)svg=svg.split(url).join(image);
+  return svg;
 }
 
 export async function rasterizeAtmosphere(svg: string, width: number, height: number, dpr: number, cap: number) {
   const size = atmosphereBitmapSize(width, height, dpr, cap);
-  const source = svg.includes(GLOW) ? svg.split(GLOW).join(await embeddedGlow()) : svg;
+  const source = await embedSvgImages(svg);
   const url = URL.createObjectURL(new Blob([source], { type: "image/svg+xml" }));
   try {
     const image = new Image();

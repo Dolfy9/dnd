@@ -10,7 +10,7 @@ const box:MapObject={id:"box",asset:"crate",x:5,y:5,w:2,h:1,blocks:true};
 it("offsets and elongates away from the strongest reaching light, ignoring blocked or wrongly aimed lights",()=>{
  const left={id:"left",x:2,y:5,bright:20,dim:20,intenzita:1},right={...left,id:"right",x:7,intenzita:.1};
  const shadow=directionalShadow(box,[left,right])!;
- expect(shadow.x).toBeGreaterThan(0);expect(shadow.y).toBe(0);expect(shadow.length).toBeGreaterThan(1);
+ expect(shadow.x).toBeGreaterThan(0);expect(shadow.y).toBe(0);expect(shadow.length).toBeGreaterThan(0);expect(shadow.length).toBeLessThan(1);
  expect(directionalShadow(box,[left,{...right,intenzita:1}])!.x).toBeLessThan(0);
  expect(directionalShadow(box,[{...left,tvar:"kuzel",smer:180}])).toBeUndefined();
  expect(directionalShadow(box,[left],[{a:[3,0],b:[3,10]}])).toBeUndefined();
@@ -20,23 +20,23 @@ it("offsets and elongates away from the strongest reaching light, ignoring block
  const plan=contactShadowPlan(map,{});expect(plan).toHaveLength(1);
  expect(contactShadowPlan({...map,objekty:[{...box,tint:"#ff0000"}]},{})).toBe(plan);
  expect(contactShadowPlan({...map,objekty:[{...box,stin:false}]},{})).toEqual([]);
- expect(contactShadowPlan({...map,svetla:[]},{})).toMatchObject([{x:5,y:5+2/24,angle:0}]);
+ expect(contactShadowPlan({...map,svetla:[]},{})).toMatchObject([{x:5,y:5,angle:0}]);
  expect(contactShadowPlan({...map,svetla:[],objekty:[{...box,rot:90}]},{})).toMatchObject([{angle:90}]);
  const svg=renderToStaticMarkup(<ContactShadowArtwork plan={plan} width={240} height={240}/>);
- expect(svg).toContain('data-contact-shadow="box"');expect(svg).toContain("radialGradient");expect(svg).not.toMatch(/<filter|animation/);
+ expect(svg).toContain('data-contact-shadow="box"');expect(svg).toContain("linearGradient");expect(svg).toContain("feGaussianBlur");expect(svg).not.toMatch(/<ellipse|animation/);
 });
 it("uses solid/cover metadata, respects explicit overrides and ignores hidden or invalid props",()=>{
  expect(castsShadow(box)).toBe(true);expect(castsShadow({...box,blocks:false,cover:2})).toBe(true);
  expect(castsShadow({...box,stin:false})).toBe(false);expect(castsShadow({...box,blocks:false,stin:true})).toBe(true);
  expect(castsShadow({...box,dmOnly:true,stin:true})).toBe(false);expect(castsShadow({...box,w:NaN})).toBe(false);
- expect(castsShadow({...box,blocks:false})).toBe(false);expect(castsShadow({...box,z:-1})).toBe(false);
+ expect(castsShadow({...box,blocks:false})).toBe(true);expect(castsShadow({...box,z:-1})).toBe(false);
  expect(castsShadow({...box,blocks:undefined},{id:"crate",nazev:"Bedna",src:"crate.png",blocks:true})).toBe(true);
 });
-it("rotates inset rectangles and approximates pillars/trees with octagons",()=>{
+it("uses full fallback footprints and approximates unknown round sprites with octagons",()=>{
  const rectangle=objectFootprint(box);expect(rectangle).toHaveLength(4);
- expect(rectangle[0][0]).toBeGreaterThan(4);
- const rotated=objectFootprint({...box,rot:90});expect(rotated[0][0]).toBeCloseTo(5.42);expect(rotated[0][1]).toBeCloseTo(4.16);
- expect(objectFootprint({...box,asset:"strom"})).toHaveLength(8);
+ expect(rectangle[0][0]).toBe(4);
+ const rotated=objectFootprint({...box,rot:90});expect(rotated[0][0]).toBeCloseTo(5.5);expect(rotated[0][1]).toBeCloseTo(4);
+ expect(objectFootprint({...box,asset:"unknown-tree"})).toHaveLength(8);
  expect(objectFootprint({...box,asset:"pillar"})).toHaveLength(8);
 });
 it("occludes behind footprints, lets origin lights escape their supporting object, and caches irrelevant edits",()=>{

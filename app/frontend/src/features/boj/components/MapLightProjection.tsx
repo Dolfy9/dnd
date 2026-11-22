@@ -16,8 +16,8 @@ export function lightAnimationStyle(l: VisualLight): CSSProperties {
   return {animationDuration:`${duration}s`,animationDelay:`${animationPhase(l.id)/l.rychlost}s`};
 }
 
-export function LightProjection({id,light:l,filter,soften}: {id:string;light:VisualLight;filter:string;soften?:string}) {
-  return <g filter={soften?`url(#${soften})`:undefined}><g clipPath={l.stiny ? `url(#${id}visibility)` : undefined}>
+export function LightProjection({id,light:l,filter,soften,shadowMask}: {id:string;light:VisualLight;filter:string;soften?:string;shadowMask?:string}) {
+  return <g mask={shadowMask?`url(#${shadowMask})`:undefined} filter={soften?`url(#${soften})`:undefined}><g clipPath={l.stiny ? `url(#${id}visibility)` : undefined}>
     <g transform={`translate(${l.x*24},${l.y*24}) rotate(${l.smer})`}>
       <use href={`#${id}`} filter={`url(#${filter})`} />
     </g>

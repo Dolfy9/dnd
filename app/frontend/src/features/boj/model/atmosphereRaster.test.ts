@@ -66,4 +66,17 @@ describe("atmosphere bitmap baking", () => {
     expect(await (create.mock.calls[0][0] as Blob).text()).toContain('href="data:image/webp;base64,glow"');
     expect(fetch).toHaveBeenCalledTimes(2);
   });
+
+  it("embeds sprite-alpha masks once per asset, and retries failed sprite requests",async()=>{
+    const {create}=setup();
+    const fetch=vi.fn().mockResolvedValueOnce({ok:false}).mockResolvedValue({ok:true,blob:async()=>new Blob(["sprite"])});
+    vi.stubGlobal("fetch",fetch);
+    vi.stubGlobal("FileReader",class {result="data:image/webp;base64,sprite";onload=()=>{};readAsDataURL(){queueMicrotask(()=>this.onload());}});
+    const svg='<svg><image href="/repo/crate.webp"/><image href="/repo/crate.webp"/></svg>';
+    await expect(rasterizeAtmosphere(svg,10,10,1,100)).rejects.toThrow("image unavailable");
+    await rasterizeAtmosphere(svg,10,10,1,100);
+    await rasterizeAtmosphere(svg,10,10,1,100);
+    expect(fetch).toHaveBeenCalledTimes(2);
+    expect(await (create.mock.calls[0][0] as Blob).text()).not.toContain('/repo/crate.webp');
+  });
 });

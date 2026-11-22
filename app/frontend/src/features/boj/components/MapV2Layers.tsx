@@ -8,6 +8,7 @@ import { stampById, StampSvg } from "../../mapeditor/assets/stamps";
 import { assetUrl, assetSrc, type AssetEntry, type TextureEntry } from "../../mapeditor/assets/manifest";
 import { resolveAnimation, animationPhase } from "./MapMotion";
 import {contactShadowPlan,MapContactShadows,type ContactShadowPlan} from "./MapContactShadows";
+import {castsShadow} from "../model/objectShadows";
 
 /** Synchronní cache manifestů — plní ji useAssetManifest/useTextureManifest;
     v editoru i boji se volá dřív, než se renderují vrstvy. */
@@ -158,7 +159,7 @@ export const MapObjectLayer = memo(function MapObjectLayer({ map, dm, staticOnly
         const def = isImg || man ? null : stampById(o.asset);
         const src = man ? assetUrl(assetSrc(man, o.v)) : isImg ? `/repo/11_Mapy/bojove/${o.asset.slice(4)}` : null;
         const tint = /^#[0-9a-f]{6}$/i.test(o.tint || "") ? [1,3,5].map(n => .65+.35*parseInt(o.tint!.slice(n,n+2),16)/255) : null;
-        const shade = o.stin===false || directional.has(o.id) || o.asset.startsWith("d-") || (o.z ?? 0) < 0 ? "" : "drop-shadow(0px 1px 1px #000b) drop-shadow(0px 2px 3px #0006)";
+        const shade = !castsShadow(o,man) || directional.has(o.id) ? "" : "drop-shadow(0px 1px 1px #000b) drop-shadow(0px 2px 3px #0006)";
         return (
           <g key={o.id} transform={`translate(${o.x * PX},${o.y * PX}) rotate(${o.rot || 0}) ${o.flip ? "scale(-1,1)" : ""}`}
              style={{mixBlendMode:man?.blend}}

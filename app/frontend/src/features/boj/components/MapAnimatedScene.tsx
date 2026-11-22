@@ -8,6 +8,7 @@ import { animationPhase, FX, resolveAnimation } from "./MapMotion";
 import { MapAnimatedLights } from "./MapAnimatedLights";
 import {contactShadowPlan,MapContactShadows} from "./MapContactShadows";
 import {MapRouteLayer} from "./MapRouteLayer";
+import {castsShadow} from "../model/objectShadows";
 
 const water = (id: string) => /voda|melcina|more|vlny/.test(id);
 export function waterMask(map: MapV2) {
@@ -39,7 +40,7 @@ export const MapAnimatedScene = memo(function MapAnimatedScene({ map, view, px =
   const sprite = (id: string, src: string, anim: string, x: number, y: number, w: number, h: number, rot = 0, flip = false, opacity = 1, blend?: AssetEntry["blend"]) =>
     <div key={id} className="map-dom-sprite" style={{left:x*24-w*12,top:y*24-h*12,width:w*24,height:h*24,transform:`rotate(${rot}deg) scaleX(${flip ? -1 : 1})`,opacity,mixBlendMode:blend}}>
       {["portal","ohen","zare"].includes(anim) && <img className={`map-dom-glow map-anim-${anim === "ohen" ? "ohen" : "zare"}`} src="/repo/11_Mapy/bojove/ovl/zar.webp" alt="" />}
-      <img src={src} alt="" className={`map-anim-${anim}`} style={{animationDelay:`${animationPhase(id)}s`,filter:directional.has(id)||map.objekty?.some(o=>o.id===id&&o.stin===false)?"none":undefined}} />
+      <img src={src} alt="" className={`map-anim-${anim}`} style={{animationDelay:`${animationPhase(id)}s`,filter:directional.has(id)||map.objekty?.some(o=>o.id===id&&!castsShadow(o,assets[o.asset]))?"none":undefined}} />
     </div>;
   return <div ref={sceneRef} className="map-animated-scene" aria-hidden="true"><div className="map-scene-board" style={{
     width:W,height:H,transform:`translate(${view.x}px,${view.y}px) scale(${view.k*px/24})`,

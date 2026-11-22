@@ -1,13 +1,16 @@
 import { memo, useEffect, useId, useMemo, useState, useSyncExternalStore, type ReactElement } from "react";
 import { renderToStaticMarkup } from "react-dom/server";
-import type { MapV2 } from "../model/mapV2";
-import { lightBlockers, nearbyLightBlockers, visibilityPolygon, type LightSegment } from "../model/lightGeometry";
+import type { MapV2,MapObject } from "../model/mapV2";
+import { lightBlockers, nearbyLightBlockers, visibilityPolygon, type LightSegment,type Point } from "../model/lightGeometry";
 import { useMapManifests } from "./MapV2Layers";
 import { visualLights } from "./MapAtmoLayers";
 import { GLOW, LightDefinition, lightAnimationStyle, lightReach, type VisualLight } from "./MapLightProjection";
 import { LIGHT_CAPS, nearestLights, nextLightAnimationCap, type LightAnimationCap } from "../model/lightAnimationPolicy";
-import { objectBlockers } from "../model/objectShadows";
+import { finiteLightShadows,type ObjectLightShadow } from "../model/objectShadows";
 import { mapWalls } from "../model/mapRoutes";
+import { ObjectArtworkMask,ObjectShadowMask } from "./ObjectLightMask";
+import { embedSvgImages } from "../model/atmosphereRaster";
+import {assetSrc,type AssetEntry} from "../../mapeditor/assets/manifest";
 
 const CAP_KEY="montelien-light-animation-cap";
 let sessionCap:LightAnimationCap=12;
@@ -26,7 +29,7 @@ export function rasterizeLight(svg:string,width:number,height:number):Promise<st
   if (cached) return cached;
   const result=(async()=>{
     glowData ??= fetch(GLOW).then(r=>{if(!r.ok) throw new Error("Light image unavailable");return r.blob();}).then(readData).catch(e=>{glowData=undefined;throw e;});
-    const source=svg.split(GLOW).join(await glowData);
+    const source=await embedSvgImages(svg.split(GLOW).join(await glowData));
     const image=new Image();
     await new Promise<void>((resolve,reject)=>{image.onload=()=>resolve();image.onerror=()=>reject(new Error("Light raster unavailable"));image.src="data:image/svg+xml;charset=utf-8,"+encodeURIComponent(source);});
     const density=Math.min(2,1024/Math.max(width,height));
@@ -70,8 +73,16 @@ export function visibleLight(l: VisualLight, view: {x:number;y:number;k:number},
   return b.left*scale+view.x < width && b.top*scale+view.y < height && (b.left+b.width)*scale+view.x > 0 && (b.top+b.height)*scale+view.y > 0;
 }
 
-const AnimatedLight = memo(function AnimatedLight({light:l,blockers,width,height,animate}: {
-  light:VisualLight;blockers:LightSegment[];width:number;height:number;animate:boolean;
+export function AnimatedLightMask({light,polygon,shadows,objects,assets,width,height}:{light:VisualLight;polygon:Point[];shadows:ObjectLightShadow[];objects:MapObject[];assets:Record<string,AssetEntry>;width:number;height:number}) {
+  const b=lightBounds(light);
+  return <svg xmlns="http://www.w3.org/2000/svg" width={b.width} height={b.height} viewBox={`${b.left} ${b.top} ${b.width} ${b.height}`}><defs>
+    <ObjectShadowMask id="shadow" shadows={shadows} width={width*24} height={height*24}/>
+    <ObjectArtworkMask id="artwork" objects={objects} assets={assets} width={width*24} height={height*24}/>
+  </defs><g mask="url(#artwork)"><g mask="url(#shadow)">{polygon.length?<polygon points={polygon.map(([x,y])=>`${x*24},${y*24}`).join(" ")} fill="white"/>:<rect width={width*24} height={height*24} fill="white"/>}</g></g></svg>;
+}
+
+const AnimatedLight = memo(function AnimatedLight({light:l,blockers,shadows,objects,assets,width,height,animate}: {
+  light:VisualLight;blockers:LightSegment[];shadows:ObjectLightShadow[];objects:MapObject[];assets:Record<string,AssetEntry>;width:number;height:number;animate:boolean;
 }) {
   const id=useId().replace(/:/g,"");
   const b=lightBounds(l);
@@ -79,13 +90,14 @@ const AnimatedLight = memo(function AnimatedLight({light:l,blockers,width,height
   const blockerKey=nearby.map(w=>[...w.a,...w.b].join(",")).join(";");
   const polygon=useMemo(()=>nearby.length ? visibilityPolygon([l.x,l.y],nearby,width,height) : [],[l.x,l.y,blockerKey,width,height]);
   const clipPath=polygon.length ? `polygon(${polygon.map(([x,y])=>`${x*24-b.left}px ${y*24-b.top}px`).join(",")})` : undefined;
-  const [mask,setMask]=useState<string>();
-  const maskKey=JSON.stringify([polygon,b.left,b.top,b.width,b.height]);
+  const [rasterMask,setRasterMask]=useState<{key:string;src:string}>();
+  const maskKey=JSON.stringify([polygon,shadows,objects.map(o=>[o.asset,o.x,o.y,o.w,o.h,o.rot,o.flip,o.v,assets[o.asset] && assetSrc(assets[o.asset],o.v)]),b.left,b.top,b.width,b.height]);
+  const mask=rasterMask?.key===maskKey?rasterMask.src:undefined,needsMask=!!(polygon.length || shadows.length || objects.length);
   useEffect(()=>{
-    let active=true;setMask(undefined);
-    if(polygon.length){
-      const points=polygon.map(([x,y])=>`${x*24-b.left},${y*24-b.top}`).join(" ");
-      rasterizeLight(`<svg xmlns="http://www.w3.org/2000/svg" width="${b.width}" height="${b.height}"><polygon points="${points}" fill="white"/></svg>`,b.width,b.height).then(src=>{if(active)setMask(src);}).catch(()=>{});
+    let active=true;
+    if(needsMask){
+      const art=<AnimatedLightMask light={l} polygon={polygon} shadows={shadows} objects={objects} assets={assets} width={width} height={height}/>;
+      rasterizeLight(renderToStaticMarkup(art),b.width,b.height).then(src=>{if(active)setRasterMask({key:maskKey,src});}).catch(()=>{});
     }
     return()=>{active=false;};
   },[maskKey]);
@@ -102,7 +114,7 @@ const AnimatedLight = memo(function AnimatedLight({light:l,blockers,width,height
   };
   const base=useMemo(()=>sprite(false),[l.tvar,l.sirka,l.delka,l.radius,l.bright,l.smer,l.color,b.width,b.height]);
   const alternate=useMemo(()=>shimmer ? sprite(true) : null,[base,l.efekt]);
-  return <div className="map-light-clip" style={{left:b.left,top:b.top,width:b.width,height:b.height,clipPath:mask?undefined:clipPath,maskImage:mask?`url("${mask}")`:undefined,maskSize:"100% 100%",opacity:l.intenzita*.2}} data-animated-light={l.id}>
+  return <div className="map-light-clip" style={{left:b.left,top:b.top,width:b.width,height:b.height,clipPath:mask?undefined:clipPath,maskImage:mask?`url("${mask}")`:undefined,maskSize:"100% 100%",opacity:needsMask&&!mask?0:l.intenzita*.2}} data-animated-light={l.id}>
     <div className={`map-light-raster${animate ? ` map-light-effect map-light-${l.efekt}` : ""}`} style={lightAnimationStyle(l)}>
       <LightRaster art={base} width={b.width} height={b.height} />
       {alternate && <div className={`map-light-alternate${animate ? " map-light-crossfade" : ""}`} style={lightAnimationStyle(l)}><LightRaster art={alternate} width={b.width} height={b.height} /></div>}
@@ -117,8 +129,7 @@ export const MapAnimatedLights = memo(function MapAnimatedLights({map,view,px,do
   const [meanMs,setMeanMs]=useState<number>();
   const [epoch,setEpoch]=useState(0);
   const {assets}=useMapManifests();
-  const objects=objectBlockers(map.objekty,assets);
-  const blockers=useMemo(()=>[...lightBlockers(mapWalls(map),doors),...objects],[map.steny,map.trasy,doors,objects]);
+  const blockers=useMemo(()=>lightBlockers(mapWalls(map),doors),[map.steny,map.trasy,doors]);
   const wallKey=blockers.map(w=>[...w.a,...w.b].join(",")).join(";");
   const width=map.mrizka[0]?.length || 1,height=map.mrizka.length;
   const vw=viewport?.width ?? (typeof window === "undefined" ? width*px*view.k : window.innerWidth);
@@ -148,6 +159,6 @@ export const MapAnimatedLights = memo(function MapAnimatedLights({map,view,px,do
     return()=>cancelAnimationFrame(frame);
   },[sampleKey,cap,epoch]);
   return <div style={{display:"contents"}} data-light-animation-cap={cap} data-light-mean-ms={meanMs?.toFixed(2)}>{active.map(l=>
-    <AnimatedLight key={l.id} light={l} blockers={blockers} width={width} height={height} animate />
+    <AnimatedLight key={l.id} light={l} blockers={blockers} shadows={finiteLightShadows({...l,bright:l.bright/24*5},map.objekty,assets,blockers)} objects={(map.objekty || []).filter(o=>!o.dmOnly && Math.hypot(o.x-l.x,o.y-l.y)<lightReach(l)+Math.max(o.w,o.h))} assets={assets} width={width} height={height} animate />
   )}</div>;
 });

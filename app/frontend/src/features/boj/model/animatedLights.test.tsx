@@ -1,9 +1,10 @@
 import { afterEach, describe, expect, it, vi } from "vitest";
 import { renderToStaticMarkup } from "react-dom/server";
 import { MapAnimatedScene } from "../components/MapAnimatedScene";
-import { lightBounds, lightTint, visibleLight, rasterizeLight } from "../components/MapAnimatedLights";
+import { AnimatedLightMask,lightBounds, lightTint, visibleLight, rasterizeLight } from "../components/MapAnimatedLights";
 import { MapAtmosphereArtwork, visualLights } from "../components/MapAtmoLayers";
 import type { MapV2 } from "./mapV2";
+import {finiteLightShadows} from "./objectShadows";
 
 const base:MapV2={id:"m",nazev:"M",podklad:"dungeon",mrizka:Array(20).fill(".".repeat(30))};
 const light={id:"f",x:5,y:5,bright:5,dim:5,efekt:"plamen" as const};
@@ -32,6 +33,11 @@ describe("bounded light compositor",()=>{
     expect(lightTint("#ffac52",-7)).not.toBe("#ffac52");
     expect(lightBounds({...l,tvar:"pruh",delka:8,smer:0}).width).toBeGreaterThan(lightBounds({...l,tvar:"pruh",delka:8,smer:90}).width);
   });
+  it("masks animated light by the actual object alpha, even for flat non-occluding sprites",()=>{
+    const html=renderToStaticMarkup(<AnimatedLightMask light={visualLights({...base,svetla:[light]})[0]} polygon={[]} shadows={[]} objects={[{id:"o",asset:"img:crate.webp",x:5,y:5,w:1,h:1,vyska:0}]} assets={{}} width={30} height={20}/>);
+    expect(html).toContain('data-glow-exclusion="o"');expect(html).toContain('href="/repo/11_Mapy/bojove/crate.webp"');
+    expect(html).toContain('mask="url(#artwork)"');expect(html).toContain('mask="url(#shadow)"');
+  });
   it("caps simultaneous effects while retaining the remaining static lights",()=>{
     const html=renderToStaticMarkup(<MapAnimatedScene map={{...base,svetla:Array.from({length:16},(_,i)=>({...light,id:"l"+i}))}} view={view}>{null}</MapAnimatedScene>);
     expect((html.match(/data-animated-light=/g)||[])).toHaveLength(12);
@@ -41,11 +47,13 @@ describe("bounded light compositor",()=>{
   it("does not change light clips when a distant blocker moves, but includes nearby and strip-end blockers",()=>{
     const clip=(x:number,y:number,shape={})=>renderToStaticMarkup(<MapAnimatedScene map={{...base,svetla:[{...light,...shape}],objekty:[{id:"crate",asset:"bedna",x,y,w:1,h:1,rot:0,blocks:true}]}} view={view}>{null}</MapAnimatedScene>).match(/<div class="map-light-clip"[^>]+>/)?.[0];
     expect(clip(20,15)).toBe(clip(21,15));
-    expect(clip(6.5,5)).toContain("clip-path:polygon");
-    expect(clip(6.5,5,{stiny:false})).not.toContain("clip-path");
-    expect(clip(10,5)).not.toContain("clip-path");
-    expect(clip(10,5,{tvar:"pruh",delka:8})).toContain("clip-path:polygon");
-    const baked=(x:number)=>renderToStaticMarkup(<MapAtmosphereArtwork map={{...base,svetla:[light],objekty:[{id:"crate",asset:"bedna",x,y:15,w:1,h:1,rot:0,blocks:true}]}} />);
+    expect(clip(6.5,5)).toContain("opacity:0");
+    const shadow=(x:number,shape={})=>finiteLightShadows({...light,...shape},[{id:"crate",asset:"bedna",x,y:5,w:1,h:1,blocks:true}]);
+    expect(shadow(6.5)).toHaveLength(1);
+    expect(shadow(6.5,{stiny:false})).toHaveLength(0);
+    expect(shadow(10)).toHaveLength(0);
+    expect(shadow(10,{tvar:"pruh",delka:8})).toHaveLength(1);
+    const baked=(x:number)=>renderToStaticMarkup(<MapAtmosphereArtwork layer="darkness" map={{...base,svetla:[light],objekty:[{id:"crate",asset:"bedna",x,y:15,w:1,h:1,rot:0,blocks:true}]}} />);
     expect(baked(20)).toBe(baked(21));
   });
   it("rasterizes once, reuses cached PNGs and evicts failed results",async()=>{

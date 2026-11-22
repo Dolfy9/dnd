@@ -35,6 +35,7 @@ export interface MapObject {
   blocks?: boolean;          // blokuje pohyb
   cover?: 2 | 3;             // krytí, které poskytuje
   stin?: boolean;
+  vyska?: number;
   difficult?: boolean;       // těžký terén
   light?: { bright: number; dim: number };
   dmOnly?: boolean;

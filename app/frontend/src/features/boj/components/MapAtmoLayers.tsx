@@ -4,12 +4,13 @@ import { mapWalls } from "../model/mapRoutes";
 import type { MapV2, MapPaintStroke } from "../model/mapV2";
 import { normalizeLight } from "../model/mapV2";
 import { lightBlockers } from "../model/lightGeometry";
-import { objectBlockers } from "../model/objectShadows";
+import { finiteLightShadows,objectHeight } from "../model/objectShadows";
 import { assetUrl, type AssetEntry } from "../../mapeditor/assets/manifest";
 import { useMapManifests, PX } from "./MapV2Layers";
 import { resolveAnimation } from "./MapMotion";
 import { LightDefinition, LightProjection } from "./MapLightProjection";
 import { bakeAtmosphere } from "../model/atmosphereRaster";
+import { ObjectArtworkMask, ObjectShadowMask } from "./ObjectLightMask";
 import "./mapAtmo.css";
 
 export { GLOW } from "./MapLightProjection";
@@ -63,13 +64,14 @@ export const MapAtmosphereArtwork = memo(function MapAtmosphereArtwork({ map, do
   const W = (map.mrizka[0]?.length || 1) * PX, H = map.mrizka.length * PX;
   const {assets} = useMapManifests();
   const lights = visualLights(map,assets).filter(l => l.radius > 0 && l.intenzita > 0);
-  const objects=objectBlockers(map.objekty,assets);
-  const blockers = useMemo(() => [...lightBlockers(mapWalls(map),doors),...objects],[map.steny,map.trasy,doors,objects]);
+  const blockers = useMemo(() => lightBlockers(mapWalls(map),doors),[map.steny,map.trasy,doors]);
+  const shadows=lights.map(l=>finiteLightShadows({...l,bright:l.bright/PX*5},map.objekty,assets,blockers));
   const amb = clamp(map.atmosfera?.amb ?? 1, 1);
   if (amb === 1 && !lights.length) return null;
   return <svg xmlns="http://www.w3.org/2000/svg" width={W} height={H} viewBox={`0 0 ${W} ${H}`} overflow="hidden" pointerEvents="none">
     <defs>
-      {objects.length>0 && <filter id={uid+"penumbra"} x="-10%" y="-10%" width="120%" height="120%"><feGaussianBlur stdDeviation="1.5"/></filter>}
+      {lights.map((l,i)=><ObjectShadowMask key={l.id} id={uid+"shadow"+i} shadows={shadows[i]} width={W} height={H}/>)}
+      {layer!=="darkness" && <ObjectArtworkMask id={uid+"artwork"} objects={map.objekty || []} assets={assets} width={W} height={H}/>}
       {lights.map((l,i) => <LightDefinition key={l.id} id={uid+"light"+i} light={l} blockers={blockers} width={W} height={H} />)}
       <filter id={uid + "black"} colorInterpolationFilters="sRGB"><feColorMatrix type="matrix"
         values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 1 0" /></filter>
@@ -79,22 +81,22 @@ export const MapAtmosphereArtwork = memo(function MapAtmosphereArtwork({ map, do
       <mask id={uid + "dark"} maskUnits="userSpaceOnUse" x={0} y={0} width={W} height={H}>
         <rect width={W} height={H} fill="white" />
         {lights.map((l, i) => <g key={l.id} opacity={l.intenzita}>
-          <LightProjection id={uid+"light"+i} light={l} filter={uid+"black"} soften={objects.length?uid+"penumbra":undefined} />
+          <LightProjection id={uid+"light"+i} light={l} filter={uid+"black"} shadowMask={uid+"shadow"+i} />
         </g>)}
       </mask>
     </defs>
     {layer !== "glow" && <rect width={W} height={H} fill={color(map.atmosfera?.barva || "#101522")}
       opacity={1 - amb} mask={`url(#${uid}dark)`} />}
-    {layer !== "darkness" && lights.map((l, i) => <g key={l.id} opacity={l.intenzita * .48} style={{mixBlendMode:"screen"}}>
-      <LightProjection id={uid+"light"+i} light={l} filter={uid+"tint"+i} soften={objects.length?uid+"penumbra":undefined} />
-    </g>)}
+    {layer !== "darkness" && <g mask={`url(#${uid}artwork)`} style={{mixBlendMode:"screen"}}>{lights.map((l, i) => <g key={l.id} opacity={l.intenzita * .48} style={{mixBlendMode:"screen"}}>
+      <LightProjection id={uid+"light"+i} light={l} filter={uid+"tint"+i} shadowMask={uid+"shadow"+i} />
+    </g>)}</g>}
   </svg>;
 });
 
-export function BakedAtmosphere({dark,glow,width,height}:{dark:string;glow:string;width:number;height:number}) {
+export function BakedAtmosphere({dark,glow,width,height}:{dark:string;glow?:string;width:number;height:number}) {
   return <>
     <image href={dark} width={width} height={height} preserveAspectRatio="none" data-atmosphere-darkness />
-    <image href={glow} width={width} height={height} preserveAspectRatio="none" data-atmosphere-glow style={{mixBlendMode:"screen"}} />
+    {glow && <image href={glow} width={width} height={height} preserveAspectRatio="none" data-atmosphere-glow style={{mixBlendMode:"screen"}} />}
   </>;
 }
 
@@ -109,8 +111,8 @@ export const MapAtmosphereLayer = memo(function MapAtmosphereLayer({ map, doors,
     window.addEventListener("resize", resize);
     return () => window.removeEventListener("resize", resize);
   }, []);
-  const key = JSON.stringify([W, H, lights, lightBlockers(mapWalls(map), doors), objectBlockers(map.objekty,assets), ambient, map.atmosfera?.barva, animated, dpr]);
-  const [bitmaps, setBitmaps] = useState<{ dark: string; glow: string }>();
+  const key = JSON.stringify([W, H, lights, lightBlockers(mapWalls(map), doors), map.objekty?.map(o=>[o.id,o.asset,o.x,o.y,o.w,o.h,o.v,o.rot,o.flip,o.stin,o.dmOnly,objectHeight(o,assets[o.asset])]), ambient, map.atmosfera?.barva, animated, dpr]);
+  const [bitmaps, setBitmaps] = useState<{ dark: string; glow: string;key:string }>();
   const [failed, setFailed] = useState(false);
   const empty = ambient === 1 && !lights.length;
   useEffect(() => () => {
@@ -124,7 +126,7 @@ export const MapAtmosphereLayer = memo(function MapAtmosphereLayer({ map, doors,
         const dark = renderToStaticMarkup(<MapAtmosphereArtwork map={map} doors={doors} animated={animated} layer="darkness" />);
         const glow = renderToStaticMarkup(<MapAtmosphereArtwork map={map} doors={doors} animated={animated} layer="glow" />);
         const result = await bakeAtmosphere(dark, glow, W, H, dpr, !animated);
-        if (active) { setBitmaps(result); setFailed(false); }
+        if (active) { setBitmaps({...result,key}); setFailed(false); }
         else { URL.revokeObjectURL(result.dark); URL.revokeObjectURL(result.glow); }
       } catch {
         if (active) setFailed(true);
@@ -137,7 +139,7 @@ export const MapAtmosphereLayer = memo(function MapAtmosphereLayer({ map, doors,
   }, [key]);
   if (empty) return null;
   return <g data-map-atmosphere data-atmosphere-baked={!!bitmaps} pointerEvents="none">
-    {bitmaps ? <BakedAtmosphere {...bitmaps} width={W} height={H} /> : failed ? <MapAtmosphereArtwork map={map} doors={doors} animated={animated} />
+    {bitmaps ? <BakedAtmosphere dark={bitmaps.dark} glow={bitmaps.key===key?bitmaps.glow:undefined} width={W} height={H} /> : failed ? <MapAtmosphereArtwork map={map} doors={doors} animated={animated} />
       : <rect width={W} height={H} fill={color(map.atmosfera?.barva || "#101522")} opacity={1 - ambient} />}
   </g>;
 });
