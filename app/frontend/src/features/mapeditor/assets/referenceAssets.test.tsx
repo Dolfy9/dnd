@@ -5,6 +5,7 @@ import {expect,it} from "vitest";
 import {renderToStaticMarkup} from "react-dom/server";
 import {MapObjectLayer,setManifests} from "../../boj/components/MapV2Layers";
 import {MapAnimatedScene} from "../../boj/components/MapAnimatedScene";
+import {MapPreview} from "../components/MapPreview";
 import {VariantStrip} from "../components/VariantStrip";
 import {castsShadow} from "../../boj/model/objectShadows";
 import type {AssetEntry} from "./manifest";
@@ -40,4 +41,15 @@ it("screens effects against terrain in static previews and the live scene, leavi
  expect(renderToStaticMarkup(<svg><MapObjectLayer map={ordinary}/></svg>)).not.toContain("mix-blend-mode:screen");
  expect(renderToStaticMarkup(<VariantStrip entry={assets["ov-svetlusky"]} onChange={()=>{}}/>).match(/mix-blend-mode:screen/g)).toHaveLength(4);
  expect(renderToStaticMarkup(<svg><MapObjectLayer map={{...map,objekty:[]}}/></svg>)).not.toContain("mix-blend-mode");
+});
+it("screens every D1 effect when animation selects the DOM sprite path, also in static exports",()=>{
+ setManifests(assets,{});
+ for(const asset of ["ov-svetlusky","ov-mlha-chuchvalec","ov-mesic-odlesk","ov-paprsky"]){
+  const map={id:"m",nazev:"M",podklad:"dungeon" as const,mrizka:["........"],objekty:[{id:"animated-effect",asset,x:2,y:2,w:3,h:3,anim:"vitr"}]};
+  const scene=renderToStaticMarkup(<MapAnimatedScene map={map} view={{x:0,y:0,k:1}} lights={false}>{null}</MapAnimatedScene>);
+  expect(scene).toMatch(/class="map-dom-sprite"[^>]*style="[^"]*mix-blend-mode:screen/);
+  expect(renderToStaticMarkup(<MapPreview map={map} staticLighting/>)).toContain("mix-blend-mode:screen");
+  const ordinary={...map,objekty:[{...map.objekty[0],asset:"p-lodka"}]};
+  expect(renderToStaticMarkup(<MapAnimatedScene map={ordinary} view={{x:0,y:0,k:1}} lights={false}>{null}</MapAnimatedScene>)).not.toContain("mix-blend-mode:screen");
+ }
 });
