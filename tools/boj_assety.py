@@ -2,7 +2,7 @@
 """Připraví textury a průhledné rekvizity pro bojové mapy (Pillow).
 
 Použití: python3 tools/boj_assety.py [vstupní_složka] [--sheet cesta.png]
-Výchozí vstup je ~/gen; tex_*.png a prop_*.png se převedou do web/assets/boj.
+Výchozí vstup je ~/gen; tex_*, prop_*, icon_* a ovl_*.png se převedou do web/assets/boj.
 Textury mají plynulé návaznosti, rekvizity odstraněné purpurové pozadí.
 Volitelný přehled ukazuje textury 2×2 a rekvizity na šedém i tmavém pozadí.
 """
@@ -30,7 +30,7 @@ def texture(image):
     return image
 
 
-def prop(image):
+def prop(image, size=256):
     image = image.convert("RGBA")
     pixels = []
     source = image.load()
@@ -46,13 +46,23 @@ def prop(image):
     image.putdata(pixels)
     bbox = image.getbbox()
     if bbox is None:
-        return Image.new("RGBA", (256, 256))
+        return Image.new("RGBA", (size, size))
     image = image.crop(bbox)
     side = max(image.size)
     padding = max(1, round(side * .04))
     square = Image.new("RGBA", (side + padding * 2, side + padding * 2))
     square.paste(image, ((square.width - image.width) // 2, (square.height - image.height) // 2))
-    return square.resize((256, 256), Image.Resampling.LANCZOS)
+    return square.resize((size, size), Image.Resampling.LANCZOS)
+
+
+def overlay(image, key):
+    image = image.convert("RGB").resize((1024, 1024), Image.Resampling.LANCZOS)
+    alpha = image.convert("L")
+    if key == "vineta":
+        alpha = ImageChops.invert(alpha)
+        image = Image.new("RGB", image.size, "black")
+    image.putalpha(alpha)
+    return image
 
 
 def contact_sheet(paths, destination):
@@ -83,17 +93,18 @@ def main():
     parser.add_argument("--sheet", type=Path)
     args = parser.parse_args()
     source = args.input.expanduser()
-    inputs = sorted(source.glob("tex_*.png")) + sorted(source.glob("prop_*.png"))
+    inputs = sorted(p for prefix in ("tex", "prop", "icon", "ovl") for p in source.glob(prefix + "_*.png") if p.name != "prop_zar.png")
     if not inputs:
-        parser.error(f"Žádné tex_*.png ani prop_*.png v {source}")
+        parser.error(f"Žádné podporované PNG assety v {source}")
     paths = []
     for path in inputs:
         kind, key = path.stem.split("_", 1)
-        target = OUT / ("tex" if kind == "tex" else "prop") / (key + ".webp")
+        target = OUT / kind / (key + ".webp")
         target.parent.mkdir(parents=True, exist_ok=True)
         with Image.open(path) as image:
-            result = texture(image) if kind == "tex" else prop(image)
-        result.save(target, "WEBP", quality=82, method=6, exact=True)
+            large = key.startswith(("strom", "zakladna", "start_")) or key == "aktivni"
+            result = texture(image) if kind == "tex" else overlay(image, key) if kind == "ovl" else prop(image, 128 if kind == "icon" else 512 if large else 256)
+        result.save(target, "WEBP", quality=76, method=6, exact=True)
         paths.append(target)
     if args.sheet:
         contact_sheet(paths, args.sheet.expanduser())

@@ -19,9 +19,7 @@
 .bj-lab text { font: 600 .32px system-ui, sans-serif; fill: #c9c1b3; text-anchor: middle; }
 .bj-tok { cursor: grab; }
 .bj-tok text { fill: #fff; font-family: system-ui, sans-serif; font-weight: 700; text-anchor: middle; pointer-events: none; }
-.bj-tok.dead circle { opacity: .45; }
-.bj-ring { fill: none; stroke: #ffd54a; stroke-width: .08; animation: bjpulse 1.2s ease-in-out infinite; }
-@keyframes bjpulse { 50% { stroke-opacity: .25; } }
+.bj-tok.dead image { opacity: .45; }
 .bj-status { padding: 4px 6px; min-height: 1.6em; color: var(--md-default-fg-color--light); }
 .bj-right h3 { margin: 0 0 4px; font: 700 .85rem "Cinzel", serif; }
 .bj-init { width: 100%; border-collapse: collapse; display: table !important; font-size: .7rem; }
@@ -82,6 +80,24 @@ body.ed-on .bj-pal { cursor: pointer; }
 
 /* ilustrované mapy, žetony, kontrola a deník */
 .bj-atmosphere { pointer-events: none; }
+.bj-icon { display: inline-block; width: 25px; height: 25px; object-fit: contain; vertical-align: middle; }
+.bj-builderbar, .bj-builderpanel { background-image: url("boj/tex/panel.webp"); background-size: 512px; color: #eee0c4; }
+.bj-builderpanel { padding: 12px; border-radius: 8px; }
+.bj-settings-fields { background: url("boj/tex/parchment.webp") repeat; color: #302719; padding: 10px; border-radius: 5px; }
+.bj-templatecards { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; border: 0; padding: 0; }
+.bj-templatecards label { cursor: pointer; border: 2px solid transparent; padding: 4px; }
+.bj-templatecards label:has(:checked) { border-color: #b78434; }
+.bj-templatecards svg { width: 100%; height: 85px; display: block; }
+.bj-templatecards input { width: auto; }
+.bj-active { animation: bj-flicker 1.2s ease-in-out infinite alternate; }
+.bj-newmap:has(.bj-templatecards) { width: min(560px, 60vw); max-width: 100%; }
+.bj-newmap input, .bj-newmap select { min-width: 0; max-width: 100%; }
+#boj-app .bj-builderpanel h4, #boj-app .bj-builderpanel .bj-swatch { color: #f5e6c9; }
+#boj-app .bj-builderpanel .bj-swatch.on { color: #302719; }
+#boj-app .bj-builderbar button, #boj-app .bj-builderbar select { color: #302719; }
+#boj-app .bj-builderbar .bj-buildhint { color: #f5e6c9; }
+.bj-builderbar { background-image: url("boj/tex/panel.webp") !important; }
+@media (prefers-reduced-motion: reduce) { .bj-active { animation: none; } }
 .bj-builderbar { position: sticky; top: 3rem; z-index: 3; display: flex; flex-wrap: wrap; align-items: center; gap: 6px; padding: 9px; background: var(--bj-bg); border: 1px solid var(--bj-line); border-top: 3px solid #b78434; border-radius: 8px 8px 0 0; box-shadow: 0 3px 12px #0002; }
 .bj-builderbar strong { font-family: "Cinzel", Georgia, serif; margin-right: auto; }
 .bj-builderbar .bj-tools { display: flex; gap: 3px; }
