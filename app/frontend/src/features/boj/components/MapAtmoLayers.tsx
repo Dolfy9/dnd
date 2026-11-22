@@ -60,7 +60,7 @@ export function visualLights(map: MapV2, assets: Record<string, AssetEntry> = {}
     radius: (clamp(l.bright, 0, 500) + clamp(l.dim, 0, 500)) / 5 * PX }));
 }
 
-export const MapAtmosphereArtwork = memo(function MapAtmosphereArtwork({ map, doors, animated=true, layer="both" }: { map: MapV2; doors?: Record<string, boolean>; animated?:boolean; layer?: "darkness" | "glow" | "both" }) {
+export const MapAtmosphereArtwork = memo(function MapAtmosphereArtwork({ map, doors, animated=true, layer="both", darknessMask }: { map: MapV2; doors?: Record<string, boolean>; animated?:boolean; layer?: "darkness" | "glow" | "both"; darknessMask?: string }) {
   const uid = useId().replace(/:/g, "");
   const W = (map.mrizka[0]?.length || 1) * PX, H = map.mrizka.length * PX;
   const {assets} = useMapManifests();
@@ -86,23 +86,37 @@ export const MapAtmosphereArtwork = memo(function MapAtmosphereArtwork({ map, do
         </g>)}
       </mask>
     </defs>
-    {layer !== "glow" && <rect width={W} height={H} fill={color(map.atmosfera?.barva || "#101522")}
-      opacity={1 - amb} mask={`url(#${uid}dark)`} />}
+    {layer !== "glow" && <g mask={darknessMask}><rect width={W} height={H} fill={color(map.atmosfera?.barva || "#101522")}
+      opacity={1 - amb} mask={`url(#${uid}dark)`} /></g>}
     {layer !== "darkness" && <g mask={`url(#${uid}artwork)`} style={{mixBlendMode:"screen"}}>{lights.map((l, i) => <g key={l.id} opacity={l.intenzita * .48} style={{mixBlendMode:"screen"}}>
       <LightProjection id={uid+"light"+i} light={l} filter={uid+"tint"+i} shadowMask={uid+"shadow"+i} />
     </g>)}</g>}
   </svg>;
 });
 
-export function BakedAtmosphere({dark,glow,width,height}:{dark:string;glow?:string;width:number;height:number}) {
+export function BakedAtmosphere({dark,glow,width,height,darknessMask}:{dark:string;glow?:string;width:number;height:number;darknessMask?:string}) {
   return <>
-    <image href={dark} width={width} height={height} preserveAspectRatio="none" data-atmosphere-darkness />
+    <image href={dark} width={width} height={height} preserveAspectRatio="none" data-atmosphere-darkness mask={darknessMask} />
     {glow && <image href={glow} width={width} height={height} preserveAspectRatio="none" data-atmosphere-glow style={{mixBlendMode:"screen"}} />}
   </>;
 }
 
-export const MapAtmosphereLayer = memo(function MapAtmosphereLayer({ map, doors, animated=true }: { map: MapV2; doors?: Record<string, boolean>; animated?:boolean }) {
+export function PublicIlluminationMask({id,illumination,width,height}:{id:string;illumination:Record<string,string>;width:number;height:number}) {
+  return <mask id={id} maskUnits="userSpaceOnUse" x={0} y={0} width={width} height={height} data-public-illumination>
+    <rect width={width} height={height} fill="white" />
+    {Object.entries(illumination).map(([cell,level])=>{
+      if (!/^\d+,\d+$/.test(cell) || (level!=="bright" && level!=="dim")) return null;
+      const [x,y]=cell.split(",").map(Number);
+      if (x*PX>=width || y*PX>=height) return null;
+      return <rect key={cell} x={x*PX} y={y*PX} width={PX} height={PX} fill="#000" opacity={level==="bright"?1:.55}/>;
+    })}
+  </mask>;
+}
+
+export const MapAtmosphereLayer = memo(function MapAtmosphereLayer({ map, doors, animated=true, illumination }: { map: MapV2; doors?: Record<string, boolean>; animated?:boolean; illumination?:Record<string,string> }) {
   const { assets } = useMapManifests();
+  const uid = useId().replace(/:/g, "");
+  const darknessMask = illumination ? `url(#${uid}public)` : undefined;
   const W = (map.mrizka[0]?.length || 1) * PX, H = map.mrizka.length * PX;
   const lights = visualLights(map, assets).filter(l => l.radius > 0 && l.intenzita > 0);
   const ambient = clamp(map.atmosfera?.amb ?? 1, 1);
@@ -148,8 +162,9 @@ export const MapAtmosphereLayer = memo(function MapAtmosphereLayer({ map, doors,
   }, [key]);
   if (empty && !previous) return null;
   return <g data-map-atmosphere data-atmosphere-baked={!!bitmaps} pointerEvents="none">
-    {previous && <g key={previous.dark} className="source-raster-leave"><BakedAtmosphere dark={previous.dark} glow={previous.glow} width={W} height={H}/></g>}
-    {bitmaps ? <g key={bitmaps.dark} className="source-raster-enter"><BakedAtmosphere dark={bitmaps.dark} glow={bitmaps.glow} width={W} height={H} /></g> : failed ? <MapAtmosphereArtwork map={map} doors={doors} animated={animated} />
-      : !previous && <rect width={W} height={H} fill={color(map.atmosfera?.barva || "#101522")} opacity={1 - ambient} />}
+    {illumination && <defs><PublicIlluminationMask id={uid+"public"} illumination={illumination} width={W} height={H}/></defs>}
+    {previous && <g key={previous.dark} className="source-raster-leave"><BakedAtmosphere dark={previous.dark} glow={previous.glow} width={W} height={H} darknessMask={darknessMask}/></g>}
+    {bitmaps ? <g key={bitmaps.dark} className="source-raster-enter"><BakedAtmosphere dark={bitmaps.dark} glow={bitmaps.glow} width={W} height={H} darknessMask={darknessMask} /></g> : failed ? <MapAtmosphereArtwork map={map} doors={doors} animated={animated} darknessMask={darknessMask} />
+      : !previous && <rect width={W} height={H} fill={color(map.atmosfera?.barva || "#101522")} opacity={1 - ambient} mask={darknessMask} />}
   </g>;
 });

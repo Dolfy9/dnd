@@ -606,7 +606,7 @@ export default function BattleMap(p: Props) {
               </g>
             );
           })}
-          <g transform={`scale(${PX / 24})`}><MapAtmosphereLayer map={map as MapV2} doors={S.dvere} /></g>
+          <g transform={`scale(${PX / 24})`}><MapAtmosphereLayer map={map as MapV2} doors={S.dvere} illumination={S.playerLightCells} /></g>
           <LightingLayer S={S} map={map} px={PX} W={W} H={H} dm={p.dm} />
           <FogLayer S={S} px={PX} W={W} H={H} dm={p.dm} />
           {measure && (
