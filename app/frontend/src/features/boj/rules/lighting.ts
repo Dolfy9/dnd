@@ -55,6 +55,22 @@ const zoneCoversCell = (z: Zone, x: number, y: number, tokens: Token[]): boolean
 export const obscuredAt = (S: StavBoje, x: number, y: number): boolean =>
   (S.zones || []).some((z) => z.blocksLos && zoneCoversCell(z, x, y, S.tok));
 
+function lightRayOrigin(wIdx: ReturnType<typeof wallIndex>, x: number, y: number, direction: number, doors?: Record<string, boolean>): [number, number] {
+  let ox = x, oy = y;
+  for (const w of wIdx.values()) {
+    if (!wallBlocksSight(w, doors)) continue;
+    const dx = w.b[0] - w.a[0], dy = w.b[1] - w.a[1], len = Math.hypot(dx, dy);
+    if (!len) continue;
+    const t = ((x - w.a[0]) * dx + (y - w.a[1]) * dy) / (len * len);
+    if (t < 0 || t > 1 || Math.abs(dx * (y - w.a[1]) - dy * (x - w.a[0])) / len > 1e-7) continue;
+    const nx = -dy / len, ny = dx / len;
+    const dot = nx * Math.cos(direction) + ny * Math.sin(direction);
+    const side = Math.abs(dot) < 1e-9 ? (nx > 0 || (nx === 0 && ny > 0) ? 1 : -1) : Math.sign(dot);
+    ox += nx * side * 1e-4; oy += ny * side * 1e-4;
+  }
+  return [ox, oy];
+}
+
 /** Úroveň světla na buňce: Darkness/obscured zóny > zdroje > globální. */
 export function lightAt(S: StavBoje, map: BattleMapData, x: number, y: number): LightLevel {
   const playerLevel = S.playerLightCells?.[`${x},${y}`];
@@ -81,7 +97,9 @@ export function lightAt(S: StavBoje, map: BattleMapData, x: number, y: number): 
       : shape.tvar==="kuzel" ? Math.hypot(dx,dy) : Math.max(Math.abs(dx),Math.abs(dy))) * 5;
     const inDark = obscuredAt(S, ax, ay); // světlo ve tmě nesvítí (Darkness 2024)
     if (inDark) continue;
-    if (wIdx.size && sightBlocked(idxOr(wIdx), ox + (shaped || exact?0:.5), oy + (shaped || exact?0:.5), x + .5, y + .5, (S as any).dvere)) continue; // světlo skrz zeď nesvítí
+    const rayOrigin: [number, number] = [ox + (shaped || exact ? 0 : .5), oy + (shaped || exact ? 0 : .5)];
+    const [rx, ry] = shaped || !wIdx.size ? rayOrigin : lightRayOrigin(wIdx, ...rayOrigin, radians, S.dvere);
+    if (wIdx.size && sightBlocked(idxOr(wIdx), rx, ry, x + .5, y + .5, S.dvere)) continue; // světlo skrz zeď nesvítí
     if (d <= L.bright) return "bright";
     if (d <= L.bright + L.dim && rank[lvl] < 1) lvl = "dim";
   }
