@@ -1,6 +1,6 @@
 /* Sdílené v2 vrstvy mapy (boj + editor): textury, výška, stěny/dveře, objekty,
    kresby, světla, poznámky, mřížka. Vše memoizované — statické podle `map`. */
-import React, { memo, useSyncExternalStore } from "react";
+import React, { memo, useId, useSyncExternalStore } from "react";
 import type { MapV2, MapWall, MapObject } from "../model/mapV2";
 import { edgeKey } from "../model/mapV2";
 import { TextureDefs, texUrl, textureById } from "../../mapeditor/assets/textures";
@@ -85,9 +85,15 @@ const WALL_STYLE: Record<string, { color: string; w: number; dash?: string }> = 
 export const MapWallLayer = memo(function MapWallLayer({ map, doors, onDoor, dm, revealedSecrets }:
   { map: MapV2; doors?: Record<string, boolean>; onDoor?: (w: MapWall) => void; dm?: boolean; revealedSecrets?: Record<string, 1> }) {
   const steny = map.steny || [];
+  const uid = useId().replace(/:/g, "");
+  const { textures } = useMapManifests();
+  const texture = textures[["jeskyne", "hory", "snih", "les"].includes(map.podklad) ? "teren-skala" : "teren-wall"];
   if (!steny.length) return null;
   return (
     <g>
+      {texture && <defs><pattern id={uid + "masonry"} width={PX * 2} height={PX * 2} patternUnits="userSpaceOnUse">
+        <image href={assetUrl(texture.src)} width={PX * 2} height={PX * 2} />
+      </pattern></defs>}
       {steny.map((w) => {
         if (w.typ === "secret" && !dm && !(revealedSecrets && revealedSecrets[w.id])) return null;
         const st = WALL_STYLE[w.typ] || WALL_STYLE.wall;
@@ -103,6 +109,10 @@ export const MapWallLayer = memo(function MapWallLayer({ map, doors, onDoor, dm,
                   strokeWidth={st.w} opacity={.3} strokeLinecap="square" />
             <line x1={x1} y1={y1} x2={x2} y2={y2} stroke={st.color} strokeWidth={st.w}
                   strokeDasharray={st.dash} strokeLinecap="square" opacity={w.typ === "curtain" ? .75 : 1} />
+            {texture && w.typ === "wall" && <>
+              <line x1={x1} y1={y1} x2={x2} y2={y2} stroke="#1c1917" strokeWidth={9} strokeLinecap="square" />
+              <line x1={x1} y1={y1} x2={x2} y2={y2} stroke={`url(#${uid}masonry)`} strokeWidth={7} strokeLinecap="square" />
+            </>}
             {w.typ === "door" && (
               <g transform={`translate(${mx},${my}) rotate(${Math.atan2(y2-y1,x2-x1)*180/Math.PI})`}>
                 {open && <path d="M0 0 A9 9 0 0 1 8.5 -3" fill="none" stroke={st.color} strokeWidth={.9} opacity={.8} />}

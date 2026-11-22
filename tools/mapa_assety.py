@@ -87,7 +87,7 @@ def repair_texture(image):
     return image
 
 
-def key_magenta(image):
+def key_magenta(image, aspect=1, size=512):
     from PIL import Image, ImageChops, ImageMath
     image = image.convert("RGBA")
     r, g, b, original_alpha = image.split()
@@ -97,32 +97,34 @@ def key_magenta(image):
     channels = [ImageMath.lambda_eval(
         lambda v: v["convert"]((v["c"] - v["s"]) * 255 / v["d"], "L"),
         c=c, s=spill, d=denominator) for c in (r, g, b)]
-    alpha = ImageChops.multiply(alpha.point(lambda a: 0 if a <= 6 else a), original_alpha)
+    alpha = ImageChops.multiply(alpha.point(lambda a: 0 if a <= 160 else a), original_alpha)
     result = Image.merge("RGBA", (*channels, alpha))
     bbox = alpha.getbbox()
+    width, height = (size, round(size / aspect)) if aspect >= 1 else (round(size * aspect), size)
     if bbox is None:
-        return Image.new("RGBA", (512, 512))
+        return Image.new("RGBA", (width, height))
     result = result.crop(bbox)
-    side = max(result.size)
-    padding = max(1, round(side * .04))
-    square = Image.new("RGBA", (side + 2 * padding, side + 2 * padding))
-    square.paste(result, ((square.width - result.width) // 2, (square.height - result.height) // 2))
-    return square.resize((512, 512), Image.Resampling.LANCZOS)
+    padding = max(1, round(min(width, height) * .04))
+    result.thumbnail((max(1, width - 2 * padding), max(1, height - 2 * padding)), Image.Resampling.LANCZOS)
+    canvas = Image.new("RGBA", (width, height))
+    canvas.paste(result, ((width - result.width) // 2, (height - result.height) // 2))
+    return canvas
 
 
 def import_images(source: Path, prompts: dict) -> None:
     from PIL import Image
-    expected = [(source / "assets" / (a["id"] + ".png"), ASSETS / a["kategorie"] / (a["id"] + ".webp"), True)
+    expected = [(source / "assets" / (a["id"] + ".png"), ASSETS / a["kategorie"] / (a["id"] + ".webp"), a)
                 for a in prompts["assety"]]
     expected += [(source / "textury" / (t["id"] + ".png"), TEXDIR / (t["id"] + ".webp"), False)
                  for t in prompts["textury"]]
+    expected = [(src if src.is_file() else source / src.name, dst, meta) for src, dst, meta in expected]
     missing = [str(src) for src, _, _ in expected if not src.is_file()]
     if missing:
         raise ValueError("Chybí zdrojové obrázky: " + ", ".join(missing))
-    for src, dst, keyed in expected:
+    for src, dst, meta in expected:
         dst.parent.mkdir(parents=True, exist_ok=True)
         with Image.open(src) as image:
-            result = key_magenta(image) if keyed else repair_texture(image)
+            result = key_magenta(image, meta.get("w", 1) / meta.get("h", 1), meta.get("size", 512)) if meta else repair_texture(image)
             result.save(dst, "WEBP", quality=80, method=6, exact=True)
     print(f"Import: {len(expected)} obrázků.")
 
@@ -243,6 +245,7 @@ def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--index", action="store_true")
     parser.add_argument("--import", dest="source", type=Path)
+    parser.add_argument("--only", help="Importovat jen ID oddělená čárkou; manifest zůstane úplný")
     parser.add_argument("--legacy", type=Path, help="Dřívější složka boj/{tex,prop,fx,ovl,icon}")
     args = parser.parse_args()
     prompts = load_prompts()
@@ -250,7 +253,11 @@ def main() -> int:
     TEXDIR.mkdir(parents=True, exist_ok=True)
 
     if args.source:
-        import_images(args.source.expanduser(), prompts)
+        selected = set(args.only.split(",")) if args.only else None
+        subset = {k: [e for e in prompts[k] if selected is None or e["id"] in selected] for k in ("assety", "textury")}
+        if selected and selected - {e["id"] for entries in subset.values() for e in entries}:
+            raise ValueError("Neznámé ID pro import")
+        import_images(args.source.expanduser(), subset)
     if args.legacy:
         import_legacy(args.legacy.expanduser())
     index_only = args.index or args.source is not None or args.legacy is not None

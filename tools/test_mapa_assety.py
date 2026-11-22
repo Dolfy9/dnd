@@ -42,6 +42,20 @@ class AssetImportTests(unittest.TestCase):
         self.assertTrue(tree["blocks"])
         self.assertEqual(tree["cover"], 3)
 
+    def test_flat_import_preserves_portrait_and_declared_size(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            image = Image.new("RGB", (40, 80), (185,40,200))
+            image.paste("#92764c", (5, 5, 35, 75))
+            image.save(root / "ship.png")
+            prompts = {"assety":[{"id":"ship","kategorie":"Přístav","w":8,"h":18,"size":256}],"textury":[]}
+            with patch.object(assets, "ASSETS", root / "out"):
+                assets.import_images(root, prompts)
+            with Image.open(root / "out/Přístav/ship.webp") as result:
+                self.assertEqual(result.size, (114, 256))
+                self.assertEqual(result.getpixel((0,0))[3], 0)
+                self.assertGreater(result.getpixel((57,128))[3], 250)
+
     def test_optional_legacy_images_are_not_generated(self):
         with tempfile.TemporaryDirectory() as directory:
             with patch.object(assets, "ASSETS", Path(directory)), patch.object(assets, "TEXDIR", Path(directory)):

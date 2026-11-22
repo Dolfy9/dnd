@@ -2918,6 +2918,11271 @@
     "ggg%%ggrrgggggggggg%%ggggggggg"
    ],
    "obrazek": "bojove/noet-mlyn-ve-vinicich.jpg"
+  },
+  {
+   "id": "epic-octowerin-zlaty-kanec",
+   "nazev": "Octowerin – Poslední noc U Zlatého kance",
+   "podklad": "mesto",
+   "misto": "03_Mesta/Mesto_Octowerin.md",
+   "popis": "Déšť bubnuje do oken cechovního hostince. Šenk s krbem, kuchyně, soukromý salonek, tři pokoje a dvůr s vozem tvoří propojenou scénu. Sklepní poklop skrývá pašeráckou chodbu. Autorská herní scéna; místní názvy zón a zápletky jsou návrhem pro PJ.",
+   "osvetleni": "Vizuální atmosféra; dosah světel ve stopách.",
+   "start": {
+    "druzina": [
+     [
+      16,
+      24
+     ],
+     [
+      17,
+      24
+     ],
+     [
+      18,
+      24
+     ],
+     [
+      19,
+      24
+     ],
+     [
+      16,
+      25
+     ],
+     [
+      19,
+      25
+     ]
+    ],
+    "nepratele": [
+     [
+      24,
+      19
+     ],
+     [
+      27,
+      17
+     ],
+     [
+      9,
+      9
+     ]
+    ]
+   },
+   "objekty": [
+    {
+     "id": "objekty0",
+     "asset": "pult",
+     "x": 25,
+     "y": 14.3,
+     "w": 6,
+     "h": 2.2,
+     "rot": 8,
+     "cover": 2,
+     "difficult": true
+    },
+    {
+     "id": "objekty1",
+     "asset": "krb",
+     "x": 18.7,
+     "y": 4.3,
+     "w": 3,
+     "h": 2.3,
+     "rot": 0,
+     "light": {
+      "bright": 10,
+      "dim": 15
+     }
+    },
+    {
+     "id": "objekty2",
+     "asset": "kotel",
+     "x": 29.3,
+     "y": 5.5,
+     "w": 1.5,
+     "h": 1.5,
+     "rot": 0
+    },
+    {
+     "id": "objekty3",
+     "asset": "stolni-deska",
+     "x": 27,
+     "y": 8.5,
+     "w": 3,
+     "h": 1.5,
+     "rot": 4,
+     "cover": 2
+    },
+    {
+     "id": "objekty4",
+     "asset": "p3-padaci-dvere",
+     "x": 29,
+     "y": 19.6,
+     "w": 1.6,
+     "h": 1.6,
+     "rot": 7
+    },
+    {
+     "id": "objekty5",
+     "asset": "gen2-vuz",
+     "x": 7,
+     "y": 25.2,
+     "w": 3.2,
+     "h": 2.2,
+     "rot": -14,
+     "cover": 2,
+     "difficult": true
+    },
+    {
+     "id": "objekty6",
+     "asset": "gen2-koberec",
+     "x": 16.6,
+     "y": 10,
+     "w": 4.5,
+     "h": 3.2,
+     "rot": 12,
+     "z": -2
+    },
+    {
+     "id": "objekty7",
+     "asset": "stul-kulaty",
+     "x": 16.6,
+     "y": 10,
+     "w": 2.2,
+     "h": 2.2,
+     "rot": 12,
+     "cover": 2,
+     "difficult": true
+    },
+    {
+     "id": "objekty8",
+     "asset": "zidle",
+     "x": 18.165,
+     "y": 10.333,
+     "w": 0.75,
+     "h": 1,
+     "rot": -78
+    },
+    {
+     "id": "objekty9",
+     "asset": "zidle",
+     "x": 16.6,
+     "y": 11.6,
+     "w": 0.75,
+     "h": 1,
+     "rot": 0
+    },
+    {
+     "id": "objekty10",
+     "asset": "zidle",
+     "x": 15.035,
+     "y": 9.667,
+     "w": 0.75,
+     "h": 1,
+     "rot": 102
+    },
+    {
+     "id": "objekty11",
+     "asset": "zidle",
+     "x": 16.795,
+     "y": 8.412,
+     "w": 0.75,
+     "h": 1,
+     "rot": 187
+    },
+    {
+     "id": "objekty12",
+     "asset": "svicka",
+     "x": 17.05,
+     "y": 9.7,
+     "w": 0.3,
+     "h": 0.3,
+     "rot": 0
+    },
+    {
+     "id": "objekty13",
+     "asset": "p3-nadobi",
+     "x": 16.3,
+     "y": 10.2,
+     "w": 0.85,
+     "h": 0.65,
+     "rot": 12
+    },
+    {
+     "id": "objekty14",
+     "asset": "gen2-koberec",
+     "x": 17.5,
+     "y": 18,
+     "w": 4.5,
+     "h": 3.2,
+     "rot": -17,
+     "z": -2
+    },
+    {
+     "id": "objekty15",
+     "asset": "stul-kulaty",
+     "x": 17.5,
+     "y": 18,
+     "w": 2.2,
+     "h": 2.2,
+     "rot": -17,
+     "cover": 2,
+     "difficult": true
+    },
+    {
+     "id": "objekty16",
+     "asset": "zidle",
+     "x": 19.03,
+     "y": 17.532,
+     "w": 0.75,
+     "h": 1,
+     "rot": -107
+    },
+    {
+     "id": "objekty17",
+     "asset": "zidle",
+     "x": 18.276,
+     "y": 19.399,
+     "w": 0.75,
+     "h": 1,
+     "rot": -29
+    },
+    {
+     "id": "objekty18",
+     "asset": "zidle",
+     "x": 15.97,
+     "y": 18.468,
+     "w": 0.75,
+     "h": 1,
+     "rot": 73
+    },
+    {
+     "id": "objekty19",
+     "asset": "zidle",
+     "x": 16.901,
+     "y": 16.517,
+     "w": 0.75,
+     "h": 1,
+     "rot": 158
+    },
+    {
+     "id": "objekty20",
+     "asset": "svicka",
+     "x": 17.95,
+     "y": 17.7,
+     "w": 0.3,
+     "h": 0.3,
+     "rot": 0
+    },
+    {
+     "id": "objekty21",
+     "asset": "p3-nadobi",
+     "x": 17.2,
+     "y": 18.2,
+     "w": 0.85,
+     "h": 0.65,
+     "rot": -17
+    },
+    {
+     "id": "objekty22",
+     "asset": "gen2-koberec",
+     "x": 9,
+     "y": 13.5,
+     "w": 4.5,
+     "h": 3.2,
+     "rot": 4,
+     "z": -2
+    },
+    {
+     "id": "objekty23",
+     "asset": "stul-kulaty",
+     "x": 9,
+     "y": 13.5,
+     "w": 2.2,
+     "h": 2.2,
+     "rot": 4,
+     "cover": 2,
+     "difficult": true
+    },
+    {
+     "id": "objekty24",
+     "asset": "zidle",
+     "x": 10.596,
+     "y": 13.612,
+     "w": 0.75,
+     "h": 1,
+     "rot": -86
+    },
+    {
+     "id": "objekty25",
+     "asset": "zidle",
+     "x": 9.223,
+     "y": 15.084,
+     "w": 0.75,
+     "h": 1,
+     "rot": -8
+    },
+    {
+     "id": "objekty26",
+     "asset": "zidle",
+     "x": 7.404,
+     "y": 13.388,
+     "w": 0.75,
+     "h": 1,
+     "rot": 94
+    },
+    {
+     "id": "objekty27",
+     "asset": "zidle",
+     "x": 8.972,
+     "y": 11.9,
+     "w": 0.75,
+     "h": 1,
+     "rot": 179
+    },
+    {
+     "id": "objekty28",
+     "asset": "svicka",
+     "x": 9.45,
+     "y": 13.2,
+     "w": 0.3,
+     "h": 0.3,
+     "rot": 0
+    },
+    {
+     "id": "objekty29",
+     "asset": "p3-nadobi",
+     "x": 8.7,
+     "y": 13.7,
+     "w": 0.85,
+     "h": 0.65,
+     "rot": 4
+    },
+    {
+     "id": "objekty30",
+     "asset": "gen2-koberec",
+     "x": 27.6,
+     "y": 20,
+     "w": 4.5,
+     "h": 3.2,
+     "rot": -8,
+     "z": -2
+    },
+    {
+     "id": "objekty31",
+     "asset": "stul-obdelnik",
+     "x": 27.6,
+     "y": 20,
+     "w": 2.2,
+     "h": 2.2,
+     "rot": -8,
+     "cover": 2,
+     "difficult": true
+    },
+    {
+     "id": "objekty32",
+     "asset": "zidle",
+     "x": 29.184,
+     "y": 19.777,
+     "w": 0.75,
+     "h": 1,
+     "rot": -98
+    },
+    {
+     "id": "objekty33",
+     "asset": "zidle",
+     "x": 28.147,
+     "y": 21.504,
+     "w": 0.75,
+     "h": 1,
+     "rot": -20
+    },
+    {
+     "id": "objekty34",
+     "asset": "zidle",
+     "x": 26.016,
+     "y": 20.223,
+     "w": 0.75,
+     "h": 1,
+     "rot": 82
+    },
+    {
+     "id": "objekty35",
+     "asset": "zidle",
+     "x": 27.24,
+     "y": 18.441,
+     "w": 0.75,
+     "h": 1,
+     "rot": 167
+    },
+    {
+     "id": "objekty36",
+     "asset": "svicka",
+     "x": 28.05,
+     "y": 19.7,
+     "w": 0.3,
+     "h": 0.3,
+     "rot": 0
+    },
+    {
+     "id": "objekty37",
+     "asset": "p3-nadobi",
+     "x": 27.3,
+     "y": 20.2,
+     "w": 0.85,
+     "h": 0.65,
+     "rot": -8
+    },
+    {
+     "id": "objekty38",
+     "asset": "gen2-koberec",
+     "x": 8.2,
+     "y": 6.5,
+     "w": 4.5,
+     "h": 3.2,
+     "rot": 3,
+     "z": -2
+    },
+    {
+     "id": "objekty39",
+     "asset": "stul-kulaty",
+     "x": 8.2,
+     "y": 6.5,
+     "w": 2.2,
+     "h": 2.2,
+     "rot": 3,
+     "cover": 2,
+     "difficult": true
+    },
+    {
+     "id": "objekty40",
+     "asset": "zidle",
+     "x": 9.798,
+     "y": 6.584,
+     "w": 0.75,
+     "h": 1,
+     "rot": -87
+    },
+    {
+     "id": "objekty41",
+     "asset": "zidle",
+     "x": 8.45,
+     "y": 8.08,
+     "w": 0.75,
+     "h": 1,
+     "rot": -9
+    },
+    {
+     "id": "objekty42",
+     "asset": "zidle",
+     "x": 6.602,
+     "y": 6.416,
+     "w": 0.75,
+     "h": 1,
+     "rot": 93
+    },
+    {
+     "id": "objekty43",
+     "asset": "zidle",
+     "x": 8.144,
+     "y": 4.901,
+     "w": 0.75,
+     "h": 1,
+     "rot": 178
+    },
+    {
+     "id": "objekty44",
+     "asset": "svicka",
+     "x": 8.65,
+     "y": 6.2,
+     "w": 0.3,
+     "h": 0.3,
+     "rot": 0
+    },
+    {
+     "id": "objekty45",
+     "asset": "p3-nadobi",
+     "x": 7.9,
+     "y": 6.7,
+     "w": 0.85,
+     "h": 0.65,
+     "rot": 3
+    },
+    {
+     "id": "objekty46",
+     "asset": "postel",
+     "x": 5.2,
+     "y": 18,
+     "w": 2.4,
+     "h": 1.5,
+     "rot": 90
+    },
+    {
+     "id": "objekty47",
+     "asset": "truhel",
+     "x": 7.7,
+     "y": 18,
+     "w": 0.85,
+     "h": 0.6,
+     "rot": -7,
+     "cover": 2
+    },
+    {
+     "id": "objekty48",
+     "asset": "postel",
+     "x": 5.2,
+     "y": 21,
+     "w": 2.4,
+     "h": 1.5,
+     "rot": 90
+    },
+    {
+     "id": "objekty49",
+     "asset": "truhel",
+     "x": 7.7,
+     "y": 21,
+     "w": 0.85,
+     "h": 0.6,
+     "rot": -7,
+     "cover": 2
+    },
+    {
+     "id": "objekty50",
+     "asset": "postel",
+     "x": 6,
+     "y": 8,
+     "w": 2.4,
+     "h": 1.5,
+     "rot": 0
+    },
+    {
+     "id": "objekty51",
+     "asset": "truhel",
+     "x": 8.5,
+     "y": 8,
+     "w": 0.85,
+     "h": 0.6,
+     "rot": -7,
+     "cover": 2
+    },
+    {
+     "id": "objekty52",
+     "asset": "skrin",
+     "x": 11,
+     "y": 5,
+     "w": 2,
+     "h": 1,
+     "rot": 90,
+     "blocks": true,
+     "cover": 3
+    },
+    {
+     "id": "objekty53",
+     "asset": "gen2-regal",
+     "x": 30.3,
+     "y": 10,
+     "w": 2,
+     "h": 1,
+     "rot": 0,
+     "blocks": true,
+     "cover": 3
+    },
+    {
+     "id": "objekty54",
+     "asset": "gen2-regal",
+     "x": 30.4,
+     "y": 13,
+     "w": 2,
+     "h": 1,
+     "rot": 0,
+     "blocks": true,
+     "cover": 3
+    },
+    {
+     "id": "objekty55",
+     "asset": "skrin",
+     "x": 14,
+     "y": 21,
+     "w": 2,
+     "h": 1,
+     "rot": 90,
+     "blocks": true,
+     "cover": 3
+    },
+    {
+     "id": "objekty56",
+     "asset": "kandelabr",
+     "x": 4,
+     "y": 4,
+     "w": 0.65,
+     "h": 0.65,
+     "rot": 0
+    },
+    {
+     "id": "objekty57",
+     "asset": "kandelabr",
+     "x": 14,
+     "y": 4,
+     "w": 0.65,
+     "h": 0.65,
+     "rot": 0
+    },
+    {
+     "id": "objekty58",
+     "asset": "kandelabr",
+     "x": 31,
+     "y": 17,
+     "w": 0.65,
+     "h": 0.65,
+     "rot": 0
+    },
+    {
+     "id": "objekty59",
+     "asset": "kandelabr",
+     "x": 23.7,
+     "y": 21.8,
+     "w": 0.65,
+     "h": 0.65,
+     "rot": 0
+    },
+    {
+     "id": "objekty60",
+     "asset": "bedna",
+     "x": 29.065,
+     "y": 13.584,
+     "w": 0.747,
+     "h": 0.793,
+     "rot": 341.83,
+     "cover": 2,
+     "difficult": true
+    },
+    {
+     "id": "objekty61",
+     "asset": "pydel",
+     "x": 29.676,
+     "y": 12.738,
+     "w": 0.916,
+     "h": 1.085,
+     "rot": 34.34,
+     "cover": 2,
+     "difficult": true
+    },
+    {
+     "id": "objekty62",
+     "asset": "bedna",
+     "x": 29.088,
+     "y": 13.271,
+     "w": 0.93,
+     "h": 0.757,
+     "rot": 239.71,
+     "cover": 2,
+     "difficult": true
+    },
+    {
+     "id": "objekty63",
+     "asset": "bedna",
+     "x": 29.974,
+     "y": 12.409,
+     "w": 0.772,
+     "h": 0.916,
+     "rot": 79.06,
+     "cover": 2,
+     "difficult": true
+    },
+    {
+     "id": "objekty64",
+     "asset": "sud",
+     "x": 29.933,
+     "y": 12.258,
+     "w": 0.932,
+     "h": 1.07,
+     "rot": 25.64,
+     "cover": 2,
+     "difficult": true
+    },
+    {
+     "id": "objekty65",
+     "asset": "pydel",
+     "x": 29.456,
+     "y": 13.154,
+     "w": 0.687,
+     "h": 0.713,
+     "rot": 8.56,
+     "cover": 2,
+     "difficult": true
+    },
+    {
+     "id": "objekty66",
+     "asset": "sud",
+     "x": 30.273,
+     "y": 12.426,
+     "w": 0.579,
+     "h": 0.553,
+     "rot": 12.33,
+     "cover": 2,
+     "difficult": true
+    },
+    {
+     "id": "objekty67",
+     "asset": "sud",
+     "x": 25.602,
+     "y": 4.061,
+     "w": 0.938,
+     "h": 1.007,
+     "rot": 306.84,
+     "cover": 2,
+     "difficult": true
+    },
+    {
+     "id": "objekty68",
+     "asset": "sud",
+     "x": 26.039,
+     "y": 4.45,
+     "w": 0.722,
+     "h": 0.742,
+     "rot": 206.1,
+     "cover": 2,
+     "difficult": true
+    },
+    {
+     "id": "objekty69",
+     "asset": "sud",
+     "x": 25.569,
+     "y": 6.027,
+     "w": 0.674,
+     "h": 0.78,
+     "rot": 56.14,
+     "cover": 2,
+     "difficult": true
+    },
+    {
+     "id": "objekty70",
+     "asset": "sud",
+     "x": 24.896,
+     "y": 5.59,
+     "w": 0.918,
+     "h": 0.904,
+     "rot": 38.67,
+     "cover": 2,
+     "difficult": true
+    },
+    {
+     "id": "objekty71",
+     "asset": "bedna",
+     "x": 25.306,
+     "y": 4.7,
+     "w": 0.669,
+     "h": 0.788,
+     "rot": 223.33,
+     "cover": 2,
+     "difficult": true
+    },
+    {
+     "id": "objekty72",
+     "asset": "pydel",
+     "x": 25.546,
+     "y": 6.049,
+     "w": 0.788,
+     "h": 0.736,
+     "rot": 254.61,
+     "cover": 2,
+     "difficult": true
+    },
+    {
+     "id": "objekty73",
+     "asset": "sud",
+     "x": 26.236,
+     "y": 5.467,
+     "w": 0.684,
+     "h": 0.634,
+     "rot": 59.11,
+     "cover": 2,
+     "difficult": true
+    },
+    {
+     "id": "objekty74",
+     "asset": "pydel",
+     "x": 30.755,
+     "y": 25.459,
+     "w": 0.647,
+     "h": 0.655,
+     "rot": 37.88,
+     "cover": 2,
+     "difficult": true
+    },
+    {
+     "id": "objekty75",
+     "asset": "pydel",
+     "x": 29.621,
+     "y": 24.555,
+     "w": 0.917,
+     "h": 0.886,
+     "rot": 301.67,
+     "cover": 2,
+     "difficult": true
+    },
+    {
+     "id": "objekty76",
+     "asset": "bedna",
+     "x": 28.821,
+     "y": 24.478,
+     "w": 0.754,
+     "h": 0.723,
+     "rot": 123.01,
+     "cover": 2,
+     "difficult": true
+    },
+    {
+     "id": "objekty77",
+     "asset": "bedna",
+     "x": 29.415,
+     "y": 24.22,
+     "w": 0.691,
+     "h": 0.765,
+     "rot": 34.22,
+     "cover": 2,
+     "difficult": true
+    },
+    {
+     "id": "objekty78",
+     "asset": "bedna",
+     "x": 29.711,
+     "y": 24.859,
+     "w": 0.587,
+     "h": 0.535,
+     "rot": 38.5,
+     "cover": 2,
+     "difficult": true
+    },
+    {
+     "id": "objekty79",
+     "asset": "sud",
+     "x": 29.017,
+     "y": 24.272,
+     "w": 0.865,
+     "h": 0.905,
+     "rot": 164.89,
+     "cover": 2,
+     "difficult": true
+    },
+    {
+     "id": "objekty80",
+     "asset": "bedna",
+     "x": 29.344,
+     "y": 25.128,
+     "w": 0.865,
+     "h": 0.73,
+     "rot": 266.72,
+     "cover": 2,
+     "difficult": true
+    },
+    {
+     "id": "objekty81",
+     "asset": "pydel",
+     "x": 4.474,
+     "y": 23.52,
+     "w": 0.605,
+     "h": 0.516,
+     "rot": 14.07,
+     "cover": 2,
+     "difficult": true
+    },
+    {
+     "id": "objekty82",
+     "asset": "sud",
+     "x": 4.712,
+     "y": 24.45,
+     "w": 0.65,
+     "h": 0.602,
+     "rot": 241.91,
+     "cover": 2,
+     "difficult": true
+    },
+    {
+     "id": "objekty83",
+     "asset": "sud",
+     "x": 4.997,
+     "y": 25.35,
+     "w": 0.635,
+     "h": 0.629,
+     "rot": 185.52,
+     "cover": 2,
+     "difficult": true
+    },
+    {
+     "id": "objekty84",
+     "asset": "sud",
+     "x": 4.888,
+     "y": 24.199,
+     "w": 0.741,
+     "h": 0.621,
+     "rot": 207.88,
+     "cover": 2,
+     "difficult": true
+    },
+    {
+     "id": "objekty85",
+     "asset": "bedna",
+     "x": 4.258,
+     "y": 25.34,
+     "w": 0.639,
+     "h": 0.746,
+     "rot": 236.47,
+     "cover": 2,
+     "difficult": true
+    },
+    {
+     "id": "objekty86",
+     "asset": "pydel",
+     "x": 5.289,
+     "y": 24.573,
+     "w": 0.819,
+     "h": 0.87,
+     "rot": 180.91,
+     "cover": 2,
+     "difficult": true
+    },
+    {
+     "id": "objekty87",
+     "asset": "bedna",
+     "x": 5.421,
+     "y": 24.631,
+     "w": 0.795,
+     "h": 0.644,
+     "rot": 284.0,
+     "cover": 2,
+     "difficult": true
+    },
+    {
+     "id": "objekty88",
+     "asset": "pydel",
+     "x": 11.253,
+     "y": 25.892,
+     "w": 0.779,
+     "h": 0.88,
+     "rot": 307.25,
+     "cover": 2,
+     "difficult": true
+    },
+    {
+     "id": "objekty89",
+     "asset": "bedna",
+     "x": 12.026,
+     "y": 25.19,
+     "w": 0.944,
+     "h": 1.061,
+     "rot": 301.51,
+     "cover": 2,
+     "difficult": true
+    },
+    {
+     "id": "objekty90",
+     "asset": "bedna",
+     "x": 10.56,
+     "y": 25.017,
+     "w": 0.556,
+     "h": 0.575,
+     "rot": 18.35,
+     "cover": 2,
+     "difficult": true
+    },
+    {
+     "id": "objekty91",
+     "asset": "pydel",
+     "x": 11.278,
+     "y": 24.429,
+     "w": 0.915,
+     "h": 0.887,
+     "rot": 61.75,
+     "cover": 2,
+     "difficult": true
+    },
+    {
+     "id": "objekty92",
+     "asset": "bedna",
+     "x": 11.764,
+     "y": 26.136,
+     "w": 0.885,
+     "h": 0.897,
+     "rot": 197.46,
+     "cover": 2,
+     "difficult": true
+    },
+    {
+     "id": "objekty93",
+     "asset": "bedna",
+     "x": 11.292,
+     "y": 24.956,
+     "w": 0.924,
+     "h": 0.907,
+     "rot": 346.52,
+     "cover": 2,
+     "difficult": true
+    },
+    {
+     "id": "objekty94",
+     "asset": "pydel",
+     "x": 11.366,
+     "y": 25.629,
+     "w": 0.903,
+     "h": 1.079,
+     "rot": 114.56,
+     "cover": 2,
+     "difficult": true
+    },
+    {
+     "id": "objekty95",
+     "asset": "kvetinac",
+     "x": 24.044,
+     "y": 17.679,
+     "w": 0.604,
+     "h": 0.5,
+     "rot": 273.97
+    },
+    {
+     "id": "objekty96",
+     "asset": "kamen",
+     "x": 24.44,
+     "y": 18.2,
+     "w": 0.61,
+     "h": 0.711,
+     "rot": 73.35
+    },
+    {
+     "id": "objekty97",
+     "asset": "kamen",
+     "x": 23.657,
+     "y": 18.173,
+     "w": 0.343,
+     "h": 0.384,
+     "rot": 266.7
+    },
+    {
+     "id": "objekty98",
+     "asset": "smiti",
+     "x": 23.321,
+     "y": 18.419,
+     "w": 0.364,
+     "h": 0.436,
+     "rot": 5.83
+    },
+    {
+     "id": "objekty99",
+     "asset": "kvetinac",
+     "x": 23.262,
+     "y": 17.763,
+     "w": 0.556,
+     "h": 0.512,
+     "rot": 45.82
+    },
+    {
+     "id": "objekty100",
+     "asset": "kvetinac",
+     "x": 4.814,
+     "y": 10.89,
+     "w": 0.53,
+     "h": 0.618,
+     "rot": 150.39
+    },
+    {
+     "id": "objekty101",
+     "asset": "kamen",
+     "x": 4.417,
+     "y": 9.118,
+     "w": 0.486,
+     "h": 0.432,
+     "rot": 109.82
+    },
+    {
+     "id": "objekty102",
+     "asset": "kamen",
+     "x": 3.88,
+     "y": 10.001,
+     "w": 0.353,
+     "h": 0.318,
+     "rot": 1.49
+    },
+    {
+     "id": "objekty103",
+     "asset": "smiti",
+     "x": 4.476,
+     "y": 10.866,
+     "w": 0.559,
+     "h": 0.664,
+     "rot": 249.13
+    },
+    {
+     "id": "objekty104",
+     "asset": "smiti",
+     "x": 4.07,
+     "y": 10.226,
+     "w": 0.376,
+     "h": 0.399,
+     "rot": 121.09
+    },
+    {
+     "id": "objekty105",
+     "asset": "smiti",
+     "x": 31.727,
+     "y": 5.268,
+     "w": 0.539,
+     "h": 0.511,
+     "rot": 219.51
+    },
+    {
+     "id": "objekty106",
+     "asset": "smiti",
+     "x": 30.807,
+     "y": 4.707,
+     "w": 0.352,
+     "h": 0.36,
+     "rot": 166.79
+    },
+    {
+     "id": "objekty107",
+     "asset": "smiti",
+     "x": 30.651,
+     "y": 4.551,
+     "w": 0.356,
+     "h": 0.374,
+     "rot": 324.53
+    },
+    {
+     "id": "objekty108",
+     "asset": "kamen",
+     "x": 31.143,
+     "y": 5.917,
+     "w": 0.61,
+     "h": 0.494,
+     "rot": 139.41
+    },
+    {
+     "id": "objekty109",
+     "asset": "smiti",
+     "x": 31.043,
+     "y": 5.088,
+     "w": 0.599,
+     "h": 0.647,
+     "rot": 46.91
+    },
+    {
+     "id": "objekty110",
+     "asset": "kvetinac",
+     "x": 34.209,
+     "y": 9.326,
+     "w": 0.524,
+     "h": 0.506,
+     "rot": 240.09
+    },
+    {
+     "id": "objekty111",
+     "asset": "kamen",
+     "x": 33.461,
+     "y": 8.18,
+     "w": 0.403,
+     "h": 0.334,
+     "rot": 60.13
+    },
+    {
+     "id": "objekty112",
+     "asset": "kamen",
+     "x": 33.885,
+     "y": 8.483,
+     "w": 0.589,
+     "h": 0.569,
+     "rot": 221.33
+    },
+    {
+     "id": "objekty113",
+     "asset": "smiti",
+     "x": 34.06,
+     "y": 8.755,
+     "w": 0.524,
+     "h": 0.525,
+     "rot": 314.26
+    },
+    {
+     "id": "objekty114",
+     "asset": "kamen",
+     "x": 34.137,
+     "y": 9.174,
+     "w": 0.591,
+     "h": 0.506,
+     "rot": 291.49
+    },
+    {
+     "id": "objekty115",
+     "asset": "smiti",
+     "x": 0.997,
+     "y": 18.597,
+     "w": 0.409,
+     "h": 0.467,
+     "rot": 9.02
+    },
+    {
+     "id": "objekty116",
+     "asset": "smiti",
+     "x": 1.234,
+     "y": 18.432,
+     "w": 0.608,
+     "h": 0.73,
+     "rot": 203.12
+    },
+    {
+     "id": "objekty117",
+     "asset": "kvetinac",
+     "x": 2.196,
+     "y": 18.866,
+     "w": 0.393,
+     "h": 0.381,
+     "rot": 14.51
+    },
+    {
+     "id": "objekty118",
+     "asset": "kamen",
+     "x": 1.045,
+     "y": 19.297,
+     "w": 0.459,
+     "h": 0.525,
+     "rot": 63.27
+    },
+    {
+     "id": "objekty119",
+     "asset": "kamen",
+     "x": 1.11,
+     "y": 18.525,
+     "w": 0.565,
+     "h": 0.649,
+     "rot": 296.97
+    }
+   ],
+   "steny": [
+    {
+     "id": "steny0",
+     "a": [
+      3,
+      3
+     ],
+     "b": [
+      14.02,
+      3.0
+     ],
+     "typ": "wall"
+    },
+    {
+     "id": "steny1",
+     "a": [
+      14.02,
+      3.0
+     ],
+     "b": [
+      16.05,
+      3.0
+     ],
+     "typ": "window"
+    },
+    {
+     "id": "steny2",
+     "a": [
+      16.05,
+      3.0
+     ],
+     "b": [
+      32,
+      3
+     ],
+     "typ": "wall"
+    },
+    {
+     "id": "steny3",
+     "a": [
+      32,
+      3
+     ],
+     "b": [
+      32.0,
+      7.4
+     ],
+     "typ": "wall"
+    },
+    {
+     "id": "steny4",
+     "a": [
+      32.0,
+      7.4
+     ],
+     "b": [
+      32.0,
+      9.6
+     ],
+     "typ": "window"
+    },
+    {
+     "id": "steny5",
+     "a": [
+      32.0,
+      9.6
+     ],
+     "b": [
+      32,
+      23
+     ],
+     "typ": "wall"
+    },
+    {
+     "id": "steny6",
+     "a": [
+      32,
+      23
+     ],
+     "b": [
+      21.56,
+      23.0
+     ],
+     "typ": "wall"
+    },
+    {
+     "id": "steny7",
+     "a": [
+      21.56,
+      23.0
+     ],
+     "b": [
+      19.24,
+      23.0
+     ],
+     "typ": "door"
+    },
+    {
+     "id": "steny8",
+     "a": [
+      19.24,
+      23.0
+     ],
+     "b": [
+      3,
+      23
+     ],
+     "typ": "wall"
+    },
+    {
+     "id": "steny9",
+     "a": [
+      3,
+      23
+     ],
+     "b": [
+      3.0,
+      15.4
+     ],
+     "typ": "wall"
+    },
+    {
+     "id": "steny10",
+     "a": [
+      3.0,
+      15.4
+     ],
+     "b": [
+      3.0,
+      13.0
+     ],
+     "typ": "window"
+    },
+    {
+     "id": "steny11",
+     "a": [
+      3.0,
+      13.0
+     ],
+     "b": [
+      3,
+      3
+     ],
+     "typ": "wall"
+    },
+    {
+     "id": "steny12",
+     "a": [
+      3,
+      11
+     ],
+     "b": [
+      15,
+      11
+     ],
+     "typ": "wall"
+    },
+    {
+     "id": "steny13",
+     "a": [
+      15,
+      3
+     ],
+     "b": [
+      15,
+      11
+     ],
+     "typ": "wall"
+    },
+    {
+     "id": "steny14",
+     "a": [
+      3,
+      16
+     ],
+     "b": [
+      12,
+      16
+     ],
+     "typ": "wall"
+    },
+    {
+     "id": "steny15",
+     "a": [
+      12,
+      11
+     ],
+     "b": [
+      12,
+      16
+     ],
+     "typ": "wall"
+    },
+    {
+     "id": "steny16",
+     "a": [
+      23,
+      3
+     ],
+     "b": [
+      23,
+      8
+     ],
+     "typ": "wall"
+    },
+    {
+     "id": "steny17",
+     "a": [
+      23,
+      8
+     ],
+     "b": [
+      23,
+      10
+     ],
+     "typ": "door"
+    },
+    {
+     "id": "steny18",
+     "a": [
+      23,
+      10
+     ],
+     "b": [
+      23,
+      16
+     ],
+     "typ": "wall"
+    },
+    {
+     "id": "steny19",
+     "a": [
+      23,
+      16
+     ],
+     "b": [
+      29,
+      16
+     ],
+     "typ": "wall"
+    },
+    {
+     "id": "steny20",
+     "a": [
+      29,
+      16
+     ],
+     "b": [
+      31,
+      16
+     ],
+     "typ": "door"
+    },
+    {
+     "id": "steny21",
+     "a": [
+      31,
+      16
+     ],
+     "b": [
+      32,
+      16
+     ],
+     "typ": "wall"
+    },
+    {
+     "id": "steny22",
+     "a": [
+      3,
+      19
+     ],
+     "b": [
+      9,
+      19
+     ],
+     "typ": "wall"
+    },
+    {
+     "id": "steny23",
+     "a": [
+      9,
+      19
+     ],
+     "b": [
+      11,
+      19
+     ],
+     "typ": "door"
+    },
+    {
+     "id": "steny24",
+     "a": [
+      11,
+      19
+     ],
+     "b": [
+      12,
+      19
+     ],
+     "typ": "wall"
+    },
+    {
+     "id": "steny25",
+     "a": [
+      12,
+      16
+     ],
+     "b": [
+      12,
+      23
+     ],
+     "typ": "wall"
+    },
+    {
+     "id": "steny26",
+     "a": [
+      12,
+      13
+     ],
+     "b": [
+      15,
+      13
+     ],
+     "typ": "door"
+    },
+    {
+     "id": "steny27",
+     "a": [
+      5,
+      3
+     ],
+     "b": [
+      7,
+      3
+     ],
+     "typ": "window"
+    },
+    {
+     "id": "steny28",
+     "a": [
+      18,
+      3
+     ],
+     "b": [
+      20,
+      3
+     ],
+     "typ": "window"
+    },
+    {
+     "id": "steny29",
+     "a": [
+      32,
+      19
+     ],
+     "b": [
+      32,
+      21
+     ],
+     "typ": "window"
+    },
+    {
+     "id": "steny30",
+     "a": [
+      3,
+      13
+     ],
+     "b": [
+      3,
+      15
+     ],
+     "typ": "window"
+    }
+   ],
+   "malba": [
+    {
+     "id": "malba0",
+     "t": "kocici-hlavy",
+     "b": 1,
+     "o": 1,
+     "h": 1,
+     "r": 0,
+     "poly": true,
+     "p": [
+      [
+       0,
+       0
+      ],
+      [
+       36,
+       0
+      ],
+      [
+       36,
+       28
+      ],
+      [
+       0,
+       28
+      ]
+     ]
+    },
+    {
+     "id": "malba1",
+     "t": "hlina",
+     "b": 2.8,
+     "o": 0.65,
+     "h": 0.25,
+     "r": 23,
+     "poly": false,
+     "p": [
+      [
+       0,
+       25
+      ],
+      [
+       8,
+       23
+      ],
+      [
+       18,
+       24
+      ],
+      [
+       30,
+       26
+      ],
+      [
+       36,
+       24
+      ]
+     ]
+    },
+    {
+     "id": "malba2",
+     "t": "drevo",
+     "b": 1,
+     "o": 1,
+     "h": 1,
+     "r": 90,
+     "poly": true,
+     "p": [
+      [
+       3,
+       3
+      ],
+      [
+       32,
+       3
+      ],
+      [
+       32,
+       23
+      ],
+      [
+       3,
+       23
+      ]
+     ]
+    },
+    {
+     "id": "malba3",
+     "t": "dlazba",
+     "b": 1,
+     "o": 1,
+     "h": 1,
+     "r": 0,
+     "poly": true,
+     "p": [
+      [
+       23,
+       3
+      ],
+      [
+       32,
+       3
+      ],
+      [
+       32,
+       12
+      ],
+      [
+       23,
+       12
+      ]
+     ]
+    },
+    {
+     "id": "malba4",
+     "t": "koberec",
+     "b": 1,
+     "o": 0.85,
+     "h": 1,
+     "r": 12,
+     "poly": true,
+     "p": [
+      [
+       3.4,
+       3.4
+      ],
+      [
+       11.4,
+       3.4
+      ],
+      [
+       11.4,
+       11.0
+      ],
+      [
+       3.4,
+       11.0
+      ]
+     ]
+    },
+    {
+     "id": "malba5",
+     "t": "teren-rubble",
+     "b": 1.1,
+     "o": 0.45,
+     "h": 0.2,
+     "r": 32,
+     "poly": false,
+     "p": [
+      [
+       24,
+       23
+      ],
+      [
+       25,
+       25
+      ],
+      [
+       28,
+       26
+      ]
+     ]
+    }
+   ],
+   "svetla": [
+    {
+     "id": "svetla0",
+     "x": 16.6,
+     "y": 10,
+     "bright": 4,
+     "dim": 9,
+     "color": "#ffbb70",
+     "intenzita": 0.6,
+     "blikani": true
+    },
+    {
+     "id": "svetla1",
+     "x": 17.5,
+     "y": 18,
+     "bright": 4,
+     "dim": 9,
+     "color": "#ffbb70",
+     "intenzita": 0.6,
+     "blikani": true
+    },
+    {
+     "id": "svetla2",
+     "x": 9,
+     "y": 13.5,
+     "bright": 4,
+     "dim": 9,
+     "color": "#ffbb70",
+     "intenzita": 0.6,
+     "blikani": true
+    },
+    {
+     "id": "svetla3",
+     "x": 27.6,
+     "y": 20,
+     "bright": 4,
+     "dim": 9,
+     "color": "#ffbb70",
+     "intenzita": 0.6,
+     "blikani": true
+    },
+    {
+     "id": "svetla4",
+     "x": 8.2,
+     "y": 6.5,
+     "bright": 4,
+     "dim": 9,
+     "color": "#ffbb70",
+     "intenzita": 0.6,
+     "blikani": true
+    },
+    {
+     "id": "svetla5",
+     "x": 4,
+     "y": 4,
+     "bright": 8,
+     "dim": 16,
+     "color": "#ffbb70",
+     "intenzita": 0.8,
+     "blikani": true
+    },
+    {
+     "id": "svetla6",
+     "x": 14,
+     "y": 4,
+     "bright": 8,
+     "dim": 16,
+     "color": "#ffbb70",
+     "intenzita": 0.8,
+     "blikani": true
+    },
+    {
+     "id": "svetla7",
+     "x": 31,
+     "y": 17,
+     "bright": 8,
+     "dim": 16,
+     "color": "#ffbb70",
+     "intenzita": 0.8,
+     "blikani": true
+    },
+    {
+     "id": "svetla8",
+     "x": 23.7,
+     "y": 21.8,
+     "bright": 8,
+     "dim": 16,
+     "color": "#ffbb70",
+     "intenzita": 0.8,
+     "blikani": true
+    },
+    {
+     "id": "svetla9",
+     "x": 18.7,
+     "y": 4.6,
+     "bright": 12,
+     "dim": 20,
+     "color": "#ff9b42",
+     "intenzita": 0.8,
+     "blikani": true
+    },
+    {
+     "id": "svetla10",
+     "x": 20,
+     "y": 25,
+     "bright": 5,
+     "dim": 12,
+     "color": "#9cc4e0",
+     "intenzita": 0.35,
+     "blikani": false
+    }
+   ],
+   "poznamky": [
+    {
+     "id": "poznamky0",
+     "x": 29,
+     "y": 19.7,
+     "text": "Sklepní poklop: DC 13 Investigation odhalí čerstvé škrábance. Žebřík do pašeráckého sklepa."
+    },
+    {
+     "id": "poznamky1",
+     "x": 8,
+     "y": 6.5,
+     "text": "Salonek kupců: tajná schránka pod stolem. Hostinec a jeho příběh jsou návrh pro PJ."
+    },
+    {
+     "id": "poznamky2",
+     "x": 26,
+     "y": 14,
+     "text": "Šenk: pult poskytuje poloviční kryt; převrácené sudy vytvoří těžký terén."
+    }
+   ],
+   "kresby": [],
+   "vyska": {},
+   "textury": {},
+   "atmosfera": {
+    "amb": 0.5,
+    "barva": "#182237"
+   },
+   "pocasi": {
+    "typ": "dest",
+    "sila": 0.32,
+    "vitr": 112
+   },
+   "mrizkaStyl": {
+    "typ": "dots",
+    "barva": "#ddd4b1",
+    "opacita": 0.13
+   },
+   "mrizka": [
+    "....................................",
+    "....................................",
+    "....................................",
+    "....................................",
+    "....................................",
+    "....................................",
+    "....................................",
+    "....................................",
+    "....................................",
+    "....................................",
+    "....................................",
+    "....................................",
+    "....................................",
+    "....................................",
+    "....................................",
+    "....................................",
+    "....................................",
+    "....................................",
+    "....................................",
+    "....................................",
+    "....................................",
+    "....................................",
+    "....................................",
+    "....................................",
+    "....................................",
+    "....................................",
+    "....................................",
+    "...................................."
+   ]
+  },
+  {
+   "id": "epic-mictima-modra-hrobka",
+   "nazev": "Mictima – Hrobka Modré přísahy",
+   "podklad": "krypta",
+   "misto": "03_Mesta/Mesto_Mictima.md",
+   "popis": "Pod hřbitovem se otevírá lomená pohřební cesta. Ústřední osmistěnná síň, postranní niky a zatopený relikviář vedou k modrému portálu. Sarkofágy nabízejí kryt, kosti zpomalují. Autorská herní scéna; místní názvy zón a zápletky jsou návrhem pro PJ.",
+   "osvetleni": "Vizuální atmosféra; dosah světel ve stopách.",
+   "start": {
+    "druzina": [
+     [
+      4,
+      23
+     ],
+     [
+      5,
+      23
+     ],
+     [
+      6,
+      23
+     ],
+     [
+      4,
+      24
+     ],
+     [
+      5,
+      24
+     ],
+     [
+      6,
+      24
+     ]
+    ],
+    "nepratele": [
+     [
+      19,
+      10
+     ],
+     [
+      24,
+      14
+     ],
+     [
+      26,
+      16
+     ],
+     [
+      8,
+      10
+     ]
+    ]
+   },
+   "objekty": [
+    {
+     "id": "objekty0",
+     "asset": "mag-kruh",
+     "x": 22,
+     "y": 11.8,
+     "w": 7,
+     "h": 7,
+     "rot": -12,
+     "z": -2,
+     "anim": false
+    },
+    {
+     "id": "objekty1",
+     "asset": "gen2-portal",
+     "x": 24.5,
+     "y": 7.2,
+     "w": 3.7,
+     "h": 3.7,
+     "rot": 27
+    },
+    {
+     "id": "objekty2",
+     "asset": "oltar",
+     "x": 22,
+     "y": 17,
+     "w": 3.3,
+     "h": 1.6,
+     "rot": 0,
+     "blocks": true,
+     "cover": 3
+    },
+    {
+     "id": "objekty3",
+     "asset": "socha",
+     "x": 14,
+     "y": 8,
+     "w": 1.7,
+     "h": 2,
+     "rot": 28,
+     "blocks": true,
+     "cover": 3
+    },
+    {
+     "id": "objekty4",
+     "asset": "socha",
+     "x": 29,
+     "y": 16.5,
+     "w": 1.7,
+     "h": 2,
+     "rot": -30,
+     "blocks": true,
+     "cover": 3
+    },
+    {
+     "id": "objekty5",
+     "asset": "sarkofag",
+     "x": 16,
+     "y": 5.6,
+     "w": 1.5,
+     "h": 2.8,
+     "rot": 0,
+     "cover": 2,
+     "difficult": true
+    },
+    {
+     "id": "objekty6",
+     "asset": "pavouk-web",
+     "x": 17.575,
+     "y": 5.893,
+     "w": 0.521,
+     "h": 0.613,
+     "rot": 292.53
+    },
+    {
+     "id": "objekty7",
+     "asset": "pavouk-web",
+     "x": 16.019,
+     "y": 6.501,
+     "w": 0.695,
+     "h": 0.65,
+     "rot": 349.17
+    },
+    {
+     "id": "objekty8",
+     "asset": "gen2-kosti",
+     "x": 17.423,
+     "y": 6.786,
+     "w": 0.311,
+     "h": 0.322,
+     "rot": 180.29
+    },
+    {
+     "id": "objekty9",
+     "asset": "pavouk-web",
+     "x": 17.862,
+     "y": 6.515,
+     "w": 0.33,
+     "h": 0.39,
+     "rot": 135.79
+    },
+    {
+     "id": "objekty10",
+     "asset": "sarkofag",
+     "x": 21,
+     "y": 5.2,
+     "w": 1.5,
+     "h": 2.8,
+     "rot": 4,
+     "cover": 2,
+     "difficult": true
+    },
+    {
+     "id": "objekty11",
+     "asset": "pavouk-web",
+     "x": 22.022,
+     "y": 5.166,
+     "w": 0.582,
+     "h": 0.553,
+     "rot": 236.18
+    },
+    {
+     "id": "objekty12",
+     "asset": "gen2-kosti",
+     "x": 21.443,
+     "y": 5.317,
+     "w": 0.605,
+     "h": 0.584,
+     "rot": 275.92
+    },
+    {
+     "id": "objekty13",
+     "asset": "kamen",
+     "x": 22.116,
+     "y": 4.901,
+     "w": 0.606,
+     "h": 0.692,
+     "rot": 49.23
+    },
+    {
+     "id": "objekty14",
+     "asset": "gen2-kosti",
+     "x": 21.502,
+     "y": 5.84,
+     "w": 0.489,
+     "h": 0.493,
+     "rot": 258.97
+    },
+    {
+     "id": "objekty15",
+     "asset": "sarkofag",
+     "x": 14,
+     "y": 17,
+     "w": 1.5,
+     "h": 2.8,
+     "rot": 42,
+     "cover": 2,
+     "difficult": true
+    },
+    {
+     "id": "objekty16",
+     "asset": "kamen",
+     "x": 14.689,
+     "y": 17.772,
+     "w": 0.389,
+     "h": 0.451,
+     "rot": 47.61
+    },
+    {
+     "id": "objekty17",
+     "asset": "kamen",
+     "x": 14.661,
+     "y": 17.934,
+     "w": 0.641,
+     "h": 0.549,
+     "rot": 174.27
+    },
+    {
+     "id": "objekty18",
+     "asset": "gen2-kosti",
+     "x": 13.768,
+     "y": 17.345,
+     "w": 0.688,
+     "h": 0.731,
+     "rot": 169.18
+    },
+    {
+     "id": "objekty19",
+     "asset": "pavouk-web",
+     "x": 13.607,
+     "y": 18.428,
+     "w": 0.42,
+     "h": 0.441,
+     "rot": 254.95
+    },
+    {
+     "id": "objekty20",
+     "asset": "sarkofag",
+     "x": 18.5,
+     "y": 18.8,
+     "w": 1.5,
+     "h": 2.8,
+     "rot": 8,
+     "cover": 2,
+     "difficult": true
+    },
+    {
+     "id": "objekty21",
+     "asset": "pavouk-web",
+     "x": 18.177,
+     "y": 19.843,
+     "w": 0.567,
+     "h": 0.54,
+     "rot": 168.55
+    },
+    {
+     "id": "objekty22",
+     "asset": "kamen",
+     "x": 19.81,
+     "y": 20.096,
+     "w": 0.384,
+     "h": 0.363,
+     "rot": 306.76
+    },
+    {
+     "id": "objekty23",
+     "asset": "kamen",
+     "x": 20.013,
+     "y": 18.379,
+     "w": 0.351,
+     "h": 0.289,
+     "rot": 203.96
+    },
+    {
+     "id": "objekty24",
+     "asset": "pavouk-web",
+     "x": 18.157,
+     "y": 19.997,
+     "w": 0.516,
+     "h": 0.606,
+     "rot": 304.07
+    },
+    {
+     "id": "objekty25",
+     "asset": "sarkofag",
+     "x": 28,
+     "y": 11,
+     "w": 1.5,
+     "h": 2.8,
+     "rot": 90,
+     "cover": 2,
+     "difficult": true
+    },
+    {
+     "id": "objekty26",
+     "asset": "gen2-kosti",
+     "x": 28.615,
+     "y": 12.29,
+     "w": 0.487,
+     "h": 0.524,
+     "rot": 237.33
+    },
+    {
+     "id": "objekty27",
+     "asset": "kamen",
+     "x": 28.088,
+     "y": 11.687,
+     "w": 0.301,
+     "h": 0.293,
+     "rot": 306.74
+    },
+    {
+     "id": "objekty28",
+     "asset": "gen2-kosti",
+     "x": 27.693,
+     "y": 11.306,
+     "w": 0.35,
+     "h": 0.312,
+     "rot": 154.76
+    },
+    {
+     "id": "objekty29",
+     "asset": "kamen",
+     "x": 28.392,
+     "y": 10.531,
+     "w": 0.379,
+     "h": 0.324,
+     "rot": 115.79
+    },
+    {
+     "id": "objekty30",
+     "asset": "sarkofag",
+     "x": 5.5,
+     "y": 7.2,
+     "w": 1.5,
+     "h": 2.8,
+     "rot": -8,
+     "cover": 2,
+     "difficult": true
+    },
+    {
+     "id": "objekty31",
+     "asset": "pavouk-web",
+     "x": 4.596,
+     "y": 8.021,
+     "w": 0.339,
+     "h": 0.338,
+     "rot": 269.81
+    },
+    {
+     "id": "objekty32",
+     "asset": "pavouk-web",
+     "x": 5.547,
+     "y": 8.647,
+     "w": 0.569,
+     "h": 0.47,
+     "rot": 141.54
+    },
+    {
+     "id": "objekty33",
+     "asset": "kamen",
+     "x": 6.897,
+     "y": 7.705,
+     "w": 0.484,
+     "h": 0.422,
+     "rot": 104.08
+    },
+    {
+     "id": "objekty34",
+     "asset": "gen2-kosti",
+     "x": 5.488,
+     "y": 8.01,
+     "w": 0.473,
+     "h": 0.503,
+     "rot": 264.2
+    },
+    {
+     "id": "objekty35",
+     "asset": "sarkofag",
+     "x": 8.5,
+     "y": 9,
+     "w": 1.5,
+     "h": 2.8,
+     "rot": 9,
+     "cover": 2,
+     "difficult": true
+    },
+    {
+     "id": "objekty36",
+     "asset": "gen2-kosti",
+     "x": 8.892,
+     "y": 8.604,
+     "w": 0.45,
+     "h": 0.501,
+     "rot": 172.61
+    },
+    {
+     "id": "objekty37",
+     "asset": "pavouk-web",
+     "x": 8.953,
+     "y": 10.088,
+     "w": 0.522,
+     "h": 0.58,
+     "rot": 126.55
+    },
+    {
+     "id": "objekty38",
+     "asset": "gen2-kosti",
+     "x": 8.31,
+     "y": 8.362,
+     "w": 0.654,
+     "h": 0.611,
+     "rot": 137.88
+    },
+    {
+     "id": "objekty39",
+     "asset": "kamen",
+     "x": 8.383,
+     "y": 9.932,
+     "w": 0.481,
+     "h": 0.572,
+     "rot": 121.29
+    },
+    {
+     "id": "objekty40",
+     "asset": "sarkofag",
+     "x": 30,
+     "y": 24,
+     "w": 1.5,
+     "h": 2.8,
+     "rot": 90,
+     "cover": 2,
+     "difficult": true
+    },
+    {
+     "id": "objekty41",
+     "asset": "pavouk-web",
+     "x": 29.825,
+     "y": 24.329,
+     "w": 0.573,
+     "h": 0.517,
+     "rot": 28.65
+    },
+    {
+     "id": "objekty42",
+     "asset": "gen2-kosti",
+     "x": 30.042,
+     "y": 23.542,
+     "w": 0.446,
+     "h": 0.43,
+     "rot": 68.63
+    },
+    {
+     "id": "objekty43",
+     "asset": "pavouk-web",
+     "x": 29.629,
+     "y": 24.867,
+     "w": 0.371,
+     "h": 0.4,
+     "rot": 48.84
+    },
+    {
+     "id": "objekty44",
+     "asset": "gen2-kosti",
+     "x": 31.533,
+     "y": 24.273,
+     "w": 0.669,
+     "h": 0.673,
+     "rot": 229.28
+    },
+    {
+     "id": "objekty45",
+     "asset": "sloup",
+     "x": 15,
+     "y": 10,
+     "w": 1.1,
+     "h": 1.1,
+     "rot": 0,
+     "blocks": true,
+     "cover": 3
+    },
+    {
+     "id": "objekty46",
+     "asset": "sloup",
+     "x": 15,
+     "y": 14.5,
+     "w": 1.1,
+     "h": 1.1,
+     "rot": 0,
+     "blocks": true,
+     "cover": 3
+    },
+    {
+     "id": "objekty47",
+     "asset": "sloup",
+     "x": 27.8,
+     "y": 7.5,
+     "w": 1.1,
+     "h": 1.1,
+     "rot": 0,
+     "blocks": true,
+     "cover": 3
+    },
+    {
+     "id": "objekty48",
+     "asset": "sloup",
+     "x": 27.5,
+     "y": 18,
+     "w": 1.1,
+     "h": 1.1,
+     "rot": 0,
+     "blocks": true,
+     "cover": 3
+    },
+    {
+     "id": "objekty49",
+     "asset": "sloup",
+     "x": 4.4,
+     "y": 10.7,
+     "w": 1.1,
+     "h": 1.1,
+     "rot": 0,
+     "blocks": true,
+     "cover": 3
+    },
+    {
+     "id": "objekty50",
+     "asset": "sloup",
+     "x": 9.8,
+     "y": 6,
+     "w": 1.1,
+     "h": 1.1,
+     "rot": 0,
+     "blocks": true,
+     "cover": 3
+    },
+    {
+     "id": "objekty51",
+     "asset": "brasier",
+     "x": 12,
+     "y": 8,
+     "w": 0.8,
+     "h": 0.8,
+     "rot": 0
+    },
+    {
+     "id": "objekty52",
+     "asset": "brasier",
+     "x": 29,
+     "y": 8,
+     "w": 0.8,
+     "h": 0.8,
+     "rot": 0
+    },
+    {
+     "id": "objekty53",
+     "asset": "brasier",
+     "x": 16,
+     "y": 19,
+     "w": 0.8,
+     "h": 0.8,
+     "rot": 0
+    },
+    {
+     "id": "objekty54",
+     "asset": "brasier",
+     "x": 27,
+     "y": 18,
+     "w": 0.8,
+     "h": 0.8,
+     "rot": 0
+    },
+    {
+     "id": "objekty55",
+     "asset": "brasier",
+     "x": 6,
+     "y": 21,
+     "w": 0.8,
+     "h": 0.8,
+     "rot": 0
+    },
+    {
+     "id": "objekty56",
+     "asset": "brasier",
+     "x": 6,
+     "y": 6,
+     "w": 0.8,
+     "h": 0.8,
+     "rot": 0
+    },
+    {
+     "id": "objekty57",
+     "asset": "trhlina",
+     "x": 22.073,
+     "y": 15.127,
+     "w": 0.303,
+     "h": 0.322,
+     "rot": 105.07
+    },
+    {
+     "id": "objekty58",
+     "asset": "gen2-houby",
+     "x": 18.539,
+     "y": 14.368,
+     "w": 0.358,
+     "h": 0.299,
+     "rot": 237.66
+    },
+    {
+     "id": "objekty59",
+     "asset": "trhlina",
+     "x": 15.534,
+     "y": 13.892,
+     "w": 0.503,
+     "h": 0.523,
+     "rot": 197.33
+    },
+    {
+     "id": "objekty60",
+     "asset": "gen2-kosti",
+     "x": 18.27,
+     "y": 15.667,
+     "w": 0.607,
+     "h": 0.654,
+     "rot": 346.36
+    },
+    {
+     "id": "objekty61",
+     "asset": "gen2-kosti",
+     "x": 17.329,
+     "y": 6.759,
+     "w": 0.692,
+     "h": 0.808,
+     "rot": 115.83
+    },
+    {
+     "id": "objekty62",
+     "asset": "gen2-houby",
+     "x": 15.467,
+     "y": 11.606,
+     "w": 0.612,
+     "h": 0.663,
+     "rot": 284.14
+    },
+    {
+     "id": "objekty63",
+     "asset": "gen2-houby",
+     "x": 13.024,
+     "y": 13.855,
+     "w": 0.475,
+     "h": 0.529,
+     "rot": 185.2
+    },
+    {
+     "id": "objekty64",
+     "asset": "gen2-houby",
+     "x": 18.023,
+     "y": 11.229,
+     "w": 0.427,
+     "h": 0.439,
+     "rot": 218.68
+    },
+    {
+     "id": "objekty65",
+     "asset": "gen2-houby",
+     "x": 19.537,
+     "y": 6.978,
+     "w": 0.543,
+     "h": 0.551,
+     "rot": 293.13
+    },
+    {
+     "id": "objekty66",
+     "asset": "gen2-houby",
+     "x": 22.984,
+     "y": 17.5,
+     "w": 0.682,
+     "h": 0.725,
+     "rot": 65.66
+    },
+    {
+     "id": "objekty67",
+     "asset": "trhlina",
+     "x": 26.615,
+     "y": 8.843,
+     "w": 0.562,
+     "h": 0.65,
+     "rot": 175.94
+    },
+    {
+     "id": "objekty68",
+     "asset": "kostlivec",
+     "x": 27.584,
+     "y": 8.335,
+     "w": 0.352,
+     "h": 0.355,
+     "rot": 305.08
+    },
+    {
+     "id": "objekty69",
+     "asset": "gen2-kosti",
+     "x": 24.872,
+     "y": 17.078,
+     "w": 0.518,
+     "h": 0.495,
+     "rot": 36.53
+    },
+    {
+     "id": "objekty70",
+     "asset": "gen2-houby",
+     "x": 12.176,
+     "y": 9.159,
+     "w": 0.467,
+     "h": 0.437,
+     "rot": 143.8
+    },
+    {
+     "id": "objekty71",
+     "asset": "trhlina",
+     "x": 19.039,
+     "y": 15.171,
+     "w": 0.422,
+     "h": 0.416,
+     "rot": 99.99
+    },
+    {
+     "id": "objekty72",
+     "asset": "gen2-kosti",
+     "x": 12.846,
+     "y": 14.639,
+     "w": 0.452,
+     "h": 0.38,
+     "rot": 257.49
+    },
+    {
+     "id": "objekty73",
+     "asset": "kostlivec",
+     "x": 12.429,
+     "y": 13.343,
+     "w": 0.639,
+     "h": 0.75,
+     "rot": 96.47
+    },
+    {
+     "id": "objekty74",
+     "asset": "kostlivec",
+     "x": 26.303,
+     "y": 11.349,
+     "w": 0.388,
+     "h": 0.461,
+     "rot": 87.33
+    },
+    {
+     "id": "objekty75",
+     "asset": "gen2-houby",
+     "x": 13.005,
+     "y": 8.23,
+     "w": 0.506,
+     "h": 0.601,
+     "rot": 352.93
+    },
+    {
+     "id": "objekty76",
+     "asset": "gen2-kosti",
+     "x": 18.568,
+     "y": 6.505,
+     "w": 0.661,
+     "h": 0.613,
+     "rot": 191.42
+    },
+    {
+     "id": "objekty77",
+     "asset": "trhlina",
+     "x": 26.548,
+     "y": 15.042,
+     "w": 0.736,
+     "h": 0.763,
+     "rot": 289.37
+    },
+    {
+     "id": "objekty78",
+     "asset": "trhlina",
+     "x": 19.528,
+     "y": 18.566,
+     "w": 0.454,
+     "h": 0.44,
+     "rot": 216.47
+    },
+    {
+     "id": "objekty79",
+     "asset": "gen2-houby",
+     "x": 20.209,
+     "y": 8.552,
+     "w": 0.574,
+     "h": 0.561,
+     "rot": 123.93
+    },
+    {
+     "id": "objekty80",
+     "asset": "kostlivec",
+     "x": 18.362,
+     "y": 11.618,
+     "w": 0.673,
+     "h": 0.706,
+     "rot": 337.06
+    },
+    {
+     "id": "objekty81",
+     "asset": "trhlina",
+     "x": 15.727,
+     "y": 13.392,
+     "w": 0.339,
+     "h": 0.355,
+     "rot": 31.16
+    },
+    {
+     "id": "objekty82",
+     "asset": "trhlina",
+     "x": 14.341,
+     "y": 15.677,
+     "w": 0.579,
+     "h": 0.534,
+     "rot": 297.89
+    },
+    {
+     "id": "objekty83",
+     "asset": "trhlina",
+     "x": 25.558,
+     "y": 8.366,
+     "w": 0.419,
+     "h": 0.437,
+     "rot": 176.71
+    },
+    {
+     "id": "objekty84",
+     "asset": "kostlivec",
+     "x": 14.554,
+     "y": 13.379,
+     "w": 0.472,
+     "h": 0.54,
+     "rot": 147.86
+    },
+    {
+     "id": "objekty85",
+     "asset": "kostlivec",
+     "x": 17.212,
+     "y": 11.896,
+     "w": 0.663,
+     "h": 0.541,
+     "rot": 233.4
+    },
+    {
+     "id": "objekty86",
+     "asset": "gen2-kosti",
+     "x": 26.012,
+     "y": 13.435,
+     "w": 0.336,
+     "h": 0.345,
+     "rot": 248.85
+    },
+    {
+     "id": "objekty87",
+     "asset": "trhlina",
+     "x": 25.864,
+     "y": 9.903,
+     "w": 0.568,
+     "h": 0.571,
+     "rot": 117.1
+    },
+    {
+     "id": "objekty88",
+     "asset": "trhlina",
+     "x": 15.268,
+     "y": 17.029,
+     "w": 0.382,
+     "h": 0.405,
+     "rot": 320.68
+    },
+    {
+     "id": "objekty89",
+     "asset": "gen2-krystal",
+     "x": 7.965,
+     "y": 6.606,
+     "w": 0.42,
+     "h": 0.457,
+     "rot": 226.16
+    },
+    {
+     "id": "objekty90",
+     "asset": "pavouk-web",
+     "x": 6.491,
+     "y": 7.686,
+     "w": 0.354,
+     "h": 0.333,
+     "rot": 5.59
+    },
+    {
+     "id": "objekty91",
+     "asset": "pavouk-web",
+     "x": 9.421,
+     "y": 7.603,
+     "w": 0.641,
+     "h": 0.643,
+     "rot": 275.49
+    },
+    {
+     "id": "objekty92",
+     "asset": "kamen",
+     "x": 7.408,
+     "y": 8.918,
+     "w": 0.51,
+     "h": 0.516,
+     "rot": 348.95
+    },
+    {
+     "id": "objekty93",
+     "asset": "gen2-krystal",
+     "x": 8.207,
+     "y": 9.346,
+     "w": 0.501,
+     "h": 0.543,
+     "rot": 303.47
+    },
+    {
+     "id": "objekty94",
+     "asset": "pavouk-web",
+     "x": 4.774,
+     "y": 7.383,
+     "w": 0.601,
+     "h": 0.593,
+     "rot": 272.23
+    },
+    {
+     "id": "objekty95",
+     "asset": "pavouk-web",
+     "x": 6.83,
+     "y": 5.945,
+     "w": 0.316,
+     "h": 0.269,
+     "rot": 214.8
+    },
+    {
+     "id": "objekty96",
+     "asset": "pavouk-web",
+     "x": 4.84,
+     "y": 6.9,
+     "w": 0.374,
+     "h": 0.387,
+     "rot": 317.1
+    },
+    {
+     "id": "objekty97",
+     "asset": "pavouk-web",
+     "x": 5.349,
+     "y": 5.888,
+     "w": 0.416,
+     "h": 0.449,
+     "rot": 306.38
+    },
+    {
+     "id": "objekty98",
+     "asset": "gen2-krystal",
+     "x": 6.303,
+     "y": 8.389,
+     "w": 0.371,
+     "h": 0.38,
+     "rot": 156.34
+    },
+    {
+     "id": "objekty99",
+     "asset": "gen2-krystal",
+     "x": 6.064,
+     "y": 9.265,
+     "w": 0.452,
+     "h": 0.453,
+     "rot": 114.62
+    },
+    {
+     "id": "objekty100",
+     "asset": "gen2-krystal",
+     "x": 4.873,
+     "y": 8.387,
+     "w": 0.464,
+     "h": 0.532,
+     "rot": 5.59
+    },
+    {
+     "id": "objekty101",
+     "asset": "gen2-hrob",
+     "x": 7.233,
+     "y": 22.053,
+     "w": 0.302,
+     "h": 0.313,
+     "rot": 172.68
+    },
+    {
+     "id": "objekty102",
+     "asset": "gen2-hrob",
+     "x": 6.952,
+     "y": 21.045,
+     "w": 0.321,
+     "h": 0.268,
+     "rot": 170.73
+    },
+    {
+     "id": "objekty103",
+     "asset": "trhlina",
+     "x": 5.583,
+     "y": 22.762,
+     "w": 0.307,
+     "h": 0.274,
+     "rot": 248.49
+    },
+    {
+     "id": "objekty104",
+     "asset": "gen2-hrob",
+     "x": 5.362,
+     "y": 22.851,
+     "w": 0.616,
+     "h": 0.511,
+     "rot": 247.46
+    },
+    {
+     "id": "objekty105",
+     "asset": "gen2-kosti",
+     "x": 7.322,
+     "y": 21.929,
+     "w": 0.384,
+     "h": 0.405,
+     "rot": 139.91
+    },
+    {
+     "id": "objekty106",
+     "asset": "gen2-kosti",
+     "x": 5.248,
+     "y": 22.966,
+     "w": 0.35,
+     "h": 0.374,
+     "rot": 106.08
+    },
+    {
+     "id": "objekty107",
+     "asset": "gen2-kosti",
+     "x": 6.788,
+     "y": 22.118,
+     "w": 0.451,
+     "h": 0.437,
+     "rot": 205.23
+    },
+    {
+     "id": "objekty108",
+     "asset": "trhlina",
+     "x": 7.66,
+     "y": 22.413,
+     "w": 0.576,
+     "h": 0.47,
+     "rot": 297.64
+    },
+    {
+     "id": "objekty109",
+     "asset": "gen2-hrob",
+     "x": 7.534,
+     "y": 21.875,
+     "w": 0.377,
+     "h": 0.432,
+     "rot": 93.58
+    },
+    {
+     "id": "objekty110",
+     "asset": "gen2-kosti",
+     "x": 7.423,
+     "y": 21.317,
+     "w": 0.463,
+     "h": 0.523,
+     "rot": 131.29
+    },
+    {
+     "id": "objekty111",
+     "asset": "trhlina",
+     "x": 5.726,
+     "y": 21.018,
+     "w": 0.622,
+     "h": 0.742,
+     "rot": 84.17
+    },
+    {
+     "id": "objekty112",
+     "asset": "gen2-kosti",
+     "x": 7.477,
+     "y": 22.419,
+     "w": 0.391,
+     "h": 0.32,
+     "rot": 333.79
+    },
+    {
+     "id": "objekty113",
+     "asset": "trhlina",
+     "x": 5.351,
+     "y": 19.569,
+     "w": 0.617,
+     "h": 0.668,
+     "rot": 172.71
+    },
+    {
+     "id": "objekty114",
+     "asset": "trhlina",
+     "x": 6.807,
+     "y": 22.137,
+     "w": 0.462,
+     "h": 0.512,
+     "rot": 282.52
+    },
+    {
+     "id": "objekty115",
+     "asset": "gen2-krev",
+     "x": 18,
+     "y": 16,
+     "w": 0.8,
+     "h": 1.3,
+     "rot": 70,
+     "z": -1,
+     "anim": false
+    }
+   ],
+   "steny": [
+    {
+     "id": "steny0",
+     "a": [
+      11,
+      6
+     ],
+     "b": [
+      15,
+      3
+     ],
+     "typ": "wall"
+    },
+    {
+     "id": "steny1",
+     "a": [
+      15,
+      3
+     ],
+     "b": [
+      26,
+      3
+     ],
+     "typ": "wall"
+    },
+    {
+     "id": "steny2",
+     "a": [
+      26,
+      3
+     ],
+     "b": [
+      31,
+      7
+     ],
+     "typ": "wall"
+    },
+    {
+     "id": "steny3",
+     "a": [
+      31,
+      7
+     ],
+     "b": [
+      31,
+      17
+     ],
+     "typ": "wall"
+    },
+    {
+     "id": "steny4",
+     "a": [
+      31,
+      17
+     ],
+     "b": [
+      27,
+      21
+     ],
+     "typ": "wall"
+    },
+    {
+     "id": "steny5",
+     "a": [
+      27,
+      21
+     ],
+     "b": [
+      25.5,
+      21.0
+     ],
+     "typ": "wall"
+    },
+    {
+     "id": "steny6",
+     "a": [
+      25.5,
+      21.0
+     ],
+     "b": [
+      23.3,
+      21.0
+     ],
+     "typ": "door"
+    },
+    {
+     "id": "steny7",
+     "a": [
+      23.3,
+      21.0
+     ],
+     "b": [
+      17,
+      21
+     ],
+     "typ": "wall"
+    },
+    {
+     "id": "steny8",
+     "a": [
+      17,
+      21
+     ],
+     "b": [
+      11,
+      16
+     ],
+     "typ": "wall"
+    },
+    {
+     "id": "steny9",
+     "a": [
+      11,
+      16
+     ],
+     "b": [
+      11.0,
+      14.2
+     ],
+     "typ": "wall"
+    },
+    {
+     "id": "steny10",
+     "a": [
+      11.0,
+      14.2
+     ],
+     "b": [
+      11.0,
+      12.0
+     ],
+     "typ": "door"
+    },
+    {
+     "id": "steny11",
+     "a": [
+      11,
+      12
+     ],
+     "b": [
+      11,
+      10.7
+     ],
+     "typ": "wall"
+    },
+    {
+     "id": "steny12",
+     "a": [
+      11,
+      10.7
+     ],
+     "b": [
+      11,
+      9.3
+     ],
+     "typ": "door"
+    },
+    {
+     "id": "steny13",
+     "a": [
+      11,
+      9.3
+     ],
+     "b": [
+      11,
+      6
+     ],
+     "typ": "wall"
+    },
+    {
+     "id": "steny14",
+     "a": [
+      3,
+      25
+     ],
+     "b": [
+      3,
+      19
+     ],
+     "typ": "wall"
+    },
+    {
+     "id": "steny15",
+     "a": [
+      3,
+      19
+     ],
+     "b": [
+      7,
+      15
+     ],
+     "typ": "wall"
+    },
+    {
+     "id": "steny16",
+     "a": [
+      7,
+      15
+     ],
+     "b": [
+      9.0,
+      13.5
+     ],
+     "typ": "wall"
+    },
+    {
+     "id": "steny17",
+     "a": [
+      9.0,
+      13.5
+     ],
+     "b": [
+      10.8,
+      12.15
+     ],
+     "typ": "door"
+    },
+    {
+     "id": "steny18",
+     "a": [
+      10.8,
+      12.15
+     ],
+     "b": [
+      11,
+      12
+     ],
+     "typ": "wall"
+    },
+    {
+     "id": "steny19",
+     "a": [
+      11,
+      12
+     ],
+     "b": [
+      11.6,
+      12.6
+     ],
+     "typ": "wall"
+    },
+    {
+     "id": "steny20",
+     "a": [
+      11.6,
+      12.6
+     ],
+     "b": [
+      14.2,
+      15.2
+     ],
+     "typ": "door"
+    },
+    {
+     "id": "steny21",
+     "a": [
+      14.2,
+      15.2
+     ],
+     "b": [
+      15,
+      16
+     ],
+     "typ": "wall"
+    },
+    {
+     "id": "steny22",
+     "a": [
+      15,
+      16
+     ],
+     "b": [
+      10,
+      20
+     ],
+     "typ": "wall"
+    },
+    {
+     "id": "steny23",
+     "a": [
+      10,
+      20
+     ],
+     "b": [
+      8,
+      25
+     ],
+     "typ": "wall"
+    },
+    {
+     "id": "steny24",
+     "a": [
+      8,
+      25
+     ],
+     "b": [
+      3,
+      25
+     ],
+     "typ": "wall"
+    },
+    {
+     "id": "steny25",
+     "a": [
+      3,
+      5
+     ],
+     "b": [
+      11,
+      5
+     ],
+     "typ": "wall"
+    },
+    {
+     "id": "steny26",
+     "a": [
+      11,
+      5
+     ],
+     "b": [
+      11.0,
+      9.2
+     ],
+     "typ": "wall"
+    },
+    {
+     "id": "steny27",
+     "a": [
+      11.0,
+      9.2
+     ],
+     "b": [
+      11.0,
+      11.3
+     ],
+     "typ": "door"
+    },
+    {
+     "id": "steny28",
+     "a": [
+      11.0,
+      11.3
+     ],
+     "b": [
+      11,
+      12
+     ],
+     "typ": "wall"
+    },
+    {
+     "id": "steny29",
+     "a": [
+      11,
+      12
+     ],
+     "b": [
+      3,
+      12
+     ],
+     "typ": "wall"
+    },
+    {
+     "id": "steny30",
+     "a": [
+      3,
+      12
+     ],
+     "b": [
+      3,
+      5
+     ],
+     "typ": "wall"
+    },
+    {
+     "id": "steny31",
+     "a": [
+      27,
+      22
+     ],
+     "b": [
+      34,
+      22
+     ],
+     "typ": "wall"
+    },
+    {
+     "id": "steny32",
+     "a": [
+      34,
+      22
+     ],
+     "b": [
+      34,
+      26
+     ],
+     "typ": "wall"
+    },
+    {
+     "id": "steny33",
+     "a": [
+      34,
+      26
+     ],
+     "b": [
+      27,
+      26
+     ],
+     "typ": "wall"
+    },
+    {
+     "id": "steny34",
+     "a": [
+      27,
+      26
+     ],
+     "b": [
+      27.0,
+      25.8
+     ],
+     "typ": "wall"
+    },
+    {
+     "id": "steny35",
+     "a": [
+      27.0,
+      25.8
+     ],
+     "b": [
+      27.0,
+      23.8
+     ],
+     "typ": "door"
+    },
+    {
+     "id": "steny36",
+     "a": [
+      27.0,
+      23.8
+     ],
+     "b": [
+      27,
+      22
+     ],
+     "typ": "wall"
+    }
+   ],
+   "malba": [
+    {
+     "id": "malba0",
+     "t": "teren-bedrock",
+     "b": 1,
+     "o": 1,
+     "h": 1,
+     "r": 0,
+     "poly": true,
+     "p": [
+      [
+       0,
+       0
+      ],
+      [
+       36,
+       0
+      ],
+      [
+       36,
+       28
+      ],
+      [
+       0,
+       28
+      ]
+     ]
+    },
+    {
+     "id": "malba1",
+     "t": "teren-krypta",
+     "b": 1,
+     "o": 1,
+     "h": 1,
+     "r": 0,
+     "poly": true,
+     "p": [
+      [
+       11,
+       6
+      ],
+      [
+       15,
+       3
+      ],
+      [
+       26,
+       3
+      ],
+      [
+       31,
+       7
+      ],
+      [
+       31,
+       17
+      ],
+      [
+       27,
+       21
+      ],
+      [
+       17,
+       21
+      ],
+      [
+       11,
+       16
+      ]
+     ]
+    },
+    {
+     "id": "malba2",
+     "t": "dlazba",
+     "b": 1,
+     "o": 1,
+     "h": 1,
+     "r": 39,
+     "poly": true,
+     "p": [
+      [
+       3,
+       25
+      ],
+      [
+       3,
+       19
+      ],
+      [
+       7,
+       15
+      ],
+      [
+       11,
+       12
+      ],
+      [
+       15,
+       16
+      ],
+      [
+       10,
+       20
+      ],
+      [
+       8,
+       25
+      ]
+     ]
+    },
+    {
+     "id": "malba3",
+     "t": "dlazba",
+     "b": 1,
+     "o": 1,
+     "h": 1,
+     "r": 12,
+     "poly": true,
+     "p": [
+      [
+       3,
+       5
+      ],
+      [
+       11,
+       5
+      ],
+      [
+       11,
+       12
+      ],
+      [
+       3,
+       12
+      ]
+     ]
+    },
+    {
+     "id": "malba4",
+     "t": "dlazba",
+     "b": 1,
+     "o": 1,
+     "h": 1,
+     "r": 0,
+     "poly": true,
+     "p": [
+      [
+       27,
+       22
+      ],
+      [
+       34,
+       22
+      ],
+      [
+       34,
+       26
+      ],
+      [
+       27,
+       26
+      ]
+     ]
+    },
+    {
+     "id": "malba5",
+     "t": "dlazba",
+     "b": 1,
+     "o": 1,
+     "h": 1,
+     "r": 27,
+     "poly": true,
+     "p": [
+      [
+       24,
+       19
+      ],
+      [
+       28,
+       18
+      ],
+      [
+       31,
+       23
+      ],
+      [
+       28,
+       25
+      ],
+      [
+       24,
+       21
+      ]
+     ]
+    },
+    {
+     "id": "malba6",
+     "t": "teren-ruiny",
+     "b": 1.5,
+     "o": 0.5,
+     "h": 0.35,
+     "r": 45,
+     "poly": true,
+     "p": [
+      [
+       14,
+       8
+      ],
+      [
+       20,
+       7.7
+      ],
+      [
+       27,
+       8.4
+      ],
+      [
+       27.5,
+       12
+      ],
+      [
+       26.6,
+       16
+      ],
+      [
+       20,
+       16.4
+      ],
+      [
+       15,
+       16
+      ],
+      [
+       14.3,
+       12
+      ]
+     ]
+    },
+    {
+     "id": "malba7",
+     "t": "melka-voda",
+     "b": 1.5,
+     "o": 0.8,
+     "h": 0.3,
+     "r": 0,
+     "poly": true,
+     "p": [
+      [
+       27.6,
+       22.6
+      ],
+      [
+       33.2,
+       22.6
+      ],
+      [
+       33.2,
+       25.400000000000002
+      ],
+      [
+       27.6,
+       25.400000000000002
+      ]
+     ]
+    },
+    {
+     "id": "malba8",
+     "t": "teren-rubble",
+     "b": 1.4,
+     "o": 0.7,
+     "h": 0.3,
+     "r": 46,
+     "poly": false,
+     "p": [
+      [
+       4.5,
+       23
+      ],
+      [
+       6,
+       20
+      ],
+      [
+       10,
+       16
+      ]
+     ]
+    },
+    {
+     "id": "malba9",
+     "t": "teren-rubble",
+     "b": 1.2,
+     "o": 0.5,
+     "h": 0.3,
+     "r": 32,
+     "poly": false,
+     "p": [
+      [
+       14,
+       7
+      ],
+      [
+       13,
+       12
+      ],
+      [
+       16,
+       17
+      ]
+     ]
+    }
+   ],
+   "svetla": [
+    {
+     "id": "svetla0",
+     "x": 12,
+     "y": 8,
+     "bright": 7,
+     "dim": 15,
+     "color": "#7ec8ff",
+     "intenzita": 0.8,
+     "blikani": true
+    },
+    {
+     "id": "svetla1",
+     "x": 29,
+     "y": 8,
+     "bright": 7,
+     "dim": 15,
+     "color": "#89beff",
+     "intenzita": 0.8,
+     "blikani": true
+    },
+    {
+     "id": "svetla2",
+     "x": 16,
+     "y": 19,
+     "bright": 7,
+     "dim": 15,
+     "color": "#91aaff",
+     "intenzita": 0.8,
+     "blikani": true
+    },
+    {
+     "id": "svetla3",
+     "x": 27,
+     "y": 18,
+     "bright": 7,
+     "dim": 15,
+     "color": "#769cff",
+     "intenzita": 0.8,
+     "blikani": true
+    },
+    {
+     "id": "svetla4",
+     "x": 6,
+     "y": 21,
+     "bright": 7,
+     "dim": 15,
+     "color": "#88d4dd",
+     "intenzita": 0.8,
+     "blikani": true
+    },
+    {
+     "id": "svetla5",
+     "x": 6,
+     "y": 6,
+     "bright": 7,
+     "dim": 15,
+     "color": "#a68fff",
+     "intenzita": 0.8,
+     "blikani": true
+    },
+    {
+     "id": "svetla6",
+     "x": 24.5,
+     "y": 7.2,
+     "bright": 10,
+     "dim": 18,
+     "color": "#57baff",
+     "intenzita": 0.7,
+     "blikani": false
+    }
+   ],
+   "poznamky": [
+    {
+     "id": "poznamky0",
+     "x": 24.5,
+     "y": 7.2,
+     "text": "Brána přísahy: otevře se po vyslovení jména pohřbeného strážce; bez nutného boje."
+    },
+    {
+     "id": "poznamky1",
+     "x": 30,
+     "y": 24,
+     "text": "Relikviář: voda po kolena, těžký terén. Stříbrný klíč leží pod hladinou."
+    },
+    {
+     "id": "poznamky2",
+     "x": 22,
+     "y": 17,
+     "text": "Oltář: nápis připomíná porušenou přísahu. Sarkofágy lze obejít po širokém okruhu."
+    }
+   ],
+   "kresby": [],
+   "vyska": {},
+   "textury": {},
+   "atmosfera": {
+    "amb": 0.45,
+    "barva": "#111d35"
+   },
+   "pocasi": {
+    "typ": "mlha",
+    "sila": 0.32,
+    "vitr": 112
+   },
+   "mrizkaStyl": {
+    "typ": "dots",
+    "barva": "#ddd4b1",
+    "opacita": 0.13
+   },
+   "mrizka": [
+    "####################################",
+    "####################################",
+    "####################################",
+    "##############.............#########",
+    "#############...............########",
+    "###........#.................#######",
+    "###...........................######",
+    "###............................#####",
+    "###............................#####",
+    "###............................#####",
+    "###............................#####",
+    "###............................#####",
+    "##########.....................#####",
+    "#########......................#####",
+    "########.......................#####",
+    "######.........................#####",
+    "#####..........................#####",
+    "####..........................######",
+    "###.........##...............#######",
+    "###........####..............#######",
+    "###.......######.............#######",
+    "###......###############......######",
+    "###......################.........##",
+    "###......#################..,,,,,.##",
+    "###.....###################.,,,,,.##",
+    "###########################.......##",
+    "####################################",
+    "####################################"
+   ]
+  },
+  {
+   "id": "epic-nolien-chram-reky",
+   "nazev": "Nölien – Chrám Stříbrného proudu",
+   "podklad": "les",
+   "misto": "02_Zeme/Elfsky_Stat_Nolien.md",
+   "popis": "Večerní světlo nad zarostlou Tirentovou svatyní. Šikmá procesní cesta vede od řeky k rozlomenému polygonálnímu chrámu, mezi kořeny svítí staré runy. Dřevěný most spojuje oba břehy. Autorská herní scéna; místní názvy zón a zápletky jsou návrhem pro PJ.",
+   "osvetleni": "Vizuální atmosféra; dosah světel ve stopách.",
+   "start": {
+    "druzina": [
+     [
+      2,
+      21
+     ],
+     [
+      3,
+      21
+     ],
+     [
+      4,
+      21
+     ],
+     [
+      2,
+      22
+     ],
+     [
+      3,
+      22
+     ],
+     [
+      4,
+      22
+     ]
+    ],
+    "nepratele": [
+     [
+      10,
+      10
+     ],
+     [
+      16,
+      11
+     ],
+     [
+      29,
+      16
+     ],
+     [
+      30,
+      18
+     ]
+    ]
+   },
+   "objekty": [
+    {
+     "id": "objekty0",
+     "asset": "mag-kruh",
+     "x": 12,
+     "y": 10,
+     "w": 6,
+     "h": 6,
+     "rot": 20,
+     "z": -2,
+     "anim": false
+    },
+    {
+     "id": "objekty1",
+     "asset": "gen2-oltar",
+     "x": 12,
+     "y": 7,
+     "w": 2.6,
+     "h": 1.5,
+     "rot": 17,
+     "blocks": true,
+     "cover": 3
+    },
+    {
+     "id": "objekty2",
+     "asset": "gen2-socha",
+     "x": 16,
+     "y": 7,
+     "w": 1.8,
+     "h": 2,
+     "rot": -20,
+     "blocks": true,
+     "cover": 3
+    },
+    {
+     "id": "objekty3",
+     "asset": "sloup",
+     "x": 7.2,
+     "y": 7,
+     "w": 1.05,
+     "h": 1.05,
+     "rot": 0,
+     "blocks": true,
+     "cover": 3
+    },
+    {
+     "id": "objekty4",
+     "asset": "p3-sloup-ruina",
+     "x": 7.8,
+     "y": 7.9,
+     "w": 2,
+     "h": 1.2,
+     "rot": 20,
+     "difficult": true,
+     "cover": 2
+    },
+    {
+     "id": "objekty5",
+     "asset": "sloup",
+     "x": 18,
+     "y": 8.5,
+     "w": 1.05,
+     "h": 1.05,
+     "rot": 0,
+     "blocks": true,
+     "cover": 3
+    },
+    {
+     "id": "objekty6",
+     "asset": "p3-sloup-ruina",
+     "x": 18.6,
+     "y": 9.4,
+     "w": 2,
+     "h": 1.2,
+     "rot": -15,
+     "difficult": true,
+     "cover": 2
+    },
+    {
+     "id": "objekty7",
+     "asset": "sloup",
+     "x": 8,
+     "y": 14,
+     "w": 1.05,
+     "h": 1.05,
+     "rot": 0,
+     "blocks": true,
+     "cover": 3
+    },
+    {
+     "id": "objekty8",
+     "asset": "p3-sloup-ruina",
+     "x": 8.6,
+     "y": 14.9,
+     "w": 2,
+     "h": 1.2,
+     "rot": -32,
+     "difficult": true,
+     "cover": 2
+    },
+    {
+     "id": "objekty9",
+     "asset": "sloup",
+     "x": 16,
+     "y": 14,
+     "w": 1.05,
+     "h": 1.05,
+     "rot": 0,
+     "blocks": true,
+     "cover": 3
+    },
+    {
+     "id": "objekty10",
+     "asset": "p3-sloup-ruina",
+     "x": 16.6,
+     "y": 14.9,
+     "w": 2,
+     "h": 1.2,
+     "rot": 32,
+     "difficult": true,
+     "cover": 2
+    },
+    {
+     "id": "objekty11",
+     "asset": "sloup",
+     "x": 11,
+     "y": 4.5,
+     "w": 1.05,
+     "h": 1.05,
+     "rot": 0,
+     "blocks": true,
+     "cover": 3
+    },
+    {
+     "id": "objekty12",
+     "asset": "p3-sloup-ruina",
+     "x": 11.6,
+     "y": 5.4,
+     "w": 2,
+     "h": 1.2,
+     "rot": 0,
+     "difficult": true,
+     "cover": 2
+    },
+    {
+     "id": "objekty13",
+     "asset": "gen2-kmen",
+     "x": 22,
+     "y": 21,
+     "w": 4.5,
+     "h": 1.3,
+     "rot": -38,
+     "cover": 2,
+     "difficult": true
+    },
+    {
+     "id": "objekty14",
+     "asset": "gen2-keltsky_kamen",
+     "x": 30,
+     "y": 7,
+     "w": 1.8,
+     "h": 2,
+     "rot": 23,
+     "cover": 2
+    },
+    {
+     "id": "objekty15",
+     "asset": "gen2-strom2",
+     "x": 4.015,
+     "y": 6.814,
+     "w": 3.42,
+     "h": 3.511,
+     "rot": 355.1,
+     "cover": 3
+    },
+    {
+     "id": "objekty16",
+     "asset": "strom",
+     "x": 4.13,
+     "y": 5.726,
+     "w": 2.874,
+     "h": 2.594,
+     "rot": 195.81,
+     "cover": 3
+    },
+    {
+     "id": "objekty17",
+     "asset": "strom-velky",
+     "x": 2.095,
+     "y": 1.872,
+     "w": 2.182,
+     "h": 1.866,
+     "rot": 104.37,
+     "cover": 3
+    },
+    {
+     "id": "objekty18",
+     "asset": "gen2-strom",
+     "x": 0.849,
+     "y": 5.313,
+     "w": 2.058,
+     "h": 1.924,
+     "rot": 56.51,
+     "cover": 3
+    },
+    {
+     "id": "objekty19",
+     "asset": "gen2-strom2",
+     "x": 0.732,
+     "y": 2.58,
+     "w": 3.053,
+     "h": 3.084,
+     "rot": 89.75,
+     "cover": 3
+    },
+    {
+     "id": "objekty20",
+     "asset": "gen2-strom2",
+     "x": 3.918,
+     "y": 1.347,
+     "w": 2.032,
+     "h": 2.338,
+     "rot": 272.45,
+     "cover": 3
+    },
+    {
+     "id": "objekty21",
+     "asset": "gen2-strom2",
+     "x": 3.944,
+     "y": 1.692,
+     "w": 2.191,
+     "h": 1.816,
+     "rot": 351.31,
+     "cover": 3
+    },
+    {
+     "id": "objekty22",
+     "asset": "gen2-strom",
+     "x": 3.905,
+     "y": 3.164,
+     "w": 3.464,
+     "h": 3.984,
+     "rot": 302.7,
+     "cover": 3
+    },
+    {
+     "id": "objekty23",
+     "asset": "strom-velky",
+     "x": 5.856,
+     "y": 3.89,
+     "w": 3.207,
+     "h": 2.686,
+     "rot": 343.91,
+     "cover": 3
+    },
+    {
+     "id": "objekty24",
+     "asset": "gen2-strom",
+     "x": 1.792,
+     "y": 5.201,
+     "w": 2.863,
+     "h": 3.358,
+     "rot": 346.65,
+     "cover": 3
+    },
+    {
+     "id": "objekty25",
+     "asset": "gen2-strom2",
+     "x": 1.228,
+     "y": 2.209,
+     "w": 2.003,
+     "h": 1.711,
+     "rot": 90.52,
+     "cover": 3
+    },
+    {
+     "id": "objekty26",
+     "asset": "strom",
+     "x": 2.717,
+     "y": 3.597,
+     "w": 3.28,
+     "h": 2.963,
+     "rot": 257.21,
+     "cover": 3
+    },
+    {
+     "id": "objekty27",
+     "asset": "gen2-strom",
+     "x": 4.393,
+     "y": 14.971,
+     "w": 2.756,
+     "h": 2.949,
+     "rot": 14.31,
+     "cover": 3
+    },
+    {
+     "id": "objekty28",
+     "asset": "strom-velky",
+     "x": 3.912,
+     "y": 17.484,
+     "w": 2.106,
+     "h": 1.811,
+     "rot": 185.94,
+     "cover": 3
+    },
+    {
+     "id": "objekty29",
+     "asset": "gen2-strom2",
+     "x": 3.857,
+     "y": 18.546,
+     "w": 3.122,
+     "h": 3.171,
+     "rot": 312.65,
+     "cover": 3
+    },
+    {
+     "id": "objekty30",
+     "asset": "gen2-strom2",
+     "x": 3.701,
+     "y": 9.638,
+     "w": 3.264,
+     "h": 3.462,
+     "rot": 316.55,
+     "cover": 3
+    },
+    {
+     "id": "objekty31",
+     "asset": "gen2-strom2",
+     "x": 1.295,
+     "y": 17.449,
+     "w": 2.4,
+     "h": 2.132,
+     "rot": 356.87,
+     "cover": 3
+    },
+    {
+     "id": "objekty32",
+     "asset": "gen2-strom2",
+     "x": 2.744,
+     "y": 15.925,
+     "w": 3.009,
+     "h": 2.881,
+     "rot": 331.13,
+     "cover": 3
+    },
+    {
+     "id": "objekty33",
+     "asset": "strom",
+     "x": 3.425,
+     "y": 14.118,
+     "w": 2.965,
+     "h": 3.353,
+     "rot": 235.35,
+     "cover": 3
+    },
+    {
+     "id": "objekty34",
+     "asset": "strom-velky",
+     "x": 3.799,
+     "y": 16.208,
+     "w": 2.779,
+     "h": 2.577,
+     "rot": 57.76,
+     "cover": 3
+    },
+    {
+     "id": "objekty35",
+     "asset": "gen2-strom2",
+     "x": 2.804,
+     "y": 9.776,
+     "w": 2.415,
+     "h": 2.634,
+     "rot": 257.09,
+     "cover": 3
+    },
+    {
+     "id": "objekty36",
+     "asset": "gen2-strom2",
+     "x": 4.393,
+     "y": 14.716,
+     "w": 3.383,
+     "h": 3.662,
+     "rot": 274.2,
+     "cover": 3
+    },
+    {
+     "id": "objekty37",
+     "asset": "strom-velky",
+     "x": 2.384,
+     "y": 16.554,
+     "w": 2.597,
+     "h": 2.55,
+     "rot": 317.98,
+     "cover": 3
+    },
+    {
+     "id": "objekty38",
+     "asset": "strom",
+     "x": 1.991,
+     "y": 9.894,
+     "w": 2.357,
+     "h": 2.351,
+     "rot": 41.1,
+     "cover": 3
+    },
+    {
+     "id": "objekty39",
+     "asset": "gen2-strom2",
+     "x": 4.399,
+     "y": 15.963,
+     "w": 3.001,
+     "h": 2.407,
+     "rot": 27.1,
+     "cover": 3
+    },
+    {
+     "id": "objekty40",
+     "asset": "strom-velky",
+     "x": 8.697,
+     "y": 25.707,
+     "w": 2.608,
+     "h": 2.74,
+     "rot": 113.23,
+     "cover": 3
+    },
+    {
+     "id": "objekty41",
+     "asset": "strom-velky",
+     "x": 5.421,
+     "y": 24.906,
+     "w": 2.679,
+     "h": 2.509,
+     "rot": 26.65,
+     "cover": 3
+    },
+    {
+     "id": "objekty42",
+     "asset": "gen2-strom2",
+     "x": 8.665,
+     "y": 24.485,
+     "w": 3.225,
+     "h": 2.763,
+     "rot": 285.33,
+     "cover": 3
+    },
+    {
+     "id": "objekty43",
+     "asset": "gen2-strom",
+     "x": 12.372,
+     "y": 26.252,
+     "w": 2.938,
+     "h": 2.465,
+     "rot": 332.87,
+     "cover": 3
+    },
+    {
+     "id": "objekty44",
+     "asset": "strom-velky",
+     "x": 8.305,
+     "y": 26.568,
+     "w": 2.848,
+     "h": 2.956,
+     "rot": 292.1,
+     "cover": 3
+    },
+    {
+     "id": "objekty45",
+     "asset": "gen2-strom",
+     "x": 11.448,
+     "y": 26.641,
+     "w": 2.725,
+     "h": 2.663,
+     "rot": 130.87,
+     "cover": 3
+    },
+    {
+     "id": "objekty46",
+     "asset": "gen2-strom2",
+     "x": 5.18,
+     "y": 26.348,
+     "w": 3.082,
+     "h": 3.033,
+     "rot": 316.13,
+     "cover": 3
+    },
+    {
+     "id": "objekty47",
+     "asset": "strom-velky",
+     "x": 14.237,
+     "y": 24.426,
+     "w": 3.012,
+     "h": 3.103,
+     "rot": 13.12,
+     "cover": 3
+    },
+    {
+     "id": "objekty48",
+     "asset": "strom-velky",
+     "x": 6.937,
+     "y": 25.854,
+     "w": 2.918,
+     "h": 3.072,
+     "rot": 213.28,
+     "cover": 3
+    },
+    {
+     "id": "objekty49",
+     "asset": "gen2-strom",
+     "x": 10.067,
+     "y": 24.973,
+     "w": 3.322,
+     "h": 3.816,
+     "rot": 228.43,
+     "cover": 3
+    },
+    {
+     "id": "objekty50",
+     "asset": "strom",
+     "x": 8.244,
+     "y": 24.688,
+     "w": 2.719,
+     "h": 3.212,
+     "rot": 254.4,
+     "cover": 3
+    },
+    {
+     "id": "objekty51",
+     "asset": "strom",
+     "x": 3.914,
+     "y": 25.762,
+     "w": 3.346,
+     "h": 3.655,
+     "rot": 65.54,
+     "cover": 3
+    },
+    {
+     "id": "objekty52",
+     "asset": "gen2-strom2",
+     "x": 29.849,
+     "y": 20.382,
+     "w": 2.077,
+     "h": 1.831,
+     "rot": 103.01,
+     "cover": 3
+    },
+    {
+     "id": "objekty53",
+     "asset": "strom",
+     "x": 33.49,
+     "y": 24.871,
+     "w": 2.767,
+     "h": 2.53,
+     "rot": 263.84,
+     "cover": 3
+    },
+    {
+     "id": "objekty54",
+     "asset": "gen2-strom",
+     "x": 28.584,
+     "y": 21.765,
+     "w": 2.41,
+     "h": 1.986,
+     "rot": 113.63,
+     "cover": 3
+    },
+    {
+     "id": "objekty55",
+     "asset": "gen2-strom",
+     "x": 28.993,
+     "y": 24.838,
+     "w": 2.389,
+     "h": 2.174,
+     "rot": 290.88,
+     "cover": 3
+    },
+    {
+     "id": "objekty56",
+     "asset": "strom-velky",
+     "x": 27.818,
+     "y": 21.748,
+     "w": 3.278,
+     "h": 3.455,
+     "rot": 118.5,
+     "cover": 3
+    },
+    {
+     "id": "objekty57",
+     "asset": "strom",
+     "x": 27.585,
+     "y": 24.306,
+     "w": 2.868,
+     "h": 2.308,
+     "rot": 239.87,
+     "cover": 3
+    },
+    {
+     "id": "objekty58",
+     "asset": "gen2-strom",
+     "x": 28.941,
+     "y": 23.093,
+     "w": 2.13,
+     "h": 2.07,
+     "rot": 161.97,
+     "cover": 3
+    },
+    {
+     "id": "objekty59",
+     "asset": "gen2-strom",
+     "x": 33.038,
+     "y": 21.574,
+     "w": 2.843,
+     "h": 2.559,
+     "rot": 120.87,
+     "cover": 3
+    },
+    {
+     "id": "objekty60",
+     "asset": "gen2-strom",
+     "x": 32.798,
+     "y": 20.059,
+     "w": 2.94,
+     "h": 3.219,
+     "rot": 124.37,
+     "cover": 3
+    },
+    {
+     "id": "objekty61",
+     "asset": "gen2-strom",
+     "x": 34.697,
+     "y": 22.494,
+     "w": 3.355,
+     "h": 3.566,
+     "rot": 275.91,
+     "cover": 3
+    },
+    {
+     "id": "objekty62",
+     "asset": "gen2-strom2",
+     "x": 33.282,
+     "y": 23.864,
+     "w": 2.796,
+     "h": 3.022,
+     "rot": 1.53,
+     "cover": 3
+    },
+    {
+     "id": "objekty63",
+     "asset": "strom",
+     "x": 29.829,
+     "y": 23.254,
+     "w": 3.051,
+     "h": 3.118,
+     "rot": 248.26,
+     "cover": 3
+    },
+    {
+     "id": "objekty64",
+     "asset": "gen2-strom2",
+     "x": 33.295,
+     "y": 26.087,
+     "w": 3.309,
+     "h": 3.189,
+     "rot": 245.16,
+     "cover": 3
+    },
+    {
+     "id": "objekty65",
+     "asset": "gen2-strom",
+     "x": 29.122,
+     "y": 19.716,
+     "w": 2.773,
+     "h": 2.43,
+     "rot": 106.83,
+     "cover": 3
+    },
+    {
+     "id": "objekty66",
+     "asset": "gen2-strom2",
+     "x": 31.88,
+     "y": 3.987,
+     "w": 2.53,
+     "h": 2.858,
+     "rot": 59.27,
+     "cover": 3
+    },
+    {
+     "id": "objekty67",
+     "asset": "strom",
+     "x": 29.94,
+     "y": 2.323,
+     "w": 2.494,
+     "h": 2.801,
+     "rot": 96.13,
+     "cover": 3
+    },
+    {
+     "id": "objekty68",
+     "asset": "strom",
+     "x": 31.067,
+     "y": 3.611,
+     "w": 3.431,
+     "h": 3.721,
+     "rot": 306.83,
+     "cover": 3
+    },
+    {
+     "id": "objekty69",
+     "asset": "strom",
+     "x": 32.629,
+     "y": 2.399,
+     "w": 3.466,
+     "h": 3.655,
+     "rot": 235.21,
+     "cover": 3
+    },
+    {
+     "id": "objekty70",
+     "asset": "gen2-strom",
+     "x": 33.951,
+     "y": 5.213,
+     "w": 2.424,
+     "h": 2.839,
+     "rot": 106.84,
+     "cover": 3
+    },
+    {
+     "id": "objekty71",
+     "asset": "strom",
+     "x": 33.638,
+     "y": 3.089,
+     "w": 2.68,
+     "h": 2.793,
+     "rot": 346.94,
+     "cover": 3
+    },
+    {
+     "id": "objekty72",
+     "asset": "strom-velky",
+     "x": 30.965,
+     "y": 6.578,
+     "w": 2.144,
+     "h": 2.339,
+     "rot": 32.3,
+     "cover": 3
+    },
+    {
+     "id": "objekty73",
+     "asset": "strom",
+     "x": 34.414,
+     "y": 2.821,
+     "w": 2.707,
+     "h": 2.888,
+     "rot": 152.3,
+     "cover": 3
+    },
+    {
+     "id": "objekty74",
+     "asset": "gen2-strom2",
+     "x": 29.783,
+     "y": 3.888,
+     "w": 2.457,
+     "h": 2.721,
+     "rot": 218.55,
+     "cover": 3
+    },
+    {
+     "id": "objekty75",
+     "asset": "gen2-strom2",
+     "x": 32.317,
+     "y": 2.481,
+     "w": 2.123,
+     "h": 2.422,
+     "rot": 39.4,
+     "cover": 3
+    },
+    {
+     "id": "objekty76",
+     "asset": "strom",
+     "x": 33.07,
+     "y": 8.452,
+     "w": 2.827,
+     "h": 2.274,
+     "rot": 86.01,
+     "cover": 3
+    },
+    {
+     "id": "objekty77",
+     "asset": "strom",
+     "x": 34.31,
+     "y": 9.407,
+     "w": 2.699,
+     "h": 2.825,
+     "rot": 337.27,
+     "cover": 3
+    },
+    {
+     "id": "objekty78",
+     "asset": "gen2-strom2",
+     "x": 32.982,
+     "y": 9.48,
+     "w": 3.255,
+     "h": 3.838,
+     "rot": 222.45,
+     "cover": 3
+    },
+    {
+     "id": "objekty79",
+     "asset": "gen2-strom2",
+     "x": 30.14,
+     "y": 8.697,
+     "w": 2.262,
+     "h": 2.449,
+     "rot": 203.56,
+     "cover": 3
+    },
+    {
+     "id": "objekty80",
+     "asset": "gen2-strom2",
+     "x": 31.205,
+     "y": 8.397,
+     "w": 2.04,
+     "h": 2.226,
+     "rot": 312.24,
+     "cover": 3
+    },
+    {
+     "id": "objekty81",
+     "asset": "gen2-strom",
+     "x": 32.454,
+     "y": 9.16,
+     "w": 3.298,
+     "h": 3.087,
+     "rot": 186.37,
+     "cover": 3
+    },
+    {
+     "id": "objekty82",
+     "asset": "gen2-strom",
+     "x": 29.978,
+     "y": 9.242,
+     "w": 3.018,
+     "h": 3.334,
+     "rot": 112.69,
+     "cover": 3
+    },
+    {
+     "id": "objekty83",
+     "asset": "gen2-strom",
+     "x": 33.2,
+     "y": 9.918,
+     "w": 2.318,
+     "h": 2.588,
+     "rot": 274.58,
+     "cover": 3
+    },
+    {
+     "id": "objekty84",
+     "asset": "gen2-houby",
+     "x": 3.857,
+     "y": 6.814,
+     "w": 0.682,
+     "h": 0.736,
+     "rot": 60.5
+    },
+    {
+     "id": "objekty85",
+     "asset": "vinorost",
+     "x": 5.011,
+     "y": 8.222,
+     "w": 0.894,
+     "h": 0.78,
+     "rot": 79.65
+    },
+    {
+     "id": "objekty86",
+     "asset": "gen2-kapradi",
+     "x": 7.712,
+     "y": 6.587,
+     "w": 0.906,
+     "h": 1.025,
+     "rot": 75.44
+    },
+    {
+     "id": "objekty87",
+     "asset": "koreny",
+     "x": 6.808,
+     "y": 6.21,
+     "w": 0.827,
+     "h": 0.96,
+     "rot": 55.86
+    },
+    {
+     "id": "objekty88",
+     "asset": "vinorost",
+     "x": 5.692,
+     "y": 8.231,
+     "w": 0.628,
+     "h": 0.675,
+     "rot": 125.31
+    },
+    {
+     "id": "objekty89",
+     "asset": "gen2-houby",
+     "x": 6.166,
+     "y": 7.115,
+     "w": 0.838,
+     "h": 0.854,
+     "rot": 26.94
+    },
+    {
+     "id": "objekty90",
+     "asset": "gen2-ker",
+     "x": 6.074,
+     "y": 5.41,
+     "w": 0.608,
+     "h": 0.558,
+     "rot": 133.95
+    },
+    {
+     "id": "objekty91",
+     "asset": "gen2-kapradi",
+     "x": 5.059,
+     "y": 5.463,
+     "w": 0.653,
+     "h": 0.744,
+     "rot": 295.59
+    },
+    {
+     "id": "objekty92",
+     "asset": "gen2-ker",
+     "x": 5.263,
+     "y": 13.629,
+     "w": 0.788,
+     "h": 0.727,
+     "rot": 92.09
+    },
+    {
+     "id": "objekty93",
+     "asset": "koreny",
+     "x": 5.279,
+     "y": 13.27,
+     "w": 0.431,
+     "h": 0.357,
+     "rot": 61.36
+    },
+    {
+     "id": "objekty94",
+     "asset": "gen2-kapradi",
+     "x": 6.866,
+     "y": 13.56,
+     "w": 0.889,
+     "h": 1.055,
+     "rot": 253.31
+    },
+    {
+     "id": "objekty95",
+     "asset": "koreny",
+     "x": 6.665,
+     "y": 14.297,
+     "w": 0.76,
+     "h": 0.834,
+     "rot": 230.26
+    },
+    {
+     "id": "objekty96",
+     "asset": "koreny",
+     "x": 6.102,
+     "y": 11.547,
+     "w": 0.73,
+     "h": 0.613,
+     "rot": 279.05
+    },
+    {
+     "id": "objekty97",
+     "asset": "gen2-houby",
+     "x": 4.718,
+     "y": 12.554,
+     "w": 0.454,
+     "h": 0.396,
+     "rot": 219.22
+    },
+    {
+     "id": "objekty98",
+     "asset": "koreny",
+     "x": 4.709,
+     "y": 14.237,
+     "w": 0.749,
+     "h": 0.887,
+     "rot": 214.37
+    },
+    {
+     "id": "objekty99",
+     "asset": "koreny",
+     "x": 4.614,
+     "y": 13.751,
+     "w": 0.42,
+     "h": 0.34,
+     "rot": 148.37
+    },
+    {
+     "id": "objekty100",
+     "asset": "gen2-kapradi",
+     "x": 17.724,
+     "y": 12.822,
+     "w": 0.493,
+     "h": 0.501,
+     "rot": 308.1
+    },
+    {
+     "id": "objekty101",
+     "asset": "gen2-houby",
+     "x": 18.014,
+     "y": 12.91,
+     "w": 0.868,
+     "h": 0.741,
+     "rot": 142.93
+    },
+    {
+     "id": "objekty102",
+     "asset": "gen2-ker",
+     "x": 17.063,
+     "y": 13.461,
+     "w": 0.62,
+     "h": 0.643,
+     "rot": 281.01
+    },
+    {
+     "id": "objekty103",
+     "asset": "gen2-houby",
+     "x": 18.478,
+     "y": 13.63,
+     "w": 0.725,
+     "h": 0.799,
+     "rot": 155.98
+    },
+    {
+     "id": "objekty104",
+     "asset": "gen2-ker",
+     "x": 15.114,
+     "y": 14.261,
+     "w": 0.543,
+     "h": 0.507,
+     "rot": 81.54
+    },
+    {
+     "id": "objekty105",
+     "asset": "gen2-ker",
+     "x": 17.846,
+     "y": 13.108,
+     "w": 0.793,
+     "h": 0.913,
+     "rot": 72.89
+    },
+    {
+     "id": "objekty106",
+     "asset": "gen2-kapradi",
+     "x": 18.472,
+     "y": 14.528,
+     "w": 0.869,
+     "h": 0.909,
+     "rot": 267.62
+    },
+    {
+     "id": "objekty107",
+     "asset": "gen2-kapradi",
+     "x": 18.778,
+     "y": 14.601,
+     "w": 0.429,
+     "h": 0.408,
+     "rot": 273.71
+    },
+    {
+     "id": "objekty108",
+     "asset": "gen2-ker",
+     "x": 13.08,
+     "y": 15.68,
+     "w": 0.886,
+     "h": 0.785,
+     "rot": 9.07
+    },
+    {
+     "id": "objekty109",
+     "asset": "vinorost",
+     "x": 13.163,
+     "y": 18.524,
+     "w": 0.512,
+     "h": 0.469,
+     "rot": 27.06
+    },
+    {
+     "id": "objekty110",
+     "asset": "gen2-houby",
+     "x": 11.328,
+     "y": 18.057,
+     "w": 0.723,
+     "h": 0.633,
+     "rot": 19.78
+    },
+    {
+     "id": "objekty111",
+     "asset": "vinorost",
+     "x": 10.461,
+     "y": 17.237,
+     "w": 0.544,
+     "h": 0.586,
+     "rot": 342.75
+    },
+    {
+     "id": "objekty112",
+     "asset": "vinorost",
+     "x": 12.976,
+     "y": 18.454,
+     "w": 0.734,
+     "h": 0.752,
+     "rot": 352.62
+    },
+    {
+     "id": "objekty113",
+     "asset": "gen2-kapradi",
+     "x": 11.505,
+     "y": 15.265,
+     "w": 0.517,
+     "h": 0.455,
+     "rot": 237.04
+    },
+    {
+     "id": "objekty114",
+     "asset": "gen2-houby",
+     "x": 12.79,
+     "y": 16.186,
+     "w": 0.844,
+     "h": 0.789,
+     "rot": 250.99
+    },
+    {
+     "id": "objekty115",
+     "asset": "gen2-ker",
+     "x": 11.545,
+     "y": 17.65,
+     "w": 0.939,
+     "h": 1.07,
+     "rot": 319.6
+    },
+    {
+     "id": "objekty116",
+     "asset": "gen2-ker",
+     "x": 28.882,
+     "y": 20.135,
+     "w": 0.596,
+     "h": 0.705,
+     "rot": 194.79
+    },
+    {
+     "id": "objekty117",
+     "asset": "koreny",
+     "x": 28.771,
+     "y": 20.062,
+     "w": 0.83,
+     "h": 0.754,
+     "rot": 321.58
+    },
+    {
+     "id": "objekty118",
+     "asset": "gen2-kapradi",
+     "x": 28.396,
+     "y": 19.172,
+     "w": 0.627,
+     "h": 0.558,
+     "rot": 14.07
+    },
+    {
+     "id": "objekty119",
+     "asset": "vinorost",
+     "x": 26.874,
+     "y": 18.995,
+     "w": 0.719,
+     "h": 0.588,
+     "rot": 200.37
+    },
+    {
+     "id": "objekty120",
+     "asset": "gen2-ker",
+     "x": 28.396,
+     "y": 19.78,
+     "w": 0.691,
+     "h": 0.816,
+     "rot": 315.06
+    },
+    {
+     "id": "objekty121",
+     "asset": "gen2-kapradi",
+     "x": 28.402,
+     "y": 18.707,
+     "w": 0.405,
+     "h": 0.351,
+     "rot": 111.94
+    },
+    {
+     "id": "objekty122",
+     "asset": "gen2-houby",
+     "x": 25.702,
+     "y": 18.7,
+     "w": 0.861,
+     "h": 1.028,
+     "rot": 259.88
+    },
+    {
+     "id": "objekty123",
+     "asset": "koreny",
+     "x": 29.406,
+     "y": 19.248,
+     "w": 0.896,
+     "h": 0.771,
+     "rot": 92.64
+    },
+    {
+     "id": "objekty124",
+     "asset": "koreny",
+     "x": 30.219,
+     "y": 5.409,
+     "w": 0.632,
+     "h": 0.619,
+     "rot": 50.53
+    },
+    {
+     "id": "objekty125",
+     "asset": "vinorost",
+     "x": 31.727,
+     "y": 5.201,
+     "w": 0.77,
+     "h": 0.886,
+     "rot": 266.96
+    },
+    {
+     "id": "objekty126",
+     "asset": "koreny",
+     "x": 30.005,
+     "y": 4.204,
+     "w": 0.685,
+     "h": 0.621,
+     "rot": 119.72
+    },
+    {
+     "id": "objekty127",
+     "asset": "koreny",
+     "x": 31.07,
+     "y": 4.713,
+     "w": 0.693,
+     "h": 0.702,
+     "rot": 15.87
+    },
+    {
+     "id": "objekty128",
+     "asset": "gen2-kapradi",
+     "x": 31.239,
+     "y": 4.909,
+     "w": 0.481,
+     "h": 0.464,
+     "rot": 127.1
+    },
+    {
+     "id": "objekty129",
+     "asset": "gen2-houby",
+     "x": 29.701,
+     "y": 5.337,
+     "w": 0.564,
+     "h": 0.608,
+     "rot": 252.0
+    },
+    {
+     "id": "objekty130",
+     "asset": "koreny",
+     "x": 31.195,
+     "y": 7.101,
+     "w": 0.752,
+     "h": 0.792,
+     "rot": 155.52
+    },
+    {
+     "id": "objekty131",
+     "asset": "koreny",
+     "x": 31.494,
+     "y": 6.3,
+     "w": 0.555,
+     "h": 0.634,
+     "rot": 137.24
+    },
+    {
+     "id": "objekty132",
+     "asset": "gen2-houby",
+     "x": 16.818,
+     "y": 22.763,
+     "w": 0.779,
+     "h": 0.91,
+     "rot": 33.1
+    },
+    {
+     "id": "objekty133",
+     "asset": "gen2-ker",
+     "x": 16.27,
+     "y": 21.594,
+     "w": 0.618,
+     "h": 0.721,
+     "rot": 307.8
+    },
+    {
+     "id": "objekty134",
+     "asset": "gen2-ker",
+     "x": 14.263,
+     "y": 23.106,
+     "w": 0.654,
+     "h": 0.78,
+     "rot": 150.49
+    },
+    {
+     "id": "objekty135",
+     "asset": "gen2-kapradi",
+     "x": 14.501,
+     "y": 24.716,
+     "w": 0.723,
+     "h": 0.596,
+     "rot": 127.52
+    },
+    {
+     "id": "objekty136",
+     "asset": "gen2-houby",
+     "x": 14.601,
+     "y": 21.478,
+     "w": 0.441,
+     "h": 0.447,
+     "rot": 42.36
+    },
+    {
+     "id": "objekty137",
+     "asset": "koreny",
+     "x": 15.3,
+     "y": 23.033,
+     "w": 0.611,
+     "h": 0.617,
+     "rot": 60.1
+    },
+    {
+     "id": "objekty138",
+     "asset": "vinorost",
+     "x": 15.341,
+     "y": 22.728,
+     "w": 0.654,
+     "h": 0.695,
+     "rot": 313.21
+    },
+    {
+     "id": "objekty139",
+     "asset": "vinorost",
+     "x": 13.628,
+     "y": 22.383,
+     "w": 0.85,
+     "h": 0.698,
+     "rot": 211.06
+    },
+    {
+     "id": "objekty140",
+     "asset": "kamen",
+     "x": 26.533,
+     "y": 4.716,
+     "w": 0.831,
+     "h": 0.781,
+     "rot": 83.41
+    },
+    {
+     "id": "objekty141",
+     "asset": "kamen",
+     "x": 25.908,
+     "y": 5.108,
+     "w": 0.534,
+     "h": 0.631,
+     "rot": 216.78
+    },
+    {
+     "id": "objekty142",
+     "asset": "gen2-lekniny",
+     "x": 25.124,
+     "y": 5.123,
+     "w": 0.731,
+     "h": 0.839,
+     "rot": 233.3
+    },
+    {
+     "id": "objekty143",
+     "asset": "kamen",
+     "x": 24.931,
+     "y": 5.103,
+     "w": 0.724,
+     "h": 0.621,
+     "rot": 159.47
+    },
+    {
+     "id": "objekty144",
+     "asset": "gen2-lekniny",
+     "x": 26.149,
+     "y": 6.359,
+     "w": 0.687,
+     "h": 0.719,
+     "rot": 13.39
+    },
+    {
+     "id": "objekty145",
+     "asset": "gen2-lekniny",
+     "x": 25.516,
+     "y": 18.25,
+     "w": 0.78,
+     "h": 0.836,
+     "rot": 340.26
+    },
+    {
+     "id": "objekty146",
+     "asset": "gen2-rakos",
+     "x": 25.475,
+     "y": 18.27,
+     "w": 0.527,
+     "h": 0.496,
+     "rot": 120.95
+    },
+    {
+     "id": "objekty147",
+     "asset": "kamen",
+     "x": 24.661,
+     "y": 15.774,
+     "w": 0.819,
+     "h": 0.672,
+     "rot": 62.17
+    },
+    {
+     "id": "objekty148",
+     "asset": "gen2-rakos",
+     "x": 24.899,
+     "y": 16.396,
+     "w": 0.731,
+     "h": 0.776,
+     "rot": 219.06
+    },
+    {
+     "id": "objekty149",
+     "asset": "gen2-rakos",
+     "x": 25.529,
+     "y": 17.943,
+     "w": 0.607,
+     "h": 0.702,
+     "rot": 63.28
+    },
+    {
+     "id": "objekty150",
+     "asset": "gen2-rakos",
+     "x": 22.692,
+     "y": 25.051,
+     "w": 0.799,
+     "h": 0.931,
+     "rot": 238.58
+    },
+    {
+     "id": "objekty151",
+     "asset": "gen2-lekniny",
+     "x": 23.92,
+     "y": 24.146,
+     "w": 0.783,
+     "h": 0.898,
+     "rot": 38.97
+    },
+    {
+     "id": "objekty152",
+     "asset": "kamen",
+     "x": 22.767,
+     "y": 24.885,
+     "w": 0.654,
+     "h": 0.723,
+     "rot": 113.53
+    },
+    {
+     "id": "objekty153",
+     "asset": "gen2-lekniny",
+     "x": 24.097,
+     "y": 23.433,
+     "w": 0.8,
+     "h": 0.953,
+     "rot": 325.58
+    },
+    {
+     "id": "objekty154",
+     "asset": "gen2-lekniny",
+     "x": 23.589,
+     "y": 25.866,
+     "w": 0.688,
+     "h": 0.602,
+     "rot": 138.76
+    }
+   ],
+   "steny": [
+    {
+     "id": "steny0",
+     "a": [
+      20,
+      11.3
+     ],
+     "b": [
+      27.8,
+      11.3
+     ],
+     "typ": "half"
+    },
+    {
+     "id": "steny1",
+     "a": [
+      20,
+      13.4
+     ],
+     "b": [
+      27.8,
+      13.4
+     ],
+     "typ": "half"
+    },
+    {
+     "id": "steny2",
+     "a": [
+      6,
+      7
+     ],
+     "b": [
+      7.6,
+      5.6
+     ],
+     "typ": "wall"
+    },
+    {
+     "id": "steny3",
+     "a": [
+      7.6,
+      5.6
+     ],
+     "b": [
+      9.2,
+      4.2
+     ],
+     "typ": "window"
+    },
+    {
+     "id": "steny4",
+     "a": [
+      9.2,
+      4.2
+     ],
+     "b": [
+      10,
+      3.5
+     ],
+     "typ": "wall"
+    },
+    {
+     "id": "steny5",
+     "a": [
+      10,
+      3.5
+     ],
+     "b": [
+      17,
+      4
+     ],
+     "typ": "wall"
+    },
+    {
+     "id": "steny6",
+     "a": [
+      17,
+      4
+     ],
+     "b": [
+      17.6,
+      4.8
+     ],
+     "typ": "wall"
+    },
+    {
+     "id": "steny7",
+     "a": [
+      17.6,
+      4.8
+     ],
+     "b": [
+      19.25,
+      7.0
+     ],
+     "typ": "half"
+    },
+    {
+     "id": "steny8",
+     "a": [
+      19.25,
+      7.0
+     ],
+     "b": [
+      20,
+      8
+     ],
+     "typ": "wall"
+    },
+    {
+     "id": "steny9",
+     "a": [
+      20,
+      8
+     ],
+     "b": [
+      18,
+      16
+     ],
+     "typ": "wall"
+    },
+    {
+     "id": "steny10",
+     "a": [
+      18,
+      16
+     ],
+     "b": [
+      15.55,
+      16.7
+     ],
+     "typ": "wall"
+    },
+    {
+     "id": "steny11",
+     "a": [
+      15.55,
+      16.7
+     ],
+     "b": [
+      13.1,
+      17.4
+     ],
+     "typ": "door"
+    },
+    {
+     "id": "steny12",
+     "a": [
+      13.1,
+      17.4
+     ],
+     "b": [
+      11,
+      18
+     ],
+     "typ": "wall"
+    },
+    {
+     "id": "steny13",
+     "a": [
+      11,
+      18
+     ],
+     "b": [
+      9.8,
+      17.0
+     ],
+     "typ": "wall"
+    },
+    {
+     "id": "steny14",
+     "a": [
+      9.8,
+      17.0
+     ],
+     "b": [
+      7.1,
+      14.75
+     ],
+     "typ": "half"
+    },
+    {
+     "id": "steny15",
+     "a": [
+      7.1,
+      14.75
+     ],
+     "b": [
+      5,
+      13
+     ],
+     "typ": "wall"
+    },
+    {
+     "id": "steny16",
+     "a": [
+      5,
+      13
+     ],
+     "b": [
+      6,
+      7
+     ],
+     "typ": "wall"
+    }
+   ],
+   "malba": [
+    {
+     "id": "malba0",
+     "t": "teren-g",
+     "b": 1,
+     "o": 1,
+     "h": 1,
+     "r": 0,
+     "poly": true,
+     "p": [
+      [
+       0,
+       0
+      ],
+      [
+       36,
+       0
+      ],
+      [
+       36,
+       28
+      ],
+      [
+       0,
+       28
+      ]
+     ]
+    },
+    {
+     "id": "malba1",
+     "t": "teren-voda",
+     "b": 1.5,
+     "o": 1,
+     "h": 0.3,
+     "r": 0,
+     "poly": true,
+     "p": [
+      [
+       23,
+       0
+      ],
+      [
+       29,
+       0
+      ],
+      [
+       27,
+       6
+      ],
+      [
+       28,
+       10
+      ],
+      [
+       25,
+       17
+      ],
+      [
+       26,
+       22
+      ],
+      [
+       23,
+       28
+      ],
+      [
+       18,
+       28
+      ],
+      [
+       21,
+       21
+      ],
+      [
+       20,
+       16
+      ],
+      [
+       23,
+       9
+      ],
+      [
+       21,
+       5
+      ]
+     ]
+    },
+    {
+     "id": "malba2",
+     "t": "teren-melcina",
+     "b": 1.1,
+     "o": 0.7,
+     "h": 0.4,
+     "r": 0,
+     "poly": false,
+     "p": [
+      [
+       23.3,
+       0
+      ],
+      [
+       21.7,
+       5
+      ],
+      [
+       23.5,
+       9
+      ],
+      [
+       20.8,
+       17
+      ],
+      [
+       22,
+       22
+      ],
+      [
+       19,
+       28
+      ]
+     ]
+    },
+    {
+     "id": "malba3",
+     "t": "hlina",
+     "b": 2.4,
+     "o": 0.9,
+     "h": 0.25,
+     "r": 34,
+     "poly": false,
+     "p": [
+      [
+       0,
+       23
+      ],
+      [
+       7,
+       19
+      ],
+      [
+       12,
+       14
+      ],
+      [
+       17,
+       12
+      ],
+      [
+       22,
+       12
+      ],
+      [
+       32,
+       15
+      ],
+      [
+       36,
+       17
+      ]
+     ]
+    },
+    {
+     "id": "malba4",
+     "t": "drevo",
+     "b": 1,
+     "o": 1,
+     "h": 1,
+     "r": 90,
+     "poly": true,
+     "p": [
+      [
+       20,
+       11.2
+      ],
+      [
+       28,
+       11.2
+      ],
+      [
+       28,
+       13.5
+      ],
+      [
+       20,
+       13.5
+      ]
+     ]
+    },
+    {
+     "id": "malba5",
+     "t": "teren-ruiny",
+     "b": 1,
+     "o": 1,
+     "h": 1,
+     "r": 26,
+     "poly": true,
+     "p": [
+      [
+       6,
+       7
+      ],
+      [
+       10,
+       3.5
+      ],
+      [
+       17,
+       4
+      ],
+      [
+       20,
+       8
+      ],
+      [
+       18,
+       16
+      ],
+      [
+       11,
+       18
+      ],
+      [
+       5,
+       13
+      ]
+     ]
+    },
+    {
+     "id": "malba6",
+     "t": "bazina",
+     "b": 1.7,
+     "o": 0.5,
+     "h": 0.15,
+     "r": 48,
+     "poly": false,
+     "p": [
+      [
+       5,
+       7
+      ],
+      [
+       6,
+       12
+      ],
+      [
+       10,
+       15
+      ]
+     ]
+    },
+    {
+     "id": "malba7",
+     "t": "teren-rubble",
+     "b": 0.8,
+     "o": 0.45,
+     "h": 0.3,
+     "r": 22,
+     "poly": false,
+     "p": [
+      [
+       5,
+       7
+      ],
+      [
+       6,
+       12
+      ],
+      [
+       10,
+       15
+      ]
+     ]
+    },
+    {
+     "id": "malba8",
+     "t": "bazina",
+     "b": 1.7,
+     "o": 0.5,
+     "h": 0.15,
+     "r": 48,
+     "poly": false,
+     "p": [
+      [
+       11,
+       17
+      ],
+      [
+       16,
+       16
+      ],
+      [
+       18,
+       12
+      ]
+     ]
+    },
+    {
+     "id": "malba9",
+     "t": "teren-rubble",
+     "b": 0.8,
+     "o": 0.45,
+     "h": 0.3,
+     "r": 22,
+     "poly": false,
+     "p": [
+      [
+       11,
+       17
+      ],
+      [
+       16,
+       16
+      ],
+      [
+       18,
+       12
+      ]
+     ]
+    },
+    {
+     "id": "malba10",
+     "t": "bazina",
+     "b": 1.7,
+     "o": 0.5,
+     "h": 0.15,
+     "r": 48,
+     "poly": false,
+     "p": [
+      [
+       8,
+       5
+      ],
+      [
+       12,
+       5
+      ],
+      [
+       15,
+       6
+      ]
+     ]
+    },
+    {
+     "id": "malba11",
+     "t": "teren-rubble",
+     "b": 0.8,
+     "o": 0.45,
+     "h": 0.3,
+     "r": 22,
+     "poly": false,
+     "p": [
+      [
+       8,
+       5
+      ],
+      [
+       12,
+       5
+      ],
+      [
+       15,
+       6
+      ]
+     ]
+    }
+   ],
+   "svetla": [
+    {
+     "id": "svetla0",
+     "x": 12,
+     "y": 8,
+     "bright": 9,
+     "dim": 19,
+     "color": "#96e6cd",
+     "intenzita": 0.65,
+     "blikani": false
+    },
+    {
+     "id": "svetla1",
+     "x": 30,
+     "y": 7,
+     "bright": 8,
+     "dim": 14,
+     "color": "#a7c6ff",
+     "intenzita": 0.55,
+     "blikani": false
+    },
+    {
+     "id": "svetla2",
+     "x": 17,
+     "y": 24,
+     "bright": 6,
+     "dim": 15,
+     "color": "#ca9ae7",
+     "intenzita": 0.5,
+     "blikani": false
+    }
+   ],
+   "poznamky": [
+    {
+     "id": "poznamky0",
+     "x": 12,
+     "y": 7,
+     "text": "Tirentův oltář: rozbitá mísa odráží nebe bez ohledu na koruny stromů."
+    },
+    {
+     "id": "poznamky1",
+     "x": 24,
+     "y": 12,
+     "text": "Most: zábradlí poskytuje poloviční kryt, průchod po prostředku je volný."
+    },
+    {
+     "id": "poznamky2",
+     "x": 30,
+     "y": 7,
+     "text": "Runový kámen: lze vyjednat průchod se strážci; kořeny u zdi tvoří těžký terén."
+    }
+   ],
+   "kresby": [],
+   "vyska": {},
+   "textury": {},
+   "atmosfera": {
+    "amb": 0.67,
+    "barva": "#263c43"
+   },
+   "pocasi": {
+    "typ": "mlha",
+    "sila": 0.32,
+    "vitr": 112
+   },
+   "mrizkaStyl": {
+    "typ": "dots",
+    "barva": "#ddd4b1",
+    "opacita": 0.13
+   },
+   "mrizka": [
+    "ggggggggggggggggggggggg~~~~~~ggggggg",
+    "gggggggggggggggggggggg~~~~~~gggggggg",
+    "gggggggggggggggggggggg~~~~~~gggggggg",
+    "gggggggggggggggggggggg~~~~~~gggggggg",
+    "ggggggggg........gggg~~~~~~ggggggggg",
+    "gggggggg..........ggg~~~~~~ggggggggg",
+    "ggggggg............ggg~~~~~ggggggggg",
+    "gggggg..............gg~~~~~ggggggggg",
+    "gggggg..............ggg~~~~~gggggggg",
+    "gggggg..............ggg~~~~~gggggggg",
+    "ggggg..............ggg~~~~~~gggggggg",
+    "ggggg..............g========gggggggg",
+    "ggggg..............g========gggggggg",
+    "gggggg.............gg~~~~~gggggggggg",
+    "ggggggg...........ggg~~~~~gggggggggg",
+    "gggggggg..........gg~~~~~~gggggggggg",
+    "ggggggggg.......gggg~~~~~ggggggggggg",
+    "gggggggggg...ggggggg~~~~~ggggggggggg",
+    "gggggggggggggggggggg~~~~~ggggggggggg",
+    "ggggggggggggggggggggg~~~~ggggggggggg",
+    "ggggggggggggggggggggg~~~~~gggggggggg",
+    "ggggggggggggggggggggg~~~~~gggggggggg",
+    "gggggggggggggggggggg~~~~~~gggggggggg",
+    "gggggggggggggggggggg~~~~~ggggggggggg",
+    "ggggggggggggggggggg~~~~~~ggggggggggg",
+    "ggggggggggggggggggg~~~~~gggggggggggg",
+    "ggggggggggggggggggg~~~~~gggggggggggg",
+    "gggggggggggggggggg~~~~~ggggggggggggg"
+   ]
+  },
+  {
+   "id": "epic-menkant-boure",
+   "nazev": "Menkant – Bouře nad Zlatou kotvou",
+   "podklad": "pristav",
+   "misto": "03_Mesta/Mesto_Menkant.md",
+   "popis": "Blesky nad Menkantskou zátokou. Sklad Zlaté kotvy, nákladní molo a paluba přivázané karavely vytvářejí tři propojené arény; sudy a náklad nabízejí kryt, mokré rampy kloužou. Autorská herní scéna; místní názvy zón a zápletky jsou návrhem pro PJ.",
+   "osvetleni": "Vizuální atmosféra; dosah světel ve stopách.",
+   "start": {
+    "druzina": [
+     [
+      2,
+      24
+     ],
+     [
+      3,
+      24
+     ],
+     [
+      4,
+      24
+     ],
+     [
+      2,
+      25
+     ],
+     [
+      3,
+      25
+     ],
+     [
+      4,
+      25
+     ]
+    ],
+    "nepratele": [
+     [
+      25,
+      11
+     ],
+     [
+      27,
+      16
+     ],
+     [
+      18,
+      15
+     ],
+     [
+      8,
+      8
+     ]
+    ]
+   },
+   "objekty": [
+    {
+     "id": "objekty0",
+     "asset": "p3-lodni-paluba",
+     "x": 26,
+     "y": 13.1,
+     "w": 9,
+     "h": 25,
+     "rot": 0,
+     "z": -4,
+     "anim": false
+    },
+    {
+     "id": "objekty1",
+     "asset": "stożar",
+     "x": 26,
+     "y": 9,
+     "w": 2.1,
+     "h": 2.1,
+     "rot": 0,
+     "blocks": true,
+     "cover": 3
+    },
+    {
+     "id": "objekty2",
+     "asset": "stożar",
+     "x": 26,
+     "y": 18,
+     "w": 1.7,
+     "h": 1.7,
+     "rot": 0,
+     "blocks": true,
+     "cover": 3
+    },
+    {
+     "id": "objekty3",
+     "asset": "kotva",
+     "x": 24,
+     "y": 4,
+     "w": 0.9,
+     "h": 1.3,
+     "rot": -22
+    },
+    {
+     "id": "objekty4",
+     "asset": "clun",
+     "x": 32.5,
+     "y": 20,
+     "w": 2.3,
+     "h": 5,
+     "rot": -12,
+     "cover": 2
+    },
+    {
+     "id": "objekty5",
+     "asset": "clun",
+     "x": 17.8,
+     "y": 3.5,
+     "w": 1.8,
+     "h": 3.6,
+     "rot": 21,
+     "cover": 2
+    },
+    {
+     "id": "objekty6",
+     "asset": "p3-padaci-dvere",
+     "x": 26,
+     "y": 13.3,
+     "w": 1.5,
+     "h": 1.5,
+     "rot": 0
+    },
+    {
+     "id": "objekty7",
+     "asset": "p3-lana",
+     "x": 13,
+     "y": 7,
+     "w": 0.9,
+     "h": 0.9,
+     "rot": 48.2
+    },
+    {
+     "id": "objekty8",
+     "asset": "p3-lana",
+     "x": 13,
+     "y": 19,
+     "w": 0.9,
+     "h": 0.9,
+     "rot": 153.69
+    },
+    {
+     "id": "objekty9",
+     "asset": "p3-lana",
+     "x": 18,
+     "y": 14,
+     "w": 0.9,
+     "h": 0.9,
+     "rot": 306.76
+    },
+    {
+     "id": "objekty10",
+     "asset": "p3-lana",
+     "x": 20,
+     "y": 24,
+     "w": 0.9,
+     "h": 0.9,
+     "rot": 162.51
+    },
+    {
+     "id": "objekty11",
+     "asset": "p3-lana",
+     "x": 23,
+     "y": 21,
+     "w": 0.9,
+     "h": 0.9,
+     "rot": 83.8
+    },
+    {
+     "id": "objekty12",
+     "asset": "p3-lana",
+     "x": 29,
+     "y": 7,
+     "w": 0.9,
+     "h": 0.9,
+     "rot": 240.68
+    },
+    {
+     "id": "objekty13",
+     "asset": "p3-lana",
+     "x": 4,
+     "y": 13,
+     "w": 0.9,
+     "h": 0.9,
+     "rot": 110.15
+    },
+    {
+     "id": "objekty14",
+     "asset": "bedna",
+     "x": 2.879,
+     "y": 4.186,
+     "w": 1.028,
+     "h": 0.844,
+     "rot": 95.02,
+     "cover": 2,
+     "difficult": true
+    },
+    {
+     "id": "objekty15",
+     "asset": "truhla-lod",
+     "x": 3.134,
+     "y": 3.863,
+     "w": 0.72,
+     "h": 0.708,
+     "rot": 134.93,
+     "cover": 2,
+     "difficult": true
+    },
+    {
+     "id": "objekty16",
+     "asset": "truhla-lod",
+     "x": 2.952,
+     "y": 4.143,
+     "w": 0.935,
+     "h": 0.868,
+     "rot": 59.28,
+     "cover": 2,
+     "difficult": true
+    },
+    {
+     "id": "objekty17",
+     "asset": "truhla-lod",
+     "x": 2.633,
+     "y": 3.94,
+     "w": 0.992,
+     "h": 1.112,
+     "rot": 34.4,
+     "cover": 2,
+     "difficult": true
+    },
+    {
+     "id": "objekty18",
+     "asset": "truhla-lod",
+     "x": 2.79,
+     "y": 4.162,
+     "w": 0.78,
+     "h": 0.645,
+     "rot": 264.47,
+     "cover": 2,
+     "difficult": true
+    },
+    {
+     "id": "objekty19",
+     "asset": "bedna",
+     "x": 3.553,
+     "y": 4.461,
+     "w": 0.797,
+     "h": 0.764,
+     "rot": 133.72,
+     "cover": 2,
+     "difficult": true
+    },
+    {
+     "id": "objekty20",
+     "asset": "sud",
+     "x": 3.728,
+     "y": 5.018,
+     "w": 0.816,
+     "h": 0.743,
+     "rot": 40.48,
+     "cover": 2,
+     "difficult": true
+    },
+    {
+     "id": "objekty21",
+     "asset": "bedna",
+     "x": 8.587,
+     "y": 4.651,
+     "w": 0.758,
+     "h": 0.655,
+     "rot": 324.61,
+     "cover": 2,
+     "difficult": true
+    },
+    {
+     "id": "objekty22",
+     "asset": "truhla-lod",
+     "x": 7.76,
+     "y": 4.973,
+     "w": 0.827,
+     "h": 0.675,
+     "rot": 0.84,
+     "cover": 2,
+     "difficult": true
+    },
+    {
+     "id": "objekty23",
+     "asset": "sud",
+     "x": 6.887,
+     "y": 5.148,
+     "w": 0.921,
+     "h": 0.753,
+     "rot": 23.93,
+     "cover": 2,
+     "difficult": true
+    },
+    {
+     "id": "objekty24",
+     "asset": "sud",
+     "x": 8.977,
+     "y": 5.565,
+     "w": 0.979,
+     "h": 1.116,
+     "rot": 235.45,
+     "cover": 2,
+     "difficult": true
+    },
+    {
+     "id": "objekty25",
+     "asset": "pydel",
+     "x": 8.622,
+     "y": 5.121,
+     "w": 0.97,
+     "h": 0.895,
+     "rot": 23.02,
+     "cover": 2,
+     "difficult": true
+    },
+    {
+     "id": "objekty26",
+     "asset": "sud",
+     "x": 8.078,
+     "y": 5.435,
+     "w": 0.785,
+     "h": 0.678,
+     "rot": 285.8,
+     "cover": 2,
+     "difficult": true
+    },
+    {
+     "id": "objekty27",
+     "asset": "bedna",
+     "x": 6.957,
+     "y": 5.849,
+     "w": 0.959,
+     "h": 0.817,
+     "rot": 320.98,
+     "cover": 2,
+     "difficult": true
+    },
+    {
+     "id": "objekty28",
+     "asset": "pydel",
+     "x": 3.136,
+     "y": 9.223,
+     "w": 0.915,
+     "h": 0.782,
+     "rot": 287.01,
+     "cover": 2,
+     "difficult": true
+    },
+    {
+     "id": "objekty29",
+     "asset": "pydel",
+     "x": 3.891,
+     "y": 9.916,
+     "w": 0.839,
+     "h": 0.996,
+     "rot": 166.42,
+     "cover": 2,
+     "difficult": true
+    },
+    {
+     "id": "objekty30",
+     "asset": "bedna",
+     "x": 4.922,
+     "y": 9.333,
+     "w": 0.871,
+     "h": 0.802,
+     "rot": 241.55,
+     "cover": 2,
+     "difficult": true
+    },
+    {
+     "id": "objekty31",
+     "asset": "sud",
+     "x": 3.78,
+     "y": 8.283,
+     "w": 0.978,
+     "h": 0.792,
+     "rot": 114.92,
+     "cover": 2,
+     "difficult": true
+    },
+    {
+     "id": "objekty32",
+     "asset": "sud",
+     "x": 3.516,
+     "y": 10.471,
+     "w": 1.071,
+     "h": 0.969,
+     "rot": 213.73,
+     "cover": 2,
+     "difficult": true
+    },
+    {
+     "id": "objekty33",
+     "asset": "truhla-lod",
+     "x": 4.349,
+     "y": 10.401,
+     "w": 0.667,
+     "h": 0.789,
+     "rot": 68.77,
+     "cover": 2,
+     "difficult": true
+    },
+    {
+     "id": "objekty34",
+     "asset": "truhla-lod",
+     "x": 3.807,
+     "y": 9.231,
+     "w": 0.704,
+     "h": 0.582,
+     "rot": 148.61,
+     "cover": 2,
+     "difficult": true
+    },
+    {
+     "id": "objekty35",
+     "asset": "truhla-lod",
+     "x": 9.216,
+     "y": 19.307,
+     "w": 1.104,
+     "h": 0.946,
+     "rot": 75.93,
+     "cover": 2,
+     "difficult": true
+    },
+    {
+     "id": "objekty36",
+     "asset": "pydel",
+     "x": 9.245,
+     "y": 18.513,
+     "w": 1.117,
+     "h": 1.197,
+     "rot": 250.68,
+     "cover": 2,
+     "difficult": true
+    },
+    {
+     "id": "objekty37",
+     "asset": "sud",
+     "x": 9.71,
+     "y": 19.122,
+     "w": 0.916,
+     "h": 0.882,
+     "rot": 162.46,
+     "cover": 2,
+     "difficult": true
+    },
+    {
+     "id": "objekty38",
+     "asset": "truhla-lod",
+     "x": 10.708,
+     "y": 20.103,
+     "w": 0.763,
+     "h": 0.651,
+     "rot": 279.2,
+     "cover": 2,
+     "difficult": true
+    },
+    {
+     "id": "objekty39",
+     "asset": "pydel",
+     "x": 9.862,
+     "y": 18.236,
+     "w": 1.136,
+     "h": 1.07,
+     "rot": 183.39,
+     "cover": 2,
+     "difficult": true
+    },
+    {
+     "id": "objekty40",
+     "asset": "sud",
+     "x": 11.152,
+     "y": 19.779,
+     "w": 0.893,
+     "h": 1.062,
+     "rot": 50.18,
+     "cover": 2,
+     "difficult": true
+    },
+    {
+     "id": "objekty41",
+     "asset": "bedna",
+     "x": 10.995,
+     "y": 18.559,
+     "w": 0.903,
+     "h": 0.86,
+     "rot": 124.49,
+     "cover": 2,
+     "difficult": true
+    },
+    {
+     "id": "objekty42",
+     "asset": "truhla-lod",
+     "x": 3.674,
+     "y": 22.28,
+     "w": 0.828,
+     "h": 0.958,
+     "rot": 87.35,
+     "cover": 2,
+     "difficult": true
+    },
+    {
+     "id": "objekty43",
+     "asset": "pydel",
+     "x": 4.719,
+     "y": 21.162,
+     "w": 0.913,
+     "h": 0.753,
+     "rot": 297.78,
+     "cover": 2,
+     "difficult": true
+    },
+    {
+     "id": "objekty44",
+     "asset": "pydel",
+     "x": 3.625,
+     "y": 21.261,
+     "w": 0.799,
+     "h": 0.698,
+     "rot": 80.19,
+     "cover": 2,
+     "difficult": true
+    },
+    {
+     "id": "objekty45",
+     "asset": "pydel",
+     "x": 3.27,
+     "y": 22.175,
+     "w": 1.113,
+     "h": 1.042,
+     "rot": 299.6,
+     "cover": 2,
+     "difficult": true
+    },
+    {
+     "id": "objekty46",
+     "asset": "truhla-lod",
+     "x": 4.807,
+     "y": 21.006,
+     "w": 1.064,
+     "h": 0.867,
+     "rot": 288.43,
+     "cover": 2,
+     "difficult": true
+    },
+    {
+     "id": "objekty47",
+     "asset": "bedna",
+     "x": 4.156,
+     "y": 21.652,
+     "w": 0.754,
+     "h": 0.904,
+     "rot": 136.01,
+     "cover": 2,
+     "difficult": true
+    },
+    {
+     "id": "objekty48",
+     "asset": "pydel",
+     "x": 5.261,
+     "y": 21.411,
+     "w": 0.858,
+     "h": 0.739,
+     "rot": 39.5,
+     "cover": 2,
+     "difficult": true
+    },
+    {
+     "id": "objekty49",
+     "asset": "bedna",
+     "x": 19.124,
+     "y": 14.015,
+     "w": 1.111,
+     "h": 0.956,
+     "rot": 262.04,
+     "cover": 2,
+     "difficult": true
+    },
+    {
+     "id": "objekty50",
+     "asset": "sud",
+     "x": 18.993,
+     "y": 15.061,
+     "w": 0.992,
+     "h": 0.927,
+     "rot": 63.48,
+     "cover": 2,
+     "difficult": true
+    },
+    {
+     "id": "objekty51",
+     "asset": "sud",
+     "x": 19.397,
+     "y": 14.508,
+     "w": 0.871,
+     "h": 0.944,
+     "rot": 131.81,
+     "cover": 2,
+     "difficult": true
+    },
+    {
+     "id": "objekty52",
+     "asset": "pydel",
+     "x": 18.947,
+     "y": 14.207,
+     "w": 0.746,
+     "h": 0.616,
+     "rot": 284.8,
+     "cover": 2,
+     "difficult": true
+    },
+    {
+     "id": "objekty53",
+     "asset": "truhla-lod",
+     "x": 19.862,
+     "y": 13.974,
+     "w": 0.807,
+     "h": 0.686,
+     "rot": 316.81,
+     "cover": 2,
+     "difficult": true
+    },
+    {
+     "id": "objekty54",
+     "asset": "sud",
+     "x": 20.484,
+     "y": 15.496,
+     "w": 0.712,
+     "h": 0.808,
+     "rot": 349.21,
+     "cover": 2,
+     "difficult": true
+    },
+    {
+     "id": "objekty55",
+     "asset": "bedna",
+     "x": 20.827,
+     "y": 15.238,
+     "w": 0.728,
+     "h": 0.754,
+     "rot": 255.54,
+     "cover": 2,
+     "difficult": true
+    },
+    {
+     "id": "objekty56",
+     "asset": "pydel",
+     "x": 27.029,
+     "y": 22.132,
+     "w": 1.007,
+     "h": 1.183,
+     "rot": 239.48,
+     "cover": 2,
+     "difficult": true
+    },
+    {
+     "id": "objekty57",
+     "asset": "pydel",
+     "x": 28.303,
+     "y": 21.398,
+     "w": 0.841,
+     "h": 0.964,
+     "rot": 162.41,
+     "cover": 2,
+     "difficult": true
+    },
+    {
+     "id": "objekty58",
+     "asset": "pydel",
+     "x": 28.399,
+     "y": 21.338,
+     "w": 1.008,
+     "h": 1.136,
+     "rot": 25.79,
+     "cover": 2,
+     "difficult": true
+    },
+    {
+     "id": "objekty59",
+     "asset": "bedna",
+     "x": 28.276,
+     "y": 21.128,
+     "w": 0.922,
+     "h": 0.798,
+     "rot": 56.76,
+     "cover": 2,
+     "difficult": true
+    },
+    {
+     "id": "objekty60",
+     "asset": "bedna",
+     "x": 28.102,
+     "y": 21.595,
+     "w": 1.07,
+     "h": 1.26,
+     "rot": 117.66,
+     "cover": 2,
+     "difficult": true
+    },
+    {
+     "id": "objekty61",
+     "asset": "sud",
+     "x": 28.056,
+     "y": 21.864,
+     "w": 0.762,
+     "h": 0.702,
+     "rot": 276.32,
+     "cover": 2,
+     "difficult": true
+    },
+    {
+     "id": "objekty62",
+     "asset": "truhla-lod",
+     "x": 27.629,
+     "y": 21.85,
+     "w": 1.006,
+     "h": 1.152,
+     "rot": 7.23,
+     "cover": 2,
+     "difficult": true
+    },
+    {
+     "id": "objekty63",
+     "asset": "bedna",
+     "x": 28.819,
+     "y": 5.892,
+     "w": 1.067,
+     "h": 1.067,
+     "rot": 171.64,
+     "cover": 2,
+     "difficult": true
+    },
+    {
+     "id": "objekty64",
+     "asset": "bedna",
+     "x": 27.546,
+     "y": 7.261,
+     "w": 0.795,
+     "h": 0.676,
+     "rot": 80.91,
+     "cover": 2,
+     "difficult": true
+    },
+    {
+     "id": "objekty65",
+     "asset": "bedna",
+     "x": 27.566,
+     "y": 7.106,
+     "w": 0.891,
+     "h": 0.737,
+     "rot": 17.25,
+     "cover": 2,
+     "difficult": true
+    },
+    {
+     "id": "objekty66",
+     "asset": "truhla-lod",
+     "x": 28.569,
+     "y": 5.872,
+     "w": 0.79,
+     "h": 0.874,
+     "rot": 271.43,
+     "cover": 2,
+     "difficult": true
+    },
+    {
+     "id": "objekty67",
+     "asset": "bedna",
+     "x": 28.803,
+     "y": 6.42,
+     "w": 0.957,
+     "h": 1.139,
+     "rot": 307.39,
+     "cover": 2,
+     "difficult": true
+    },
+    {
+     "id": "objekty68",
+     "asset": "bedna",
+     "x": 28.975,
+     "y": 6.526,
+     "w": 0.823,
+     "h": 0.911,
+     "rot": 213.29,
+     "cover": 2,
+     "difficult": true
+    },
+    {
+     "id": "objekty69",
+     "asset": "truhla-lod",
+     "x": 28.586,
+     "y": 6.017,
+     "w": 0.989,
+     "h": 0.961,
+     "rot": 157.33,
+     "cover": 2,
+     "difficult": true
+    },
+    {
+     "id": "objekty70",
+     "asset": "latarnik",
+     "x": 11.5,
+     "y": 13.5,
+     "w": 0.6,
+     "h": 0.6,
+     "rot": 0
+    },
+    {
+     "id": "objekty71",
+     "asset": "latarnik",
+     "x": 15,
+     "y": 6.5,
+     "w": 0.6,
+     "h": 0.6,
+     "rot": 0
+    },
+    {
+     "id": "objekty72",
+     "asset": "latarnik",
+     "x": 16,
+     "y": 22,
+     "w": 0.6,
+     "h": 0.6,
+     "rot": 0
+    },
+    {
+     "id": "objekty73",
+     "asset": "latarnik",
+     "x": 21,
+     "y": 23.5,
+     "w": 0.6,
+     "h": 0.6,
+     "rot": 0
+    },
+    {
+     "id": "objekty74",
+     "asset": "latarnik",
+     "x": 23,
+     "y": 8,
+     "w": 0.6,
+     "h": 0.6,
+     "rot": 0
+    },
+    {
+     "id": "objekty75",
+     "asset": "latarnik",
+     "x": 29,
+     "y": 22,
+     "w": 0.6,
+     "h": 0.6,
+     "rot": 0
+    },
+    {
+     "id": "objekty76",
+     "asset": "latarnik",
+     "x": 7,
+     "y": 11.5,
+     "w": 0.6,
+     "h": 0.6,
+     "rot": 0
+    },
+    {
+     "id": "objekty77",
+     "asset": "vrv-kotel",
+     "x": 3.94,
+     "y": 7.175,
+     "w": 0.34,
+     "h": 0.369,
+     "rot": 278.53
+    },
+    {
+     "id": "objekty78",
+     "asset": "kamen",
+     "x": 5.5,
+     "y": 9.931,
+     "w": 0.366,
+     "h": 0.338,
+     "rot": 337.46
+    },
+    {
+     "id": "objekty79",
+     "asset": "kamen",
+     "x": 10.547,
+     "y": 16.385,
+     "w": 0.683,
+     "h": 0.697,
+     "rot": 201.54
+    },
+    {
+     "id": "objekty80",
+     "asset": "smiti",
+     "x": 8.885,
+     "y": 12.419,
+     "w": 0.664,
+     "h": 0.732,
+     "rot": 78.8
+    },
+    {
+     "id": "objekty81",
+     "asset": "smiti",
+     "x": 1.778,
+     "y": 19.786,
+     "w": 0.664,
+     "h": 0.629,
+     "rot": 89.82
+    },
+    {
+     "id": "objekty82",
+     "asset": "vrv-kotel",
+     "x": 5.757,
+     "y": 9.443,
+     "w": 0.446,
+     "h": 0.481,
+     "rot": 172.43
+    },
+    {
+     "id": "objekty83",
+     "asset": "smiti",
+     "x": 6.698,
+     "y": 20.303,
+     "w": 0.371,
+     "h": 0.324,
+     "rot": 200.02
+    },
+    {
+     "id": "objekty84",
+     "asset": "smiti",
+     "x": 7.818,
+     "y": 7.162,
+     "w": 0.501,
+     "h": 0.474,
+     "rot": 249.25
+    },
+    {
+     "id": "objekty85",
+     "asset": "smiti",
+     "x": 6.907,
+     "y": 18.154,
+     "w": 0.349,
+     "h": 0.397,
+     "rot": 151.64
+    },
+    {
+     "id": "objekty86",
+     "asset": "smiti",
+     "x": 7.175,
+     "y": 7.785,
+     "w": 0.342,
+     "h": 0.353,
+     "rot": 129.9
+    },
+    {
+     "id": "objekty87",
+     "asset": "kamen",
+     "x": 8.873,
+     "y": 9.591,
+     "w": 0.331,
+     "h": 0.292,
+     "rot": 346.46
+    },
+    {
+     "id": "objekty88",
+     "asset": "smiti",
+     "x": 2.357,
+     "y": 20.742,
+     "w": 0.427,
+     "h": 0.483,
+     "rot": 123.06
+    },
+    {
+     "id": "objekty89",
+     "asset": "smiti",
+     "x": 2.899,
+     "y": 11.418,
+     "w": 0.746,
+     "h": 0.619,
+     "rot": 178.75
+    },
+    {
+     "id": "objekty90",
+     "asset": "vrv-kotel",
+     "x": 5.189,
+     "y": 7.915,
+     "w": 0.429,
+     "h": 0.514,
+     "rot": 111.53
+    },
+    {
+     "id": "objekty91",
+     "asset": "smiti",
+     "x": 5.72,
+     "y": 22.593,
+     "w": 0.634,
+     "h": 0.709,
+     "rot": 117.44
+    },
+    {
+     "id": "objekty92",
+     "asset": "vrv-kotel",
+     "x": 2.122,
+     "y": 11.949,
+     "w": 0.654,
+     "h": 0.663,
+     "rot": 95.68
+    },
+    {
+     "id": "objekty93",
+     "asset": "smiti",
+     "x": 6.724,
+     "y": 7.844,
+     "w": 0.648,
+     "h": 0.529,
+     "rot": 92.7
+    },
+    {
+     "id": "objekty94",
+     "asset": "smiti",
+     "x": 9.622,
+     "y": 14.942,
+     "w": 0.591,
+     "h": 0.477,
+     "rot": 29.84
+    },
+    {
+     "id": "objekty95",
+     "asset": "bedna",
+     "x": 5.031,
+     "y": 8.57,
+     "w": 0.477,
+     "h": 0.43,
+     "rot": 75.84,
+     "cover": 2
+    },
+    {
+     "id": "objekty96",
+     "asset": "gen2-sudy",
+     "x": 8.281,
+     "y": 8.875,
+     "w": 0.606,
+     "h": 0.647,
+     "rot": 163.69,
+     "cover": 2
+    },
+    {
+     "id": "objekty97",
+     "asset": "kotva",
+     "x": 9.813,
+     "y": 7.797,
+     "w": 0.692,
+     "h": 0.693,
+     "rot": 11.82,
+     "cover": 2
+    },
+    {
+     "id": "objekty98",
+     "asset": "bedna",
+     "x": 2.615,
+     "y": 9.453,
+     "w": 0.482,
+     "h": 0.487,
+     "rot": 356.87,
+     "cover": 2
+    },
+    {
+     "id": "objekty99",
+     "asset": "kotva",
+     "x": 6.62,
+     "y": 8.938,
+     "w": 0.605,
+     "h": 0.718,
+     "rot": 100.06,
+     "cover": 2
+    },
+    {
+     "id": "objekty100",
+     "asset": "gen2-sudy",
+     "x": 6.478,
+     "y": 7.742,
+     "w": 0.528,
+     "h": 0.632,
+     "rot": 212.7,
+     "cover": 2
+    },
+    {
+     "id": "objekty101",
+     "asset": "bedna",
+     "x": 8.033,
+     "y": 6.956,
+     "w": 0.502,
+     "h": 0.552,
+     "rot": 120.05,
+     "cover": 2
+    },
+    {
+     "id": "objekty102",
+     "asset": "bedna",
+     "x": 8.31,
+     "y": 8.142,
+     "w": 0.461,
+     "h": 0.384,
+     "rot": 104.53,
+     "cover": 2
+    },
+    {
+     "id": "objekty103",
+     "asset": "bedna",
+     "x": 6.99,
+     "y": 9.356,
+     "w": 0.548,
+     "h": 0.453,
+     "rot": 312.71,
+     "cover": 2
+    },
+    {
+     "id": "objekty104",
+     "asset": "kotva",
+     "x": 5.789,
+     "y": 7.011,
+     "w": 0.63,
+     "h": 0.701,
+     "rot": 258.76,
+     "cover": 2
+    },
+    {
+     "id": "objekty105",
+     "asset": "kotva",
+     "x": 3.255,
+     "y": 6.097,
+     "w": 0.502,
+     "h": 0.591,
+     "rot": 23.8,
+     "cover": 2
+    },
+    {
+     "id": "objekty106",
+     "asset": "bedna",
+     "x": 4.495,
+     "y": 7.003,
+     "w": 0.646,
+     "h": 0.697,
+     "rot": 346.15,
+     "cover": 2
+    }
+   ],
+   "steny": [
+    {
+     "id": "steny0",
+     "a": [
+      2,
+      3
+     ],
+     "b": [
+      11,
+      3
+     ],
+     "typ": "wall"
+    },
+    {
+     "id": "steny1",
+     "a": [
+      11,
+      3
+     ],
+     "b": [
+      11.0,
+      7.95
+     ],
+     "typ": "wall"
+    },
+    {
+     "id": "steny2",
+     "a": [
+      11.0,
+      7.95
+     ],
+     "b": [
+      11.0,
+      10.38
+     ],
+     "typ": "door"
+    },
+    {
+     "id": "steny3",
+     "a": [
+      11.0,
+      10.38
+     ],
+     "b": [
+      11,
+      12
+     ],
+     "typ": "wall"
+    },
+    {
+     "id": "steny4",
+     "a": [
+      11,
+      12
+     ],
+     "b": [
+      9.2,
+      12.0
+     ],
+     "typ": "wall"
+    },
+    {
+     "id": "steny5",
+     "a": [
+      9.2,
+      12.0
+     ],
+     "b": [
+      6.95,
+      12.0
+     ],
+     "typ": "window"
+    },
+    {
+     "id": "steny6",
+     "a": [
+      6.95,
+      12.0
+     ],
+     "b": [
+      2,
+      12
+     ],
+     "typ": "wall"
+    },
+    {
+     "id": "steny7",
+     "a": [
+      2,
+      12
+     ],
+     "b": [
+      2,
+      3
+     ],
+     "typ": "wall"
+    },
+    {
+     "id": "steny8",
+     "a": [
+      26,
+      3
+     ],
+     "b": [
+      28,
+      5
+     ],
+     "typ": "half"
+    },
+    {
+     "id": "steny9",
+     "a": [
+      28,
+      5
+     ],
+     "b": [
+      29.5,
+      8
+     ],
+     "typ": "half"
+    },
+    {
+     "id": "steny10",
+     "a": [
+      29.5,
+      8
+     ],
+     "b": [
+      30,
+      13
+     ],
+     "typ": "half"
+    },
+    {
+     "id": "steny11",
+     "a": [
+      30,
+      13
+     ],
+     "b": [
+      29.5,
+      21
+     ],
+     "typ": "half"
+    },
+    {
+     "id": "steny12",
+     "a": [
+      29.5,
+      21
+     ],
+     "b": [
+      28,
+      23
+     ],
+     "typ": "half"
+    },
+    {
+     "id": "steny13",
+     "a": [
+      28,
+      23
+     ],
+     "b": [
+      24,
+      23
+     ],
+     "typ": "half"
+    },
+    {
+     "id": "steny14",
+     "a": [
+      24,
+      23
+     ],
+     "b": [
+      22.4,
+      21
+     ],
+     "typ": "half"
+    },
+    {
+     "id": "steny15",
+     "a": [
+      22.4,
+      21
+     ],
+     "b": [
+      22.22,
+      15.15
+     ],
+     "typ": "half"
+    },
+    {
+     "id": "steny16",
+     "a": [
+      22.22,
+      15.15
+     ],
+     "b": [
+      22.12,
+      11.9
+     ],
+     "typ": "door"
+    },
+    {
+     "id": "steny17",
+     "a": [
+      22.12,
+      11.9
+     ],
+     "b": [
+      22,
+      8
+     ],
+     "typ": "half"
+    },
+    {
+     "id": "steny18",
+     "a": [
+      22,
+      8
+     ],
+     "b": [
+      26,
+      3
+     ],
+     "typ": "half"
+    }
+   ],
+   "malba": [
+    {
+     "id": "malba0",
+     "t": "teren-voda",
+     "b": 1.5,
+     "o": 1,
+     "h": 0.3,
+     "r": 0,
+     "poly": true,
+     "p": [
+      [
+       0,
+       0
+      ],
+      [
+       36,
+       0
+      ],
+      [
+       36,
+       28
+      ],
+      [
+       0,
+       28
+      ]
+     ]
+    },
+    {
+     "id": "malba1",
+     "t": "kocici-hlavy",
+     "b": 1,
+     "o": 1,
+     "h": 1,
+     "r": 0,
+     "poly": true,
+     "p": [
+      [
+       0,
+       0
+      ],
+      [
+       12.5,
+       0
+      ],
+      [
+       12.5,
+       28
+      ],
+      [
+       0,
+       28
+      ]
+     ]
+    },
+    {
+     "id": "malba2",
+     "t": "drevo",
+     "b": 1,
+     "o": 1,
+     "h": 1,
+     "r": 90,
+     "poly": true,
+     "p": [
+      [
+       2,
+       3
+      ],
+      [
+       11,
+       3
+      ],
+      [
+       11,
+       12
+      ],
+      [
+       2,
+       12
+      ]
+     ]
+    },
+    {
+     "id": "malba3",
+     "t": "drevo",
+     "b": 1,
+     "o": 1,
+     "h": 1,
+     "r": 90,
+     "poly": true,
+     "p": [
+      [
+       11,
+       13
+      ],
+      [
+       29,
+       13
+      ],
+      [
+       29,
+       16.5
+      ],
+      [
+       11,
+       16.5
+      ]
+     ]
+    },
+    {
+     "id": "malba4",
+     "t": "drevo",
+     "b": 1,
+     "o": 1,
+     "h": 1,
+     "r": 0,
+     "poly": true,
+     "p": [
+      [
+       14,
+       6
+      ],
+      [
+       17,
+       6
+      ],
+      [
+       17,
+       23
+      ],
+      [
+       14,
+       23
+      ]
+     ]
+    },
+    {
+     "id": "malba5",
+     "t": "drevo",
+     "b": 1,
+     "o": 1,
+     "h": 1,
+     "r": 90,
+     "poly": true,
+     "p": [
+      [
+       10,
+       23
+      ],
+      [
+       22,
+       23
+      ],
+      [
+       22,
+       25
+      ],
+      [
+       10,
+       25
+      ]
+     ]
+    },
+    {
+     "id": "malba6",
+     "t": "drevo",
+     "b": 1,
+     "o": 0,
+     "h": 1,
+     "r": 90,
+     "poly": true,
+     "p": [
+      [
+       26,
+       3
+      ],
+      [
+       28,
+       5
+      ],
+      [
+       29.5,
+       8
+      ],
+      [
+       30,
+       13
+      ],
+      [
+       29.5,
+       21
+      ],
+      [
+       28,
+       23
+      ],
+      [
+       24,
+       23
+      ],
+      [
+       22.4,
+       21
+      ],
+      [
+       22,
+       8
+      ]
+     ]
+    },
+    {
+     "id": "malba7",
+     "t": "teren-rubble",
+     "b": 1.4,
+     "o": 0.45,
+     "h": 0.2,
+     "r": 18,
+     "poly": false,
+     "p": [
+      [
+       1,
+       16
+      ],
+      [
+       6,
+       18
+      ],
+      [
+       10,
+       22
+      ]
+     ]
+    },
+    {
+     "id": "malba8",
+     "t": "hlina",
+     "b": 1.6,
+     "o": 0.5,
+     "h": 0.3,
+     "r": 34,
+     "poly": false,
+     "p": [
+      [
+       1,
+       25
+      ],
+      [
+       5,
+       21
+      ],
+      [
+       8,
+       17
+      ],
+      [
+       10,
+       13
+      ]
+     ]
+    }
+   ],
+   "svetla": [
+    {
+     "id": "svetla0",
+     "x": 11.5,
+     "y": 13.5,
+     "bright": 6,
+     "dim": 16,
+     "color": "#ffd58d",
+     "intenzita": 0.7,
+     "blikani": true
+    },
+    {
+     "id": "svetla1",
+     "x": 15,
+     "y": 6.5,
+     "bright": 6,
+     "dim": 16,
+     "color": "#ffd58d",
+     "intenzita": 0.7,
+     "blikani": true
+    },
+    {
+     "id": "svetla2",
+     "x": 16,
+     "y": 22,
+     "bright": 6,
+     "dim": 16,
+     "color": "#ffd58d",
+     "intenzita": 0.7,
+     "blikani": true
+    },
+    {
+     "id": "svetla3",
+     "x": 21,
+     "y": 23.5,
+     "bright": 6,
+     "dim": 16,
+     "color": "#ffd58d",
+     "intenzita": 0.7,
+     "blikani": true
+    },
+    {
+     "id": "svetla4",
+     "x": 23,
+     "y": 8,
+     "bright": 6,
+     "dim": 16,
+     "color": "#ffd58d",
+     "intenzita": 0.7,
+     "blikani": true
+    },
+    {
+     "id": "svetla5",
+     "x": 29,
+     "y": 22,
+     "bright": 6,
+     "dim": 16,
+     "color": "#ffd58d",
+     "intenzita": 0.7,
+     "blikani": true
+    },
+    {
+     "id": "svetla6",
+     "x": 7,
+     "y": 11.5,
+     "bright": 6,
+     "dim": 16,
+     "color": "#ffd58d",
+     "intenzita": 0.7,
+     "blikani": true
+    },
+    {
+     "id": "svetla7",
+     "x": 30,
+     "y": 14,
+     "bright": 10,
+     "dim": 25,
+     "color": "#92b9e9",
+     "intenzita": 0.35,
+     "blikani": false
+    }
+   ],
+   "poznamky": [
+    {
+     "id": "poznamky0",
+     "x": 26,
+     "y": 13,
+     "text": "Karavela: dubový poklop vede do podpalubí. Můstky spojují otevřenou palubu s nákladním molem."
+    },
+    {
+     "id": "poznamky1",
+     "x": 7,
+     "y": 7,
+     "text": "Sklad Zlaté kotvy: celní pečeti na jedné bedně jsou padělané. Stávající městská krčma je místní inspirací."
+    },
+    {
+     "id": "poznamky2",
+     "x": 15,
+     "y": 14,
+     "text": "Mola: volný koridor uprostřed. Voda je těžký terén; pád do moře řeší PJ."
+    }
+   ],
+   "kresby": [],
+   "vyska": {},
+   "textury": {},
+   "atmosfera": {
+    "amb": 0.58,
+    "barva": "#16283d"
+   },
+   "pocasi": {
+    "typ": "bourka",
+    "sila": 0.58,
+    "vitr": 112
+   },
+   "mrizkaStyl": {
+    "typ": "dots",
+    "barva": "#ddd4b1",
+    "opacita": 0.13
+   },
+   "mrizka": [
+    "............~~~~~~~~~~~~~~~~~~~~~~~~",
+    "............~~~~~~~~~~~~~~~~~~~~~~~~",
+    "............~~~~~~~~~~~~~~~~~~~~~~~~",
+    "............~~~~~~~~~~~~~~~~~~~~~~~~",
+    "............~~~~~~~~~~~~~..~~~~~~~~~",
+    "............~~~~~~~~~~~~....~~~~~~~~",
+    "............~~===~~~~~~......~~~~~~~",
+    "............~~===~~~~~.......~~~~~~~",
+    "............~~===~~~~~........~~~~~~",
+    "............~~===~~~~~........~~~~~~",
+    "............~~===~~~~~........~~~~~~",
+    "............~~===~~~~~........~~~~~~",
+    "............~~===~~~~~........~~~~~~",
+    "...........===========........~~~~~~",
+    "...........===========........~~~~~~",
+    "...........===========........~~~~~~",
+    "............~~===~~~~~........~~~~~~",
+    "............~~===~~~~~........~~~~~~",
+    "............~~===~~~~~........~~~~~~",
+    "............~~===~~~~~........~~~~~~",
+    "............~~===~~~~~........~~~~~~",
+    "............~~===~~~~~~......~~~~~~~",
+    "............~~===~~~~~~~....~~~~~~~~",
+    "..........============~~~~~~~~~~~~~~",
+    "..........============~~~~~~~~~~~~~~",
+    "............~~~~~~~~~~~~~~~~~~~~~~~~",
+    "............~~~~~~~~~~~~~~~~~~~~~~~~",
+    "............~~~~~~~~~~~~~~~~~~~~~~~~"
+   ]
+  },
+  {
+   "id": "epic-draar-popelava-svatyne",
+   "nazev": "Dräar – Svatyně Popelavého draka",
+   "podklad": "jeskyne",
+   "misto": "01_Svet/Mista/Trosky_Draaru.md",
+   "popis": "Návrh svatyně pod troskami dávné říše: lávová řeka obtéká obřadní ostrov, šikmý čedičový most vede k runovému oltáři. Pokladnice, zlomené pilíře a dračí ostatky v černém popelu. Autorská herní scéna; místní názvy zón a zápletky jsou návrhem pro PJ.",
+   "osvetleni": "Vizuální atmosféra; dosah světel ve stopách.",
+   "start": {
+    "druzina": [
+     [
+      3,
+      20
+     ],
+     [
+      4,
+      20
+     ],
+     [
+      3,
+      21
+     ],
+     [
+      4,
+      21
+     ],
+     [
+      3,
+      22
+     ],
+     [
+      4,
+      22
+     ]
+    ],
+    "nepratele": [
+     [
+      26,
+      13
+     ],
+     [
+      28,
+      16
+     ],
+     [
+      30,
+      10
+     ]
+    ]
+   },
+   "objekty": [
+    {
+     "id": "objekty0",
+     "asset": "magicky-oltar",
+     "x": 28,
+     "y": 11,
+     "w": 3.3,
+     "h": 2.3,
+     "rot": 22,
+     "blocks": true,
+     "cover": 3
+    },
+    {
+     "id": "objekty1",
+     "asset": "mag-kruh",
+     "x": 28,
+     "y": 11,
+     "w": 6,
+     "h": 6,
+     "rot": 22,
+     "z": -3,
+     "anim": false
+    },
+    {
+     "id": "objekty2",
+     "asset": "gen2-portal2",
+     "x": 29,
+     "y": 7.5,
+     "w": 3.2,
+     "h": 3.2,
+     "rot": -17
+    },
+    {
+     "id": "objekty3",
+     "asset": "p3-poklad",
+     "x": 7.5,
+     "y": 19,
+     "w": 3.2,
+     "h": 2.6,
+     "rot": 13,
+     "cover": 2,
+     "difficult": true
+    },
+    {
+     "id": "objekty4",
+     "asset": "p3-draci-kostra",
+     "x": 8,
+     "y": 8,
+     "w": 7,
+     "h": 5,
+     "rot": -24,
+     "cover": 2,
+     "difficult": true
+    },
+    {
+     "id": "objekty5",
+     "asset": "kostlivec",
+     "x": 10,
+     "y": 8,
+     "w": 1.7,
+     "h": 2,
+     "rot": 32
+    },
+    {
+     "id": "objekty6",
+     "asset": "sloup-velky",
+     "x": 24,
+     "y": 9,
+     "w": 1.4,
+     "h": 1.4,
+     "rot": 0,
+     "blocks": true,
+     "cover": 3
+    },
+    {
+     "id": "objekty7",
+     "asset": "prulom",
+     "x": 25,
+     "y": 9.7,
+     "w": 1.5,
+     "h": 1,
+     "rot": 20,
+     "difficult": true
+    },
+    {
+     "id": "objekty8",
+     "asset": "sloup-velky",
+     "x": 31,
+     "y": 15,
+     "w": 1.4,
+     "h": 1.4,
+     "rot": 0,
+     "blocks": true,
+     "cover": 3
+    },
+    {
+     "id": "objekty9",
+     "asset": "prulom",
+     "x": 32,
+     "y": 15.7,
+     "w": 1.5,
+     "h": 1,
+     "rot": 20,
+     "difficult": true
+    },
+    {
+     "id": "objekty10",
+     "asset": "sloup-velky",
+     "x": 24,
+     "y": 17,
+     "w": 1.4,
+     "h": 1.4,
+     "rot": 0,
+     "blocks": true,
+     "cover": 3
+    },
+    {
+     "id": "objekty11",
+     "asset": "prulom",
+     "x": 25,
+     "y": 17.7,
+     "w": 1.5,
+     "h": 1,
+     "rot": 45,
+     "difficult": true
+    },
+    {
+     "id": "objekty12",
+     "asset": "sloup-velky",
+     "x": 6,
+     "y": 15,
+     "w": 1.4,
+     "h": 1.4,
+     "rot": 0,
+     "blocks": true,
+     "cover": 3
+    },
+    {
+     "id": "objekty13",
+     "asset": "prulom",
+     "x": 7,
+     "y": 15.7,
+     "w": 1.5,
+     "h": 1,
+     "rot": -12,
+     "difficult": true
+    },
+    {
+     "id": "objekty14",
+     "asset": "sloup-velky",
+     "x": 12,
+     "y": 21,
+     "w": 1.4,
+     "h": 1.4,
+     "rot": 0,
+     "blocks": true,
+     "cover": 3
+    },
+    {
+     "id": "objekty15",
+     "asset": "prulom",
+     "x": 13,
+     "y": 21.7,
+     "w": 1.5,
+     "h": 1,
+     "rot": -42,
+     "difficult": true
+    },
+    {
+     "id": "objekty16",
+     "asset": "p3-obsidian",
+     "x": 4.928,
+     "y": 6.059,
+     "w": 1.757,
+     "h": 1.771,
+     "rot": 257.8,
+     "cover": 3
+    },
+    {
+     "id": "objekty17",
+     "asset": "p3-obsidian",
+     "x": 3.955,
+     "y": 2.77,
+     "w": 1.564,
+     "h": 1.685,
+     "rot": 252.37,
+     "cover": 3
+    },
+    {
+     "id": "objekty18",
+     "asset": "gen2-balvan2",
+     "x": 5.305,
+     "y": 1.379,
+     "w": 1.819,
+     "h": 1.815,
+     "rot": 93.67,
+     "cover": 3
+    },
+    {
+     "id": "objekty19",
+     "asset": "gen2-balvan",
+     "x": 5.377,
+     "y": 3.288,
+     "w": 1.177,
+     "h": 1.207,
+     "rot": 310.62,
+     "cover": 3
+    },
+    {
+     "id": "objekty20",
+     "asset": "gen2-balvan",
+     "x": 6.053,
+     "y": 4.448,
+     "w": 1.337,
+     "h": 1.315,
+     "rot": 56.11,
+     "cover": 3
+    },
+    {
+     "id": "objekty21",
+     "asset": "gen2-balvan2",
+     "x": 2.643,
+     "y": 2.214,
+     "w": 2.175,
+     "h": 2.347,
+     "rot": 59.24,
+     "cover": 3
+    },
+    {
+     "id": "objekty22",
+     "asset": "gen2-balvan2",
+     "x": 1.817,
+     "y": 4.075,
+     "w": 1.13,
+     "h": 1.133,
+     "rot": 38.88,
+     "cover": 3
+    },
+    {
+     "id": "objekty23",
+     "asset": "gen2-balvan2",
+     "x": 3.737,
+     "y": 1.408,
+     "w": 1.142,
+     "h": 0.95,
+     "rot": 290.73,
+     "cover": 3
+    },
+    {
+     "id": "objekty24",
+     "asset": "gen2-balvan2",
+     "x": 29.532,
+     "y": 2.807,
+     "w": 1.33,
+     "h": 1.422,
+     "rot": 214.47,
+     "cover": 3
+    },
+    {
+     "id": "objekty25",
+     "asset": "p3-obsidian",
+     "x": 30.582,
+     "y": 2.229,
+     "w": 1.636,
+     "h": 1.505,
+     "rot": 159.01,
+     "cover": 3
+    },
+    {
+     "id": "objekty26",
+     "asset": "p3-obsidian",
+     "x": 34.817,
+     "y": 2.986,
+     "w": 1.369,
+     "h": 1.1,
+     "rot": 197.78,
+     "cover": 3
+    },
+    {
+     "id": "objekty27",
+     "asset": "p3-obsidian",
+     "x": 32.93,
+     "y": 1.605,
+     "w": 1.727,
+     "h": 1.99,
+     "rot": 100.16,
+     "cover": 3
+    },
+    {
+     "id": "objekty28",
+     "asset": "gen2-balvan",
+     "x": 32.042,
+     "y": 2.428,
+     "w": 2.113,
+     "h": 2.098,
+     "rot": 241.36,
+     "cover": 3
+    },
+    {
+     "id": "objekty29",
+     "asset": "gen2-balvan",
+     "x": 32.126,
+     "y": 4.041,
+     "w": 2.168,
+     "h": 2.52,
+     "rot": 254.97,
+     "cover": 3
+    },
+    {
+     "id": "objekty30",
+     "asset": "gen2-balvan",
+     "x": 30.126,
+     "y": 3.327,
+     "w": 1.284,
+     "h": 1.421,
+     "rot": 161.92,
+     "cover": 3
+    },
+    {
+     "id": "objekty31",
+     "asset": "gen2-balvan2",
+     "x": 28.762,
+     "y": 3.097,
+     "w": 1.576,
+     "h": 1.606,
+     "rot": 249.51,
+     "cover": 3
+    },
+    {
+     "id": "objekty32",
+     "asset": "gen2-balvan",
+     "x": 33.076,
+     "y": 21.438,
+     "w": 1.393,
+     "h": 1.535,
+     "rot": 61.94,
+     "cover": 3
+    },
+    {
+     "id": "objekty33",
+     "asset": "p3-obsidian",
+     "x": 32.41,
+     "y": 19.256,
+     "w": 1.805,
+     "h": 2.023,
+     "rot": 40.85,
+     "cover": 3
+    },
+    {
+     "id": "objekty34",
+     "asset": "p3-obsidian",
+     "x": 32.962,
+     "y": 26.667,
+     "w": 1.382,
+     "h": 1.296,
+     "rot": 30.47,
+     "cover": 3
+    },
+    {
+     "id": "objekty35",
+     "asset": "gen2-balvan",
+     "x": 33.503,
+     "y": 21.508,
+     "w": 1.758,
+     "h": 1.539,
+     "rot": 152.29,
+     "cover": 3
+    },
+    {
+     "id": "objekty36",
+     "asset": "gen2-balvan2",
+     "x": 31.576,
+     "y": 21.889,
+     "w": 2.005,
+     "h": 1.647,
+     "rot": 59.94,
+     "cover": 3
+    },
+    {
+     "id": "objekty37",
+     "asset": "gen2-balvan2",
+     "x": 31.832,
+     "y": 23.8,
+     "w": 1.509,
+     "h": 1.79,
+     "rot": 145.56,
+     "cover": 3
+    },
+    {
+     "id": "objekty38",
+     "asset": "gen2-balvan",
+     "x": 31.158,
+     "y": 24.124,
+     "w": 1.96,
+     "h": 2.227,
+     "rot": 63.68,
+     "cover": 3
+    },
+    {
+     "id": "objekty39",
+     "asset": "p3-obsidian",
+     "x": 34.688,
+     "y": 22.157,
+     "w": 2.026,
+     "h": 1.738,
+     "rot": 352.43,
+     "cover": 3
+    },
+    {
+     "id": "objekty40",
+     "asset": "gen2-balvan2",
+     "x": 5.494,
+     "y": 25.728,
+     "w": 1.802,
+     "h": 1.588,
+     "rot": 357.96,
+     "cover": 3
+    },
+    {
+     "id": "objekty41",
+     "asset": "gen2-balvan2",
+     "x": 2.219,
+     "y": 25.758,
+     "w": 1.683,
+     "h": 1.436,
+     "rot": 316.36,
+     "cover": 3
+    },
+    {
+     "id": "objekty42",
+     "asset": "gen2-balvan2",
+     "x": 5.84,
+     "y": 26.744,
+     "w": 1.505,
+     "h": 1.586,
+     "rot": 167.37,
+     "cover": 3
+    },
+    {
+     "id": "objekty43",
+     "asset": "gen2-balvan2",
+     "x": 3.28,
+     "y": 25.404,
+     "w": 1.082,
+     "h": 1.219,
+     "rot": 247.48,
+     "cover": 3
+    },
+    {
+     "id": "objekty44",
+     "asset": "p3-obsidian",
+     "x": 5.619,
+     "y": 25.934,
+     "w": 1.746,
+     "h": 1.653,
+     "rot": 82.32,
+     "cover": 3
+    },
+    {
+     "id": "objekty45",
+     "asset": "gen2-balvan2",
+     "x": 3.119,
+     "y": 26.45,
+     "w": 1.989,
+     "h": 2.113,
+     "rot": 100.79,
+     "cover": 3
+    },
+    {
+     "id": "objekty46",
+     "asset": "gen2-balvan",
+     "x": 6.4,
+     "y": 26.014,
+     "w": 1.239,
+     "h": 1.344,
+     "rot": 219.52,
+     "cover": 3
+    },
+    {
+     "id": "objekty47",
+     "asset": "gen2-balvan2",
+     "x": 5.94,
+     "y": 26.734,
+     "w": 1.472,
+     "h": 1.274,
+     "rot": 42.72,
+     "cover": 3
+    },
+    {
+     "id": "objekty48",
+     "asset": "gen2-balvan",
+     "x": 13.913,
+     "y": 6.472,
+     "w": 1.228,
+     "h": 1.451,
+     "rot": 240.22,
+     "cover": 3
+    },
+    {
+     "id": "objekty49",
+     "asset": "gen2-balvan",
+     "x": 14.244,
+     "y": 2.892,
+     "w": 1.195,
+     "h": 1.041,
+     "rot": 116.98,
+     "cover": 3
+    },
+    {
+     "id": "objekty50",
+     "asset": "p3-obsidian",
+     "x": 14.385,
+     "y": 4.161,
+     "w": 2.053,
+     "h": 2.14,
+     "rot": 264.53,
+     "cover": 3
+    },
+    {
+     "id": "objekty51",
+     "asset": "p3-obsidian",
+     "x": 14.146,
+     "y": 3.696,
+     "w": 1.501,
+     "h": 1.242,
+     "rot": 100.24,
+     "cover": 3
+    },
+    {
+     "id": "objekty52",
+     "asset": "gen2-balvan",
+     "x": 12.124,
+     "y": 5.532,
+     "w": 2.091,
+     "h": 2.059,
+     "rot": 133.49,
+     "cover": 3
+    },
+    {
+     "id": "objekty53",
+     "asset": "gen2-balvan2",
+     "x": 13.16,
+     "y": 2.289,
+     "w": 1.664,
+     "h": 1.82,
+     "rot": 357.78,
+     "cover": 3
+    },
+    {
+     "id": "objekty54",
+     "asset": "gen2-balvan2",
+     "x": 13.947,
+     "y": 2.014,
+     "w": 2.038,
+     "h": 1.703,
+     "rot": 244.91,
+     "cover": 3
+    },
+    {
+     "id": "objekty55",
+     "asset": "gen2-balvan",
+     "x": 13.053,
+     "y": 3.41,
+     "w": 1.917,
+     "h": 1.876,
+     "rot": 34.12,
+     "cover": 3
+    },
+    {
+     "id": "objekty56",
+     "asset": "p3-obsidian",
+     "x": 4.253,
+     "y": 9.299,
+     "w": 1.928,
+     "h": 2.06,
+     "rot": 240.27,
+     "cover": 3
+    },
+    {
+     "id": "objekty57",
+     "asset": "gen2-balvan",
+     "x": 2.644,
+     "y": 13.365,
+     "w": 1.598,
+     "h": 1.822,
+     "rot": 331.6,
+     "cover": 3
+    },
+    {
+     "id": "objekty58",
+     "asset": "gen2-balvan2",
+     "x": 2.864,
+     "y": 11.773,
+     "w": 1.608,
+     "h": 1.525,
+     "rot": 262.18,
+     "cover": 3
+    },
+    {
+     "id": "objekty59",
+     "asset": "gen2-balvan2",
+     "x": 3.345,
+     "y": 9.634,
+     "w": 1.214,
+     "h": 1.056,
+     "rot": 101.38,
+     "cover": 3
+    },
+    {
+     "id": "objekty60",
+     "asset": "gen2-balvan",
+     "x": 3.376,
+     "y": 13.214,
+     "w": 1.844,
+     "h": 1.503,
+     "rot": 305.8,
+     "cover": 3
+    },
+    {
+     "id": "objekty61",
+     "asset": "p3-obsidian",
+     "x": 2.463,
+     "y": 9.405,
+     "w": 1.465,
+     "h": 1.393,
+     "rot": 145.37,
+     "cover": 3
+    },
+    {
+     "id": "objekty62",
+     "asset": "gen2-balvan",
+     "x": 3.271,
+     "y": 10.502,
+     "w": 1.469,
+     "h": 1.225,
+     "rot": 122.54,
+     "cover": 3
+    },
+    {
+     "id": "objekty63",
+     "asset": "gen2-balvan2",
+     "x": 2.105,
+     "y": 12.231,
+     "w": 1.607,
+     "h": 1.913,
+     "rot": 302.41,
+     "cover": 3
+    },
+    {
+     "id": "objekty64",
+     "asset": "kamen",
+     "x": 6.621,
+     "y": 7.939,
+     "w": 0.92,
+     "h": 1.012,
+     "rot": 153.52
+    },
+    {
+     "id": "objekty65",
+     "asset": "trhlina",
+     "x": 9.995,
+     "y": 7.783,
+     "w": 0.993,
+     "h": 0.884,
+     "rot": 354.57
+    },
+    {
+     "id": "objekty66",
+     "asset": "gen2-krystal",
+     "x": 9.322,
+     "y": 7.526,
+     "w": 0.614,
+     "h": 0.635,
+     "rot": 235.99
+    },
+    {
+     "id": "objekty67",
+     "asset": "trhlina",
+     "x": 9.197,
+     "y": 8.975,
+     "w": 0.972,
+     "h": 0.94,
+     "rot": 168.95
+    },
+    {
+     "id": "objekty68",
+     "asset": "gen2-krystal",
+     "x": 9.512,
+     "y": 9.392,
+     "w": 0.405,
+     "h": 0.369,
+     "rot": 120.28
+    },
+    {
+     "id": "objekty69",
+     "asset": "trhlina",
+     "x": 6.069,
+     "y": 7.107,
+     "w": 0.751,
+     "h": 0.858,
+     "rot": 98.54
+    },
+    {
+     "id": "objekty70",
+     "asset": "kamen",
+     "x": 6.921,
+     "y": 7.179,
+     "w": 0.9,
+     "h": 0.803,
+     "rot": 107.9
+    },
+    {
+     "id": "objekty71",
+     "asset": "gen2-krystal",
+     "x": 7.205,
+     "y": 7.053,
+     "w": 0.703,
+     "h": 0.72,
+     "rot": 336.66
+    },
+    {
+     "id": "objekty72",
+     "asset": "gen2-kosti",
+     "x": 9.503,
+     "y": 22.454,
+     "w": 0.44,
+     "h": 0.413,
+     "rot": 105.86
+    },
+    {
+     "id": "objekty73",
+     "asset": "trhlina",
+     "x": 10.803,
+     "y": 22.708,
+     "w": 0.572,
+     "h": 0.477,
+     "rot": 64.26
+    },
+    {
+     "id": "objekty74",
+     "asset": "gen2-krystal",
+     "x": 10.136,
+     "y": 20.411,
+     "w": 0.562,
+     "h": 0.489,
+     "rot": 5.68
+    },
+    {
+     "id": "objekty75",
+     "asset": "gen2-krystal",
+     "x": 12.194,
+     "y": 22.558,
+     "w": 0.862,
+     "h": 0.887,
+     "rot": 234.48
+    },
+    {
+     "id": "objekty76",
+     "asset": "trhlina",
+     "x": 11.033,
+     "y": 22.11,
+     "w": 0.693,
+     "h": 0.736,
+     "rot": 175.04
+    },
+    {
+     "id": "objekty77",
+     "asset": "gen2-kosti",
+     "x": 12.451,
+     "y": 22.193,
+     "w": 0.877,
+     "h": 0.881,
+     "rot": 236.92
+    },
+    {
+     "id": "objekty78",
+     "asset": "kamen",
+     "x": 10.951,
+     "y": 20.273,
+     "w": 0.722,
+     "h": 0.608,
+     "rot": 297.58
+    },
+    {
+     "id": "objekty79",
+     "asset": "trhlina",
+     "x": 10.181,
+     "y": 20.858,
+     "w": 0.643,
+     "h": 0.55,
+     "rot": 241.28
+    },
+    {
+     "id": "objekty80",
+     "asset": "gen2-kosti",
+     "x": 23.93,
+     "y": 16.29,
+     "w": 0.812,
+     "h": 0.686,
+     "rot": 230.75
+    },
+    {
+     "id": "objekty81",
+     "asset": "gen2-kosti",
+     "x": 25.214,
+     "y": 15.705,
+     "w": 0.984,
+     "h": 1.077,
+     "rot": 180.3
+    },
+    {
+     "id": "objekty82",
+     "asset": "kamen",
+     "x": 24.876,
+     "y": 16.576,
+     "w": 0.714,
+     "h": 0.788,
+     "rot": 220.86
+    },
+    {
+     "id": "objekty83",
+     "asset": "kamen",
+     "x": 25.363,
+     "y": 17.348,
+     "w": 0.605,
+     "h": 0.722,
+     "rot": 225.4
+    },
+    {
+     "id": "objekty84",
+     "asset": "gen2-krystal",
+     "x": 25.136,
+     "y": 16.543,
+     "w": 1.007,
+     "h": 0.908,
+     "rot": 39.62
+    },
+    {
+     "id": "objekty85",
+     "asset": "gen2-kosti",
+     "x": 22.727,
+     "y": 15.815,
+     "w": 0.96,
+     "h": 1.143,
+     "rot": 92.2
+    },
+    {
+     "id": "objekty86",
+     "asset": "gen2-kosti",
+     "x": 23.896,
+     "y": 16.772,
+     "w": 0.8,
+     "h": 0.897,
+     "rot": 234.68
+    },
+    {
+     "id": "objekty87",
+     "asset": "gen2-kosti",
+     "x": 23.011,
+     "y": 14.523,
+     "w": 1.054,
+     "h": 1.225,
+     "rot": 288.44
+    },
+    {
+     "id": "objekty88",
+     "asset": "gen2-kosti",
+     "x": 31.269,
+     "y": 11.494,
+     "w": 1.049,
+     "h": 1.044,
+     "rot": 96.01
+    },
+    {
+     "id": "objekty89",
+     "asset": "kamen",
+     "x": 30.436,
+     "y": 9.603,
+     "w": 0.443,
+     "h": 0.452,
+     "rot": 57.63
+    },
+    {
+     "id": "objekty90",
+     "asset": "gen2-kosti",
+     "x": 29.426,
+     "y": 12.052,
+     "w": 0.746,
+     "h": 0.759,
+     "rot": 329.63
+    },
+    {
+     "id": "objekty91",
+     "asset": "gen2-krystal",
+     "x": 30.548,
+     "y": 12.76,
+     "w": 0.686,
+     "h": 0.651,
+     "rot": 100.52
+    },
+    {
+     "id": "objekty92",
+     "asset": "gen2-krystal",
+     "x": 32.459,
+     "y": 11.698,
+     "w": 0.727,
+     "h": 0.617,
+     "rot": 328.88
+    },
+    {
+     "id": "objekty93",
+     "asset": "trhlina",
+     "x": 30.756,
+     "y": 11.45,
+     "w": 0.92,
+     "h": 0.785,
+     "rot": 355.44
+    },
+    {
+     "id": "objekty94",
+     "asset": "kamen",
+     "x": 29.849,
+     "y": 11.452,
+     "w": 0.913,
+     "h": 1.019,
+     "rot": 242.1
+    },
+    {
+     "id": "objekty95",
+     "asset": "trhlina",
+     "x": 31.072,
+     "y": 12.988,
+     "w": 0.852,
+     "h": 0.972,
+     "rot": 59.55
+    },
+    {
+     "id": "objekty96",
+     "asset": "gen2-kosti",
+     "x": 24.798,
+     "y": 5.089,
+     "w": 0.649,
+     "h": 0.631,
+     "rot": 50.87
+    },
+    {
+     "id": "objekty97",
+     "asset": "trhlina",
+     "x": 25.641,
+     "y": 5.963,
+     "w": 0.784,
+     "h": 0.67,
+     "rot": 103.87
+    },
+    {
+     "id": "objekty98",
+     "asset": "kamen",
+     "x": 24.663,
+     "y": 6.852,
+     "w": 0.516,
+     "h": 0.529,
+     "rot": 113.88
+    },
+    {
+     "id": "objekty99",
+     "asset": "gen2-krystal",
+     "x": 27.211,
+     "y": 6.835,
+     "w": 0.791,
+     "h": 0.669,
+     "rot": 87.9
+    },
+    {
+     "id": "objekty100",
+     "asset": "kamen",
+     "x": 27.341,
+     "y": 4.625,
+     "w": 0.701,
+     "h": 0.629,
+     "rot": 194.23
+    },
+    {
+     "id": "objekty101",
+     "asset": "gen2-krystal",
+     "x": 24.982,
+     "y": 4.413,
+     "w": 0.564,
+     "h": 0.505,
+     "rot": 224.12
+    },
+    {
+     "id": "objekty102",
+     "asset": "kamen",
+     "x": 26.819,
+     "y": 5.599,
+     "w": 0.92,
+     "h": 0.889,
+     "rot": 296.28
+    },
+    {
+     "id": "objekty103",
+     "asset": "gen2-krystal",
+     "x": 27.431,
+     "y": 6.701,
+     "w": 0.418,
+     "h": 0.462,
+     "rot": 218.19
+    },
+    {
+     "id": "objekty104",
+     "asset": "gen2-kosti",
+     "x": 5.279,
+     "y": 21.056,
+     "w": 0.759,
+     "h": 0.784,
+     "rot": 36.67
+    },
+    {
+     "id": "objekty105",
+     "asset": "kamen",
+     "x": 7.389,
+     "y": 20.607,
+     "w": 1.099,
+     "h": 1.209,
+     "rot": 110.33
+    },
+    {
+     "id": "objekty106",
+     "asset": "gen2-krystal",
+     "x": 4.487,
+     "y": 21.146,
+     "w": 0.803,
+     "h": 0.907,
+     "rot": 156.92
+    },
+    {
+     "id": "objekty107",
+     "asset": "gen2-krystal",
+     "x": 5.515,
+     "y": 19.094,
+     "w": 1.006,
+     "h": 1.077,
+     "rot": 200.23
+    },
+    {
+     "id": "objekty108",
+     "asset": "trhlina",
+     "x": 5.58,
+     "y": 19.916,
+     "w": 0.531,
+     "h": 0.492,
+     "rot": 332.67
+    },
+    {
+     "id": "objekty109",
+     "asset": "kamen",
+     "x": 7.033,
+     "y": 21.453,
+     "w": 0.904,
+     "h": 0.749,
+     "rot": 169.29
+    },
+    {
+     "id": "objekty110",
+     "asset": "gen2-krystal",
+     "x": 4.521,
+     "y": 18.593,
+     "w": 0.446,
+     "h": 0.522,
+     "rot": 100.37
+    },
+    {
+     "id": "objekty111",
+     "asset": "gen2-kosti",
+     "x": 4.262,
+     "y": 20.19,
+     "w": 1.0,
+     "h": 1.14,
+     "rot": 302.28
+    },
+    {
+     "id": "objekty112",
+     "asset": "gen2-krev",
+     "x": 26,
+     "y": 12,
+     "w": 1.4,
+     "h": 1.9,
+     "rot": 30,
+     "z": -1,
+     "anim": false
+    }
+   ],
+   "steny": [
+    {
+     "id": "steny0",
+     "a": [
+      11,
+      16
+     ],
+     "b": [
+      25.5,
+      13.5
+     ],
+     "typ": "half"
+    },
+    {
+     "id": "steny1",
+     "a": [
+      24,
+      6
+     ],
+     "b": [
+      30,
+      6
+     ],
+     "typ": "half"
+    },
+    {
+     "id": "steny2",
+     "a": [
+      30,
+      6
+     ],
+     "b": [
+      33,
+      11
+     ],
+     "typ": "half"
+    },
+    {
+     "id": "steny3",
+     "a": [
+      33,
+      11
+     ],
+     "b": [
+      31,
+      17
+     ],
+     "typ": "half"
+    },
+    {
+     "id": "steny4",
+     "a": [
+      31,
+      17
+     ],
+     "b": [
+      26,
+      19
+     ],
+     "typ": "half"
+    },
+    {
+     "id": "steny5",
+     "a": [
+      26,
+      19
+     ],
+     "b": [
+      25.4,
+      18.2
+     ],
+     "typ": "half"
+    },
+    {
+     "id": "steny6",
+     "a": [
+      25.4,
+      18.2
+     ],
+     "b": [
+      24.05,
+      16.4
+     ],
+     "typ": "door"
+    },
+    {
+     "id": "steny7",
+     "a": [
+      24.05,
+      16.4
+     ],
+     "b": [
+      23,
+      15
+     ],
+     "typ": "half"
+    },
+    {
+     "id": "steny8",
+     "a": [
+      23,
+      15
+     ],
+     "b": [
+      23.12,
+      13.92
+     ],
+     "typ": "half"
+    },
+    {
+     "id": "steny9",
+     "a": [
+      23.12,
+      13.92
+     ],
+     "b": [
+      23.46,
+      10.86
+     ],
+     "typ": "door"
+    },
+    {
+     "id": "steny10",
+     "a": [
+      23.46,
+      10.86
+     ],
+     "b": [
+      24,
+      6
+     ],
+     "typ": "half"
+    }
+   ],
+   "malba": [
+    {
+     "id": "malba0",
+     "t": "jeskyne",
+     "b": 1,
+     "o": 1,
+     "h": 1,
+     "r": 0,
+     "poly": true,
+     "p": [
+      [
+       0,
+       0
+      ],
+      [
+       36,
+       0
+      ],
+      [
+       36,
+       28
+      ],
+      [
+       0,
+       28
+      ]
+     ]
+    },
+    {
+     "id": "malba1",
+     "t": "lava",
+     "b": 1.5,
+     "o": 1,
+     "h": 0.3,
+     "r": 0,
+     "poly": true,
+     "p": [
+      [
+       17,
+       0
+      ],
+      [
+       23,
+       0
+      ],
+      [
+       24,
+       5
+      ],
+      [
+       21,
+       9
+      ],
+      [
+       23,
+       15
+      ],
+      [
+       20,
+       20
+      ],
+      [
+       22,
+       28
+      ],
+      [
+       16,
+       28
+      ],
+      [
+       15,
+       22
+      ],
+      [
+       17,
+       16
+      ],
+      [
+       15,
+       11
+      ],
+      [
+       18,
+       6
+      ]
+     ]
+    },
+    {
+     "id": "malba2",
+     "t": "lava",
+     "b": 1.5,
+     "o": 1,
+     "h": 0.3,
+     "r": 0,
+     "poly": true,
+     "p": [
+      [
+       17,
+       16
+      ],
+      [
+       25,
+       17
+      ],
+      [
+       29,
+       23
+      ],
+      [
+       24,
+       27
+      ],
+      [
+       17,
+       25
+      ],
+      [
+       14,
+       21
+      ]
+     ]
+    },
+    {
+     "id": "malba3",
+     "t": "teren-skala",
+     "b": 1,
+     "o": 1,
+     "h": 1,
+     "r": 0,
+     "poly": true,
+     "p": [
+      [
+       20,
+       9
+      ],
+      [
+       25,
+       4
+      ],
+      [
+       31,
+       5
+      ],
+      [
+       34,
+       11
+      ],
+      [
+       32,
+       19
+      ],
+      [
+       27,
+       22
+      ],
+      [
+       23,
+       18
+      ]
+     ]
+    },
+    {
+     "id": "malba4",
+     "t": "dlazba",
+     "b": 1,
+     "o": 1,
+     "h": 1,
+     "r": 0,
+     "poly": true,
+     "p": [
+      [
+       11,
+       16
+      ],
+      [
+       12,
+       13
+      ],
+      [
+       25,
+       11
+      ],
+      [
+       25.5,
+       13.5
+      ]
+     ]
+    },
+    {
+     "id": "malba5",
+     "t": "teren-ruiny",
+     "b": 1,
+     "o": 1,
+     "h": 1,
+     "r": 0,
+     "poly": true,
+     "p": [
+      [
+       2,
+       17
+      ],
+      [
+       8,
+       13
+      ],
+      [
+       13,
+       15
+      ],
+      [
+       13,
+       23
+      ],
+      [
+       7,
+       26
+      ],
+      [
+       2,
+       24
+      ]
+     ]
+    },
+    {
+     "id": "malba6",
+     "t": "teren-rubble",
+     "b": 2,
+     "o": 0.7,
+     "h": 0.25,
+     "r": 29,
+     "poly": false,
+     "p": [
+      [
+       1,
+       23
+      ],
+      [
+       7,
+       21
+      ],
+      [
+       11,
+       18
+      ],
+      [
+       15,
+       14
+      ]
+     ]
+    },
+    {
+     "id": "malba7",
+     "t": "hlina",
+     "b": 2.4,
+     "o": 0.35,
+     "h": 0.2,
+     "r": -16,
+     "poly": false,
+     "p": [
+      [
+       4,
+       9
+      ],
+      [
+       8,
+       10
+      ],
+      [
+       13,
+       8
+      ]
+     ]
+    }
+   ],
+   "svetla": [
+    {
+     "id": "svetla0",
+     "x": 18.5,
+     "y": 4,
+     "bright": 6,
+     "dim": 18,
+     "color": "#ff5b24",
+     "intenzita": 0.7,
+     "blikani": true
+    },
+    {
+     "id": "svetla1",
+     "x": 20,
+     "y": 9,
+     "bright": 6,
+     "dim": 18,
+     "color": "#ff5b24",
+     "intenzita": 0.7,
+     "blikani": true
+    },
+    {
+     "id": "svetla2",
+     "x": 19,
+     "y": 17,
+     "bright": 6,
+     "dim": 18,
+     "color": "#ff5b24",
+     "intenzita": 0.7,
+     "blikani": true
+    },
+    {
+     "id": "svetla3",
+     "x": 18.5,
+     "y": 24,
+     "bright": 6,
+     "dim": 18,
+     "color": "#ff5b24",
+     "intenzita": 0.7,
+     "blikani": true
+    },
+    {
+     "id": "svetla4",
+     "x": 29,
+     "y": 22,
+     "bright": 6,
+     "dim": 18,
+     "color": "#ff5b24",
+     "intenzita": 0.7,
+     "blikani": true
+    },
+    {
+     "id": "svetla5",
+     "x": 25,
+     "y": 25,
+     "bright": 6,
+     "dim": 18,
+     "color": "#ff5b24",
+     "intenzita": 0.7,
+     "blikani": true
+    },
+    {
+     "id": "svetla6",
+     "x": 28,
+     "y": 11,
+     "bright": 8,
+     "dim": 18,
+     "color": "#ffa13f",
+     "intenzita": 0.7,
+     "blikani": true
+    },
+    {
+     "id": "svetla7",
+     "x": 29,
+     "y": 7.5,
+     "bright": 7,
+     "dim": 12,
+     "color": "#bd77fa",
+     "intenzita": 0.5,
+     "blikani": false
+    }
+   ],
+   "poznamky": [
+    {
+     "id": "poznamky0",
+     "x": 18,
+     "y": 17,
+     "text": "Láva: neprůchodné pole l s ohnivým nebezpečím. Kamenný most zůstává průchozí a bez nákladu."
+    },
+    {
+     "id": "poznamky1",
+     "x": 8,
+     "y": 8,
+     "text": "Dračí ostatky: pradávný strážce svatyně, herní návrh pro PJ; nikoli nový kanonický drak Montelienu."
+    },
+    {
+     "id": "poznamky2",
+     "x": 7.5,
+     "y": 19,
+     "text": "Pokladnice: poloviční kryt. Zápletka i označení svatyně jsou herní návrh."
+    }
+   ],
+   "kresby": [],
+   "vyska": {},
+   "textury": {},
+   "atmosfera": {
+    "amb": 0.52,
+    "barva": "#291b22"
+   },
+   "pocasi": {
+    "typ": "popel",
+    "sila": 0.32,
+    "vitr": 112
+   },
+   "mrizkaStyl": {
+    "typ": "dots",
+    "barva": "#ddd4b1",
+    "opacita": 0.13
+   },
+   "mrizka": [
+    ".................llllll.............",
+    ".................llllll.............",
+    ".................llllll.............",
+    "..................llllll............",
+    "..................llllll............",
+    "..................lllll.............",
+    "..................llll..............",
+    ".................llll...............",
+    "................llll................",
+    "................llll................",
+    "...............lllll................",
+    "...............llllll...............",
+    "....................................",
+    "....................................",
+    "....................ll..............",
+    ".................lllll..............",
+    ".................lllll..............",
+    "................lllllll.............",
+    "...............llllllll.............",
+    "...............lllllllll............",
+    "..............lllllllllll...........",
+    "..............llllllllllll..........",
+    "...............llllllllllllll.......",
+    "...............lllllllllllll........",
+    "...............llllllllllll.........",
+    "................llllllllll..........",
+    "................lllllllll...........",
+    "................llllll.............."
+   ]
+  },
+  {
+   "id": "epic-fornheim-polarni-tabor",
+   "nazev": "Fornheim – Hlídka na zrcadlovém jezeře",
+   "podklad": "snih",
+   "misto": "01_Svet/Mista/Fornheim.md",
+   "popis": "Polární tábor pod ledovými věžemi Fornheimu. Sněžná cesta míjí zamrzlé jezero, výprava rozbila stany v závětří skal. Uprostřed ledu praská runový kruh; táborák je jediný teplý bod. Autorská herní scéna; místní názvy zón a zápletky jsou návrhem pro PJ.",
+   "osvetleni": "Vizuální atmosféra; dosah světel ve stopách.",
+   "start": {
+    "druzina": [
+     [
+      1,
+      20
+     ],
+     [
+      2,
+      20
+     ],
+     [
+      3,
+      20
+     ],
+     [
+      1,
+      21
+     ],
+     [
+      2,
+      21
+     ],
+     [
+      3,
+      21
+     ]
+    ],
+    "nepratele": [
+     [
+      22,
+      17
+     ],
+     [
+      27,
+      19
+     ],
+     [
+      30,
+      14
+     ]
+    ]
+   },
+   "objekty": [
+    {
+     "id": "objekty0",
+     "asset": "mag-kruh",
+     "x": 25.5,
+     "y": 12.2,
+     "w": 4.5,
+     "h": 4.5,
+     "rot": -21,
+     "z": -2,
+     "anim": false
+    },
+    {
+     "id": "objekty1",
+     "asset": "rune-kamen",
+     "x": 26,
+     "y": 8.2,
+     "w": 1.6,
+     "h": 2,
+     "rot": 23,
+     "cover": 2
+    },
+    {
+     "id": "objekty2",
+     "asset": "gen2-stan",
+     "x": 6,
+     "y": 7,
+     "w": 4.2,
+     "h": 3.8,
+     "rot": -16,
+     "cover": 2,
+     "difficult": true
+    },
+    {
+     "id": "objekty3",
+     "asset": "zbroj-stojan",
+     "x": 8,
+     "y": 8,
+     "w": 1,
+     "h": 0.8,
+     "rot": -16
+    },
+    {
+     "id": "objekty4",
+     "asset": "gen2-truhla",
+     "x": 5,
+     "y": 9,
+     "w": 0.9,
+     "h": 0.65,
+     "rot": 16,
+     "cover": 2
+    },
+    {
+     "id": "objekty5",
+     "asset": "gen2-stan",
+     "x": 5,
+     "y": 14,
+     "w": 3.5,
+     "h": 3.2,
+     "rot": 12,
+     "cover": 2,
+     "difficult": true
+    },
+    {
+     "id": "objekty6",
+     "asset": "zbroj-stojan",
+     "x": 7,
+     "y": 15,
+     "w": 1,
+     "h": 0.8,
+     "rot": 12
+    },
+    {
+     "id": "objekty7",
+     "asset": "gen2-truhla",
+     "x": 4,
+     "y": 16,
+     "w": 0.9,
+     "h": 0.65,
+     "rot": -12,
+     "cover": 2
+    },
+    {
+     "id": "objekty8",
+     "asset": "gen2-stan",
+     "x": 10,
+     "y": 5,
+     "w": 3.2,
+     "h": 3.2,
+     "rot": 28,
+     "cover": 2,
+     "difficult": true
+    },
+    {
+     "id": "objekty9",
+     "asset": "zbroj-stojan",
+     "x": 12,
+     "y": 6,
+     "w": 1,
+     "h": 0.8,
+     "rot": 28
+    },
+    {
+     "id": "objekty10",
+     "asset": "gen2-truhla",
+     "x": 9,
+     "y": 7,
+     "w": 0.9,
+     "h": 0.65,
+     "rot": -28,
+     "cover": 2
+    },
+    {
+     "id": "objekty11",
+     "asset": "gen2-stan",
+     "x": 11,
+     "y": 20,
+     "w": 3.5,
+     "h": 3,
+     "rot": 18,
+     "cover": 2,
+     "difficult": true
+    },
+    {
+     "id": "objekty12",
+     "asset": "zbroj-stojan",
+     "x": 13,
+     "y": 21,
+     "w": 1,
+     "h": 0.8,
+     "rot": 18
+    },
+    {
+     "id": "objekty13",
+     "asset": "gen2-truhla",
+     "x": 10,
+     "y": 22,
+     "w": 0.9,
+     "h": 0.65,
+     "rot": -18,
+     "cover": 2
+    },
+    {
+     "id": "objekty14",
+     "asset": "ohne-tabor",
+     "x": 9.5,
+     "y": 12,
+     "w": 2,
+     "h": 2,
+     "rot": 0,
+     "light": {
+      "bright": 10,
+      "dim": 15
+     }
+    },
+    {
+     "id": "objekty15",
+     "asset": "gen2-kmen",
+     "x": 7.6,
+     "y": 11,
+     "w": 2,
+     "h": 0.65,
+     "rot": 60,
+     "cover": 2
+    },
+    {
+     "id": "objekty16",
+     "asset": "gen2-kmen",
+     "x": 10,
+     "y": 14,
+     "w": 2.3,
+     "h": 0.7,
+     "rot": -10,
+     "cover": 2
+    },
+    {
+     "id": "objekty17",
+     "asset": "gen2-strom2",
+     "x": 1.034,
+     "y": 3.618,
+     "w": 2.028,
+     "h": 1.956,
+     "rot": 289.18,
+     "cover": 3
+    },
+    {
+     "id": "objekty18",
+     "asset": "gen2-strom2",
+     "x": 1.72,
+     "y": 1.39,
+     "w": 2.468,
+     "h": 2.83,
+     "rot": 128.71,
+     "cover": 3
+    },
+    {
+     "id": "objekty19",
+     "asset": "smrk",
+     "x": 4.359,
+     "y": 1.616,
+     "w": 2.587,
+     "h": 3.078,
+     "rot": 149.31,
+     "cover": 3
+    },
+    {
+     "id": "objekty20",
+     "asset": "gen2-strom2",
+     "x": 3.663,
+     "y": 2.77,
+     "w": 2.118,
+     "h": 2.212,
+     "rot": 296.5,
+     "cover": 3
+    },
+    {
+     "id": "objekty21",
+     "asset": "smrk",
+     "x": 3.053,
+     "y": 1.938,
+     "w": 2.196,
+     "h": 2.001,
+     "rot": 159.95,
+     "cover": 3
+    },
+    {
+     "id": "objekty22",
+     "asset": "gen2-strom2",
+     "x": 0.827,
+     "y": 2.158,
+     "w": 2.183,
+     "h": 2.177,
+     "rot": 94.47,
+     "cover": 3
+    },
+    {
+     "id": "objekty23",
+     "asset": "gen2-strom2",
+     "x": 2.28,
+     "y": 4.857,
+     "w": 2.961,
+     "h": 2.843,
+     "rot": 293.59,
+     "cover": 3
+    },
+    {
+     "id": "objekty24",
+     "asset": "smrk",
+     "x": 3.96,
+     "y": 2.617,
+     "w": 2.119,
+     "h": 1.834,
+     "rot": 138.95,
+     "cover": 3
+    },
+    {
+     "id": "objekty25",
+     "asset": "smrk",
+     "x": 2.791,
+     "y": 2.152,
+     "w": 2.889,
+     "h": 3.083,
+     "rot": 13.0,
+     "cover": 3
+    },
+    {
+     "id": "objekty26",
+     "asset": "smrk",
+     "x": 1.618,
+     "y": 23.724,
+     "w": 1.975,
+     "h": 1.757,
+     "rot": 7.28,
+     "cover": 3
+    },
+    {
+     "id": "objekty27",
+     "asset": "gen2-strom2",
+     "x": 2.808,
+     "y": 22.712,
+     "w": 2.888,
+     "h": 3.339,
+     "rot": 319.49,
+     "cover": 3
+    },
+    {
+     "id": "objekty28",
+     "asset": "gen2-strom2",
+     "x": 2.615,
+     "y": 24.752,
+     "w": 2.205,
+     "h": 2.47,
+     "rot": 106.07,
+     "cover": 3
+    },
+    {
+     "id": "objekty29",
+     "asset": "gen2-strom2",
+     "x": 4.256,
+     "y": 23.77,
+     "w": 2.283,
+     "h": 2.078,
+     "rot": 291.66,
+     "cover": 3
+    },
+    {
+     "id": "objekty30",
+     "asset": "smrk",
+     "x": 2.973,
+     "y": 24.937,
+     "w": 2.482,
+     "h": 2.899,
+     "rot": 129.51,
+     "cover": 3
+    },
+    {
+     "id": "objekty31",
+     "asset": "gen2-strom2",
+     "x": 5.662,
+     "y": 23.479,
+     "w": 2.133,
+     "h": 2.166,
+     "rot": 125.08,
+     "cover": 3
+    },
+    {
+     "id": "objekty32",
+     "asset": "smrk",
+     "x": 4.864,
+     "y": 22.721,
+     "w": 2.842,
+     "h": 2.786,
+     "rot": 145.24,
+     "cover": 3
+    },
+    {
+     "id": "objekty33",
+     "asset": "gen2-strom2",
+     "x": 0.602,
+     "y": 24.697,
+     "w": 2.563,
+     "h": 2.35,
+     "rot": 142.56,
+     "cover": 3
+    },
+    {
+     "id": "objekty34",
+     "asset": "smrk",
+     "x": 1.497,
+     "y": 25.406,
+     "w": 1.932,
+     "h": 1.6,
+     "rot": 134.16,
+     "cover": 3
+    },
+    {
+     "id": "objekty35",
+     "asset": "smrk",
+     "x": 5.159,
+     "y": 23.243,
+     "w": 1.91,
+     "h": 1.779,
+     "rot": 236.93,
+     "cover": 3
+    },
+    {
+     "id": "objekty36",
+     "asset": "smrk",
+     "x": 4.272,
+     "y": 24.017,
+     "w": 2.248,
+     "h": 2.389,
+     "rot": 53.03,
+     "cover": 3
+    },
+    {
+     "id": "objekty37",
+     "asset": "smrk",
+     "x": 2.9,
+     "y": 26.373,
+     "w": 1.908,
+     "h": 2.153,
+     "rot": 160.94,
+     "cover": 3
+    },
+    {
+     "id": "objekty38",
+     "asset": "gen2-strom2",
+     "x": 34.263,
+     "y": 24.36,
+     "w": 2.82,
+     "h": 3.366,
+     "rot": 244.6,
+     "cover": 3
+    },
+    {
+     "id": "objekty39",
+     "asset": "smrk",
+     "x": 28.629,
+     "y": 25.277,
+     "w": 2.185,
+     "h": 2.173,
+     "rot": 158.62,
+     "cover": 3
+    },
+    {
+     "id": "objekty40",
+     "asset": "gen2-strom2",
+     "x": 28.627,
+     "y": 24.962,
+     "w": 1.959,
+     "h": 2.293,
+     "rot": 352.75,
+     "cover": 3
+    },
+    {
+     "id": "objekty41",
+     "asset": "gen2-strom2",
+     "x": 29.863,
+     "y": 26.412,
+     "w": 2.635,
+     "h": 2.237,
+     "rot": 286.15,
+     "cover": 3
+    },
+    {
+     "id": "objekty42",
+     "asset": "gen2-strom2",
+     "x": 34.618,
+     "y": 26.126,
+     "w": 2.836,
+     "h": 2.809,
+     "rot": 340.47,
+     "cover": 3
+    },
+    {
+     "id": "objekty43",
+     "asset": "gen2-strom2",
+     "x": 34.436,
+     "y": 25.489,
+     "w": 1.933,
+     "h": 2.274,
+     "rot": 195.99,
+     "cover": 3
+    },
+    {
+     "id": "objekty44",
+     "asset": "gen2-strom2",
+     "x": 30.778,
+     "y": 24.589,
+     "w": 2.974,
+     "h": 3.516,
+     "rot": 66.69,
+     "cover": 3
+    },
+    {
+     "id": "objekty45",
+     "asset": "smrk",
+     "x": 34.698,
+     "y": 25.728,
+     "w": 2.996,
+     "h": 2.745,
+     "rot": 320.72,
+     "cover": 3
+    },
+    {
+     "id": "objekty46",
+     "asset": "gen2-strom2",
+     "x": 30.373,
+     "y": 25.874,
+     "w": 1.861,
+     "h": 2.063,
+     "rot": 293.51,
+     "cover": 3
+    },
+    {
+     "id": "objekty47",
+     "asset": "gen2-strom2",
+     "x": 30.422,
+     "y": 23.82,
+     "w": 2.098,
+     "h": 1.712,
+     "rot": 6.72,
+     "cover": 3
+    },
+    {
+     "id": "objekty48",
+     "asset": "gen2-strom2",
+     "x": 34.339,
+     "y": 24.264,
+     "w": 1.816,
+     "h": 1.823,
+     "rot": 348.02,
+     "cover": 3
+    },
+    {
+     "id": "objekty49",
+     "asset": "gen2-strom2",
+     "x": 33.217,
+     "y": 25.087,
+     "w": 2.87,
+     "h": 2.81,
+     "rot": 11.2,
+     "cover": 3
+    },
+    {
+     "id": "objekty50",
+     "asset": "gen2-strom2",
+     "x": 32.18,
+     "y": 1.702,
+     "w": 2.547,
+     "h": 2.323,
+     "rot": 241.58,
+     "cover": 3
+    },
+    {
+     "id": "objekty51",
+     "asset": "smrk",
+     "x": 34.523,
+     "y": 2.553,
+     "w": 2.973,
+     "h": 2.901,
+     "rot": 109.81,
+     "cover": 3
+    },
+    {
+     "id": "objekty52",
+     "asset": "gen2-strom2",
+     "x": 29.311,
+     "y": 3.343,
+     "w": 2.36,
+     "h": 2.732,
+     "rot": 312.57,
+     "cover": 3
+    },
+    {
+     "id": "objekty53",
+     "asset": "smrk",
+     "x": 34.038,
+     "y": 2.956,
+     "w": 1.884,
+     "h": 1.89,
+     "rot": 275.04,
+     "cover": 3
+    },
+    {
+     "id": "objekty54",
+     "asset": "smrk",
+     "x": 29.213,
+     "y": 3.318,
+     "w": 2.125,
+     "h": 2.159,
+     "rot": 315.34,
+     "cover": 3
+    },
+    {
+     "id": "objekty55",
+     "asset": "smrk",
+     "x": 32.367,
+     "y": 1.707,
+     "w": 2.491,
+     "h": 2.096,
+     "rot": 299.25,
+     "cover": 3
+    },
+    {
+     "id": "objekty56",
+     "asset": "gen2-strom2",
+     "x": 33.008,
+     "y": 1.26,
+     "w": 2.941,
+     "h": 3.493,
+     "rot": 105.12,
+     "cover": 3
+    },
+    {
+     "id": "objekty57",
+     "asset": "gen2-strom2",
+     "x": 30.961,
+     "y": 1.65,
+     "w": 1.835,
+     "h": 2.115,
+     "rot": 337.98,
+     "cover": 3
+    },
+    {
+     "id": "objekty58",
+     "asset": "smrk",
+     "x": 20.905,
+     "y": 2.458,
+     "w": 2.207,
+     "h": 2.028,
+     "rot": 280.76,
+     "cover": 3
+    },
+    {
+     "id": "objekty59",
+     "asset": "gen2-strom2",
+     "x": 21.388,
+     "y": 1.582,
+     "w": 2.007,
+     "h": 1.635,
+     "rot": 233.13,
+     "cover": 3
+    },
+    {
+     "id": "objekty60",
+     "asset": "smrk",
+     "x": 19.77,
+     "y": 2.604,
+     "w": 2.282,
+     "h": 2.535,
+     "rot": 68.72,
+     "cover": 3
+    },
+    {
+     "id": "objekty61",
+     "asset": "smrk",
+     "x": 22.41,
+     "y": 1.409,
+     "w": 2.547,
+     "h": 2.04,
+     "rot": 264.5,
+     "cover": 3
+    },
+    {
+     "id": "objekty62",
+     "asset": "smrk",
+     "x": 18.246,
+     "y": 2.318,
+     "w": 2.36,
+     "h": 2.35,
+     "rot": 264.69,
+     "cover": 3
+    },
+    {
+     "id": "objekty63",
+     "asset": "smrk",
+     "x": 20.871,
+     "y": 1.966,
+     "w": 2.948,
+     "h": 2.552,
+     "rot": 183.46,
+     "cover": 3
+    },
+    {
+     "id": "objekty64",
+     "asset": "gen2-strom2",
+     "x": 20.699,
+     "y": 1.821,
+     "w": 2.685,
+     "h": 2.887,
+     "rot": 100.95,
+     "cover": 3
+    },
+    {
+     "id": "objekty65",
+     "asset": "gen2-balvan2",
+     "x": 14.731,
+     "y": 3.86,
+     "w": 1.132,
+     "h": 1.328,
+     "rot": 113.76,
+     "cover": 2
+    },
+    {
+     "id": "objekty66",
+     "asset": "balvan",
+     "x": 13.608,
+     "y": 1.21,
+     "w": 1.085,
+     "h": 1.08,
+     "rot": 68.56,
+     "cover": 2
+    },
+    {
+     "id": "objekty67",
+     "asset": "balvan",
+     "x": 13.99,
+     "y": 3.29,
+     "w": 1.055,
+     "h": 0.984,
+     "rot": 147.11,
+     "cover": 2
+    },
+    {
+     "id": "objekty68",
+     "asset": "gen2-kmen",
+     "x": 14.725,
+     "y": 4.524,
+     "w": 0.746,
+     "h": 0.73,
+     "rot": 145.44,
+     "cover": 2
+    },
+    {
+     "id": "objekty69",
+     "asset": "gen2-balvan2",
+     "x": 14.378,
+     "y": 1.53,
+     "w": 1.311,
+     "h": 1.467,
+     "rot": 162.7,
+     "cover": 2
+    },
+    {
+     "id": "objekty70",
+     "asset": "balvan",
+     "x": 32.25,
+     "y": 13.027,
+     "w": 0.845,
+     "h": 0.851,
+     "rot": 239.29,
+     "cover": 2
+    },
+    {
+     "id": "objekty71",
+     "asset": "gen2-kmen",
+     "x": 32.71,
+     "y": 12.201,
+     "w": 1.357,
+     "h": 1.584,
+     "rot": 300.3,
+     "cover": 2
+    },
+    {
+     "id": "objekty72",
+     "asset": "balvan",
+     "x": 32.191,
+     "y": 11.687,
+     "w": 1.132,
+     "h": 0.986,
+     "rot": 186.0,
+     "cover": 2
+    },
+    {
+     "id": "objekty73",
+     "asset": "balvan",
+     "x": 33.674,
+     "y": 12.493,
+     "w": 0.808,
+     "h": 0.713,
+     "rot": 228.87,
+     "cover": 2
+    },
+    {
+     "id": "objekty74",
+     "asset": "gen2-kmen",
+     "x": 32.71,
+     "y": 13.161,
+     "w": 1.024,
+     "h": 0.926,
+     "rot": 139.44,
+     "cover": 2
+    },
+    {
+     "id": "objekty75",
+     "asset": "gen2-kmen",
+     "x": 3.764,
+     "y": 19.946,
+     "w": 1.346,
+     "h": 1.452,
+     "rot": 299.16,
+     "cover": 2
+    },
+    {
+     "id": "objekty76",
+     "asset": "gen2-kmen",
+     "x": 3.274,
+     "y": 19.367,
+     "w": 1.065,
+     "h": 1.267,
+     "rot": 162.92,
+     "cover": 2
+    },
+    {
+     "id": "objekty77",
+     "asset": "gen2-kmen",
+     "x": 3.543,
+     "y": 20.654,
+     "w": 0.662,
+     "h": 0.555,
+     "rot": 301.9,
+     "cover": 2
+    },
+    {
+     "id": "objekty78",
+     "asset": "balvan",
+     "x": 2.805,
+     "y": 20.515,
+     "w": 0.702,
+     "h": 0.658,
+     "rot": 96.36,
+     "cover": 2
+    },
+    {
+     "id": "objekty79",
+     "asset": "gen2-balvan2",
+     "x": 3.513,
+     "y": 19.54,
+     "w": 1.027,
+     "h": 1.089,
+     "rot": 210.31,
+     "cover": 2
+    },
+    {
+     "id": "objekty80",
+     "asset": "gen2-balvan2",
+     "x": 11.846,
+     "y": 26.329,
+     "w": 1.29,
+     "h": 1.218,
+     "rot": 324.79,
+     "cover": 2
+    },
+    {
+     "id": "objekty81",
+     "asset": "gen2-kmen",
+     "x": 12.629,
+     "y": 26.472,
+     "w": 0.85,
+     "h": 0.981,
+     "rot": 18.4,
+     "cover": 2
+    },
+    {
+     "id": "objekty82",
+     "asset": "gen2-balvan2",
+     "x": 11.991,
+     "y": 23.986,
+     "w": 0.873,
+     "h": 0.837,
+     "rot": 27.43,
+     "cover": 2
+    },
+    {
+     "id": "objekty83",
+     "asset": "gen2-balvan2",
+     "x": 12.625,
+     "y": 23.971,
+     "w": 1.342,
+     "h": 1.086,
+     "rot": 240.7,
+     "cover": 2
+    },
+    {
+     "id": "objekty84",
+     "asset": "gen2-balvan2",
+     "x": 11.329,
+     "y": 26.546,
+     "w": 1.119,
+     "h": 1.323,
+     "rot": 309.27,
+     "cover": 2
+    },
+    {
+     "id": "objekty85",
+     "asset": "gen2-kmen",
+     "x": 33.169,
+     "y": 21.532,
+     "w": 0.627,
+     "h": 0.741,
+     "rot": 117.92,
+     "cover": 2
+    },
+    {
+     "id": "objekty86",
+     "asset": "gen2-kmen",
+     "x": 33.546,
+     "y": 19.674,
+     "w": 1.099,
+     "h": 0.916,
+     "rot": 42.55,
+     "cover": 2
+    },
+    {
+     "id": "objekty87",
+     "asset": "gen2-balvan2",
+     "x": 33.069,
+     "y": 21.993,
+     "w": 0.642,
+     "h": 0.684,
+     "rot": 71.95,
+     "cover": 2
+    },
+    {
+     "id": "objekty88",
+     "asset": "balvan",
+     "x": 34.934,
+     "y": 20.15,
+     "w": 1.077,
+     "h": 0.983,
+     "rot": 33.37,
+     "cover": 2
+    },
+    {
+     "id": "objekty89",
+     "asset": "gen2-kmen",
+     "x": 32.857,
+     "y": 21.557,
+     "w": 1.168,
+     "h": 1.297,
+     "rot": 126.17,
+     "cover": 2
+    },
+    {
+     "id": "objekty90",
+     "asset": "pydel",
+     "x": 3.149,
+     "y": 9.848,
+     "w": 0.422,
+     "h": 0.401,
+     "rot": 279.97,
+     "cover": 2
+    },
+    {
+     "id": "objekty91",
+     "asset": "vrv-kotel",
+     "x": 4.823,
+     "y": 8.75,
+     "w": 0.535,
+     "h": 0.459,
+     "rot": 323.68,
+     "cover": 2
+    },
+    {
+     "id": "objekty92",
+     "asset": "vrv-kotel",
+     "x": 3.943,
+     "y": 8.635,
+     "w": 0.484,
+     "h": 0.499,
+     "rot": 353.37,
+     "cover": 2
+    },
+    {
+     "id": "objekty93",
+     "asset": "vrv-kotel",
+     "x": 4.29,
+     "y": 8.239,
+     "w": 0.515,
+     "h": 0.548,
+     "rot": 194.12,
+     "cover": 2
+    },
+    {
+     "id": "objekty94",
+     "asset": "vrv-kotel",
+     "x": 3.246,
+     "y": 8.894,
+     "w": 0.747,
+     "h": 0.786,
+     "rot": 130.15,
+     "cover": 2
+    },
+    {
+     "id": "objekty95",
+     "asset": "vrv-kotel",
+     "x": 4.4,
+     "y": 8.053,
+     "w": 0.69,
+     "h": 0.598,
+     "rot": 311.19,
+     "cover": 2
+    },
+    {
+     "id": "objekty96",
+     "asset": "bedna",
+     "x": 6.924,
+     "y": 16.774,
+     "w": 0.502,
+     "h": 0.56,
+     "rot": 345.91,
+     "cover": 2
+    },
+    {
+     "id": "objekty97",
+     "asset": "vrv-kotel",
+     "x": 7.889,
+     "y": 17.223,
+     "w": 0.587,
+     "h": 0.531,
+     "rot": 277.88,
+     "cover": 2
+    },
+    {
+     "id": "objekty98",
+     "asset": "bedna",
+     "x": 7.222,
+     "y": 18.312,
+     "w": 0.624,
+     "h": 0.709,
+     "rot": 96.19,
+     "cover": 2
+    },
+    {
+     "id": "objekty99",
+     "asset": "pydel",
+     "x": 6.873,
+     "y": 18.22,
+     "w": 0.65,
+     "h": 0.616,
+     "rot": 249.7,
+     "cover": 2
+    },
+    {
+     "id": "objekty100",
+     "asset": "bedna",
+     "x": 7.056,
+     "y": 18.716,
+     "w": 0.427,
+     "h": 0.489,
+     "rot": 307.86,
+     "cover": 2
+    },
+    {
+     "id": "objekty101",
+     "asset": "pydel",
+     "x": 7.535,
+     "y": 19.155,
+     "w": 0.491,
+     "h": 0.439,
+     "rot": 285.92,
+     "cover": 2
+    },
+    {
+     "id": "objekty102",
+     "asset": "vrv-kotel",
+     "x": 10.429,
+     "y": 7.372,
+     "w": 0.425,
+     "h": 0.475,
+     "rot": 30.9,
+     "cover": 2
+    },
+    {
+     "id": "objekty103",
+     "asset": "bedna",
+     "x": 11.723,
+     "y": 7.334,
+     "w": 0.555,
+     "h": 0.632,
+     "rot": 338.23,
+     "cover": 2
+    },
+    {
+     "id": "objekty104",
+     "asset": "bedna",
+     "x": 10.64,
+     "y": 7.527,
+     "w": 0.588,
+     "h": 0.6,
+     "rot": 120.92,
+     "cover": 2
+    },
+    {
+     "id": "objekty105",
+     "asset": "pydel",
+     "x": 10.932,
+     "y": 7.796,
+     "w": 0.591,
+     "h": 0.548,
+     "rot": 266.39,
+     "cover": 2
+    },
+    {
+     "id": "objekty106",
+     "asset": "vrv-kotel",
+     "x": 11.244,
+     "y": 7.479,
+     "w": 0.64,
+     "h": 0.561,
+     "rot": 112.17,
+     "cover": 2
+    },
+    {
+     "id": "objekty107",
+     "asset": "vrv-kotel",
+     "x": 10.074,
+     "y": 7.171,
+     "w": 0.672,
+     "h": 0.786,
+     "rot": 271.97,
+     "cover": 2
+    },
+    {
+     "id": "objekty108",
+     "asset": "pydel",
+     "x": 12.571,
+     "y": 17.406,
+     "w": 0.694,
+     "h": 0.769,
+     "rot": 106.11,
+     "cover": 2
+    },
+    {
+     "id": "objekty109",
+     "asset": "bedna",
+     "x": 13.149,
+     "y": 17.804,
+     "w": 0.465,
+     "h": 0.372,
+     "rot": 169.27,
+     "cover": 2
+    },
+    {
+     "id": "objekty110",
+     "asset": "bedna",
+     "x": 12.164,
+     "y": 16.732,
+     "w": 0.464,
+     "h": 0.468,
+     "rot": 226.06,
+     "cover": 2
+    },
+    {
+     "id": "objekty111",
+     "asset": "pydel",
+     "x": 12.776,
+     "y": 17.073,
+     "w": 0.608,
+     "h": 0.628,
+     "rot": 126.36,
+     "cover": 2
+    },
+    {
+     "id": "objekty112",
+     "asset": "vrv-kotel",
+     "x": 11.518,
+     "y": 18.536,
+     "w": 0.591,
+     "h": 0.697,
+     "rot": 190.79,
+     "cover": 2
+    },
+    {
+     "id": "objekty113",
+     "asset": "pydel",
+     "x": 11.704,
+     "y": 18.038,
+     "w": 0.55,
+     "h": 0.465,
+     "rot": 291.04,
+     "cover": 2
+    },
+    {
+     "id": "objekty114",
+     "asset": "gen2-krev",
+     "x": 23,
+     "y": 16,
+     "w": 0.8,
+     "h": 1.2,
+     "rot": -24,
+     "z": -1,
+     "anim": false
+    }
+   ],
+   "steny": [
+    {
+     "id": "steny0",
+     "a": [
+      2,
+      17
+     ],
+     "b": [
+      6,
+      18
+     ],
+     "typ": "half"
+    },
+    {
+     "id": "steny1",
+     "a": [
+      6,
+      18
+     ],
+     "b": [
+      9,
+      17.5
+     ],
+     "typ": "door"
+    },
+    {
+     "id": "steny2",
+     "a": [
+      3,
+      4
+     ],
+     "b": [
+      7,
+      2
+     ],
+     "typ": "half"
+    },
+    {
+     "id": "steny3",
+     "a": [
+      7,
+      2
+     ],
+     "b": [
+      12,
+      2.5
+     ],
+     "typ": "half"
+    }
+   ],
+   "malba": [
+    {
+     "id": "malba0",
+     "t": "snih",
+     "b": 1,
+     "o": 1,
+     "h": 1,
+     "r": 0,
+     "poly": true,
+     "p": [
+      [
+       0,
+       0
+      ],
+      [
+       36,
+       0
+      ],
+      [
+       36,
+       28
+      ],
+      [
+       0,
+       28
+      ]
+     ]
+    },
+    {
+     "id": "malba1",
+     "t": "led",
+     "b": 1.5,
+     "o": 1,
+     "h": 0.3,
+     "r": 14,
+     "poly": true,
+     "p": [
+      [
+       17,
+       4
+      ],
+      [
+       25,
+       2
+      ],
+      [
+       32,
+       6
+      ],
+      [
+       34,
+       14
+      ],
+      [
+       29,
+       23
+      ],
+      [
+       21,
+       26
+      ],
+      [
+       14,
+       22
+      ],
+      [
+       13,
+       15
+      ]
+     ]
+    },
+    {
+     "id": "malba2",
+     "t": "snih",
+     "b": 1.7,
+     "o": 0.6,
+     "h": 0.2,
+     "r": 32,
+     "poly": false,
+     "p": [
+      [
+       14,
+       23
+      ],
+      [
+       13,
+       17
+      ],
+      [
+       16,
+       9
+      ],
+      [
+       19,
+       5
+      ]
+     ]
+    },
+    {
+     "id": "malba3",
+     "t": "hlina",
+     "b": 2,
+     "o": 0.65,
+     "h": 0.2,
+     "r": -23,
+     "poly": false,
+     "p": [
+      [
+       0,
+       21
+      ],
+      [
+       6,
+       19
+      ],
+      [
+       10,
+       16
+      ],
+      [
+       12,
+       11
+      ],
+      [
+       17,
+       9
+      ]
+     ]
+    },
+    {
+     "id": "malba4",
+     "t": "teren-propast",
+     "b": 1.5,
+     "o": 1,
+     "h": 0.3,
+     "r": 0,
+     "poly": true,
+     "p": [
+      [
+       25,
+       10
+      ],
+      [
+       27,
+       9
+      ],
+      [
+       28,
+       13
+      ],
+      [
+       25,
+       15
+      ],
+      [
+       24,
+       13
+      ]
+     ]
+    },
+    {
+     "id": "malba5",
+     "t": "teren-rubble",
+     "b": 1,
+     "o": 0.25,
+     "h": 0.3,
+     "r": 22,
+     "poly": false,
+     "p": [
+      [
+       12,
+       25
+      ],
+      [
+       14,
+       23
+      ],
+      [
+       16,
+       22
+      ]
+     ]
+    }
+   ],
+   "svetla": [
+    {
+     "id": "svetla0",
+     "x": 9.5,
+     "y": 12,
+     "bright": 12,
+     "dim": 20,
+     "color": "#ffb063",
+     "intenzita": 0.8,
+     "blikani": true
+    },
+    {
+     "id": "svetla1",
+     "x": 26,
+     "y": 11,
+     "bright": 8,
+     "dim": 17,
+     "color": "#83cfe8",
+     "intenzita": 0.6,
+     "blikani": false
+    },
+    {
+     "id": "svetla2",
+     "x": 21,
+     "y": 22,
+     "bright": 7,
+     "dim": 12,
+     "color": "#9e99ff",
+     "intenzita": 0.4,
+     "blikani": false
+    }
+   ],
+   "poznamky": [
+    {
+     "id": "poznamky0",
+     "x": 26,
+     "y": 12,
+     "text": "Trhlina: neprůchodná propast. Okolní led je těžký terén; bezpečná cesta obchází západní břeh."
+    },
+    {
+     "id": "poznamky1",
+     "x": 9.5,
+     "y": 12,
+     "text": "Hlídka: zásoby vydrží tři noci. Oheň je vidět z protějšího břehu."
+    },
+    {
+     "id": "poznamky2",
+     "x": 23,
+     "y": 16,
+     "text": "Krvavé stopy končí na ledu. Pátrání DC 13 odhalí, že se majitel vracel do tábora."
+    }
+   ],
+   "kresby": [],
+   "vyska": {},
+   "textury": {},
+   "atmosfera": {
+    "amb": 0.72,
+    "barva": "#22374b"
+   },
+   "pocasi": {
+    "typ": "snih",
+    "sila": 0.32,
+    "vitr": 112
+   },
+   "mrizkaStyl": {
+    "typ": "dots",
+    "barva": "#ddd4b1",
+    "opacita": 0.13
+   },
+   "mrizka": [
+    "....................................",
+    "....................................",
+    ".......................iii..........",
+    "...................iiiiiiiii........",
+    ".................iiiiiiiiiiii.......",
+    "................iiiiiiiiiiiiiii.....",
+    "................iiiiiiiiiiiiiiii....",
+    "................iiiiiiiiiiiiiiii....",
+    "...............iiiiiiiiiiiiiiiiii...",
+    "...............iiiiiiiiiii_iiiiii...",
+    "...............iiiiiiiiii__iiiiii...",
+    "..............iiiiiiiiii____iiiii...",
+    "..............iiiiiiiiii____iiiiii..",
+    "..............iiiiiiiiii___iiiiiii..",
+    ".............iiiiiiiiiiii_iiiiiiii..",
+    ".............iiiiiiiiiiiiiiiiiiii...",
+    ".............iiiiiiiiiiiiiiiiiiii...",
+    ".............iiiiiiiiiiiiiiiiiii....",
+    ".............iiiiiiiiiiiiiiiiii.....",
+    "..............iiiiiiiiiiiiiiiii.....",
+    "..............iiiiiiiiiiiiiiii......",
+    "..............iiiiiiiiiiiiiiii......",
+    "...............iiiiiiiiiiiiii.......",
+    ".................iiiiiiiiiii........",
+    "..................iiiiiii...........",
+    "....................ii..............",
+    "....................................",
+    "...................................."
+   ]
+  },
+  {
+   "id": "nova-mapa-37",
+   "nazev": "Nová mapa 37",
+   "podklad": "jine",
+   "osvetleni": "Bright Light",
+   "start": {
+    "druzina": []
+   },
+   "mrizka": [
+    "....................",
+    "....................",
+    "....................",
+    "....................",
+    "....................",
+    "....................",
+    "....................",
+    "....................",
+    "....................",
+    "....................",
+    "....................",
+    "....................",
+    "....................",
+    "....................",
+    "...................."
+   ]
   }
  ]
 }

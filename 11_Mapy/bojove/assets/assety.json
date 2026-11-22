@@ -1021,6 +1021,110 @@
    "custom": false
   },
   {
+   "id": "p3-lodni-paluba",
+   "nazev": "Paluba bouřkové karavely",
+   "kategorie": "Přístav",
+   "src": "bojove/assets/Přístav/p3-lodni-paluba.webp",
+   "tags": [
+    "Přístav"
+   ],
+   "custom": false,
+   "w": 8,
+   "h": 18
+  },
+  {
+   "id": "p3-poklad",
+   "nazev": "Dračí poklad",
+   "kategorie": "Dungeon",
+   "src": "bojove/assets/Dungeon/p3-poklad.webp",
+   "tags": [
+    "Dungeon"
+   ],
+   "custom": false,
+   "w": 3,
+   "h": 2.5,
+   "cover": 2,
+   "difficult": true
+  },
+  {
+   "id": "p3-draci-kostra",
+   "nazev": "Dračí kostra",
+   "kategorie": "Dungeon",
+   "src": "bojove/assets/Dungeon/p3-draci-kostra.webp",
+   "tags": [
+    "Dungeon"
+   ],
+   "custom": false,
+   "w": 7,
+   "h": 5,
+   "cover": 2,
+   "difficult": true
+  },
+  {
+   "id": "p3-obsidian",
+   "nazev": "Obsidiánové jehly",
+   "kategorie": "Příroda",
+   "src": "bojove/assets/Příroda/p3-obsidian.webp",
+   "tags": [
+    "Příroda"
+   ],
+   "custom": false,
+   "w": 2,
+   "h": 2,
+   "blocks": true,
+   "cover": 3
+  },
+  {
+   "id": "p3-lana",
+   "nazev": "Stočená přístavní lana",
+   "kategorie": "Přístav",
+   "src": "bojove/assets/Přístav/p3-lana.webp",
+   "tags": [
+    "Přístav"
+   ],
+   "custom": false,
+   "w": 0.9,
+   "h": 0.9
+  },
+  {
+   "id": "p3-padaci-dvere",
+   "nazev": "Dubový sklepní poklop",
+   "kategorie": "Nábytek",
+   "src": "bojove/assets/Nábytek/p3-padaci-dvere.webp",
+   "tags": [
+    "Nábytek"
+   ],
+   "custom": false,
+   "w": 1.5,
+   "h": 1.5
+  },
+  {
+   "id": "p3-nadobi",
+   "nazev": "Hostinská večeře",
+   "kategorie": "Nábytek",
+   "src": "bojove/assets/Nábytek/p3-nadobi.webp",
+   "tags": [
+    "Nábytek"
+   ],
+   "custom": false,
+   "w": 0.85,
+   "h": 0.65
+  },
+  {
+   "id": "p3-sloup-ruina",
+   "nazev": "Zlomený elfí sloup",
+   "kategorie": "Dungeon",
+   "src": "bojove/assets/Dungeon/p3-sloup-ruina.webp",
+   "tags": [
+    "Dungeon"
+   ],
+   "custom": false,
+   "w": 2,
+   "h": 1.2,
+   "cover": 2,
+   "difficult": true
+  },
+  {
    "id": "gen2-strom",
    "nazev": "Dub – realistický",
    "kategorie": "Příroda",

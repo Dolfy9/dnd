@@ -7,6 +7,10 @@ const GROUNDS = new Set(["mesto", "krypta", "les", "ruiny", "reka", "more", "pri
   "bazina", "snih", "jeskyne", "hory", "poust", "plaz"]);
 
 export function terrainTexture(tile: string, ground: string, interior = false): string {
+  if (tile === "l") return "lava";
+  if (tile === "i") return "led";
+  if (tile === "u" || tile === "h") return "teren-rubble";
+  if (tile === "p") return "teren-propast";
   const key = tile === "#" ? interior ? "bedrock" : NATURAL.has(ground) ? "skala" : "wall"
     : SURFACES[tile] || (GROUNDS.has(ground) ? ground : "mesto");
   return "teren-" + key;

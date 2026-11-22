@@ -601,7 +601,15 @@
    "nazev": "Válečný buben",
    "kategorie": "Tábor/bitva",
    "prompt": "war drum"
-  }
+  },
+  {"id":"p3-lodni-paluba","nazev":"Paluba bouřkové karavely","kategorie":"Přístav","size":512,"w":8,"h":18,"prompt":"Directly overhead cutaway of an empty medieval wooden caravel hull and weathered teak deck, pointed bow, rounded stern, brass trim, railing around perimeter, no sails, no mast, no cargo, no water, isolated solid magenta background."},
+  {"id":"p3-poklad","nazev":"Dračí poklad","kategorie":"Dungeon","size":512,"w":3,"h":2.5,"cover":2,"difficult":true,"prompt":"Overhead irregular low mound of ancient gold coins, scattered silver coins, jeweled crowns, goblets and ruby gemstones, rich worn gold metallic detail, organic scattered outline, isolated solid magenta background."},
+  {"id":"p3-draci-kostra","nazev":"Dračí kostra","kategorie":"Dungeon","size":512,"w":7,"h":5,"cover":2,"difficult":true,"prompt":"Direct overhead ancient enormous curled dragon skeleton, horned skull, curved vertebrae and spread ribs, weathered ivory bones, empty hollow interior visible, no ground, isolated solid magenta background."},
+  {"id":"p3-obsidian","nazev":"Obsidiánové jehly","kategorie":"Příroda","size":512,"w":2,"h":2,"blocks":true,"cover":3,"prompt":"Overhead cluster of jagged black volcanic obsidian spires, glossy fractured black glass with subtle crimson reflections, irregular silhouette, isolated solid magenta background."},
+  {"id":"p3-lana","nazev":"Stočená přístavní lana","kategorie":"Přístav","size":256,"w":0.9,"h":0.9,"prompt":"Direct overhead loosely coiled thick weathered hemp ship rope, frayed loose end, detailed twisted fibers, no hooks, isolated solid magenta background."},
+  {"id":"p3-padaci-dvere","nazev":"Dubový sklepní poklop","kategorie":"Nábytek","size":256,"w":1.5,"h":1.5,"prompt":"Direct overhead closed square oak cellar trapdoor, black wrought iron bands, iron ring handle, weathered planks, isolated solid magenta background."},
+  {"id":"p3-nadobi","nazev":"Hostinská večeře","kategorie":"Nábytek","size":256,"w":0.85,"h":0.65,"prompt":"Overhead tiny tabletop still life of pewter plate with roast meat, bread loaf, cheese and two wooden ale tankards, no table underneath, isolated solid magenta background."},
+  {"id":"p3-sloup-ruina","nazev":"Zlomený elfí sloup","kategorie":"Dungeon","size":512,"w":2,"h":1.2,"cover":2,"difficult":true,"prompt":"Direct overhead fallen broken white marble elven column in three uneven fragments, delicate leaf relief carvings, moss and ivy creeping over cracks, isolated solid magenta background."}
  ],
  "textury": [
   {

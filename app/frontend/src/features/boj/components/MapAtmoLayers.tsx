@@ -27,12 +27,14 @@ export const MapPaintLayer = memo(function MapPaintLayer({ map, preview }: { map
           <filter id={id + "blur"} filterUnits="userSpaceOnUse" x={-PX * 8} y={-PX * 8} width={W + PX * 16} height={H + PX * 16} colorInterpolationFilters="sRGB">
             <feGaussianBlur stdDeviation={blur} />
           </filter>
-          <mask id={id + "mask"} maskUnits="userSpaceOnUse" x={0} y={0} width={W} height={H}>
+          <mask id={id + "mask"} maskUnits="userSpaceOnUse" maskContentUnits="userSpaceOnUse" style={{ maskType: "alpha" }} x={0} y={0} width={W} height={H}>
             <path d={d} fill={s.poly ? "white" : "none"} stroke={s.poly ? "none" : "white"} strokeWidth={s.b * PX} strokeLinecap="round" strokeLinejoin="round"
               filter={blur ? `url(#${id}blur)` : undefined} />
           </mask>
         </defs>
-        <rect width={W} height={H} fill={`url(#${id}tex)`} mask={`url(#${id}mask)`} opacity={s.o} />
+        {s.poly && !blur
+          ? <path d={d} fill={`url(#${id}tex)`} opacity={s.o} />
+          : <rect width={W} height={H} fill={`url(#${id}tex)`} mask={`url(#${id}mask)`} opacity={s.o} />}
       </g>;
     })}
   </svg>;
