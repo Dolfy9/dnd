@@ -153,6 +153,23 @@ def test_player_view_fog_large_token_partially_revealed():
 
 # ---------- integrace ----------
 
+def test_partial_state_save_preserves_all_campaigns_and_metadata(editor, monkeypatch):
+    monkeypatch.setattr(battles_mod, "_mirror", lambda *args: None)
+    response = editor.post("/api/battles", json={"name": "Multicampaign autosave", "kampane": ["first", "second"], "map_ref": "octowerin-ulicka", "quest": "quest-one"})
+    assert response.status_code == 200
+    bid = response.json()["id"]
+    try:
+        initial = editor.get(f"/api/battles/{bid}").json()["state"]
+        assert editor.put(f"/api/battles/{bid}/state", json={"state": {"stav_boje": {"tok": []}}}).status_code == 200
+        saved = editor.get(f"/api/battles/{bid}").json()["state"]
+        for key in ("kampane", "kampan", "quest", "mapa", "nazev", "vytvoreno"):
+            assert saved[key] == initial[key]
+        assert saved["stav_boje"] == {"tok": []}
+        assert editor.put(f"/api/battles/{bid}/state", json={"state": {"kampane": [], "quest": ""}}).status_code == 200
+        assert editor.get(f"/api/battles/{bid}").json()["state"]["kampane"] == []
+    finally:
+        editor.delete(f"/api/battles/{bid}")
+
 def test_source_states_sync_to_players_but_only_editors_can_write(editor, player, monkeypatch):
     monkeypatch.setattr(battles_mod, "_mirror", lambda *args: None)
     bid = _mk_battle(editor)

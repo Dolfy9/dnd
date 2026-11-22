@@ -213,7 +213,7 @@ async def put_state(bid: str, b: BattleState, u: dict = Depends(security.require
     r = _row_or_404(bid)
     if b.version and b.version != r["version"]:
         raise HTTPException(409, "konflikt verzí – boj mezitím změnil někdo jiný")
-    state = b.state
+    state = {**(db.jload(r["state"]) or {}), **b.state}
     state["id"] = bid
     state["upraveno"] = db.now()
     con = db.connect()
