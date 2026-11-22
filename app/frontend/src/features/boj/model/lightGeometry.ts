@@ -16,6 +16,15 @@ export function lightBlockers(walls: MapWall[] = [], doors?: Record<string, bool
   return walls.filter(w => w && wallBlocksSight(w,doors) && [...w.a,...w.b].every(Number.isFinite) && (w.a[0] !== w.b[0] || w.a[1] !== w.b[1]));
 }
 
+export function nearbyLightBlockers(origin:Point,radius:number,blockers:LightSegment[]):LightSegment[] {
+  if(![...origin,radius].every(Number.isFinite) || radius<=0)return [];
+  return blockers.filter(({a,b})=>{
+    const dx=b[0]-a[0],dy=b[1]-a[1],length=dx*dx+dy*dy;
+    const t=length ? Math.max(0,Math.min(1,((origin[0]-a[0])*dx+(origin[1]-a[1])*dy)/length)) : 0;
+    return (a[0]+t*dx-origin[0])**2+(a[1]+t*dy-origin[1])**2<=radius*radius;
+  });
+}
+
 const cross = (ax: number, ay: number, bx: number, by: number) => ax * by - ay * bx;
 
 export function visibilityPolygon(origin: Point, blockers: LightSegment[], width: number, height: number): Point[] {

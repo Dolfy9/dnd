@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { lightBlockers, visibilityPolygon, conePath, type Point } from "./lightGeometry";
+import { lightBlockers, nearbyLightBlockers, visibilityPolygon, conePath, type Point } from "./lightGeometry";
 import { normalizeLight, migrateMap, type MapLightV2, type MapWall } from "./mapV2";
 
 const light: MapLightV2 = {id:"l",x:2,y:3,bright:10,dim:15};
@@ -14,6 +14,18 @@ function contains(poly: Point[], [x,y]: Point) {
 }
 
 describe("light projection", () => {
+  it("keeps only segments within reach, including crossing segments whose endpoints are outside",()=>{
+    const near={a:[6,4] as Point,b:[6,6] as Point},far={a:[15,4] as Point,b:[15,6] as Point};
+    const crossing={a:[0,6] as Point,b:[20,6] as Point};
+    expect(nearbyLightBlockers([5,5],2,[near,far,crossing])).toEqual([near,crossing]);
+    expect(nearbyLightBlockers([5,5],2,[])).toEqual([]);
+    for(const radius of [0,-1,NaN,Infinity])expect(nearbyLightBlockers([5,5],radius,[near])).toEqual([]);
+    expect(nearbyLightBlockers([NaN,5],2,[near])).toEqual([]);
+    const all=[near,far,crossing],local=nearbyLightBlockers([5,5],2,all);
+    const full=visibilityPolygon([5,5],all,20,20),filtered=visibilityPolygon([5,5],local,20,20);
+    for(let x=3.1;x<7;x+=.25)for(let y=3.1;y<7;y+=.25)
+      if(Math.hypot(x-5,y-5)<2)expect(contains(filtered,[x,y])).toBe(contains(full,[x,y]));
+  });
   it("reaches the intersection of crossing walls without prematurely closing the visible region", () => {
     const walls=[{a:[4,2] as Point,b:[8,8] as Point},{a:[4,8] as Point,b:[8,2] as Point}];
     const poly=visibilityPolygon([2,5],walls,10,10);

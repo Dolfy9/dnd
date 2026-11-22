@@ -64,13 +64,12 @@ export const MapAtmosphereArtwork = memo(function MapAtmosphereArtwork({ map, do
   const lights = visualLights(map,assets).filter(l => l.radius > 0 && l.intenzita > 0);
   const objects=objectBlockers(map.objekty,assets);
   const blockers = useMemo(() => [...lightBlockers(map.steny,doors),...objects],[map.steny,doors,objects]);
-  const wallKey = blockers.map(w => [...w.a,...w.b].join(",")).join(";");
   const amb = clamp(map.atmosfera?.amb ?? 1, 1);
   if (amb === 1 && !lights.length) return null;
   return <svg xmlns="http://www.w3.org/2000/svg" width={W} height={H} viewBox={`0 0 ${W} ${H}`} overflow="hidden" pointerEvents="none">
     <defs>
       {objects.length>0 && <filter id={uid+"penumbra"} x="-10%" y="-10%" width="120%" height="120%"><feGaussianBlur stdDeviation="1.5"/></filter>}
-      {lights.map((l,i) => <LightDefinition key={l.id} id={uid+"light"+i} light={l} blockers={blockers} wallKey={wallKey} width={W} height={H} />)}
+      {lights.map((l,i) => <LightDefinition key={l.id} id={uid+"light"+i} light={l} blockers={blockers} width={W} height={H} />)}
       <filter id={uid + "black"} colorInterpolationFilters="sRGB"><feColorMatrix type="matrix"
         values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 1 0" /></filter>
       {lights.map((l, i) => <filter key={l.id} id={uid + "tint" + i} colorInterpolationFilters="sRGB">

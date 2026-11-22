@@ -2,7 +2,7 @@ import { afterEach, describe, expect, it, vi } from "vitest";
 import { renderToStaticMarkup } from "react-dom/server";
 import { MapAnimatedScene } from "../components/MapAnimatedScene";
 import { lightBounds, lightTint, visibleLight, rasterizeLight } from "../components/MapAnimatedLights";
-import { visualLights } from "../components/MapAtmoLayers";
+import { MapAtmosphereArtwork, visualLights } from "../components/MapAtmoLayers";
 import type { MapV2 } from "./mapV2";
 
 const base:MapV2={id:"m",nazev:"M",podklad:"dungeon",mrizka:Array(20).fill(".".repeat(30))};
@@ -37,6 +37,16 @@ describe("bounded light compositor",()=>{
     expect((html.match(/data-animated-light=/g)||[])).toHaveLength(12);
     expect((html.match(/map-light-effect /g)||[])).toHaveLength(12);
     expect(visualLights({...base,svetla:Array.from({length:16},(_,i)=>({...light,id:"l"+i}))})).toHaveLength(16);
+  });
+  it("does not change light clips when a distant blocker moves, but includes nearby and strip-end blockers",()=>{
+    const clip=(x:number,y:number,shape={})=>renderToStaticMarkup(<MapAnimatedScene map={{...base,svetla:[{...light,...shape}],objekty:[{id:"crate",asset:"bedna",x,y,w:1,h:1,rot:0,blocks:true}]}} view={view}>{null}</MapAnimatedScene>).match(/<div class="map-light-clip"[^>]+>/)?.[0];
+    expect(clip(20,15)).toBe(clip(21,15));
+    expect(clip(6.5,5)).toContain("clip-path:polygon");
+    expect(clip(6.5,5,{stiny:false})).not.toContain("clip-path");
+    expect(clip(10,5)).not.toContain("clip-path");
+    expect(clip(10,5,{tvar:"pruh",delka:8})).toContain("clip-path:polygon");
+    const baked=(x:number)=>renderToStaticMarkup(<MapAtmosphereArtwork map={{...base,svetla:[light],objekty:[{id:"crate",asset:"bedna",x,y:15,w:1,h:1,rot:0,blocks:true}]}} />);
+    expect(baked(20)).toBe(baked(21));
   });
   it("rasterizes once, reuses cached PNGs and evicts failed results",async()=>{
     const drawImage=vi.fn(),toDataURL=vi.fn(()=>"data:image/png;base64,png");

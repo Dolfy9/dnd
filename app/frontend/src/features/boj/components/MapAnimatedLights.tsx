@@ -1,10 +1,10 @@
 import { memo, useEffect, useId, useMemo, useState, useSyncExternalStore, type ReactElement } from "react";
 import { renderToStaticMarkup } from "react-dom/server";
 import type { MapV2 } from "../model/mapV2";
-import { lightBlockers, visibilityPolygon, type LightSegment } from "../model/lightGeometry";
+import { lightBlockers, nearbyLightBlockers, visibilityPolygon, type LightSegment } from "../model/lightGeometry";
 import { useMapManifests } from "./MapV2Layers";
 import { visualLights } from "./MapAtmoLayers";
-import { GLOW, LightDefinition, lightAnimationStyle, type VisualLight } from "./MapLightProjection";
+import { GLOW, LightDefinition, lightAnimationStyle, lightReach, type VisualLight } from "./MapLightProjection";
 import { LIGHT_CAPS, nearestLights, nextLightAnimationCap, type LightAnimationCap } from "../model/lightAnimationPolicy";
 import { objectBlockers } from "../model/objectShadows";
 
@@ -69,12 +69,14 @@ export function visibleLight(l: VisualLight, view: {x:number;y:number;k:number},
   return b.left*scale+view.x < width && b.top*scale+view.y < height && (b.left+b.width)*scale+view.x > 0 && (b.top+b.height)*scale+view.y > 0;
 }
 
-const AnimatedLight = memo(function AnimatedLight({light:l,blockers,wallKey,width,height,animate}: {
-  light:VisualLight;blockers:LightSegment[];wallKey:string;width:number;height:number;animate:boolean;
+const AnimatedLight = memo(function AnimatedLight({light:l,blockers,width,height,animate}: {
+  light:VisualLight;blockers:LightSegment[];width:number;height:number;animate:boolean;
 }) {
   const id=useId().replace(/:/g,"");
   const b=lightBounds(l);
-  const polygon=useMemo(()=>l.stiny && blockers.length ? visibilityPolygon([l.x,l.y],blockers,width,height) : [],[l.x,l.y,l.stiny,wallKey,width,height]);
+  const nearby=l.stiny ? nearbyLightBlockers([l.x,l.y],lightReach(l),blockers) : [];
+  const blockerKey=nearby.map(w=>[...w.a,...w.b].join(",")).join(";");
+  const polygon=useMemo(()=>nearby.length ? visibilityPolygon([l.x,l.y],nearby,width,height) : [],[l.x,l.y,blockerKey,width,height]);
   const clipPath=polygon.length ? `polygon(${polygon.map(([x,y])=>`${x*24-b.left}px ${y*24-b.top}px`).join(",")})` : undefined;
   const [mask,setMask]=useState<string>();
   const maskKey=JSON.stringify([polygon,b.left,b.top,b.width,b.height]);
@@ -91,7 +93,7 @@ const AnimatedLight = memo(function AnimatedLight({light:l,blockers,wallKey,widt
     const key=id+(alternate ? "warm" : "base");
     return <svg xmlns="http://www.w3.org/2000/svg" width={b.width} height={b.height} viewBox={`${-b.x} ${-b.y} ${b.width} ${b.height}`}>
       <defs>
-        <LightDefinition id={key} light={l} blockers={[]} wallKey="" width={b.width} height={b.height} />
+        <LightDefinition id={key} light={l} blockers={[]} width={b.width} height={b.height} />
         <filter id={key+"tint"} colorInterpolationFilters="sRGB"><feFlood floodColor={alternate ? lightTint(l.color!,l.efekt === "plamen" ? -7 : 24) : l.color} /><feComposite in2="SourceAlpha" operator="in" /></filter>
       </defs>
       <g transform={`rotate(${l.smer})`}><use href={`#${key}`} filter={`url(#${key}tint)`} /></g>
@@ -145,6 +147,6 @@ export const MapAnimatedLights = memo(function MapAnimatedLights({map,view,px,do
     return()=>cancelAnimationFrame(frame);
   },[sampleKey,cap,epoch]);
   return <div style={{display:"contents"}} data-light-animation-cap={cap} data-light-mean-ms={meanMs?.toFixed(2)}>{active.map(l=>
-    <AnimatedLight key={l.id} light={l} blockers={blockers} wallKey={wallKey} width={width} height={height} animate />
+    <AnimatedLight key={l.id} light={l} blockers={blockers} width={width} height={height} animate />
   )}</div>;
 });

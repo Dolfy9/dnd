@@ -1,11 +1,15 @@
 import { memo, useMemo, type CSSProperties } from "react";
 import { normalizeLight } from "../model/mapV2";
-import { conePath, visibilityPolygon, type LightSegment } from "../model/lightGeometry";
+import { conePath, nearbyLightBlockers, visibilityPolygon, type LightSegment } from "../model/lightGeometry";
 import { animationPhase } from "./MapMotion";
 import { coneFeatherLayers } from "../model/lightAnimationPolicy";
 
 export const GLOW = "/repo/11_Mapy/bojove/ovl/zar.webp";
 export type VisualLight = ReturnType<typeof normalizeLight> & {radius: number};
+
+export function lightReach(l:VisualLight) {
+  return (l.radius/24+(l.tvar==="pruh" ? l.delka/2 : 0))*1.13+2/24;
+}
 
 export function lightAnimationStyle(l: VisualLight): CSSProperties {
   const duration={zadny:1,mihot:3.7,plamen:2.9,pulz:4.8,magie:7.5}[l.efekt]/l.rychlost;
@@ -20,11 +24,13 @@ export function LightProjection({id,light:l,filter,soften}: {id:string;light:Vis
   </g></g>;
 }
 
-export const LightDefinition = memo(function LightDefinition({ id, light: l, blockers, wallKey, width, height }: {
-  id: string; light: VisualLight; blockers: LightSegment[]; wallKey: string; width: number; height: number;
+export const LightDefinition = memo(function LightDefinition({ id, light: l, blockers, width, height }: {
+  id: string; light: VisualLight; blockers: LightSegment[]; width: number; height: number;
 }) {
-  const polygon = useMemo(() => l.stiny && blockers.length ? visibilityPolygon([l.x,l.y],blockers,width/24,height/24) : [],
-    [l.x,l.y,l.stiny,wallKey,width,height]);
+  const nearby=l.stiny ? nearbyLightBlockers([l.x,l.y],lightReach(l),blockers) : [];
+  const blockerKey=nearby.map(w=>[...w.a,...w.b].join(",")).join(";");
+  const polygon = useMemo(() => nearby.length ? visibilityPolygon([l.x,l.y],nearby,width/24,height/24) : [],
+    [l.x,l.y,blockerKey,width,height]);
   const r=l.radius, half=l.delka*12, extent=r*1.3+(l.tvar === "pruh" ? half : 0);
   const inner=Math.max(.05,Math.min(.85,l.bright/r*.7));
   const bounds={x:-extent,y:-extent,width:extent*2,height:extent*2};
