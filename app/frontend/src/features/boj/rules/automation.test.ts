@@ -14,6 +14,22 @@ const state = (...tok: Token[]): StavBoje => ({
 });
 afterEach(() => vi.restoreAllMocks());
 
+describe("recharge d6", () => {
+  it.each([[0.5, true], [0.66, true], [0.67, false], [0.999, false]])("recharges 5–6 using a d6 at rng %s", (rng, spent) => {
+    const a = token({ atk: [{ nazev: "Breath", rc: 5 }], spent: { Breath: true } }); const s = state(a);
+    startOfTurnProcess(s, a, () => rng);
+    expect(!!a.spent.Breath).toBe(spent);
+  });
+  it("does not roll unspent abilities or manual recharge", () => {
+    const a = token({ atk: [{ nazev: "Breath", rc: 5 }] }); const s = state(a);
+    const rng = vi.fn(() => 0.999);
+    startOfTurnProcess(s, a, rng);
+    a.spent.Breath = true; s.nastaveni!.automatizace.recharge = "rucne";
+    startOfTurnProcess(s, a, rng);
+    expect(rng).not.toHaveBeenCalled(); expect(a.spent.Breath).toBe(true);
+  });
+});
+
 describe("automatic death saves", () => {
   it.each([[0.999, 1, 0], [0, 0, 2], [0.5, 0, 0]])("rolls at turn start with rng %s", (rng, hp, failures) => {
     const a = token({ hp: 0, dying: true, cond: [{ n: "Unconscious" }] }); const s = state(a);

@@ -5,7 +5,7 @@ import type { StavBoje, Token, LogEntry, EcoState } from "../types";
 import { uid } from "../types";
 import { hasCond, isIncap, speedOf, flySpeedOf } from "./conditions";
 import { sumMods, tickEffects, dropConcentration } from "./effects";
-import { d20, type Rng, defaultRng } from "./dice";
+import { d20, die, type Rng, defaultRng } from "./dice";
 import { settingsOf } from "./settings";
 import { deathSave } from "./damage";
 
@@ -95,8 +95,8 @@ export function startOfTurnProcess(S: StavBoje, t: Token, rng: Rng = defaultRng)
   resetEconomy(S, t);
   for (const n of tickEffects(t, "start", t.id)) out.push(`${t.nazev}: efekt ${n} skončil`);
   for (const u of t.atk || []) {
-    if (u.rc && t.spent?.[u.nazev]) {
-      if (d20(0, rng).r >= u.rc) { delete t.spent[u.nazev]; out.push(`${t.nazev}: ${u.nazev} recharged`); }
+    if (u.rc && t.spent?.[u.nazev] && settingsOf(S).automatizace.recharge === "auto") {
+      if (die(6, rng) >= u.rc) { delete t.spent[u.nazev]; out.push(`${t.nazev}: ${u.nazev} recharged`); }
     }
   }
   if (t.hp <= 0 && t.dying && !t.dead) {
