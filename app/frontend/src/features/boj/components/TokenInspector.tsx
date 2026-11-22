@@ -10,6 +10,7 @@ import ConditionIcon from "./ConditionIcon";
 import { PORTRAIT_DEFAULT, fokusOf } from "./TokenCoin";
 import EntityPicker from "../../../components/EntityPicker";
 import { get } from "../../../api";
+import { hpDescription } from "./combatHudModel";
 
 type Cmd = (fn: (S: StavBoje) => void) => void;
 import * as C from "../state/commands";
@@ -68,8 +69,8 @@ export default function TokenInspector({ S, t, cmd, dm, onClose }: {
         </>
         ) : (
         <div className="boj-hpbar">
-          <i style={{ width: `${Math.max(0, (t.hp / Math.max(1, t.max)) * 100)}%` }} />
-          <b>{t.side === "druzina" ? `${t.hp}/${t.max} HP` : "Stav skryt"} · AC {t.side === "druzina" ? t.ac : "—"}</b>
+          {t.side === "druzina" && <i style={{ width: `${Math.max(0, (t.hp / Math.max(1, t.max)) * 100)}%` }} />}
+          <b>{t.side === "druzina" ? `${t.hp}/${t.max} HP` : hpDescription(t)}</b>
         </div>
         )}
         {t.dying && (
@@ -78,7 +79,7 @@ export default function TokenInspector({ S, t, cmd, dm, onClose }: {
             {[0, 1, 2].map((i) => <i key={"s" + i} className={t.ds.s > i ? "ok" : ""} />)}
             <span>/</span>
             {[0, 1, 2].map((i) => <i key={"f" + i} className={t.ds.f > i ? "bad" : ""} />)}
-            <button className="boj-btn2" onClick={() => cmd((S) => C.cmdDeathSave(S, t.id))}>Hodit</button>
+            <button className="boj-btn2" disabled={!dm} onClick={() => cmd((S) => C.cmdDeathSave(S, t.id))}>Hodit</button>
           </div>
         )}
       </div>

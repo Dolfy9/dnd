@@ -42,6 +42,8 @@ import ResolveDialog, { type Resolve } from "./ResolveDialog";
 import EffectsPanel from "./EffectsPanel";
 import ToolsPanel from "./ToolsPanel";
 import TurnBanner from "./TurnBanner";
+import { TurnHud, TargetHud } from "./CombatHud";
+import type { ActionGroup } from "./combatHudModel";
 import CtxMenu from "./CtxMenu";
 import HelpOverlay from "./HelpOverlay";
 import { difficulty } from "../rules/encounter";
@@ -59,7 +61,8 @@ export default function BattlePage() {
   const [sel, setSel] = useState<string | null>(null);
   const [selSet, setSelSet] = useState<Set<string>>(new Set());
   const [panel, setPanel] = useState<Panel>("akce");
-  const [inspId, setInspId] = useState<string | null>(null);
+  const [actionGroup, setActionGroup] = useState<ActionGroup>("all");
+  const [hoverToken, setHoverToken] = useState<string | null>(null);
   const [tool, setTool] = useState<"select" | "measure" | "zone" | "paint" | "fog" | "fog-room" | "light" | "kresba">("select");
   const [paintTile, setPaintTile] = useState("#");
   const [fogMode, setFogMode] = useState<"reveal" | "hide">("reveal");
@@ -131,7 +134,8 @@ export default function BattlePage() {
     return () => setSidebar(was);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-  const S = useMemo(() => b.S && viewAsPlayer ? fogPlayerState(b.S) : b.S, [b.S, viewAsPlayer]);
+  const S = useMemo(() => b.S && (viewAsPlayer || !dm) ? fogPlayerState(b.S) : b.S, [b.S, viewAsPlayer, dm]);
+  const hudDm = dm && !viewAsPlayer;
   const lightInit = useRef("");
   useEffect(() => {
     if (!dm || !S || !map || lightInit.current === `${bid}:${map.id}`) return;
@@ -150,7 +154,7 @@ export default function BattlePage() {
       if (e.key === "Escape") { setTargeting(null); setResolve(null); setMoveAtk(null); setCtxMenu(null); setZonePlace(null); setTool("select"); setDropReq(null); setOv(null); setDmgCfm(null); setLoh(null); setSetOpen(false); return; }
       if (isInteractiveTarget(e.target)) return;
       if (e.key === "?") { setHelp((v) => !v); return; }
-      if (!dm) return;
+      if (!hudDm) return;
       if ((e.key === " " || e.key.toLowerCase() === "n") && !e.ctrlKey) { e.preventDefault(); b.dispatch((s) => C.nextTurn(s)); return; }
       if (e.ctrlKey && e.key.toLowerCase() === "z") { e.preventDefault(); e.shiftKey ? b.redo() : b.undo(); return; }
       if (e.ctrlKey && e.key.toLowerCase() === "y") { e.preventDefault(); b.redo(); return; }
@@ -190,7 +194,7 @@ export default function BattlePage() {
         return;
       }
       if (e.key.toLowerCase() === "h" || e.key.toLowerCase() === "d") {
-        if (selTok) { setInspId(selTok.id); setPanel("inspektor"); }
+        if (selTok) { setPanel("inspektor"); setSideMini(false); }
       }
     };
     window.addEventListener("keydown", h);
@@ -212,7 +216,7 @@ export default function BattlePage() {
     } else toggle();
   };
   const cmdBase = b.dispatch;
-  const cmd = (fn: (s: any) => void) => cmdBase((s: any) => { fn(s); updateLightState(s, map); updateFog(s, map); });
+  const cmd = (fn: (s: any) => void) => { if (hudDm) cmdBase((s: any) => { fn(s); updateLightState(s, map); updateFog(s, map); }); };
   const ctx = { map };
 
   /* ---- handlery ---- */
@@ -316,7 +320,7 @@ export default function BattlePage() {
   };
   const onDrop = (t: Token, to: [number, number], plan: MovementPlan, wps: [number, number][],
                  pt: { x: number; y: number }, mods: { alt: boolean; shift: boolean }, group?: Set<string>) => {
-    if (!dm) return;
+    if (!hudDm) return;
     const set = settingsOf(S);
     // Volný režim: přímé přemístění bez plánování/OA/popoverů
     if (isFree(S)) {
@@ -455,7 +459,7 @@ export default function BattlePage() {
         if (atk) setTargeting({ atk, srcId: t.id });
         break;
       }
-      case "dmg": case "heal": case "cond": setInspId(t.id); setPanel("inspektor"); break;
+      case "dmg": case "heal": case "cond": setSel(t.id); setPanel("inspektor"); setSideMini(false); break;
       default:
         if (a.startsWith("hp:")) { const d = Number(a.slice(3)); cmd((s2) => { const tt = byId(s2, t.id); if (tt) { tt.hp = Math.max(0, Math.min(tt.max, tt.hp + d)); log(s2, "system", `${tt.nazev}: HP ${d > 0 ? "+" : ""}${d} → ${tt.hp}`, "PJ"); } }); }
         if (a.startsWith("tmp:")) { const d = Number(a.slice(4)); cmd((s2) => { const tt = byId(s2, t.id); if (tt) { tt.tmp = Math.max(0, (tt.tmp || 0) + d); log(s2, "system", `${tt.nazev}: temp HP ${tt.tmp}`, "PJ"); } }); }
@@ -532,8 +536,8 @@ export default function BattlePage() {
   return (
     <div className="boj-page">
       <InitiativeBar
-        S={S} sel={sel} dm={dm}
-        onSelect={(id) => { setSel(id); setPanel("akce"); }}
+        S={S} sel={sel} dm={hudDm}
+        onSelect={(id) => { setSel(id); setActionGroup("all"); setPanel("akce"); }}
         onNext={() => cmd((s) => C.nextTurn(s))}
         onRoll={() => cmd((s) => C.cmdRollInit(s))}
         onUndo={b.undo} onRedo={b.redo}
@@ -589,9 +593,10 @@ export default function BattlePage() {
             hoverAtk={hoverAtk} names={names} followTurn={settingsOf(S).pohyb.sledujTah !== false}
             onCancelMode={cancelMode}
             fx={b.newFx} onFxDone={b.markFx}
-            onSelect={(id, add) => { if (add && id) { const n = new Set(selSet); n.has(id) ? n.delete(id) : n.add(id); setSelSet(n); } else { setSel(id); if (!add) setSelSet(new Set()); } }}
+            onHoverToken={setHoverToken}
+            onSelect={(id, add) => { if (add && id) { const n = new Set(selSet); n.has(id) ? n.delete(id) : n.add(id); setSelSet(n); } else { setSel(id); setActionGroup("all"); if (!add) setSelSet(new Set()); } }}
             onSelSet={setSelSet}
-            onInspect={(id) => { setInspId(id); setPanel("inspektor"); }}
+            onInspect={(id) => { setSel(id); setPanel("inspektor"); setSideMini(false); }}
             onDrop={onDrop}
             onPresetDrop={(tokId, pid) => { const pr = presetById(pid); if (!pr) return;
               cmd((s2) => C.addEffect(s2, tokId, pr.id, curTok?.id || undefined));
@@ -612,7 +617,10 @@ export default function BattlePage() {
             onWeather={weather => cmd(s => { s.pocasi = weather; })}
             drawColor={drawColor}
             onDraw={(pts, stroke) => cmd((s) => { s.kresby = [...(s.kresby || []), { id: uid(), kind: "free", pts, stroke, width: 3, dmOnly: true } as any]; })}
-          />
+          >
+            <TargetHud S={S} t={byId(S, hoverToken || sel)} map={map} dm={hudDm} />
+            <TurnHud S={S} dm={hudDm} onEnd={() => cmd(s => C.nextTurn(s))} onGroup={group => { setSel(curTok?.id || null); setActionGroup(group); setPanel("akce"); setSideMini(false); setSheet("half"); }} />
+          </BattleMap>
         </div>
         <aside ref={sheetRef} className={`boj-side sheet-${sheet} ${sideMini ? "mini" : ""}`} style={sideMini ? undefined : { width: sideW }}>
           <div className="boj-sheet-handle" onPointerDown={sheetDrag} onPointerMove={sheetMove} onPointerUp={sheetEnd} onPointerCancel={sheetEnd} />
@@ -629,17 +637,17 @@ export default function BattlePage() {
           <div className="boj-side-body">
             {panel === "akce" && (
               shownTok
-                ? <ActorPanel S={S} t={shownTok} targeting={targeting} onAttack={onAttack}
+                ? <ActorPanel S={S} t={shownTok} targeting={targeting} onAttack={onAttack} group={actionGroup} onGroup={setActionGroup}
                               onStdAction={(a) => cmd((s) => C.cmdStdAction(s, shownTok.id, a, selTok?.id))}
                               onCheck={(n, m, mode) => cmd((s) => C.cmdCheck(s, shownTok.id, n, m, mode))}
                               onUseItem={(i, ba) => cmd((s) => C.cmdUseItem(s, shownTok.id, i, undefined, ba))}
                               onFeature={(key) => cmd((s) => { const res = C.cmdFeature(s, shownTok.id, key, selTok?.id !== shownTok.id ? selTok?.id : undefined); if (!res.ok) toast(res.reason || "Nejde", "err"); })}
-                              onResource={onResource} onUndoMove={() => cmd((s) => C.undoTurnMovement(s, shownTok.id))} dm={dm}
+                              onResource={onResource} onUndoMove={() => cmd((s) => C.undoTurnMovement(s, shownTok.id))} dm={hudDm}
                               onHoverAtk={setHoverAtk} />
                 : <i className="boj-none">Vyber žeton na mapě</i>
             )}
             {panel === "efekty" && (
-              <EffectsPanel S={S} sel={shownTok || null} selSet={selSet} dm={dm}
+              <EffectsPanel S={S} sel={shownTok || null} selSet={selSet} dm={hudDm}
                 onPickPreset={onPickPreset}
                 onZonePreset={onZonePreset}
                 onRemoveEffect={(tid, eid) => cmd((s) => C.removeEffect(s, tid, eid))}
@@ -663,8 +671,8 @@ export default function BattlePage() {
                 onRest={(kind) => cmd((s) => C.cmdRest(s, s.tok.filter((t: Token) => !t.dead).map((t: Token) => t.id), kind))} />
             )}
             {panel === "inspektor" && (
-              inspId && byId(S, inspId)
-                ? <TokenInspector S={S} t={byId(S, inspId)!} cmd={cmd} dm={dm} onClose={() => setInspId(null)} />
+              shownTok
+                ? <TokenInspector S={S} t={shownTok} cmd={cmd} dm={hudDm} onClose={() => setPanel("akce")} />
                 : <i className="boj-none">Dvojklik na žeton otevře inspektor</i>
             )}
             {panel === "log" && <CombatLog log={S.log} pj={dm} />}

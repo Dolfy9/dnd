@@ -182,6 +182,7 @@ export interface Token {
   x: number | null;
   y: number | null;
   hp: number;
+  hp_stav?: string;
   max: number;
   tmp: number;
   ac: number;

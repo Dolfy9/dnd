@@ -68,6 +68,8 @@ interface Props {
   fx: FxEvent[];
   onFxDone: (ids: string[]) => void;
   onSelect: (id: string | null, additive?: boolean) => void;
+  onHoverToken?: (id: string | null) => void;
+  children?: React.ReactNode;
   onInspect: (id: string) => void;
   onDrop: (tok: Token, to: [number, number], plan: MovementPlan, wps: [number, number][],
            pt: { x: number; y: number }, mods: { alt: boolean; shift: boolean }, group?: Set<string>) => void;
@@ -106,6 +108,7 @@ export default function BattleMap(p: Props) {
   const [view, setView] = useState<{ x: number; y: number; k: number } | null>(null);
   const [hoverCell, setHoverCell] = useState<[number, number] | null>(null);
   const [hoverTok, setHoverTok] = useState<string | null>(null);
+  useEffect(() => { p.onHoverToken?.(hoverTok); }, [hoverTok, p.onHoverToken]);
   const [drag, setDrag] = useState<{
     id: string; to: [number, number] | null;
     pan?: { sx: number; sy: number; ox: number; oy: number };
@@ -601,6 +604,10 @@ export default function BattleMap(p: Props) {
             const w = Math.abs(bx - ax) * PX, h = Math.abs(by - ay) * PX;
             return <rect x={x} y={y} width={w} height={h} fill="#3b82f6" opacity={0.15} stroke="#60a5fa" strokeWidth={1.5} strokeDasharray="6 4" />;
           })()}
+          <g mask={liveSvgMask} pointerEvents="none">
+            <g transform={`scale(${PX / 24})`}><MapAtmosphereLayer map={map as MapV2} doors={S.dvere} illumination={S.playerLightCells} /></g>
+            <LightingLayer S={S} map={map} px={PX} W={W} H={H} dm={p.dm} />
+          </g>
           {[...S.tok].sort((a2, b2) => Number(a2.dead) - Number(b2.dead)).map((t) => {
             if (t.x == null) return null;
             const isTarget = p.targeting && !p.targeting.area && t.id !== p.targeting.srcId && !t.dead;
@@ -622,10 +629,6 @@ export default function BattleMap(p: Props) {
               </g>
             );
           })}
-          <g mask={liveSvgMask}>
-            <g transform={`scale(${PX / 24})`}><MapAtmosphereLayer map={map as MapV2} doors={S.dvere} illumination={S.playerLightCells} /></g>
-            <LightingLayer S={S} map={map} px={PX} W={W} H={H} dm={p.dm} />
-          </g>
           {measure && (
             <g pointerEvents="none">
               <line x1={(measure.a[0] + 0.5) * PX} y1={(measure.a[1] + 0.5) * PX} x2={(measure.b[0] + 0.5) * PX} y2={(measure.b[1] + 0.5) * PX}
@@ -643,6 +646,7 @@ export default function BattleMap(p: Props) {
           {p.dm && hoverSource && (()=>{const source=map.objekty?.find(o=>o.id===hoverSource) || map.svetla?.find(l=>l.id===hoverSource);return source?<g className="source-marker" data-source-hover={source.id} pointerEvents="none" transform={`translate(${source.x*PX},${source.y*PX}) scale(${1/V.k})`}><circle r={12}/><text y={3}>{sourceOn(source)?"◉":"○"}</text></g>:null;})()}
         </g>
       </svg>
+      {p.children}
       <MapWeatherOverlay map={weatherMap} view={V} px={PX} visibilityMask={liveMask} />
       {p.dm && sourceMenu && <><div style={{position:"fixed",inset:0,zIndex:100}} onPointerDown={()=>setSourceMenu(null)}/><div role="menu" aria-label="Stav zdroje" className="boj-ctx" style={{position:"fixed",left:Math.min(sourceMenu.x,window.innerWidth-240),top:Math.min(sourceMenu.y,window.innerHeight-80),zIndex:101}} onKeyDown={e=>{if(e.key==="Escape")setSourceMenu(null);}}><button role="menuitem" autoFocus onClick={()=>{p.onSource?.(sourceMenu.id);setSourceMenu(null);}}>Zapnout / vypnout zdroj</button></div></>}
       <div className="map-live-controls"><AnimationButton />{p.dm && p.onWeather && <WeatherPicker compact map={map as MapV2} value={weatherMap.pocasi} onChange={p.onWeather} />}</div>

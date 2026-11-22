@@ -1,6 +1,7 @@
 /* Mince žetonu (coin) — prémiový SVG token: portrét/emblem, kovový lem, HP oblouk,
    condition badge kolečka, concentration prstenec, stavové vizuály. */
 import { useId } from "react";
+import { publicHpFraction } from "./combatHudModel";
 import type { Token } from "../types";
 import { CONDITIONS, hasCond, isProne } from "../rules/conditions";
 import { SIDE_STYLE } from "./visual";
@@ -41,8 +42,9 @@ export default function TokenCoin({ t, step, active, selected, hovered, dm, lab 
   const invis = hasCond(t, "Invisible") && !t.dead;
   const dying = t.dying && !t.dead;
   const ring = 2 * Math.PI * (R - 3);
-  const hpLen = hpFrac(t) * ring * 0.75; // oblouk 270°
-  const tmpLen = t.tmp > 0 ? Math.min(ring * 0.25, (t.tmp / Math.max(1, t.max)) * ring * 0.75) : 0;
+  const health = dm ? hpFrac(t) : publicHpFraction(t);
+  const hpLen = health * ring * 0.75; // oblouk 270°
+  const tmpLen = dm && t.tmp > 0 ? Math.min(ring * 0.25, (t.tmp / Math.max(1, t.max)) * ring * 0.75) : 0;
   const conds = (t.cond || []).filter((c) => c.n !== "Exhaustion");
   const shown = conds.slice(0, 5);
   const extra = conds.length - shown.length;
@@ -61,7 +63,7 @@ export default function TokenCoin({ t, step, active, selected, hovered, dm, lab 
        opacity={invis ? 0.45 : t.dead ? 0.75 : 1} data-tid={t.id}>
       {/* stín + glow */}
       <circle r={R} fill="#000" opacity={0.35} cy={2.5} />
-      {active && <circle r={R + 4} fill="none" stroke={side.glow} strokeWidth={3.5} className="boj-coin-pulse" />}
+      {active && <><circle r={R + 5} fill="none" stroke="#071019" strokeWidth={6} /><circle r={R + 5} fill="none" stroke="#f8d477" strokeWidth={2.8} /></>}
       {selected && <circle r={R + 2.5} fill="none" stroke="#eab308" strokeWidth={2.4} strokeDasharray="6 3" className="boj-coin-selring" />}
       {/* reeded hrana */}
       <circle r={R} fill={`url(#rim-${t.side})`} />
@@ -97,8 +99,8 @@ export default function TokenCoin({ t, step, active, selected, hovered, dm, lab 
         </g>
       )}
       {/* HP oblouk (od -225° po 270°) + temp */}
-      <circle r={R - 3} fill="none" stroke="#0007" strokeWidth={2.2} />
-      <circle r={R - 3} fill="none" stroke={t.dead ? "#666" : hpColor(hpFrac(t))} strokeWidth={2.2}
+      <circle r={R - 3} fill="none" stroke="#071019" strokeWidth={4} />
+      <circle r={R - 3} fill="none" stroke={t.dead ? "#666" : hpColor(health)} strokeWidth={2.8}
               strokeDasharray={`${hpLen} ${ring}`} transform="rotate(135)" strokeLinecap="round" />
       {tmpLen > 0 && (
         <circle r={R - 3} fill="none" stroke="#60a5fa" strokeWidth={2.2}

@@ -26,7 +26,7 @@ function normToken(o: any): Token {
     side: SIDES[o.side] || (o.side as Side) || "druzina",
     s: o.s || o.size || 1,
     x: o.x ?? null, y: o.y ?? null, elev: o.elev,
-    hp: 1, max: 1, tmp: o.tmp ?? 0,
+    hp: 1, max: 1, tmp: o.tmp ?? 0, hp_stav: o.hp_stav,
     ac: o.ac ?? 10, initB: o.initB ?? o.init_b ?? 0,
     init: o.init ?? null, initRoll: o.initRoll,
     speed: o.speed ?? o.rychlost ?? 30, swim: o.swim ?? 0, fly: o.fly ?? 0, climb: o.climb ?? 0,

@@ -9,14 +9,15 @@ import { sg } from "../types";
 import { Engraved, emblemFor, dupNumber } from "./emblems";
 import { fokusOf } from "./TokenCoin";
 import { Dices, SkipForward, RotateCcw, RotateCw } from "lucide-react";
+import { publicHpFraction } from "./combatHudModel";
 
 /** Mini mince pro iniciativní pás (44px SVG). */
-export function MiniCoin({ t, size = 40, active }: { t: Token; size?: number; active?: boolean }) {
+export function MiniCoin({ t, size = 40, active, exact = true }: { t: Token; size?: number; active?: boolean; exact?: boolean }) {
   const uid = useId().replace(/[^a-zA-Z0-9]/g, "");
   const side = SIDE_STYLE[t.side] || SIDE_STYLE.neutral;
   const R = 20;
   const ring = 2 * Math.PI * (R - 3);
-  const frac = Math.max(0, Math.min(1, t.hp / Math.max(1, t.max)));
+  const frac = exact ? Math.max(0, Math.min(1, t.hp / Math.max(1, t.max))) : publicHpFraction(t);
   const hpC = t.dead ? "#666" : frac > 0.5 ? "#4ade80" : frac > 0.25 ? "#f59e0b" : "#ef4444";
   const portUrl = t.portret ? (/^(https?:)?\//.test(t.portret) ? t.portret : `/repo/${t.portret}`) : null;
   const fok = fokusOf(t);
@@ -103,7 +104,7 @@ export default function InitiativeBar({ S, sel, onSelect, onNext, onRoll, onUndo
             <button key={id} className={`boj-init-item ${i === S.turn ? "on" : ""} ${t.dead ? "dead" : ""} ${sel === id ? "sel" : ""}`}
                     onClick={() => onSelect(id)}
                     title={`${t.nazev} — init ${t.init ?? "?"}${t.dead ? " (mrtvý)" : ""}`}>
-              <MiniCoin t={t} size={i === S.turn ? 56 : 44} active={i === S.turn} />
+              <MiniCoin t={t} size={34} active={i === S.turn} exact={!!dm} />
               <span className="boj-init-name">{t.nazev}</span>
               <span className="boj-init-meta">
                 <i className="boj-init-num">{t.init ?? "–"}</i>
