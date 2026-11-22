@@ -76,6 +76,16 @@ const AnimatedLight = memo(function AnimatedLight({light:l,blockers,wallKey,widt
   const b=lightBounds(l);
   const polygon=useMemo(()=>l.stiny && blockers.length ? visibilityPolygon([l.x,l.y],blockers,width,height) : [],[l.x,l.y,l.stiny,wallKey,width,height]);
   const clipPath=polygon.length ? `polygon(${polygon.map(([x,y])=>`${x*24-b.left}px ${y*24-b.top}px`).join(",")})` : undefined;
+  const [mask,setMask]=useState<string>();
+  const maskKey=JSON.stringify([polygon,b.left,b.top,b.width,b.height]);
+  useEffect(()=>{
+    let active=true;setMask(undefined);
+    if(polygon.length){
+      const points=polygon.map(([x,y])=>`${x*24-b.left},${y*24-b.top}`).join(" ");
+      rasterizeLight(`<svg xmlns="http://www.w3.org/2000/svg" width="${b.width}" height="${b.height}"><polygon points="${points}" fill="white"/></svg>`,b.width,b.height).then(src=>{if(active)setMask(src);}).catch(()=>{});
+    }
+    return()=>{active=false;};
+  },[maskKey]);
   const shimmer=l.efekt === "plamen" || l.efekt === "magie";
   const sprite=(alternate:boolean) => {
     const key=id+(alternate ? "warm" : "base");
@@ -89,7 +99,7 @@ const AnimatedLight = memo(function AnimatedLight({light:l,blockers,wallKey,widt
   };
   const base=useMemo(()=>sprite(false),[l.tvar,l.sirka,l.delka,l.radius,l.bright,l.smer,l.color,b.width,b.height]);
   const alternate=useMemo(()=>shimmer ? sprite(true) : null,[base,l.efekt]);
-  return <div className="map-light-clip" style={{left:b.left,top:b.top,width:b.width,height:b.height,clipPath,opacity:l.intenzita*.2}} data-animated-light={l.id}>
+  return <div className="map-light-clip" style={{left:b.left,top:b.top,width:b.width,height:b.height,clipPath:mask?undefined:clipPath,maskImage:mask?`url("${mask}")`:undefined,maskSize:"100% 100%",opacity:l.intenzita*.2}} data-animated-light={l.id}>
     <div className={`map-light-raster${animate ? ` map-light-effect map-light-${l.efekt}` : ""}`} style={lightAnimationStyle(l)}>
       <LightRaster art={base} width={b.width} height={b.height} />
       {alternate && <div className={`map-light-alternate${animate ? " map-light-crossfade" : ""}`} style={lightAnimationStyle(l)}><LightRaster art={alternate} width={b.width} height={b.height} /></div>}

@@ -7,6 +7,7 @@ import { TextureDefs, texUrl, textureById } from "../../mapeditor/assets/texture
 import { stampById, StampSvg } from "../../mapeditor/assets/stamps";
 import { assetUrl, assetSrc, type AssetEntry, type TextureEntry } from "../../mapeditor/assets/manifest";
 import { resolveAnimation, animationPhase } from "./MapMotion";
+import {contactShadowPlan,MapContactShadows,type ContactShadowPlan} from "./MapContactShadows";
 
 /** Synchronní cache manifestů — plní ji useAssetManifest/useTextureManifest;
     v editoru i boji se volá dřív, než se renderují vrstvy. */
@@ -140,13 +141,15 @@ export const MapWallLayer = memo(function MapWallLayer({ map, doors, onDoor, dm,
   );
 });
 
-export const MapObjectLayer = memo(function MapObjectLayer({ map, dm, staticOnly = false }: { map: MapV2; dm?: boolean; staticOnly?: boolean }) {
+export const MapObjectLayer = memo(function MapObjectLayer({ map, dm, staticOnly = false, contactPlan, contactShadows=true }: { map: MapV2; dm?: boolean; staticOnly?: boolean; contactPlan?:ContactShadowPlan; contactShadows?:boolean }) {
   const { assets } = useMapManifests();
   const uid = useId().replace(/:/g,"");
+  const plan=contactPlan ?? contactShadowPlan(map,assets),directional=new Set(plan.map(s=>s.id));
   const objs = (map.objekty || []).slice().sort((a, b) => (a.z ?? assets[a.asset]?.z ?? 0) - (b.z ?? assets[b.asset]?.z ?? 0));
   if (!objs.length) return null;
   return (
     <g pointerEvents="none">
+      {contactShadows && <MapContactShadows plan={plan} width={(map.mrizka[0]?.length || 1)*PX} height={map.mrizka.length*PX}/>}
       {objs.map((o: MapObject, i) => {
         if (o.dmOnly && !dm) return null;
         const isImg = o.asset.startsWith("img:");
@@ -155,7 +158,7 @@ export const MapObjectLayer = memo(function MapObjectLayer({ map, dm, staticOnly
         const def = isImg || man ? null : stampById(o.asset);
         const src = man ? assetUrl(assetSrc(man, o.v)) : isImg ? `/repo/11_Mapy/bojove/${o.asset.slice(4)}` : null;
         const tint = /^#[0-9a-f]{6}$/i.test(o.tint || "") ? [1,3,5].map(n => .65+.35*parseInt(o.tint!.slice(n,n+2),16)/255) : null;
-        const shade = o.asset.startsWith("d-") || (o.z ?? 0) < 0 ? "" : "drop-shadow(0px 1px 1px #000b) drop-shadow(0px 2px 3px #0006)";
+        const shade = o.stin===false || directional.has(o.id) || o.asset.startsWith("d-") || (o.z ?? 0) < 0 ? "" : "drop-shadow(0px 1px 1px #000b) drop-shadow(0px 2px 3px #0006)";
         return (
           <g key={o.id} transform={`translate(${o.x * PX},${o.y * PX}) rotate(${o.rot || 0}) ${o.flip ? "scale(-1,1)" : ""}`}
              opacity={o.dmOnly ? .55 : 1}>
@@ -163,12 +166,12 @@ export const MapObjectLayer = memo(function MapObjectLayer({ map, dm, staticOnly
             {!staticOnly && ["portal", "ohen", "zare"].includes(resolveAnimation(o, man)) && <g opacity=".35"><image href="/repo/11_Mapy/bojove/ovl/zar.webp"
               x={-o.w*PX*.8} y={-o.h*PX*.8} width={o.w*PX*1.6} height={o.h*PX*1.6}
               style={{ mixBlendMode: "screen", animationDelay: `${animationPhase(o.id)}s`, filter: resolveAnimation(o, man) === "portal" ? "hue-rotate(165deg)" : undefined }} /></g>}
-            {def && <defs><filter id="stamp-shade" x="-30%" y="-30%" width="160%" height="160%">
+            {def && shade && <defs><filter id="stamp-shade" x="-30%" y="-30%" width="160%" height="160%">
               <feDropShadow dx="1" dy="2" stdDeviation="1.2" floodColor="#000" floodOpacity="0.45" /></filter></defs>}
             {src ? <image href={src} x={-o.w * PX / 2} y={-o.h * PX / 2} width={o.w * PX} height={o.h * PX}
                           preserveAspectRatio="xMidYMid meet"
                           style={{ filter: [tint ? `url(#${uid}tone${i})` : "",shade].filter(Boolean).join(" ") || undefined, animationDelay: `${animationPhase(o.id)}s` }} />
-                 : def ? <g filter="url(#stamp-shade)"><StampSvg def={def} tint={o.tint} /></g>
+                 : def ? <g filter={shade?"url(#stamp-shade)":undefined}><StampSvg def={def} tint={o.tint} /></g>
                  : <rect x={-o.w * PX / 2} y={-o.h * PX / 2} width={o.w * PX} height={o.h * PX} fill="#8a6a44" opacity={.6} />}
           </g>
         );

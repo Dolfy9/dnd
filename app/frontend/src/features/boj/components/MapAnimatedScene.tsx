@@ -6,6 +6,7 @@ import { terrainProp, terrainTexture } from "../model/terrainArt";
 import { MapObjectLayer, useMapManifests } from "./MapV2Layers";
 import { animationPhase, FX, resolveAnimation } from "./MapMotion";
 import { MapAnimatedLights } from "./MapAnimatedLights";
+import {contactShadowPlan,MapContactShadows} from "./MapContactShadows";
 
 const water = (id: string) => /voda|melcina|more|vlny/.test(id);
 export function waterMask(map: MapV2) {
@@ -33,10 +34,11 @@ export const MapAnimatedScene = memo(function MapAnimatedScene({ map, view, px =
   useEffect(()=>{const node=sceneRef.current;if(!node)return;const observer=new ResizeObserver(()=>setViewport({width:node.clientWidth,height:node.clientHeight}));observer.observe(node);return()=>observer.disconnect();},[]);
   const mask = useMemo(() => waterMask(map), [map.mrizka,map.textury,map.malba,map.podklad]);
   const W = (map.mrizka[0]?.length || 1)*24, H = map.mrizka.length*24;
+  const contactPlan=contactShadowPlan(map,assets,doors),directional=new Set(contactPlan.map(s=>s.id));
   const sprite = (id: string, src: string, anim: string, x: number, y: number, w: number, h: number, rot = 0, flip = false, opacity = 1) =>
     <div key={id} className="map-dom-sprite" style={{left:x*24-w*12,top:y*24-h*12,width:w*24,height:h*24,transform:`rotate(${rot}deg) scaleX(${flip ? -1 : 1})`,opacity}}>
       {["portal","ohen","zare"].includes(anim) && <img className={`map-dom-glow map-anim-${anim === "ohen" ? "ohen" : "zare"}`} src="/repo/11_Mapy/bojove/ovl/zar.webp" alt="" />}
-      <img src={src} alt="" className={`map-anim-${anim}`} style={{animationDelay:`${animationPhase(id)}s`}} />
+      <img src={src} alt="" className={`map-anim-${anim}`} style={{animationDelay:`${animationPhase(id)}s`,filter:directional.has(id)||map.objekty?.some(o=>o.id===id&&o.stin===false)?"none":undefined}} />
     </div>;
   return <div ref={sceneRef} className="map-animated-scene" aria-hidden="true"><div className="map-scene-board" style={{
     width:W,height:H,transform:`translate(${view.x}px,${view.y}px) scale(${view.k*px/24})`,
@@ -53,13 +55,14 @@ export const MapAnimatedScene = memo(function MapAnimatedScene({ map, view, px =
       const size = (override ?? c) === "T" ? 1.3 : 1;
       return sprite(x+","+y,assetUrl(asset.src),anim,x+.5,y+.5,size,size);
     }))}
+    {objects && <svg className="map-scene-static" width={W} height={H}><MapContactShadows plan={contactPlan} width={W} height={H}/></svg>}
     {details && <svg className="map-scene-static" width={W} height={H}>{details}</svg>}
     {objects && [...(map.objekty || [])].sort((a,b) => (a.z ?? assets[a.asset]?.z ?? 0)-(b.z ?? assets[b.asset]?.z ?? 0)).map(o => {
       if (o.dmOnly && !dm) return null;
       const asset = assets[o.asset], anim = resolveAnimation(o,asset);
       const src = asset ? assetUrl(assetSrc(asset, o.v)) : o.asset.startsWith("img:") ? "/repo/11_Mapy/bojove/"+o.asset.slice(4) : "";
       return anim && src ? sprite(o.id,src,anim,o.x,o.y,o.w,o.h,o.rot,o.flip,o.dmOnly ? .55 : 1)
-        : <svg key={o.id} className="map-scene-static" width={W} height={H}><MapObjectLayer map={{...map,objekty:[o]}} dm={dm} /></svg>;
+        : <svg key={o.id} className="map-scene-static" width={W} height={H}><MapObjectLayer map={{...map,objekty:[o]}} dm={dm} contactShadows={false} contactPlan={contactPlan} /></svg>;
     })}
     <div className="map-scene-frame" />
     {lights && <MapAnimatedLights map={map} view={view} px={px} doors={doors} viewport={viewport} />}
