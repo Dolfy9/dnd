@@ -1,7 +1,7 @@
-from . import admin, auth, battles, catalogs, entities, graph_api, map_api, battle_maps, media, pages, postava_api, rules_api, schemas_api, search
+from . import admin, auth, battles, battle_intents, catalogs, entities, graph_api, map_api, battle_maps, media, pages, postava_api, rules_api, schemas_api, search
 
 routers = [
     auth.router, pages.router, entities.router, search.router, graph_api.router,
-    catalogs.router, map_api.router, battle_maps.router, battles.router, rules_api.router, media.router,
+    catalogs.router, map_api.router, battle_maps.router, battle_intents.router, battles.router, rules_api.router, media.router,
     schemas_api.router, admin.router, postava_api.router,
 ]

@@ -137,6 +137,21 @@ CREATE TABLE IF NOT EXISTS sessions (
   expires REAL NOT NULL DEFAULT 0
 );
 
+CREATE TABLE IF NOT EXISTS battle_intents (
+  id TEXT PRIMARY KEY,
+  battle_id TEXT NOT NULL REFERENCES battles(id) ON DELETE CASCADE,
+  user_id INTEGER NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+  token_id TEXT NOT NULL,
+  kind TEXT NOT NULL CHECK(kind IN ('move','action','end_turn','death_save','reaction','roll')),
+  payload TEXT NOT NULL DEFAULT '{}',
+  status TEXT NOT NULL DEFAULT 'pending' CHECK(status IN ('pending','approved','rejected','cancelled','applied')),
+  note TEXT NOT NULL DEFAULT '',
+  created_at TEXT NOT NULL,
+  resolved_at TEXT,
+  resolved_by INTEGER REFERENCES users(id) ON DELETE SET NULL
+);
+CREATE INDEX IF NOT EXISTS idx_battle_intents_scope ON battle_intents(battle_id,user_id,status);
+
 CREATE TABLE IF NOT EXISTS audit (
   id INTEGER PRIMARY KEY AUTOINCREMENT,
   ts TEXT NOT NULL,

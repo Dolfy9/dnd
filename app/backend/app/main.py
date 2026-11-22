@@ -63,7 +63,7 @@ async def websocket(ws: WebSocket):
                 await ws.send_json({"channel": ch, "event": "denied"})
                 continue
             if msg["op"] == "sub":
-                await hub.subscribe(ws, ch)
+                await hub.subscribe(ws, ch, editor=editor)
             else:
                 await hub.unsubscribe(ws, ch)
     except WebSocketDisconnect:

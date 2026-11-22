@@ -13,6 +13,8 @@ from typing import Optional
 
 from fastapi import WebSocket
 
+from . import db
+
 log = logging.getLogger("montelien.ws")
 
 
@@ -20,9 +22,11 @@ class Hub:
     def __init__(self) -> None:
         self._subs: dict[str, set[WebSocket]] = {}
         self._lock = asyncio.Lock()
+        self._editors: dict[WebSocket, bool] = {}
 
-    async def subscribe(self, ws: WebSocket, channel: str) -> None:
+    async def subscribe(self, ws: WebSocket, channel: str, *, editor: bool = False) -> None:
         async with self._lock:
+            self._editors[ws] = editor
             self._subs.setdefault(channel, set()).add(ws)
 
     async def unsubscribe(self, ws: WebSocket, channel: str) -> None:
@@ -32,6 +36,7 @@ class Hub:
 
     async def disconnect(self, ws: WebSocket) -> None:
         async with self._lock:
+            self._editors.pop(ws, None)
             for subs in self._subs.values():
                 subs.discard(ws)
 
@@ -39,6 +44,11 @@ class Hub:
         msg = json.dumps({"channel": channel, "event": event, "data": data or {}},
                          ensure_ascii=False)
         async with self._lock:
+            if channel.startswith("battle:"):
+                row = db.connect().execute("SELECT shared FROM battles WHERE id=?", (channel.split(":", 1)[1],)).fetchone()
+                if not row or not row["shared"]:
+                    subs = self._subs.get(channel, set())
+                    subs.difference_update(ws for ws in list(subs) if not self._editors.get(ws, False))
             targets = list(self._subs.get(channel, ()))
         for ws in targets:
             try:

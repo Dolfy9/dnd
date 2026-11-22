@@ -1,6 +1,7 @@
 /* Inspektor žetonu: HP/damage/heal/temp s damage type, stavy, efekty, zdroje,
    death saves, concentration, poznámky, hide-from-players, odebrat. */
 import { useState } from "react";
+import { useQuery } from "@tanstack/react-query";
 import type { StavBoje, Token } from "../types";
 import { DMG_TYPES } from "../types";
 import { CONDITIONS, CONDITION_NAMES, exhaustion } from "../rules/conditions";
@@ -16,6 +17,21 @@ import { loadCombatant } from "../rules/reimport";
 type Cmd = (fn: (S: StavBoje) => void) => void;
 import * as C from "../state/commands";
 import { byId, ecoOf, moveLeft } from "../rules/turn";
+
+function TokenOwner({ t, cmd }: { t: Token; cmd: Cmd }) {
+  const players = useQuery({ queryKey: ["battle-players"], queryFn: () => get<{ players: { id: number; login: string; name: string }[] }>("/api/battles/players") });
+  const options = players.data?.players || [];
+  return <div className="boj-sec"><label>Vlastník žetonu
+    <select aria-label="Vlastník žetonu" value={t.src?.owner || ""} disabled={players.isPending || players.isError} onChange={e => {
+      const owner = e.target.value || undefined;
+      cmd(s => { const token = byId(s, t.id); if (token) C.patchToken(s, t.id, { src: { ...token.src, owner } }); });
+    }}>
+      <option value="">Bez vlastníka</option>
+      {t.src?.owner && !options.some(p => String(p.id) === t.src?.owner) && <option value={t.src.owner}>Nedostupný hráč (ID {t.src.owner})</option>}
+      {options.map(p => <option key={p.id} value={String(p.id)}>{p.name} ({p.login})</option>)}
+    </select>
+  </label>{players.isPending && <small>Načítám hráče…</small>}{players.isError && <p role="alert">Hráče se nepodařilo načíst.</p>}</div>;
+}
 
 export default function TokenInspector({ S, t, cmd, dm, onClose }: {
   S: StavBoje; t: Token; cmd: Cmd; dm: boolean; onClose: () => void;
@@ -55,6 +71,7 @@ export default function TokenInspector({ S, t, cmd, dm, onClose }: {
         <b>{t.nazev}</b>
         <button className="boj-x" onClick={onClose}>✕</button>
       </div>
+      {dm && <TokenOwner t={t} cmd={cmd} />}
       {dm && (t.src?.cesta || t.src?.srd) && <div className="boj-sec"><button className="boj-btn2" disabled={importing} onClick={reimport} title="Obnoví statistiky ze zdroje, ponechá aktuální HP, stavy, pozici a spotřebovaná použití.">{importing ? "Načítám…" : "Obnovit statistiky ze zdroje"}</button>{t.src.edition && <small> {t.src.source || t.src.id} · {t.src.edition}</small>}{importError && <p role="alert">{importError}</p>}</div>}
       <div className="boj-insp-hp">
         {dm ? (

@@ -41,7 +41,7 @@ def _hp_bucket(t: dict) -> str:
     return "Lehce zraněný" if f > 0.5 else "Těžce zraněný" if f > 0.25 else "Na pokraji"
 
 
-def player_view(state: dict) -> dict:
+def player_view(state: dict, user_id: int | None = None) -> dict:
     """Stav boje pro hráče: bez skrytých žetonů, DM poznámek, pj logů a přesných HP nepřátel."""
     import copy
     s = copy.deepcopy(state or {})
@@ -88,12 +88,14 @@ def player_view(state: dict) -> dict:
         if _in_fog(t):
             continue
         t = dict(t)
-        if t.get("side") != "druzina":
+        owned = user_id is not None and (t.get("src") or {}).get("owner") == str(user_id)
+        if t.get("side") != "druzina" and not owned:
             t["hp_stav"] = _hp_bucket(t)
             for k in ("hp", "max", "tmp", "ds", "saves", "pj_note", "poznamka"):
                 t.pop(k, None)
         else:
             t.pop("pj_note", None)
+            t.pop("poznamka", None)
         toks.append(t)
     sb["tok"] = toks
     private_sources = set(sb.pop("privateSourceIds", []) or [])
@@ -148,10 +150,10 @@ def player_view(state: dict) -> dict:
     return s
 
 
-def _summary(r, player: bool = False) -> dict:
+def _summary(r, player: bool = False, user_id: int | None = None) -> dict:
     s = db.jload(r["state"])
     if player:
-        s = player_view(s)
+        s = player_view(s, user_id)
     stav = s.get("stav_boje") or {}
     kampane = s.get("kampane")
     if not isinstance(kampane, list):
@@ -163,6 +165,7 @@ def _summary(r, player: bool = False) -> dict:
             "ucastnici": [{"nazev": re.sub(r"<[^>]+>", "", str(t.get("nazev", ""))),
                            "strana": t.get("side"), "hp": t.get("hp"), "max": t.get("max"),
                            "mrtvy": bool(t.get("dead"))} for t in stav.get("tok", [])],
+            "auto_pohyb": bool(s.get("auto_pohyb", False)),
             "shared": bool(r["shared"]), "updated_at": r["updated_at"], "version": r["version"]}
 
 
@@ -175,7 +178,7 @@ def list_battles(u: dict | None = Depends(security.optional)):
     for r in rows:
         if not editor and not r["shared"]:
             continue  # hráč vidí jen živě sdílené boje
-        out.append(_summary(r, player=not editor))
+        out.append(_summary(r, player=not editor, user_id=u.get("id") if u else None))
     pages = {t: [dict(x) for x in con.execute(
         "SELECT path,title FROM pages WHERE type=? ORDER BY title", (t,))]
         for t in ("kampan", "quest", "sezeni")}
@@ -187,10 +190,11 @@ def get_battle(bid: str, u: dict | None = Depends(security.optional)):
     r = _row_or_404(bid)
     if not security.can_edit(u) and not r["shared"]:
         raise HTTPException(404, "boj nenalezen")
-    out = _summary(r, player=not security.can_edit(u))
+    out = _summary(r, player=not security.can_edit(u), user_id=u.get("id") if u else None)
     state = db.jload(r["state"])
+    state.setdefault("auto_pohyb", False)
     if not security.can_edit(u):
-        state = player_view(state)
+        state = player_view(state, u.get("id") if u else None)
         out["ucastnici"] = [
             {"nazev": re.sub(r"<[^>]+>", "", str(t.get("nazev", ""))),
              "strana": t.get("side"), "hp_stav": t.get("hp_stav"),
@@ -208,6 +212,7 @@ class NewBattle(BaseModel):
     quest: str = ""
     sezeni: str = ""
     map_ref: str = ""
+    auto_pohyb: bool = False
 
 
 @router.post("")
@@ -237,7 +242,7 @@ def create_battle(b: NewBattle, u: dict = Depends(security.require("editor"))):
                      **{key: l[key] for key in ("dmOnly", "zap", "tvar", "smer", "sirka", "delka", "color", "intenzita", "efekt", "rychlost", "stiny", "blikani") if key in l}}
                     for i, l in enumerate(mdata["svetla"])]
     state = {"id": bid, "nazev": b.name, "stav": "priprava", "kampan": kampan,
-             "kampane": kampane,
+             "kampane": kampane, "auto_pohyb": b.auto_pohyb,
              "quest": b.quest, "sezeni": b.sezeni, "mapa": b.map_ref,
              "vytvoreno": db.now(), "upraveno": db.now(), "stav_boje": stav_boje}
     con = db.connect()
@@ -286,6 +291,7 @@ class MetaBody(BaseModel):
     quest: str | None = None
     sezeni: str | None = None
     map_ref: str | None = None
+    auto_pohyb: bool | None = None
 
 
 @router.put("/{bid}/meta")
@@ -293,6 +299,8 @@ def put_meta(bid: str, b: MetaBody, u: dict = Depends(security.require("editor")
     """Úprava metadat boje (vazby na kampaně/quest/sezení/mapu) bez dotknutí stavu."""
     r = _row_or_404(bid)
     state = db.jload(r["state"])
+    if b.auto_pohyb is not None:
+        state["auto_pohyb"] = b.auto_pohyb
     if b.name is not None:
         state["nazev"] = b.name
     if b.kampane is not None:
