@@ -62,7 +62,7 @@ export const MapAnimatedScene = memo(function MapAnimatedScene({ map, view, px =
       const asset = assets[o.asset], anim = resolveAnimation(o,asset);
       const src = asset ? assetUrl(assetSrc(asset, o.v)) : o.asset.startsWith("img:") ? "/repo/11_Mapy/bojove/"+o.asset.slice(4) : "";
       return anim && src ? sprite(o.id,src,anim,o.x,o.y,o.w,o.h,o.rot,o.flip,o.dmOnly ? .55 : 1)
-        : <svg key={o.id} className="map-scene-static" width={W} height={H}><MapObjectLayer map={{...map,objekty:[o]}} dm={dm} contactShadows={false} contactPlan={contactPlan} /></svg>;
+        : <svg key={o.id} className="map-scene-static" width={W} height={H} style={{mixBlendMode:asset?.blend}}><MapObjectLayer map={{...map,objekty:[o]}} dm={dm} contactShadows={false} contactPlan={contactPlan} /></svg>;
     })}
     <div className="map-scene-frame" />
     {lights && <MapAnimatedLights map={map} view={view} px={px} doors={doors} viewport={viewport} />}

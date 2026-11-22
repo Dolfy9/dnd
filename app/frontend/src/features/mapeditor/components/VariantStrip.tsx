@@ -7,7 +7,7 @@ export function VariantStrip({ entry, value = 0, onChange }: {
     {Array.from({ length: 1 + (entry.varianty?.length || 0) }, (_, v) =>
       <button type="button" key={v} aria-pressed={normalizeVariant(value, entry.varianty?.length || 0) === v}
         title={v ? "Varianta " + v : "Základ"} onClick={() => onChange(v)}>
-        <img src={assetUrl(assetSrc(entry, v))} alt={entry.nazev + (v ? " – varianta " + v : " – základ")} loading="lazy" />
+        <img src={assetUrl(assetSrc(entry, v))} alt={entry.nazev + (v ? " – varianta " + v : " – základ")} loading="lazy" style={{mixBlendMode:entry.blend}} />
         <small>{v || "Základ"}</small>
       </button>)}
   </div>;

@@ -28,7 +28,7 @@ export function AssetLibrary({ q, setQ, kat, setKat, stampId, onPick, ASSETS, on
     {items.map(a => <div key={a.id} className="me-asset-card">
       <button className={`me-stamp ${stampId === a.id ? "on" : ""}`} draggable title={`${a.nazev} · ${a.w || 1}×${a.h || 1} · táhni do mapy`}
         onDragStart={e => { e.dataTransfer.setData("application/x-montelien-asset", a.id); e.dataTransfer.effectAllowed = "copy"; }} onClick={() => pick(a.id)}>
-        <span className="me-asset-image">{a.src ? <img src={assetUrl(assetSrc(a, a.id === stampId ? variant : 0))} alt={a.nazev} loading="lazy" /> : <svg viewBox="-13 -13 26 26"><StampSvg def={stampById(a.id)!} /></svg>}
+        <span className="me-asset-image">{a.src ? <img src={assetUrl(assetSrc(a, a.id === stampId ? variant : 0))} alt={a.nazev} loading="lazy" style={{mixBlendMode:a.blend}} /> : <svg viewBox="-13 -13 26 26"><StampSvg def={stampById(a.id)!} /></svg>}
           <span className="me-asset-badges">{!!a.varianty?.length && <small title="Počet variant">+{a.varianty.length}</small>}{a.anim && <small title="Animovaný"><Sparkles size={11} /></small>}{a.light && <small title="Vydává světlo"><Lightbulb size={11} /></small>}{a.blocks && <small title="Blokuje pohyb"><Shield size={11} /></small>}</span>
         </span><span className="me-asset-name">{a.nazev}</span>
       </button>

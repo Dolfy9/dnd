@@ -251,6 +251,36 @@
    "nazev": "Dřevěný panel",
    "src": "bojove/textury/teren-panel.webp",
    "cells": 4
+  },
+  {
+   "id": "t-hlina-pesina",
+   "nazev": "Ušlapaná hliněná pěšina",
+   "src": "bojove/textury/t-hlina-pesina.webp",
+   "cells": 4
+  },
+  {
+   "id": "t-pristavni-kamen",
+   "nazev": "Přístavní nábřežní kámen",
+   "src": "bojove/textury/t-pristavni-kamen.webp",
+   "cells": 4
+  },
+  {
+   "id": "t-ulice-dlazba",
+   "nazev": "Uliční kočičí hlavy",
+   "src": "bojove/textury/t-ulice-dlazba.webp",
+   "cells": 4
+  },
+  {
+   "id": "t-zahradni-cesta",
+   "nazev": "Zahradní kamenná cesta",
+   "src": "bojove/textury/t-zahradni-cesta.webp",
+   "cells": 4
+  },
+  {
+   "id": "t-zahradni-travnik",
+   "nazev": "Zahradní trávník",
+   "src": "bojove/textury/t-zahradni-travnik.webp",
+   "cells": 4
   }
  ]
 }

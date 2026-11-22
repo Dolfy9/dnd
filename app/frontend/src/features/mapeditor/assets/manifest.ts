@@ -8,6 +8,7 @@ export interface AssetEntry {
   varianty?: string[];
   w?: number; h?: number;
   z?: number;
+  blend?: "screen";
   blocks?: boolean; cover?: 2 | 3; difficult?: boolean;
   light?: { bright: number; dim: number };
   tags?: string[]; custom?: boolean;

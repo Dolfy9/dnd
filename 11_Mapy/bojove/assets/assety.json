@@ -3022,6 +3022,463 @@
     "bojove/assets/Rekvizity/varianty/gen2-keltsky_kamen-v3.webp",
     "bojove/assets/Rekvizity/varianty/gen2-keltsky_kamen-v4.webp"
    ]
+  },
+  {
+   "id": "p-hromada-ryb",
+   "nazev": "Hromada ryb",
+   "kategorie": "Přístav",
+   "src": "bojove/assets/Přístav/p-hromada-ryb.webp",
+   "w": 1.5,
+   "h": 1,
+   "blocks": false,
+   "tags": [
+    "Přístav"
+   ],
+   "custom": false,
+   "z": -1,
+   "varianty": [
+    "bojove/assets/Přístav/varianty/p-hromada-ryb-v1.webp",
+    "bojove/assets/Přístav/varianty/p-hromada-ryb-v2.webp",
+    "bojove/assets/Přístav/varianty/p-hromada-ryb-v3.webp"
+   ]
+  },
+  {
+   "id": "p-lana-svitek",
+   "nazev": "Svitek lodního lana",
+   "kategorie": "Přístav",
+   "src": "bojove/assets/Přístav/p-lana-svitek.webp",
+   "w": 1,
+   "h": 1,
+   "blocks": false,
+   "tags": [
+    "Přístav"
+   ],
+   "custom": false,
+   "z": -1,
+   "varianty": [
+    "bojove/assets/Přístav/varianty/p-lana-svitek-v1.webp",
+    "bojove/assets/Přístav/varianty/p-lana-svitek-v2.webp",
+    "bojove/assets/Přístav/varianty/p-lana-svitek-v3.webp"
+   ]
+  },
+  {
+   "id": "p-lodka",
+   "nazev": "Veslice",
+   "kategorie": "Přístav",
+   "src": "bojove/assets/Přístav/p-lodka.webp",
+   "w": 1.5,
+   "h": 4,
+   "blocks": true,
+   "tags": [
+    "Přístav"
+   ],
+   "custom": false,
+   "cover": 2,
+   "varianty": [
+    "bojove/assets/Přístav/varianty/p-lodka-v1.webp",
+    "bojove/assets/Přístav/varianty/p-lodka-v2.webp",
+    "bojove/assets/Přístav/varianty/p-lodka-v3.webp"
+   ]
+  },
+  {
+   "id": "p-lodni-kolik",
+   "nazev": "Vyvazovací pachole",
+   "kategorie": "Přístav",
+   "src": "bojove/assets/Přístav/p-lodni-kolik.webp",
+   "w": 0.6,
+   "h": 0.6,
+   "blocks": true,
+   "tags": [
+    "Přístav"
+   ],
+   "custom": false,
+   "cover": 2,
+   "varianty": [
+    "bojove/assets/Přístav/varianty/p-lodni-kolik-v1.webp",
+    "bojove/assets/Přístav/varianty/p-lodni-kolik-v2.webp",
+    "bojove/assets/Přístav/varianty/p-lodni-kolik-v3.webp"
+   ]
+  },
+  {
+   "id": "p-nastenna-lucerna",
+   "nazev": "Nástěnná přístavní lucerna",
+   "kategorie": "Přístav",
+   "src": "bojove/assets/Přístav/p-nastenna-lucerna.webp",
+   "w": 0.5,
+   "h": 1,
+   "blocks": false,
+   "tags": [
+    "Přístav"
+   ],
+   "custom": false,
+   "light": {
+    "bright": 15,
+    "dim": 15
+   },
+   "varianty": [
+    "bojove/assets/Přístav/varianty/p-nastenna-lucerna-v1.webp",
+    "bojove/assets/Přístav/varianty/p-nastenna-lucerna-v2.webp",
+    "bojove/assets/Přístav/varianty/p-nastenna-lucerna-v3.webp"
+   ]
+  },
+  {
+   "id": "p-site",
+   "nazev": "Rybářské sítě",
+   "kategorie": "Přístav",
+   "src": "bojove/assets/Přístav/p-site.webp",
+   "w": 2,
+   "h": 2,
+   "blocks": false,
+   "tags": [
+    "Přístav"
+   ],
+   "custom": false,
+   "z": -1,
+   "varianty": [
+    "bojove/assets/Přístav/varianty/p-site-v1.webp",
+    "bojove/assets/Přístav/varianty/p-site-v2.webp",
+    "bojove/assets/Přístav/varianty/p-site-v3.webp"
+   ]
+  },
+  {
+   "id": "p-sud-ryby",
+   "nazev": "Sud s rybami",
+   "kategorie": "Přístav",
+   "src": "bojove/assets/Přístav/p-sud-ryby.webp",
+   "w": 1.5,
+   "h": 1,
+   "blocks": true,
+   "tags": [
+    "Přístav"
+   ],
+   "custom": false,
+   "cover": 2,
+   "varianty": [
+    "bojove/assets/Přístav/varianty/p-sud-ryby-v1.webp",
+    "bojove/assets/Přístav/varianty/p-sud-ryby-v2.webp",
+    "bojove/assets/Přístav/varianty/p-sud-ryby-v3.webp"
+   ]
+  },
+  {
+   "id": "p-vor",
+   "nazev": "Dřevěný vor",
+   "kategorie": "Přístav",
+   "src": "bojove/assets/Přístav/p-vor.webp",
+   "w": 3,
+   "h": 3,
+   "blocks": false,
+   "tags": [
+    "Přístav"
+   ],
+   "custom": false,
+   "z": -1,
+   "varianty": [
+    "bojove/assets/Přístav/varianty/p-vor-v1.webp",
+    "bojove/assets/Přístav/varianty/p-vor-v2.webp",
+    "bojove/assets/Přístav/varianty/p-vor-v3.webp"
+   ]
+  },
+  {
+   "id": "z-brectan-previs",
+   "nazev": "Převislý břečťan",
+   "kategorie": "Zahrada",
+   "src": "bojove/assets/Zahrada/z-brectan-previs.webp",
+   "w": 2,
+   "h": 1.5,
+   "blocks": false,
+   "tags": [
+    "Zahrada"
+   ],
+   "custom": false,
+   "z": -1,
+   "varianty": [
+    "bojove/assets/Zahrada/varianty/z-brectan-previs-v1.webp",
+    "bojove/assets/Zahrada/varianty/z-brectan-previs-v2.webp",
+    "bojove/assets/Zahrada/varianty/z-brectan-previs-v3.webp"
+   ]
+  },
+  {
+   "id": "z-jezirko-fontana",
+   "nazev": "Zahradní jezírko s fontánou",
+   "kategorie": "Zahrada",
+   "src": "bojove/assets/Zahrada/z-jezirko-fontana.webp",
+   "w": 4,
+   "h": 4,
+   "blocks": true,
+   "tags": [
+    "Zahrada"
+   ],
+   "custom": false,
+   "cover": 2
+  },
+  {
+   "id": "z-kvetinovy-zahon",
+   "nazev": "Květinový záhon",
+   "kategorie": "Zahrada",
+   "src": "bojove/assets/Zahrada/z-kvetinovy-zahon.webp",
+   "w": 2,
+   "h": 2,
+   "blocks": false,
+   "tags": [
+    "Zahrada"
+   ],
+   "custom": false,
+   "z": -1,
+   "varianty": [
+    "bojove/assets/Zahrada/varianty/z-kvetinovy-zahon-v1.webp",
+    "bojove/assets/Zahrada/varianty/z-kvetinovy-zahon-v2.webp",
+    "bojove/assets/Zahrada/varianty/z-kvetinovy-zahon-v3.webp"
+   ]
+  },
+  {
+   "id": "z-lavicka-kamen",
+   "nazev": "Kamenná lavička",
+   "kategorie": "Zahrada",
+   "src": "bojove/assets/Zahrada/z-lavicka-kamen.webp",
+   "w": 2,
+   "h": 1,
+   "blocks": true,
+   "tags": [
+    "Zahrada"
+   ],
+   "custom": false,
+   "cover": 2,
+   "varianty": [
+    "bojove/assets/Zahrada/varianty/z-lavicka-kamen-v1.webp",
+    "bojove/assets/Zahrada/varianty/z-lavicka-kamen-v2.webp",
+    "bojove/assets/Zahrada/varianty/z-lavicka-kamen-v3.webp"
+   ]
+  },
+  {
+   "id": "z-rotunda-ruina",
+   "nazev": "Zřícená rotunda",
+   "kategorie": "Zahrada",
+   "src": "bojove/assets/Zahrada/z-rotunda-ruina.webp",
+   "w": 6,
+   "h": 6,
+   "blocks": true,
+   "tags": [
+    "Zahrada"
+   ],
+   "custom": false,
+   "cover": 3
+  },
+  {
+   "id": "z-ruze-ker",
+   "nazev": "Růžový keř",
+   "kategorie": "Zahrada",
+   "src": "bojove/assets/Zahrada/z-ruze-ker.webp",
+   "w": 1,
+   "h": 1,
+   "blocks": false,
+   "tags": [
+    "Zahrada"
+   ],
+   "custom": false,
+   "cover": 2,
+   "varianty": [
+    "bojove/assets/Zahrada/varianty/z-ruze-ker-v1.webp",
+    "bojove/assets/Zahrada/varianty/z-ruze-ker-v2.webp",
+    "bojove/assets/Zahrada/varianty/z-ruze-ker-v3.webp"
+   ]
+  },
+  {
+   "id": "z-sloup-zlomeny",
+   "nazev": "Zlomený sloup",
+   "kategorie": "Zahrada",
+   "src": "bojove/assets/Zahrada/z-sloup-zlomeny.webp",
+   "w": 1.5,
+   "h": 1,
+   "blocks": true,
+   "tags": [
+    "Zahrada"
+   ],
+   "custom": false,
+   "cover": 3,
+   "varianty": [
+    "bojove/assets/Zahrada/varianty/z-sloup-zlomeny-v1.webp",
+    "bojove/assets/Zahrada/varianty/z-sloup-zlomeny-v2.webp",
+    "bojove/assets/Zahrada/varianty/z-sloup-zlomeny-v3.webp"
+   ]
+  },
+  {
+   "id": "z-socha-kral",
+   "nazev": "Socha krále",
+   "kategorie": "Zahrada",
+   "src": "bojove/assets/Zahrada/z-socha-kral.webp",
+   "w": 1.5,
+   "h": 2,
+   "blocks": true,
+   "tags": [
+    "Zahrada"
+   ],
+   "custom": false,
+   "cover": 3,
+   "varianty": [
+    "bojove/assets/Zahrada/varianty/z-socha-kral-v1.webp",
+    "bojove/assets/Zahrada/varianty/z-socha-kral-v2.webp",
+    "bojove/assets/Zahrada/varianty/z-socha-kral-v3.webp"
+   ]
+  },
+  {
+   "id": "z-sochy-zlomena",
+   "nazev": "Rozbitá socha",
+   "kategorie": "Zahrada",
+   "src": "bojove/assets/Zahrada/z-sochy-zlomena.webp",
+   "w": 2,
+   "h": 2,
+   "blocks": true,
+   "tags": [
+    "Zahrada"
+   ],
+   "custom": false,
+   "cover": 2,
+   "varianty": [
+    "bojove/assets/Zahrada/varianty/z-sochy-zlomena-v1.webp",
+    "bojove/assets/Zahrada/varianty/z-sochy-zlomena-v2.webp",
+    "bojove/assets/Zahrada/varianty/z-sochy-zlomena-v3.webp"
+   ]
+  },
+  {
+   "id": "z-strom-koruna",
+   "nazev": "Koruna zahradního stromu",
+   "kategorie": "Zahrada",
+   "src": "bojove/assets/Zahrada/z-strom-koruna.webp",
+   "w": 3,
+   "h": 3,
+   "blocks": true,
+   "tags": [
+    "Zahrada"
+   ],
+   "custom": false,
+   "cover": 3,
+   "varianty": [
+    "bojove/assets/Zahrada/varianty/z-strom-koruna-v1.webp",
+    "bojove/assets/Zahrada/varianty/z-strom-koruna-v2.webp",
+    "bojove/assets/Zahrada/varianty/z-strom-koruna-v3.webp"
+   ]
+  },
+  {
+   "id": "z-urna-kamen",
+   "nazev": "Kamenná urna",
+   "kategorie": "Zahrada",
+   "src": "bojove/assets/Zahrada/z-urna-kamen.webp",
+   "w": 1,
+   "h": 1,
+   "blocks": true,
+   "tags": [
+    "Zahrada"
+   ],
+   "custom": false,
+   "cover": 2,
+   "varianty": [
+    "bojove/assets/Zahrada/varianty/z-urna-kamen-v1.webp",
+    "bojove/assets/Zahrada/varianty/z-urna-kamen-v2.webp",
+    "bojove/assets/Zahrada/varianty/z-urna-kamen-v3.webp"
+   ]
+  },
+  {
+   "id": "z-zivy-plot-roh",
+   "nazev": "Živý plot – roh",
+   "kategorie": "Zahrada",
+   "src": "bojove/assets/Zahrada/z-zivy-plot-roh.webp",
+   "w": 2,
+   "h": 2,
+   "blocks": true,
+   "tags": [
+    "Zahrada"
+   ],
+   "custom": false,
+   "cover": 2,
+   "varianty": [
+    "bojove/assets/Zahrada/varianty/z-zivy-plot-roh-v1.webp",
+    "bojove/assets/Zahrada/varianty/z-zivy-plot-roh-v2.webp",
+    "bojove/assets/Zahrada/varianty/z-zivy-plot-roh-v3.webp"
+   ]
+  },
+  {
+   "id": "z-zivy-plot",
+   "nazev": "Živý plot",
+   "kategorie": "Zahrada",
+   "src": "bojove/assets/Zahrada/z-zivy-plot.webp",
+   "w": 2,
+   "h": 0.75,
+   "blocks": true,
+   "tags": [
+    "Zahrada"
+   ],
+   "custom": false,
+   "cover": 2,
+   "varianty": [
+    "bojove/assets/Zahrada/varianty/z-zivy-plot-v1.webp",
+    "bojove/assets/Zahrada/varianty/z-zivy-plot-v2.webp",
+    "bojove/assets/Zahrada/varianty/z-zivy-plot-v3.webp"
+   ]
+  },
+  {
+   "id": "ov-mesic-odlesk",
+   "nazev": "Měsíční odlesk na vodě",
+   "kategorie": "Efekty",
+   "src": "bojove/assets/Efekty/ov-mesic-odlesk.webp",
+   "w": 3,
+   "h": 5,
+   "z": -1,
+   "blocks": false,
+   "blend": "screen",
+   "tags": [
+    "Efekty"
+   ],
+   "custom": false
+  },
+  {
+   "id": "ov-mlha-chuchvalec",
+   "nazev": "Chuchvalec mlhy",
+   "kategorie": "Efekty",
+   "src": "bojove/assets/Efekty/ov-mlha-chuchvalec.webp",
+   "w": 4,
+   "h": 4,
+   "z": -1,
+   "blocks": false,
+   "blend": "screen",
+   "tags": [
+    "Efekty"
+   ],
+   "custom": false
+  },
+  {
+   "id": "ov-paprsky",
+   "nazev": "Paprsky světla",
+   "kategorie": "Efekty",
+   "src": "bojove/assets/Efekty/ov-paprsky.webp",
+   "w": 6,
+   "h": 4,
+   "z": -1,
+   "blocks": false,
+   "blend": "screen",
+   "tags": [
+    "Efekty"
+   ],
+   "custom": false
+  },
+  {
+   "id": "ov-svetlusky",
+   "nazev": "Roj světlušek",
+   "kategorie": "Efekty",
+   "src": "bojove/assets/Efekty/ov-svetlusky.webp",
+   "w": 3,
+   "h": 3,
+   "z": -1,
+   "blocks": false,
+   "blend": "screen",
+   "tags": [
+    "Efekty"
+   ],
+   "custom": false,
+   "varianty": [
+    "bojove/assets/Efekty/varianty/ov-svetlusky-v1.webp",
+    "bojove/assets/Efekty/varianty/ov-svetlusky-v2.webp",
+    "bojove/assets/Efekty/varianty/ov-svetlusky-v3.webp"
+   ]
   }
  ]
 }
