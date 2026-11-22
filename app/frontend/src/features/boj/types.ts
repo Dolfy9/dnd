@@ -134,7 +134,7 @@ export interface EffectMods {
   dmgOnHitOnce?: { dice: string; typ?: DmgType | string }; // Divine Favor 1d4
 }
 
-export interface LightSource extends Pick<MapLightV2, "zap" | "tvar" | "smer" | "sirka" | "delka" | "color" | "intenzita" | "efekt" | "rychlost" | "stiny" | "blikani"> {
+export interface LightSource extends Pick<MapLightV2, "dmOnly" | "zap" | "tvar" | "smer" | "sirka" | "delka" | "color" | "intenzita" | "efekt" | "rychlost" | "stiny" | "blikani"> {
   id: string;
   nazev: string;
   bright: number;               // ft jasného světla
@@ -318,6 +318,9 @@ export interface StavBoje {
   teren?: Record<string, string>;         // "x,y" → znak dlaždice (přepisuje mrizka)
   lights?: LightSource[];                 // světelné zdroje
   lightLevel?: "bright" | "dim" | "dark"; // globální osvětlení (z map.osvetleni)
+  lightCells?: Record<string, "bright" | "dim" | "dark">;
+  playerLightCells?: Record<string, "bright" | "dim" | "dark">;
+  privateSourceIds?: string[];
   fog?: { on: boolean; revealed: Record<string, 1>; visible?: Record<string, 1> }; // fog of war
   dvere?: Record<string, boolean>;            // wallId → otevřené dveře (stav v boji)
   zdroje?: Record<string, boolean>;

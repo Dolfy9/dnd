@@ -57,6 +57,8 @@ export const obscuredAt = (S: StavBoje, x: number, y: number): boolean =>
 
 /** Úroveň světla na buňce: Darkness/obscured zóny > zdroje > globální. */
 export function lightAt(S: StavBoje, map: BattleMapData, x: number, y: number): LightLevel {
+  const playerLevel = S.playerLightCells?.[`${x},${y}`];
+  if (playerLevel === "bright" || playerLevel === "dim" || playerLevel === "dark") return playerLevel;
   if (obscuredAt(S, x, y)) return "dark";
   const global = S.lightLevel || parseLightLevel(map.osvetleni);
   let lvl: LightLevel = global;

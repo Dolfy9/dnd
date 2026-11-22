@@ -13,6 +13,7 @@ import { setManifests } from "./MapV2Layers";
 import { wallIndex, type MapWall } from "../model/mapV2";
 import { mapWalls } from "../model/mapRoutes";
 import {toggleSource} from "../state/commands/sources";
+import { updateLightState } from "../model/lightState";
 import { Link, useNavigate } from "react-router-dom";
 import { useBattle } from "../state/useBattle";
 import "../boj.css";
@@ -119,6 +120,12 @@ export default function BattlePage() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   const S = b.S;
+  const lightInit = useRef("");
+  useEffect(() => {
+    if (!dm || !S || !map || lightInit.current === `${bid}:${map.id}`) return;
+    lightInit.current = `${bid}:${map.id}`;
+    b.dispatch(s => updateLightState(s, map));
+  }, [dm, !!S, map, bid]);
   const selTok = sel ? byId(S!, sel) : undefined;
   const curTok = S ? cur(S) : undefined;
   const shownTok = selTok || curTok;
@@ -219,7 +226,7 @@ export default function BattlePage() {
   };
   const cmdBase = b.dispatch;
   // dispatch wrapper: při zapnutém fog.auto přepočítá výhled po každé změně stavu
-  const cmd = (fn: (s: any) => void) => cmdBase((s: any) => { fn(s); if (s.fog?.auto) applyAutoFog(s); });
+  const cmd = (fn: (s: any) => void) => cmdBase((s: any) => { fn(s); if (s.fog?.auto) applyAutoFog(s); if (map) updateLightState(s, map); });
   const ctx = { map };
 
   /* ---- handlery ---- */

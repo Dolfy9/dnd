@@ -2,7 +2,7 @@
    osvětlení (darkness overlay + světelné díry), fog of war. */
 import type { StavBoje, Zone, Token } from "../types";
 import { tileAt, tileDef } from "../rules/grid";
-import { lightAt } from "../rules/lighting";
+import { lightAt, parseLightLevel } from "../rules/lighting";
 import type { BattleMapData } from "../types";
 import { assetUrl } from "../../mapeditor/assets/manifest";
 import { useMapManifests } from "./MapV2Layers";
@@ -234,9 +234,9 @@ export const TerenLayer = memo(function TerenLayer({ S, map, px, illustration = 
 export function LightingLayer({ S, map, px, W, H, dm }: {
   S: StavBoje; map: BattleMapData; px: number; W: number; H: number; dm: boolean;
 }) {
-  const globalLvl = S.lightLevel || "bright";
+  const globalLvl = S.lightLevel || parseLightLevel(map.osvetleni);
   const anyDarkZones = (S.zones || []).some((z) => z.blocksLos);
-  if (globalLvl === "bright" && !(S.lights || []).length && !anyDarkZones) return null;
+  if (globalLvl === "bright" && !(S.lights || []).length && !S.playerLightCells && !anyDarkZones) return null;
   const alphaBase = globalLvl === "dark" ? (dm ? 0.5 : 0.78) : globalLvl === "dim" ? (dm ? 0.22 : 0.4) : 0;
   const cells: JSX.Element[] = [];
   for (let x = 0; x < W; x++) for (let y = 0; y < H; y++) {

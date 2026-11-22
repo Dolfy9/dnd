@@ -81,6 +81,23 @@ def player_view(state: dict) -> dict:
         toks.append(t)
     sb["tok"] = toks
     sb["log"] = [l for l in sb.get("log", []) if not l.get("pj")]
+    private_sources = set(sb.pop("privateSourceIds", []) or [])
+    private_sources.update(l.get("id") for l in sb.get("lights", []) if l.get("dmOnly"))
+    map_id = sb.get("map") or s.get("mapa")
+    if map_id:
+        row = db.connect().execute("SELECT data FROM battle_maps WHERE id=?", (map_id,)).fetchone()
+        mdata = (db.jload(row["data"]) or {}) if row else {}
+        private_sources.update(o.get("id") for o in [*mdata.get("svetla", []), *mdata.get("objekty", [])] if o.get("dmOnly"))
+    if "lights" in sb:
+        sb["lights"] = [l for l in sb["lights"] if l.get("id") not in private_sources]
+    if "zdroje" in sb:
+        sb["zdroje"] = {k: v for k, v in sb["zdroje"].items() if k not in private_sources}
+    cells = sb.pop("lightCells", None)
+    if isinstance(cells, dict):
+        visible = fog.get("visible", revealed)
+        sb["playerLightCells"] = {k: v for k, v in cells.items()
+                                  if v in ("bright", "dim", "dark")
+                                  and (not fog_on or k in visible)}
     s.pop("pj_poznamky", None)
     s.pop("dm_notes", None)
     return s
@@ -168,7 +185,7 @@ def create_battle(b: NewBattle, u: dict = Depends(security.require("editor"))):
                     {"id": l.get("id", f"l{i}"), "anchor": [l.get("x", 0), l.get("y", 0)],
                      "bright": l.get("bright", 0), "dim": l.get("dim", 0),
                      "nazev": l.get("nazev", "světlo mapy"),
-                     **{key: l[key] for key in ("zap", "tvar", "smer", "sirka", "delka", "color", "intenzita", "efekt", "rychlost", "stiny", "blikani") if key in l}}
+                     **{key: l[key] for key in ("dmOnly", "zap", "tvar", "smer", "sirka", "delka", "color", "intenzita", "efekt", "rychlost", "stiny", "blikani") if key in l}}
                     for i, l in enumerate(mdata["svetla"])]
     state = {"id": bid, "nazev": b.name, "stav": "priprava", "kampan": kampan,
              "kampane": kampane,

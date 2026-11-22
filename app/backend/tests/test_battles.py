@@ -66,7 +66,7 @@ def test_seed_shaped_map_lights(editor, monkeypatch):
     shaped = {"id": "shaped", "x": 3.5, "y": 4.5, "bright": 10, "dim": 20,
               "tvar": "pruh", "smer": 90, "sirka": 70, "delka": 6,
               "color": "#ff8800", "intenzita": .7, "efekt": "pulz",
-              "rychlost": .8, "stiny": False, "blikani": False, "zap": False}
+              "rychlost": .8, "stiny": False, "blikani": False, "zap": False, "dmOnly": True}
     bid = None
     try:
         con.execute("INSERT INTO battle_maps(id,name,data) VALUES(?,?,?)", (mid, "Shaped seed test", db.jdump({"svetla": [shaped, {"id": "old", "bright": 5}]})))
@@ -78,6 +78,11 @@ def test_seed_shaped_map_lights(editor, monkeypatch):
         light, old = state["stav_boje"]["lights"]
         assert light == {key: value for key, value in shaped.items() if key not in ("x", "y")} | {"anchor": [3.5, 4.5], "nazev": "světlo mapy"}
         assert old == {"id": "old", "anchor": [0, 0], "bright": 5, "dim": 0, "nazev": "světlo mapy"}
+        del light["dmOnly"]
+        state["stav_boje"]["zdroje"] = {"shaped": False, "old": True}
+        public = battles_mod.player_view(state)["stav_boje"]
+        assert public["lights"] == [old]
+        assert public["zdroje"] == {"old": True}
     finally:
         con.execute("DELETE FROM battle_maps WHERE id=?", (mid,))
         if bid:
