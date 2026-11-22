@@ -16,7 +16,7 @@ it("preserves public glow while masking both baked and fallback darkness", () =>
   const images = baked.match(/<image[^>]*>/g)!;
   expect(images[0]).toContain('mask="url(#public)"');
   expect(images[1]).not.toContain("mask=");
-  const fallback = renderToStaticMarkup(<MapAtmosphereArtwork map={{ id:"m",nazev:"M",podklad:"jine",mrizka:[".."],atmosfera:{amb:0} }} darknessMask="url(#public)"/>);
+  const fallback = renderToStaticMarkup(<MapAtmosphereArtwork map={{ id:"m",nazev:"M",podklad:"jine",mrizka:[".."],atmosfera:{amb:0,barva:"#000000"} }} darknessMask="url(#public)"/>);
   expect(fallback).toContain('<g mask="url(#public)"><rect');
 });
 
