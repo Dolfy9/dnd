@@ -11,7 +11,7 @@ const plans=new Map<string,ContactShadowPlan>();
 export function contactShadowPlan(map:MapV2,assets:Record<string,AssetEntry>,doors?:Record<string,boolean>) {
   const lights=visualLights(map,assets).map(l=>({...l,bright:l.bright/24*5})),walls=lightBlockers(map.steny,doors);
   const objects=(map.objekty || []).filter(o=>!o.dmOnly && o.stin!==false && !o.asset.startsWith("d-") && (o.z ?? assets[o.asset]?.z ?? 0)>=0 && [o.x,o.y,o.w,o.h].every(Number.isFinite));
-  const key=JSON.stringify([lights,walls,objects.map(o=>[o.id,o.x,o.y,o.w,o.h])]),existing=plans.get(key);
+  const key=JSON.stringify([lights,walls,objects.map(o=>[o.id,o.x,o.y,o.w,o.h,o.rot])]),existing=plans.get(key);
   if(existing)return existing;
   const plan=objects.map(o=>{
     const shadow=directionalShadow(o,lights,walls);

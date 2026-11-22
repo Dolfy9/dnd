@@ -21,6 +21,7 @@ it("offsets and elongates away from the strongest reaching light, ignoring block
  expect(contactShadowPlan({...map,objekty:[{...box,tint:"#ff0000"}]},{})).toBe(plan);
  expect(contactShadowPlan({...map,objekty:[{...box,stin:false}]},{})).toEqual([]);
  expect(contactShadowPlan({...map,svetla:[]},{})).toMatchObject([{x:5,y:5+2/24,angle:0}]);
+ expect(contactShadowPlan({...map,svetla:[],objekty:[{...box,rot:90}]},{})).toMatchObject([{angle:90}]);
  const svg=renderToStaticMarkup(<ContactShadowArtwork plan={plan} width={240} height={240}/>);
  expect(svg).toContain('data-contact-shadow="box"');expect(svg).toContain("radialGradient");expect(svg).not.toMatch(/<filter|animation/);
 });
