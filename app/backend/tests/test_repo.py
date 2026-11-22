@@ -66,3 +66,5 @@ def test_editor_coordinate_link_does_not_open_battle_data(repo, monkeypatch, rol
     response = TestClient(app).get("/repo/11_Mapy/" + path)
     expected = 200 if path == "mista.json" and role in ("admin", "editor") else 404
     assert response.status_code == expected
+    if expected == 200:
+        assert "no-store" in response.headers["cache-control"]

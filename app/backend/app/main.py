@@ -90,7 +90,8 @@ async def repo_file(path: str, u: dict | None = Depends(security.optional)):
     coordinates = p == maps / "mista.json" and security.can_edit(u)
     if p.suffix.lower() == ".json" and maps in p.parents and p not in manifests and not coordinates:
         return JSONResponse({"chyba": "nenalezeno"}, 404)
-    return FileResponse(p, media_type=mimetypes.guess_type(str(p))[0])
+    headers = {"Cache-Control": "private, no-store", "Vary": "Authorization, Cookie"} if coordinates else None
+    return FileResponse(p, media_type=mimetypes.guess_type(str(p))[0], headers=headers)
 
 
 @app.get("/api/health")
