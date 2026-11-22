@@ -36,7 +36,17 @@ export function roomPolygon(m: MapV2, points: [number, number][], tex?: string, 
     const next = p[(i + 1) % p.length]; return sum + v[0] * next[1] - next[0] * v[1];
   }, 0)) < .001) return;
   wallChain(m, p, "wall", false, true);
-  if (tex) paintStroke(m, { id: wallUid(), t: tex, b: .25, o: 1, h: 1, r: angle, poly: true, p });
+  if (tex) {
+    for (let y = 0; y < m.mrizka.length; y++) for (let x = 0; x < m.mrizka[y].length; x++) {
+      let inside = false;
+      for (let i = 0, j = p.length - 1; i < p.length; j = i++) {
+        const a = p[i], b = p[j];
+        if ((a[1] > y + .5) !== (b[1] > y + .5) && x + .5 < (b[0] - a[0]) * (y + .5 - a[1]) / (b[1] - a[1]) + a[0]) inside = !inside;
+      }
+      if (inside) setTile(m, x, y, ".");
+    }
+    paintStroke(m, { id: wallUid(), t: tex, b: .25, o: 1, h: 1, r: angle, poly: true, p });
+  }
 }
 
 export function appendPaintPoint(points: [number, number][], point: [number, number], spacing = .05) {
