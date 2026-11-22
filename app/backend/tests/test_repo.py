@@ -2,7 +2,7 @@
 import pytest
 from fastapi.testclient import TestClient
 
-from app import config
+from app import config, security
 from app.main import app
 
 
@@ -54,3 +54,15 @@ def test_manifest_alias_cannot_expose_map_data(repo):
     (assets / "assety.json").symlink_to(data)
     response = TestClient(app).get("/repo/11_Mapy/bojove/assets/assety.json")
     assert response.status_code == 404
+
+
+@pytest.mark.parametrize("role", ["admin", "editor", "player"])
+@pytest.mark.parametrize("path", ["mista.json", "bojove_mapy.json", "svet.json"])
+def test_editor_coordinate_link_does_not_open_battle_data(repo, monkeypatch, role, path):
+    file = repo / "11_Mapy" / path
+    file.parent.mkdir(parents=True, exist_ok=True)
+    file.write_text('{"data":"coordinates or private map data"}')
+    monkeypatch.setitem(app.dependency_overrides, security.optional, lambda: {"role": role})
+    response = TestClient(app).get("/repo/11_Mapy/" + path)
+    expected = 200 if path == "mista.json" and role in ("admin", "editor") else 404
+    assert response.status_code == expected
