@@ -321,7 +321,8 @@ export interface StavBoje {
   lightCells?: Record<string, "bright" | "dim" | "dark">;
   playerLightCells?: Record<string, "bright" | "dim" | "dark">;
   privateSourceIds?: string[];
-  fog?: { on: boolean; revealed: Record<string, 1>; visible?: Record<string, 1> }; // fog of war
+  fog?: { on: boolean; revealed: Record<string, 1>; visible?: Record<string, 1>;
+    manual?: Record<string, 1>; hidden?: Record<string, 1> }; // fog of war
   dvere?: Record<string, boolean>;            // wallId → otevřené dveře (stav v boji)
   zdroje?: Record<string, boolean>;
   nastaveni?: BattleSettings;     // DM nastavení pravidel tohoto boje
@@ -350,6 +351,7 @@ export interface BattleStateDoc {
 }
 
 export interface BattleMapData {
+  mlha?: boolean;
   id: string;
   nazev: string;
   misto?: string;

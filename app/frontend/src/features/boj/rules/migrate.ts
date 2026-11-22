@@ -2,6 +2,7 @@
    neznámé klíče se zachovají (index signature na StavBoje). */
 import type { StavBoje, Token, CondInst, LogEntry, Side, EcoState } from "../types";
 import { uid } from "../types";
+import { normalizeFog } from "../model/fog";
 
 const SIDES: Record<string, Side> = {
   druzina: "druzina", nepratele: "nepratele", neutral: "neutral",
@@ -76,6 +77,7 @@ export function migrate(o: any): StavBoje {
   const src = (o && typeof o === "object") ? o : {};
   const S: StavBoje = {
     ...src,
+    fog: normalizeFog(src.fog),
     map: src.map,
     tok: (src.tok || src.tokens || []).map(normToken),
     ord: (src.ord || src.poradi || []).slice(),

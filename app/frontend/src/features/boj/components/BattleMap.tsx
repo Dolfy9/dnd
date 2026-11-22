@@ -2,7 +2,7 @@
    drag&drop s live path preview + OA, zóny, terén painting, osvětlení, fog,
    multi-select, kontextové menu, move&attack preview, metr, FX.
    Všechny mapové popisky jsou counter-scaled → konstantní on-screen velikost. */
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useEffect, useId, useMemo, useRef, useState } from "react";
 import type { BattleMapData, StavBoje, Token, AttackDef, FxEvent, EffectPreset } from "../types";
 import TokenCoin, { CoinDefs } from "./TokenCoin";
 import FxLayer from "./FxLayer";
@@ -25,8 +25,10 @@ import type { MapWeather } from "../model/mapV2";
 import { ZoomIn, ZoomOut, Maximize2, Crosshair, X } from "lucide-react";
 import {sourceAt,sourceMap,sourceOn} from "../model/sourceState";
 import {doorAt} from "../model/doorHit";
+import { fogPlayerState } from "../model/fog";
+import { FogMemory, useFogRaster } from "./FogSurface";
 
-export type Tool = "select" | "measure" | "zone" | "paint" | "fog" | "light" | "kresba";
+export type Tool = "select" | "measure" | "zone" | "paint" | "fog" | "fog-room" | "light" | "kresba";
 
 export interface Targeting {
   atk: AttackDef;
@@ -51,6 +53,9 @@ interface Props {
   tool: Tool;
   paintTile?: string;
   fogMode?: "reveal" | "hide";
+  fogOverlay?: boolean;
+  fogRoom?: string | null;
+  onFogRoom?: (x: number, y: number) => void;
   targeting: Targeting | null;
   zonePlace?: ZonePlace | null;
   zoneEdit?: boolean;
@@ -86,12 +91,16 @@ const viewKey = (bid: string) => `boj-view:${bid}`;
 const clamp = (v: number, a: number, b: number) => Math.min(b, Math.max(a, v));
 
 export default function BattleMap(p: Props) {
-  const { S } = p;
+  const S = useMemo(() => p.dm ? p.S : fogPlayerState(p.S), [p.S, p.dm]);
   const map=useMemo(()=>sourceMap(p.map,S.zdroje),[p.map,S.zdroje]);
   const [hoverSource,setHoverSource]=useState<string|null>(null);
   const [sourceMenu,setSourceMenu]=useState<{id:string;x:number;y:number}|null>(null);
   const weatherMap = useMemo(() => ({ ...map, pocasi: S.pocasi ?? (map as MapV2).pocasi } as MapV2), [map,S.pocasi]);
   const { W, H } = mapSize(map);
+  const fogRaster = useFogRaster(S.fog, W, H), fogId = useId().replace(/:/g, "");
+  const restricted = !p.dm && !!S.fog?.on;
+  const liveMask = restricted ? fogRaster?.visible : undefined;
+  const liveSvgMask = restricted ? `url(#${fogId}live)` : undefined;
   const PX = 48;
   const svgRef = useRef<SVGSVGElement>(null);
   const [view, setView] = useState<{ x: number; y: number; k: number } | null>(null);
@@ -310,6 +319,7 @@ export default function BattleMap(p: Props) {
       setDrag(null); return;
     }
     const { cx, cy, gx, gy } = toGrid(e);
+    if (p.dm && p.tool === "fog-room") { p.onFogRoom?.(gx, gy); return; }
     const t = tokAt(cx, cy);
     if (p.tool === "measure") { setMeasure({ a: [cx, cy], b: [cx, cy] }); return; }
     if (p.tool === "zone") {
@@ -476,7 +486,10 @@ export default function BattleMap(p: Props) {
 
   return (
     <div className="boj-maparea">
-      <MapAnimatedScene map={map as MapV2} view={V} px={PX} dm={p.dm} illustration={!!img} overrides={S.teren} doors={S.dvere} details={<>
+      {restricted && <div className="battle-fog-memory-board" style={{ width: W * 24, height: H * 24, transform: `translate(${V.x}px,${V.y}px) scale(${V.k * PX / 24})`, maskImage: fogRaster?.memory ? `url("${fogRaster.memory}")` : "linear-gradient(transparent,transparent)", maskSize: "100% 100%" }}>
+        <FogMemory map={map as MapV2} S={S} image={img || undefined} base={base} />
+      </div>}
+      <MapAnimatedScene map={map as MapV2} view={V} px={PX} dm={p.dm} visibilityMask={liveMask} illustration={!!img} overrides={S.teren} doors={S.dvere} details={<>
         <MapElevationLayer map={map as MapV2} />
         <MapGridLayer map={map as MapV2} W={W} H={H} />
         <MapDrawingLayer map={map as MapV2} dm={p.dm} />
@@ -490,18 +503,21 @@ export default function BattleMap(p: Props) {
            onPointerUp={up} onDoubleClick={dbl} onPointerLeave={leave} onContextMenu={ctx} style={{ touchAction: "none" }}>
         <CoinDefs />
         <ZonePatterns />
+        {restricted && <defs><mask id={fogId + "live"} maskUnits="userSpaceOnUse" x={0} y={0} width={W * PX} height={H * PX} style={{ maskType: "alpha" }}>
+          {liveMask && <image href={liveMask} width={W * PX} height={H * PX} preserveAspectRatio="none" />}
+        </mask></defs>}
         <g transform={`translate(${V.x},${V.y}) scale(${V.k})`}>
           {/* v2 vrstvy jsou v jednotkách 24 px/buňka → škálovaná skupina na bitevní PX */}
           <g transform={`scale(${PX / 24})`}>
           {p.dm && <MapNoteLayer map={map as MapV2} />}
           </g>
-          {(S.kresby as any)?.length ? <MapDrawingLayer map={{ kresby: S.kresby } as MapV2} dm /> : null}
+          {(S.kresby as any)?.length ? <g mask={liveSvgMask}><MapDrawingLayer map={{ kresby: S.kresby } as MapV2} dm={p.dm} /></g> : null}
           {drawLive?.pts?.length ? <polyline points={drawLive.pts.map(([x, y]) => `${x * PX},${y * PX}`).join(" ")}
             fill="none" stroke={drawLive.stroke || "#f59e0b"} strokeWidth={3} strokeLinecap="round" opacity={.85} /> : null}
-          {S.zones.map((z) => <ZoneShape key={z.id} z={z} px={PX} tokens={S.tok} lab={cs}
+          <g mask={liveSvgMask}>{S.zones.map((z) => <ZoneShape key={z.id} z={z} px={PX} tokens={S.tok} lab={cs}
             edit={p.zoneEdit && !z.tokenId}
             onMove={(ax, ay) => p.onZoneEdit?.(z.id, { anchor: [ax, ay] })}
-            onResize={(size) => p.onZoneEdit?.(z.id, { size })} />)}
+            onResize={(size) => p.onZoneEdit?.(z.id, { size })} />)}</g>
           {zonePrevCells.map(([x, y]) => (
             <rect key={`zp${x},${y}`} x={x * PX + 1} y={y * PX + 1} width={PX - 2} height={PX - 2} rx={4}
                   fill="#a78bfa" opacity={0.3} stroke="#a78bfa" strokeWidth={1.5} />
@@ -606,9 +622,10 @@ export default function BattleMap(p: Props) {
               </g>
             );
           })}
-          <g transform={`scale(${PX / 24})`}><MapAtmosphereLayer map={map as MapV2} doors={S.dvere} illumination={S.playerLightCells} /></g>
-          <LightingLayer S={S} map={map} px={PX} W={W} H={H} dm={p.dm} />
-          <FogLayer S={S} px={PX} W={W} H={H} dm={p.dm} />
+          <g mask={liveSvgMask}>
+            <g transform={`scale(${PX / 24})`}><MapAtmosphereLayer map={map as MapV2} doors={S.dvere} illumination={S.playerLightCells} /></g>
+            <LightingLayer S={S} map={map} px={PX} W={W} H={H} dm={p.dm} />
+          </g>
           {measure && (
             <g pointerEvents="none">
               <line x1={(measure.a[0] + 0.5) * PX} y1={(measure.a[1] + 0.5) * PX} x2={(measure.b[0] + 0.5) * PX} y2={(measure.b[1] + 0.5) * PX}
@@ -620,11 +637,13 @@ export default function BattleMap(p: Props) {
               </Pill>
             </g>
           )}
-          <FxLayer events={p.fx} px={PX} k={V.k} onDone={p.onFxDone} shakingIds={new Set()} />
+          <g mask={liveSvgMask}><FxLayer events={p.fx} px={PX} k={V.k} onDone={p.onFxDone} shakingIds={new Set()} /></g>
+          <FogLayer S={S} px={PX} W={W} H={H} dm={p.dm} overlay={p.fogOverlay} mask={p.dm ? fogRaster?.invisible : fogRaster?.unknown} />
+          {p.dm && p.tool === "fog-room" && (map as MapV2).interiery?.map(room => <polygon key={room.id} points={room.poly.map(([x,y]) => `${x*PX},${y*PX}`).join(" ")} fill={p.fogRoom === room.id ? "#fbbf2433" : "#c4b5fd11"} stroke={p.fogRoom === room.id ? "#fbbf24" : "#c4b5fd"} strokeWidth={2} strokeDasharray="6 4" pointerEvents="none" />)}
           {p.dm && hoverSource && (()=>{const source=map.objekty?.find(o=>o.id===hoverSource) || map.svetla?.find(l=>l.id===hoverSource);return source?<g className="source-marker" data-source-hover={source.id} pointerEvents="none" transform={`translate(${source.x*PX},${source.y*PX}) scale(${1/V.k})`}><circle r={12}/><text y={3}>{sourceOn(source)?"◉":"○"}</text></g>:null;})()}
         </g>
       </svg>
-      <MapWeatherOverlay map={weatherMap} view={V} px={PX} />
+      <MapWeatherOverlay map={weatherMap} view={V} px={PX} visibilityMask={liveMask} />
       {p.dm && sourceMenu && <><div style={{position:"fixed",inset:0,zIndex:100}} onPointerDown={()=>setSourceMenu(null)}/><div role="menu" aria-label="Stav zdroje" className="boj-ctx" style={{position:"fixed",left:Math.min(sourceMenu.x,window.innerWidth-240),top:Math.min(sourceMenu.y,window.innerHeight-80),zIndex:101}} onKeyDown={e=>{if(e.key==="Escape")setSourceMenu(null);}}><button role="menuitem" autoFocus onClick={()=>{p.onSource?.(sourceMenu.id);setSourceMenu(null);}}>Zapnout / vypnout zdroj</button></div></>}
       <div className="map-live-controls"><AnimationButton />{p.dm && p.onWeather && <WeatherPicker compact map={map as MapV2} value={weatherMap.pocasi} onChange={p.onWeather} />}</div>
 

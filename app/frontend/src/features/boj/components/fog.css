@@ -1,0 +1,6 @@
+.battle-fog-memory-board { position:absolute;left:0;top:0;transform-origin:0 0;pointer-events:none }
+.battle-fog-memory { display:block;filter:grayscale(.95) brightness(.4) }
+.battle-fog-memory * { animation:none!important;transition:none!important }
+.boj-fog { flex-wrap:wrap }
+.boj-fog-hint { display:block;color:var(--muted);font-size:11px;line-height:1.5;margin:6px 0 }
+.boj-fog-preview { background:#291d41;border:1px solid #a78bfa;color:#e9d5ff;padding:6px 12px;border-radius:6px;font-size:12px }

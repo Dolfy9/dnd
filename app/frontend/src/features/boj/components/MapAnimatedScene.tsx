@@ -29,9 +29,9 @@ export function waterMask(map: MapV2) {
   return "url(\"data:image/svg+xml," + encodeURIComponent(`<svg xmlns="http://www.w3.org/2000/svg" width="${W}" height="${H}"><mask id="m"><rect width="100%" height="100%" fill="black"/>${shapes.join("")}</mask><rect width="100%" height="100%" fill="white" mask="url(#m)"/></svg>`) + "\")";
 }
 
-export const MapAnimatedScene = memo(function MapAnimatedScene({ map, view, px = 24, children, details, dm, terrain = true, objects = true, lights = true, routes = true, illustration = false, overrides, doors }: {
+export const MapAnimatedScene = memo(function MapAnimatedScene({ map, view, px = 24, children, details, dm, terrain = true, objects = true, lights = true, routes = true, illustration = false, overrides, doors, visibilityMask }: {
   map: MapV2; view: {x:number;y:number;k:number}; px?: number; children: ReactNode; details?: ReactNode; dm?: boolean;
-  terrain?: boolean; objects?: boolean; lights?: boolean; routes?:boolean; illustration?: boolean; overrides?: StavBoje["teren"]; doors?:Record<string,boolean>;
+  terrain?: boolean; objects?: boolean; lights?: boolean; routes?:boolean; illustration?: boolean; overrides?: StavBoje["teren"]; doors?:Record<string,boolean>; visibilityMask?: string;
 }) {
   const { assets } = useMapManifests();
   const sceneRef=useRef<HTMLDivElement>(null);
@@ -46,7 +46,7 @@ export const MapAnimatedScene = memo(function MapAnimatedScene({ map, view, px =
       {source?<SourceArtwork object={source} asset={assets[source.asset]} src={src} className={`map-anim-${anim}`} style={{animationDelay:`${animationPhase(id)}s`,filter:directional.has(id)||!castsShadow(source,assets[source.asset])?"none":undefined}}/>:<img src={src} alt="" className={`map-anim-${anim}`} style={{animationDelay:`${animationPhase(id)}s`,filter:directional.has(id)||map.objekty?.some(o=>o.id===id&&!castsShadow(o,assets[o.asset]))?"none":undefined}} />}
     </div>;
   return <div ref={sceneRef} className="map-animated-scene" aria-hidden="true"><div className="map-scene-board" style={{
-    width:W,height:H,transform:`translate(${view.x}px,${view.y}px) scale(${view.k*px/24})`,
+    width:W,height:H,transform:`translate(${view.x}px,${view.y}px) scale(${view.k*px/24})`,maskImage:visibilityMask ? `url("${visibilityMask}")` : undefined,maskSize:"100% 100%",
   }}>
     <svg className="map-scene-static" width={W} height={H}>{children}</svg>
     {mask && <div className="map-dom-water" style={{maskImage:mask}} data-map-water><div style={{backgroundImage:`url(${FX}vlny-tiche.webp)`}} className="map-water-drift" /></div>}

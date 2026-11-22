@@ -170,6 +170,7 @@ export function MapPanel({ map, push, onResize, onUploadImg, onImportUvtt, onExp
   const W = map.mrizka[0]?.length || 1, H = map.mrizka.length;
   return (
     <div className="me-mapmeta">
+      <label><input type="checkbox" checked={!!map.mlha} onChange={e => push(m => { m.mlha = e.target.checked; })} /> Mlha války</label>
       <details className="me-section"><summary>Rozměry a mřížka · {W} × {H}</summary>
       <h4>Rozměr {W}×{H}</h4>
       <div className="me-resize">

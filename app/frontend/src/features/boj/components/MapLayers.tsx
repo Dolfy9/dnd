@@ -248,19 +248,26 @@ export function LightingLayer({ S, map, px, W, H, dm }: {
 }
 
 /** Fog of war: odhalené buňky průhledné, neodhalené černé (hráči) / tmavé (DM). */
-export function FogLayer({ S, px, W, H, dm }: { S: StavBoje; px: number; W: number; H: number; dm: boolean }) {
-  if (!S.fog?.on) return null;
-  const a = dm ? 0.45 : 0.97;
-  const dimA = dm ? 0.18 : 0.55;                       // explored-but-not-visible veil
-  const cells: JSX.Element[] = [];
-  const hasVis = !!S.fog.visible;
-  for (let x = 0; x < W; x++) for (let y = 0; y < H; y++) {
-    const rev = S.fog.revealed[`${x},${y}`];
-    if (!rev) cells.push(<rect key={`${x},${y}`} x={x * px} y={y * px} width={px} height={px} fill="#000" opacity={a} />);
-    else if (hasVis && !S.fog.visible![`${x},${y}`])
-      cells.push(<rect key={`${x},${y}`} x={x * px} y={y * px} width={px} height={px} fill="#000" opacity={dimA} />);
-  }
-  return <g pointerEvents="none">{cells}</g>;
+export function FogLayer({ S, px, W, H, dm, mask, overlay }: { S: StavBoje; px: number; W: number; H: number; dm: boolean; mask?: string; overlay?: boolean }) {
+  const id = useId().replace(/:/g, "");
+  if (!S.fog?.on || (dm && !overlay)) return null;
+  const width = W * px, height = H * px;
+  return <g pointerEvents="none" data-fog-surface={dm ? "gm-overlay" : "player"}>
+    <defs>
+      <filter id={id + "soft"}><feGaussianBlur stdDeviation={px * .035} /></filter>
+      <mask id={id + "mask"} maskUnits="userSpaceOnUse" x={0} y={0} width={width} height={height} style={{ maskType: "alpha" }}>
+        {mask ? <><image href={mask} width={width} height={height} preserveAspectRatio="none" filter={`url(#${id}soft)`} />
+          <image href={mask} width={width} height={height} preserveAspectRatio="none" /></> : <rect width={width} height={height} fill="white" />}
+      </mask>
+      <pattern id={id + "hatch"} width="14" height="14" patternUnits="userSpaceOnUse" patternTransform="rotate(35)">
+        <rect width="14" height="14" fill="#291d4155" /><path d="M0 0V14" stroke="#d8b4fe" strokeWidth="3" opacity=".4" />
+      </pattern>
+    </defs>
+    <g mask={`url(#${id}mask)`}>
+      <rect width={width} height={height} fill={dm ? `url(#${id}hatch)` : "#11151d"} />
+      {!dm && <image href="/repo/11_Mapy/bojove/fx/mraky.webp" width={width} height={height} preserveAspectRatio="xMidYMid slice" opacity=".065" />}
+    </g>
+  </g>;
 }
 
 export function tileTint(c: string, map: BattleMapData, x: number, y: number, teren?: Record<string, string>) {

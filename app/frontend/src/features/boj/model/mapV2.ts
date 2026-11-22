@@ -140,6 +140,7 @@ export const wallUid = () => "w" + Math.random().toString(36).slice(2, 9);
 /** Převede libovolný vstup na MapV2 s vyplněnými defaulty. Staré mapy projdou beze změny mechaniky. */
 export function migrateMap(m: BattleMapData | MapV2 | any, assets?: Record<string, VariantAsset>): MapV2 {
   const out: MapV2 = { ...(m as MapV2) };
+  if (out.mlha !== undefined) out.mlha = out.mlha === true;
   if(out.trasy!==undefined)out.trasy=normalizeRoutes(out.trasy);
   if (out.pocasi !== undefined) out.pocasi = normalizeWeather(out.pocasi);
   if (!out.mrizka) out.mrizka = ["...."];

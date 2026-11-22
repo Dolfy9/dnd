@@ -23,7 +23,7 @@ export const PAINT_TILES = [
 
 export default function ToolsPanel({ S, map, sel, dm, tool, paintTile, fogMode,
   onTool, onPaintTile, onFogMode, onFogToggle, onFogParty, onAddLight, onRemoveLight,
-  onLightLevel, onRemoveZone, onDice, onRest }: {
+  onLightLevel, onRemoveZone, onDice, onRest, fogOverlay, onFogOverlay, viewAsPlayer, onViewAsPlayer, fogRoom, onFogRoom, onFogAll, onFogReset }: {
   S: StavBoje; map: BattleMapData; sel: Token | null; dm: boolean;
   tool: string; paintTile: string; fogMode: "reveal" | "hide";
   onTool: (t: any) => void;
@@ -31,6 +31,10 @@ export default function ToolsPanel({ S, map, sel, dm, tool, paintTile, fogMode,
   onFogMode: (m: "reveal" | "hide") => void;
   onFogToggle: (on: boolean) => void;
   onFogParty: () => void;
+  fogOverlay: boolean; onFogOverlay: (on: boolean) => void;
+  viewAsPlayer: boolean; onViewAsPlayer: (on: boolean) => void;
+  fogRoom: string | null; onFogRoom: (reveal: boolean) => void;
+  onFogAll: () => void; onFogReset: () => void;
   onAddLight: (l: { nazev: string; bright: number; dim: number; tokenId?: string }) => void;
   onRemoveLight: (id: string) => void;
   onLightLevel: (l: "bright" | "dim" | "dark") => void;
@@ -56,13 +60,20 @@ export default function ToolsPanel({ S, map, sel, dm, tool, paintTile, fogMode,
             </div>
           </div>
           <div className="boj-sec">
-            <h4><CloudFog size={12} /> Fog of War</h4>
+            <h4><CloudFog size={12} /> Mlha války</h4>
             <div className="boj-fog">
-              <label><input type="checkbox" checked={!!S.fog?.on} onChange={(e) => onFogToggle(e.target.checked)} /> zapnuto</label>
+              <label><input type="checkbox" checked={!!S.fog?.on} onChange={(e) => onFogToggle(e.target.checked)} /> Mlha války zapnuta</label>
               <button className={tool === "fog" && fogMode === "reveal" ? "on" : ""} onClick={() => { onFogMode("reveal"); onTool("fog"); }}>Odkrýt</button>
               <button className={tool === "fog" && fogMode === "hide" ? "on" : ""} onClick={() => { onFogMode("hide"); onTool("fog"); }}>Zakrýt</button>
-              <button onClick={onFogParty}>Odhalit okolí družiny</button>
+              <button onClick={onFogParty}>Přepočítat výhled</button>
+              <button onClick={onFogAll}>Odhalit vše</button><button onClick={onFogReset}>Resetovat mlhu</button>
+              <button className={tool === "fog-room" ? "on" : ""} onClick={() => { onViewAsPlayer(false); onTool("fog-room"); }}>Vybrat místnost</button>
+              <button disabled={!fogRoom} onClick={() => onFogRoom(true)}>Odhalit místnost</button>
+              <button disabled={!fogRoom} onClick={() => onFogRoom(false)}>Skrýt místnost</button>
+              <label><input type="checkbox" checked={fogOverlay} onChange={e => onFogOverlay(e.target.checked)} /> Překryv výhledu hráčů</label>
+              <label><input type="checkbox" checked={viewAsPlayer} onChange={e => onViewAsPlayer(e.target.checked)} /> Zobrazit jako hráč</label>
             </div>
+            <small className="boj-fog-hint">Výhled se přepočítává při pohybu i změnách dveří a světel. Štětec a místnosti mají přednost před výhledem; reset je zruší. Místnost vybírej podle obrysu interiéru.</small>
           </div>
           <div className="boj-sec">
             <h4><Lightbulb size={12} /> Osvětlení</h4>

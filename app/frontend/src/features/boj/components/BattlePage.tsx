@@ -6,12 +6,12 @@ import { useQuery } from "@tanstack/react-query";
 import { get } from "../../../api";
 import { useApp, isEditor } from "../../../store";
 import { toast, confirmDialog } from "../../../components/ui";
-import { sightBlocked, lightAt, sensesOf } from "../rules/lighting";
+import { fogPlayerState, mapCells, updateFog } from "../model/fog";
+import { pointInPolygon } from "../model/lightGeometry";
 import { isInteractiveTarget } from "./shortcuts";
 import { useAssetManifest, useTextureManifest } from "../../mapeditor/assets/manifest";
 import { setManifests } from "./MapV2Layers";
-import { wallIndex, type MapWall } from "../model/mapV2";
-import { mapWalls } from "../model/mapRoutes";
+import { type MapV2, type MapWall } from "../model/mapV2";
 import {toggleSource} from "../state/commands/sources";
 import { updateLightState } from "../model/lightState";
 import { Link, useNavigate } from "react-router-dom";
@@ -60,9 +60,13 @@ export default function BattlePage() {
   const [selSet, setSelSet] = useState<Set<string>>(new Set());
   const [panel, setPanel] = useState<Panel>("akce");
   const [inspId, setInspId] = useState<string | null>(null);
-  const [tool, setTool] = useState<"select" | "measure" | "zone" | "paint" | "fog" | "light" | "kresba">("select");
+  const [tool, setTool] = useState<"select" | "measure" | "zone" | "paint" | "fog" | "fog-room" | "light" | "kresba">("select");
   const [paintTile, setPaintTile] = useState("#");
   const [fogMode, setFogMode] = useState<"reveal" | "hide">("reveal");
+  const [fogOverlay, setFogOverlay] = useState(false);
+  const [viewAsPlayer, setViewAsPlayer] = useState(false);
+  const [fogRoom, setFogRoom] = useState<string | null>(null);
+  const fogInitialized = useRef("");
   const [zonePlace, setZonePlace] = useState<ZonePlace | null>(null);
   const [drawColor, setDrawColor] = useState("#f59e0b");
   const [twin1, setTwin1] = useState<string | null>(null);
@@ -99,6 +103,14 @@ export default function BattlePage() {
     const list = (raw?.bojove_mapy || raw?.data?.bojove_mapy || raw?.mapy || []).map((m: any) => ({ ...(m.data || {}), ...m, data: undefined })) as BattleMapData[];
     return list.find((m) => m.id === b.S?.map) || list[0];
   }, [maps.data, b.S?.map]);
+  useEffect(() => {
+    if (!dm || !b.S || !map || fogInitialized.current === `${bid}:${map.id}`) return;
+    fogInitialized.current = `${bid}:${map.id}`;
+    const next = structuredClone(b.S);
+    if (!next.fog && map.mlha) next.fog = { on: true, revealed: {}, visible: {} };
+    updateFog(next, map);
+    if (JSON.stringify(next.fog) !== JSON.stringify(b.S.fog)) b.dispatch(s => { s.fog = next.fog; });
+  }, [bid, map, b.S, dm]);
 
   useEffect(() => { b.load(); }, [bid]);
   const assetsQ = useAssetManifest(); const texQ = useTextureManifest();
@@ -119,7 +131,7 @@ export default function BattlePage() {
     return () => setSidebar(was);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-  const S = b.S;
+  const S = useMemo(() => b.S && viewAsPlayer ? fogPlayerState(b.S) : b.S, [b.S, viewAsPlayer]);
   const lightInit = useRef("");
   useEffect(() => {
     if (!dm || !S || !map || lightInit.current === `${bid}:${map.id}`) return;
@@ -199,34 +211,8 @@ export default function BattlePage() {
         .then((ok) => { if (ok) { cmd((s) => { s.dvere = { ...(s.dvere || {}), [w.id]: true }; log(s, "system", "Dveře odemčeny a otevřeny", "PJ"); }); } });
     } else toggle();
   };
-  // přepočet viditelnosti družiny do fog stavu `s` (volá se ručně i kontinuálně při fog.auto)
-  const applyAutoFog = (s: any) => {
-    const wIdx = wallIndex(mapWalls(map));
-    const party = s.tok.filter((t: Token) => !t.dead && t.x != null && t.side !== "nepratele" && !t.skryty);
-    const vis: Record<string, 1> = {}, rev: Record<string, 1> = { ...(s.fog?.revealed || {}) };
-    const R = 12; // 60 ft
-    for (const t of party) {
-      const sn = sensesOf(t);
-      const rr = Math.max(R, Math.ceil(Math.max(sn.darkvision, sn.blindsight, sn.truesight) / 5));
-      for (let y = Math.max(0, (t.y ?? 0) - rr); y <= Math.min(map.mrizka.length - 1, (t.y ?? 0) + rr); y++)
-        for (let x = Math.max(0, (t.x ?? 0) - rr); x <= Math.min((map.mrizka[0]?.length || 1) - 1, (t.x ?? 0) + rr); x++) {
-          const d = Math.max(Math.abs(x - (t.x ?? 0)), Math.abs(y - (t.y ?? 0))) * 5;
-          if (d > rr * 5) continue;
-          const ll = lightAt(s, map, x, y);
-          const darkvis = d <= sn.darkvision || d <= sn.blindsight || sn.truesight > 0;
-          if (ll === "dark" && !darkvis) continue;
-          if (wIdx.size && sightBlocked(wIdx, (t.x ?? 0) + .5, (t.y ?? 0) + .5, x + .5, y + .5, s.dvere)) continue;
-          vis[`${x},${y}`] = 1; rev[`${x},${y}`] = 1;
-        }
-    }
-    s.fog = { ...(s.fog || {}), on: true, revealed: rev, visible: vis };
-  };
-  const autoFog = () => {
-    cmd((s) => { applyAutoFog(s); log(s, "system", "Fog: automaticky podle výhledu družiny", "PJ"); });
-  };
   const cmdBase = b.dispatch;
-  // dispatch wrapper: při zapnutém fog.auto přepočítá výhled po každé změně stavu
-  const cmd = (fn: (s: any) => void) => cmdBase((s: any) => { fn(s); if (s.fog?.auto) applyAutoFog(s); if (map) updateLightState(s, map); });
+  const cmd = (fn: (s: any) => void) => cmdBase((s: any) => { fn(s); updateLightState(s, map); updateFog(s, map); });
   const ctx = { map };
 
   /* ---- handlery ---- */
@@ -587,11 +573,7 @@ export default function BattlePage() {
                 <button className="boj-tbtn" title="Nápověda (?)" onClick={() => { setHelp(true); setMoreOpen(false); }}><HelpCircle size={14} /><span className="boj-more-lab">Nápověda</span></button>
                 {dm && <button className="boj-tbtn" title="Maximalizovat (Shift+F)" onClick={() => { setMaxi(!maxi); setMoreOpen(false); }}><Maximize size={14} /><span className="boj-more-lab">Maximalizovat</span></button>}
                 {dm && map?.id && <button className="boj-tbtn" title="Otevřít tuto mapu v editoru" onClick={() => { nav(`/boj/mapa/${map.id}`); setMoreOpen(false); }}><PenLine size={14} /><span className="boj-more-lab">Upravit mapu</span></button>}
-                {dm && <button className="boj-tbtn" title="Automatický fog podle výhledu družiny — trvalý přepočet při pohybu" onClick={() => {
-                  const on = !(S.fog as any)?.auto;
-                  cmd((s) => { s.fog = { ...(s.fog || {}), on: true, auto: on }; });
-                  setMoreOpen(false);
-                }}><Eye size={14} /><span className="boj-more-lab">Auto-fog{(S.fog as any)?.auto ? " ✓" : ""}</span></button>}
+                {dm && <button className={`boj-tbtn ${viewAsPlayer ? "on" : ""}`} aria-pressed={viewAsPlayer} title="Zobrazit jako hráč" onClick={() => { setViewAsPlayer(!viewAsPlayer); setMoreOpen(false); }}><Eye size={14} /><span className="boj-more-lab">Zobrazit jako hráč</span></button>}
                 {dm && <div className="boj-seg" role="group" aria-label="Režim boje">
                   <button className={`boj-seg-b ${!isFree(S) ? "on" : ""}`} onClick={() => cmd((s) => { if (isFree(s)) { s.nastaveni = { ...(s.nastaveni || {}), rezim: "pravidla" } as any; log(s, "system", "Režim: Pravidla", "PJ"); } })}>Pravidla</button>
                   <button className={`boj-seg-b free ${isFree(S) ? "on" : ""}`} onClick={() => cmd((s) => { if (!isFree(s)) { s.nastaveni = { ...(s.nastaveni || {}), rezim: "volny" } as any; log(s, "system", "Režim: Volný — bez pravidel", "PJ"); } })}>Volný</button>
@@ -600,7 +582,8 @@ export default function BattlePage() {
             </div>
           </div>
           <BattleMap
-            bid={bid} S={S} map={map} sel={sel} selSet={selSet} dm={dm} tool={tool}
+            bid={bid} S={S} map={map} sel={sel} selSet={selSet} dm={dm && !viewAsPlayer} tool={viewAsPlayer ? "select" : tool}
+            fogOverlay={fogOverlay} fogRoom={fogRoom} onFogRoom={(x,y) => { const room = [...((map as MapV2).interiery || [])].reverse().find(r => pointInPolygon([x,y],r.poly)); setFogRoom(room?.id || null); }}
             paintTile={paintTile} fogMode={fogMode}
             targeting={targeting} zonePlace={zonePlace} moveAtk={moveAtk?.plan}
             hoverAtk={hoverAtk} names={names} followTurn={settingsOf(S).pohyb.sledujTah !== false}
@@ -622,7 +605,7 @@ export default function BattlePage() {
             onArea={onArea}
             onZone={onZone}
             onPaint={(cells) => cmd((s) => C.cmdPaint(s, cells, paintTile))}
-            onFogPaint={(cells, reveal) => cmd((s) => C.cmdFogCells(s, cells, reveal))}
+            onFogPaint={(cells, reveal) => cmd((s) => C.cmdFogCells(s, cells.filter(([x,y]) => x >= 0 && y >= 0 && y < map.mrizka.length && x < map.mrizka[y].length), reveal))}
             onLightPlace={(x, y) => { if (pendingLight) { cmd((s) => C.cmdAddLight(s, { ...pendingLight, anchor: [x, y] })); setPendingLight(null); setTool("select"); } }}
             onCtxMenu={(t, pt) => setCtxMenu({ t, x: pt.x, y: pt.y })}
             onDoor={onDoor} onSource={id=>{if(dm)cmd(s=>toggleSource(s,map,id,dm));}}
@@ -665,10 +648,13 @@ export default function BattlePage() {
             )}
             {panel === "prostredi" && (
               <ToolsPanel S={S} map={map} sel={selTok || null} dm={dm}
+                fogOverlay={fogOverlay} onFogOverlay={setFogOverlay} viewAsPlayer={viewAsPlayer} onViewAsPlayer={setViewAsPlayer}
+                fogRoom={fogRoom} onFogRoom={(reveal) => { const room = (map as MapV2).interiery?.find(r => r.id === fogRoom); if (room) cmd(s => C.cmdFogCells(s, mapCells(map, room.poly), reveal)); }}
+                onFogAll={() => cmd(s => C.cmdFogAll(s, map))} onFogReset={() => cmd(s => C.cmdFogReset(s, map))}
                 tool={tool} paintTile={paintTile} fogMode={fogMode}
                 onTool={setTool} onPaintTile={setPaintTile} onFogMode={setFogMode}
                 onFogToggle={(on) => cmd((s) => C.cmdFogToggle(s, on))}
-                onFogParty={() => cmd((s) => C.cmdFogParty(s))}
+                onFogParty={() => cmd((s) => C.cmdFogParty(s, map))}
                 onAddLight={(l) => { if (l.tokenId) cmd((s) => C.cmdAddLight(s, l)); else { setPendingLight(l); setTool("light"); toast("Klikni do mapy = umísti světlo", "ok"); } }}
                 onRemoveLight={(id) => cmd((s) => C.cmdRemoveLight(s, id))}
                 onLightLevel={(l) => cmd((s) => C.cmdLightLevel(s, l))}

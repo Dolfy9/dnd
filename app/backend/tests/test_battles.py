@@ -216,3 +216,42 @@ def test_put_state_broadcasts_version_only(editor, monkeypatch):
     assert sent["data"] == {"version": 1}
     assert "state" not in sent["data"]
     editor.delete(f"/api/battles/{bid}")
+
+
+def test_fog_persistence_and_player_memory_filtering(editor, player, monkeypatch):
+    monkeypatch.setattr(battles_mod, "_mirror", lambda *args: None)
+    bid = _mk_battle(editor)
+    try:
+        state = _mk_state()
+        sb = state["stav_boje"]
+        sb["tok"][0].update(x=0, y=0)
+        sb["tok"][1].update(x=2, y=0)
+        sb["fog"] = {"on": True, "revealed": {"0,0": 1, "2,0": 1}, "visible": {"0,0": 1},
+                     "manual": {"0,0": 1}, "hidden": {"4,0": 1}}
+        sb["kresby"] = [{"id": "seen", "pts": [[0, 0]], "dmOnly": False}, {"id": "unknown", "pts": [[4, 0]]}]
+        sb["lights"] = [{"id": "memory-light", "anchor": [2, 0]}, {"id": "seen-light", "anchor": [0, 0]}]
+        sb["zones"] = [{"id": "unknown-zone", "anchor": [4, 0]}, {"id": "seen-zone", "anchor": [0, 0]}]
+        sb["fx"] = [{"id": "unknown-fx", "at": [4, 0]}, {"id": "seen-fx", "at": [0, 0]}]
+        sb["pj_poznamky"] = "Secret room inhabitants"
+        sb["poznamky"] = "A hidden trap"
+        sb["log"].append({"t": "Goblin útočí", "kdo": "Goblin"})
+        assert editor.put(f"/api/battles/{bid}/state", json={"state": state}).status_code == 200
+        assert editor.post(f"/api/battles/{bid}/share", json={"shared": True}).status_code == 200
+        restored = editor.get(f"/api/battles/{bid}").json()["state"]["stav_boje"]
+        assert restored["fog"] == sb["fog"]
+        public = player.get(f"/api/battles/{bid}").json()["state"]["stav_boje"]
+        assert [t["id"] for t in public["tok"]] == ["a"]
+        assert [t["nazev"] for t in player.get(f"/api/battles/{bid}").json()["ucastnici"]] == [sb["tok"][0]["nazev"]]
+        assert public["ord"] == ["a"]
+        for key, expected in (("kresby", "seen"), ("lights", "seen-light"), ("zones", "seen-zone"), ("fx", "seen-fx")):
+            assert [v["id"] for v in public[key]] == [expected]
+        assert all("Goblin" not in str(l) for l in public["log"])
+        assert "pj_poznamky" not in public and "poznamky" not in public
+        summary = next(b for b in player.get("/api/battles").json()["battles"] if b["id"] == bid)
+        assert [t["nazev"] for t in summary["ucastnici"]] == [sb["tok"][0]["nazev"]]
+        assert "manual" not in public["fog"] and "hidden" not in public["fog"]
+        sb["fog"]["visible"]["2,0"] = 1
+        assert editor.put(f"/api/battles/{bid}/state", json={"state": state}).status_code == 200
+        assert [t["id"] for t in player.get(f"/api/battles/{bid}").json()["state"]["stav_boje"]["tok"]] == ["a", "b"]
+    finally:
+        editor.delete(f"/api/battles/{bid}")

@@ -103,12 +103,12 @@ export const MapWeatherLayer = memo(function MapWeatherLayer({ map }: { map: Map
   </div>;
 });
 
-export const MapWeatherOverlay = memo(function MapWeatherOverlay({ map, view, px = 24 }: {
-  map: MapV2; view: { x: number; y: number; k: number }; px?: number;
+export const MapWeatherOverlay = memo(function MapWeatherOverlay({ map, view, px = 24, visibilityMask }: {
+  map: MapV2; view: { x: number; y: number; k: number }; px?: number; visibilityMask?: string;
 }) {
   return <div className="map-weather-overlay" aria-hidden="true"><div style={{
     width: (map.mrizka[0]?.length || 1)*24, height: map.mrizka.length*24,
-    transform: `translate(${view.x}px,${view.y}px) scale(${view.k * px / 24})`, transformOrigin: "0 0",
+    transform: `translate(${view.x}px,${view.y}px) scale(${view.k * px / 24})`, transformOrigin: "0 0", maskImage: visibilityMask ? `url("${visibilityMask}")` : undefined, maskSize: "100% 100%",
   }}><MapWeatherLayer map={map} /></div></div>;
 });
 

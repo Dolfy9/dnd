@@ -50,7 +50,22 @@ def player_view(state: dict) -> dict:
         return s
     fog = sb.get("fog") or {}
     fog_on = bool(fog.get("on"))
+    visible = fog.get("visible") if isinstance(fog.get("visible"), dict) else fog.get("revealed") or {}
+    hidden = fog.get("hidden") or {}
     revealed = fog.get("revealed") or {}
+    if fog_on:
+        revealed = {k: v for k, v in revealed.items() if k not in hidden}
+        visible = {k: v for k, v in visible.items() if k in revealed}
+        fog["revealed"] = revealed
+        fog["visible"] = visible
+
+    def _visible(x, y):
+        if not fog_on:
+            return True
+        if not isinstance(x, (int, float)) or not isinstance(y, (int, float)):
+            return False
+        key = f"{int(x)},{int(y)}"
+        return key in visible and key not in hidden
 
     def _in_fog(t):
         """Token je skryt v mlze, pokud nejsou odhaleny vsechny jeho bunky."""
@@ -58,10 +73,10 @@ def player_view(state: dict) -> dict:
             return False
         x, y, sz = t.get("x"), t.get("y"), t.get("s", 1) or 1
         if x is None or y is None:
-            return False
+            return True
         for dx in range(sz):
             for dy in range(sz):
-                if f"{x + dx},{y + dy}" not in revealed:
+                if not _visible(x + dx, y + dy):
                     return True
         return False
 
@@ -80,7 +95,6 @@ def player_view(state: dict) -> dict:
             t.pop("pj_note", None)
         toks.append(t)
     sb["tok"] = toks
-    sb["log"] = [l for l in sb.get("log", []) if not l.get("pj")]
     private_sources = set(sb.pop("privateSourceIds", []) or [])
     private_sources.update(l.get("id") for l in sb.get("lights", []) if l.get("dmOnly"))
     map_id = sb.get("map") or s.get("mapa")
@@ -94,17 +108,49 @@ def player_view(state: dict) -> dict:
         sb["zdroje"] = {k: v for k, v in sb["zdroje"].items() if k not in private_sources}
     cells = sb.pop("lightCells", None)
     if isinstance(cells, dict):
-        visible = fog.get("visible", revealed)
         sb["playerLightCells"] = {k: v for k, v in cells.items()
                                   if v in ("bright", "dim", "dark")
-                                  and (not fog_on or (k in visible and k in revealed and k not in (fog.get("hidden") or {})))}
+                                  and (not fog_on or (k in visible and k in revealed and k not in hidden))}
+    ids = {t.get("id") for t in toks}
+    hidden_names = [t.get("nazev") for t in (state.get("stav_boje") or {}).get("tok", [])
+                    if t.get("id") not in ids and t.get("nazev")]
+    sb["log"] = [l for l in sb.get("log", []) if not l.get("pj") and not any(
+        name in str(l.get("t", "")) + str(l.get("detail", "")) + str(l.get("kdo", "")) for name in hidden_names)]
+    old_order = sb.get("ord") or []
+    turn = sb.get("turn", -1)
+    active = old_order[turn] if 0 <= turn < len(old_order) else None
+    sb["ord"] = [tid for tid in old_order if tid in ids]
+    sb["turn"] = sb["ord"].index(active) if active in sb["ord"] else -1
+    sb["eco"] = {tid: value for tid, value in (sb.get("eco") or {}).items() if tid in ids}
+    for key in ("pj_poznamky", "dm_notes", "poznamky"):
+        sb.pop(key, None)
+        s.pop(key, None)
+    sb["kresby"] = [k for k in sb.get("kresby", []) if not k.get("dmOnly") and (
+        not fog_on or (k.get("pts") and all(_visible(*p) for p in k["pts"])))]
+    if fog_on:
+        sb["zones"] = [z for z in sb.get("zones", []) if not z.get("pj") and (
+            z.get("tokenId") in ids if z.get("tokenId") else _visible(*(z.get("anchor") or [None, None])))]
+        sb["lights"] = [l for l in sb.get("lights", []) if not l.get("dmOnly") and (
+            l.get("tokenId") in ids if l.get("tokenId") else _visible(*(l.get("anchor") or [None, None])))]
+        def _fx_visible(fx):
+            if fx.get("tokenId") and fx["tokenId"] not in ids:
+                return False
+            points = [fx[k] for k in ("from", "to", "at") if fx.get(k)]
+            if fx.get("area"):
+                points.append(fx["area"].get("anchor") or [None, None])
+            return bool(points or fx.get("tokenId")) and all(_visible(*p) for p in points)
+        sb["fx"] = [fx for fx in sb.get("fx", []) if _fx_visible(fx)]
+        fog.pop("manual", None)
+        fog.pop("hidden", None)
     s.pop("pj_poznamky", None)
     s.pop("dm_notes", None)
     return s
 
 
-def _summary(r) -> dict:
+def _summary(r, player: bool = False) -> dict:
     s = db.jload(r["state"])
+    if player:
+        s = player_view(s)
     stav = s.get("stav_boje") or {}
     kampane = s.get("kampane")
     if not isinstance(kampane, list):
@@ -128,7 +174,7 @@ def list_battles(u: dict | None = Depends(security.optional)):
     for r in rows:
         if not editor and not r["shared"]:
             continue  # hráč vidí jen živě sdílené boje
-        out.append(_summary(r))
+        out.append(_summary(r, player=not editor))
     pages = {t: [dict(x) for x in con.execute(
         "SELECT path,title FROM pages WHERE type=? ORDER BY title", (t,))]
         for t in ("kampan", "quest", "sezeni")}
@@ -140,7 +186,7 @@ def get_battle(bid: str, u: dict | None = Depends(security.optional)):
     r = _row_or_404(bid)
     if not security.can_edit(u) and not r["shared"]:
         raise HTTPException(404, "boj nenalezen")
-    out = _summary(r)
+    out = _summary(r, player=not security.can_edit(u))
     state = db.jload(r["state"])
     if not security.can_edit(u):
         state = player_view(state)
@@ -180,6 +226,8 @@ def create_battle(b: NewBattle, u: dict = Depends(security.require("editor"))):
         row = db.connect().execute("SELECT data FROM battle_maps WHERE id=?", (b.map_ref,)).fetchone()
         if row:
             mdata = db.jload(row["data"]) or {}
+            if mdata.get("mlha") is True:
+                stav_boje["fog"] = {"on": True, "revealed": {}, "visible": {}}
             if mdata.get("svetla"):
                 stav_boje["lights"] = [
                     {"id": l.get("id", f"l{i}"), "anchor": [l.get("x", 0), l.get("y", 0)],

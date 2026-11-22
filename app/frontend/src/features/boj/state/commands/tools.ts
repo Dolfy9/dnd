@@ -16,6 +16,7 @@ import { resourceAction, restResources } from "../../rules/resources";
 import { canSeeTarget } from "../../rules/lighting";
 import type { BattleMapData } from "../../types";
 import { fx } from "./shared";
+import { mapCells, updateFog } from "../../model/fog";
 
 /* ---------- teren / mlha / svetla ---------- */
 export function cmdPaint(S: StavBoje, cells: [number, number][], tile: string) {
@@ -28,24 +29,33 @@ export function cmdPaint(S: StavBoje, cells: [number, number][], tile: string) {
 }
 
 export function cmdFogToggle(S: StavBoje, on: boolean) {
-  S.fog = { on, revealed: S.fog?.revealed || {} };
-  log(S, "system", `Fog of War: ${on ? "zapnuto" : "vypnuto"}`, "PJ");
+  S.fog = { ...S.fog, on, revealed: S.fog?.revealed || {} };
+  log(S, "system", `Mlha války: ${on ? "zapnuto" : "vypnuto"}`, "PJ");
 }
 export function cmdFogCells(S: StavBoje, cells: [number, number][], reveal: boolean) {
   S.fog = S.fog || { on: true, revealed: {} };
+  S.fog.manual ||= {}; S.fog.hidden ||= {}; S.fog.visible ||= {};
   for (const [x, y] of cells) {
+    if (!Number.isInteger(x) || !Number.isInteger(y) || x < 0 || y < 0) continue;
     const k = `${x},${y}`;
-    if (reveal) S.fog.revealed[k] = 1;
-    else { delete S.fog.revealed[k]; if (S.fog.visible) delete S.fog.visible[k]; }
+    if (reveal) {
+      S.fog.manual[k] = 1; S.fog.revealed[k] = 1; S.fog.visible[k] = 1; delete S.fog.hidden[k];
+    } else {
+      S.fog.hidden[k] = 1; delete S.fog.manual[k]; delete S.fog.revealed[k]; delete S.fog.visible[k];
+    }
   }
 }
-export function cmdFogParty(S: StavBoje, radiusCells = 8) {
+export function cmdFogAll(S: StavBoje, map: BattleMapData) {
+  cmdFogToggle(S, true); cmdFogCells(S, mapCells(map), true);
+}
+export function cmdFogReset(S: StavBoje, map: BattleMapData) {
+  S.fog = { on: true, revealed: {}, visible: {} }; updateFog(S, map);
+  log(S, "system", "Mlha války: zapomenuta prozkoumaná místa", "PJ");
+}
+export function cmdFogParty(S: StavBoje, map: BattleMapData) {
   S.fog = S.fog || { on: true, revealed: {} };
-  for (const t of S.tok.filter((x) => x.side === "druzina" && x.x != null && !x.dead))
-    for (let dx = -radiusCells; dx <= radiusCells; dx++)
-      for (let dy = -radiusCells; dy <= radiusCells; dy++)
-        S.fog.revealed[`${t.x! + dx},${t.y! + dy}`] = 1;
-  log(S, "system", "Fog: odhaleno okoli druziny", "PJ");
+  updateFog(S, map);
+  log(S, "system", "Mlha války: přepočítán výhled družiny", "PJ");
 }
 
 export function cmdAddLight(S: StavBoje, l: Omit<import("../../types").LightSource, "id">) {
