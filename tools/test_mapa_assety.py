@@ -106,6 +106,26 @@ class AssetImportTests(unittest.TestCase):
                 with self.assertRaisesRegex(ValueError,"Chybí adresář"):
                     assets.index_variants([entry],root/"absent")
 
+    def test_replacement_and_missing_variants_keep_numbered_slots(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            source = root / "source"
+            source.mkdir()
+            Image.new("RGBA",(20,20),(80,90,70,255)).save(source/"tree-v3.webp",lossless=True)
+            paths = [f"bojove/assets/Les/varianty/tree-v{n}.webp" for n in range(1,5)]
+            entry = {"id":"tree","src":"bojove/assets/Les/tree.webp","varianty":paths.copy()}
+            with patch.object(assets,"ASSETS",root/"out"):
+                assets.index_variants([entry],source)
+                self.assertEqual(entry["varianty"],paths)
+                fresh = {"id":"tree","src":"bojove/assets/Les/tree.webp"}
+                assets.index_variants([fresh],source)
+                self.assertEqual(fresh["varianty"],["","",paths[2]])
+                Image.new("RGBA",(20,20),(0,0,0,0)).save(source/"tree-v3.webp",lossless=True)
+                assets.index_variants([entry],source)
+                self.assertEqual(entry["varianty"],paths)
+                assets.index_variants([entry])
+                self.assertEqual(entry["varianty"],paths)
+
     def test_variant_coverage_uses_cropped_alpha_and_three_percent_threshold(self):
         with tempfile.TemporaryDirectory() as directory:
             path = Path(directory)/"variant.webp"

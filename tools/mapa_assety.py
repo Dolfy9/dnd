@@ -268,7 +268,7 @@ def index_variants(entries: list[dict], source: Path | None = None) -> None:
             directory = ASSETS / Path(entry["src"]).parent.relative_to("bojove/assets") / "varianty"
         except ValueError:
             continue
-        variants = []
+        variants = list(entry.get("varianty", []))
         for n in range(1, 5):
             name = f"{entry['id']}-v{n}.webp"
             destination = directory / name
@@ -278,11 +278,11 @@ def index_variants(entries: list[dict], source: Path | None = None) -> None:
                     directory.mkdir(parents=True, exist_ok=True)
                     shutil.copy2(candidate, destination)
                     imported += 1
-                variants.append("bojove/assets/" + destination.relative_to(ASSETS).as_posix())
+                while len(variants) < n:
+                    variants.append("")
+                variants[n - 1] = "bojove/assets/" + destination.relative_to(ASSETS).as_posix()
         if variants:
             entry["varianty"] = variants
-        elif source is None:
-            entry.pop("varianty", None)
     if source:
         print(f"Varianty: importováno {imported} obrázků.")
 
