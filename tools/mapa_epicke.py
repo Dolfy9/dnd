@@ -15,6 +15,8 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 STORE = ROOT / "11_Mapy/bojove_mapy.json"
+VARIANTS = {a["id"]: len(a.get("varianty", [])) for a in
+            json.loads((ROOT / "11_Mapy/bojove/assets/assety.json").read_text(encoding="utf-8"))["assety"]}
 
 
 def inside(x, y, points):
@@ -28,6 +30,7 @@ def inside(x, y, points):
 class Scene:
     def __init__(self, slug, name, ground, place, description, seed, weather, ambient, tint):
         self.rng = random.Random(seed)
+        self.variant_rng = random.Random(f"{seed}:varianty")
         self.w, self.h = 36, 28
         self.grid = [["." for _ in range(self.w)] for _ in range(self.h)]
         self.m = dict(id=slug, nazev=name, podklad=ground, misto=place,
@@ -46,6 +49,9 @@ class Scene:
         o = dict(id=self.uid("objekty"), asset=asset, x=round(x, 3), y=round(y, 3),
                  w=round(w, 3), h=round(h if h is not None else w, 3), rot=round(rot, 2))
         o.update(options)
+        count = VARIANTS.get(asset, 0)
+        if count:
+            o["v"] = self.variant_rng.randrange(count + 1)
         if asset.startswith("d-"):
             o.update(z=-20, blocks=False, anim=False)
         self.m["objekty"].append(o)

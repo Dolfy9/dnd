@@ -73,7 +73,7 @@ class EpicMapsTest(unittest.TestCase):
     def test_art_direction_and_roof_metadata(self):
         maps=generate()
         used={o["asset"] for m in maps for o in m["objekty"]}
-        supplied={p.stem for p in (ROOT/"11_Mapy/bojove/assets").rglob("*.webp") if p.stem.startswith(("d-","i-","m-"))}
+        supplied={p.stem for p in (ROOT/"11_Mapy/bojove/assets").rglob("*.webp") if p.parent.name != "varianty" and p.stem.startswith(("d-","i-","m-"))}
         self.assertTrue(supplied <= used, supplied-used)
         self.assertTrue(maps[0]["interiery"])
         self.assertTrue(maps[1]["interiery"])
@@ -88,6 +88,18 @@ class EpicMapsTest(unittest.TestCase):
         winter=maps[-1]
         self.assertFalse(any(s["t"]=="hlina" for s in winter["malba"]))
         self.assertFalse(any(s["t"]=="dlazba" for s in maps[-2]["malba"]))
+
+    def test_seeded_variants_are_visual_only(self):
+        from unittest.mock import patch
+        from mapa_epicke import VARIANTS
+        with patch.dict(VARIANTS, {key: 4 for key in VARIANTS}):
+            maps = generate()
+            self.assertEqual(maps, generate())
+        with patch.dict(VARIANTS, {}, clear=True):
+            originals = generate()
+        self.assertTrue(any(o.get("v", 0) > 0 for m in maps for o in m["objekty"]))
+        for m, original in zip(maps, originals):
+            self.assertEqual({**m, "objekty": [{k:v for k,v in o.items() if k != "v"} for o in m["objekty"]]}, original)
 
 
 if __name__ == "__main__":
