@@ -3,6 +3,7 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import { get, put } from "../../../api";
 import { toast } from "../../../components/ui";
 import { migrateMap, type MapV2 } from "../../boj/model/mapV2";
+import { fetchAssetManifest, type AssetEntry } from "../assets/manifest";
 
 const DRAFT = (id: string) => `me-draft:${id}`;
 
@@ -14,14 +15,18 @@ export function useEditorDoc(id: string | undefined) {
   const undoRef = useRef<MapV2[]>([]);
   const redoRef = useRef<MapV2[]>([]);
   const mapRef = useRef<MapV2 | null>(null);
+  const assetsRef = useRef<Record<string, AssetEntry>>({});
   mapRef.current = map;
 
   useEffect(() => {
     if (!id) return;
-    get<any>("/api/map/data").then((d) => {
+    let cancelled = false;
+    Promise.all([get<any>("/api/map/data"), fetchAssetManifest()]).then(([d, assets]) => {
+      if (cancelled) return;
+      assetsRef.current = assets;
       const m = (d.bojove_mapy || []).find((r: any) => r.id === id)?.data;
       if (!m) { toast("Mapa nenalezena", "err"); return; }
-      const mm = migrateMap(m);
+      const mm = migrateMap(m, assets);
       setMap(mm);
       const draft = localStorage.getItem(DRAFT(id));
       if (draft) {
@@ -29,10 +34,11 @@ export function useEditorDoc(id: string | undefined) {
           const dd = JSON.parse(draft);
           const dm = dd?.map || dd;
           // nabídni jen když se draft liší od uložené verze
-          if (dm?.id === id && JSON.stringify(migrateMap(dm)) !== JSON.stringify(mm)) setRestoring({ ...(dd.ts ? { ts: dd.ts } : {}), ...dm } as any);
+          if (dm?.id === id && JSON.stringify(migrateMap(dm, assets)) !== JSON.stringify(mm)) setRestoring({ ...(dd.ts ? { ts: dd.ts } : {}), ...dm } as any);
         } catch { /* */ }
       }
     }).catch((e) => toast(String(e.message || e), "err"));
+    return () => { cancelled = true; };
   }, [id]);
 
   /** Mutace s undo snapshotem + autosave draftu. */
@@ -71,7 +77,7 @@ export function useEditorDoc(id: string | undefined) {
   }, [id]);
 
   const restoreDraft = useCallback((yes: boolean) => {
-    if (yes && restoring) { setMap(migrateMap(restoring)); setDirty(true); }
+    if (yes && restoring) { setMap(migrateMap(restoring, assetsRef.current)); setDirty(true); }
     else localStorage.removeItem(DRAFT(id!));
     setRestoring(null);
   }, [restoring, id]);

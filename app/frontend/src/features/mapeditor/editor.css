@@ -155,6 +155,13 @@ body:has(.me-ed) .mus-fab{display:none!important}
 
 .me-sheetbtn{display:none}
 .me-texture-picker{position:relative;min-width:150px;font-size:12px}
+.me-variant-count{position:absolute;right:3px;top:3px;background:#211d18df;color:#ffe6ad;padding:2px 4px;border-radius:4px;font-size:10px}
+.me-variant-section{margin:10px 0;padding:8px;border:1px solid var(--line);border-radius:6px}
+.me-variant-strip{display:flex;gap:5px;overflow-x:auto;padding:5px 1px}
+.me-variant-strip button{flex:0 0 calc((100% - 20px)/5);max-width:56px;min-width:0;border:1px solid #857358;border-radius:5px;padding:3px;background:#302a22;color:#f4ead4;cursor:pointer}
+.me-variant-strip button[aria-pressed=true]{outline:2px solid #e7bc60;outline-offset:-2px;background:#57462d}
+.me-variant-strip img{display:block;width:100%;height:48px;object-fit:contain}
+.me-variant-strip small{display:block;font-size:10px}
 .me-texture-picker summary{display:flex;align-items:center;gap:6px;cursor:pointer}
 .me-texture-picker summary img{width:32px;height:28px;object-fit:cover;border-radius:3px}
 .me-texture-picker[open]{z-index:30}

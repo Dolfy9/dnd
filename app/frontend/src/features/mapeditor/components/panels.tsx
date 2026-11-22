@@ -5,7 +5,8 @@ import type { MapV2, MapWall, MapObject, MapLightV2, MapNote } from "../../boj/m
 import { STAMPS, KATEGORIE, stampById, StampSvg, type StampDef } from "../assets/stamps";
 import { TEXTURES } from "../assets/textures";
 import { GENERATORS, type GenOut } from "../generators/generators";
-import { assetUrl, useTextureManifest, type AssetEntry } from "../assets/manifest";
+import { assetUrl, assetSrc, useTextureManifest, type AssetEntry } from "../assets/manifest";
+import { VariantStrip } from "./VariantStrip";
 import { WeatherPicker } from "../../boj/components/MapMotion";
 import { MapPreview } from "./MapPreview";
 import { TILES } from "../../boj/types";
@@ -96,21 +97,25 @@ export function LayersPanel({ map, layerVis, setLayerVis }: {
   );
 }
 
-export function LibraryPanel({ q, setQ, kat, setKat, stampId, onPick, ASSETS, onUpload }: {
+export function LibraryPanel({ q, setQ, kat, setKat, stampId, onPick, ASSETS, onUpload, variant, onVariant }: {
   q: string; setQ: (v: string) => void; kat: string; setKat: (v: string) => void;
   stampId: string; onPick: (id: string) => void; ASSETS: Record<string, AssetEntry>;
   onUpload: (f: File) => void;
+  variant: number; onVariant: (value: number) => void;
 }) {
   const filtered = STAMPS.filter((s) => (!kat || s.kat === kat) && (!q || s.nazev.toLowerCase().includes(q.toLowerCase())));
   const extras = Object.values(ASSETS).filter((a) => !stampById(a.id) && (!q || a.nazev.toLowerCase().includes(q.toLowerCase())) && (!kat || (kat === "__custom" ? a.custom : a.kategorie === kat)));
   return (
     <div className="me-lib">
       <input placeholder="Hledat…" value={q} onChange={(e) => setQ(e.target.value)} />
+      {ASSETS[stampId] && <section className="me-variant-section"><strong>{ASSETS[stampId].nazev} · varianty</strong>
+        <VariantStrip entry={ASSETS[stampId]} value={variant} onChange={onVariant} />
+      </section>}
       <div className="me-category-chips" aria-label="Kategorie knihovny">
         {["", ...new Set([...KATEGORIE, ...Object.values(ASSETS).map(a => a.kategorie).filter((k): k is string => !!k)]), "__custom"].map(kk => {
           const rep = Object.values(ASSETS).find(a => !kk || (kk === "__custom" ? a.custom : a.kategorie === kk));
           return <button key={kk} aria-pressed={kat === kk} onClick={() => setKat(kk)}>
-            <img src={rep ? assetUrl(rep.src) : "/repo/11_Mapy/bojove/ikony/plus.webp"} alt="" />{kk === "" ? "Vše" : kk === "__custom" ? "Vlastní" : kk}
+            <img src={rep ? assetUrl(assetSrc(rep)) : "/repo/11_Mapy/bojove/ikony/plus.webp"} alt="" />{kk === "" ? "Vše" : kk === "__custom" ? "Vlastní" : kk}
           </button>;
         })}
       </div>
@@ -119,14 +124,16 @@ export function LibraryPanel({ q, setQ, kat, setKat, stampId, onPick, ASSETS, on
           const man = ASSETS[s.id];
           return (
             <button key={s.id} className={`me-stamp ${stampId === s.id ? "on" : ""}`} title={`${s.nazev} (${s.w}×${s.h})`} onClick={() => onPick(s.id)}>
-              {man ? <img src={assetUrl(man.src)} alt={s.nazev} loading="lazy" />
+              {man ? <img src={assetUrl(assetSrc(man, s.id === stampId ? variant : 0))} alt={s.nazev} loading="lazy" />
                    : <><svg viewBox="-13 -13 26 26"><StampSvg def={s} /></svg><span className="me-missing" title="Základní náhled — vygeneruj obrázek pomocí tools/mapa_assety.py">náhled</span></>}
+              {!!man?.varianty?.length && <small className="me-variant-count" title={"Základ + " + man.varianty.length + " varianty"}>+{man.varianty.length}</small>}
             </button>
           );
         })}
         {extras.map((a) => (
           <button key={a.id} className={`me-stamp ${stampId === a.id ? "on" : ""}`} title={a.nazev} onClick={() => onPick(a.id)}>
-            <img src={assetUrl(a.src)} alt={a.nazev} loading="lazy" />
+            <img src={assetUrl(assetSrc(a, a.id === stampId ? variant : 0))} alt={a.nazev} loading="lazy" />
+            {!!a.varianty?.length && <small className="me-variant-count" title={"Základ + " + a.varianty.length + " varianty"}>+{a.varianty.length}</small>}
           </button>
         ))}
       </div>
@@ -136,17 +143,30 @@ export function LibraryPanel({ q, setQ, kat, setKat, stampId, onPick, ASSETS, on
   );
 }
 
-export function PropertiesPanel({ map, selObj, push, onDelete }: {
+export function PropertiesPanel({ map, selObj, push, onDelete, objects, assets, onVariant }: {
   map: MapV2; selObj: { kind: string; id: string } | null;
   push: (f: (m: MapV2) => void) => void; onDelete: () => void;
+  objects: MapObject[]; assets: Record<string, AssetEntry>;
+  onVariant: (action: number | "next" | "random", asset?: string) => void;
 }) {
-  if (!selObj) return <p className="me-none">Vyber objekt / zeď / světlo / poznámku nástrojem Výběr.</p>;
+  const variants = objects.length ? <section className="me-variant-section">
+    <h4>Varianty · {objects.length} objektů</h4>
+    {[...new Set(objects.map(o => o.asset))].map(id => assets[id] && <div key={id}>
+      <strong>{assets[id].nazev}</strong>
+      <VariantStrip entry={assets[id]} value={objects.find(o => o.asset === id)?.v}
+        onChange={v => onVariant(v, id)} />
+    </div>)}
+    <button className="me-btn sm" title="Další varianta (A)" onClick={() => onVariant("next")}>Další (A)</button>
+    <button className="me-btn sm" title="Náhodná varianta (Shift+A)" onClick={() => onVariant("random")}>Náhodně</button>
+  </section> : null;
+  if (!selObj) return variants || <p className="me-none">Vyber objekt / zeď / světlo / poznámku nástrojem Výběr.</p>;
   const selObject = selObj.kind === "objekt" ? (map.objekty || []).find((o) => o.id === selObj.id) : null;
   const selWall = selObj.kind === "stena" ? (map.steny || []).find((w) => w.id === selObj.id) : null;
   const selLight = selObj.kind === "svetlo" ? (map.svetla || []).find((l) => l.id === selObj.id) : null;
   const selNote = selObj.kind === "poznamka" ? (map.poznamky || []).find((n) => n.id === selObj.id) : null;
   return (
     <div className="me-props">
+      {variants}
       {selObject && (
         <>
           <h4>Objekt — {stampById(selObject.asset)?.nazev || selObject.asset}</h4>

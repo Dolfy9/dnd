@@ -1,5 +1,5 @@
 /* Operace nástrojů editoru — čisté funkce nad MapV2 (volá EditorPage). */
-import type { MapV2, MapWall, MapPaintStroke } from "../../boj/model/mapV2";
+import type { MapV2, MapWall, MapPaintStroke, MapObject } from "../../boj/model/mapV2";
 import { wallUid } from "../../boj/model/mapV2";
 import type { GenOut } from "../generators/generators";
 
@@ -205,6 +205,10 @@ export function pickInRect(m: MapV2, a: [number, number], b: [number, number]) {
   for (const k of m.kresby || [])
     if (k.pts.every(([x, y]) => x >= x0 && x <= x1 && y >= y0 && y <= y1)) out.push({ kind: "kresba", id: k.id });
   return out;
+}
+
+export function duplicateObjects(objects: MapObject[]) {
+  return structuredClone(objects).map(o => ({ ...o, id: wallUid(), x: o.x + 1, y: o.y + 1 }));
 }
 
 export function rotateSel(m: MapV2, sel: { kind: string; id: string }[], angle: number) {

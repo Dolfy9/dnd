@@ -5,6 +5,7 @@ Použití:
     python3 tools/mapa_assety.py            # vypíše, co chybí; s OPENAI_API_KEY generuje
     python3 tools/mapa_assety.py --index    # jen přeindexovat složky (ručně vložené obrázky)
     python3 tools/mapa_assety.py --import DIR [--legacy DIR]
+    python3 tools/mapa_assety.py --varianty DIR  # hotové id-v1..v4.webp
 
 - Assety: 11_Mapy/bojove/assets/<kategorie>/<id>.webp, manifest assety.json.
 - Textury: 11_Mapy/bojove/textury/<id>.webp (512 px = 4 buňky), manifest textury.json.
@@ -243,13 +244,63 @@ def index_textures(prompts: dict) -> tuple[list[dict], list[dict]]:
     return entries, missing
 
 
+def variant_visible(path: Path) -> bool:
+    from PIL import Image
+    try:
+        with Image.open(path) as image:
+            alpha = image.convert("RGBA").getchannel("A")
+            bbox = alpha.getbbox()
+            if not bbox:
+                return False
+            crop = alpha.crop(bbox)
+            coverage = sum(i * n for i, n in enumerate(crop.histogram())) / (255 * crop.width * crop.height)
+            return coverage >= .03
+    except OSError:
+        return False
+
+
+def index_variants(entries: list[dict], source: Path | None = None) -> None:
+    if source is not None and not source.is_dir():
+        raise ValueError(f"Chybí adresář variant: {source}")
+    imported = 0
+    for entry in entries:
+        try:
+            directory = ASSETS / Path(entry["src"]).parent.relative_to("bojove/assets") / "varianty"
+        except ValueError:
+            continue
+        variants = []
+        for n in range(1, 5):
+            name = f"{entry['id']}-v{n}.webp"
+            destination = directory / name
+            candidate = source / name if source else destination
+            if candidate.is_file() and variant_visible(candidate):
+                if source:
+                    directory.mkdir(parents=True, exist_ok=True)
+                    shutil.copy2(candidate, destination)
+                    imported += 1
+                variants.append("bojove/assets/" + destination.relative_to(ASSETS).as_posix())
+        if variants:
+            entry["varianty"] = variants
+        elif source is None:
+            entry.pop("varianty", None)
+    if source:
+        print(f"Varianty: importováno {imported} obrázků.")
+
+
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--index", action="store_true")
     parser.add_argument("--import", dest="source", type=Path)
+    parser.add_argument("--varianty", type=Path, help="Import hotových průhledných variant id-v1..v4.webp")
     parser.add_argument("--only", help="Importovat jen ID oddělená čárkou; manifest zůstane úplný")
     parser.add_argument("--legacy", type=Path, help="Dřívější složka boj/{tex,prop,fx,ovl,icon}")
     args = parser.parse_args()
+    if args.varianty:
+        manifest = json.loads(MANIFEST_A.read_text(encoding="utf-8"))
+        index_variants(manifest["assety"], args.varianty.expanduser())
+        MANIFEST_A.write_text(json.dumps(manifest, ensure_ascii=False, indent=1), encoding="utf-8")
+        print(f"Manifest: {sum(bool(e.get('varianty')) for e in manifest['assety'])} assetů s variantami.")
+        return 0
     prompts = load_prompts()
     ASSETS.mkdir(parents=True, exist_ok=True)
     TEXDIR.mkdir(parents=True, exist_ok=True)
@@ -328,6 +379,7 @@ def main() -> int:
             entries_a += [e for e in old if e.get("id") not in have and e.get("custom")]
         except ValueError:
             pass
+    index_variants(entries_a)
     MANIFEST_A.write_text(json.dumps({"assety": entries_a}, ensure_ascii=False, indent=1), encoding="utf-8")
     MANIFEST_T.write_text(json.dumps({"textury": entries_t}, ensure_ascii=False, indent=1), encoding="utf-8")
 

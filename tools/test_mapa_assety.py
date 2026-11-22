@@ -1,4 +1,5 @@
 import importlib.util
+import json
 import tempfile
 import unittest
 from unittest.mock import patch
@@ -73,6 +74,64 @@ class AssetImportTests(unittest.TestCase):
             self.assertEqual(missing,[])
             self.assertEqual(indexed[0]["z"],-20)
             self.assertIs(indexed[0]["blocks"],False)
+
+    def test_variant_import_skips_missing_sparse_empty_and_corrupt_images(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            source = root / "source"
+            source.mkdir()
+            Image.new("RGBA",(20,20),(80,90,70,255)).save(source/"tree-v1.webp",lossless=True)
+            sparse = Image.new("RGBA",(20,20),(0,0,0,0))
+            sparse.putpixel((0,0),(80,90,70,255))
+            sparse.putpixel((19,19),(80,90,70,255))
+            sparse.save(source/"tree-v2.webp",lossless=True)
+            Image.new("RGBA",(20,20),(0,0,0,0)).save(source/"tree-v3.webp",lossless=True)
+            (source/"tree-v4.webp").write_bytes(b"invalid")
+            entry = {"id":"tree","src":"bojove/assets/Les/tree.webp","w":2,"blocks":True,"anim":"vitr","custom":True}
+            metadata = dict(entry)
+            with patch.object(assets,"ASSETS",root/"out"):
+                assets.index_variants([entry],source)
+                self.assertEqual(entry["varianty"],["bojove/assets/Les/varianty/tree-v1.webp"])
+                self.assertEqual((root/"out/Les/varianty/tree-v1.webp").read_bytes(),(source/"tree-v1.webp").read_bytes())
+                self.assertEqual({k:v for k,v in entry.items() if k != "varianty"},metadata)
+                assets.index_variants([entry])
+                self.assertEqual(len(entry["varianty"]),1)
+                missing = {"id":"missing","src":"bojove/assets/Les/missing.webp"}
+                assets.index_variants([missing],source)
+                self.assertNotIn("varianty",missing)
+                external = {"id":"custom","src":"https://example.com/asset.webp","custom":True}
+                before = dict(external)
+                assets.index_variants([external],source)
+                self.assertEqual(external,before)
+                with self.assertRaisesRegex(ValueError,"Chybí adresář"):
+                    assets.index_variants([entry],root/"absent")
+
+    def test_variant_coverage_uses_cropped_alpha_and_three_percent_threshold(self):
+        with tempfile.TemporaryDirectory() as directory:
+            path = Path(directory)/"variant.webp"
+            for opacity,expected in [(7,False),(8,True),(255,True)]:
+                image = Image.new("RGBA",(100,100),(0,0,0,0))
+                image.paste((20,50,70,opacity),(40,40,60,60))
+                image.save(path,lossless=True)
+                self.assertEqual(assets.variant_visible(path),expected)
+
+    def test_variant_command_preserves_manifest_metadata_and_custom_assets(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            source = root/"source"
+            source.mkdir()
+            Image.new("RGBA",(20,20),(80,90,70,255)).save(source/"tree-v1.webp",lossless=True)
+            manifest = root/"assety.json"
+            original = {"extra":"keep","assety":[
+                {"id":"tree","src":"bojove/assets/Les/tree.webp","w":2,"blocks":True,"custom":False,"tags":["story"]},
+                {"id":"custom","src":"bojove/assets/Vlastni/custom.webp","custom":True,"light":{"bright":10,"dim":20}},
+            ]}
+            manifest.write_text(json.dumps(original))
+            with patch.object(assets,"ASSETS",root/"out"), patch.object(assets,"MANIFEST_A",manifest), patch("sys.argv",["mapa_assety.py","--varianty",str(source)]):
+                self.assertEqual(assets.main(),0)
+            imported = json.loads(manifest.read_text())
+            self.assertEqual(imported["assety"][0].pop("varianty"),["bojove/assets/Les/varianty/tree-v1.webp"])
+            self.assertEqual(imported,original)
 
 
 if __name__ == "__main__":

@@ -2,6 +2,7 @@
    Zpětně kompatibilní: staré mapy (jen `mrizka`) fungují beze změny;
    `migrateMap()` jen doplní výchozí struktury, mechanika se nemění. */
 import type { BattleMapData } from "../types";
+import { normalizeVariant, type VariantAsset } from "./assetVariants";
 
 /* ---------- v2 rozšíření ---------- */
 
@@ -19,6 +20,7 @@ export interface MapWall {
 
 /** Objekt na mapě (stamp / vlastní obrázek). x,y = střed v buňkách (float). */
 export interface MapObject {
+  v?: number;
   anim?: string | false;
   id: string;
   asset: string;             // id z knihovny nebo "img:<cesta>"
@@ -108,7 +110,7 @@ export function normalizeWeather(input: unknown): MapWeather {
 export const wallUid = () => "w" + Math.random().toString(36).slice(2, 9);
 
 /** Převede libovolný vstup na MapV2 s vyplněnými defaulty. Staré mapy projdou beze změny mechaniky. */
-export function migrateMap(m: BattleMapData | MapV2 | any): MapV2 {
+export function migrateMap(m: BattleMapData | MapV2 | any, assets?: Record<string, VariantAsset>): MapV2 {
   const out: MapV2 = { ...(m as MapV2) };
   if (out.pocasi !== undefined) out.pocasi = normalizeWeather(out.pocasi);
   if (!out.mrizka) out.mrizka = ["...."];
@@ -144,6 +146,9 @@ export function migrateMap(m: BattleMapData | MapV2 | any): MapV2 {
     if (out[k] && !Array.isArray(out[k])) delete out[k];
     (out[k] as any[] | undefined)?.forEach((o: any, i: number) => { if (!o.id) o.id = `${k[0]}${i}`; });
   }
+  if (out.objekty) out.objekty = out.objekty.map(o => o.v === undefined ? o : {
+    ...o, v: normalizeVariant(o.v, assets ? assets[o.asset]?.varianty?.length || 0 : undefined),
+  });
   // normalizace zdí na unit segmenty
   if (out.svetla) out.svetla = out.svetla.filter(l => l && typeof l === "object").map(l => ({
     ...l, intenzita: finite(l.intenzita, 1, 0, 1), blikani: l.blikani === true,

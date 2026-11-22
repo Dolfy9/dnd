@@ -1,7 +1,7 @@
 import { memo, useMemo, type CSSProperties, type ReactNode } from "react";
 import type { MapV2 } from "../model/mapV2";
 import type { StavBoje } from "../types";
-import { assetUrl } from "../../mapeditor/assets/manifest";
+import { assetUrl, assetSrc } from "../../mapeditor/assets/manifest";
 import { terrainProp, terrainTexture } from "../model/terrainArt";
 import { MapObjectLayer, useMapManifests } from "./MapV2Layers";
 import { animationPhase, FX, resolveAnimation } from "./MapMotion";
@@ -54,7 +54,7 @@ export const MapAnimatedScene = memo(function MapAnimatedScene({ map, view, px =
     {objects && [...(map.objekty || [])].sort((a,b) => (a.z ?? assets[a.asset]?.z ?? 0)-(b.z ?? assets[b.asset]?.z ?? 0)).map(o => {
       if (o.dmOnly && !dm) return null;
       const asset = assets[o.asset], anim = resolveAnimation(o,asset);
-      const src = asset ? assetUrl(asset.src) : o.asset.startsWith("img:") ? "/repo/11_Mapy/bojove/"+o.asset.slice(4) : "";
+      const src = asset ? assetUrl(assetSrc(asset, o.v)) : o.asset.startsWith("img:") ? "/repo/11_Mapy/bojove/"+o.asset.slice(4) : "";
       return anim && src ? sprite(o.id,src,anim,o.x,o.y,o.w,o.h,o.rot,o.flip,o.dmOnly ? .55 : 1)
         : <svg key={o.id} className="map-scene-static" width={W} height={H}><MapObjectLayer map={{...map,objekty:[o]}} dm={dm} /></svg>;
     })}

@@ -10,11 +10,12 @@ import {
 import { post, upload } from "../../../api";
 import { toast } from "../../../components/ui";
 import { TILES } from "../../boj/types";
-import type { MapV2, MapWall, MapDrawing, MapPaintStroke } from "../../boj/model/mapV2";
+import type { MapV2, MapWall, MapDrawing, MapPaintStroke, MapObject } from "../../boj/model/mapV2";
+import { placementVariant, variantEdits } from "../../boj/model/assetVariants";
 import { migrateMap, wallUid } from "../../boj/model/mapV2";
 import {
   MapTextureLayer, MapElevationLayer, MapWallLayer, MapDrawingLayer,
-  MapLightLayer, MapNoteLayer, MapGridLayer, PX, setManifests,
+  MapLightLayer, MapNoteLayer, MapGridLayer, MapObjectLayer, PX, setManifests,
 } from "../../boj/components/MapV2Layers";
 import { TerenLayer } from "../../boj/components/MapLayers";
 import { MapPaintLayer, MapAtmosphereLayer } from "../../boj/components/MapAtmoLayers";
@@ -79,6 +80,15 @@ export default function EditorPage() {
   const [paintAngle, setPaintAngle] = useState(0);
   const [paintRandom, setPaintRandom] = useState(false);
   const [randomRotation, setRandomRotation] = useState(false);
+  const [randomVariants, setRandomVariants] = useState(() => {
+    try { return localStorage.getItem("me-random-variant") !== "off"; } catch { return true; }
+  });
+  const [chosenVariant, setChosenVariant] = useState(0);
+  const [scatterCount, setScatterCount] = useState(10);
+  const variantRoll = useRef(Math.random());
+  const rotationRoll = useRef(Math.random());
+  const [, refreshVariant] = useState(0);
+  useEffect(() => { try { localStorage.setItem("me-random-variant", randomVariants ? "on" : "off"); } catch { /* */ } }, [randomVariants]);
   const [shapeAngle, setShapeAngle] = useState(0);
   const [floorFill, setFloorFill] = useState(true);
   const [roomPoints, setRoomPoints] = useState<[number, number][]>([]);
@@ -114,7 +124,7 @@ export default function EditorPage() {
   const [genPrev, setGenPrev] = useState<GenOut | null>(null);
   const [fs, setFs] = useState(false);
   const [V, setV] = useState({ x: 20, y: 20, k: 1 });
-  const [cur, setCur] = useState<{ x: number; y: number } | null>(null);
+  const [cur, setCur] = useState<{ x: number; y: number; wx?: number; wy?: number } | null>(null);
   const [wallDraft, setWallDraft] = useState<[number, number][]>([]);
   const [dragPt, setDragPt] = useState<{ a: [number, number]; b: [number, number] } | null>(null);
   const [marquee, setMarquee] = useState<{ a: [number, number]; b: [number, number] } | null>(null);
@@ -128,10 +138,44 @@ export default function EditorPage() {
   const panRef = useRef<{ x0: number; y0: number; vx: number; vy: number } | null>(null);
   const moveRef = useRef<{ anchor: [number, number] } | null>(null);
   const paintRef = useRef(false);
+  const placementRef = useRef<Set<string> | null>(null);
+  const clipboardRef = useRef<MapObject[]>([]);
   const [panning, setPanning] = useState(false);
   const [space, setSpace] = useState(false);
 
   const W = map?.mrizka?.[0]?.length || 1, H = map?.mrizka?.length || 1;
+  const rerollPlacement = () => {
+    variantRoll.current = Math.random(); rotationRoll.current = Math.random();
+    refreshVariant(v => v + 1);
+  };
+  const nextPlacementVariant = placementVariant(ASSETS[stampId], randomVariants, chosenVariant, () => variantRoll.current);
+  const makeObject = (x: number, y: number): MapObject => {
+    const def = stampById(stampId) || ASSETS[stampId];
+    const object: MapObject = {
+      id: wallUid(), asset: stampId, x, y, w: def?.w || 1, h: def?.h || 1,
+      blocks: def?.blocks, cover: def?.cover, difficult: def?.difficult, light: def?.light,
+      z: ASSETS[stampId]?.z, rot: randomRotation ? rotationRoll.current * 360 : 0,
+      v: placementVariant(ASSETS[stampId], randomVariants, chosenVariant, () => variantRoll.current),
+    };
+    rerollPlacement();
+    return object;
+  };
+  const changeVariants = useCallback((action: number | "next" | "random", asset?: string) => {
+    const selected = new Set(sel.filter(s => s.kind === "objekt").map(s => s.id));
+    const objects = (doc.mapRef.current?.objekty || []).filter(o => selected.has(o.id) && (!asset || o.asset === asset));
+    const edits = variantEdits(objects, ASSETS, action);
+    if (!Object.keys(edits).length) return;
+    push(m => { for (const o of m.objekty || []) if (edits[o.id] !== undefined) o.v = edits[o.id]; });
+  }, [sel, assetsQ.data, push, doc.mapRef]);
+  const scatterObjects = () => {
+    const cells = (doc.mapRef.current?.mrizka || []).flatMap((row, y) => [...row].flatMap((c, x) => TILES[c]?.cost > 0 ? [[x, y]] : []));
+    if (!cells.length) return;
+    const objects = Array.from({ length: scatterCount }, () => {
+      const [x,y] = cells[Math.floor(Math.random() * cells.length)];
+      return makeObject(x + .5, y + .5);
+    });
+    push(m => { m.objekty = [...(m.objekty || []), ...objects]; });
+  };
 
   /* ---------- view ---------- */
   const fit = useCallback(() => {
@@ -233,6 +277,24 @@ export default function EditorPage() {
       if (e.ctrlKey && e.key.toLowerCase() === "y") { e.preventDefault(); doc.redo(); return; }
       if (e.ctrlKey && e.key.toLowerCase() === "s") { e.preventDefault(); doc.save(); return; }
       if (e.key === "Escape") { setWallDraft([]); setRoomPoints([]); setDragPt(null); setMarquee(null); setSel([]); setCalib(null); return; }
+      if (!e.ctrlKey && !e.metaKey && !e.altKey && e.key.toLowerCase() === "a") {
+        e.preventDefault(); changeVariants(e.shiftKey ? "random" : "next"); return;
+      }
+      if ((e.ctrlKey || e.metaKey) && ["c", "v", "d"].includes(e.key.toLowerCase())) {
+        const selected = (doc.mapRef.current?.objekty || []).filter(o => sel.some(s => s.kind === "objekt" && s.id === o.id));
+        const key = e.key.toLowerCase();
+        if (key === "c") {
+          if (selected.length) { e.preventDefault(); clipboardRef.current = structuredClone(selected); }
+          return;
+        }
+        const source = key === "v" ? clipboardRef.current : selected;
+        if (!source.length) return;
+        e.preventDefault();
+        const copies = ops.duplicateObjects(source);
+        push(m => { m.objekty = [...(m.objekty || []), ...copies]; });
+        setSel(copies.map(o => ({kind:"objekt",id:o.id})));
+        return;
+      }
       if (!e.ctrlKey && sel.length === 1 && sel[0].kind === "objekt" && ["q", "e"].includes(e.key.toLowerCase())) {
         e.preventDefault();
         if (!doc.mapRef.current?.objekty?.some(o => o.id === sel[0].id)) { setSel([]); return; }
@@ -249,7 +311,7 @@ export default function EditorPage() {
         push((m) => ops.moveSel(m, sel, d[0], d[1]));
         return;
       }
-      const t = TOOLS.find((tt) => tt.key === e.key.toUpperCase() || tt.key === (e.shiftKey ? "Shift+" : "") + e.key.toUpperCase());
+      const t = !e.ctrlKey && !e.metaKey && TOOLS.find((tt) => tt.key === e.key.toUpperCase() || tt.key === (e.shiftKey ? "Shift+" : "") + e.key.toUpperCase());
       if (t) setTool(t.id);
       if (e.key === "+" || e.key === "=") zoomAt(1.25);
       if (e.key === "-") zoomAt(0.8);
@@ -260,7 +322,7 @@ export default function EditorPage() {
     const onFs = () => setFs(!!document.fullscreenElement);
     document.addEventListener("fullscreenchange", onFs);
     return () => { window.removeEventListener("keydown", dn); window.removeEventListener("keyup", up2); document.removeEventListener("fullscreenchange", onFs); };
-  }, [doc.undo, doc.redo, doc.save, sel, push, fit, zoomAt]);
+  }, [doc.undo, doc.redo, doc.save, sel, push, fit, zoomAt, changeVariants]);
 
   /* ---------- pointer ---------- */
   const onDown = (e: React.PointerEvent) => {
@@ -328,17 +390,12 @@ export default function EditorPage() {
         break;
       }
       case "objekt": {
-        const def = stampById(stampId) || ASSETS[stampId];
         const [fx, fy] = snap === 0 ? snapPt(e) : [cx + .5, cy + .5];
-        push((m) => {
-          m.objekty = [...(m.objekty || []), {
-            id: "o" + Date.now() % 1e6 + Math.floor(Math.random() * 99), asset: stampId,
-            x: fx, y: fy, w: def?.w || 1, h: def?.h || 1, blocks: def?.blocks, cover: def?.cover,
-            rot: randomRotation ? Math.random() * 360 : 0,
-            difficult: def?.difficult, light: def?.light,
-            z: ASSETS[stampId]?.z,
-          }];
-        });
+        transformStart.current = structuredClone(doc.mapRef.current!);
+        placementRef.current = new Set([k2(cx, cy)]);
+        e.currentTarget.setPointerCapture(e.pointerId);
+        const object = makeObject(fx, fy);
+        live(m => { m.objekty = [...(m.objekty || []), object]; });
         break;
       }
       case "kresba": { const p = snapPt(e); setDragPt({ a: p, b: p }); setFreePts([p]); break; }
@@ -387,7 +444,16 @@ export default function EditorPage() {
       setV((v) => ({ ...v, x: panRef.current!.vx + e.clientX - panRef.current!.x0, y: panRef.current!.vy + e.clientY - panRef.current!.y0 }));
       return;
     }
-    const [cx, cy] = cellOf(e); setCur({ x: cx, y: cy });
+    const [cx, cy] = cellOf(e), [wx, wy] = snapPt(e); setCur({ x: cx, y: cy, wx, wy });
+    if (placementRef.current) {
+      const key = k2(cx, cy);
+      if (cx >= 0 && cy >= 0 && cx < W && cy < H && !placementRef.current.has(key)) {
+        placementRef.current.add(key);
+        const object = makeObject(snap === 0 ? wx : cx + .5, snap === 0 ? wy : cy + .5);
+        live(m => { m.objekty = [...(m.objekty || []), object]; });
+      }
+      return;
+    }
     if (handleDrag && sel.length === 1 && sel[0].kind === "objekt") {
       const [wx, wy] = toWorld(e);
       live((m) => {
@@ -431,8 +497,8 @@ export default function EditorPage() {
       return;
     }
     panRef.current = null; setPanning(false); paintRef.current = false;
-    if (moveRef.current || handleDrag) {
-      moveRef.current = null; setHandleDrag(null);
+    if (moveRef.current || handleDrag || placementRef.current) {
+      moveRef.current = null; placementRef.current = null; setHandleDrag(null);
       const start = transformStart.current; transformStart.current = null;
       if (start) {
         const final = structuredClone(doc.mapRef.current!);
@@ -552,7 +618,11 @@ export default function EditorPage() {
                 {wallDraft.length > 0 && <button className="me-btn sm" onClick={() => { push((m) => ops.wallChain(m, wallDraft, wallTyp, wallLocked, true)); setWallDraft([]); }}>Uzavřít ({wallDraft.length})</button>}
               </>
             )}
-            {tool === "objekt" && <><label><input type="checkbox" checked={randomRotation} onChange={e => setRandomRotation(e.target.checked)} /> Náhodné natočení</label><span className="me-ctx-hint">V: přesun a úchyty · Q/E ±15° · Alt+Q/E ±1° · Ctrl+kolečko: otočit</span></>}
+            {tool === "objekt" && <><label><input type="checkbox" checked={randomRotation} onChange={e => setRandomRotation(e.target.checked)} /> Náhodné natočení</label>
+              <label><input type="checkbox" checked={randomVariants} onChange={e => { setRandomVariants(e.target.checked); rerollPlacement(); }} /> Náhodná varianta</label>
+              <label>Počet<input aria-label="Počet rozházených objektů" type="number" min="1" max="100" value={scatterCount} onChange={e => setScatterCount(Math.max(1,Math.min(100,+e.target.value || 1)))} /></label>
+              <button className="me-btn sm" onClick={scatterObjects}>Rozházet</button>
+              <span className="me-ctx-hint">V: přesun · A: další varianta · Shift+A: náhodná · Ctrl+D: duplikovat · Q/E: otočit</span></>}
             {tool === "kresba" && (
               <>
                 {(["free", "line", "rect", "ellipse", "poly", "text"] as const).map((kd) => (
@@ -597,7 +667,7 @@ export default function EditorPage() {
             </MapAnimatedScene>
             <svg ref={svgRef} className={`me-canvas tool-${tool}`} onWheel={onWheel}
                  onPointerDown={onDown} onPointerMove={onMove} onPointerUp={onUp} onDoubleClick={onDbl}
-                 onPointerCancel={() => { strokeRef.current = null; setPaintPreview(null); paintRef.current = false; if (transformStart.current) doc.setMap(transformStart.current); transformStart.current = null; moveRef.current = null; setHandleDrag(null); }}
+                 onPointerCancel={() => { strokeRef.current = null; placementRef.current = null; setPaintPreview(null); paintRef.current = false; if (transformStart.current) doc.setMap(transformStart.current); transformStart.current = null; moveRef.current = null; setHandleDrag(null); }}
                  onPointerLeave={() => setCur(null)} onContextMenu={(e) => e.preventDefault()}
                  style={{ touchAction: "none", width: "100%", height: "100%", display: "block" }}>
               <g transform={`translate(${V.x},${V.y}) scale(${V.k})`}>
@@ -651,6 +721,14 @@ export default function EditorPage() {
                     </g>
                   );
                 })}
+                {cur && tool === "objekt" && <g opacity={.6} data-object-ghost>
+                  <MapObjectLayer dm map={{...map,objekty:[{
+                    id:"ghost",asset:stampId,v:nextPlacementVariant,
+                    x:snap === 0 ? cur.wx ?? cur.x : cur.x + .5, y:snap === 0 ? cur.wy ?? cur.y : cur.y + .5,
+                    w:(stampById(stampId) || ASSETS[stampId])?.w || 1, h:(stampById(stampId) || ASSETS[stampId])?.h || 1,
+                    rot:randomRotation ? rotationRoll.current * 360 : 0,
+                  }]}} />
+                </g>}
                 {cur && (tool === "teren" || tool === "textura" || tool === "guma") &&
                   ops.brushCells(cur.x, cur.y, brushSize, brushShape).map(([x, y]) => <rect key={"b" + x + "," + y} x={x * PX} y={y * PX} width={PX} height={PX} fill="none" stroke="#fbbf24" strokeWidth={1} opacity={.7} />)}
                 {calib && calib.pts.map((p, i) => <circle key={i} cx={p[0] * PX} cy={p[1] * PX} r={5} fill="#f59e0b" stroke="#fff" strokeWidth={1.5} />)}
@@ -690,13 +768,18 @@ export default function EditorPage() {
           <div className="me-right-body">
             {tab === "vrstvy" && <LayersPanel map={map} layerVis={layerVis} setLayerVis={setLayerVis} />}
             {tab === "knihovna" && <LibraryPanel q={stampQ} setQ={setStampQ} kat={stampKat} setKat={setStampKat}
-              stampId={stampId} ASSETS={ASSETS} onUpload={uploadAsset}
-              onPick={(sid) => { setStampId(sid); setTool("objekt"); }} />}
+              stampId={stampId} ASSETS={ASSETS} onUpload={uploadAsset} variant={chosenVariant}
+              onVariant={v => { setChosenVariant(v); setRandomVariants(false); }}
+              onPick={(sid) => { setStampId(sid); setChosenVariant(0); rerollPlacement(); setTool("objekt"); }} />}
             {tab === "vlastnosti" && <PropertiesPanel map={map} selObj={sel.length === 1 ? sel[0] : null} push={push}
+              objects={(map.objekty || []).filter(o => sel.some(s => s.kind === "objekt" && s.id === o.id))}
+              assets={ASSETS} onVariant={changeVariants}
               onDelete={() => { if (sel.length) { push((m) => { for (const s of sel) { const n = s.kind === "objekt" ? "objekty" : s.kind === "kresba" ? "kresby" : s.kind === "stena" ? "steny" : s.kind === "svetlo" ? "svetla" : "poznamky"; (m as any)[n] = ((m as any)[n] || []).filter((o: any) => o.id !== s.id); } }); setSel([]); } }} />}
             {tab === "generator" && <GeneratorPanel genId={genId} setGenId={setGenId} seed={genSeed} setSeed={setGenSeed}
               genPrev={genPrev} onPreview={() => { const g = GENERATORS.find((x) => x.id === genId)!; setGenPrev(g.fn(W, H, genSeed)); }}
-              onApply={() => { push((m) => ops.applyGen(m, genPrev!)); setGenPrev(null); }}
+              onApply={() => { push((m) => ops.applyGen(m, {...genPrev!,objekty:genPrev?.objekty?.map(o => ({
+                ...o,v:placementVariant(ASSETS[o.asset],randomVariants,o.asset === stampId ? chosenVariant : 0),
+              }))})); rerollPlacement(); setGenPrev(null); }}
               onDiscard={() => setGenPrev(null)} />}
             {tab === "mapa" && <MapPanel map={map} push={push} onResize={resize}
               onUploadImg={uploadImg} onImportUvtt={async (f) => {
@@ -706,7 +789,7 @@ export default function EditorPage() {
                 } catch (e: any) { toast("UVTT import selhal: " + e.message, "err"); } }}
               onExportUvtt={() => download(exportUvtt(map), `${map.id}.uvtt`)}
               onExportJson={() => download(JSON.stringify(map, null, 2), `${map.id}.json`)}
-              onImportJson={async (f) => { try { const d = JSON.parse(await f.text()); push((m) => Object.assign(m, migrateMap(d))); } catch { toast("Neplatný JSON", "err"); } }}
+              onImportJson={async (f) => { try { const d = JSON.parse(await f.text()); push((m) => Object.assign(m, migrateMap(d, ASSETS))); } catch { toast("Neplatný JSON", "err"); } }}
               onExportPng={async () => {
                 const [{ renderToStaticMarkup }, { MapPreview }] = await Promise.all([import("react-dom/server"), import("./MapPreview")]);
                 const snapshot = new DOMParser().parseFromString(renderToStaticMarkup(<MapPreview map={map} />), "image/svg+xml").documentElement;

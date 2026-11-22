@@ -1,9 +1,11 @@
 /* Manifest assetů a textur — načítá se z /repo/11_Mapy/bojove/assets|textury.
    Obrázky mají přednost; vestavěné SVG stamps/textury jsou fallback. */
 import { useQuery } from "@tanstack/react-query";
+export { assetSrc, normalizeVariant, placementVariant, nextVariant } from "../../boj/model/assetVariants";
 
 export interface AssetEntry {
   id: string; nazev: string; kategorie?: string; src: string;
+  varianty?: string[];
   w?: number; h?: number;
   z?: number;
   blocks?: boolean; cover?: 2 | 3; difficult?: boolean;
@@ -19,15 +21,17 @@ async function fetchJson(url: string): Promise<any> {
   return r.json().catch(() => ({}));
 }
 
+export async function fetchAssetManifest(): Promise<Record<string, AssetEntry>> {
+  const a = await fetchJson("/repo/11_Mapy/bojove/assets/assety.json");
+  const map: Record<string, AssetEntry> = {};
+  for (const e of a.assety || []) map[e.id] = e;
+  return map;
+}
+
 export function useAssetManifest() {
   return useQuery({
     queryKey: ["boj-assets-manifest"],
-    queryFn: async () => {
-      const a = await fetchJson("/repo/11_Mapy/bojove/assets/assety.json");
-      const map: Record<string, AssetEntry> = {};
-      for (const e of a.assety || []) map[e.id] = e;
-      return map;
-    },
+    queryFn: fetchAssetManifest,
     staleTime: 30_000,
   });
 }
