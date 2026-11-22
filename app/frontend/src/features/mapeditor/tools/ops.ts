@@ -2,9 +2,16 @@
 import type { MapV2, MapWall, MapPaintStroke, MapObject, MapRoute } from "../../boj/model/mapV2";
 import { wallUid } from "../../boj/model/mapV2";
 import type { GenOut } from "../generators/generators";
-import { routeContains } from "../../boj/model/mapRoutes";
+import { normalizeRoutes, routeContains } from "../../boj/model/mapRoutes";
 
 export const k2 = (x: number, y: number) => `${x},${y}`;
+export function moveRoutePoint(m:MapV2,id:string,index:number,point:[number,number]) {
+  m.trasy=m.trasy?.map(r=>{
+    if(r.id!==id||index<0||index>=r.pts.length)return r;
+    const next={...r,pts:r.pts.map((p,i)=>i===index?point:p)};
+    return normalizeRoutes([next]).length?next:r;
+  });
+}
 
 export function interiorPolygon(m: MapV2, points: [number, number][]) {
   if (points.length < 3 || points.some(p => p.some(n => !Number.isFinite(n)))) return;

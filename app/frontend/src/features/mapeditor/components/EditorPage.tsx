@@ -539,7 +539,7 @@ export default function EditorPage() {
     }
   };
   const onMove = (e: React.PointerEvent) => {
-    if(routeDrag.current){const drag=routeDrag.current,p=snapPt(e);live(m=>{m.trasy=m.trasy?.map(r=>r.id===drag.id?{...r,pts:r.pts.map((q,i)=>i===drag.point?p:q)}:r);});return;}
+    if(routeDrag.current){const drag=routeDrag.current,p=snapPt(e);live(m=>ops.moveRoutePoint(m,drag.id,drag.point,p));return;}
     if(lightGesture.current){setLightPreview(lightGestureValue(e));return;}
     if (strokeRef.current) {
       const s = strokeRef.current;
