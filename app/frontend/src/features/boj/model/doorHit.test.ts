@@ -2,6 +2,18 @@ import { expect, it } from "vitest";
 import { doorAt } from "./doorHit";
 import type { MapWall } from "./mapV2";
 
+it("chooses the nearest closed door instead of the first nearby open leaf", () => {
+  const open: MapWall = { id: "open", a: [2, 3], b: [4, 3], typ: "door", open: true };
+  const closed: MapWall = { id: "closed", a: [1, 1.5], b: [3, 1.5], typ: "door" };
+  for (const walls of [[open, closed], [closed, open]]) {
+    expect(doorAt(walls, 2, 1.5)?.id).toBe("closed");
+    expect(doorAt(walls, 2.16, 1.2)?.id).toBe("open");
+  }
+  expect(doorAt([], 2, 1.5)).toBeUndefined();
+  expect(doorAt([{ ...closed, typ: "wall" }], 2, 1.5)).toBeUndefined();
+  expect(doorAt([closed], 2, 10)).toBeUndefined();
+});
+
 it("hits the far end of visible straight and angled open leaves using battle overrides", () => {
   for (const b of [[5, 2], [5, 5], [2, 5], [-1, 2]] as [number, number][]) {
     const w: MapWall = { id: "door", a: [2, 2], b, typ: "door" };
