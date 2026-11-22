@@ -1,4 +1,5 @@
 /* Typy bojového modulu (D&D 5e 2024). Čistá data — žádné React/DOM závislosti. */
+import type { MapLightV2 } from "./model/mapV2";
 
 export type Ability = "STR" | "DEX" | "CON" | "INT" | "WIS" | "CHA";
 export type Side = "druzina" | "nepratele" | "neutral";
@@ -133,7 +134,7 @@ export interface EffectMods {
   dmgOnHitOnce?: { dice: string; typ?: DmgType | string }; // Divine Favor 1d4
 }
 
-export interface LightSource {
+export interface LightSource extends Pick<MapLightV2, "tvar" | "smer" | "sirka" | "delka" | "color" | "intenzita" | "efekt" | "rychlost" | "stiny" | "blikani"> {
   id: string;
   nazev: string;
   bright: number;               // ft jasného světla

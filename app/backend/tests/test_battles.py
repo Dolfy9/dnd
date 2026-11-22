@@ -59,6 +59,32 @@ def _mk_state():
     }, "dm_notes": "super tajné"}
 
 
+def test_seed_shaped_map_lights(editor, monkeypatch):
+    monkeypatch.setattr(battles_mod, "_mirror", lambda *args: None)
+    con = db.connect()
+    mid = "test-shaped-seed-map"
+    shaped = {"id": "shaped", "x": 3.5, "y": 4.5, "bright": 10, "dim": 20,
+              "tvar": "pruh", "smer": 90, "sirka": 70, "delka": 6,
+              "color": "#ff8800", "intenzita": .7, "efekt": "pulz",
+              "rychlost": .8, "stiny": False, "blikani": False}
+    bid = None
+    try:
+        con.execute("INSERT INTO battle_maps(id,name,data) VALUES(?,?,?)", (mid, "Shaped seed test", db.jdump({"svetla": [shaped, {"id": "old", "bright": 5}]})))
+        con.commit()
+        response = editor.post("/api/battles", json={"name": "Test shaped lights", "map_ref": mid})
+        assert response.status_code == 200, response.text
+        bid = response.json()["id"]
+        state = db.jload(con.execute("SELECT state FROM battles WHERE id=?", (bid,)).fetchone()["state"])
+        light, old = state["stav_boje"]["lights"]
+        assert light == {key: value for key, value in shaped.items() if key not in ("x", "y")} | {"anchor": [3.5, 4.5], "nazev": "světlo mapy"}
+        assert old == {"id": "old", "anchor": [0, 0], "bright": 5, "dim": 0, "nazev": "světlo mapy"}
+    finally:
+        con.execute("DELETE FROM battle_maps WHERE id=?", (mid,))
+        if bid:
+            con.execute("DELETE FROM battles WHERE id=?", (bid,))
+        con.commit()
+
+
 # ---------- player_view (čistá funkce) ----------
 
 def test_player_view_strips_hidden_and_pj():

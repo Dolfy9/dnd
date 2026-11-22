@@ -6,6 +6,7 @@ import { cellsOf, gapFt } from "./grid";
 import { coverOf } from "./los";
 import { edgeBlocksSight, wallIndex, crossedFreeWalls, wallBlocksSight } from "../model/mapV2";
 import { hasCond, isIncap } from "./conditions";
+import { normalizeLight } from "../model/mapV2";
 
 export type LightLevel = "bright" | "dim" | "dark";
 
@@ -64,7 +65,14 @@ export function lightAt(S: StavBoje, map: BattleMapData, x: number, y: number): 
     const ax = src ? src.x! : L.anchor?.[0];
     const ay = src ? src.y! : L.anchor?.[1];
     if (ax == null || ay == null) continue;
-    const d = Math.max(Math.abs(x - ax), Math.abs(y - ay)) * 5;
+    if (![ax,ay].every(Number.isFinite)) continue;
+    const shape=normalizeLight({...L,x:ax,y:ay});
+    const dx=x-ax,dy=y-ay,radians=shape.smer*Math.PI/180;
+    const along=dx*Math.cos(radians)+dy*Math.sin(radians);
+    const across=-dx*Math.sin(radians)+dy*Math.cos(radians);
+    if(shape.tvar==="kuzel" && Math.hypot(dx,dy)>1e-9 && Math.abs((Math.atan2(dy,dx)*180/Math.PI-shape.smer+540)%360-180)>shape.sirka/2+1e-9) continue;
+    const d = (shape.tvar==="pruh" ? Math.hypot(Math.max(0,Math.abs(along)-shape.delka/2),across)
+      : shape.tvar==="kuzel" ? Math.hypot(dx,dy) : Math.max(Math.abs(dx),Math.abs(dy))) * 5;
     const inDark = obscuredAt(S, ax, ay); // světlo ve tmě nesvítí (Darkness 2024)
     if (inDark) continue;
     if (wIdx.size && sightBlocked(idxOr(wIdx), ax + .5, ay + .5, x + .5, y + .5, (S as any).dvere)) continue; // světlo skrz zeď nesvítí
