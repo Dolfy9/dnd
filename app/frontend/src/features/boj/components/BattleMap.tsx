@@ -7,7 +7,7 @@ import type { BattleMapData, StavBoje, Token, AttackDef, FxEvent, EffectPreset }
 import TokenCoin, { CoinDefs } from "./TokenCoin";
 import FxLayer from "./FxLayer";
 import { byId, cur } from "../rules/turn";
-import { reachableCells, evalUi } from "../state/commands";
+import { evalUi } from "../state/commands";
 import { planMovement, cumFt, type MovementPlan } from "../rules/movement";
 import { settingsOf } from "../rules/settings";
 import { mapSize, tileAt, tileDef } from "../rules/grid";
@@ -16,6 +16,8 @@ import { MapElevationLayer, MapWallLayer, MapDrawingLayer, MapLightLayer, MapNot
 import { BASE_COLORS } from "../types";
 import { areaCells, tokensInArea } from "../rules/areas";
 import { targetStatus, targetingArea } from "./targetingModel";
+import { layoutLabels, movementOverlay, provokingPathCells, reachCells, threatCells } from "./tacticalModel";
+import { hpDescription } from "./combatHudModel";
 import { isInteractiveTarget } from "./shortcuts";
 import { dmgStyle } from "./visual";
 import { ZoneShape, ZonePatterns, LightingLayer, FogLayer } from "./MapLayers";
@@ -110,6 +112,11 @@ export default function BattleMap(p: Props) {
   const [view, setView] = useState<{ x: number; y: number; k: number } | null>(null);
   const [hoverCell, setHoverCell] = useState<[number, number] | null>(null);
   const [hoverTok, setHoverTok] = useState<string | null>(null);
+  const [showMovement, setShowMovement] = useState(true);
+  const [showReach, setShowReach] = useState(false);
+  const [showThreat, setShowThreat] = useState(false);
+  const [chosenAttack, setChosenAttack] = useState<{ source: string; atk: AttackDef } | null>(null);
+  useEffect(() => { if (p.hoverAtk && p.sel) setChosenAttack({ source: p.sel, atk: p.hoverAtk }); }, [p.hoverAtk, p.sel]);
   const [areaRotation, setAreaRotation] = useState(0);
   useEffect(() => { setAreaRotation(0); }, [p.targeting?.atk, p.targeting?.srcId]);
   useEffect(() => { p.onHoverToken?.(hoverTok); }, [hoverTok, p.onHoverToken]);
@@ -255,14 +262,28 @@ export default function BattleMap(p: Props) {
     ? [-V.x / V.k + 8, (rNow.width - V.x) / V.k - 8]
     : undefined;
 
-  const selTok = p.sel ? byId(S, p.sel) : undefined;
+  const selTok = (p.sel ? byId(S, p.sel) : undefined) || cur(S);
   const reach = useMemo(
-    () => (selTok && selTok.x != null && !selTok.dead && !p.targeting ? reachableCells(S, map, selTok) : {}),
-    [S, map, selTok?.id, selTok?.x, selTok?.y, selTok?.hp, p.targeting],
+    () => showMovement && selTok && !p.targeting ? movementOverlay(S, map, selTok.id, p.dm) : [],
+    [S, map, selTok?.id, showMovement, p.targeting, p.dm],
   );
+  const meleeCells = useMemo(() => showReach && selTok ? reachCells(S, map, selTok, p.dm) : [], [S, map, selTok?.id, showReach, p.dm]);
+  const threats = useMemo(() => showThreat && selTok ? threatCells(S, map, selTok.id, p.dm) : [], [S, map, selTok?.id, showThreat, p.dm]);
+  const labelScale = 1 / V.k;
+  const labelTokens = S.tok.filter(t => t.x != null && t.y != null && !t.dead && (p.names === "always" || t.id === hoverTok || t.id === p.sel || t.id === S.ord[S.turn]));
+  const labelData = labelTokens.map(t => {
+    const full = t.id === hoverTok || t.id === p.sel;
+    const name = full ? t.nazev : t.nazev.length > 12 ? `${t.nazev.slice(0, 11)}…` : t.nazev;
+    const detail = full ? p.dm ? `${t.hp}${t.tmp ? `+${t.tmp}` : ""}/${t.max} HP · AC ${t.ac}` : hpDescription(t) : "";
+    const width = Math.min(250, Math.max(64, name.length * 7, detail.length * 6)) * labelScale;
+    return { id: t.id, x: (t.x! + t.s / 2) * PX - width / 2, y: (t.y! + t.s) * PX + 4 * labelScale, width, height: (full ? 34 : 20) * labelScale,
+      priority: t.id === hoverTok ? 3 : t.id === p.sel ? 2 : t.id === S.ord[S.turn] ? 1 : 0, name, detail, t };
+  });
+  const labels = layoutLabels(labelData, 4 * labelScale, rNow ? { left: -V.x / V.k + 4 * labelScale, right: (rNow.width - V.x) / V.k - 4 * labelScale, top: -V.y / V.k + 4 * labelScale, bottom: (rNow.height - V.y) / V.k - 4 * labelScale } : undefined);
   const settings = useMemo(() => settingsOf(S), [S]);
   const plan = drag?.to && drag.id ? planMovement(S, map, byId(S, drag.id)!, drag.wps || [], drag.to, "pravidla", settings) : null;
   const cum = plan && plan.path.length > 1 ? cumFt(byId(S, drag!.id)!, plan.path, map, S, settings) : null;
+  const provoking = plan && drag?.id ? provokingPathCells(S, byId(S, drag.id)!, plan.path) : [];
   useEffect(() => {
     if (!drag?.id) return;
     const h = (e: KeyboardEvent) => {
@@ -274,8 +295,11 @@ export default function BattleMap(p: Props) {
   }, [!!drag?.id, hoverCell, drag?.wps?.length]);
   const srcTok = p.targeting ? byId(S, p.targeting.srcId) : p.hoverAtk && selTok ? selTok : undefined;
   const ringAtk = p.targeting ? p.targeting.atk : p.hoverAtk || null;
-  const hoverEval = p.targeting && !p.targeting.area && hoverTok && srcTok && byId(S, hoverTok)
-    ? evalUi(S, map, srcTok, byId(S, hoverTok)!, p.targeting.atk) : null;
+  const infoSource = srcTok || selTok;
+  const infoTarget = byId(S, hoverTok);
+  const infoAttack = p.targeting?.atk || p.hoverAtk || (chosenAttack && chosenAttack.source === infoSource?.id ? chosenAttack.atk : infoSource?.atk[0]);
+  const hoverEval = infoSource && infoTarget && infoAttack && cur(S)?.id === infoSource.id && infoSource.side !== infoTarget.side
+    ? targetStatus(S, map, infoSource, infoTarget, infoAttack) : null;
   const areaSpec = p.targeting?.area && hoverCell && srcTok ? targetingArea(srcTok, p.targeting.atk, hoverCell, areaRotation) : null;
   const areaPrev = areaSpec ? areaCells(areaSpec) : [];
   const caught = areaSpec ? tokensInArea(areaSpec, S.tok, srcTok) : [];
@@ -535,18 +559,18 @@ export default function BattleMap(p: Props) {
             <rect key={`zp${x},${y}`} x={x * PX + 1} y={y * PX + 1} width={PX - 2} height={PX - 2} rx={4}
                   fill="#a78bfa" opacity={0.3} stroke="#a78bfa" strokeWidth={1.5} />
           ))}
-          {!p.targeting && Object.keys(reach).map((k) => {
-            const [x, y] = k.split(",").map(Number);
-            const far = reach[k] > 0;
-            return <rect key={k} x={x * PX + 1} y={y * PX + 1} width={PX - 2} height={PX - 2} fill="#3b82f6" opacity={far ? 0.13 : 0} rx={4} />;
-          })}
+          <g className="battle-tactical-cells" mask={liveSvgMask} pointerEvents="none">
+            {reach.map(({ x, y, dash, cost }) => <rect key={`m${x},${y}`} data-movement={dash ? "dash" : "walk"} data-cost={cost} x={x * PX + 1} y={y * PX + 1} width={PX - 2} height={PX - 2} fill={dash ? "#60a5fa" : "#34d399"} opacity={dash ? .1 : .18} rx={3} />)}
+            {meleeCells.map(([x, y]) => <rect key={`r${x},${y}`} data-reach="true" x={x * PX + 2} y={y * PX + 2} width={PX - 4} height={PX - 4} fill="#fbbf2410" stroke="#fbbf24" strokeWidth={1.5} strokeDasharray="4 3" />)}
+            {threats.map(([x, y]) => <rect key={`t${x},${y}`} data-threat="true" x={x * PX + 3} y={y * PX + 3} width={PX - 6} height={PX - 6} fill="#fb718525" stroke="#fb7185" strokeWidth={1.2} />)}
+          </g>
           {plan && drag?.to && (
             <g>
               {plan.path.map(([x, y], i) => {
                 const over = cum ? cum[i] > plan.limitFt : false;
                 return (
                   <rect key={i} x={x * PX + 6} y={y * PX + 6} width={PX - 12} height={PX - 12} rx={6}
-                        fill={plan.blocked ? "#ef4444" : over ? "#f59e0b" : "#22c55e"} opacity={0.3} />
+                        data-provokes={provoking.includes(i) || undefined} stroke={provoking.includes(i) ? "#fb7185" : "none"} strokeWidth={3} fill={provoking.includes(i) ? "#ef4444" : plan.blocked ? "#ef4444" : over ? "#f59e0b" : "#22c55e"} opacity={provoking.includes(i) ? .65 : .3} />
                 );
               })}
               {(drag.wps || []).map(([x, y], i) => (
@@ -631,7 +655,7 @@ export default function BattleMap(p: Props) {
                 {ev && <title>{ev.reason || (ev.longRange ? "Dlouhý dostřel · nevýhoda" : "Legální cíl")} · {ev.dist} ft · {ev.coverText}</title>}
                 <TokenCoin t={t} px={PX * 0.94} step={PX} active={S.ord?.[S.turn] === t.id}
                            selected={p.sel === t.id || !!p.selSet?.has(t.id)}
-                           hovered={hoverTok === t.id} dm={p.dm} lab={cs} names={p.names || "hover"} plateClamp={plateClamp} />
+                           hovered={hoverTok === t.id} dm={p.dm} lab={cs} names="none" plateClamp={plateClamp} />
                 {isTarget && ev && (
                   <Pill x={(t.x + t.s / 2) * PX} y={(t.y ?? 0) * PX - 8} w={148} h={30}>
                     <text textAnchor="middle" y={-4} fontSize={11.5} fill={ev.canTarget ? "#4ade80" : "#f87171"} fontWeight={800}>
@@ -643,6 +667,19 @@ export default function BattleMap(p: Props) {
               </g>
             );
           })}
+          <g className="battle-token-labels" pointerEvents="none" mask={liveSvgMask}>
+            {labels.map(box => {
+              const label = labelData.find(l => l.id === box.id)!;
+              return <g key={box.id} data-label={box.id}>
+                <line x1={(label.t.x! + label.t.s / 2) * PX} y1={(label.t.y! + label.t.s) * PX} x2={box.x + box.width / 2} y2={box.y} stroke="#94a3b8" strokeWidth={labelScale} opacity={.55} />
+                <g transform={`translate(${box.x},${box.y}) scale(${labelScale})`}>
+                  <rect width={box.width / labelScale} height={box.height / labelScale} rx={6} fill="#0b1426f2" stroke="#64748b" strokeWidth={.7} />
+                  <text x={box.width / labelScale / 2} y={14} textAnchor="middle" fontSize={11} fontWeight={650} fill="#f1f5f9" textLength={Math.min(box.width / labelScale - 10, label.name.length * 6.5)} lengthAdjust="spacingAndGlyphs">{label.name}</text>
+                  {label.detail && <text x={box.width / labelScale / 2} y={27} textAnchor="middle" fontSize={10} fill="#cbd5e1">{label.detail}</text>}
+                </g>
+              </g>;
+            })}
+          </g>
           {measure && (
             <g pointerEvents="none">
               <line x1={(measure.a[0] + 0.5) * PX} y1={(measure.a[1] + 0.5) * PX} x2={(measure.b[0] + 0.5) * PX} y2={(measure.b[1] + 0.5) * PX}
@@ -661,6 +698,16 @@ export default function BattleMap(p: Props) {
         </g>
       </svg>
       {p.children}
+      <div className="battle-tactical-controls" role="group" aria-label="Taktické vrstvy">
+        <button aria-pressed={showMovement} onClick={() => setShowMovement(v => !v)} title="Zeleně: zbývající pohyb · modře: Dash (Action)">Pohyb</button>
+        <button aria-pressed={showReach} onClick={() => setShowReach(v => !v)}>Dosah</button>
+        <button aria-pressed={showThreat} onClick={() => setShowThreat(v => !v)} title="Červeně: buňky, z nichž opuštění dosahu vyvolá OA">Hrozby OA</button>
+        <small>● pohyb · <span>● Dash</span> · OA při opuštění dosahu</small>
+      </div>
+      {hoverEval && infoAttack && <aside className="battle-hover-odds" aria-label="Šance zásahu">
+        <b>{infoTarget!.nazev}</b><span>{infoAttack.nazev} · {hoverEval.dist} ft · {hoverEval.coverText}</span>
+        <strong>{hoverEval.highlighted ? p.dm ? `${Math.round(hoverEval.hitChance * 100)} % zásah${hoverEval.longRange ? " · nevýhoda" : ""}` : "Odhad zásahu určuje PJ" : hoverEval.reason}</strong>
+      </aside>}
       <MapWeatherOverlay map={weatherMap} view={V} px={PX} visibilityMask={liveMask} />
       {p.dm && sourceMenu && <><div style={{position:"fixed",inset:0,zIndex:100}} onPointerDown={()=>setSourceMenu(null)}/><div role="menu" aria-label="Stav zdroje" className="boj-ctx" style={{position:"fixed",left:Math.min(sourceMenu.x,window.innerWidth-240),top:Math.min(sourceMenu.y,window.innerHeight-80),zIndex:101}} onKeyDown={e=>{if(e.key==="Escape")setSourceMenu(null);}}><button role="menuitem" autoFocus onClick={()=>{p.onSource?.(sourceMenu.id);setSourceMenu(null);}}>Zapnout / vypnout zdroj</button></div></>}
       <div className="map-live-controls"><AnimationButton />{p.dm && p.onWeather && <WeatherPicker compact map={map as MapV2} value={weatherMap.pocasi} onChange={p.onWeather} />}</div>

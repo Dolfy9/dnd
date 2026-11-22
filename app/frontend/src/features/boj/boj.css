@@ -577,7 +577,21 @@ body.boj-max .app-topbar, body.boj-max .sb-wrap { display: none !important }
 .boj-zone-handles rect:hover, .boj-zone-handles circle:hover { stroke: #93c5fd; }
 .boj-splvl h5 { margin: 6px 0 2px; font-size: 11px; color: var(--fg2); font-weight: 800; }
 .boj-splvl h5 em { color: var(--acc); font-style: normal; }
-.combat-pending { position:absolute;z-index:24;left:64px;top:14px;width:262px;max-height:42%;overflow:auto;border:1px solid #475569aa;border-radius:12px;background:#0b1422f2;color:#e2e8f0;box-shadow:0 8px 30px #0006;font:12px/1.4 -apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif; }
+.battle-tactical-controls { position:absolute;top:12px;left:64px;z-index:23;display:flex;flex-wrap:wrap;gap:4px;max-width:290px;padding:7px;border:1px solid #475569;border-radius:10px;background:#0b1426f2;color:#cbd5e1;font:11px/1.4 system-ui,sans-serif; }
+.battle-tactical-controls button { min-height:30px;padding:4px 10px;border:1px solid #475569;border-radius:6px;background:#182536;color:#cbd5e1;cursor:pointer; }
+.battle-tactical-controls button[aria-pressed="true"] { border-color:#6ee7b7;color:#a7f3d0;background:#13332f; }
+.battle-tactical-controls small { flex-basis:100%;font-size:10px;color:#6ee7b7; }.battle-tactical-controls small span { color:#93c5fd; }
+.battle-hover-odds { position:absolute;top:130px;right:14px;z-index:23;width:220px;padding:10px 12px;border:1px solid #64748b;border-radius:10px;background:#0b1426f5;color:#e2e8f0;font:12px/1.5 system-ui,sans-serif;pointer-events:none; }
+.battle-hover-odds span,.battle-hover-odds strong { display:block; }.battle-hover-odds span { color:#94a3b8;font-size:11px; }.battle-hover-odds strong { color:#6ee7b7;margin-top:4px; }
+.battle-token-labels { font-family:system-ui,sans-serif; }
+.battle-turn-ring { transform-box:fill-box;transform-origin:center;animation:battleTurnRing 2.4s ease-in-out infinite;filter:drop-shadow(0 0 3px #f8d477); }
+.boj-init-item.on { animation:battleTurnChip 2.4s ease-in-out infinite; }
+@keyframes battleTurnRing { 50% { opacity:.6;transform:scale(1.08); } }
+@keyframes battleTurnChip { 50% { box-shadow:inset 0 0 12px #f8d47730; } }
+html[data-map-animations="off"] .battle-turn-ring,html[data-map-animations="off"] .boj-init-item.on { animation:none; }
+@media(prefers-reduced-motion:reduce) { .battle-turn-ring,.boj-init-item.on { animation:none!important; } }
+@media(max-width:600px) { .battle-tactical-controls { left:48px;top:8px;max-width:220px;padding:5px;gap:3px; }.battle-tactical-controls button { min-height:34px;padding:4px 7px; }.battle-hover-odds { top:auto;bottom:164px;right:8px;width:200px; }.boj-page .combat-target-hud { top:120px;width:164px;padding:8px; }.boj-page .map-live-controls { top:76px;right:8px; } }
+.combat-pending { position:absolute;z-index:24;left:64px;top:94px;width:262px;max-height:42%;overflow:auto;border:1px solid #475569aa;border-radius:12px;background:#0b1422f2;color:#e2e8f0;box-shadow:0 8px 30px #0006;font:12px/1.4 -apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif; }
 .combat-pending>header { display:flex;justify-content:space-between;padding:10px 12px;border-bottom:1px solid #334155;letter-spacing:.03em; }
 .combat-pending>header span { color:#fbbf24; }
 .combat-pending article { display:flex;gap:8px;padding:10px;border-bottom:1px solid #33415588; }

@@ -21,7 +21,7 @@ interface Props {
   dm: boolean;              // ukazovat čísla HP
   dead?: boolean;
   lab?: number;             // counter-scale (1/zoom) pro badges/jmenovky — konstantní on-screen
-  names?: "hover" | "always";
+  names?: "hover" | "always" | "none";
   plateClamp?: [number, number]; // viditelné meze ve world px — jmenovka se clapne do obrazu
 }
 
@@ -63,7 +63,7 @@ export default function TokenCoin({ t, step, active, selected, hovered, dm, lab 
        opacity={invis ? 0.45 : t.dead ? 0.75 : 1} data-tid={t.id}>
       {/* stín + glow */}
       <circle r={R} fill="#000" opacity={0.35} cy={2.5} />
-      {active && <><circle r={R + 5} fill="none" stroke="#071019" strokeWidth={6} /><circle r={R + 5} fill="none" stroke="#f8d477" strokeWidth={2.8} /></>}
+      {active && <><circle r={R + 5} fill="none" stroke="#071019" strokeWidth={6} /><circle className="battle-turn-ring" r={R + 5} fill="none" stroke="#f8d477" strokeWidth={2.8} /></>}
       {selected && <circle r={R + 2.5} fill="none" stroke="#eab308" strokeWidth={2.4} strokeDasharray="6 3" className="boj-coin-selring" />}
       {/* reeded hrana */}
       <circle r={R} fill={`url(#rim-${t.side})`} />
@@ -159,7 +159,7 @@ export default function TokenCoin({ t, step, active, selected, hovered, dm, lab 
         </g>
       )}
       {/* jmenovka — konstantní on-screen velikost, pilulka pro kontrast */}
-      {(names === "always" || hovered || selected || active) && !t.dead && (() => {
+      {names !== "none" && (names === "always" || hovered || selected || active) && !t.dead && (() => {
         const plateW = Math.max(68, t.nazev.length * 8) * lab;
         const dx = plateClamp ? clamp(0, plateClamp[0] + plateW / 2 - cx, plateClamp[1] - plateW / 2 - cx) : 0;
         return (

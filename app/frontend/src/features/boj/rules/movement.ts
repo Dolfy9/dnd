@@ -60,7 +60,7 @@ interface DijkstraRes {
 }
 
 /** Dijkstra bez limitu; stav = "x,y,p" (p = parita úhlopříček pro 5-10 variant). */
-function dijkstra(t: Token, from: [number, number], map: BattleMapData, S: StavBoje, diag: string, passHostile: boolean, forced: boolean): DijkstraRes {
+function dijkstra(t: Token, from: [number, number], map: BattleMapData, S: StavBoje, diag: string, passHostile: boolean, forced: boolean, limit = Infinity): DijkstraRes {
   const { W, H } = mapSize(map);
   const alt = diag === "5-10";
   const key = (x: number, y: number, p: number) => `${x},${y},${p}`;
@@ -86,11 +86,25 @@ function dijkstra(t: Token, from: [number, number], map: BattleMapData, S: StavB
       const np = alt && diagStep ? 1 - p : p;
       const stepFt = diagStep && alt ? (p === 0 ? 5 : 10) : 5;
       const nc = c + sc * stepFt;
+      if (nc > limit) continue;
       const k = key(nx, ny, np);
       if (nc < (dist.get(k) ?? Infinity)) { dist.set(k, nc); prev.set(k, key(x, y, p)); q.push([nc, nx, ny, np]); }
     }
   }
   return { dist, prev };
+}
+
+export function movementCosts(S: StavBoje, map: BattleMapData, t: Token, limit: number, settings: BattleSettings): Record<string, number> {
+  if (t.x == null || t.y == null || t.dead) return {};
+  const result = dijkstra(t, [t.x, t.y], map, S, settings.pohyb.uhlopricky, settings.pohyb.pruchodNepratel === "povolit", false, limit);
+  const costs: Record<string, number> = {};
+  for (const [key, cost] of result.dist) {
+    const [x, y] = key.split(",").map(Number);
+    if (cellsOf(t, x, y).some(([cx, cy]) => occupantAt(S.tok, cx, cy, t))) continue;
+    const cell = `${x},${y}`;
+    costs[cell] = Math.min(costs[cell] ?? Infinity, cost);
+  }
+  return costs;
 }
 
 /** Nejsledovanější klíč pro cíl [x,y] — vezme libovolnou paritu. */
