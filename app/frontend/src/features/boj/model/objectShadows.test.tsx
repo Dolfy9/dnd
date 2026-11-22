@@ -25,6 +25,12 @@ it("offsets and elongates away from the strongest reaching light, ignoring block
  const svg=renderToStaticMarkup(<ContactShadowArtwork plan={plan} width={240} height={240}/>);
  expect(svg).toContain('data-contact-shadow="box"');expect(svg).toContain("linearGradient");expect(svg).toContain("feGaussianBlur");expect(svg).not.toMatch(/<ellipse|animation/);
 });
+it("keeps explicit shadow overrides independent of negative draw order",()=>{
+ expect(castsShadow({...box,z:-1,stin:true})).toBe(true);
+ expect(castsShadow({...box,z:-1})).toBe(false);
+ expect(castsShadow({...box,z:-1,stin:false,vyska:3})).toBe(false);
+ expect(castsShadow({...box,z:-1,stin:true,vyska:0})).toBe(false);
+});
 it("uses solid/cover metadata, respects explicit overrides and ignores hidden or invalid props",()=>{
  expect(castsShadow(box)).toBe(true);expect(castsShadow({...box,blocks:false,cover:2})).toBe(true);
  expect(castsShadow({...box,stin:false})).toBe(false);expect(castsShadow({...box,blocks:false,stin:true})).toBe(true);

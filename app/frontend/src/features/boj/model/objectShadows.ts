@@ -7,11 +7,11 @@ import {normalizeVariant} from "./assetVariants";
 const spriteProfiles=profiles as Record<string,{hulls:number[][][];ratios:number[]}>;
 
 export function objectHeight(o:MapObject,a?:AssetEntry):number {
-  if((o.z ?? a?.z ?? 0)<0 && o.vyska===undefined)return 0;
+  if((o.z ?? a?.z ?? 0)<0 && o.vyska===undefined && o.stin!==true)return 0;
   const override=o.vyska ?? a?.vyska;
   if(override!==undefined)return Number.isFinite(override)?Math.max(0,Math.min(8,override)):0;
   const name=[o.asset,a?.nazev,a?.kategorie].join(" ");
-  if(a?.blend || (o.z ?? a?.z ?? 0)<0 || /koberec|rohoz|kvetinovy|květinový|p-site\b|sítě|brectan|břečťan|puddle|louže|kaluž|obtisk|efekt/i.test(name))return 0;
+  if(a?.blend || ((o.z ?? a?.z ?? 0)<0 && o.stin!==true) || /koberec|rohoz|kvetinovy|květinový|p-site\b|sítě|brectan|břečťan|puddle|louže|kaluž|obtisk|efekt/i.test(name))return 0;
   if(/strom|tree|sloup|pillar|soch|skříň|skrin|rotunda/i.test(name))return 3;
   if(/bedn|crate|sud|barrel|lavic|lavič|keř|bush/i.test(name))return .6;
   return o.stin || (o.blocks ?? a?.blocks) || (o.cover ?? a?.cover)?1.2:0;
