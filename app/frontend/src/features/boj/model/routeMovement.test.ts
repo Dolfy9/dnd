@@ -3,11 +3,17 @@ import type {MapV2} from "./mapV2";
 import type {Token,StavBoje} from "../types";
 import {planMovement} from "../rules/movement";
 import {defaultSettings} from "../rules/settings";
-import {reachable} from "../rules/grid";
+import {reachable,canEndAt} from "../rules/grid";
 import {deckCoversStep} from "./mapRoutes";
 
 const token={id:"t",s:1,x:0,y:0,speed:30,side:"druzina",cond:[],effects:[],spent:{},atk:[]} as unknown as Token;
 const state={tok:[token],zones:[],eco:{},turn:0,ord:["t"]} as unknown as StavBoje;
+it("does not enter a hedge from the same side of its axis",()=>{
+ const t={...token,x:2,y:1},map:MapV2={id:"m",nazev:"M",podklad:"jine",mrizka:Array(4).fill("...."),trasy:[{id:"hedge",druh:"plot",pts:[[1,0],[1,4]],sirka:2,hladke:false}]};
+ expect(reachable(t,30,map,[t]).dist["1,1"]).toBeUndefined();
+ expect(canEndAt(t,1,1,map,[t])).toBe(false);
+ expect(reachable(t,30,{...map,trasy:[]},[t]).dist["1,1"]).toBe(5);
+});
 it("crosses a narrow diagonal deck even when both adjacent side cells are chasm",()=>{
  const map:MapV2={id:"m",nazev:"M",podklad:"jine",mrizka:["___","___","___"],trasy:[{id:"pier",druh:"molo",pts:[[.5,.5],[2.5,2.5]],sirka:.5,hladke:false}]};
  const p=planMovement(state,map,token,[],[2,2],"pravidla",defaultSettings());

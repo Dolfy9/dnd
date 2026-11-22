@@ -79,6 +79,7 @@ export function stepCost(t: Token, x: number, y: number, map: BattleMapData, tok
     const c = tileAt(map, cx, cy, teren), def = tileDef(c);
     if (c === "_" && !t.fly) return Infinity;
     if (!def.cost && c !== "_") return Infinity;
+    if (def.cost && cellInfo(map,cx,cy,teren).blocksMove) return Infinity;
     let k = def.cost || 1;
     if (c === "~" && t.swim) k = 1;
     if (t.fly && "^,%~_".includes(c)) k = 1;
