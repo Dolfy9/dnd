@@ -1,9 +1,15 @@
 import { afterEach, describe, expect, it, vi } from "vitest";
-import { atmosphereBitmapSize, bakeAtmosphere, rasterizeAtmosphere } from "./atmosphereRaster";
+import { atmosphereBitmapSize, bakeAtmosphere, embedSvgImages, rasterizeAtmosphere } from "./atmosphereRaster";
 
 afterEach(() => { vi.unstubAllGlobals(); vi.restoreAllMocks(); });
 
 describe("atmosphere bitmap baking", () => {
+  it("embeds overlapping image URLs independently without rewriting unrelated SVG text",async()=>{
+    vi.stubGlobal("fetch",vi.fn(async(url:string)=>({ok:true,blob:async()=>new Blob([url])})));
+    vi.stubGlobal("FileReader",class {result="";onload=()=>{};readAsDataURL(blob:Blob){blob.text().then(t=>{this.result="data:"+t;this.onload();});}});
+    const svg='<svg data-source="/repo/prefix.webp"><image href="/repo/prefix.webp"/><image href="/repo/prefix.webp?v=2"/><image href="/repo/prefix.webp"/></svg>';
+    expect(await embedSvgImages(svg)).toBe('<svg data-source="/repo/prefix.webp"><image href="data:/repo/prefix.webp"/><image href="data:/repo/prefix.webp?v=2"/><image href="data:/repo/prefix.webp"/></svg>');
+  });
   it("uses device pixels, caps the long side and tolerates empty/non-finite dimensions", () => {
     expect(atmosphereBitmapSize(100, 200, 2, 4096)).toEqual({width:200,height:400});
     expect(atmosphereBitmapSize(8000, 4000, 2, 4096)).toEqual({width:4096,height:2048});

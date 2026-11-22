@@ -26,10 +26,10 @@ function embeddedImage(url:string) {
 }
 
 export async function embedSvgImages(svg:string) {
-  const urls=[...new Set([...svg.matchAll(/href="(\/repo\/[^\"]+)"/g)].map(match=>match[1]))];
-  const data=await Promise.all(urls.map(async url=>[url,await embeddedImage(url.replace(/&amp;/g,"&"))]));
-  for(const [url,image] of data)svg=svg.split(url).join(image);
-  return svg;
+  const href=/(\s(?:xlink:)?href=")(\/repo\/[^"]+)"/g;
+  const urls=[...new Set([...svg.matchAll(href)].map(match=>match[2]))];
+  const data=new Map(await Promise.all(urls.map(async url=>[url,await embeddedImage(url.replace(/&amp;/g,"&"))] as const)));
+  return svg.replace(href,(_,prefix:string,url:string)=>prefix+data.get(url)+'"');
 }
 
 export async function rasterizeAtmosphere(svg: string, width: number, height: number, dpr: number, cap: number) {
