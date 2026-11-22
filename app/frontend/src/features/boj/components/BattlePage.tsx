@@ -168,12 +168,12 @@ export default function BattlePage() {
         const nx = selTok.x + dx, ny = selTok.y! + dy;
         const set = settingsOf(S);
         if (e.altKey) { // Alt+šipka = teleport o krok
-          b.dispatch((s) => C.moveToken(s, selTok.id, nx, ny, { mode: "teleport" }));
+          cmd((s) => C.moveToken(s, selTok.id, nx, ny, { mode: "teleport" }));
           return;
         }
         const pl = planMovement(S, map, selTok, [], [nx, ny], "pravidla", set);
         if (!pl.blocked && pl.overFt <= 0 && !pl.oas.length)
-          b.dispatch((s) => C.moveToken(s, selTok.id, nx, ny, { ft: pl.ft, oas: pl.oas, mode: "pravidla" }));
+          cmd((s) => C.moveToken(s, selTok.id, nx, ny, { ft: pl.ft, oas: pl.oas, mode: "pravidla" }));
         else setDropReq({ t: selTok, plan: pl, waypoints: [], pt: { x: window.innerWidth / 2, y: window.innerHeight / 2 }, kind: pl.blocked ? "blocked" : pl.oas.length && pl.overFt <= 0 ? "oa" : "over" });
         return;
       }
