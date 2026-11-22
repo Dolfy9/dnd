@@ -525,3 +525,11 @@ body.boj-max .app-topbar, body.boj-max .sb-wrap { display: none !important }
 .boj-rx-opt{display:flex;flex-direction:column;gap:2px;text-align:left;padding:8px 10px;border:1px solid var(--line);border-radius:8px;background:var(--panel-2);color:var(--ink);cursor:pointer;font-size:12px;min-height:36px}
 .boj-rx-opt span{opacity:.75;font-size:11px}
 .boj-rx-opt:hover{border-color:var(--accent)}
+.boj-ctx-hp { display: flex; align-items: center; gap: 4px; margin: 4px 0 6px; padding: 4px 0; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); font-size: 11px; }
+.boj-ctx-hp span { flex: 1; font-weight: 700; }
+.boj-ctx-hp button { background: var(--btn); border: 1px solid var(--line); border-radius: 6px; color: var(--fg); font-size: 11px; padding: 2px 6px; cursor: pointer; }
+.boj-ctx-hp button:hover { border-color: var(--acc); }
+.boj-zone-handles { pointer-events: auto; }
+.boj-zone-handles rect:hover, .boj-zone-handles circle:hover { stroke: #93c5fd; }
+.boj-splvl h5 { margin: 6px 0 2px; font-size: 11px; color: var(--fg2); font-weight: 800; }
+.boj-splvl h5 em { color: var(--acc); font-style: normal; }

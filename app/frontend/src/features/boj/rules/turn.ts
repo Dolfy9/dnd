@@ -152,6 +152,11 @@ export const STD_ACTIONS = [
   { id: "escape", nazev: "Escape", desc: "Uvolnění z Grappled (Athletics/Acrobatics)." },
   { id: "standup", nazev: "Stand Up", desc: "Vstát z Prone (½ speed)." },
   { id: "dropprone", nazev: "Drop Prone", desc: "Lehnout si (zdarma)." },
+  { id: "crawl", nazev: "Crawl", desc: "Plazení — pohyb ×2 (přepínač)." },
+  { id: "jumplong", nazev: "Long Jump", desc: "Skok do dálky: STR ft (rozběh 10 ft)." },
+  { id: "jumphigh", nazev: "High Jump", desc: "Skok do výšky: 3+STR mod." },
+  { id: "flyup", nazev: "Fly ↑", desc: "Vzletět +5 ft elevace (−5 ft pohybu)." },
+  { id: "flydown", nazev: "Fly ↓", desc: "Klesnout −5 ft elevace (−5 ft pohybu)." },
 ] as const;
 
 export type StdActionId = (typeof STD_ACTIONS)[number]["id"];

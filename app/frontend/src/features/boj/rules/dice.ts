@@ -30,7 +30,7 @@ export function diceOnlyAvg(expr: string): number {
 export interface RollResult { total: number; parts: number[] }
 
 /** Hod kostkami; crit zdvojnásobí počet kostek. */
-export function rollDice(expr: string, opts: { crit?: boolean; rng?: Rng } = {}): RollResult {
+export function rollDice(expr: string, opts: { crit?: boolean; rng?: Rng; treat1as2?: boolean } = {}): RollResult {
   const rng = opts.rng || defaultRng;
   let total = 0;
   const parts: number[] = [];
@@ -38,7 +38,8 @@ export function rollDice(expr: string, opts: { crit?: boolean; rng?: Rng } = {})
     if (t.f) {
       const count = t.n * (opts.crit ? 2 : 1);
       for (let i = 0; i < count; i++) {
-        const r = die(t.f, rng);
+        let r = die(t.f, rng);
+        if (opts.treat1as2 && r === 1) r = 2;      // Elemental Adept 2024
         total += t.sign * r;
         parts.push(r);
       }

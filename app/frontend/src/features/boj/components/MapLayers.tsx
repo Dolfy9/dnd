@@ -44,13 +44,54 @@ function ZoneChip({ x, y, z, lab = 1 }: { x: number; y: number; z: Zone; lab?: n
   );
 }
 
-export function ZoneShape({ z, px, tokens, lab = 1 }: { z: Zone; px: number; tokens: Token[]; lab?: number }) {
+export function ZoneShape({ z, px, tokens, lab = 1, edit, onMove, onResize }: {
+  z: Zone; px: number; tokens: Token[]; lab?: number;
+  edit?: boolean; onMove?: (ax: number, ay: number) => void; onResize?: (size: number) => void;
+}) {
+  const handles = edit ? (
+    <g className="boj-zone-handles">
+      <rect
+        x={(z.anchor[0] + 0.5) * px - 10} y={(z.anchor[1] + 0.5) * px - 10} width={20} height={20} rx={4}
+        fill="#0f172acc" stroke="#60a5fa" strokeWidth={1.5} style={{ cursor: "move", pointerEvents: "auto" }}
+        onPointerDown={(e) => {
+          e.stopPropagation(); e.preventDefault();
+          const svg = (e.target as Element).closest("svg")!; const r0 = svg.getBoundingClientRect();
+          const sc = px / (r0.width / svg.viewBox.baseVal.width || 1);
+          const mv = (ev: PointerEvent) => {
+            const gx = (ev.clientX - r0.left) / (r0.width / svg.viewBox.baseVal.width) / px - 0.5;
+            const gy = (ev.clientY - r0.top) / (r0.width / svg.viewBox.baseVal.width) / px - 0.5;
+            onMove?.(Math.max(0, Math.floor(gx)), Math.max(0, Math.floor(gy)));
+          };
+          const up = () => { window.removeEventListener("pointermove", mv); window.removeEventListener("pointerup", up); };
+          window.addEventListener("pointermove", mv); window.addEventListener("pointerup", up);
+        }}
+      />
+      {!z.tokenId && (
+        <circle
+          cx={(z.anchor[0] + 0.5) * px + (z.shape.size / 5) * px} cy={(z.anchor[1] + 0.5) * px} r={7}
+          fill="#0f172acc" stroke="#60a5fa" strokeWidth={1.5} style={{ cursor: "nwse-resize", pointerEvents: "auto" }}
+          onPointerDown={(e) => {
+            e.stopPropagation(); e.preventDefault();
+            const svg = (e.target as Element).closest("svg")!; const r0 = svg.getBoundingClientRect();
+            const ax = z.anchor[0] + 0.5, ay = z.anchor[1] + 0.5;
+            const mv = (ev: PointerEvent) => {
+              const gx = (ev.clientX - r0.left) / (r0.width / svg.viewBox.baseVal.width) / px;
+              const dist = Math.max(1, Math.round(Math.hypot(gx - ax, ((ev.clientY - r0.top) / (r0.width / svg.viewBox.baseVal.width) / px) - ay) * 5 / 5) * 5);
+              onResize?.(dist * 5);
+            };
+            const up = () => { window.removeEventListener("pointermove", mv); window.removeEventListener("pointerup", up); };
+            window.addEventListener("pointermove", mv); window.addEventListener("pointerup", up);
+          }}
+        />
+      )}
+    </g>
+  ) : null;
   const st = ZONES_STYLE[z.style] || ZONES_STYLE.fire;
   const cls = `boj-zone boj-zone-${z.style}`;
   const dark = z.style === "darkness";
   const fillOp = st.op ?? 0.4;
   const body = (shape: JSX.Element, chipX: number, chipY: number, edgeR?: number, edgeCx?: number, edgeCy?: number) => (
-    <g className={cls} pointerEvents="none">
+    <g className={cls} pointerEvents="none">{handles}
       {shape}
       {edgeR != null && (
         <>

@@ -31,7 +31,8 @@ export default function PresetPicker({ forTok, onPick, onZone }: {
   const rows = q || cat ? list : [...suggested, ...list.filter((p) => !sugSet.has(p.id))];
 
   const Row = ({ p, sug }: { p: EffectPreset; sug?: boolean }) => (
-    <div className={`boj-preset ${sug ? "sug" : ""}`} title={p.desc}>
+    <div className={`boj-preset ${sug ? "sug" : ""}`} title={p.desc + " (táhni na žeton)"} draggable
+      onDragStart={(e) => { e.dataTransfer.setData("text/preset", p.id); e.dataTransfer.effectAllowed = "copy"; }}>
       <span className="boj-preset-ico" style={{ background: (p.color || "#64748b") + "33", color: p.color || "#94a3b8" }}>{p.icon}</span>
       <span className="boj-preset-name"><b>{p.nazev}</b>{p.conc && <i>Conc</i>}{sug && <em>doporučeno</em>}</span>
       <span className="boj-preset-btns">

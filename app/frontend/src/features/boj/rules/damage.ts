@@ -24,27 +24,27 @@ const normType = (s: string) => s.charAt(0).toUpperCase() + s.slice(1).toLowerCa
 const hasIn = (list: string[] | undefined, t: string) =>
   !!list?.some((x) => x.toLowerCase() === t.toLowerCase() || x.toLowerCase() === "all" || x.toLowerCase() === "vše");
 
-function modFor(t: Token, type: string): { mult: number; why: string } {
+function modFor(t: Token, type: string, ignore: string[] = []): { mult: number; why: string } {
   const ty = normType(type);
   const em = sumMods(t);
   if (em.dmgImun === "all" || (Array.isArray(em.dmgImun) && em.dmgImun.map(String).map((x) => x.toLowerCase()).includes(ty.toLowerCase())))
     return { mult: 0, why: `Immune (${ty})` };
   if (hasIn(t.imunity, ty)) return { mult: 0, why: `Immune (${ty})` };
   if (hasCond(t, "Petrified") || em.dmgResist === "all") return { mult: 0.5, why: "Resist all (Petrified/efekt)" };
-  if (Array.isArray(em.dmgResist) && em.dmgResist.map((x) => x.toLowerCase()).includes(ty.toLowerCase()))
+  if (Array.isArray(em.dmgResist) && em.dmgResist.map((x) => x.toLowerCase()).includes(ty.toLowerCase()) && !ignore.includes(ty))
     return { mult: 0.5, why: `Resistant (${ty})` };
-  if (hasIn(t.odolnosti, ty)) return { mult: 0.5, why: `Resistant (${ty})` };
+  if (hasIn(t.odolnosti, ty) && !ignore.includes(ty)) return { mult: 0.5, why: `Resistant (${ty})` };
   if (hasIn(t.zranitelnosti, ty) || (Array.isArray(em.dmgVuln) && em.dmgVuln.map((x) => x.toLowerCase()).includes(ty.toLowerCase())))
     return { mult: 2, why: `Vulnerable (${ty})` };
   return { mult: 1, why: "" };
 }
 
-export function applyDamage(t: Token, parts: DmgPart[], opts: { nonlethal?: boolean; crit?: boolean } = {}): DamageResult {
+export function applyDamage(t: Token, parts: DmgPart[], opts: { nonlethal?: boolean; crit?: boolean; ignoreResist?: string[] } = {}): DamageResult {
   const messages: string[] = [];
   const outParts: DamageResult["parts"] = [];
   let total = 0;
   for (const p of parts) {
-    const m = modFor(t, p.type);
+    const m = modFor(t, p.type, opts.ignoreResist || []);
     const out = Math.floor(p.amount * m.mult);
     outParts.push({ type: p.type, in: p.amount, out, mod: m.why });
     if (m.why) messages.push(m.why);

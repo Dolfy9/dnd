@@ -46,6 +46,9 @@ interface Props {
   fogMode?: "reveal" | "hide";
   targeting: Targeting | null;
   zonePlace?: ZonePlace | null;
+  zoneEdit?: boolean;
+  onPresetDrop?: (tokId: string, presetId: string) => void;
+  onZoneEdit?: (id: string, p: { anchor?: [number, number]; size?: number }) => void;
   moveAtk?: MoveAtkPreview | null;
   hoverAtk?: AttackDef | null;         // hover v panelu → ukázat dosah
   names?: "hover" | "always";
@@ -490,7 +493,10 @@ export default function BattleMap(p: Props) {
           {(S.kresby as any)?.length ? <MapDrawingLayer map={{ kresby: S.kresby } as MapV2} dm /> : null}
           {drawLive?.pts?.length ? <polyline points={drawLive.pts.map(([x, y]) => `${x * PX},${y * PX}`).join(" ")}
             fill="none" stroke={drawLive.stroke || "#f59e0b"} strokeWidth={3} strokeLinecap="round" opacity={.85} /> : null}
-          {S.zones.map((z) => <ZoneShape key={z.id} z={z} px={PX} tokens={S.tok} lab={cs} />)}
+          {S.zones.map((z) => <ZoneShape key={z.id} z={z} px={PX} tokens={S.tok} lab={cs}
+            edit={p.zoneEdit && !z.tokenId}
+            onMove={(ax, ay) => p.onZoneEdit?.(z.id, { anchor: [ax, ay] })}
+            onResize={(size) => p.onZoneEdit?.(z.id, { size })} />)}
           {zonePrevCells.map(([x, y]) => (
             <rect key={`zp${x},${y}`} x={x * PX + 1} y={y * PX + 1} width={PX - 2} height={PX - 2} rx={4}
                   fill="#a78bfa" opacity={0.3} stroke="#a78bfa" strokeWidth={1.5} />
@@ -579,7 +585,9 @@ export default function BattleMap(p: Props) {
             const isTarget = p.targeting && !p.targeting.area && t.id !== p.targeting.srcId && !t.dead;
             const ev = isTarget && t.id === hoverTok ? hoverEval : (isTarget && !hoverTok ? evalUi(S, map, srcTok!, t, p.targeting!.atk) : null);
             return (
-              <g key={t.id} className={isTarget ? (ev?.canTarget ? "boj-targetable" : "boj-untargetable") : ""}>
+              <g key={t.id} className={isTarget ? (ev?.canTarget ? "boj-targetable" : "boj-untargetable") : ""}
+                onDragOver={(e) => { if (e.dataTransfer.types.includes("text/preset")) { e.preventDefault(); e.dataTransfer.dropEffect = "copy"; } }}
+                onDrop={(e) => { const pid = e.dataTransfer.getData("text/preset"); if (pid) { e.preventDefault(); e.stopPropagation(); p.onPresetDrop?.(t.id, pid); } }}>
                 <TokenCoin t={t} px={PX * 0.94} step={PX} active={S.ord?.[S.turn] === t.id}
                            selected={p.sel === t.id || !!p.selSet?.has(t.id)}
                            hovered={hoverTok === t.id} dm={p.dm} lab={cs} names={p.names || "hover"} plateClamp={plateClamp} />

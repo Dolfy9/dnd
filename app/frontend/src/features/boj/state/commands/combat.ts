@@ -19,8 +19,8 @@ import { fx, type CmdCtx } from "./shared";
 import { dropConc } from "./effects";
 import { settingsOf } from "../../rules/settings";
 import { isFree } from "../../rules/free";
-import { grappleResolve, escapeResolve, hideResolve, searchResolve, standUpCost } from "../../rules/actions/actions";
-import { hasGWM, hasSavage, savagePick, metaCost, spendSP, METAMAGIC } from "../../rules/actions/features";
+import { grappleResolve, escapeResolve, hideResolve, searchResolve, standUpCost, longJumpFt, highJumpFt, fallingDamage } from "../../rules/actions/actions";
+import { hasGWM, hasSavage, savagePick, metaCost, spendSP, METAMAGIC, elementalAdeptFor } from "../../rules/actions/features";
 import { EFFECT_PRESETS } from "../../rules/effects";
 import { addEffect } from "./effects";
 
@@ -49,7 +49,10 @@ export function cmdAttack(S: StavBoje, a: AtkArgs, ctx: CmdCtx): { ok: boolean; 
   if (a.meta?.length) {
     const cost = metaCost(a.meta, atk.lvl || 0);
     if (!spendSP(A, cost)) return { ok: false, reason: `Sorcery Points: potřeba ${cost}, nemáš` };
-    if (a.meta.includes("distant") && (atk.range || atk.reach)) atk = { ...atk, range: (atk.range || atk.reach || 5) * 2 };
+    if (a.meta.includes("distant")) {
+      if (atk.range) atk = { ...atk, range: atk.range * 2 };
+      else if (atk.melee || atk.reach) atk = { ...atk, melee: false, range: 30 }; // touch → 30 ft
+    }
     if (a.meta.includes("quickened")) atk = { ...atk, ba: true };
     log(S, "system", `${A.nazev}: Metamagic ${a.meta.map((m) => METAMAGIC.find((x) => x.id === m)?.nazev || m).join(", ")} (−${cost} SP)`, A.nazev);
   }
@@ -146,6 +149,12 @@ export function cmdAttack(S: StavBoje, a: AtkArgs, ctx: CmdCtx): { ok: boolean; 
     useEco(S, B, "r");
     log(S, "effect", `${B.nazev}: Uncanny Dodge — damage za pulku`, B.nazev);
   }
+  // Empowered metamagic: přehoď až CHA mod damage kostek (aproximace plný přehod, vezmi lepší)
+  if (r.hit && a.manualDmg == null && a.meta?.includes("empowered") && a.atk.dmg) {
+    const again = rollDice(a.atk.dmg, { crit: r.crit }).total;
+    const rolled = parts.reduce((x, p) => x + p.amount, 0);
+    if (again > rolled) { parts[0].amount += again - rolled; log(S, "damage", `${A.nazev}: Empowered — přehozeno ${rolled} → ${again}`, A.nazev); }
+  }
   // Savage Attacker: jednou za tah weapon damage přehodit, vzít vyšší
   const ecoS = S.eco[A.id];
   if (r.hit && a.manualDmg == null && ecoS && hasSavage(A) && !a.atk.kouzlo && a.atk.dmg && !(ecoS as any).savage) {
@@ -155,7 +164,7 @@ export function cmdAttack(S: StavBoje, a: AtkArgs, ctx: CmdCtx): { ok: boolean; 
     if (again > rolled) { parts[0].amount += again - rolled; log(S, "damage", `${A.nazev}: Savage Attacker — přehozeno ${rolled} → ${again}`, A.nazev); }
   }
   let dmgRes: ReturnType<typeof applyDamage> | null = null;
-  if (r.hit) dmgRes = applyDamage(B, parts, { crit: r.crit });
+  if (r.hit) dmgRes = applyDamage(B, parts, { crit: r.crit, ignoreResist: parts.filter((p) => elementalAdeptFor(A, p.type)).map((p) => p.type) });
   const txt = `${A.nazev} → ${B.nazev}: ${a.atk.nazev}${n > 1 ? ` ×${n}` : ""} ` +
     `d20(${r.d20s.join("/")})${r.bonus >= 0 ? "+" : ""}${r.bonus} = ${r.total} vs ${ev.acBreak}` +
     (r.hit ? ` → ${r.crit ? "CRIT " : ""}${dmgRes ? dmgRes.applied : 0} ${a.atk.typ || ""}` : " — mina");
@@ -193,8 +202,13 @@ export function cmdAttack(S: StavBoje, a: AtkArgs, ctx: CmdCtx): { ok: boolean; 
     const p = EFFECT_PRESETS.find((x) => x.nazev.toLowerCase() === (a.atk.kouzlo || "").toLowerCase());
     if (p) {
       const tgtId = p.zone?.shape.kind === "emanation" || p.target === "self" ? A.id : B.id;
+      const eN = S.tok.flatMap((x) => x.effects).length, zN = S.zones.length;
       addEffect(S, tgtId, p.id, A.id);
-      log(S, "effect", `${A.nazev}: ${a.atk.kouzlo} → preset ${p.nazev}${p.conc ? " (Concentration)" : ""}`, A.nazev);
+      if (a.meta?.includes("extended")) {
+        for (const x of S.tok) for (const e of x.effects.slice(-Math.max(0, S.tok.flatMap((y) => y.effects).length - eN))) if ((e as any).duration?.rounds) (e as any).duration.rounds *= 2;
+        for (const z of S.zones.slice(zN)) { (z as any).durN = ((z as any).durN || 0) * 2; }
+      }
+      log(S, "effect", `${A.nazev}: ${a.atk.kouzlo} → preset ${p.nazev}${p.conc ? " (Concentration)" : ""}${a.meta?.includes("extended") ? " ×2 trvání" : ""}`, A.nazev);
     }
   }
   // počítadlo leveled spell za tah (2024)
@@ -269,10 +283,16 @@ function applyMastery(S: StavBoje, A: Token, B: Token, atk: AttackDef, hit: bool
 }
 
 /* ---------- oblasti / záchrany ---------- */
-export interface AreaArgs { srcId: string; spec: AreaSpec; atk: AttackDef; manualDmg?: number; slot?: number; pact?: boolean; override?: boolean }
+export interface AreaArgs { srcId: string; spec: AreaSpec; atk: AttackDef; manualDmg?: number; slot?: number; pact?: boolean; override?: boolean; meta?: string[] }
 export function cmdArea(S: StavBoje, a: AreaArgs, ctx: CmdCtx): { ok: boolean; targets: number; reason?: string } {
   const A = byId(S, a.srcId);
   if (!A) return { ok: false, targets: 0 };
+  if (a.meta?.length) {
+    const cost = metaCost(a.meta, a.atk.lvl || 0);
+    if (!spendSP(A, cost)) return { ok: false, targets: 0, reason: `Sorcery Points: potřeba ${cost}` };
+    if (a.meta!.includes("quickened")) a = { ...a, atk: { ...a.atk, ba: true } };
+    log(S, "system", `${A.nazev}: Metamagic ${a.meta!.join(",")} (−${cost} SP)`, A.nazev);
+  }
   const slotErr = slotError(A, a.atk, a.slot, a.pact);
   if (slotErr) {
     if (!check(S, settingsOf(S).automatizace.sloty, a.override, `${A.nazev}: ${a.atk.nazev} bez volného slotu (⚙ DM)`))
@@ -288,7 +308,7 @@ export function cmdArea(S: StavBoje, a: AreaArgs, ctx: CmdCtx): { ok: boolean; t
       const m = up.dice.match(/^(\d*)d(\d+)/);
       if (m) dice += `+${(a.slot - a.atk.lvl) * (parseInt(m[1] || "1", 10))}d${m[2]}`;
     }
-    dmgBase = rollDice(dice).total;
+    dmgBase = rollDice(dice, { treat1as2: a.atk.typ ? elementalAdeptFor(A, a.atk.typ) : false }).total;
   }
   fx(S, "aoe", { area: { shape: a.spec.shape, size: a.spec.size, anchor: a.spec.anchor, dir: a.spec.dir }, dmgType: a.atk.typ, text: a.atk.nazev });
   for (const T of targets) {
@@ -296,8 +316,11 @@ export function cmdArea(S: StavBoje, a: AreaArgs, ctx: CmdCtx): { ok: boolean; t
     let applies = true;
     if (a.atk.save && a.atk.dc) {
       const cov = ctx.map ? coverOf(A, T, ctx.map, S.tok, undefined, undefined, S.teren, (S as any).dvere) : 0;
-      const sr = resolveSave(T, a.atk.save, a.atk.dc, { cover: cov });
-      applies = !sr.success;
+      if ((a.meta || []).includes("careful") && T.side === A.side) { applies = false; log(S, "system", `${T.nazev}: Careful — automaticky uspěl`, A.nazev); }
+      const firstT = targets.indexOf(T) === 0;
+      const sr = resolveSave(T, a.atk.save, a.atk.dc, { cover: cov, forceDis: !!((a.meta || []).includes("heightened") && firstT) });
+      if (!applies) { dmg = 0; }
+      applies = applies && !sr.success;
       const tMods = sumMods(T);
       if (a.atk.save === "DEX" && a.atk.half && tMods.evasion) {
         dmg = sr.success ? 0 : Math.floor(dmg / 2);
@@ -392,6 +415,31 @@ export function cmdStdAction(S: StavBoje, id: string, action: string, tgtId?: st
       if (!hasCond(t, "Prone")) t.cond.push({ n: "Prone" });
       e.a += 1; // Drop Prone je zdarma — vrátíme akci
       log(S, "system", `${t.nazev}: Drop Prone`, t.nazev);
+      if ((t.elev || 0) > 0) { const dmg = fallingDamage(t.elev || 0, defaultRng); t.elev = 0; t.hp = Math.max(0, t.hp - dmg); log(S, "damage", `${t.nazev}: pád z výšky — ${dmg} dmg, Prone`, t.nazev); }
+      break;
+    }
+    case "crawl": {
+      (t as any).crawl = !(t as any).crawl;
+      e.a += 1; // přepínač — zdarma
+      log(S, "system", `${t.nazev}: Crawl ${(t as any).crawl ? "zapnuto (pohyb ×2)" : "vypnuto"}`, t.nazev);
+      break;
+    }
+    case "jumplong": {
+      e.moved += 5; e.a += 1;
+      log(S, "system", `${t.nazev}: Long Jump — ${longJumpFt(t, true)} ft (s rozběhem 10 ft)`, t.nazev);
+      break;
+    }
+    case "jumphigh": {
+      e.moved += 5; e.a += 1;
+      log(S, "system", `${t.nazev}: High Jump — ${highJumpFt(t, true)} ft`, t.nazev);
+      break;
+    }
+    case "flyup": case "flydown": {
+      const d = action === "flyup" ? 5 : -5;
+      t.elev = Math.max(0, (t.elev || 0) + d);
+      e.moved += 5; e.a += 1; // elevation je pohyb, ne akce — vrátíme
+      if (action === "flydown" && t.elev === 0) log(S, "system", `${t.nazev}: přistál`, t.nazev);
+      else log(S, "system", `${t.nazev}: elevace ${d > 0 ? "+" : ""}${d} ft → ${t.elev} ft (−5 ft pohybu)`, t.nazev);
       break;
     }
     case "help": {

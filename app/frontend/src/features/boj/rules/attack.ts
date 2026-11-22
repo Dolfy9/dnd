@@ -5,7 +5,7 @@ import { CONDITIONS, exhaustion, hasCond, isIncap, isProne } from "./conditions"
 import { effectiveAc, sumMods } from "./effects";
 import { gapFt, hostile } from "./grid";
 import { coverOf, COVER_BONUS, COVER_TEXT, type Cover } from "./los";
-import { sharpshooterCover } from "./actions/features";
+import { sharpshooterCover, elementalAdeptFor } from "./actions/features";
 import { canSeeTarget } from "./lighting";
 import { d20, rollDice, diceOnlyAvg, type Rng, defaultRng } from "./dice";
 
@@ -174,11 +174,11 @@ export function resolveAttack(ctx: AttackCtx, opts: { rng?: Rng; manualD20?: num
   if (hit && opts.manualDmg != null) {
     dmgByType.push({ type: atk.typ || "Bludgeoning", amount: opts.manualDmg });
   } else if (hit && atk.dmg) {
-    const r = rollDice(atk.dmg, { crit, rng });
+    const r = rollDice(atk.dmg, { crit, rng, treat1as2: elementalAdeptFor(a, atk.typ || "") });
     dmgRolls.push(...r.parts);
     dmgByType.push({ type: atk.typ || "Bludgeoning", amount: r.total });
     if (atk.dmg2) {
-      const r2 = rollDice(atk.dmg2, { crit, rng });
+      const r2 = rollDice(atk.dmg2, { crit, rng, treat1as2: elementalAdeptFor(a, atk.typ2 || "") });
       dmgRolls.push(...r2.parts);
       dmgByType.push({ type: atk.typ2 || "Force", amount: r2.total });
     }

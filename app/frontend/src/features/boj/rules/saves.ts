@@ -16,7 +16,7 @@ export interface SaveEval {
   notes: string[];
 }
 
-export function evalSave(t: Token, ab: Ability, dc: number, opts: { cover?: Cover; vsArea?: boolean; overrideAdv?: number | null } = {}): SaveEval {
+export function evalSave(t: Token, ab: Ability, dc: number, opts: { cover?: Cover; vsArea?: boolean; overrideAdv?: number | null; forceDis?: boolean } = {}): SaveEval {
   const notes: string[] = [];
   const em = sumMods(t);
   let bonus = t.saves?.[ab] ?? (t.mods?.[ab] ?? 0);
@@ -53,8 +53,9 @@ export interface SaveResult extends SaveEval {
   legendaryUsed?: boolean;
 }
 
-export function resolveSave(t: Token, ab: Ability, dc: number, opts: { cover?: Cover; rng?: Rng; manualRoll?: number; useLegendary?: boolean } = {}): SaveResult {
+export function resolveSave(t: Token, ab: Ability, dc: number, opts: { cover?: Cover; rng?: Rng; manualRoll?: number; useLegendary?: boolean; forceDis?: boolean } = {}): SaveResult {
   const ev = evalSave(t, ab, dc, opts);
+  if (opts.forceDis) ev.net = -5;
   const rng = opts.rng || defaultRng;
   const em = sumMods(t);
   const roll = opts.manualRoll != null ? { r: opts.manualRoll, rolls: [opts.manualRoll] } : d20(ev.net, rng);

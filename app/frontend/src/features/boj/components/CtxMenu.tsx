@@ -31,6 +31,14 @@ export default function CtxMenu({ t, x, y, dm, onClose, onAction }: {
   return (
     <div ref={ref} className="boj-ctx" style={st}>
       <b>{t.nazev}</b>
+      <div className="boj-ctx-hp">
+        <span>HP {t.hp}/{t.max}{t.tmp ? ` (+${t.tmp})` : ""}</span>
+        <button onClick={() => { onAction("hp:-5"); onClose(); }}>−5</button>
+        <button onClick={() => { onAction("hp:-1"); onClose(); }}>−1</button>
+        <button onClick={() => { onAction("hp:+1"); onClose(); }}>+1</button>
+        <button onClick={() => { onAction("hp:+5"); onClose(); }}>+5</button>
+        <button title="+5 temp HP" onClick={() => { onAction("tmp:+5"); onClose(); }}>⛨+5</button>
+      </div>
       {items.filter((i) => dm || ["attack", "cond", "effect"].includes(i.id)).map((i) => (
         <button key={i.id} onClick={() => { onAction(i.id); onClose(); }}>{i.icon} {i.nazev}</button>
       ))}

@@ -2,8 +2,10 @@
 import { describe, it, expect } from "vitest";
 import { reactionOptions, applyReaction } from "./reactions";
 import { giveBardic, consumeBardic, turnUndeadSave, applyTurned, gwmBonus, hasGWM,
-         sharpshooterCover, savagePick, spendSP, metaCost, flurryAttacks, wildShapeTemp } from "./features";
-import { cmdAttack, cmdStdAction } from "../../state/commands/combat";
+         sharpshooterCover, savagePick, spendSP, metaCost, flurryAttacks, wildShapeTemp, eaFixDie } from "./features";
+import { cmdAttack, cmdStdAction, cmdArea } from "../../state/commands/combat";
+import { applyDamage } from "../../rules/damage";
+import { rollDice } from "../../rules/dice";
 import { cmdFeature } from "../../state/commands/features";
 import { mkTok } from "../rules.test";
 import type { StavBoje, BattleMapData, Token, AttackDef } from "../../types";
@@ -143,5 +145,57 @@ describe("Wild Shape / Flurry", () => {
   it("temp HP = level; flurry = 2 útoky", () => {
     expect(wildShapeTemp(mkTok({ lvl: 8 }))).toBe(8);
     expect(flurryAttacks(mkTok({ lvl: 5, mods: { DEX: 4 } as any })).length).toBe(2);
+  });
+});
+
+describe("A-gap mechaniky", () => {
+  it("Heightened: forceDis na save cesty (cmdArea)", () => {
+    const A = mkTok({ id: "s", slots: [{ max: 0, used: 0 }, { max: 0, used: 0 }, { max: 2, used: 0 }], zdroje: [{ nazev: "Sorcery Points", max: 9, used: 0 }],
+      feats: ["Metamagic"] });
+    const T1 = mkTok({ id: "t1", side: "nepratele", x: 1, y: 0, mods: { DEX: -5 } as any });
+    const S = mkS([A, T1]); (A as any).x = 0; (A as any).y = 0;
+    const atk = { nazev: "FB", kind: "spell" as const, lvl: 3, save: "DEX" as const, dc: 30, dmg: "1d6", typ: "Fire" } as any;
+    const r = cmdArea(S, { srcId: "s", spec: { shape: "sphere", size: 5, anchor: [1, 0] }, atk, slot: 3, meta: ["heightened"] }, CTX);
+    expect(r.ok).toBe(true);
+    expect(A.zdroje[0].used).toBe(2); // SP 2
+  });
+  it("Careful: spojenec v oblasti automaticky uspěje (bez zranění)", () => {
+    const A = mkTok({ id: "s", slots: [{ max: 0, used: 0 }, { max: 0, used: 0 }, { max: 2, used: 0 }], zdroje: [{ nazev: "Sorcery Points", max: 9, used: 0 }], feats: ["Metamagic"] });
+    const ally = mkTok({ id: "al", x: 1, y: 0, mods: { DEX: -5 } as any });
+    const foe = mkTok({ id: "fo", side: "nepratele", x: 1, y: 1, mods: { DEX: -5 } as any });
+    const S = mkS([A, ally, foe]); (A as any).x = 0;
+    const atk = { nazev: "FB", kind: "spell" as const, lvl: 3, save: "DEX" as const, dc: 30, dmg: "8d6", typ: "Fire" } as any;
+    const r = cmdArea(S, { srcId: "s", spec: { shape: "sphere", size: 10, anchor: [1, 0] }, atk, slot: 3, meta: ["careful"] }, CTX);
+    expect(r.ok).toBe(true);
+    expect(ally.hp).toBe(20);
+    expect(foe.hp).toBeLessThan(20);
+  });
+  it("Elemental Adept: 1→2 na kostce + ignoruje resistenci", () => {
+    const T = mkTok({ id: "t", odolnosti: ["Fire"] });
+    const res = applyDamage(T, [{ amount: 20, type: "Fire" }], { ignoreResist: ["Fire"] });
+    expect(res.applied).toBe(20);
+    const t2 = mkTok({ feats: ["Elemental Adept (Fire)"] });
+    expect(eaFixDie(t2, "Fire", 1)).toBe(2);
+    expect(eaFixDie(t2, "Cold", 1)).toBe(1);
+  });
+  it("rollDice treat1as2: žádná 1ka ve výsledku", () => {
+    for (let i = 0; i < 50; i++) {
+      const rr = rollDice("6d6", { treat1as2: true });
+      expect(rr.parts.every((d) => d !== 1)).toBe(true);
+    }
+  });
+  it("Subtle: metaCost 1 SP; Heightened 2 SP; Twinned = lvl", () => {
+    expect(metaCost(["subtle"], 0)).toBe(1);
+    expect(metaCost(["heightened"], 0)).toBe(2);
+    expect(metaCost(["twinned"], 3)).toBe(3);
+  });
+  it("Protection reakce: preDis dostupná u hit triggeru", () => {
+    const P = mkTok({ id: "p", features: [], feats: ["Protection"] });
+    const ally = mkTok({ id: "al", x: 1, y: 0 });
+    const A = mkTok({ id: "a", side: "nepratele", x: 2, y: 0 });
+    (P as any).x = 0; (P as any).y = 0;
+    const S = mkS([P, ally, A]);
+    const opts = reactionOptions(S, { kind: "hit", attacker: A, target: ally, hitTotal: 18 });
+    expect(opts.some((o) => o.id.startsWith("protect"))).toBe(true);
   });
 });

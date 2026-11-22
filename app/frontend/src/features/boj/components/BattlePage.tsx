@@ -61,6 +61,7 @@ export default function BattlePage() {
   const [fogMode, setFogMode] = useState<"reveal" | "hide">("reveal");
   const [zonePlace, setZonePlace] = useState<ZonePlace | null>(null);
   const [drawColor, setDrawColor] = useState("#f59e0b");
+  const [twin1, setTwin1] = useState<string | null>(null);
   const [rx, setRx] = useState<{ opts: ReactionOption[]; run: (o?: ReactionOption) => void } | null>(null);
   const [pendingLight, setPendingLight] = useState<{ nazev: string; bright: number; dim: number } | null>(null);
   const [targeting, setTargeting] = useState<Targeting | null>(null);
@@ -256,8 +257,29 @@ export default function BattlePage() {
       setTargeting(null);
       return;
     }
-    setResolve({ kind: "attack", atk: targeting.atk, srcId: targeting.srcId, tgtId, meta: targeting.meta });
-    setTargeting(null);
+    // Twinned: první klik = cíl 1, druhý klik = cíl 2 → resolve oba útoky
+    if ((targeting.meta || []).includes("twinned") && !twin1) {
+      setTwin1(tgtId); toast("Twinned: vyber druhý cíl", "info"); return;
+    }
+    const fire = (dis: boolean) => {
+      if (twin1) {
+        const t1 = twin1; setTwin1(null); setTargeting(null);
+        cmd((s2) => {
+          C.cmdAttack(s2, { atkId: src.id, tgtId: t1, atk: targeting.atk, slot: targeting.slot, pact: targeting.pact, meta: targeting.meta }, ctx);
+          C.cmdAttack(s2, { atkId: src.id, tgtId, atk: targeting.atk, override: true }, ctx);
+        });
+        return;
+      }
+      setResolve({ kind: "attack", atk: targeting.atk, srcId: targeting.srcId, tgtId, meta: targeting.meta, preDis: dis } as any);
+      setTargeting(null);
+    };
+    // Protection: spojenec cíle do 5 ft může před hodem dát Dis
+    const prot = reactionOptions(S, { kind: "hit", attacker: src, target: tgt, atk: targeting.atk }).filter((oo) => oo.id.startsWith("protect"));
+    if (prot.length) {
+      setRx({ opts: prot, run: (oo) => { setRx(null); if (oo) cmd((s2) => { const rr = applyReaction(s2, oo, { kind: "hit", attacker: src, target: tgt, atk: targeting.atk }, Math.random); if (rr.msg) log(s2, "system", rr.msg, "PJ"); }); fire(!!oo); } });
+      return;
+    }
+    fire(false);
   };
   const doMoveAttack = () => {
     if (!moveAtk) return;
@@ -365,9 +387,18 @@ export default function BattlePage() {
       proceed(res);
     } });
   };
-  const applyResolve = (o: { overrideAdv?: number | null; manualD20?: number; manualDmg?: number; slot?: number; pact?: boolean; override?: boolean }) => {
+  const applyResolve = (o: { overrideAdv?: number | null; manualD20?: number; manualDmg?: number; slot?: number; pact?: boolean; override?: boolean; lucky?: "adv" | "dis"; inspire?: boolean }) => {
     if (!resolve) return;
     const r = resolve;
+    if ((r as any).preDis && o.overrideAdv == null) o.overrideAdv = -1;
+    if (o.lucky || o.inspire) cmd((s2) => {
+      const A0r = byId(s2, r.srcId);
+      if (o.lucky && A0r) {
+        const z = (A0r.zdroje || []).find((zz: any) => /lucky|luck/i.test(zz.nazev) && zz.max - zz.used > 0);
+        if (z) { z.used++; log(s2, "system", `${A0r.nazev}: Lucky (−1 Luck Point)`, A0r.nazev); }
+      }
+      if (o.inspire && A0r) { A0r.heroicInspiration = false; log(s2, "system", `${A0r.nazev}: Heroic Inspiration — přehozeno`, A0r.nazev); }
+    });
     // potvrzení zranění: nejdřív náhled (stejný d20), DM může upravit a pak teprve aplikovat
     if (r.kind === "attack" && o.manualDmg == null && (settingsOf(S).automatizace.zraneni === "potvrdit" || isFree(S))) {
       const A = byId(S, r.srcId), B = byId(S, r.tgtId);
@@ -384,7 +415,7 @@ export default function BattlePage() {
       }
     }
     const A0 = byId(S, r.srcId);
-    if (r.atk.kind === "spell" && (r.atk.lvl || 0) > 0 && A0) {
+    if (r.atk.kind === "spell" && (r.atk.lvl || 0) > 0 && A0 && !(r.meta || []).includes("subtle")) {
       const opts = reactionOptions(S, { kind: "enemyCasts", attacker: A0, target: undefined, distFt: undefined });
       if (opts.length) {
         setRx({ opts, run: (ro) => {
@@ -430,6 +461,10 @@ export default function BattlePage() {
         break;
       }
       case "dmg": case "heal": case "cond": setInspId(t.id); setPanel("inspektor"); break;
+      default:
+        if (a.startsWith("hp:")) { const d = Number(a.slice(3)); cmd((s2) => { const tt = byId(s2, t.id); if (tt) { tt.hp = Math.max(0, Math.min(tt.max, tt.hp + d)); log(s2, "system", `${tt.nazev}: HP ${d > 0 ? "+" : ""}${d} → ${tt.hp}`, "PJ"); } }); }
+        if (a.startsWith("tmp:")) { const d = Number(a.slice(4)); cmd((s2) => { const tt = byId(s2, t.id); if (tt) { tt.tmp = Math.max(0, (tt.tmp || 0) + d); log(s2, "system", `${tt.nazev}: temp HP ${tt.tmp}`, "PJ"); } }); }
+        break;
       case "effect": setSel(t.id); setPanel("efekty"); break;
       case "hide": cmd((s) => C.patchToken(s, t.id, { skryty: !t.skryty })); break;
       case "remove": void confirmDialog({ title: "Odebrat z boje", text: t.nazev, okLabel: "Odebrat", danger: true })
@@ -566,6 +601,14 @@ export default function BattlePage() {
             onSelSet={setSelSet}
             onInspect={(id) => { setInspId(id); setPanel("inspektor"); }}
             onDrop={onDrop}
+            onPresetDrop={(tokId, pid) => { const pr = presetById(pid); if (!pr) return;
+              cmd((s2) => C.addEffect(s2, tokId, pr.id, curTok?.id || undefined));
+              toast(`${pr.nazev} → ${byId(S, tokId)?.nazev}`, "ok"); }}
+            zoneEdit={isFree(S) || dm}
+            onZoneEdit={(id, p) => cmd((s2) => { const z = s2.zones.find((zz: any) => zz.id === id); if (!z) return;
+              if (p.anchor) z.anchor = p.anchor;
+              if (p.size) z.shape.size = p.size;
+              log(s2, "system", `Zóna ${z.nazev}: úprava`, "PJ"); })}
             onTarget={onTarget}
             onArea={onArea}
             onZone={onZone}

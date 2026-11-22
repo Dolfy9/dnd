@@ -136,17 +136,15 @@ export default function ActorPanel({ S, t, targeting, onAttack, onStdAction, onR
       )}
       {!!spells.length && (
         <div className="boj-sec"><h4><Wand2 size={12} /> Kouzla {t.dc ? `(DC ${t.dc})` : ""}</h4>
-          {spells.map((a, i) => <AtkRow key={i} a={a} />)}
-          {!!t.slots.length && (
-            <div className="boj-slots">
-              {t.slots.map((s, i) => (
-                <span key={i} className="boj-slot" title={`${i + 1}. úroveň: ${s.max - s.used}/${s.max}`}>
-                  {i + 1}<em>{s.max - s.used}</em>
-                </span>
-              ))}
-              {t.pact && <span className="boj-slot pact" title={`Pact ${t.pact.lvl}.: ${t.pact.max - t.pact.used}/${t.pact.max}`}>P<em>{t.pact.max - t.pact.used}</em></span>}
+          {[...new Set(spells.map((a) => a.lvl || 0))].sort().map((lvl) => (
+            <div key={lvl} className="boj-splvl">
+              <h5>{lvl === 0 ? "Cantripy" : `${lvl}. úroveň`}
+                {lvl > 0 && t.slots?.[lvl - 1] && <em title="Volné sloty"> {t.slots[lvl - 1].max - t.slots[lvl - 1].used}/{t.slots[lvl - 1].max}</em>}
+                {lvl > 0 && t.pact && lvl === t.pact.lvl && <em title="Pact sloty"> P {t.pact.max - t.pact.used}/{t.pact.max}</em>}
+              </h5>
+              {spells.filter((a) => (a.lvl || 0) === lvl).map((a, i) => <AtkRow key={i} a={a} />)}
             </div>
-          )}
+          ))}
         </div>
       )}
       {!!bonus.length && <div className="boj-sec"><h4><Zap size={12} /> Bonus</h4>{bonus.map((a, i) => <AtkRow key={i} a={a} />)}</div>}

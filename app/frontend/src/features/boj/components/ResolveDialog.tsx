@@ -11,12 +11,12 @@ import { dmgStyle } from "./visual";
 import { Dices, Keyboard, X } from "lucide-react";
 
 export interface ResolveAttack { kind: "attack"; atk: AttackDef; srcId: string; tgtId: string; force?: boolean; meta?: string[] }
-export interface ResolveArea { kind: "area"; atk: AttackDef; srcId: string; spec: { shape: any; size: number; anchor: [number, number]; dir?: number }; tgtIds: string[]; slot?: number; force?: boolean }
+export interface ResolveArea { kind: "area"; atk: AttackDef; srcId: string; spec: { shape: any; size: number; anchor: [number, number]; dir?: number }; tgtIds: string[]; slot?: number; force?: boolean; meta?: string[] }
 export type Resolve = ResolveAttack | ResolveArea;
 
 export default function ResolveDialog({ S, map, r, onApply, onClose }: {
   S: StavBoje; map: BattleMapData; r: Resolve;
-  onApply: (opts: { overrideAdv?: number | null; manualD20?: number; manualDmg?: number }) => void;
+  onApply: (opts: { overrideAdv?: number | null; manualD20?: number; manualDmg?: number; lucky?: "adv" | "dis"; inspire?: boolean }) => void;
   onClose: () => void;
 }) {
   useEffect(() => {
@@ -43,6 +43,7 @@ export default function ResolveDialog({ S, map, r, onApply, onClose }: {
     manualD20: manual && d20v ? Number(d20v) : undefined,
     manualDmg: manual && dmgv ? Number(dmgv) : undefined,
   };
+  const canLucky = !!(A as any).zdroje?.some((z: any) => /lucky|luck/i.test(z.nazev) && z.max - z.used > 0) || (A.feats || []).some((f: string) => /^lucky$/i.test(f));
   return (
     <div className="boj-modal" onClick={onClose}>
       <div className="boj-modal-in" onClick={(e) => e.stopPropagation()}>
@@ -101,6 +102,15 @@ export default function ResolveDialog({ S, map, r, onApply, onClose }: {
             </select>
           </div>
         )}
+        <div className="boj-luck-row">
+          {canLucky && <>
+            <button className="boj-mini" title="Lucky: vlastní hod s výhodou" onClick={() => { setAdv(1); onApply({ ...opts, overrideAdv: 1, lucky: "adv" }); }}>🍀 Lucky +Adv</button>
+            <button className="boj-mini" title="Lucky: nevýhoda na tento hod" onClick={() => { setAdv(-1); onApply({ ...opts, overrideAdv: -1, lucky: "dis" }); }}>🍀 Lucky +Dis</button>
+          </>}
+          {!!A.heroicInspiration && r.kind === "attack" && (
+            <button className="boj-mini" title="Heroic Inspiration: přehoď d20" onClick={() => onApply({ ...opts, manualD20: undefined, inspire: true })}>✦ Přehodit</button>
+          )}
+        </div>
         <label className="boj-manual"><input type="checkbox" checked={manual} onChange={(e) => setManual(e.target.checked)} /> <Keyboard size={13} /> Ruční hodnoty (fyzické kostky)</label>
         {manual && (
           <div className="boj-manual-row">
