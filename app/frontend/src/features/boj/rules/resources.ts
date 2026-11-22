@@ -22,7 +22,7 @@ export function resourceAction(nazev: string, t: Token): ResourceAction {
   if (/rage|běsněn/.test(n))
     return { kind: "preset", presetId: "rage", eco: "b", desc: "aplikuje Rage preset" };
   if (/lay on hands/.test(n))
-    return { kind: "heal", needsAmount: true, eco: "a", desc: "léčí z poolu HP" };
+    return { kind: "heal", needsAmount: true, eco: "b", desc: "léčí z poolu HP (Bonus Action)" };
   if (/breath weapon/.test(n))
     return { kind: "area", eco: "a", desc: "otevře oblast podle druhu dechu" };
   if (/channel divinity|ki |focus|bardic|sorcery|superiority|psionic/.test(n))

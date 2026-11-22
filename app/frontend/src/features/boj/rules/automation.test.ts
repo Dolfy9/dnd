@@ -6,6 +6,8 @@ import { cmdAttack, cmdArea, cmdDamage } from "../state/commands/combat";
 import { triggerZone } from "../state/commands/move";
 import { advanceTurn, startOfTurnProcess } from "./turn";
 import { deathSave } from "./damage";
+import { resourceAction } from "./resources";
+import { cmdUseResource } from "../state/commands/resources";
 
 let nextId = 0;
 const token = (o: Partial<Token> = {}): Token => ({ ...custom("T", "druzina", 2000, 10), id: `t${nextId++}`, ...o });
@@ -13,6 +15,19 @@ const state = (...tok: Token[]): StavBoje => ({
   tok, ord: tok.map(t => t.id), turn: 0, round: 1, log: [], eco: {}, zones: [], fx: [], nastaveni: defaultSettings(),
 });
 afterEach(() => vi.restoreAllMocks());
+
+describe("Lay on Hands 2024", () => {
+  it("uses a bonus action and retains pool healing", () => {
+    expect(resourceAction("Lay on Hands", token())).toMatchObject({ kind: "heal", needsAmount: true, eco: "b" });
+  });
+  it("spends the bonus action, heals and preserves the action; rejects a second use", () => {
+    const a = token({ hp: 10, zdroje: [{ nazev: "Lay on Hands", max: 20, used: 0 }] }); const s = state(a);
+    expect(cmdUseResource(s, a.id, 0, 5).ok).toBe(true);
+    expect(a.hp).toBe(15); expect(s.eco[a.id]).toMatchObject({ a: 0, b: 1, r: 0 });
+    expect(cmdUseResource(s, a.id, 0, 5).ok).toBe(false);
+    expect(a.zdroje[0].used).toBe(5);
+  });
+});
 
 describe("recharge d6", () => {
   it.each([[0.5, true], [0.66, true], [0.67, false], [0.999, false]])("recharges 5–6 using a d6 at rng %s", (rng, spent) => {
