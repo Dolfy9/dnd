@@ -8,7 +8,13 @@
    "tags": [
     "Nábytek"
    ],
-   "custom": false
+   "custom": false,
+   "varianty": [
+    "bojove/assets/Nábytek/varianty/stul-ctverec-v1.webp",
+    "bojove/assets/Nábytek/varianty/stul-ctverec-v2.webp",
+    "bojove/assets/Nábytek/varianty/stul-ctverec-v3.webp",
+    "bojove/assets/Nábytek/varianty/stul-ctverec-v4.webp"
+   ]
   },
   {
    "id": "stul-obdelnik",
@@ -18,7 +24,13 @@
    "tags": [
     "Nábytek"
    ],
-   "custom": false
+   "custom": false,
+   "varianty": [
+    "bojove/assets/Nábytek/varianty/stul-obdelnik-v1.webp",
+    "bojove/assets/Nábytek/varianty/stul-obdelnik-v2.webp",
+    "bojove/assets/Nábytek/varianty/stul-obdelnik-v3.webp",
+    "bojove/assets/Nábytek/varianty/stul-obdelnik-v4.webp"
+   ]
   },
   {
    "id": "stul-kulaty",
@@ -28,7 +40,13 @@
    "tags": [
     "Nábytek"
    ],
-   "custom": false
+   "custom": false,
+   "varianty": [
+    "bojove/assets/Nábytek/varianty/stul-kulaty-v1.webp",
+    "bojove/assets/Nábytek/varianty/stul-kulaty-v2.webp",
+    "bojove/assets/Nábytek/varianty/stul-kulaty-v3.webp",
+    "bojove/assets/Nábytek/varianty/stul-kulaty-v4.webp"
+   ]
   },
   {
    "id": "zidle",
@@ -38,7 +56,13 @@
    "tags": [
     "Nábytek"
    ],
-   "custom": false
+   "custom": false,
+   "varianty": [
+    "bojove/assets/Nábytek/varianty/zidle-v1.webp",
+    "bojove/assets/Nábytek/varianty/zidle-v2.webp",
+    "bojove/assets/Nábytek/varianty/zidle-v3.webp",
+    "bojove/assets/Nábytek/varianty/zidle-v4.webp"
+   ]
   },
   {
    "id": "lavice",
@@ -48,7 +72,13 @@
    "tags": [
     "Nábytek"
    ],
-   "custom": false
+   "custom": false,
+   "varianty": [
+    "bojove/assets/Nábytek/varianty/lavice-v1.webp",
+    "bojove/assets/Nábytek/varianty/lavice-v2.webp",
+    "bojove/assets/Nábytek/varianty/lavice-v3.webp",
+    "bojove/assets/Nábytek/varianty/lavice-v4.webp"
+   ]
   },
   {
    "id": "postel",
@@ -58,7 +88,13 @@
    "tags": [
     "Nábytek"
    ],
-   "custom": false
+   "custom": false,
+   "varianty": [
+    "bojove/assets/Nábytek/varianty/postel-v1.webp",
+    "bojove/assets/Nábytek/varianty/postel-v2.webp",
+    "bojove/assets/Nábytek/varianty/postel-v3.webp",
+    "bojove/assets/Nábytek/varianty/postel-v4.webp"
+   ]
   },
   {
    "id": "postel-dvou",
@@ -68,7 +104,13 @@
    "tags": [
     "Nábytek"
    ],
-   "custom": false
+   "custom": false,
+   "varianty": [
+    "bojove/assets/Nábytek/varianty/postel-dvou-v1.webp",
+    "bojove/assets/Nábytek/varianty/postel-dvou-v2.webp",
+    "bojove/assets/Nábytek/varianty/postel-dvou-v3.webp",
+    "bojove/assets/Nábytek/varianty/postel-dvou-v4.webp"
+   ]
   },
   {
    "id": "skrin",
@@ -78,7 +120,13 @@
    "tags": [
     "Nábytek"
    ],
-   "custom": false
+   "custom": false,
+   "varianty": [
+    "bojove/assets/Nábytek/varianty/skrin-v1.webp",
+    "bojove/assets/Nábytek/varianty/skrin-v2.webp",
+    "bojove/assets/Nábytek/varianty/skrin-v3.webp",
+    "bojove/assets/Nábytek/varianty/skrin-v4.webp"
+   ]
   },
   {
    "id": "truhel",
@@ -88,7 +136,13 @@
    "tags": [
     "Nábytek"
    ],
-   "custom": false
+   "custom": false,
+   "varianty": [
+    "bojove/assets/Nábytek/varianty/truhel-v1.webp",
+    "bojove/assets/Nábytek/varianty/truhel-v2.webp",
+    "bojove/assets/Nábytek/varianty/truhel-v3.webp",
+    "bojove/assets/Nábytek/varianty/truhel-v4.webp"
+   ]
   },
   {
    "id": "knihovna",
@@ -98,7 +152,13 @@
    "tags": [
     "Nábytek"
    ],
-   "custom": false
+   "custom": false,
+   "varianty": [
+    "bojove/assets/Nábytek/varianty/knihovna-v1.webp",
+    "bojove/assets/Nábytek/varianty/knihovna-v2.webp",
+    "bojove/assets/Nábytek/varianty/knihovna-v3.webp",
+    "bojove/assets/Nábytek/varianty/knihovna-v4.webp"
+   ]
   },
   {
    "id": "krzeslo",
@@ -108,7 +168,13 @@
    "tags": [
     "Nábytek"
    ],
-   "custom": false
+   "custom": false,
+   "varianty": [
+    "bojove/assets/Nábytek/varianty/krzeslo-v1.webp",
+    "bojove/assets/Nábytek/varianty/krzeslo-v2.webp",
+    "bojove/assets/Nábytek/varianty/krzeslo-v3.webp",
+    "bojove/assets/Nábytek/varianty/krzeslo-v4.webp"
+   ]
   },
   {
    "id": "stolni-deska",
@@ -118,7 +184,13 @@
    "tags": [
     "Nábytek"
    ],
-   "custom": false
+   "custom": false,
+   "varianty": [
+    "bojove/assets/Nábytek/varianty/stolni-deska-v1.webp",
+    "bojove/assets/Nábytek/varianty/stolni-deska-v2.webp",
+    "bojove/assets/Nábytek/varianty/stolni-deska-v3.webp",
+    "bojove/assets/Nábytek/varianty/stolni-deska-v4.webp"
+   ]
   },
   {
    "id": "krb",
@@ -129,7 +201,13 @@
     "Nábytek"
    ],
    "custom": false,
-   "anim": "ohen"
+   "anim": "ohen",
+   "varianty": [
+    "bojove/assets/Nábytek/varianty/krb-v1.webp",
+    "bojove/assets/Nábytek/varianty/krb-v2.webp",
+    "bojove/assets/Nábytek/varianty/krb-v3.webp",
+    "bojove/assets/Nábytek/varianty/krb-v4.webp"
+   ]
   },
   {
    "id": "pult",
@@ -139,7 +217,13 @@
    "tags": [
     "Nábytek"
    ],
-   "custom": false
+   "custom": false,
+   "varianty": [
+    "bojove/assets/Nábytek/varianty/pult-v1.webp",
+    "bojove/assets/Nábytek/varianty/pult-v2.webp",
+    "bojove/assets/Nábytek/varianty/pult-v3.webp",
+    "bojove/assets/Nábytek/varianty/pult-v4.webp"
+   ]
   },
   {
    "id": "koberec-velky",
@@ -149,7 +233,13 @@
    "tags": [
     "Nábytek"
    ],
-   "custom": false
+   "custom": false,
+   "varianty": [
+    "bojove/assets/Nábytek/varianty/koberec-velky-v1.webp",
+    "bojove/assets/Nábytek/varianty/koberec-velky-v2.webp",
+    "bojove/assets/Nábytek/varianty/koberec-velky-v3.webp",
+    "bojove/assets/Nábytek/varianty/koberec-velky-v4.webp"
+   ]
   },
   {
    "id": "sud",
@@ -159,7 +249,13 @@
    "tags": [
     "Nábytek"
    ],
-   "custom": false
+   "custom": false,
+   "varianty": [
+    "bojove/assets/Nábytek/varianty/sud-v1.webp",
+    "bojove/assets/Nábytek/varianty/sud-v2.webp",
+    "bojove/assets/Nábytek/varianty/sud-v3.webp",
+    "bojove/assets/Nábytek/varianty/sud-v4.webp"
+   ]
   },
   {
    "id": "bedna",
@@ -169,7 +265,13 @@
    "tags": [
     "Nábytek"
    ],
-   "custom": false
+   "custom": false,
+   "varianty": [
+    "bojove/assets/Nábytek/varianty/bedna-v1.webp",
+    "bojove/assets/Nábytek/varianty/bedna-v2.webp",
+    "bojove/assets/Nábytek/varianty/bedna-v3.webp",
+    "bojove/assets/Nábytek/varianty/bedna-v4.webp"
+   ]
   },
   {
    "id": "bedny-sesup",
@@ -179,7 +281,13 @@
    "tags": [
     "Nábytek"
    ],
-   "custom": false
+   "custom": false,
+   "varianty": [
+    "bojove/assets/Nábytek/varianty/bedny-sesup-v1.webp",
+    "bojove/assets/Nábytek/varianty/bedny-sesup-v2.webp",
+    "bojove/assets/Nábytek/varianty/bedny-sesup-v3.webp",
+    "bojove/assets/Nábytek/varianty/bedny-sesup-v4.webp"
+   ]
   },
   {
    "id": "pydel",
@@ -189,7 +297,13 @@
    "tags": [
     "Nábytek"
    ],
-   "custom": false
+   "custom": false,
+   "varianty": [
+    "bojove/assets/Nábytek/varianty/pydel-v1.webp",
+    "bojove/assets/Nábytek/varianty/pydel-v2.webp",
+    "bojove/assets/Nábytek/varianty/pydel-v3.webp",
+    "bojove/assets/Nábytek/varianty/pydel-v4.webp"
+   ]
   },
   {
    "id": "sloup",
@@ -199,7 +313,13 @@
    "tags": [
     "Dungeon"
    ],
-   "custom": false
+   "custom": false,
+   "varianty": [
+    "bojove/assets/Dungeon/varianty/sloup-v1.webp",
+    "bojove/assets/Dungeon/varianty/sloup-v2.webp",
+    "bojove/assets/Dungeon/varianty/sloup-v3.webp",
+    "bojove/assets/Dungeon/varianty/sloup-v4.webp"
+   ]
   },
   {
    "id": "sloup-velky",
@@ -209,7 +329,13 @@
    "tags": [
     "Dungeon"
    ],
-   "custom": false
+   "custom": false,
+   "varianty": [
+    "bojove/assets/Dungeon/varianty/sloup-velky-v1.webp",
+    "bojove/assets/Dungeon/varianty/sloup-velky-v2.webp",
+    "bojove/assets/Dungeon/varianty/sloup-velky-v3.webp",
+    "bojove/assets/Dungeon/varianty/sloup-velky-v4.webp"
+   ]
   },
   {
    "id": "socha",
@@ -219,7 +345,13 @@
    "tags": [
     "Dungeon"
    ],
-   "custom": false
+   "custom": false,
+   "varianty": [
+    "bojove/assets/Dungeon/varianty/socha-v1.webp",
+    "bojove/assets/Dungeon/varianty/socha-v2.webp",
+    "bojove/assets/Dungeon/varianty/socha-v3.webp",
+    "bojove/assets/Dungeon/varianty/socha-v4.webp"
+   ]
   },
   {
    "id": "sarkofag",
@@ -229,7 +361,13 @@
    "tags": [
     "Dungeon"
    ],
-   "custom": false
+   "custom": false,
+   "varianty": [
+    "bojove/assets/Dungeon/varianty/sarkofag-v1.webp",
+    "bojove/assets/Dungeon/varianty/sarkofag-v2.webp",
+    "bojove/assets/Dungeon/varianty/sarkofag-v3.webp",
+    "bojove/assets/Dungeon/varianty/sarkofag-v4.webp"
+   ]
   },
   {
    "id": "hrobka-kryt",
@@ -239,7 +377,13 @@
    "tags": [
     "Dungeon"
    ],
-   "custom": false
+   "custom": false,
+   "varianty": [
+    "bojove/assets/Dungeon/varianty/hrobka-kryt-v1.webp",
+    "bojove/assets/Dungeon/varianty/hrobka-kryt-v2.webp",
+    "bojove/assets/Dungeon/varianty/hrobka-kryt-v3.webp",
+    "bojove/assets/Dungeon/varianty/hrobka-kryt-v4.webp"
+   ]
   },
   {
    "id": "oltar",
@@ -249,7 +393,13 @@
    "tags": [
     "Dungeon"
    ],
-   "custom": false
+   "custom": false,
+   "varianty": [
+    "bojove/assets/Dungeon/varianty/oltar-v1.webp",
+    "bojove/assets/Dungeon/varianty/oltar-v2.webp",
+    "bojove/assets/Dungeon/varianty/oltar-v3.webp",
+    "bojove/assets/Dungeon/varianty/oltar-v4.webp"
+   ]
   },
   {
    "id": "kazatelna",
@@ -259,7 +409,13 @@
    "tags": [
     "Dungeon"
    ],
-   "custom": false
+   "custom": false,
+   "varianty": [
+    "bojove/assets/Dungeon/varianty/kazatelna-v1.webp",
+    "bojove/assets/Dungeon/varianty/kazatelna-v2.webp",
+    "bojove/assets/Dungeon/varianty/kazatelna-v3.webp",
+    "bojove/assets/Dungeon/varianty/kazatelna-v4.webp"
+   ]
   },
   {
    "id": "mriz",
@@ -269,7 +425,13 @@
    "tags": [
     "Dungeon"
    ],
-   "custom": false
+   "custom": false,
+   "varianty": [
+    "bojove/assets/Dungeon/varianty/mriz-v1.webp",
+    "bojove/assets/Dungeon/varianty/mriz-v2.webp",
+    "bojove/assets/Dungeon/varianty/mriz-v3.webp",
+    "bojove/assets/Dungeon/varianty/mriz-v4.webp"
+   ]
   },
   {
    "id": "studna",
@@ -279,7 +441,13 @@
    "tags": [
     "Dungeon"
    ],
-   "custom": false
+   "custom": false,
+   "varianty": [
+    "bojove/assets/Dungeon/varianty/studna-v1.webp",
+    "bojove/assets/Dungeon/varianty/studna-v2.webp",
+    "bojove/assets/Dungeon/varianty/studna-v3.webp",
+    "bojove/assets/Dungeon/varianty/studna-v4.webp"
+   ]
   },
   {
    "id": "tajna-mistnost",
@@ -289,7 +457,13 @@
    "tags": [
     "Dungeon"
    ],
-   "custom": false
+   "custom": false,
+   "varianty": [
+    "bojove/assets/Dungeon/varianty/tajna-mistnost-v1.webp",
+    "bojove/assets/Dungeon/varianty/tajna-mistnost-v2.webp",
+    "bojove/assets/Dungeon/varianty/tajna-mistnost-v3.webp",
+    "bojove/assets/Dungeon/varianty/tajna-mistnost-v4.webp"
+   ]
   },
   {
    "id": "pavouk-web",
@@ -299,7 +473,13 @@
    "tags": [
     "Dungeon"
    ],
-   "custom": false
+   "custom": false,
+   "varianty": [
+    "bojove/assets/Dungeon/varianty/pavouk-web-v1.webp",
+    "bojove/assets/Dungeon/varianty/pavouk-web-v2.webp",
+    "bojove/assets/Dungeon/varianty/pavouk-web-v3.webp",
+    "bojove/assets/Dungeon/varianty/pavouk-web-v4.webp"
+   ]
   },
   {
    "id": "kostlivec",
@@ -309,7 +489,13 @@
    "tags": [
     "Dungeon"
    ],
-   "custom": false
+   "custom": false,
+   "varianty": [
+    "bojove/assets/Dungeon/varianty/kostlivec-v1.webp",
+    "bojove/assets/Dungeon/varianty/kostlivec-v2.webp",
+    "bojove/assets/Dungeon/varianty/kostlivec-v3.webp",
+    "bojove/assets/Dungeon/varianty/kostlivec-v4.webp"
+   ]
   },
   {
    "id": "kosti-hromada",
@@ -319,7 +505,13 @@
    "tags": [
     "Dungeon"
    ],
-   "custom": false
+   "custom": false,
+   "varianty": [
+    "bojove/assets/Dungeon/varianty/kosti-hromada-v1.webp",
+    "bojove/assets/Dungeon/varianty/kosti-hromada-v2.webp",
+    "bojove/assets/Dungeon/varianty/kosti-hromada-v3.webp",
+    "bojove/assets/Dungeon/varianty/kosti-hromada-v4.webp"
+   ]
   },
   {
    "id": "prulom",
@@ -329,7 +521,13 @@
    "tags": [
     "Dungeon"
    ],
-   "custom": false
+   "custom": false,
+   "varianty": [
+    "bojove/assets/Dungeon/varianty/prulom-v1.webp",
+    "bojove/assets/Dungeon/varianty/prulom-v2.webp",
+    "bojove/assets/Dungeon/varianty/prulom-v3.webp",
+    "bojove/assets/Dungeon/varianty/prulom-v4.webp"
+   ]
   },
   {
    "id": "schod-dolu",
@@ -339,7 +537,13 @@
    "tags": [
     "Dungeon"
    ],
-   "custom": false
+   "custom": false,
+   "varianty": [
+    "bojove/assets/Dungeon/varianty/schod-dolu-v1.webp",
+    "bojove/assets/Dungeon/varianty/schod-dolu-v2.webp",
+    "bojove/assets/Dungeon/varianty/schod-dolu-v3.webp",
+    "bojove/assets/Dungeon/varianty/schod-dolu-v4.webp"
+   ]
   },
   {
    "id": "balvan",
@@ -349,7 +553,13 @@
    "tags": [
     "Dungeon"
    ],
-   "custom": false
+   "custom": false,
+   "varianty": [
+    "bojove/assets/Dungeon/varianty/balvan-v1.webp",
+    "bojove/assets/Dungeon/varianty/balvan-v2.webp",
+    "bojove/assets/Dungeon/varianty/balvan-v3.webp",
+    "bojove/assets/Dungeon/varianty/balvan-v4.webp"
+   ]
   },
   {
    "id": "stalaktit",
@@ -359,7 +569,13 @@
    "tags": [
     "Dungeon"
    ],
-   "custom": false
+   "custom": false,
+   "varianty": [
+    "bojove/assets/Dungeon/varianty/stalaktit-v1.webp",
+    "bojove/assets/Dungeon/varianty/stalaktit-v2.webp",
+    "bojove/assets/Dungeon/varianty/stalaktit-v3.webp",
+    "bojove/assets/Dungeon/varianty/stalaktit-v4.webp"
+   ]
   },
   {
    "id": "trhlina",
@@ -369,7 +585,13 @@
    "tags": [
     "Dungeon"
    ],
-   "custom": false
+   "custom": false,
+   "varianty": [
+    "bojove/assets/Dungeon/varianty/trhlina-v1.webp",
+    "bojove/assets/Dungeon/varianty/trhlina-v2.webp",
+    "bojove/assets/Dungeon/varianty/trhlina-v3.webp",
+    "bojove/assets/Dungeon/varianty/trhlina-v4.webp"
+   ]
   },
   {
    "id": "strom",
@@ -380,7 +602,13 @@
     "Příroda"
    ],
    "custom": false,
-   "anim": "vitr"
+   "anim": "vitr",
+   "varianty": [
+    "bojove/assets/Příroda/varianty/strom-v1.webp",
+    "bojove/assets/Příroda/varianty/strom-v2.webp",
+    "bojove/assets/Příroda/varianty/strom-v3.webp",
+    "bojove/assets/Příroda/varianty/strom-v4.webp"
+   ]
   },
   {
    "id": "strom-velky",
@@ -391,7 +619,13 @@
     "Příroda"
    ],
    "custom": false,
-   "anim": "vitr"
+   "anim": "vitr",
+   "varianty": [
+    "bojove/assets/Příroda/varianty/strom-velky-v1.webp",
+    "bojove/assets/Příroda/varianty/strom-velky-v2.webp",
+    "bojove/assets/Příroda/varianty/strom-velky-v3.webp",
+    "bojove/assets/Příroda/varianty/strom-velky-v4.webp"
+   ]
   },
   {
    "id": "smrk",
@@ -402,7 +636,13 @@
     "Příroda"
    ],
    "custom": false,
-   "anim": "vitr"
+   "anim": "vitr",
+   "varianty": [
+    "bojove/assets/Příroda/varianty/smrk-v1.webp",
+    "bojove/assets/Příroda/varianty/smrk-v2.webp",
+    "bojove/assets/Příroda/varianty/smrk-v3.webp",
+    "bojove/assets/Příroda/varianty/smrk-v4.webp"
+   ]
   },
   {
    "id": "keř",
@@ -413,7 +653,13 @@
     "Příroda"
    ],
    "custom": false,
-   "anim": "vitr"
+   "anim": "vitr",
+   "varianty": [
+    "bojove/assets/Příroda/varianty/keř-v1.webp",
+    "bojove/assets/Příroda/varianty/keř-v2.webp",
+    "bojove/assets/Příroda/varianty/keř-v3.webp",
+    "bojove/assets/Příroda/varianty/keř-v4.webp"
+   ]
   },
   {
    "id": "kamen",
@@ -423,7 +669,13 @@
    "tags": [
     "Příroda"
    ],
-   "custom": false
+   "custom": false,
+   "varianty": [
+    "bojove/assets/Příroda/varianty/kamen-v1.webp",
+    "bojove/assets/Příroda/varianty/kamen-v2.webp",
+    "bojove/assets/Příroda/varianty/kamen-v3.webp",
+    "bojove/assets/Příroda/varianty/kamen-v4.webp"
+   ]
   },
   {
    "id": "skala",
@@ -433,7 +685,13 @@
    "tags": [
     "Příroda"
    ],
-   "custom": false
+   "custom": false,
+   "varianty": [
+    "bojove/assets/Příroda/varianty/skala-v1.webp",
+    "bojove/assets/Příroda/varianty/skala-v2.webp",
+    "bojove/assets/Příroda/varianty/skala-v3.webp",
+    "bojove/assets/Příroda/varianty/skala-v4.webp"
+   ]
   },
   {
    "id": "pazdrovi",
@@ -443,7 +701,13 @@
    "tags": [
     "Příroda"
    ],
-   "custom": false
+   "custom": false,
+   "varianty": [
+    "bojove/assets/Příroda/varianty/pazdrovi-v1.webp",
+    "bojove/assets/Příroda/varianty/pazdrovi-v2.webp",
+    "bojove/assets/Příroda/varianty/pazdrovi-v3.webp",
+    "bojove/assets/Příroda/varianty/pazdrovi-v4.webp"
+   ]
   },
   {
    "id": "padly-strom",
@@ -453,7 +717,13 @@
    "tags": [
     "Příroda"
    ],
-   "custom": false
+   "custom": false,
+   "varianty": [
+    "bojove/assets/Příroda/varianty/padly-strom-v1.webp",
+    "bojove/assets/Příroda/varianty/padly-strom-v2.webp",
+    "bojove/assets/Příroda/varianty/padly-strom-v3.webp",
+    "bojove/assets/Příroda/varianty/padly-strom-v4.webp"
+   ]
   },
   {
    "id": "houby",
@@ -464,7 +734,13 @@
     "Příroda"
    ],
    "custom": false,
-   "anim": "zare"
+   "anim": "zare",
+   "varianty": [
+    "bojove/assets/Příroda/varianty/houby-v1.webp",
+    "bojove/assets/Příroda/varianty/houby-v2.webp",
+    "bojove/assets/Příroda/varianty/houby-v3.webp",
+    "bojove/assets/Příroda/varianty/houby-v4.webp"
+   ]
   },
   {
    "id": "houby-svitici",
@@ -475,7 +751,13 @@
     "Příroda"
    ],
    "custom": false,
-   "anim": "zare"
+   "anim": "zare",
+   "varianty": [
+    "bojove/assets/Příroda/varianty/houby-svitici-v1.webp",
+    "bojove/assets/Příroda/varianty/houby-svitici-v2.webp",
+    "bojove/assets/Příroda/varianty/houby-svitici-v3.webp",
+    "bojove/assets/Příroda/varianty/houby-svitici-v4.webp"
+   ]
   },
   {
    "id": "vinorost",
@@ -485,7 +767,13 @@
    "tags": [
     "Příroda"
    ],
-   "custom": false
+   "custom": false,
+   "varianty": [
+    "bojove/assets/Příroda/varianty/vinorost-v1.webp",
+    "bojove/assets/Příroda/varianty/vinorost-v2.webp",
+    "bojove/assets/Příroda/varianty/vinorost-v3.webp",
+    "bojove/assets/Příroda/varianty/vinorost-v4.webp"
+   ]
   },
   {
    "id": "reka-prechod",
@@ -495,7 +783,13 @@
    "tags": [
     "Příroda"
    ],
-   "custom": false
+   "custom": false,
+   "varianty": [
+    "bojove/assets/Příroda/varianty/reka-prechod-v1.webp",
+    "bojove/assets/Příroda/varianty/reka-prechod-v2.webp",
+    "bojove/assets/Příroda/varianty/reka-prechod-v3.webp",
+    "bojove/assets/Příroda/varianty/reka-prechod-v4.webp"
+   ]
   },
   {
    "id": "koreny",
@@ -505,7 +799,13 @@
    "tags": [
     "Příroda"
    ],
-   "custom": false
+   "custom": false,
+   "varianty": [
+    "bojove/assets/Příroda/varianty/koreny-v1.webp",
+    "bojove/assets/Příroda/varianty/koreny-v2.webp",
+    "bojove/assets/Příroda/varianty/koreny-v3.webp",
+    "bojove/assets/Příroda/varianty/koreny-v4.webp"
+   ]
   },
   {
    "id": "kvety",
@@ -515,7 +815,13 @@
    "tags": [
     "Příroda"
    ],
-   "custom": false
+   "custom": false,
+   "varianty": [
+    "bojove/assets/Příroda/varianty/kvety-v1.webp",
+    "bojove/assets/Příroda/varianty/kvety-v2.webp",
+    "bojove/assets/Příroda/varianty/kvety-v3.webp",
+    "bojove/assets/Příroda/varianty/kvety-v4.webp"
+   ]
   },
   {
    "id": "studna-mesto",
@@ -525,7 +831,13 @@
    "tags": [
     "Město"
    ],
-   "custom": false
+   "custom": false,
+   "varianty": [
+    "bojove/assets/Město/varianty/studna-mesto-v1.webp",
+    "bojove/assets/Město/varianty/studna-mesto-v2.webp",
+    "bojove/assets/Město/varianty/studna-mesto-v3.webp",
+    "bojove/assets/Město/varianty/studna-mesto-v4.webp"
+   ]
   },
   {
    "id": "stodola-vuz",
@@ -535,7 +847,13 @@
    "tags": [
     "Město"
    ],
-   "custom": false
+   "custom": false,
+   "varianty": [
+    "bojove/assets/Město/varianty/stodola-vuz-v1.webp",
+    "bojove/assets/Město/varianty/stodola-vuz-v2.webp",
+    "bojove/assets/Město/varianty/stodola-vuz-v3.webp",
+    "bojove/assets/Město/varianty/stodola-vuz-v4.webp"
+   ]
   },
   {
    "id": "stojan-stand",
@@ -545,7 +863,13 @@
    "tags": [
     "Město"
    ],
-   "custom": false
+   "custom": false,
+   "varianty": [
+    "bojove/assets/Město/varianty/stojan-stand-v1.webp",
+    "bojove/assets/Město/varianty/stojan-stand-v2.webp",
+    "bojove/assets/Město/varianty/stojan-stand-v3.webp",
+    "bojove/assets/Město/varianty/stojan-stand-v4.webp"
+   ]
   },
   {
    "id": "lavoir-kasna",
@@ -555,7 +879,13 @@
    "tags": [
     "Město"
    ],
-   "custom": false
+   "custom": false,
+   "varianty": [
+    "bojove/assets/Město/varianty/lavoir-kasna-v1.webp",
+    "bojove/assets/Město/varianty/lavoir-kasna-v2.webp",
+    "bojove/assets/Město/varianty/lavoir-kasna-v3.webp",
+    "bojove/assets/Město/varianty/lavoir-kasna-v4.webp"
+   ]
   },
   {
    "id": "latarnik",
@@ -565,7 +895,13 @@
    "tags": [
     "Město"
    ],
-   "custom": false
+   "custom": false,
+   "varianty": [
+    "bojove/assets/Město/varianty/latarnik-v1.webp",
+    "bojove/assets/Město/varianty/latarnik-v2.webp",
+    "bojove/assets/Město/varianty/latarnik-v3.webp",
+    "bojove/assets/Město/varianty/latarnik-v4.webp"
+   ]
   },
   {
    "id": "plot",
@@ -575,7 +911,13 @@
    "tags": [
     "Město"
    ],
-   "custom": false
+   "custom": false,
+   "varianty": [
+    "bojove/assets/Město/varianty/plot-v1.webp",
+    "bojove/assets/Město/varianty/plot-v2.webp",
+    "bojove/assets/Město/varianty/plot-v3.webp",
+    "bojove/assets/Město/varianty/plot-v4.webp"
+   ]
   },
   {
    "id": "zabradi",
@@ -585,7 +927,13 @@
    "tags": [
     "Město"
    ],
-   "custom": false
+   "custom": false,
+   "varianty": [
+    "bojove/assets/Město/varianty/zabradi-v1.webp",
+    "bojove/assets/Město/varianty/zabradi-v2.webp",
+    "bojove/assets/Město/varianty/zabradi-v3.webp",
+    "bojove/assets/Město/varianty/zabradi-v4.webp"
+   ]
   },
   {
    "id": "kvetinac",
@@ -595,7 +943,13 @@
    "tags": [
     "Město"
    ],
-   "custom": false
+   "custom": false,
+   "varianty": [
+    "bojove/assets/Město/varianty/kvetinac-v1.webp",
+    "bojove/assets/Město/varianty/kvetinac-v2.webp",
+    "bojove/assets/Město/varianty/kvetinac-v3.webp",
+    "bojove/assets/Město/varianty/kvetinac-v4.webp"
+   ]
   },
   {
    "id": "kolo-voza",
@@ -605,7 +959,13 @@
    "tags": [
     "Město"
    ],
-   "custom": false
+   "custom": false,
+   "varianty": [
+    "bojove/assets/Město/varianty/kolo-voza-v1.webp",
+    "bojove/assets/Město/varianty/kolo-voza-v2.webp",
+    "bojove/assets/Město/varianty/kolo-voza-v3.webp",
+    "bojove/assets/Město/varianty/kolo-voza-v4.webp"
+   ]
   },
   {
    "id": "markyza",
@@ -615,7 +975,13 @@
    "tags": [
     "Město"
    ],
-   "custom": false
+   "custom": false,
+   "varianty": [
+    "bojove/assets/Město/varianty/markyza-v1.webp",
+    "bojove/assets/Město/varianty/markyza-v2.webp",
+    "bojove/assets/Město/varianty/markyza-v3.webp",
+    "bojove/assets/Město/varianty/markyza-v4.webp"
+   ]
   },
   {
    "id": "smiti",
@@ -625,7 +991,13 @@
    "tags": [
     "Město"
    ],
-   "custom": false
+   "custom": false,
+   "varianty": [
+    "bojove/assets/Město/varianty/smiti-v1.webp",
+    "bojove/assets/Město/varianty/smiti-v2.webp",
+    "bojove/assets/Město/varianty/smiti-v3.webp",
+    "bojove/assets/Město/varianty/smiti-v4.webp"
+   ]
   },
   {
    "id": "dvere-ikona",
@@ -635,7 +1007,13 @@
    "tags": [
     "Město"
    ],
-   "custom": false
+   "custom": false,
+   "varianty": [
+    "bojove/assets/Město/varianty/dvere-ikona-v1.webp",
+    "bojove/assets/Město/varianty/dvere-ikona-v2.webp",
+    "bojove/assets/Město/varianty/dvere-ikona-v3.webp",
+    "bojove/assets/Město/varianty/dvere-ikona-v4.webp"
+   ]
   },
   {
    "id": "clun",
@@ -645,7 +1023,13 @@
    "tags": [
     "Loď"
    ],
-   "custom": false
+   "custom": false,
+   "varianty": [
+    "bojove/assets/Loď/varianty/clun-v1.webp",
+    "bojove/assets/Loď/varianty/clun-v2.webp",
+    "bojove/assets/Loď/varianty/clun-v3.webp",
+    "bojove/assets/Loď/varianty/clun-v4.webp"
+   ]
   },
   {
    "id": "stożar",
@@ -655,7 +1039,13 @@
    "tags": [
     "Loď"
    ],
-   "custom": false
+   "custom": false,
+   "varianty": [
+    "bojove/assets/Loď/varianty/stożar-v1.webp",
+    "bojove/assets/Loď/varianty/stożar-v2.webp",
+    "bojove/assets/Loď/varianty/stożar-v3.webp",
+    "bojove/assets/Loď/varianty/stożar-v4.webp"
+   ]
   },
   {
    "id": "kotva",
@@ -665,7 +1055,13 @@
    "tags": [
     "Loď"
    ],
-   "custom": false
+   "custom": false,
+   "varianty": [
+    "bojove/assets/Loď/varianty/kotva-v1.webp",
+    "bojove/assets/Loď/varianty/kotva-v2.webp",
+    "bojove/assets/Loď/varianty/kotva-v3.webp",
+    "bojove/assets/Loď/varianty/kotva-v4.webp"
+   ]
   },
   {
    "id": "vrv-kotel",
@@ -675,7 +1071,13 @@
    "tags": [
     "Loď"
    ],
-   "custom": false
+   "custom": false,
+   "varianty": [
+    "bojove/assets/Loď/varianty/vrv-kotel-v1.webp",
+    "bojove/assets/Loď/varianty/vrv-kotel-v2.webp",
+    "bojove/assets/Loď/varianty/vrv-kotel-v3.webp",
+    "bojove/assets/Loď/varianty/vrv-kotel-v4.webp"
+   ]
   },
   {
    "id": "truhla-lod",
@@ -685,7 +1087,13 @@
    "tags": [
     "Loď"
    ],
-   "custom": false
+   "custom": false,
+   "varianty": [
+    "bojove/assets/Loď/varianty/truhla-lod-v1.webp",
+    "bojove/assets/Loď/varianty/truhla-lod-v2.webp",
+    "bojove/assets/Loď/varianty/truhla-lod-v3.webp",
+    "bojove/assets/Loď/varianty/truhla-lod-v4.webp"
+   ]
   },
   {
    "id": "mag-kruh",
@@ -695,7 +1103,13 @@
    "tags": [
     "Magie"
    ],
-   "custom": false
+   "custom": false,
+   "varianty": [
+    "bojove/assets/Magie/varianty/mag-kruh-v1.webp",
+    "bojove/assets/Magie/varianty/mag-kruh-v2.webp",
+    "bojove/assets/Magie/varianty/mag-kruh-v3.webp",
+    "bojove/assets/Magie/varianty/mag-kruh-v4.webp"
+   ]
   },
   {
    "id": "portal",
@@ -706,7 +1120,13 @@
     "Magie"
    ],
    "custom": false,
-   "anim": "portal"
+   "anim": "portal",
+   "varianty": [
+    "bojove/assets/Magie/varianty/portal-v1.webp",
+    "bojove/assets/Magie/varianty/portal-v2.webp",
+    "bojove/assets/Magie/varianty/portal-v3.webp",
+    "bojove/assets/Magie/varianty/portal-v4.webp"
+   ]
   },
   {
    "id": "rune-kamen",
@@ -717,7 +1137,13 @@
     "Magie"
    ],
    "custom": false,
-   "anim": "zare"
+   "anim": "zare",
+   "varianty": [
+    "bojove/assets/Magie/varianty/rune-kamen-v1.webp",
+    "bojove/assets/Magie/varianty/rune-kamen-v2.webp",
+    "bojove/assets/Magie/varianty/rune-kamen-v3.webp",
+    "bojove/assets/Magie/varianty/rune-kamen-v4.webp"
+   ]
   },
   {
    "id": "krystal",
@@ -728,7 +1154,13 @@
     "Magie"
    ],
    "custom": false,
-   "anim": "zare"
+   "anim": "zare",
+   "varianty": [
+    "bojove/assets/Magie/varianty/krystal-v1.webp",
+    "bojove/assets/Magie/varianty/krystal-v2.webp",
+    "bojove/assets/Magie/varianty/krystal-v3.webp",
+    "bojove/assets/Magie/varianty/krystal-v4.webp"
+   ]
   },
   {
    "id": "kotel",
@@ -738,7 +1170,13 @@
    "tags": [
     "Magie"
    ],
-   "custom": false
+   "custom": false,
+   "varianty": [
+    "bojove/assets/Magie/varianty/kotel-v1.webp",
+    "bojove/assets/Magie/varianty/kotel-v2.webp",
+    "bojove/assets/Magie/varianty/kotel-v3.webp",
+    "bojove/assets/Magie/varianty/kotel-v4.webp"
+   ]
   },
   {
    "id": "magicky-oltar",
@@ -748,7 +1186,13 @@
    "tags": [
     "Magie"
    ],
-   "custom": false
+   "custom": false,
+   "varianty": [
+    "bojove/assets/Magie/varianty/magicky-oltar-v1.webp",
+    "bojove/assets/Magie/varianty/magicky-oltar-v2.webp",
+    "bojove/assets/Magie/varianty/magicky-oltar-v3.webp",
+    "bojove/assets/Magie/varianty/magicky-oltar-v4.webp"
+   ]
   },
   {
    "id": "svitek-police",
@@ -758,7 +1202,13 @@
    "tags": [
     "Magie"
    ],
-   "custom": false
+   "custom": false,
+   "varianty": [
+    "bojove/assets/Magie/varianty/svitek-police-v1.webp",
+    "bojove/assets/Magie/varianty/svitek-police-v2.webp",
+    "bojove/assets/Magie/varianty/svitek-police-v3.webp",
+    "bojove/assets/Magie/varianty/svitek-police-v4.webp"
+   ]
   },
   {
    "id": "spiky",
@@ -768,7 +1218,13 @@
    "tags": [
     "Pasti a nebezpečí"
    ],
-   "custom": false
+   "custom": false,
+   "varianty": [
+    "bojove/assets/Pasti a nebezpečí/varianty/spiky-v1.webp",
+    "bojove/assets/Pasti a nebezpečí/varianty/spiky-v2.webp",
+    "bojove/assets/Pasti a nebezpečí/varianty/spiky-v3.webp",
+    "bojove/assets/Pasti a nebezpečí/varianty/spiky-v4.webp"
+   ]
   },
   {
    "id": "jama-spiky",
@@ -778,7 +1234,13 @@
    "tags": [
     "Pasti a nebezpečí"
    ],
-   "custom": false
+   "custom": false,
+   "varianty": [
+    "bojove/assets/Pasti a nebezpečí/varianty/jama-spiky-v1.webp",
+    "bojove/assets/Pasti a nebezpečí/varianty/jama-spiky-v2.webp",
+    "bojove/assets/Pasti a nebezpečí/varianty/jama-spiky-v3.webp",
+    "bojove/assets/Pasti a nebezpečí/varianty/jama-spiky-v4.webp"
+   ]
   },
   {
    "id": "past-klapka",
@@ -788,7 +1250,13 @@
    "tags": [
     "Pasti a nebezpečí"
    ],
-   "custom": false
+   "custom": false,
+   "varianty": [
+    "bojove/assets/Pasti a nebezpečí/varianty/past-klapka-v1.webp",
+    "bojove/assets/Pasti a nebezpečí/varianty/past-klapka-v2.webp",
+    "bojove/assets/Pasti a nebezpečí/varianty/past-klapka-v3.webp",
+    "bojove/assets/Pasti a nebezpečí/varianty/past-klapka-v4.webp"
+   ]
   },
   {
    "id": "ohen-past",
@@ -799,7 +1267,13 @@
     "Pasti a nebezpečí"
    ],
    "custom": false,
-   "anim": "ohen"
+   "anim": "ohen",
+   "varianty": [
+    "bojove/assets/Pasti a nebezpečí/varianty/ohen-past-v1.webp",
+    "bojove/assets/Pasti a nebezpečí/varianty/ohen-past-v2.webp",
+    "bojove/assets/Pasti a nebezpečí/varianty/ohen-past-v3.webp",
+    "bojove/assets/Pasti a nebezpečí/varianty/ohen-past-v4.webp"
+   ]
   },
   {
    "id": "lano-past",
@@ -809,7 +1283,13 @@
    "tags": [
     "Pasti a nebezpečí"
    ],
-   "custom": false
+   "custom": false,
+   "varianty": [
+    "bojove/assets/Pasti a nebezpečí/varianty/lano-past-v1.webp",
+    "bojove/assets/Pasti a nebezpečí/varianty/lano-past-v2.webp",
+    "bojove/assets/Pasti a nebezpečí/varianty/lano-past-v3.webp",
+    "bojove/assets/Pasti a nebezpečí/varianty/lano-past-v4.webp"
+   ]
   },
   {
    "id": "trn",
@@ -819,7 +1299,13 @@
    "tags": [
     "Pasti a nebezpečí"
    ],
-   "custom": false
+   "custom": false,
+   "varianty": [
+    "bojove/assets/Pasti a nebezpečí/varianty/trn-v1.webp",
+    "bojove/assets/Pasti a nebezpečí/varianty/trn-v2.webp",
+    "bojove/assets/Pasti a nebezpečí/varianty/trn-v3.webp",
+    "bojove/assets/Pasti a nebezpečí/varianty/trn-v4.webp"
+   ]
   },
   {
    "id": "kyselina",
@@ -829,7 +1315,13 @@
    "tags": [
     "Pasti a nebezpečí"
    ],
-   "custom": false
+   "custom": false,
+   "varianty": [
+    "bojove/assets/Pasti a nebezpečí/varianty/kyselina-v1.webp",
+    "bojove/assets/Pasti a nebezpečí/varianty/kyselina-v2.webp",
+    "bojove/assets/Pasti a nebezpečí/varianty/kyselina-v3.webp",
+    "bojove/assets/Pasti a nebezpečí/varianty/kyselina-v4.webp"
+   ]
   },
   {
    "id": "netopyri",
@@ -839,7 +1331,13 @@
    "tags": [
     "Pasti a nebezpečí"
    ],
-   "custom": false
+   "custom": false,
+   "varianty": [
+    "bojove/assets/Pasti a nebezpečí/varianty/netopyri-v1.webp",
+    "bojove/assets/Pasti a nebezpečí/varianty/netopyri-v2.webp",
+    "bojove/assets/Pasti a nebezpečí/varianty/netopyri-v3.webp",
+    "bojove/assets/Pasti a nebezpečí/varianty/netopyri-v4.webp"
+   ]
   },
   {
    "id": "pochodeň",
@@ -850,7 +1348,13 @@
     "Světla"
    ],
    "custom": false,
-   "anim": "ohen"
+   "anim": "ohen",
+   "varianty": [
+    "bojove/assets/Světla/varianty/pochodeň-v1.webp",
+    "bojove/assets/Světla/varianty/pochodeň-v2.webp",
+    "bojove/assets/Světla/varianty/pochodeň-v3.webp",
+    "bojove/assets/Světla/varianty/pochodeň-v4.webp"
+   ]
   },
   {
    "id": "ohriste",
@@ -861,7 +1365,13 @@
     "Světla"
    ],
    "custom": false,
-   "anim": "ohen"
+   "anim": "ohen",
+   "varianty": [
+    "bojove/assets/Světla/varianty/ohriste-v1.webp",
+    "bojove/assets/Světla/varianty/ohriste-v2.webp",
+    "bojove/assets/Světla/varianty/ohriste-v3.webp",
+    "bojove/assets/Světla/varianty/ohriste-v4.webp"
+   ]
   },
   {
    "id": "brasier",
@@ -872,7 +1382,13 @@
     "Světla"
    ],
    "custom": false,
-   "anim": "ohen"
+   "anim": "ohen",
+   "varianty": [
+    "bojove/assets/Světla/varianty/brasier-v1.webp",
+    "bojove/assets/Světla/varianty/brasier-v2.webp",
+    "bojove/assets/Světla/varianty/brasier-v3.webp",
+    "bojove/assets/Světla/varianty/brasier-v4.webp"
+   ]
   },
   {
    "id": "svicka",
@@ -883,7 +1399,13 @@
     "Světla"
    ],
    "custom": false,
-   "anim": "ohen"
+   "anim": "ohen",
+   "varianty": [
+    "bojove/assets/Světla/varianty/svicka-v1.webp",
+    "bojove/assets/Světla/varianty/svicka-v2.webp",
+    "bojove/assets/Světla/varianty/svicka-v3.webp",
+    "bojove/assets/Světla/varianty/svicka-v4.webp"
+   ]
   },
   {
    "id": "lucerna",
@@ -894,7 +1416,13 @@
     "Světla"
    ],
    "custom": false,
-   "anim": "ohen"
+   "anim": "ohen",
+   "varianty": [
+    "bojove/assets/Světla/varianty/lucerna-v1.webp",
+    "bojove/assets/Světla/varianty/lucerna-v2.webp",
+    "bojove/assets/Světla/varianty/lucerna-v3.webp",
+    "bojove/assets/Světla/varianty/lucerna-v4.webp"
+   ]
   },
   {
    "id": "kandelabr",
@@ -905,7 +1433,13 @@
     "Světla"
    ],
    "custom": false,
-   "anim": "ohen"
+   "anim": "ohen",
+   "varianty": [
+    "bojove/assets/Světla/varianty/kandelabr-v1.webp",
+    "bojove/assets/Světla/varianty/kandelabr-v2.webp",
+    "bojove/assets/Světla/varianty/kandelabr-v3.webp",
+    "bojove/assets/Světla/varianty/kandelabr-v4.webp"
+   ]
   },
   {
    "id": "svitici-runa",
@@ -916,7 +1450,13 @@
     "Světla"
    ],
    "custom": false,
-   "anim": "zare"
+   "anim": "zare",
+   "varianty": [
+    "bojove/assets/Světla/varianty/svitici-runa-v1.webp",
+    "bojove/assets/Světla/varianty/svitici-runa-v2.webp",
+    "bojove/assets/Světla/varianty/svitici-runa-v3.webp",
+    "bojove/assets/Světla/varianty/svitici-runa-v4.webp"
+   ]
   },
   {
    "id": "krb-vapka",
@@ -927,7 +1467,13 @@
     "Světla"
    ],
    "custom": false,
-   "anim": "ohen"
+   "anim": "ohen",
+   "varianty": [
+    "bojove/assets/Světla/varianty/krb-vapka-v1.webp",
+    "bojove/assets/Světla/varianty/krb-vapka-v2.webp",
+    "bojove/assets/Světla/varianty/krb-vapka-v3.webp",
+    "bojove/assets/Světla/varianty/krb-vapka-v4.webp"
+   ]
   },
   {
    "id": "stan",
@@ -937,7 +1483,13 @@
    "tags": [
     "Tábor/bitva"
    ],
-   "custom": false
+   "custom": false,
+   "varianty": [
+    "bojove/assets/Tábor/bitva/varianty/stan-v1.webp",
+    "bojove/assets/Tábor/bitva/varianty/stan-v2.webp",
+    "bojove/assets/Tábor/bitva/varianty/stan-v3.webp",
+    "bojove/assets/Tábor/bitva/varianty/stan-v4.webp"
+   ]
   },
   {
    "id": "stan-velky",
@@ -947,7 +1499,13 @@
    "tags": [
     "Tábor/bitva"
    ],
-   "custom": false
+   "custom": false,
+   "varianty": [
+    "bojove/assets/Tábor/bitva/varianty/stan-velky-v1.webp",
+    "bojove/assets/Tábor/bitva/varianty/stan-velky-v2.webp",
+    "bojove/assets/Tábor/bitva/varianty/stan-velky-v3.webp",
+    "bojove/assets/Tábor/bitva/varianty/stan-velky-v4.webp"
+   ]
   },
   {
    "id": "ohne-tabor",
@@ -958,7 +1516,13 @@
     "Tábor/bitva"
    ],
    "custom": false,
-   "anim": "ohen"
+   "anim": "ohen",
+   "varianty": [
+    "bojove/assets/Tábor/bitva/varianty/ohne-tabor-v1.webp",
+    "bojove/assets/Tábor/bitva/varianty/ohne-tabor-v2.webp",
+    "bojove/assets/Tábor/bitva/varianty/ohne-tabor-v3.webp",
+    "bojove/assets/Tábor/bitva/varianty/ohne-tabor-v4.webp"
+   ]
   },
   {
    "id": "barikada",
@@ -968,7 +1532,13 @@
    "tags": [
     "Tábor/bitva"
    ],
-   "custom": false
+   "custom": false,
+   "varianty": [
+    "bojove/assets/Tábor/bitva/varianty/barikada-v1.webp",
+    "bojove/assets/Tábor/bitva/varianty/barikada-v2.webp",
+    "bojove/assets/Tábor/bitva/varianty/barikada-v3.webp",
+    "bojove/assets/Tábor/bitva/varianty/barikada-v4.webp"
+   ]
   },
   {
    "id": "jezek",
@@ -978,7 +1548,13 @@
    "tags": [
     "Tábor/bitva"
    ],
-   "custom": false
+   "custom": false,
+   "varianty": [
+    "bojove/assets/Tábor/bitva/varianty/jezek-v1.webp",
+    "bojove/assets/Tábor/bitva/varianty/jezek-v2.webp",
+    "bojove/assets/Tábor/bitva/varianty/jezek-v3.webp",
+    "bojove/assets/Tábor/bitva/varianty/jezek-v4.webp"
+   ]
   },
   {
    "id": "vlajka",
@@ -988,7 +1564,13 @@
    "tags": [
     "Tábor/bitva"
    ],
-   "custom": false
+   "custom": false,
+   "varianty": [
+    "bojove/assets/Tábor/bitva/varianty/vlajka-v1.webp",
+    "bojove/assets/Tábor/bitva/varianty/vlajka-v2.webp",
+    "bojove/assets/Tábor/bitva/varianty/vlajka-v3.webp",
+    "bojove/assets/Tábor/bitva/varianty/vlajka-v4.webp"
+   ]
   },
   {
    "id": "zbroj-stojan",
@@ -998,7 +1580,13 @@
    "tags": [
     "Tábor/bitva"
    ],
-   "custom": false
+   "custom": false,
+   "varianty": [
+    "bojove/assets/Tábor/bitva/varianty/zbroj-stojan-v1.webp",
+    "bojove/assets/Tábor/bitva/varianty/zbroj-stojan-v2.webp",
+    "bojove/assets/Tábor/bitva/varianty/zbroj-stojan-v3.webp",
+    "bojove/assets/Tábor/bitva/varianty/zbroj-stojan-v4.webp"
+   ]
   },
   {
    "id": "zavazi",
@@ -1008,7 +1596,13 @@
    "tags": [
     "Tábor/bitva"
    ],
-   "custom": false
+   "custom": false,
+   "varianty": [
+    "bojove/assets/Tábor/bitva/varianty/zavazi-v1.webp",
+    "bojove/assets/Tábor/bitva/varianty/zavazi-v2.webp",
+    "bojove/assets/Tábor/bitva/varianty/zavazi-v3.webp",
+    "bojove/assets/Tábor/bitva/varianty/zavazi-v4.webp"
+   ]
   },
   {
    "id": "valek-buben",
@@ -1018,7 +1612,13 @@
    "tags": [
     "Tábor/bitva"
    ],
-   "custom": false
+   "custom": false,
+   "varianty": [
+    "bojove/assets/Tábor/bitva/varianty/valek-buben-v1.webp",
+    "bojove/assets/Tábor/bitva/varianty/valek-buben-v2.webp",
+    "bojove/assets/Tábor/bitva/varianty/valek-buben-v3.webp",
+    "bojove/assets/Tábor/bitva/varianty/valek-buben-v4.webp"
+   ]
   },
   {
    "id": "p3-lodni-paluba",
@@ -1030,7 +1630,13 @@
    ],
    "custom": false,
    "w": 8,
-   "h": 18
+   "h": 18,
+   "varianty": [
+    "bojove/assets/Přístav/varianty/p3-lodni-paluba-v1.webp",
+    "bojove/assets/Přístav/varianty/p3-lodni-paluba-v2.webp",
+    "bojove/assets/Přístav/varianty/p3-lodni-paluba-v3.webp",
+    "bojove/assets/Přístav/varianty/p3-lodni-paluba-v4.webp"
+   ]
   },
   {
    "id": "p3-poklad",
@@ -1044,7 +1650,13 @@
    "w": 3,
    "h": 2.5,
    "cover": 2,
-   "difficult": true
+   "difficult": true,
+   "varianty": [
+    "bojove/assets/Dungeon/varianty/p3-poklad-v1.webp",
+    "bojove/assets/Dungeon/varianty/p3-poklad-v2.webp",
+    "bojove/assets/Dungeon/varianty/p3-poklad-v3.webp",
+    "bojove/assets/Dungeon/varianty/p3-poklad-v4.webp"
+   ]
   },
   {
    "id": "p3-draci-kostra",
@@ -1058,7 +1670,13 @@
    "w": 7,
    "h": 5,
    "cover": 2,
-   "difficult": true
+   "difficult": true,
+   "varianty": [
+    "bojove/assets/Dungeon/varianty/p3-draci-kostra-v1.webp",
+    "bojove/assets/Dungeon/varianty/p3-draci-kostra-v2.webp",
+    "bojove/assets/Dungeon/varianty/p3-draci-kostra-v3.webp",
+    "bojove/assets/Dungeon/varianty/p3-draci-kostra-v4.webp"
+   ]
   },
   {
    "id": "p3-obsidian",
@@ -1072,7 +1690,13 @@
    "w": 2,
    "h": 2,
    "blocks": true,
-   "cover": 3
+   "cover": 3,
+   "varianty": [
+    "bojove/assets/Příroda/varianty/p3-obsidian-v1.webp",
+    "bojove/assets/Příroda/varianty/p3-obsidian-v2.webp",
+    "bojove/assets/Příroda/varianty/p3-obsidian-v3.webp",
+    "bojove/assets/Příroda/varianty/p3-obsidian-v4.webp"
+   ]
   },
   {
    "id": "p3-lana",
@@ -1084,7 +1708,13 @@
    ],
    "custom": false,
    "w": 0.9,
-   "h": 0.9
+   "h": 0.9,
+   "varianty": [
+    "bojove/assets/Přístav/varianty/p3-lana-v1.webp",
+    "bojove/assets/Přístav/varianty/p3-lana-v2.webp",
+    "bojove/assets/Přístav/varianty/p3-lana-v3.webp",
+    "bojove/assets/Přístav/varianty/p3-lana-v4.webp"
+   ]
   },
   {
    "id": "p3-padaci-dvere",
@@ -1096,7 +1726,13 @@
    ],
    "custom": false,
    "w": 1.5,
-   "h": 1.5
+   "h": 1.5,
+   "varianty": [
+    "bojove/assets/Nábytek/varianty/p3-padaci-dvere-v1.webp",
+    "bojove/assets/Nábytek/varianty/p3-padaci-dvere-v2.webp",
+    "bojove/assets/Nábytek/varianty/p3-padaci-dvere-v3.webp",
+    "bojove/assets/Nábytek/varianty/p3-padaci-dvere-v4.webp"
+   ]
   },
   {
    "id": "p3-nadobi",
@@ -1108,7 +1744,13 @@
    ],
    "custom": false,
    "w": 0.85,
-   "h": 0.65
+   "h": 0.65,
+   "varianty": [
+    "bojove/assets/Nábytek/varianty/p3-nadobi-v1.webp",
+    "bojove/assets/Nábytek/varianty/p3-nadobi-v2.webp",
+    "bojove/assets/Nábytek/varianty/p3-nadobi-v3.webp",
+    "bojove/assets/Nábytek/varianty/p3-nadobi-v4.webp"
+   ]
   },
   {
    "id": "p3-sloup-ruina",
@@ -1122,7 +1764,13 @@
    "w": 2,
    "h": 1.2,
    "cover": 2,
-   "difficult": true
+   "difficult": true,
+   "varianty": [
+    "bojove/assets/Dungeon/varianty/p3-sloup-ruina-v1.webp",
+    "bojove/assets/Dungeon/varianty/p3-sloup-ruina-v2.webp",
+    "bojove/assets/Dungeon/varianty/p3-sloup-ruina-v3.webp",
+    "bojove/assets/Dungeon/varianty/p3-sloup-ruina-v4.webp"
+   ]
   },
   {
    "id": "d-krev",
@@ -1136,7 +1784,13 @@
    "w": 2,
    "h": 2,
    "z": -20,
-   "blocks": false
+   "blocks": false,
+   "varianty": [
+    "bojove/assets/Obtisky/varianty/d-krev-v1.webp",
+    "bojove/assets/Obtisky/varianty/d-krev-v2.webp",
+    "bojove/assets/Obtisky/varianty/d-krev-v3.webp",
+    "bojove/assets/Obtisky/varianty/d-krev-v4.webp"
+   ]
   },
   {
    "id": "d-kaluz",
@@ -1150,7 +1804,13 @@
    "w": 2.5,
    "h": 2,
    "z": -20,
-   "blocks": false
+   "blocks": false,
+   "varianty": [
+    "bojove/assets/Obtisky/varianty/d-kaluz-v1.webp",
+    "bojove/assets/Obtisky/varianty/d-kaluz-v2.webp",
+    "bojove/assets/Obtisky/varianty/d-kaluz-v3.webp",
+    "bojove/assets/Obtisky/varianty/d-kaluz-v4.webp"
+   ]
   },
   {
    "id": "d-listi",
@@ -1164,7 +1824,13 @@
    "w": 2.4,
    "h": 2,
    "z": -20,
-   "blocks": false
+   "blocks": false,
+   "varianty": [
+    "bojove/assets/Obtisky/varianty/d-listi-v1.webp",
+    "bojove/assets/Obtisky/varianty/d-listi-v2.webp",
+    "bojove/assets/Obtisky/varianty/d-listi-v3.webp",
+    "bojove/assets/Obtisky/varianty/d-listi-v4.webp"
+   ]
   },
   {
    "id": "d-mech",
@@ -1178,7 +1844,13 @@
    "w": 2.8,
    "h": 2.4,
    "z": -20,
-   "blocks": false
+   "blocks": false,
+   "varianty": [
+    "bojove/assets/Obtisky/varianty/d-mech-v1.webp",
+    "bojove/assets/Obtisky/varianty/d-mech-v2.webp",
+    "bojove/assets/Obtisky/varianty/d-mech-v3.webp",
+    "bojove/assets/Obtisky/varianty/d-mech-v4.webp"
+   ]
   },
   {
    "id": "d-prasklina",
@@ -1192,7 +1864,13 @@
    "w": 2.5,
    "h": 1.5,
    "z": -20,
-   "blocks": false
+   "blocks": false,
+   "varianty": [
+    "bojove/assets/Obtisky/varianty/d-prasklina-v1.webp",
+    "bojove/assets/Obtisky/varianty/d-prasklina-v2.webp",
+    "bojove/assets/Obtisky/varianty/d-prasklina-v3.webp",
+    "bojove/assets/Obtisky/varianty/d-prasklina-v4.webp"
+   ]
   },
   {
    "id": "d-spaleniste",
@@ -1206,7 +1884,13 @@
    "w": 3,
    "h": 2.5,
    "z": -20,
-   "blocks": false
+   "blocks": false,
+   "varianty": [
+    "bojove/assets/Obtisky/varianty/d-spaleniste-v1.webp",
+    "bojove/assets/Obtisky/varianty/d-spaleniste-v2.webp",
+    "bojove/assets/Obtisky/varianty/d-spaleniste-v3.webp",
+    "bojove/assets/Obtisky/varianty/d-spaleniste-v4.webp"
+   ]
   },
   {
    "id": "d-sut",
@@ -1220,7 +1904,13 @@
    "w": 2,
    "h": 1.5,
    "z": -20,
-   "blocks": false
+   "blocks": false,
+   "varianty": [
+    "bojove/assets/Obtisky/varianty/d-sut-v1.webp",
+    "bojove/assets/Obtisky/varianty/d-sut-v2.webp",
+    "bojove/assets/Obtisky/varianty/d-sut-v3.webp",
+    "bojove/assets/Obtisky/varianty/d-sut-v4.webp"
+   ]
   },
   {
    "id": "d-seno",
@@ -1234,7 +1924,13 @@
    "w": 2,
    "h": 1.5,
    "z": -20,
-   "blocks": false
+   "blocks": false,
+   "varianty": [
+    "bojove/assets/Obtisky/varianty/d-seno-v1.webp",
+    "bojove/assets/Obtisky/varianty/d-seno-v2.webp",
+    "bojove/assets/Obtisky/varianty/d-seno-v3.webp",
+    "bojove/assets/Obtisky/varianty/d-seno-v4.webp"
+   ]
   },
   {
    "id": "d-snih-zavej",
@@ -1248,7 +1944,13 @@
    "w": 3,
    "h": 2,
    "z": -20,
-   "blocks": false
+   "blocks": false,
+   "varianty": [
+    "bojove/assets/Obtisky/varianty/d-snih-zavej-v1.webp",
+    "bojove/assets/Obtisky/varianty/d-snih-zavej-v2.webp",
+    "bojove/assets/Obtisky/varianty/d-snih-zavej-v3.webp",
+    "bojove/assets/Obtisky/varianty/d-snih-zavej-v4.webp"
+   ]
   },
   {
    "id": "d-popel",
@@ -1262,7 +1964,13 @@
    "w": 3,
    "h": 2.5,
    "z": -20,
-   "blocks": false
+   "blocks": false,
+   "varianty": [
+    "bojove/assets/Obtisky/varianty/d-popel-v1.webp",
+    "bojove/assets/Obtisky/varianty/d-popel-v2.webp",
+    "bojove/assets/Obtisky/varianty/d-popel-v3.webp",
+    "bojove/assets/Obtisky/varianty/d-popel-v4.webp"
+   ]
   },
   {
    "id": "i-pult",
@@ -1275,7 +1983,13 @@
    "custom": false,
    "w": 4,
    "h": 3,
-   "blocks": true
+   "blocks": true,
+   "varianty": [
+    "bojove/assets/Nábytek/varianty/i-pult-v1.webp",
+    "bojove/assets/Nábytek/varianty/i-pult-v2.webp",
+    "bojove/assets/Nábytek/varianty/i-pult-v3.webp",
+    "bojove/assets/Nábytek/varianty/i-pult-v4.webp"
+   ]
   },
   {
    "id": "i-regal-lahve",
@@ -1288,7 +2002,13 @@
    "custom": false,
    "w": 3,
    "h": 1,
-   "blocks": true
+   "blocks": true,
+   "varianty": [
+    "bojove/assets/Nábytek/varianty/i-regal-lahve-v1.webp",
+    "bojove/assets/Nábytek/varianty/i-regal-lahve-v2.webp",
+    "bojove/assets/Nábytek/varianty/i-regal-lahve-v3.webp",
+    "bojove/assets/Nábytek/varianty/i-regal-lahve-v4.webp"
+   ]
   },
   {
    "id": "i-krb",
@@ -1306,7 +2026,13 @@
     "bright": 3,
     "dim": 6
    },
-   "anim": "ohen"
+   "anim": "ohen",
+   "varianty": [
+    "bojove/assets/Nábytek/varianty/i-krb-v1.webp",
+    "bojove/assets/Nábytek/varianty/i-krb-v2.webp",
+    "bojove/assets/Nábytek/varianty/i-krb-v3.webp",
+    "bojove/assets/Nábytek/varianty/i-krb-v4.webp"
+   ]
   },
   {
    "id": "i-lavice",
@@ -1319,7 +2045,13 @@
    "custom": false,
    "w": 2,
    "h": 0.8,
-   "blocks": true
+   "blocks": true,
+   "varianty": [
+    "bojove/assets/Nábytek/varianty/i-lavice-v1.webp",
+    "bojove/assets/Nábytek/varianty/i-lavice-v2.webp",
+    "bojove/assets/Nábytek/varianty/i-lavice-v3.webp",
+    "bojove/assets/Nábytek/varianty/i-lavice-v4.webp"
+   ]
   },
   {
    "id": "i-sudy-stoh",
@@ -1332,7 +2064,13 @@
    "custom": false,
    "w": 2,
    "h": 1.6,
-   "blocks": true
+   "blocks": true,
+   "varianty": [
+    "bojove/assets/Nábytek/varianty/i-sudy-stoh-v1.webp",
+    "bojove/assets/Nábytek/varianty/i-sudy-stoh-v2.webp",
+    "bojove/assets/Nábytek/varianty/i-sudy-stoh-v3.webp",
+    "bojove/assets/Nábytek/varianty/i-sudy-stoh-v4.webp"
+   ]
   },
   {
    "id": "i-kuchyn",
@@ -1345,7 +2083,13 @@
    "custom": false,
    "w": 3,
    "h": 2,
-   "blocks": true
+   "blocks": true,
+   "varianty": [
+    "bojove/assets/Nábytek/varianty/i-kuchyn-v1.webp",
+    "bojove/assets/Nábytek/varianty/i-kuchyn-v2.webp",
+    "bojove/assets/Nábytek/varianty/i-kuchyn-v3.webp",
+    "bojove/assets/Nábytek/varianty/i-kuchyn-v4.webp"
+   ]
   },
   {
    "id": "i-kolebka-lustr",
@@ -1363,7 +2107,13 @@
     "bright": 3,
     "dim": 6
    },
-   "anim": "ohen"
+   "anim": "ohen",
+   "varianty": [
+    "bojove/assets/Nábytek/varianty/i-kolebka-lustr-v1.webp",
+    "bojove/assets/Nábytek/varianty/i-kolebka-lustr-v2.webp",
+    "bojove/assets/Nábytek/varianty/i-kolebka-lustr-v3.webp",
+    "bojove/assets/Nábytek/varianty/i-kolebka-lustr-v4.webp"
+   ]
   },
   {
    "id": "m-most-kamen",
@@ -1376,7 +2126,13 @@
    "custom": false,
    "w": 6,
    "h": 3,
-   "blocks": false
+   "blocks": false,
+   "varianty": [
+    "bojove/assets/Stavby/varianty/m-most-kamen-v1.webp",
+    "bojove/assets/Stavby/varianty/m-most-kamen-v2.webp",
+    "bojove/assets/Stavby/varianty/m-most-kamen-v3.webp",
+    "bojove/assets/Stavby/varianty/m-most-kamen-v4.webp"
+   ]
   },
   {
    "id": "m-most-drevo",
@@ -1389,7 +2145,13 @@
    "custom": false,
    "w": 6,
    "h": 2.5,
-   "blocks": false
+   "blocks": false,
+   "varianty": [
+    "bojove/assets/Stavby/varianty/m-most-drevo-v1.webp",
+    "bojove/assets/Stavby/varianty/m-most-drevo-v2.webp",
+    "bojove/assets/Stavby/varianty/m-most-drevo-v3.webp",
+    "bojove/assets/Stavby/varianty/m-most-drevo-v4.webp"
+   ]
   },
   {
    "id": "m-molo",
@@ -1402,7 +2164,13 @@
    "custom": false,
    "w": 5,
    "h": 2,
-   "blocks": false
+   "blocks": false,
+   "varianty": [
+    "bojove/assets/Přístav/varianty/m-molo-v1.webp",
+    "bojove/assets/Přístav/varianty/m-molo-v2.webp",
+    "bojove/assets/Přístav/varianty/m-molo-v3.webp",
+    "bojove/assets/Přístav/varianty/m-molo-v4.webp"
+   ]
   },
   {
    "id": "m-lucerna-sloup",
@@ -1420,7 +2188,13 @@
     "bright": 3,
     "dim": 6
    },
-   "anim": "ohen"
+   "anim": "ohen",
+   "varianty": [
+    "bojove/assets/Přístav/varianty/m-lucerna-sloup-v1.webp",
+    "bojove/assets/Přístav/varianty/m-lucerna-sloup-v2.webp",
+    "bojove/assets/Přístav/varianty/m-lucerna-sloup-v3.webp",
+    "bojove/assets/Přístav/varianty/m-lucerna-sloup-v4.webp"
+   ]
   },
   {
    "id": "m-sit",
@@ -1433,7 +2207,13 @@
    "custom": false,
    "w": 2.5,
    "h": 2,
-   "blocks": false
+   "blocks": false,
+   "varianty": [
+    "bojove/assets/Přístav/varianty/m-sit-v1.webp",
+    "bojove/assets/Přístav/varianty/m-sit-v2.webp",
+    "bojove/assets/Přístav/varianty/m-sit-v3.webp",
+    "bojove/assets/Přístav/varianty/m-sit-v4.webp"
+   ]
   },
   {
    "id": "m-kotva-retez",
@@ -1446,7 +2226,13 @@
    "custom": false,
    "w": 2,
    "h": 2,
-   "blocks": false
+   "blocks": false,
+   "varianty": [
+    "bojove/assets/Přístav/varianty/m-kotva-retez-v1.webp",
+    "bojove/assets/Přístav/varianty/m-kotva-retez-v2.webp",
+    "bojove/assets/Přístav/varianty/m-kotva-retez-v3.webp",
+    "bojove/assets/Přístav/varianty/m-kotva-retez-v4.webp"
+   ]
   },
   {
    "id": "m-dreveny-plot",
@@ -1459,7 +2245,13 @@
    "custom": false,
    "w": 3,
    "h": 0.6,
-   "blocks": false
+   "blocks": false,
+   "varianty": [
+    "bojove/assets/Stavby/varianty/m-dreveny-plot-v1.webp",
+    "bojove/assets/Stavby/varianty/m-dreveny-plot-v2.webp",
+    "bojove/assets/Stavby/varianty/m-dreveny-plot-v3.webp",
+    "bojove/assets/Stavby/varianty/m-dreveny-plot-v4.webp"
+   ]
   },
   {
    "id": "m-kamenna-zidka",
@@ -1472,7 +2264,13 @@
    "custom": false,
    "w": 3,
    "h": 0.7,
-   "blocks": false
+   "blocks": false,
+   "varianty": [
+    "bojove/assets/Stavby/varianty/m-kamenna-zidka-v1.webp",
+    "bojove/assets/Stavby/varianty/m-kamenna-zidka-v2.webp",
+    "bojove/assets/Stavby/varianty/m-kamenna-zidka-v3.webp",
+    "bojove/assets/Stavby/varianty/m-kamenna-zidka-v4.webp"
+   ]
   },
   {
    "id": "gen2-strom",
@@ -1487,7 +2285,13 @@
    "h": 2,
    "blocks": true,
    "cover": 3,
-   "anim": "vitr"
+   "anim": "vitr",
+   "varianty": [
+    "bojove/assets/Příroda/varianty/gen2-strom-v1.webp",
+    "bojove/assets/Příroda/varianty/gen2-strom-v2.webp",
+    "bojove/assets/Příroda/varianty/gen2-strom-v3.webp",
+    "bojove/assets/Příroda/varianty/gen2-strom-v4.webp"
+   ]
   },
   {
    "id": "gen2-strom2",
@@ -1502,7 +2306,13 @@
    "h": 2,
    "blocks": true,
    "cover": 3,
-   "anim": "vitr"
+   "anim": "vitr",
+   "varianty": [
+    "bojove/assets/Příroda/varianty/gen2-strom2-v1.webp",
+    "bojove/assets/Příroda/varianty/gen2-strom2-v2.webp",
+    "bojove/assets/Příroda/varianty/gen2-strom2-v3.webp",
+    "bojove/assets/Příroda/varianty/gen2-strom2-v4.webp"
+   ]
   },
   {
    "id": "gen2-strom3",
@@ -1517,7 +2327,13 @@
    "h": 2,
    "blocks": true,
    "cover": 3,
-   "anim": "vitr"
+   "anim": "vitr",
+   "varianty": [
+    "bojove/assets/Příroda/varianty/gen2-strom3-v1.webp",
+    "bojove/assets/Příroda/varianty/gen2-strom3-v2.webp",
+    "bojove/assets/Příroda/varianty/gen2-strom3-v3.webp",
+    "bojove/assets/Příroda/varianty/gen2-strom3-v4.webp"
+   ]
   },
   {
    "id": "gen2-ker",
@@ -1531,7 +2347,13 @@
    "w": 1,
    "h": 1,
    "difficult": true,
-   "anim": "vitr"
+   "anim": "vitr",
+   "varianty": [
+    "bojove/assets/Příroda/varianty/gen2-ker-v1.webp",
+    "bojove/assets/Příroda/varianty/gen2-ker-v2.webp",
+    "bojove/assets/Příroda/varianty/gen2-ker-v3.webp",
+    "bojove/assets/Příroda/varianty/gen2-ker-v4.webp"
+   ]
   },
   {
    "id": "gen2-ker2",
@@ -1545,7 +2367,13 @@
    "w": 1,
    "h": 1,
    "difficult": true,
-   "anim": "vitr"
+   "anim": "vitr",
+   "varianty": [
+    "bojove/assets/Příroda/varianty/gen2-ker2-v1.webp",
+    "bojove/assets/Příroda/varianty/gen2-ker2-v2.webp",
+    "bojove/assets/Příroda/varianty/gen2-ker2-v3.webp",
+    "bojove/assets/Příroda/varianty/gen2-ker2-v4.webp"
+   ]
   },
   {
    "id": "gen2-balvan",
@@ -1559,7 +2387,13 @@
    "w": 1,
    "h": 1,
    "blocks": true,
-   "cover": 3
+   "cover": 3,
+   "varianty": [
+    "bojove/assets/Příroda/varianty/gen2-balvan-v1.webp",
+    "bojove/assets/Příroda/varianty/gen2-balvan-v2.webp",
+    "bojove/assets/Příroda/varianty/gen2-balvan-v3.webp",
+    "bojove/assets/Příroda/varianty/gen2-balvan-v4.webp"
+   ]
   },
   {
    "id": "gen2-balvan2",
@@ -1573,7 +2407,13 @@
    "w": 1,
    "h": 1,
    "blocks": true,
-   "cover": 3
+   "cover": 3,
+   "varianty": [
+    "bojove/assets/Příroda/varianty/gen2-balvan2-v1.webp",
+    "bojove/assets/Příroda/varianty/gen2-balvan2-v2.webp",
+    "bojove/assets/Příroda/varianty/gen2-balvan2-v3.webp",
+    "bojove/assets/Příroda/varianty/gen2-balvan2-v4.webp"
+   ]
   },
   {
    "id": "gen2-sloup",
@@ -1587,7 +2427,13 @@
    "w": 1,
    "h": 1,
    "blocks": true,
-   "cover": 3
+   "cover": 3,
+   "varianty": [
+    "bojove/assets/Rekvizity/varianty/gen2-sloup-v1.webp",
+    "bojove/assets/Rekvizity/varianty/gen2-sloup-v2.webp",
+    "bojove/assets/Rekvizity/varianty/gen2-sloup-v3.webp",
+    "bojove/assets/Rekvizity/varianty/gen2-sloup-v4.webp"
+   ]
   },
   {
    "id": "gen2-bedny",
@@ -1601,7 +2447,13 @@
    "w": 1,
    "h": 1,
    "cover": 2,
-   "difficult": true
+   "difficult": true,
+   "varianty": [
+    "bojove/assets/Rekvizity/varianty/gen2-bedny-v1.webp",
+    "bojove/assets/Rekvizity/varianty/gen2-bedny-v2.webp",
+    "bojove/assets/Rekvizity/varianty/gen2-bedny-v3.webp",
+    "bojove/assets/Rekvizity/varianty/gen2-bedny-v4.webp"
+   ]
   },
   {
    "id": "gen2-sudy",
@@ -1615,7 +2467,13 @@
    "w": 1,
    "h": 1,
    "cover": 2,
-   "difficult": true
+   "difficult": true,
+   "varianty": [
+    "bojove/assets/Rekvizity/varianty/gen2-sudy-v1.webp",
+    "bojove/assets/Rekvizity/varianty/gen2-sudy-v2.webp",
+    "bojove/assets/Rekvizity/varianty/gen2-sudy-v3.webp",
+    "bojove/assets/Rekvizity/varianty/gen2-sudy-v4.webp"
+   ]
   },
   {
    "id": "gen2-ohen",
@@ -1632,7 +2490,13 @@
     "bright": 10,
     "dim": 10
    },
-   "anim": "ohen"
+   "anim": "ohen",
+   "varianty": [
+    "bojove/assets/Rekvizity/varianty/gen2-ohen-v1.webp",
+    "bojove/assets/Rekvizity/varianty/gen2-ohen-v2.webp",
+    "bojove/assets/Rekvizity/varianty/gen2-ohen-v3.webp",
+    "bojove/assets/Rekvizity/varianty/gen2-ohen-v4.webp"
+   ]
   },
   {
    "id": "gen2-dvere",
@@ -1644,7 +2508,13 @@
    ],
    "custom": false,
    "w": 1,
-   "h": 1
+   "h": 1,
+   "varianty": [
+    "bojove/assets/Rekvizity/varianty/gen2-dvere-v1.webp",
+    "bojove/assets/Rekvizity/varianty/gen2-dvere-v2.webp",
+    "bojove/assets/Rekvizity/varianty/gen2-dvere-v3.webp",
+    "bojove/assets/Rekvizity/varianty/gen2-dvere-v4.webp"
+   ]
   },
   {
    "id": "gen2-sarkofag",
@@ -1658,7 +2528,13 @@
    "w": 1,
    "h": 1,
    "cover": 2,
-   "difficult": true
+   "difficult": true,
+   "varianty": [
+    "bojove/assets/Rekvizity/varianty/gen2-sarkofag-v1.webp",
+    "bojove/assets/Rekvizity/varianty/gen2-sarkofag-v2.webp",
+    "bojove/assets/Rekvizity/varianty/gen2-sarkofag-v3.webp",
+    "bojove/assets/Rekvizity/varianty/gen2-sarkofag-v4.webp"
+   ]
   },
   {
    "id": "gen2-kosti",
@@ -1670,7 +2546,13 @@
    ],
    "custom": false,
    "w": 1,
-   "h": 1
+   "h": 1,
+   "varianty": [
+    "bojove/assets/Rekvizity/varianty/gen2-kosti-v1.webp",
+    "bojove/assets/Rekvizity/varianty/gen2-kosti-v2.webp",
+    "bojove/assets/Rekvizity/varianty/gen2-kosti-v3.webp",
+    "bojove/assets/Rekvizity/varianty/gen2-kosti-v4.webp"
+   ]
   },
   {
    "id": "gen2-portal",
@@ -1683,7 +2565,13 @@
    "custom": false,
    "w": 1,
    "h": 1,
-   "anim": "portal"
+   "anim": "portal",
+   "varianty": [
+    "bojove/assets/Magie/varianty/gen2-portal-v1.webp",
+    "bojove/assets/Magie/varianty/gen2-portal-v2.webp",
+    "bojove/assets/Magie/varianty/gen2-portal-v3.webp",
+    "bojove/assets/Magie/varianty/gen2-portal-v4.webp"
+   ]
   },
   {
    "id": "gen2-portal2",
@@ -1696,7 +2584,13 @@
    "custom": false,
    "w": 1,
    "h": 1,
-   "anim": "portal"
+   "anim": "portal",
+   "varianty": [
+    "bojove/assets/Magie/varianty/gen2-portal2-v1.webp",
+    "bojove/assets/Magie/varianty/gen2-portal2-v2.webp",
+    "bojove/assets/Magie/varianty/gen2-portal2-v3.webp",
+    "bojove/assets/Magie/varianty/gen2-portal2-v4.webp"
+   ]
   },
   {
    "id": "gen2-lucerna",
@@ -1713,7 +2607,13 @@
     "bright": 10,
     "dim": 10
    },
-   "anim": "ohen"
+   "anim": "ohen",
+   "varianty": [
+    "bojove/assets/Rekvizity/varianty/gen2-lucerna-v1.webp",
+    "bojove/assets/Rekvizity/varianty/gen2-lucerna-v2.webp",
+    "bojove/assets/Rekvizity/varianty/gen2-lucerna-v3.webp",
+    "bojove/assets/Rekvizity/varianty/gen2-lucerna-v4.webp"
+   ]
   },
   {
    "id": "gen2-pochoden",
@@ -1730,7 +2630,13 @@
     "bright": 10,
     "dim": 10
    },
-   "anim": "ohen"
+   "anim": "ohen",
+   "varianty": [
+    "bojove/assets/Rekvizity/varianty/gen2-pochoden-v1.webp",
+    "bojove/assets/Rekvizity/varianty/gen2-pochoden-v2.webp",
+    "bojove/assets/Rekvizity/varianty/gen2-pochoden-v3.webp",
+    "bojove/assets/Rekvizity/varianty/gen2-pochoden-v4.webp"
+   ]
   },
   {
    "id": "gen2-stul",
@@ -1744,7 +2650,13 @@
    "w": 1,
    "h": 1,
    "cover": 2,
-   "difficult": true
+   "difficult": true,
+   "varianty": [
+    "bojove/assets/Rekvizity/varianty/gen2-stul-v1.webp",
+    "bojove/assets/Rekvizity/varianty/gen2-stul-v2.webp",
+    "bojove/assets/Rekvizity/varianty/gen2-stul-v3.webp",
+    "bojove/assets/Rekvizity/varianty/gen2-stul-v4.webp"
+   ]
   },
   {
    "id": "gen2-zidle",
@@ -1756,7 +2668,13 @@
    ],
    "custom": false,
    "w": 1,
-   "h": 1
+   "h": 1,
+   "varianty": [
+    "bojove/assets/Rekvizity/varianty/gen2-zidle-v1.webp",
+    "bojove/assets/Rekvizity/varianty/gen2-zidle-v2.webp",
+    "bojove/assets/Rekvizity/varianty/gen2-zidle-v3.webp",
+    "bojove/assets/Rekvizity/varianty/gen2-zidle-v4.webp"
+   ]
   },
   {
    "id": "gen2-koberec",
@@ -1768,7 +2686,13 @@
    ],
    "custom": false,
    "w": 1,
-   "h": 1
+   "h": 1,
+   "varianty": [
+    "bojove/assets/Rekvizity/varianty/gen2-koberec-v1.webp",
+    "bojove/assets/Rekvizity/varianty/gen2-koberec-v2.webp",
+    "bojove/assets/Rekvizity/varianty/gen2-koberec-v3.webp",
+    "bojove/assets/Rekvizity/varianty/gen2-koberec-v4.webp"
+   ]
   },
   {
    "id": "gen2-studna",
@@ -1782,7 +2706,13 @@
    "w": 1,
    "h": 1,
    "blocks": true,
-   "cover": 3
+   "cover": 3,
+   "varianty": [
+    "bojove/assets/Rekvizity/varianty/gen2-studna-v1.webp",
+    "bojove/assets/Rekvizity/varianty/gen2-studna-v2.webp",
+    "bojove/assets/Rekvizity/varianty/gen2-studna-v3.webp",
+    "bojove/assets/Rekvizity/varianty/gen2-studna-v4.webp"
+   ]
   },
   {
    "id": "gen2-oltar",
@@ -1796,7 +2726,13 @@
    "w": 1,
    "h": 1,
    "blocks": true,
-   "cover": 3
+   "cover": 3,
+   "varianty": [
+    "bojove/assets/Rekvizity/varianty/gen2-oltar-v1.webp",
+    "bojove/assets/Rekvizity/varianty/gen2-oltar-v2.webp",
+    "bojove/assets/Rekvizity/varianty/gen2-oltar-v3.webp",
+    "bojove/assets/Rekvizity/varianty/gen2-oltar-v4.webp"
+   ]
   },
   {
    "id": "gen2-socha",
@@ -1810,7 +2746,13 @@
    "w": 1,
    "h": 1,
    "blocks": true,
-   "cover": 3
+   "cover": 3,
+   "varianty": [
+    "bojove/assets/Rekvizity/varianty/gen2-socha-v1.webp",
+    "bojove/assets/Rekvizity/varianty/gen2-socha-v2.webp",
+    "bojove/assets/Rekvizity/varianty/gen2-socha-v3.webp",
+    "bojove/assets/Rekvizity/varianty/gen2-socha-v4.webp"
+   ]
   },
   {
    "id": "gen2-kmen",
@@ -1824,7 +2766,13 @@
    "w": 1,
    "h": 1,
    "cover": 2,
-   "difficult": true
+   "difficult": true,
+   "varianty": [
+    "bojove/assets/Příroda/varianty/gen2-kmen-v1.webp",
+    "bojove/assets/Příroda/varianty/gen2-kmen-v2.webp",
+    "bojove/assets/Příroda/varianty/gen2-kmen-v3.webp",
+    "bojove/assets/Příroda/varianty/gen2-kmen-v4.webp"
+   ]
   },
   {
    "id": "gen2-parez",
@@ -1838,7 +2786,13 @@
    "w": 1,
    "h": 1,
    "cover": 2,
-   "difficult": true
+   "difficult": true,
+   "varianty": [
+    "bojove/assets/Příroda/varianty/gen2-parez-v1.webp",
+    "bojove/assets/Příroda/varianty/gen2-parez-v2.webp",
+    "bojove/assets/Příroda/varianty/gen2-parez-v3.webp",
+    "bojove/assets/Příroda/varianty/gen2-parez-v4.webp"
+   ]
   },
   {
    "id": "gen2-houby",
@@ -1851,7 +2805,13 @@
    "custom": false,
    "w": 1,
    "h": 1,
-   "anim": "zare"
+   "anim": "zare",
+   "varianty": [
+    "bojove/assets/Příroda/varianty/gen2-houby-v1.webp",
+    "bojove/assets/Příroda/varianty/gen2-houby-v2.webp",
+    "bojove/assets/Příroda/varianty/gen2-houby-v3.webp",
+    "bojove/assets/Příroda/varianty/gen2-houby-v4.webp"
+   ]
   },
   {
    "id": "gen2-lekniny",
@@ -1863,7 +2823,13 @@
    ],
    "custom": false,
    "w": 1,
-   "h": 1
+   "h": 1,
+   "varianty": [
+    "bojove/assets/Příroda/varianty/gen2-lekniny-v1.webp",
+    "bojove/assets/Příroda/varianty/gen2-lekniny-v2.webp",
+    "bojove/assets/Příroda/varianty/gen2-lekniny-v3.webp",
+    "bojove/assets/Příroda/varianty/gen2-lekniny-v4.webp"
+   ]
   },
   {
    "id": "gen2-rakos",
@@ -1877,7 +2843,13 @@
    "w": 1,
    "h": 1,
    "difficult": true,
-   "anim": "vitr"
+   "anim": "vitr",
+   "varianty": [
+    "bojove/assets/Příroda/varianty/gen2-rakos-v1.webp",
+    "bojove/assets/Příroda/varianty/gen2-rakos-v2.webp",
+    "bojove/assets/Příroda/varianty/gen2-rakos-v3.webp",
+    "bojove/assets/Příroda/varianty/gen2-rakos-v4.webp"
+   ]
   },
   {
    "id": "gen2-stan",
@@ -1889,7 +2861,13 @@
    ],
    "custom": false,
    "w": 2,
-   "h": 2
+   "h": 2,
+   "varianty": [
+    "bojove/assets/Rekvizity/varianty/gen2-stan-v1.webp",
+    "bojove/assets/Rekvizity/varianty/gen2-stan-v2.webp",
+    "bojove/assets/Rekvizity/varianty/gen2-stan-v3.webp",
+    "bojove/assets/Rekvizity/varianty/gen2-stan-v4.webp"
+   ]
   },
   {
    "id": "gen2-vuz",
@@ -1903,7 +2881,13 @@
    "w": 2,
    "h": 2,
    "cover": 2,
-   "difficult": true
+   "difficult": true,
+   "varianty": [
+    "bojove/assets/Rekvizity/varianty/gen2-vuz-v1.webp",
+    "bojove/assets/Rekvizity/varianty/gen2-vuz-v2.webp",
+    "bojove/assets/Rekvizity/varianty/gen2-vuz-v3.webp",
+    "bojove/assets/Rekvizity/varianty/gen2-vuz-v4.webp"
+   ]
   },
   {
    "id": "gen2-krev",
@@ -1915,7 +2899,13 @@
    ],
    "custom": false,
    "w": 1,
-   "h": 1
+   "h": 1,
+   "varianty": [
+    "bojove/assets/Rekvizity/varianty/gen2-krev-v1.webp",
+    "bojove/assets/Rekvizity/varianty/gen2-krev-v2.webp",
+    "bojove/assets/Rekvizity/varianty/gen2-krev-v3.webp",
+    "bojove/assets/Rekvizity/varianty/gen2-krev-v4.webp"
+   ]
   },
   {
    "id": "gen2-truhla",
@@ -1929,7 +2919,13 @@
    "w": 1,
    "h": 1,
    "cover": 2,
-   "difficult": true
+   "difficult": true,
+   "varianty": [
+    "bojove/assets/Rekvizity/varianty/gen2-truhla-v1.webp",
+    "bojove/assets/Rekvizity/varianty/gen2-truhla-v2.webp",
+    "bojove/assets/Rekvizity/varianty/gen2-truhla-v3.webp",
+    "bojove/assets/Rekvizity/varianty/gen2-truhla-v4.webp"
+   ]
   },
   {
    "id": "gen2-regal",
@@ -1943,7 +2939,13 @@
    "w": 1,
    "h": 1,
    "blocks": true,
-   "cover": 3
+   "cover": 3,
+   "varianty": [
+    "bojove/assets/Rekvizity/varianty/gen2-regal-v1.webp",
+    "bojove/assets/Rekvizity/varianty/gen2-regal-v2.webp",
+    "bojove/assets/Rekvizity/varianty/gen2-regal-v3.webp",
+    "bojove/assets/Rekvizity/varianty/gen2-regal-v4.webp"
+   ]
   },
   {
    "id": "gen2-krystal",
@@ -1956,7 +2958,13 @@
    "custom": false,
    "w": 1,
    "h": 1,
-   "anim": "zare"
+   "anim": "zare",
+   "varianty": [
+    "bojove/assets/Příroda/varianty/gen2-krystal-v1.webp",
+    "bojove/assets/Příroda/varianty/gen2-krystal-v2.webp",
+    "bojove/assets/Příroda/varianty/gen2-krystal-v3.webp",
+    "bojove/assets/Příroda/varianty/gen2-krystal-v4.webp"
+   ]
   },
   {
    "id": "gen2-hrob",
@@ -1968,7 +2976,13 @@
    ],
    "custom": false,
    "w": 1,
-   "h": 1
+   "h": 1,
+   "varianty": [
+    "bojove/assets/Rekvizity/varianty/gen2-hrob-v1.webp",
+    "bojove/assets/Rekvizity/varianty/gen2-hrob-v2.webp",
+    "bojove/assets/Rekvizity/varianty/gen2-hrob-v3.webp",
+    "bojove/assets/Rekvizity/varianty/gen2-hrob-v4.webp"
+   ]
   },
   {
    "id": "gen2-kapradi",
@@ -1982,7 +2996,13 @@
    "w": 1,
    "h": 1,
    "difficult": true,
-   "anim": "vitr"
+   "anim": "vitr",
+   "varianty": [
+    "bojove/assets/Příroda/varianty/gen2-kapradi-v1.webp",
+    "bojove/assets/Příroda/varianty/gen2-kapradi-v2.webp",
+    "bojove/assets/Příroda/varianty/gen2-kapradi-v3.webp",
+    "bojove/assets/Příroda/varianty/gen2-kapradi-v4.webp"
+   ]
   },
   {
    "id": "gen2-keltsky_kamen",
@@ -1995,7 +3015,13 @@
    "custom": false,
    "w": 1,
    "h": 1,
-   "anim": "zare"
+   "anim": "zare",
+   "varianty": [
+    "bojove/assets/Rekvizity/varianty/gen2-keltsky_kamen-v1.webp",
+    "bojove/assets/Rekvizity/varianty/gen2-keltsky_kamen-v2.webp",
+    "bojove/assets/Rekvizity/varianty/gen2-keltsky_kamen-v3.webp",
+    "bojove/assets/Rekvizity/varianty/gen2-keltsky_kamen-v4.webp"
+   ]
   }
  ]
 }
