@@ -87,7 +87,7 @@ def player_view(state: dict) -> dict:
     if map_id:
         row = db.connect().execute("SELECT data FROM battle_maps WHERE id=?", (map_id,)).fetchone()
         mdata = (db.jload(row["data"]) or {}) if row else {}
-        private_sources.update(o.get("id") for o in [*mdata.get("svetla", []), *mdata.get("objekty", [])] if o.get("dmOnly"))
+        private_sources.update(o.get("id") for o in [*(mdata.get("svetla") or []), *(mdata.get("objekty") or [])] if o.get("dmOnly"))
     if "lights" in sb:
         sb["lights"] = [l for l in sb["lights"] if l.get("id") not in private_sources]
     if "zdroje" in sb:
