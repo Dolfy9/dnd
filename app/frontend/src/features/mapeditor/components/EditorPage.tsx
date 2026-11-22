@@ -11,7 +11,7 @@ import {
 import { post, upload } from "../../../api";
 import { toast } from "../../../components/ui";
 import { TILES } from "../../boj/types";
-import type { MapV2, MapWall, MapDrawing, MapPaintStroke, MapObject } from "../../boj/model/mapV2";
+import type { MapV2, MapWall, MapDrawing, MapPaintStroke, MapObject, MapLightV2 } from "../../boj/model/mapV2";
 import { placementVariant, variantEdits } from "../../boj/model/assetVariants";
 import { migrateMap, wallUid, WEATHER } from "../../boj/model/mapV2";
 import {
@@ -29,7 +29,10 @@ import { GENERATORS, type GenOut } from "../generators/generators";
 import { importUvtt, exportUvtt, exportPng } from "../io/uvtt";
 import { useEditorDoc } from "../state/useEditorDoc";
 import * as ops from "../tools/ops";
-import { TexturePicker, TilePicker, WallPicker, LightColors, TABS, LAYERS, LayersPanel, LibraryPanel, PropertiesPanel, GeneratorPanel, MapPanel, type TabId } from "./panels";
+import { TexturePicker, TilePicker, WallPicker, TABS, LAYERS, LayersPanel, LibraryPanel, PropertiesPanel, GeneratorPanel, MapPanel, type TabId } from "./panels";
+import { LightInspector, LightShapePicker } from "./LightInspector";
+import { LightHandles } from "./LightHandles";
+import { LIGHT_PRESETS, editedLight, updateLight, aimPlacedLight, dragLightHandle, lightRotationDelta, type LightHandle } from "../tools/lightEditing";
 import { CommandPalette, ShortcutHelp, ToolRail, EditorMinimap, type EditorCommand } from "./EditorChrome";
 import type { LibraryMode } from "./AssetLibrary";
 import { actOnObjects, canTogglePanel, liveSelection, panUpdate, playerPreviewMap, TOOL_HINTS, readPreference, writePreference, rememberAsset, type ObjectAction } from "../state/editorUx";
@@ -114,11 +117,9 @@ export default function EditorPage() {
   const [drawW, setDrawW] = useState(0.15);
   const [drawDm, setDrawDm] = useState(false);
   const [elevStep, setElevStep] = useState(5);
-  const [lightB, setLightB] = useState(20);
-  const [lightD, setLightD] = useState(20);
-  const [lightColor, setLightColor] = useState("#fbbf24");
-  const [lightIntensity, setLightIntensity] = useState(1);
-  const [lightFlicker, setLightFlicker] = useState(false);
+  const [lightSettings, setLightSettings] = useState<MapLightV2>(()=>({...LIGHT_PRESETS[0].light}));
+  const [lightPreview, setLightPreview] = useState<MapLightV2|null>(null);
+  const lightGesture=useRef<{light:MapLightV2;anchor:[number,number];screen:[number,number];handle?:LightHandle}|null>(null);
   const [startTyp, setStartTyp] = useState<"druzina" | "nepratele" | "neutral">("druzina");
   const [snap, setSnap] = useState<1 | 0.5 | 0>(1);
   const [sel, setSel] = useState<Sel[]>([]);
@@ -162,6 +163,7 @@ export default function EditorPage() {
   useEffect(() => {
     if (panelPinned) return;
     if (tool === "objekt") { setTab("knihovna"); setLibraryMode("objects"); }
+    else if (tool === "svetlo") { setTab("vlastnosti"); setPanelOpen(true); }
     else if (["teren","fill","flood","textura","malba"].includes(tool)) { setTab("knihovna"); setLibraryMode(["textura","malba"].includes(tool) ? "textures" : "terrain"); }
   }, [tool, panelPinned]);
   useEffect(() => { if (sel.length && !panelPinned) { setTab("vlastnosti"); if (window.innerWidth >= 1100) setPanelOpen(true); } }, [sel, panelPinned]);
@@ -326,7 +328,13 @@ export default function EditorPage() {
       if (e.key === " ") { setSpace(true); e.preventDefault(); return; }
       if (e.ctrlKey && e.key.toLowerCase() === "z") { e.preventDefault(); e.shiftKey ? doc.redo() : doc.undo(); return; }
       if (e.ctrlKey && e.key.toLowerCase() === "y") { e.preventDefault(); doc.redo(); return; }
-      if (e.key === "Escape") { setWallDraft([]); setRoomPoints([]); setDragPt(null); setMarquee(null); setSel([]); setCalib(null); return; }
+      if (e.key === "Escape") { lightGesture.current=null;setLightPreview(null);setWallDraft([]); setRoomPoints([]); setDragPt(null); setMarquee(null); setSel([]); setCalib(null); return; }
+      const lightTurn=lightRotationDelta(e);
+      if(lightTurn && sel.length===1 && sel[0].kind==="svetlo"){
+        const light=doc.mapRef.current?.svetla?.find(l=>l.id===sel[0].id);
+        if(light){e.preventDefault();push(m=>{updateLight(m,light.id,{smer:(light.smer || 0)+lightTurn});});}
+        return;
+      }
       if (!e.ctrlKey && !e.metaKey && !e.altKey && e.key.toLowerCase() === "a") {
         e.preventDefault(); changeVariants(e.shiftKey ? "random" : "next"); return;
       }
@@ -376,6 +384,13 @@ export default function EditorPage() {
   }, [doc.undo, doc.redo, doc.save, sel, push, fit, zoomAt, changeVariants, contextMenu]);
 
   /* ---------- pointer ---------- */
+  const lightGestureValue=(e:React.PointerEvent):MapLightV2=>{
+    const gesture=lightGesture.current!;
+    if(Math.hypot(e.clientX-gesture.screen[0],e.clientY-gesture.screen[1])<3)return gesture.light;
+    const point=toWorld(e);
+    if(!gesture.handle)return aimPlacedLight(gesture.light,[gesture.light.x+point[0]-gesture.anchor[0],gesture.light.y+point[1]-gesture.anchor[1]],e.shiftKey);
+    return dragLightHandle(gesture.light,gesture.handle,gesture.handle==="origin"?[gesture.light.x+point[0]-gesture.anchor[0],gesture.light.y+point[1]-gesture.anchor[1]]:point,e.shiftKey,W,H);
+  };
   const onDown = (e: React.PointerEvent) => {
     if (e.button === 1 || space || e.button === 2) { panRef.current = { x0: e.clientX, y0: e.clientY, vx: V.x, vy: V.y }; e.currentTarget.setPointerCapture(e.pointerId); setPanning(true); userZoomRef.current = true; return; }
     setContextMenu(null);
@@ -452,7 +467,13 @@ export default function EditorPage() {
       }
       case "kresba": { const p = snapPt(e); setDragPt({ a: p, b: p }); setFreePts([p]); break; }
       case "vyska": push((m) => { m.vyska = { ...(m.vyska || {}) }; const kk = k2(cx, cy); m.vyska[kk] = (m.vyska[kk] || 0) + (e.altKey ? -elevStep : elevStep); if (!m.vyska[kk]) delete m.vyska[kk]; }); break;
-      case "svetlo": push((m) => { m.svetla = [...(m.svetla || []), { id: wallUid(), x: cx + .5, y: cy + .5, bright: lightB, dim: lightD, color: lightColor, intenzita: lightIntensity, blikani: lightFlicker }]; }); break;
+      case "svetlo": {
+        const point=toWorld(e),light={...lightSettings,id:wallUid(),x:snap===0?point[0]:cx+.5,y:snap===0?point[1]:cy+.5};
+        lightGesture.current={light,anchor:point,screen:[e.clientX,e.clientY]};
+        setLightPreview(light);paintRef.current=false;
+        svgRef.current?.setPointerCapture(e.pointerId);
+        break;
+      }
       case "start": push((m) => {
         m.start = { ...(m.start || {}) } as any;
         const arr = ((m.start as any)[startTyp] || []) as [number, number][];
@@ -486,6 +507,7 @@ export default function EditorPage() {
     }
   };
   const onMove = (e: React.PointerEvent) => {
+    if(lightGesture.current){setLightPreview(lightGestureValue(e));return;}
     if (strokeRef.current) {
       const s = strokeRef.current;
       ops.appendPaintPoint(s.stroke.p, toWorld(e), Math.max(.025, s.stroke.b / 20));
@@ -541,6 +563,14 @@ export default function EditorPage() {
     else if (tool === "guma") push((m) => ops.eraseAt(m, cx, cy));
   };
   const onUp = (e: React.PointerEvent) => {
+    if(lightGesture.current){
+      const gesture=lightGesture.current, final=lightGestureValue(e);
+      lightGesture.current=null;setLightPreview(null);paintRef.current=false;
+      if(!gesture.handle){push(m=>{m.svetla=[...(m.svetla || []),final];});setSel([{kind:"svetlo",id:final.id}]);setTool("select");setTab("vlastnosti");setPanelOpen(true);}
+      else if(final!==gesture.light)push(m=>{updateLight(m,final.id,final);});
+      if(e.currentTarget.hasPointerCapture(e.pointerId))e.currentTarget.releasePointerCapture(e.pointerId);
+      return;
+    }
     if (strokeRef.current) {
       const s = strokeRef.current; strokeRef.current = null;
       ops.appendPaintPoint(s.stroke.p, toWorld(e), .001);
@@ -591,12 +621,17 @@ export default function EditorPage() {
     zoomAt(e.deltaY < 0 ? 1.15 : 1 / 1.15, e.clientX - r.left, e.clientY - r.top);
   };
 
-  const playerMap = React.useMemo(() => map && playerPreviewMap(map,playerPreview),[map,playerPreview]);
+  const playerMap = React.useMemo(() => {
+    if(!map)return null;
+    const rendered=lightPreview?{...map,svetla:[...(map.svetla || []).filter(l=>l.id!==lightPreview.id),lightPreview]}:map;
+    return playerPreviewMap(rendered,playerPreview);
+  },[map,playerPreview,lightPreview]);
   /* ---------- render ---------- */
   if (!map) return <div className="me-ed me-loading">Načítám mapu…</div>;
   const selObject = sel.length === 1 && sel[0].kind === "objekt" ? (map.objekty || []).find((o) => o.id === sel[0].id) : null;
   const toolInfo = TOOLS.find((t) => t.id === tool)!;
   const previewMap = playerMap!;
+  const selectedLight=(previewMap.svetla || []).find(l=>l.id===(lightPreview?.id || (sel.length===1 && sel[0].kind==="svetlo"?sel[0].id:null)));
   const commands: EditorCommand[] = [
     ...TOOLS.map(t => ({id:"tool-"+t.id,label:t.nazev,group:"Nástroje · "+t.key,icon:t.icon,run:() => setTool(t.id)})),
     ...TABS.map(([id,icon,label]) => ({id:"panel-"+id,label,group:"Panely",icon,run:() => {setTab(id);setPanelOpen(true);}})),
@@ -699,12 +734,10 @@ export default function EditorPage() {
             {tool === "vyska" && <><span className="me-ctx-lab">Krok:</span>{[5, 10, 20].map((s) => <button key={s} className={`me-btn sm ${elevStep === s ? "on" : ""}`} onClick={() => setElevStep(s)}>{s} ft</button>)}<span className="me-ctx-hint">klik +, Alt+klik −</span></>}
             {tool === "svetlo" && (
               <>
-                <span className="me-ctx-lab">Jasné (ft)</span><input aria-label="Jasné světlo" type="number" min="0" value={lightB} onChange={(e) => setLightB(Math.max(0, +e.target.value))} style={{ width: 48 }} />
-                <span className="me-ctx-lab">Přítmí navíc (ft)</span><input aria-label="Přítmí navíc" type="number" min="0" value={lightD} onChange={(e) => setLightD(Math.max(0, +e.target.value))} style={{ width: 48 }} />
-                <LightColors value={lightColor} onChange={setLightColor} />
-                <input type="color" value={lightColor} onChange={(e) => setLightColor(e.target.value)} />
-                <label>Intenzita {Math.round(lightIntensity * 100)} %<input aria-label="Intenzita světla" type="range" min="0" max="1" step=".05" value={lightIntensity} onChange={e => setLightIntensity(+e.target.value)} /></label>
-                <label><input type="checkbox" checked={lightFlicker} onChange={e => setLightFlicker(e.target.checked)} /> Blikání</label>
+                <LightShapePicker value={lightSettings} onChange={patch=>setLightSettings(l=>editedLight(l,patch))}/>
+                <span className="me-light-preset-label">{lightSettings.nazev}</span>
+                <button className="me-btn sm" onClick={()=>{setTab("vlastnosti");setPanelOpen(true);}}>Nastavení světla</button>
+                <span className="me-ctx-hint">Klik: umístit · tažení: namířit a nastavit dosah</span>
               </>
             )}
             {tool === "start" && START_TYPY.map(([v, n]) => <button key={v} className={`me-btn sm ${startTyp === v ? "on" : ""}`} onClick={() => setStartTyp(v as any)}>{n}</button>)}
@@ -726,7 +759,7 @@ export default function EditorPage() {
             </MapAnimatedScene>
             <svg ref={svgRef} className={`me-canvas tool-${tool}`} onWheel={onWheel}
                  onPointerDown={onDown} onPointerMove={onMove} onPointerUp={onUp} onDoubleClick={onDbl}
-                 onPointerCancel={() => { strokeRef.current = null; placementRef.current = null; setPaintPreview(null); paintRef.current = false; if (transformStart.current) doc.setMap(transformStart.current); transformStart.current = null; moveRef.current = null; setHandleDrag(null); }}
+                 onPointerCancel={() => { lightGesture.current=null;setLightPreview(null);strokeRef.current = null; placementRef.current = null; setPaintPreview(null); paintRef.current = false; if (transformStart.current) doc.setMap(transformStart.current); transformStart.current = null; moveRef.current = null; setHandleDrag(null); }}
                  onPointerLeave={() => setCur(null)} onContextMenu={(e) => { e.preventDefault(); const [x,y] = toWorld(e); const hit = ops.pickAt(previewMap,x,y,true); if(hit?.kind === "objekt"){if(!sel.some(s => s.id === hit.id)) setSel([hit]);setContextMenu({x:Math.max(8,Math.min(window.innerWidth-240,e.clientX)),y:Math.max(8,Math.min(window.innerHeight-380,e.clientY))});} }}
                  style={{ touchAction: "none", width: "100%", height: "100%", display: "block" }}>
               <g transform={`translate(${V.x},${V.y}) scale(${V.k})`}>
@@ -780,6 +813,14 @@ export default function EditorPage() {
                     </g>
                   );
                 })}
+                {selectedLight && layerVis.svetla && <LightHandles light={selectedLight} zoom={V.k} onBegin={(e,handle)=>{
+                  if(e.button!==0)return;
+                  e.preventDefault();e.stopPropagation();
+                  const light=doc.mapRef.current?.svetla?.find(l=>l.id===selectedLight.id);
+                  if(!light)return;
+                  lightGesture.current={light,anchor:toWorld(e),screen:[e.clientX,e.clientY],handle};
+                  setLightPreview(light);svgRef.current?.setPointerCapture(e.pointerId);
+                }}/>}
                 {cur && tool === "objekt" && <g opacity={.6} data-object-ghost>
                   <MapObjectLayer dm map={{...map,objekty:[{
                     id:"ghost",asset:stampId,v:nextPlacementVariant,
@@ -831,10 +872,10 @@ export default function EditorPage() {
               stampId={stampId} ASSETS={ASSETS} onUpload={uploadAsset} variant={chosenVariant}
               onVariant={v => { setChosenVariant(v); setRandomVariants(false); }}
               onPick={(sid) => { setStampId(sid); setChosenVariant(0); rerollPlacement(); setTool("objekt"); }} />}
-            {tab === "vlastnosti" && <PropertiesPanel map={map} selObj={sel.length === 1 ? sel[0] : null} push={push}
+            {tab === "vlastnosti" && (tool==="svetlo"?<LightInspector placement value={lightSettings} onChange={patch=>setLightSettings(l=>editedLight(l,patch))}/>:<PropertiesPanel map={map} selObj={sel.length === 1 ? sel[0] : null} push={push}
               objects={(map.objekty || []).filter(o => sel.some(s => s.kind === "objekt" && s.id === o.id))}
               assets={ASSETS} onVariant={changeVariants} onAction={runObjectAction}
-              onDelete={() => { if (sel.length) { push((m) => { for (const s of sel) { const n = s.kind === "objekt" ? "objekty" : s.kind === "kresba" ? "kresby" : s.kind === "stena" ? "steny" : s.kind === "svetlo" ? "svetla" : "poznamky"; (m as any)[n] = ((m as any)[n] || []).filter((o: any) => o.id !== s.id); } }); setSel([]); } }} />}
+              onDelete={() => { if (sel.length) { push((m) => { for (const s of sel) { const n = s.kind === "objekt" ? "objekty" : s.kind === "kresba" ? "kresby" : s.kind === "stena" ? "steny" : s.kind === "svetlo" ? "svetla" : "poznamky"; (m as any)[n] = ((m as any)[n] || []).filter((o: any) => o.id !== s.id); } }); setSel([]); } }} />)}
             {tab === "generator" && <GeneratorPanel genId={genId} setGenId={setGenId} seed={genSeed} setSeed={setGenSeed}
               genPrev={genPrev} onPreview={() => { const g = GENERATORS.find((x) => x.id === genId)!; setGenPrev(g.fn(W, H, genSeed)); }}
               onApply={() => { push((m) => ops.applyGen(m, {...genPrev!,objekty:genPrev?.objekty?.map(o => ({

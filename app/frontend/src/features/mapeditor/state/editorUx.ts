@@ -19,7 +19,7 @@ export const TOOL_HINTS: Record<string, string> = {
   dvere: "Klikni na stěnu pro dveře či okno. Alt přepíná otevření.",
   interier: "Označ polygon bez počasí. Enter dokončí, Alt kliknutím odebere.",
   objekt: "Vyber předlohu v knihovně, klikni nebo táhni do mapy.",
-  svetlo: "Kliknutím umísti světlo s nastavenou barvou a dosahem.",
+  svetlo: "Klikni pro vložení světla z předlohy. Tažením určíš směr a dosah, u pruhu délku. Úchyty mění polohu, směr, dosah i tvar. Shift přichytí směr po 15°. [ / ] otáčí vybrané světlo, se Shiftem po 1°.",
   kresba: "Kresli čáry, tvary a text. Polygon dokončí Enter.",
   vyska: "Klik přidává výšku, Alt + klik ubírá.", start: "Kliknutím umísti startovní pozici zvolené skupiny.",
   poznamka: "Kliknutím přidej poznámku viditelnou jen pro vypravěče.",

@@ -7,6 +7,8 @@ import { GENERATORS, type GenOut } from "../generators/generators";
 import { assetUrl, useTextureManifest, type AssetEntry } from "../assets/manifest";
 import { EditorWeather as WeatherPicker } from "./EditorChrome";
 import { ObjectInspector } from "./ObjectInspector";
+import { LightInspector } from "./LightInspector";
+import { editedLight, updateLight } from "../tools/lightEditing";
 import type { ObjectAction } from "../state/editorUx";
 export { AssetLibrary as LibraryPanel } from "./AssetLibrary";
 import { MapPreview } from "./MapPreview";
@@ -109,6 +111,9 @@ export function PropertiesPanel({ map, selObj, push, onDelete, objects, assets, 
   const selWall = selObj.kind === "stena" ? (map.steny || []).find((w) => w.id === selObj.id) : null;
   const selLight = selObj.kind === "svetlo" ? (map.svetla || []).find((l) => l.id === selObj.id) : null;
   const selNote = selObj.kind === "poznamka" ? (map.poznamky || []).find((n) => n.id === selObj.id) : null;
+  if (selLight) return <LightInspector value={selLight} onChange={patch=>{
+    if(editedLight(selLight,patch)!==selLight) push(m=>{updateLight(m,selLight.id,patch);});
+  }} onDelete={onDelete}/>;
   return (
     <div className="me-props">
       {selWall && (
@@ -117,17 +122,6 @@ export function PropertiesPanel({ map, selObj, push, onDelete, objects, assets, 
           <WallPicker value={selWall.typ} onChange={typ => push(m => { m.steny!.find(w => w.id === selObj.id)!.typ = typ; })} />
           <label className="me-ctx-chk"><input type="checkbox" checked={!!selWall.open} onChange={(e) => push((m) => { m.steny!.find((w) => w.id === selObj.id)!.open = e.target.checked; })} /> otevřené</label>
           <label className="me-ctx-chk"><input type="checkbox" checked={!!selWall.locked} onChange={(e) => push((m) => { m.steny!.find((w) => w.id === selObj.id)!.locked = e.target.checked; })} /> zamčené</label>
-        </>
-      )}
-      {selLight && (
-        <>
-          <h4>Světlo</h4>
-          <label>Jasné (ft)<input type="number" min="0" value={selLight.bright} onChange={(e) => push((m) => { m.svetla!.find((l) => l.id === selObj.id)!.bright = Math.max(0, +e.target.value); })} /></label>
-          <label>Přítmí navíc (ft)<input type="number" min="0" value={selLight.dim} onChange={(e) => push((m) => { m.svetla!.find((l) => l.id === selObj.id)!.dim = Math.max(0, +e.target.value); })} /></label>
-          <LightColors value={selLight.color || "#fbbf24"} onChange={v => push(m => { m.svetla!.find(l => l.id === selObj.id)!.color = v; })} />
-          <label>barva<input type="color" value={selLight.color || "#fbbf24"} onChange={(e) => push((m) => { m.svetla!.find((l) => l.id === selObj.id)!.color = e.target.value; })} /></label>
-          <label>Intenzita<input type="range" min="0" max="1" step=".05" value={selLight.intenzita ?? 1} onChange={e => push(m => { m.svetla!.find(l => l.id === selObj.id)!.intenzita = +e.target.value; })} /></label>
-          <label><input type="checkbox" checked={!!selLight.blikani} onChange={e => push(m => { const l=m.svetla!.find(l => l.id === selObj.id)!; l.blikani=e.target.checked; l.efekt=e.target.checked ? "mihot" : "zadny"; })} /> Blikání</label>
         </>
       )}
       {selNote && (

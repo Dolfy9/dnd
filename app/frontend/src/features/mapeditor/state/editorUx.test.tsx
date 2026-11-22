@@ -10,27 +10,30 @@ import { EditorWeather, ShortcutHelp, CommandPalette } from "../components/Edito
 import { ObjectInspector } from "../components/ObjectInspector";
 import { AssetLibrary } from "../components/AssetLibrary";
 import { PropertiesPanel } from "../components/panels";
+import { LightInspector } from "../components/LightInspector";
 
 const object: MapObject = {id:"one",asset:"tree",x:2,y:3,w:1,h:2,v:2,light:{bright:10,dim:10}};
 afterEach(() => vi.unstubAllGlobals());
 
 describe("editor productivity", () => {
-  it("keeps the existing flicker checkbox effective after legacy light migration", () => {
+  it("lets effect cards replace legacy flicker after light migration", () => {
     const map=migrateMap({id:"m",nazev:"M",mrizka:[".."],svetla:[{id:"l",x:1,y:1,bright:5,dim:5,blikani:true}]});
-    const panel=PropertiesPanel({map,selObj:{kind:"svetlo",id:"l"},objects:[],assets:{},push:f=>f(map),onVariant:()=>{},onAction:()=>{},onDelete:()=>{}});
+    const panel=()=>PropertiesPanel({map,selObj:{kind:"svetlo",id:"l"},objects:[],assets:{},push:f=>f(map),onVariant:()=>{},onAction:()=>{},onDelete:()=>{}});
     const inputs: React.ReactElement<any>[]=[];
     function visit(node: React.ReactNode) {
       React.Children.forEach(node,child=>{
         if (!React.isValidElement<{children?:React.ReactNode;type?:string}>(child)) return;
-        if (child.type === "input" && child.props.type === "checkbox") inputs.push(child);
+        if (child.type === "button") inputs.push(child);
         visit(child.props.children);
       });
     }
-    visit(panel);
+    visit(LightInspector((panel() as React.ReactElement<React.ComponentProps<typeof LightInspector>>).props));
     expect(map.svetla![0].efekt).toBe("mihot");
-    inputs[0].props.onChange({target:{checked:false}});
+    inputs.find(b=>b.props.children?.[1]?.props?.children==="Žádný")!.props.onClick();
     expect(migrateMap(map).svetla![0]).toMatchObject({efekt:"zadny",blikani:false});
-    inputs[0].props.onChange({target:{checked:true}});
+    inputs.length=0;
+    visit(LightInspector((panel() as React.ReactElement<React.ComponentProps<typeof LightInspector>>).props));
+    inputs.find(b=>b.props.children?.[1]?.props?.children==="Mihotání")!.props.onClick();
     expect(migrateMap(map).svetla![0]).toMatchObject({efekt:"mihot",blikani:true});
   });
   it("snapshots pan coordinates before pointer-up clears the drag ref", () => {
