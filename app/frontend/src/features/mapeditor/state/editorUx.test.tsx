@@ -7,11 +7,22 @@ import type { MapObject, MapV2 } from "../../boj/model/mapV2";
 import { EditorWeather, ShortcutHelp, CommandPalette } from "../components/EditorChrome";
 import { ObjectInspector } from "../components/ObjectInspector";
 import { AssetLibrary } from "../components/AssetLibrary";
+import { PropertiesPanel } from "../components/panels";
 
 const object: MapObject = {id:"one",asset:"tree",x:2,y:3,w:1,h:2,v:2,light:{bright:10,dim:10}};
 afterEach(() => vi.unstubAllGlobals());
 
 describe("editor productivity", () => {
+  it("deletes only the objects shown in a mixed-selection inspector", () => {
+    const map = {objekty:[object],steny:[{id:"wall",a:[0,0],b:[1,0],typ:"wall"}]} as MapV2;
+    const deleteSelection = vi.fn();
+    const panel = PropertiesPanel({map,selObj:null,objects:[object],assets:{},push:()=>{},onVariant:()=>{},onDelete:deleteSelection,
+      onAction:action => { map.objekty=actOnObjects(map.objekty!,[object.id],action); }});
+    panel.props.onDelete();
+    expect(map.objekty).toEqual([]);
+    expect(map.steny?.map(w => w.id)).toEqual(["wall"]);
+    expect(deleteSelection).not.toHaveBeenCalled();
+  });
   it("clears missing canvas selections after undo without mutating the document", () => {
     const map = {objekty:[object]} as MapV2;
     const selection = [{kind:"objekt",id:"one"}];

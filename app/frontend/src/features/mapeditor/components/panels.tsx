@@ -104,7 +104,7 @@ export function PropertiesPanel({ map, selObj, push, onDelete, objects, assets, 
   onVariant: (action: number | "next" | "random", asset?: string) => void;
   onAction: (action: ObjectAction) => void;
 }) {
-  if (objects.length) return <ObjectInspector objects={objects} assets={assets} push={push} onVariant={onVariant} onAction={onAction} onDelete={onDelete} />;
+  if (objects.length) return <ObjectInspector objects={objects} assets={assets} push={push} onVariant={onVariant} onAction={onAction} onDelete={() => onAction("delete")} />;
   if (!selObj) return <div className="me-empty"><MousePointer2 size={36} /><h3>Všechno začíná výběrem</h3><p>Klikni na objekt, stěnu, světlo nebo poznámku v mapě.</p><p><kbd>V</kbd> Výběr a přesun<br /><kbd>Shift + klik</kbd> Přidat do výběru<br /><kbd>Táhni</kbd> Vybrat více prvků</p></div>;
   const selWall = selObj.kind === "stena" ? (map.steny || []).find((w) => w.id === selObj.id) : null;
   const selLight = selObj.kind === "svetlo" ? (map.svetla || []).find((l) => l.id === selObj.id) : null;
