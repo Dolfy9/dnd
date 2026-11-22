@@ -20,7 +20,7 @@ class ReferenceAssetsTest(unittest.TestCase):
                     if not a["id"].startswith("ov-"):
                         self.assertIn("A", im.getbands())
                     count += 1
-        self.assertEqual(count, 85)
+        self.assertEqual(count, 86)
         for aid, v in [("z-kvetinovy-zahon", 2), ("z-zivy-plot-roh", 3), ("z-strom-koruna", 1)]:
             a = assets[aid]
             self.assertEqual((MAPS / a["src"]).read_bytes(), (MAPS / a["varianty"][v-1]).read_bytes())

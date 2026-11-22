@@ -139,14 +139,15 @@ def harbor():
 def garden():
     s = scene("reference-zahrada-mesic", "Zahrada osmi králů – Měsíční ticho", "les", 812, .26, "#010102")
     s.rect(0,0,42,28,"t-zahrada-trava-kvety")
-    for texture,opacity in [("t-zahrada-trava-kvety",.55),("t-zahrada-mech-listi",.9),("t-zahrada-hlina-koreny",.8)]:
-        for _ in range(25):
+    for texture,opacity in [("t-zahrada-trava-kvety",.4),("t-zahrada-hlina-koreny",.4)]:
+        for _ in range(12):
             x,y=s.rng.uniform(1,40),s.rng.uniform(1,27)
-            s.paint(texture,[(x,y),(x+s.rng.uniform(-2,2),y+s.rng.uniform(-2,2))],
-                    b=s.rng.uniform(2,5),o=opacity,h=0,r=s.rng.uniform(0,360))
-    for pts in [[(2,4),(8,7),(7,11)],[(33,2),(31,6),(36,10)],
-                [(4,18),(8,22),(13,26)],[(23,23),(29,24),(37,21)],[(16,5),(22,8),(27,6)]]:
-        s.paint("t-zahrada-mech-listi",pts,b=5,o=.7,h=0)
+            points=[(x+math.cos(i*math.tau/7)*s.rng.uniform(1,3.5),
+                     y+math.sin(i*math.tau/7)*s.rng.uniform(1,3.5)) for i in range(7)]
+            s.paint(texture,points,b=5,o=opacity,h=0,poly=True,r=s.rng.uniform(0,360))
+    for y in (4,24):
+        for x in (5,12,29,37):
+            s.paint("t-zahrada-mech-listi",[(x,y)],b=2.8,o=.3,h=0)
     route(s,"cesta",[(0,14),(42,14)],2.1,"t-zahradni-cesta")
     route(s,"cesta",[(21,0),(21,10.7)],1.7,"t-hlina-pesina",hladke=True)
     route(s,"cesta",[(21,17),(21,28)],1.7,"t-hlina-pesina",hladke=True)
@@ -159,9 +160,8 @@ def garden():
         for pts in [[(1,y+.5),(8,y),(16,y+.3),(19.4,y)],
                     [(22.6,y),(28,y+.3),(36,y),(41,y+.5)]]:
             route(s,"plot",pts,1.6,hladke=True)
-    s.rect(14.4,12,13,4.2,"teren-voda",tile="~")
-    route(s,"zidka",[(14.4,12),(27.4,12),(27.4,16.2),(14.4,16.2),(14.4,12)],.4,"t-pristavni-kamen",brectan=True)
-    s.obj("z-jezirko-fontana",20.9,14.1,13.4,4.7,0,z=-3,stin=False)
+    s.rect(14.8,11.2,12.2,5.8,"hluboka-voda",tile="~")
+    s.obj("z-jezirko-fontana",20.9,14.1,13,13*251/512,0,z=-3,stin=False)["v"]=1
     for y in (8,20.1):
         for x in (11.3,16,26.2,31):
             s.obj("z-socha-kral",x,y,2.3,3.6,s.rng.uniform(-3,3),cover=3)
@@ -188,7 +188,7 @@ def garden():
         s.obj("z-brectan-previs",x,y,1.7,1.2,s.rng.uniform(-30,30),z=-1,stin=False)
     for x,y in [(2,8),(4,19),(9,25),(17,19),(24,8),(30,23),(38,7),(33,18)]:
         s.obj("ov-svetlusky",x,y,2,2,0,z=2,anim=False,stin=False)
-    s.obj("ov-mesic-odlesk",18.7,13.8,3.1,3.3,0,z=-1,anim=False,stin=False)
+    s.obj("ov-mesic-odlesk",18.1,14.1,2.2,3.9,0,z=-1,opacity=.75,anim="voda",stin=False)
     undergrowth(s,[(x,y) for y in (3.6,8.8,21.2,24.8) for x in (5,10,16,26,31,37)],18,1.8)
     for x in range(1,42):
         for y in (12.7,15.3):
@@ -200,12 +200,15 @@ def garden():
             s.cluster(["gen2-ker2","z-brectan-previs"],x,y,3,.7,.35,(.25,.6),z=-1,stin=False)
     for x,y in [(11.3,8),(16,8),(26.2,8),(31,8),(11.3,20.1),(16,20.1),(26.2,20.1),(31,20.1)]:
         s.obj("d-mech",x,y+1.1,2.2,1.5,s.rng.uniform(0,360),opacity=.8)
-    mist(s,[(1,3),(17,0),(34,1),(42,9),(42,24),(25,28),(5,28),(0,17)],11)
+    for x,y,w in [(0,5,11),(1,11,12),(0,18,11),(2,24,12),(7,27,13),(16,28,13),(26,27,12),(36,28,11)]:
+        s.obj("ov-mlha-chuchvalec",x,y,w,w*.6,s.rng.uniform(-25,25),
+              opacity=s.rng.uniform(.5,.65),z=12,anim="voda",stin=False)
     s.obj("ov-paprsky",6,3.5,11,9,0,z=9,opacity=.12,anim=False,stin=False)
     s.light(6,2,"#b9cde8",28,95,.65,False)
     for x,y in [(13.7,8),(28.6,8),(13.7,20),(28.6,20)]:
         s.light(x,y,"#d4d6dc",12,42,.32,False)
     s.light(19,14,"#bfcddb",7,22,.2,False)
+    s.light(21,14,"#d6dfee",6,13,.6,False)
     s.light(21,26,"#c6d1df",10,35,.12,False)
     for light in s.m["svetla"]:
         light.update(stiny=False, nazev="Rozptýlené měsíční světlo")
@@ -213,6 +216,16 @@ def garden():
              [(31,6),(34,6),(37,6),(40,6),(31,9),(34,9)])
     s.note(21,14,"Zapuštěná nádrž není průchozí. Cesta ji obchází na severu a jihu.")
     s.note(36,14,"Zřícená rotunda poskytuje poloviční kryt a těžký terén.")
+    objects=[]
+    for o in s.m["objekty"]:
+        if o["asset"]=="d-listi":
+            near_base=any(math.dist((o["x"],o["y"]),(x,y))<2.2 for y in (8,20.1) for x in (11.3,16,26.2,31))
+            near_hedge=min(abs(o["y"]-3.5),abs(o["y"]-25))<1.4
+            if not (near_base or near_hedge) or s.rng.random()>.45:
+                continue
+            o.update(w=o["w"]*.65,h=o["h"]*.65,opacity=.28)
+        objects.append(o)
+    s.m["objekty"]=objects
     return s.finish()
 
 

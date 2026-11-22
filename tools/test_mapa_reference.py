@@ -27,7 +27,7 @@ class ReferenceMapsTest(unittest.TestCase):
                 self.assertGreater(len(m["objekty"]), 100)
                 self.assertLess(m["atmosfera"]["amb"], .5)
                 self.assertGreater(m["atmosfera"]["vineta"], 0)
-                self.assertTrue(any(o["asset"] == "ov-mlha-chuchvalec" and 0 < o["opacity"] < .3 for o in m["objekty"]))
+                self.assertTrue(any(o["asset"] == "ov-mlha-chuchvalec" and 0 < o["opacity"] < .7 for o in m["objekty"]))
                 self.assertTrue(m["malba"] and m["svetla"] and m["trasy"])
                 for o in m["objekty"]:
                     self.assertIn(o["asset"], assets)
@@ -59,7 +59,17 @@ class ReferenceMapsTest(unittest.TestCase):
         self.assertEqual(len([l for l in harbor["svetla"] if l.get("nazev")=="Tlumené světlo skladu"]),2)
         self.assertGreaterEqual(len([o for o in harbor["objekty"] if o["asset"]=="ov-mesic-odlesk" and o.get("anim")=="voda"]),4)
         self.assertTrue(all(o.get("anim")=="voda" for m in (harbor,garden) for o in m["objekty"] if o["asset"]=="ov-mlha-chuchvalec"))
-        self.assertGreater(len(garden["malba"]),75)
+        patches=[p for p in garden["malba"] if p["poly"] and len(p["p"])==7]
+        self.assertEqual(len(patches),24)
+        self.assertTrue(all(p["h"]==0 and p["o"]<=.4 for p in patches))
+        pond=next(o for o in garden["objekty"] if o["asset"]=="z-jezirko-fontana")
+        self.assertEqual(pond["v"],1)
+        self.assertAlmostEqual(pond["w"]/pond["h"],512/251,places=3)
+        leaves=[o for o in garden["objekty"] if o["asset"]=="d-listi"]
+        self.assertLess(len(leaves),30)
+        self.assertTrue(all(o["opacity"]<=.3 and o["w"]<1 for o in leaves))
+        mist=[o for o in garden["objekty"] if o["asset"]=="ov-mlha-chuchvalec"]
+        self.assertTrue(all(o["opacity"]>=.5 for o in mist))
         self.assertEqual(harbor["malba"][0]["t"], "hluboka-voda")
         self.assertEqual(harbor["mrizka"][20][12], "~")
         self.assertEqual(harbor["mrizka"][9][12], ".")

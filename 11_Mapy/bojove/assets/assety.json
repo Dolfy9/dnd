@@ -3449,7 +3449,10 @@
    ],
    "custom": false,
    "cover": 2,
-   "vyska": 1.2
+   "vyska": 1.2,
+   "varianty": [
+    "bojove/assets/Zahrada/varianty/z-jezirko-fontana-v1.webp"
+   ]
   },
   {
    "id": "z-kvetinovy-zahon",

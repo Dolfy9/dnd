@@ -15,7 +15,7 @@ const assets=Object.fromEntries(entries.map(e=>[e.id,e]));
 it("imports stable contiguous reference variants, intact replacement slots and solid metadata",()=>{
  const added=entries.filter(e=>/^(p-|z-)/.test(e.id));expect(added).toHaveLength(21);
  for(const a of added){
-  expect(a.varianty?.length || 0).toBe(["z-jezirko-fontana","z-rotunda-ruina"].includes(a.id)?0:3);
+  expect(a.varianty?.length || 0).toBe(a.id==="z-jezirko-fontana"?1:a.id==="z-rotunda-ruina"?0:3);
   a.varianty?.forEach((src,i)=>expect(src).toMatch(new RegExp(`/${a.id}-v${i+1}\\.webp$`)));
  }
  for(const id of ["p-lodni-kolik","z-socha-kral","z-sloup-zlomeny","z-jezirko-fontana","z-rotunda-ruina","z-urna-kamen"]){
