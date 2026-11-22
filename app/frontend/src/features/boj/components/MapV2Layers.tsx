@@ -122,7 +122,7 @@ export const MapWallLayer = memo(function MapWallLayer({ map, doors, onDoor, dm,
   );
 });
 
-export const MapObjectLayer = memo(function MapObjectLayer({ map, dm }: { map: MapV2; dm?: boolean }) {
+export const MapObjectLayer = memo(function MapObjectLayer({ map, dm, staticOnly = false }: { map: MapV2; dm?: boolean; staticOnly?: boolean }) {
   const { assets } = useMapManifests();
   const objs = (map.objekty || []).slice().sort((a, b) => (a.z ?? 0) - (b.z ?? 0));
   if (!objs.length) return null;
@@ -132,18 +132,18 @@ export const MapObjectLayer = memo(function MapObjectLayer({ map, dm }: { map: M
         if (o.dmOnly && !dm) return null;
         const isImg = o.asset.startsWith("img:");
         const man = assets[o.asset];
+        if (staticOnly && resolveAnimation(o, man)) return null;
         const def = isImg || man ? null : stampById(o.asset);
         const src = man ? assetUrl(man.src) : isImg ? `/repo/11_Mapy/bojove/${o.asset.slice(4)}` : null;
         return (
           <g key={o.id} transform={`translate(${o.x * PX},${o.y * PX}) rotate(${o.rot || 0}) ${o.flip ? "scale(-1,1)" : ""}`}
              opacity={o.dmOnly ? .55 : 1}>
-            {["portal", "ohen", "zare"].includes(resolveAnimation(o, man)) && <g opacity=".35"><image href="/repo/11_Mapy/bojove/ovl/zar.webp"
+            {!staticOnly && ["portal", "ohen", "zare"].includes(resolveAnimation(o, man)) && <g opacity=".35"><image href="/repo/11_Mapy/bojove/ovl/zar.webp"
               x={-o.w*PX*.8} y={-o.h*PX*.8} width={o.w*PX*1.6} height={o.h*PX*1.6}
-              className={`map-anim-${resolveAnimation(o, man) === "ohen" ? "ohen" : "zare"}`}
               style={{ mixBlendMode: "screen", animationDelay: `${animationPhase(o.id)}s`, filter: resolveAnimation(o, man) === "portal" ? "hue-rotate(165deg)" : undefined }} /></g>}
             {def && <defs><filter id="stamp-shade" x="-30%" y="-30%" width="160%" height="160%">
               <feDropShadow dx="1" dy="2" stdDeviation="1.2" floodColor="#000" floodOpacity="0.45" /></filter></defs>}
-            {src ? <image className={`map-anim-${resolveAnimation(o, man)}`} href={src} x={-o.w * PX / 2} y={-o.h * PX / 2} width={o.w * PX} height={o.h * PX}
+            {src ? <image href={src} x={-o.w * PX / 2} y={-o.h * PX / 2} width={o.w * PX} height={o.h * PX}
                           preserveAspectRatio="xMidYMid meet"
                           style={{ filter: "drop-shadow(1px 2px 2px #0008)", animationDelay: `${animationPhase(o.id)}s` }} />
                  : def ? <g filter="url(#stamp-shade)"><StampSvg def={def} tint={o.tint} /></g>

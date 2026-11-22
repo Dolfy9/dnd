@@ -12,13 +12,14 @@ import { planMovement, cumFt, type MovementPlan } from "../rules/movement";
 import { settingsOf } from "../rules/settings";
 import { mapSize, tileAt, tileDef } from "../rules/grid";
 import type { MapV2, MapWall } from "../model/mapV2";
-import { MapTextureLayer, MapElevationLayer, MapWallLayer, MapObjectLayer, MapDrawingLayer, MapLightLayer, MapNoteLayer, MapGridLayer } from "./MapV2Layers";
+import { MapTextureLayer, MapElevationLayer, MapWallLayer, MapDrawingLayer, MapLightLayer, MapNoteLayer, MapGridLayer } from "./MapV2Layers";
 import { BASE_COLORS } from "../types";
 import { areaCells } from "../rules/areas";
 import { dmgStyle } from "./visual";
 import { ZoneShape, ZonePatterns, TerenLayer, LightingLayer, FogLayer } from "./MapLayers";
 import { MapPaintLayer, MapAtmosphereLayer } from "./MapAtmoLayers";
-import { AnimationButton, WeatherPicker, MapWeatherOverlay, MapWaterLayer } from "./MapMotion";
+import { AnimationButton, WeatherPicker, MapWeatherOverlay } from "./MapMotion";
+import { MapAnimatedScene } from "./MapAnimatedScene";
 import type { MapWeather } from "../model/mapV2";
 import { ZoomIn, ZoomOut, Maximize2, Crosshair, X } from "lucide-react";
 
@@ -466,25 +467,25 @@ export default function BattleMap(p: Props) {
 
   return (
     <div className="boj-maparea">
+      <MapAnimatedScene map={map as MapV2} view={V} px={PX} dm={p.dm} illustration={!!img} overrides={S.teren} details={<>
+        <MapElevationLayer map={map as MapV2} />
+        <MapGridLayer map={map as MapV2} W={W} H={H} />
+        <MapDrawingLayer map={map as MapV2} dm={p.dm} />
+        <MapWallLayer map={map as MapV2} doors={S.dvere} dm={p.dm} />
+      </>}>
+        <rect width={W*24} height={H*24} fill={base} />
+        {img && <image href={img} width={W*24} height={H*24} preserveAspectRatio="none" opacity={.92} />}
+        <TerenLayer staticOnly S={S} map={map} px={24} illustration={!!img} />
+        <MapTextureLayer map={map as MapV2} />
+        <MapPaintLayer map={map as MapV2} />
+      </MapAnimatedScene>
       <svg ref={svgRef} className={`boj-map ${cursorCls}`} onWheel={onWheel} onPointerDown={down} onPointerMove={move}
            onPointerUp={up} onDoubleClick={dbl} onPointerLeave={leave} onContextMenu={ctx} style={{ touchAction: "none" }}>
         <CoinDefs />
         <ZonePatterns />
         <g transform={`translate(${V.x},${V.y}) scale(${V.k})`}>
-          <rect width={W * PX} height={H * PX} fill={base} />
-          {img && <image href={img} width={W * PX} height={H * PX} preserveAspectRatio="none" opacity={0.92} />}
           {/* v2 vrstvy jsou v jednotkách 24 px/buňka → škálovaná skupina na bitevní PX */}
           <g transform={`scale(${PX / 24})`}>
-          <TerenLayer S={S} map={map} px={24} illustration={!!img} />
-          <MapTextureLayer map={map as MapV2} />
-          <MapPaintLayer map={map as MapV2} />
-          <MapWaterLayer map={map as MapV2} />
-          <MapElevationLayer map={map as MapV2} />
-          <MapGridLayer map={map as MapV2} W={W} H={H} />
-          <MapDrawingLayer map={map as MapV2} dm={p.dm} />
-          <MapWallLayer map={map as MapV2} doors={S.dvere} dm={p.dm}
-                        onDoor={p.dm && p.onDoor ? p.onDoor : undefined} />
-          <MapObjectLayer map={map as MapV2} dm={p.dm} />
           {p.dm && <MapNoteLayer map={map as MapV2} />}
           </g>
           {(S.kresby as any)?.length ? <MapDrawingLayer map={{ kresby: S.kresby } as MapV2} dm /> : null}

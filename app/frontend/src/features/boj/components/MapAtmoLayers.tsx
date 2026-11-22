@@ -66,7 +66,7 @@ export const MapAtmosphereLayer = memo(function MapAtmosphereLayer({ map }: { ma
       <mask id={uid + "dark"} maskUnits="userSpaceOnUse" x={0} y={0} width={W} height={H}>
         <rect width={W} height={H} fill="white" />
         {lights.map((l, i) => <g key={l.id} opacity={l.intenzita}>
-          <g className={l.blikani ? "map-light-flicker" : undefined} style={{ animationDelay: `-${i * .73}s` }}>
+          <g>
           <image {...sprite(l, l.radius)} filter={`url(#${uid}black)`} />
           {l.bright > 0 && <image {...sprite(l, l.bright)} filter={`url(#${uid}black)`} />}
           </g>
@@ -76,7 +76,7 @@ export const MapAtmosphereLayer = memo(function MapAtmosphereLayer({ map }: { ma
     <rect width={W} height={H} fill={color(map.atmosfera?.barva || "#101522")}
       opacity={1 - amb} mask={`url(#${uid}dark)`} />
     {lights.map((l, i) => <g key={l.id} opacity={l.intenzita * .48} style={{ mixBlendMode: "screen" }}>
-      <g className={l.blikani ? "map-light-flicker" : undefined} style={{ animationDelay: `-${i * .73}s` }}>
+      <g>
       <image {...sprite(l, l.radius)} filter={`url(#${uid}tint${i})`} />
       </g>
     </g>)}

@@ -86,7 +86,7 @@ describe("shared image compositing", () => {
     const svg = renderToStaticMarkup(<MapAtmosphereLayer map={m} />);
     expect(svg).toContain(GLOW);
     expect(svg).toContain("mix-blend-mode:screen");
-    expect(svg).toContain("map-light-flicker");
+    expect(svg).not.toContain("map-light-flicker");
     expect(svg).not.toContain("radialGradient");
     expect(svg).toContain('opacity="0.9"');
   });

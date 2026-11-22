@@ -71,6 +71,25 @@ export function exportUvtt(map: MapV2): string {
 
 /** PNG export mapy přes offscreen canvas (vytvoř SVG snapshot → drawImage). */
 export async function exportPng(svgEl: SVGSVGElement, pxPerCell: number, filename: string) {
+  svgEl = svgEl.cloneNode(true) as SVGSVGElement;
+  svgEl.setAttribute("xmlns", "http://www.w3.org/2000/svg");
+  const sources = new Map<string, Promise<string>>();
+  await Promise.all(Array.from(svgEl.querySelectorAll("image")).map(async image => {
+    const href = image.getAttribute("href");
+    if (!href || href.startsWith("data:")) return;
+    if (!sources.has(href)) sources.set(href, (async () => {
+      const response = await fetch(href);
+      if (!response.ok) throw new Error("Obrázek nelze načíst: " + href);
+      const blob = await response.blob();
+      return new Promise<string>((resolve, reject) => {
+        const reader = new FileReader();
+        reader.onload = () => resolve(String(reader.result));
+        reader.onerror = reject;
+        reader.readAsDataURL(blob);
+      });
+    })());
+    image.setAttribute("href", await sources.get(href)!);
+  }));
   const W = svgEl.viewBox.baseVal.width, H = svgEl.viewBox.baseVal.height;
   const cell = 24; // náš px/cell v SVG
   const scale = pxPerCell / cell;

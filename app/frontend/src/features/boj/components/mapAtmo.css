@@ -19,19 +19,17 @@
 .map-weather-overlay { position: absolute; inset: 0; overflow: hidden; pointer-events: none; contain: strict; }
 .map-weather-sheet, .map-weather-cloud { will-change: transform; }
 .map-weather-wind { position: absolute; left: 50%; top: 50%; transform: translate(-50%,-50%) rotate(var(--wind)); }
-.map-weather-sheet, .map-weather-cloud { position: absolute; inset: -256px; background-repeat: repeat; background-size: 256px; animation: map-fall 2s linear infinite; opacity: .55; }
-.map-weather-sheet.sheet-1 { animation-duration: 3.3s; animation-delay: -1.6s; background-size: 384px; opacity: .32; }
+.map-weather-sheet, .map-weather-cloud { position: absolute; inset: -256px; background-repeat: repeat; background-size: 256px; animation: map-fall 2s linear infinite; opacity: calc(var(--strength) * .55); }
+.map-weather-sheet.sheet-1 { animation-duration: 3.3s; animation-delay: -1.6s; background-size: 384px; opacity: calc(var(--strength) * .32); }
 @keyframes map-fall { from { transform: translate(0,0); } to { transform: translate(256px,256px); } }
-.weather-bourka .map-weather-sheet { opacity: .9; }
-.weather-dest .map-weather-sheet, .weather-bourka .map-weather-sheet { mix-blend-mode: screen; }
-.weather-snih .map-weather-sheet, .weather-vanice .map-weather-sheet { animation-duration: 17s; background-size: 320px; opacity: .85; }
-.weather-snih .sheet-1, .weather-vanice .sheet-1 { animation-duration: 25s; background-size: 512px; opacity: .6; }
+.weather-bourka .map-weather-sheet { opacity: calc(var(--strength) * .9); }
+.weather-snih .map-weather-sheet, .weather-vanice .map-weather-sheet { animation-duration: 17s; background-size: 320px; opacity: calc(var(--strength) * .85); }
+.weather-snih .sheet-1, .weather-vanice .sheet-1 { animation-duration: 25s; background-size: 512px; opacity: calc(var(--strength) * .6); }
 .weather-vanice .map-weather-sheet { animation-duration: 5s; }
-.map-weather-cloud { background-size: 640px; animation: map-fall 70s linear infinite alternate; opacity: .23; mix-blend-mode: multiply; background-color: #111b30; }
-.weather-mlha .map-weather-sheet { background-size: 640px; animation-duration: 90s; opacity: .28; }
-.weather-mlha .map-weather-sheet { mix-blend-mode: screen; }
-.weather-mlha .sheet-1 { animation-direction: reverse; animation-duration: 120s; opacity: .2; }
-.weather-popel .map-weather-sheet { animation-direction: reverse; animation-duration: 19s; opacity: .8; }
+.map-weather-cloud { background-size: 640px; animation: map-fall 70s linear infinite alternate; opacity: calc(var(--strength) * .14); background-color: #111b30; }
+.weather-mlha .map-weather-sheet { background-size: 640px; animation-duration: 90s; opacity: calc(var(--strength) * .28); }
+.weather-mlha .sheet-1 { animation-direction: reverse; animation-duration: 120s; opacity: calc(var(--strength) * .2); }
+.weather-popel .map-weather-sheet { animation-direction: reverse; animation-duration: 19s; opacity: calc(var(--strength) * .8); }
 .weather-popel .sheet-1 { animation-duration: 30s; }
 .map-lightning { position: absolute; inset: 0; background: #dbeaff66; opacity: 0; }
 .map-lightning img { position: absolute; height: 90%; width: 35%; left: var(--bolt-x, 40%); object-fit: contain; }
@@ -40,8 +38,19 @@
 .map-weather-cards button { padding: 4px; border: 1px solid #bda780; border-radius: 7px; background: #eee3cc; color: #47331d; font-size: 11px; cursor: pointer; }
 .map-weather-cards button[aria-pressed="true"] { border-color: #a43824; box-shadow: 0 0 0 2px #a4382444; }
 .map-weather-cards button:hover { filter: brightness(1.12); }
-.map-weather-cards span { display: block; height: 48px; background-size: cover; overflow: hidden; border-radius: 4px; background-color: #566477; background-blend-mode: multiply; }
-.map-weather-cards img { width: 100%; height: 100%; object-fit: cover; filter: brightness(5); }
+.map-weather-cards span { display: block; position: relative; height: 48px; background-size: cover; overflow: hidden; border-radius: 4px; background-color: #a5af7e; }
+.map-weather-cards img { width: 100%; height: 100%; object-fit: cover; }
+.map-animated-scene { position: absolute; inset: 0; overflow: hidden; pointer-events: none; contain: strict; }
+.map-scene-board { position: relative; transform-origin: 0 0; }
+.map-scene-static { position: absolute; inset: 0; overflow: visible; }
+.me-canvas, .boj-map { position: relative; }
+.map-dom-sprite { position: absolute; pointer-events: none; }
+.map-dom-sprite > img { position: absolute; width: 100%; height: 100%; object-fit: contain; }
+.map-dom-sprite > .map-dom-glow { left: -30%; top: -30%; width: 160%; height: 160%; opacity: .35; }
+.map-dom-water { position: absolute; inset: 0; overflow: hidden; transform: translateZ(0); }
+.map-dom-water > div { position: absolute; inset: -96px; background-size: 96px; will-change: transform; }
+.map-dom-light { position: absolute; pointer-events: none; }
+.map-dom-light img { width: 100%; height: 100%; }
 .map-weather-quick { position: relative; color: #48351e; font-size: 12px; background: #f3ead4; border: 1px solid #bda780; border-radius: 5px; padding: 6px; }
 .map-weather-quick[open] { width: 250px; }
 .map-weather-quick label { display: flex; justify-content: space-between; margin: 8px 0; }

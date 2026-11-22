@@ -6,7 +6,7 @@ import { MapPaintLayer, MapAtmosphereLayer } from "../../boj/components/MapAtmoL
 
 export const MapPreview = memo(function MapPreview({ map }: { map: MapV2 }) {
   const W = (map.mrizka[0]?.length || 1)*24, H = map.mrizka.length*24;
-  return <svg className="me-map-preview" viewBox={`0 0 ${W} ${H}`} aria-label={map.nazev}>
+  return <svg xmlns="http://www.w3.org/2000/svg" className="me-map-preview" viewBox={`0 0 ${W} ${H}`} aria-label={map.nazev}>
     {map.obrazek && <image href={`/repo/11_Mapy/${map.obrazek}`} width={W} height={H} preserveAspectRatio="none" />}
     <TerenLayer map={map} px={24} illustration={!!map.obrazek} />
     <MapTextureLayer map={map} /><MapPaintLayer map={map} /><MapWallLayer map={map} />

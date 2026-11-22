@@ -13,12 +13,13 @@ import { TILES } from "../../boj/types";
 import type { MapV2, MapWall, MapDrawing, MapPaintStroke } from "../../boj/model/mapV2";
 import { migrateMap, wallUid } from "../../boj/model/mapV2";
 import {
-  MapTextureLayer, MapElevationLayer, MapWallLayer, MapObjectLayer, MapDrawingLayer,
+  MapTextureLayer, MapElevationLayer, MapWallLayer, MapDrawingLayer,
   MapLightLayer, MapNoteLayer, MapGridLayer, PX, setManifests,
 } from "../../boj/components/MapV2Layers";
 import { TerenLayer } from "../../boj/components/MapLayers";
 import { MapPaintLayer, MapAtmosphereLayer } from "../../boj/components/MapAtmoLayers";
-import { AnimationButton, MapWeatherOverlay, MapWaterLayer } from "../../boj/components/MapMotion";
+import { AnimationButton, MapWeatherOverlay } from "../../boj/components/MapMotion";
+import { MapAnimatedScene } from "../../boj/components/MapAnimatedScene";
 import { TEXTURES, textureById } from "../assets/textures";
 import { stampById } from "../assets/stamps";
 import { useAssetManifest, useTextureManifest } from "../assets/manifest";
@@ -569,23 +570,24 @@ export default function EditorPage() {
           </div>
 
           <div ref={wrapRef} className="me-canvas-wrap">
+            <MapAnimatedScene map={map} view={V} dm terrain={layerVis.teren} objects={layerVis.objekty} lights={layerVis.svetla} illustration={!!(layerVis.obrazek && map.obrazek)} details={<>
+              {layerVis.mrizka && <MapGridLayer map={map} W={W} H={H} />}
+              {layerVis.vyska && <MapElevationLayer map={map} />}
+              {layerVis.kresby && <MapDrawingLayer map={map} dm />}
+              {layerVis.steny && <MapWallLayer map={map} dm />}
+            </>}>
+              <rect width={W * PX} height={H * PX} fill="#4a453e" />
+              {layerVis.obrazek && map.obrazek && <image href={`/repo/11_Mapy/${map.obrazek}`} width={W * PX} height={H * PX} preserveAspectRatio="none" opacity={0.9} />}
+              {layerVis.teren && <TerenLayer staticOnly map={map} px={PX} illustration={!!(layerVis.obrazek && map.obrazek)} />}
+              {layerVis.textury && <MapTextureLayer map={map} />}
+              {layerVis.malba && <MapPaintLayer map={map} preview={paintPreview || undefined} />}
+            </MapAnimatedScene>
             <svg ref={svgRef} className={`me-canvas tool-${tool}`} onWheel={onWheel}
                  onPointerDown={onDown} onPointerMove={onMove} onPointerUp={onUp} onDoubleClick={onDbl}
                  onPointerCancel={() => { strokeRef.current = null; setPaintPreview(null); paintRef.current = false; if (transformStart.current) doc.setMap(transformStart.current); transformStart.current = null; moveRef.current = null; setHandleDrag(null); }}
                  onPointerLeave={() => setCur(null)} onContextMenu={(e) => e.preventDefault()}
                  style={{ touchAction: "none", width: "100%", height: "100%", display: "block" }}>
               <g transform={`translate(${V.x},${V.y}) scale(${V.k})`}>
-                <rect width={W * PX} height={H * PX} fill="#4a453e" />
-                {layerVis.obrazek && map.obrazek && <image href={`/repo/11_Mapy/${map.obrazek}`} width={W * PX} height={H * PX} preserveAspectRatio="none" opacity={0.9} />}
-                {layerVis.teren && <TerenLayer map={map} px={PX} illustration={!!(layerVis.obrazek && map.obrazek)} />}
-                {layerVis.textury && <MapTextureLayer map={map} />}
-                {layerVis.malba && <MapPaintLayer map={map} preview={paintPreview || undefined} />}
-                <MapWaterLayer map={map} />
-                {layerVis.mrizka && <MapGridLayer map={map} W={W} H={H} />}
-                {layerVis.vyska && <MapElevationLayer map={map} />}
-                {layerVis.kresby && <MapDrawingLayer map={map} dm />}
-                {layerVis.steny && <MapWallLayer map={map} dm />}
-                {layerVis.objekty && <MapObjectLayer map={map} dm />}
                 {layerVis.svetla && <MapAtmosphereLayer map={map} />}
                 {layerVis.poznamky && <MapNoteLayer map={map} />}
                 {layerVis.starty && START_TYPY.map(([typ]) =>
@@ -691,7 +693,11 @@ export default function EditorPage() {
               onExportUvtt={() => download(exportUvtt(map), `${map.id}.uvtt`)}
               onExportJson={() => download(JSON.stringify(map, null, 2), `${map.id}.json`)}
               onImportJson={async (f) => { try { const d = JSON.parse(await f.text()); push((m) => Object.assign(m, migrateMap(d))); } catch { toast("Neplatný JSON", "err"); } }}
-              onExportPng={() => svgRef.current && exportPng(svgRef.current, 70, `${map.id}.png`)}
+              onExportPng={async () => {
+                const [{ renderToStaticMarkup }, { MapPreview }] = await Promise.all([import("react-dom/server"), import("./MapPreview")]);
+                const snapshot = new DOMParser().parseFromString(renderToStaticMarkup(<MapPreview map={map} />), "image/svg+xml").documentElement;
+                await exportPng(snapshot as unknown as SVGSVGElement, 70, `${map.id}.png`);
+              }}
               calib={calib} setCalib={setCalib} />}
           </div>
         </aside>

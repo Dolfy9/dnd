@@ -36,8 +36,8 @@ export function WeatherPicker({ value, onChange, compact = false }: {
   const weather = normalizeWeather(value);
   const cards = <div className="map-weather-cards">{WEATHER.map(([typ, label, fx]) =>
     <button type="button" key={typ} aria-pressed={weather.typ === typ} onClick={() => onChange({ ...weather, typ })}>
-      <span style={{ backgroundImage: `url(/repo/11_Mapy/bojove/textury/teren-les.webp)` }}>
-        {fx && <img src={FX + fx + ".webp"} alt="" />}
+      <span style={{ backgroundImage: `url(/repo/11_Mapy/bojove/textury/teren-g.webp)` }}>
+        {fx && <img src={FX + (typ === "dest" ? "dest-svetly" : typ === "mlha" ? "mraky-svetle" : fx) + ".webp"} alt="" style={{filter:"brightness(3) contrast(1.2)"}} />}
       </span>{label}
     </button>)}</div>;
   const controls = <><label>Síla {Math.round(weather.sila! * 100)} %<input aria-label="Síla počasí" type="range" min="0" max="1" step=".05" value={weather.sila}
@@ -69,12 +69,10 @@ export const MapWeatherLayer = memo(function MapWeatherLayer({ map }: { map: Map
   const rain = w.typ === "dest" || w.typ === "bourka";
   const snow = w.typ === "snih" || w.typ === "vanice";
   const fog = w.typ === "mlha";
-  const files = rain ? ["dest", "dest2"] : snow ? ["snih", "snih2"] : fog ? ["mraky", "mraky"] : ["jiskry", "jiskry"];
-  return <div data-map-weather={w.typ} className={`map-weather weather-${w.typ}`} style={{ "--wind": `${w.vitr! - 90}deg`, opacity: w.sila } as CSSProperties}>
+  const files = rain ? ["dest-svetly", "dest2-svetly"] : snow ? ["snih", "snih2"] : fog ? ["mraky-svetle", "mraky-svetle"] : ["jiskry", "jiskry"];
+  return <div data-map-weather={w.typ} className={`map-weather weather-${w.typ}`} style={{ "--wind": `${w.vitr! - 90}deg`, "--strength": w.sila } as CSSProperties}>
       <div className="map-weather-wind" style={{ width: Math.hypot((map.mrizka[0]?.length || 1)*24,map.mrizka.length*24), height: Math.hypot((map.mrizka[0]?.length || 1)*24,map.mrizka.length*24) }}>{files.map((file, i) => <div key={i} className={`map-weather-sheet sheet-${i}`}
-        style={rain || fog ? { maskImage: `url(${FX + file}.webp)`, maskRepeat: "repeat",
-          maskSize: fog ? "640px" : i ? "384px" : "256px", backgroundColor: rain ? "#d8e7ff" : "#b4c3ca" }
-          : { backgroundImage: `url(${FX + file}.webp)` }} />)}</div>
+        style={{ backgroundImage: `url(${FX + file}.webp)` }} />)}</div>
       {(w.typ === "bourka" || w.typ === "vanice") && <div className="map-weather-cloud" style={{ backgroundImage: `url(${FX}mraky.webp)` }} />}
       {w.typ === "bourka" && <div ref={lightning} className="map-lightning"><img src={FX + "blesk.webp"} alt="" /></div>}
   </div>;
@@ -105,7 +103,7 @@ export const MapWaterLayer = memo(function MapWaterLayer({ map }: { map: MapV2 }
       {strokes.map(s => <path key={s.id} d={s.p.map(([x,y],i) => `${i ? "L" : "M"}${x*24},${y*24}`).join(" ") + (s.poly ? "Z" : s.p.length === 1 ? "l.001,0" : "")}
         fill={s.poly ? water(s.t) ? "white" : "black" : "none"} stroke={s.poly ? "none" : water(s.t) ? "white" : "black"} strokeWidth={s.b*24} strokeLinecap="round" strokeLinejoin="round" opacity={s.o} />)}
     </mask><pattern id={id+"waves"} width="96" height="96" patternUnits="userSpaceOnUse">
-      <g className="map-water-drift">{[-96,0].flatMap(x => [-96,0].map(y => <image key={x+","+y} href={FX+"vlny.webp"} x={x} y={y} width="96" height="96" />))}</g>
+      <g>{[-96,0].flatMap(x => [-96,0].map(y => <image key={x+","+y} href={FX+"vlny.webp"} x={x} y={y} width="96" height="96" />))}</g>
     </pattern></defs>
     <rect width={W} height={H} mask={`url(#${id}water)`} fill={`url(#${id}waves)`} />
   </g>;
