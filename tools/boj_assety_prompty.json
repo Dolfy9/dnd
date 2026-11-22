@@ -1,0 +1,41 @@
+{
+  "size": "1024x1024",
+  "quality": "medium",
+  "texture_template": "Seamless tileable texture, strict top-down orthographic view, {s}, hand-painted fantasy battle-map style (premium VTT tabletop asset), muted natural colors, even soft lighting with no directional shadows, no vignette, no perspective, no objects, no text, edges must tile seamlessly.",
+  "prop_template": "Single top-down orthographic game prop sprite for a fantasy tabletop battle map: {s}. Hand-painted premium VTT asset style, soft drop shadow omitted, centered, fills about 85% of the frame, isolated on a perfectly flat solid pure magenta (#FF00FF) background, no magenta inside the object, no text, no border.",
+  "textures": {
+    "mesto": "medieval cobblestone street of irregular grey and ochre rounded cobbles with dark mortar gaps, subtle moss",
+    "krypta": "dark ancient crypt floor of large worn square basalt flagstones with thin cracks and dust",
+    "les": "forest floor with fallen leaves, pine needles, small twigs, moss patches and dark earth",
+    "ruiny": "ruined temple floor of cracked pale limestone flagstones overgrown with moss and grass in the cracks",
+    "reka": "lush green meadow grass with small wildflowers and clover",
+    "more": "deep dark blue-teal ocean water surface with gentle waves and foam highlights",
+    "pristav": "weathered grey wooden dock planks with iron nails, gaps and salt stains",
+    "bazina": "murky swamp mud with puddles of stagnant green water, reeds and algae",
+    "snih": "fresh packed snow with subtle footprints, ice crystals and soft blue shadows",
+    "jeskyne": "natural cave rock floor of uneven dark grey stone with small pebbles and mineral veins",
+    "hory": "rocky mountain ground with gravel, scree, lichen and sparse dry grass",
+    "poust": "desert sand with wind ripples and scattered small pebbles",
+    "plaz": "pale golden beach sand with small shells and fine ripples",
+    "g": "short green grass lawn",
+    "r": "packed brown dirt road with wheel ruts and small stones",
+    "wall": "top view of a thick stone masonry wall cap made of large dark grey hewn stone blocks",
+    "rubble": "rubble field of broken stones, debris, gravel and tangled brambles",
+    "voda": "deep river water, dark blue with flowing ripples and subtle reflections",
+    "melcina": "clear shallow water over sandy and pebbly bottom with visible stones, light turquoise",
+    "most": "wooden bridge deck of thick parallel horizontal planks with dark gaps, running left-right",
+    "propast": "bottomless dark chasm, nearly black abyss with faint rocky ledges fading into darkness",
+    "schody": "stone staircase steps seen from above, horizontal steps with shading suggesting depth",
+    "parchment": "aged parchment paper with subtle stains and fibers, warm cream tone"
+  },
+  "props": {
+    "strom": "large lush oak tree canopy seen from directly above, round with leaf clusters",
+    "balvan": "large grey granite boulder seen from above",
+    "sloup": "round carved stone pillar seen from directly above, circular capital",
+    "bedny": "stack of two wooden crates and a barrel seen from above",
+    "ohen": "burning campfire with flames and glowing embers in a stone ring, seen from above",
+    "dvere": "closed heavy wooden door with iron bands seen from above as a thin rectangle, horizontal",
+    "sarkofag": "stone sarcophagus with carved lid seen from above",
+    "ker": "dense green bush seen from above"
+  }
+}
