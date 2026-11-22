@@ -7,6 +7,7 @@ import { hasCond, isIncap, speedOf, flySpeedOf } from "./conditions";
 import { sumMods, tickEffects, dropConcentration } from "./effects";
 import { d20, type Rng, defaultRng } from "./dice";
 import { settingsOf } from "./settings";
+import { deathSave } from "./damage";
 
 export const byId = (S: StavBoje, id?: string | null) => S.tok.find((t) => t.id === id);
 export const cur = (S: StavBoje) => byId(S, S.ord?.[S.turn ?? -1]);
@@ -98,8 +99,11 @@ export function startOfTurnProcess(S: StavBoje, t: Token, rng: Rng = defaultRng)
       if (d20(0, rng).r >= u.rc) { delete t.spent[u.nazev]; out.push(`${t.nazev}: ${u.nazev} recharged`); }
     }
   }
+  if (t.hp <= 0 && t.dying && !t.dead) {
+    if (settingsOf(S).automatizace.deathSaves === "auto") out.push(deathSave(t, d20(0, rng).r).text);
+    else out.push(`${t.nazev} umírá — hoď death save`);
+  }
   if (isIncap(t)) out.push(`${t.nazev} je Incapacitated — žádné akce`);
-  else if (t.dying) out.push(`${t.nazev} umírá — hoď death save`);
   return out;
 }
 

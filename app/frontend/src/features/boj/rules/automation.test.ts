@@ -4,6 +4,8 @@ import { custom } from "./combatants";
 import { defaultSettings } from "./settings";
 import { cmdAttack, cmdArea, cmdDamage } from "../state/commands/combat";
 import { triggerZone } from "../state/commands/move";
+import { advanceTurn, startOfTurnProcess } from "./turn";
+import { deathSave } from "./damage";
 
 let nextId = 0;
 const token = (o: Partial<Token> = {}): Token => ({ ...custom("T", "druzina", 2000, 10), id: `t${nextId++}`, ...o });
@@ -11,6 +13,35 @@ const state = (...tok: Token[]): StavBoje => ({
   tok, ord: tok.map(t => t.id), turn: 0, round: 1, log: [], eco: {}, zones: [], fx: [], nastaveni: defaultSettings(),
 });
 afterEach(() => vi.restoreAllMocks());
+
+describe("automatic death saves", () => {
+  it.each([[0.999, 1, 0], [0, 0, 2], [0.5, 0, 0]])("rolls at turn start with rng %s", (rng, hp, failures) => {
+    const a = token({ hp: 0, dying: true, cond: [{ n: "Unconscious" }] }); const s = state(a);
+    const messages = startOfTurnProcess(s, a, () => rng);
+    expect(a.hp).toBe(hp); expect(a.ds.f).toBe(failures);
+    expect(messages.join(" ")).toMatch(/death save/);
+    if (hp) expect(a.cond).toEqual([]);
+    else if (rng > 0) expect(a.ds.s).toBe(1);
+  });
+  it("does not roll while stable, dead, healed, or in manual mode", () => {
+    const a = token({ hp: 0, dying: true, ds: { s: 2, f: 0 } });
+    deathSave(a, 10);
+    expect(a.dying).toBe(false);
+    const b = token({ hp: 0, dying: true, dead: true }); const c = token({ hp: 1, dying: true });
+    const d = token({ hp: 0, dying: true }); const s = state(a, b, c, d);
+    const rng = vi.fn(() => 0);
+    for (const t of [a, b, c]) startOfTurnProcess(s, t, rng);
+    s.nastaveni!.automatizace.deathSaves = "rucne";
+    startOfTurnProcess(s, d, rng);
+    expect(rng).not.toHaveBeenCalled(); expect(d.ds.f).toBe(0);
+  });
+  it("logs the automatic roll during turn advancement and handles death", () => {
+    const a = token(); const b = token({ hp: 0, dying: true, ds: { s: 0, f: 1 } }); const s = state(a, b);
+    advanceTurn(s, () => 0);
+    expect(b.dead).toBe(true); expect(b.dying).toBe(false);
+    expect(s.log.some(l => /3× fail/.test(l.t))).toBe(true);
+  });
+});
 
 describe("automatic concentration", () => {
   it("fails the CON save and removes linked effects and zones, but not another caster's", () => {

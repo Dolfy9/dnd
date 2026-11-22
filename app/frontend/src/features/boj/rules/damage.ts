@@ -132,6 +132,7 @@ export function deathSave(t: Token, roll: number): { text: string; stabilized?: 
   if (t.ds.s >= 3) {
     // stabilizace: zůstává na 0 HP, Unconscious dokud nedostane healing (2024)
     t.ds = { s: 0, f: 0 };
+    t.dying = false;
     return { text: `${t.nazev} je stabilizovaný (0 HP)`, stabilized: true };
   }
   return { text: `${t.nazev}: death save ${roll >= 10 ? "✓" : "✗"} (${roll})` };
