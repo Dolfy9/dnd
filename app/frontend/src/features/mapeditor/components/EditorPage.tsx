@@ -893,7 +893,7 @@ export default function EditorPage() {
               onImportJson={async (f) => { try { const d = JSON.parse(await f.text()); push((m) => Object.assign(m, migrateMap(d, ASSETS))); } catch { toast("Neplatný JSON", "err"); } }}
               onExportPng={async () => {
                 const [{ renderToStaticMarkup }, { MapPreview }] = await Promise.all([import("react-dom/server"), import("./MapPreview")]);
-                const snapshot = new DOMParser().parseFromString(renderToStaticMarkup(<MapPreview map={map} />), "image/svg+xml").documentElement;
+                const snapshot = new DOMParser().parseFromString(renderToStaticMarkup(<MapPreview map={map} staticLighting />), "image/svg+xml").documentElement;
                 await exportPng(snapshot as unknown as SVGSVGElement, 70, `${map.id}.png`);
               }}
               calib={calib} setCalib={setCalib} />}
